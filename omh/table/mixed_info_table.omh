@@ -4,11 +4,11 @@
 # ----------------------------------------------------------------------------
 $begin mixed_info_table$$
 $spell
-	CppAD
-	cppad
-	nnz
-	var
-	nr
+   CppAD
+   cppad
+   nnz
+   var
+   nr
 $$
 
 $section The CppAD Mixed Information Table$$

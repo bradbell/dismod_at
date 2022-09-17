@@ -10,8 +10,8 @@
 
 namespace dismod_at {
 CppAD::vector<double> get_prior_mean(
-	const CppAD::vector<dismod_at::prior_struct>& prior_table ,
-	const dismod_at::pack_prior&                  var2prior
+   const CppAD::vector<dismod_at::prior_struct>& prior_table ,
+   const dismod_at::pack_prior&                  var2prior
 );
 }
 

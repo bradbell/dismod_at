@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 $begin hes_fixed_table$$
 $spell
-	hes
-	var
+   hes
+   var
 $$
 
 $section Hessian of The Fixed Effect Objective Function$$

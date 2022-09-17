@@ -10,12 +10,12 @@
 # include <dismod_at/pack_prior.hpp>
 
 namespace dismod_at {
-	extern void censor_var_limit(
-		CppAD::vector<double>&                    var_out       ,
-		const CppAD::vector<double>&              var_in        ,
-		const pack_prior&                         var2prior     ,
-		const CppAD::vector<prior_struct>&        prior_table
-	);
+   extern void censor_var_limit(
+      CppAD::vector<double>&                    var_out       ,
+      const CppAD::vector<double>&              var_in        ,
+      const pack_prior&                         var2prior     ,
+      const CppAD::vector<prior_struct>&        prior_table
+   );
 }
 
 # endif

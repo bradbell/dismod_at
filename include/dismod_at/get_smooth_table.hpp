@@ -10,15 +10,15 @@
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-	struct smooth_struct {
-		std::string smooth_name;
-		int         n_age;
-		int         n_time;
-		int         mulstd_value_prior_id;
-		int         mulstd_dage_prior_id;
-		int         mulstd_dtime_prior_id;
-	};
-	extern CppAD::vector<smooth_struct> get_smooth_table(sqlite3*  db);
+   struct smooth_struct {
+      std::string smooth_name;
+      int         n_age;
+      int         n_time;
+      int         mulstd_value_prior_id;
+      int         mulstd_dage_prior_id;
+      int         mulstd_dtime_prior_id;
+   };
+   extern CppAD::vector<smooth_struct> get_smooth_table(sqlite3*  db);
 }
 
 # endif

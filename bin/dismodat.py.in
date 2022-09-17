@@ -6,7 +6,7 @@
 # ----------------------------------------------------------------------------
 # $begin dismodat.py$$ $newlinech #$$
 # $spell
-#	dismodat.py
+#  dismodat.py
 # $$
 #
 # $section Python Program Syntax$$
@@ -31,7 +31,7 @@
 # At the end,
 # a $code dismodat.py$$ command adds a command log entry with message equal to
 # $codei%
-#	end %command%
+#  end %command%
 # %$$
 # $end
 # -----------------------------------------------------------------------------
@@ -42,8 +42,8 @@ import time
 # import dismod_at
 sandbox = 'python/dismod_at'
 if os.path.isdir(sandbox) :
-	print('using ' + sandbox)
-	sys.path.insert(0,  os.path.join( os.getcwd(), 'python' ) )
+   print('using ' + sandbox)
+   sys.path.insert(0,  os.path.join( os.getcwd(), 'python' ) )
 import dismod_at
 # ---------------------------------------------------------------------------
 # check usage
@@ -59,7 +59,7 @@ usage += 'dismodat.py database plot_data_fit pdf_file plot_title max_plot'
 # usage += '\t[statement_one [statement_two ...] ]'
 #
 if len(sys.argv) < 3 :
-	sys.exit(usage)
+   sys.exit(usage)
 #
 database_file_arg = sys.argv[1]
 command_arg       = sys.argv[2]
@@ -71,11 +71,11 @@ begin_time     = int( time.time() )
 # deprecated
 # special case where we execute the command first to create the database
 if command_arg == 'csv2db' :
-	if len(sys.argv) != 5 :
-		sys.exit(usage)
-	configure_csv = sys.argv[3]
-	measure_csv   = sys.argv[4]
-	dismod_at.csv2db_command(database_file_arg, configure_csv, measure_csv)
+   if len(sys.argv) != 5 :
+      sys.exit(usage)
+   configure_csv = sys.argv[3]
+   measure_csv   = sys.argv[4]
+   dismod_at.csv2db_command(database_file_arg, configure_csv, measure_csv)
 # ---------------------------------------------------------------------------
 # connection
 new           = False
@@ -98,7 +98,7 @@ log_id        = len( log_table )
 # message
 message       = 'begin'
 for i in range(len(sys.argv) - 2) :
-	message += ' ' + sys.argv[i+2]
+   message += ' ' + sys.argv[i+2]
 #
 cmd  = 'insert into log'
 cmd += ' (log_id,message_type,table_name,row_id,unix_time,message) values('
@@ -113,45 +113,45 @@ connection.close()
 # ---------------------------------------------------------------------------
 # execute command
 if command_arg == 'db2csv' :
-	if len(sys.argv) != 3 :
-		sys.exit(usage)
-	dismod_at.db2csv_command(database_file_arg)
+   if len(sys.argv) != 3 :
+      sys.exit(usage)
+   dismod_at.db2csv_command(database_file_arg)
 elif command_arg == 'perturb' :
-	if len(sys.argv) != 5 :
-		sys.exit(usage)
-	tbl_name = arg_list[0]
-	sigma    = arg_list[1]
-	dismod_at.perturb_command(
-		database_file_arg, tbl_name, sigma
-	)
+   if len(sys.argv) != 5 :
+      sys.exit(usage)
+   tbl_name = arg_list[0]
+   sigma    = arg_list[1]
+   dismod_at.perturb_command(
+      database_file_arg, tbl_name, sigma
+   )
 elif command_arg == 'plot_rate_fit' :
-	if len(sys.argv) != 6 :
-		sys.exit(usage)
-	pdf_file   = arg_list[0]
-	plot_title = arg_list[1]
-	rate_set   = set( arg_list[2].split() )
-	dismod_at.plot_rate_fit(
-		database_file_arg, pdf_file, plot_title, rate_set
-	)
+   if len(sys.argv) != 6 :
+      sys.exit(usage)
+   pdf_file   = arg_list[0]
+   plot_title = arg_list[1]
+   rate_set   = set( arg_list[2].split() )
+   dismod_at.plot_rate_fit(
+      database_file_arg, pdf_file, plot_title, rate_set
+   )
 elif command_arg == 'plot_data_fit' :
-	if len(sys.argv) != 6 :
-		sys.exit(usage)
-	pdf_file   = arg_list[0]
-	plot_title = arg_list[1]
-	max_plot   = int( arg_list[2] )
-	dismod_at.plot_data_fit(
-		database_file_arg, pdf_file, plot_title, max_plot
-	)
+   if len(sys.argv) != 6 :
+      sys.exit(usage)
+   pdf_file   = arg_list[0]
+   plot_title = arg_list[1]
+   max_plot   = int( arg_list[2] )
+   dismod_at.plot_data_fit(
+      database_file_arg, pdf_file, plot_title, max_plot
+   )
 elif command_arg == 'csv2db' :
-	# deprecated
-	pass # already executed this command
+   # deprecated
+   pass # already executed this command
 elif command_arg == 'modify' :
-	# deprecated
-	if len(sys.argv) < 7 :
-		sys.exit(usage)
-	dismod_at.modify_command(database_file_arg, arg_list)
+   # deprecated
+   if len(sys.argv) < 7 :
+      sys.exit(usage)
+   dismod_at.modify_command(database_file_arg, arg_list)
 else :
-	sys.exit(usage)
+   sys.exit(usage)
 # ---------------------------------------------------------------------------
 # write end for this command
 end_time     = int( time.time() )

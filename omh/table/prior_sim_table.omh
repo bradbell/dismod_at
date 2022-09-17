@@ -4,15 +4,15 @@
 # ----------------------------------------------------------------------------
 $begin prior_sim_table$$
 $spell
-	mulcov
-	sim
-	std
-	covariate
-	covariates
-	var
-	sim
-	dage
-	dtime
+   mulcov
+   sim
+   std
+   covariate
+   covariates
+   var
+   sim
+   dage
+   dtime
 $$
 
 $section Simulated Variation in Prior$$
@@ -44,7 +44,7 @@ This identifies which $cref/var_id/var_table/var_id/$$
 each row of the prior_sim table corresponds to.
 If $icode n_var$$ is the number of rows in the var table,
 $codei%
-	%prior_sim_id% = %simulate_index% * %n_var% + %var_id%
+   %prior_sim_id% = %simulate_index% * %n_var% + %var_id%
 %$$
 for $icode simulate_index$$ equal zero to $icode%number_simulate%-1%$$
 and $icode var_id$$ equal zero to $codei%n_var%-1%$$.
@@ -57,16 +57,16 @@ is uniform, $icode prior_sim_value$$ is $code null$$.
 
 $subhead zero_sum_child_rate$$
 If the $cref/
-	zero_sum_child_rate/
-	option_table/
-	Zero Sum Constraints/
-	zero_sum_child_rate
+   zero_sum_child_rate/
+   option_table/
+   Zero Sum Constraints/
+   zero_sum_child_rate
 /$$ option
 is chosen for a rate, the simulated values for the corresponding
 $cref/child rate effects
-	/model_variables
-	/Random Effects, u
-	/Child Rate Effects
+   /model_variables
+   /Random Effects, u
+   /Child Rate Effects
 /$$
 will sum to zero at each grid point in the corresponding smoothing for;
 see $cref/child_smooth_id/rate_table/child_smooth_id/$$ in the rate table.
@@ -78,16 +78,16 @@ averages of the simulated values.
 
 $subhead zero_sum_mulcov_group$$
 If the $cref/
-	zero_sum_mulcov_group/
-	option_table/
-	Zero Sum Constraints/
-	zero_sum_mulcov_group
+   zero_sum_mulcov_group/
+   option_table/
+   Zero Sum Constraints/
+   zero_sum_mulcov_group
 /$$ option
 is chosen for a group, the simulated values for the corresponding
 $cref/subgroup covariate multipliers
-	/model_variables
-	/Random Effects, u
-	/Subgroup Covariate Multipliers
+   /model_variables
+   /Random Effects, u
+   /Subgroup Covariate Multipliers
 /$$
 will sum to zero at each grid point in the corresponding smoothing.
 This summation is with respect to subgroups in the group specified
@@ -113,7 +113,7 @@ $cref/density_id/prior_table/density_id/$$,
 and $icode lower$$, $icode upper$$ are the corresponding limits;
 the corresponding simulated value or difference is
 $codei%
-	max[ %upper%, min( %lower% , %sim% ) ]
+   max[ %upper%, min( %lower% , %sim% ) ]
 %$$
 
 $head Example$$

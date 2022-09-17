@@ -10,11 +10,11 @@
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-	struct option_struct {
-		std::string option_name;
-		std::string option_value;
-	};
-	extern CppAD::vector<option_struct> get_option_table(sqlite3*  db);
+   struct option_struct {
+      std::string option_name;
+      std::string option_value;
+   };
+   extern CppAD::vector<option_struct> get_option_table(sqlite3*  db);
 }
 
 # endif

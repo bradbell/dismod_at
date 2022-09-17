@@ -10,7 +10,7 @@ file_list=os.listdir('@CMAKE_CURRENT_SOURCE_DIR@')
 file_list=sorted(file_list)
 #
 for name in file_list :
-	if name[-3:] == '.py' and name != 'run_all.py' :
-		root = name[:-3]
-		exec( 'import ' + root )
-		exec( root + '.' + root + '()' )
+   if name[-3:] == '.py' and name != 'run_all.py' :
+      root = name[:-3]
+      exec( 'import ' + root )
+      exec( root + '.' + root + '()' )

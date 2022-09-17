@@ -12,13 +12,13 @@
 # include <dismod_at/get_smooth_grid.hpp>
 
 namespace dismod_at {
-	extern void check_rate_limit(
-		sqlite3*                                  db            ,
-		const std::string&                        rate_case     ,
-		const CppAD::vector<rate_struct>&         rate_table    ,
-		const CppAD::vector<prior_struct>&        prior_table   ,
-		const CppAD::vector<smooth_grid_struct>&  smooth_grid
-	);
+   extern void check_rate_limit(
+      sqlite3*                                  db            ,
+      const std::string&                        rate_case     ,
+      const CppAD::vector<rate_struct>&         rate_table    ,
+      const CppAD::vector<prior_struct>&        prior_table   ,
+      const CppAD::vector<smooth_grid_struct>&  smooth_grid
+   );
 }
 
 # endif

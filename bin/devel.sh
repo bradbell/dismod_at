@@ -12,9 +12,9 @@ image_link='https://bradbell.github.io/dismod_at'
 # List of files, besides CMakeLists.txt, that have have a copy of the
 # version number (can be empty).
 version_files='
-	doc.omh
-	dev.omh
-	python/setup.cfg
+   doc.omh
+   dev.omh
+   python/setup.cfg
 '
 #
 # List of special files, for this repository, that the devel tools ignore.
@@ -22,12 +22,12 @@ version_files='
 # Files that are created by a program, and checked into the repository,
 # should also be in this list.
 ignore_files='
-	.gitignore
-	batch_edit.sed
-	bin/devel.sh
-	2DO
-	python/pyproject.toml
-	python/README.md
+   .gitignore
+   batch_edit.sed
+   bin/devel.sh
+   2DO
+   python/pyproject.toml
+   python/README.md
    sphinx/preamble.rst
 '
 # ----------------------------------------------------------------------------

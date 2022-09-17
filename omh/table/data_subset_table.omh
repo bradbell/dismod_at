@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 $begin data_subset_table$$
 $spell
-	covariates
-	initializes
+   covariates
+   initializes
 $$
 
 $section The Data Subset Table$$.

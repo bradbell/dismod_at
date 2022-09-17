@@ -9,12 +9,12 @@
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-	CppAD::vector<double> pack_warm_start(
-		const CppAD::mixed::warm_start_struct& warm_start
-	);
-	CppAD::mixed::warm_start_struct unpack_warm_start(
-		const CppAD::vector<double>& vec
-	);
+   CppAD::vector<double> pack_warm_start(
+      const CppAD::mixed::warm_start_struct& warm_start
+   );
+   CppAD::mixed::warm_start_struct unpack_warm_start(
+      const CppAD::vector<double>& vec
+   );
 }
 
 # endif

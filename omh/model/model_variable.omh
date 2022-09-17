@@ -4,21 +4,21 @@
 # ----------------------------------------------------------------------------
 $begin model_variables$$
 $spell
-	const
-	std
-	dismod
-	smoothings
-	var
-	mulstd
-	dage
-	dtime
-	pini
-	mulcov
-	covariate
-	interpolant
-	csv
-	ik
-	nslist
+   const
+   std
+   dismod
+   smoothings
+   var
+   mulstd
+   dage
+   dtime
+   pini
+   mulcov
+   covariate
+   interpolant
+   csv
+   ik
+   nslist
 $$
 
 $section The Model Variables$$
@@ -46,9 +46,9 @@ $subhead Standard Deviation Multipliers$$
 The first type are the standard deviation multipliers for a smoothing.
 The prior for these variables are specified directly; see
 $cref/lambda
-	/model_variables
-	/Fixed Effects, theta
-	/Smoothing Standard Deviation Multipliers, lambda
+   /model_variables
+   /Fixed Effects, theta
+   /Smoothing Standard Deviation Multipliers, lambda
 /$$ below.
 
 $subhead Functions of Age and Time$$
@@ -60,28 +60,28 @@ The $cref/smooth_id/smooth_table/smooth_id/$$ for one of these variables
 specifies its prior as follows:
 $table
 $cref/n_age/smooth_table/n_age/$$ $cnext
-	number of age points used to represent the function
+   number of age points used to represent the function
 $rnext
 $cref/n_time/smooth_table/n_time/$$ $cnext
-	number of time points used to represent the function
+   number of time points used to represent the function
 $rnext
 $cref/age_id/smooth_grid_table/age_id/$$ $cnext
-	identifies age value for a variable
+   identifies age value for a variable
 $rnext
 $cref/time_id/smooth_grid_table/time_id/$$ $cnext
-	identifies time value for a variable
+   identifies time value for a variable
 $rnext
 $cref/const_value/smooth_grid_table/const_value/$$ $cnext
-	null or a value that a variable is constrained to
+   null or a value that a variable is constrained to
 $rnext
 $cref/value_prior_id/smooth_grid_table/value_prior_id/$$ $cnext
-	value prior for a variable
+   value prior for a variable
 $rnext
 $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$  $cnext
-	difference prior for a variable (and next variable) in age direction
+   difference prior for a variable (and next variable) in age direction
 $rnext
 $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$  $cnext
-	difference prior for a variable (and next variable) in time direction
+   difference prior for a variable (and next variable) in time direction
 $tend
 The number of variables (number of grid points)
 corresponding to a smoothing is $icode%n_age%*%n_time%$$.

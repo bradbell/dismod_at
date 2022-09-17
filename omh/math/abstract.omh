@@ -5,8 +5,8 @@
 
 $begin math_abstract$$
 $spell
-	Dismod
-	covariates
+   Dismod
+   covariates
 $$
 
 
@@ -57,8 +57,8 @@ fourth derivatives of the joint likelihood are required.
 Algorithmic differentiation is used to make this task feasible.
 
 $childtable%omh/math/ode.omh
-	%omh/math/censor_density.omh
-	%omh/math/prevalence_ode.omh
+   %omh/math/censor_density.omh
+   %omh/math/prevalence_ode.omh
 %$$
 
 $end

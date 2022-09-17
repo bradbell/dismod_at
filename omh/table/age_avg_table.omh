@@ -4,9 +4,9 @@
 # ----------------------------------------------------------------------------
 $begin age_avg_table$$
 $spell
-	grid
-	csv
-	dismod
+   grid
+   csv
+   dismod
 $$
 
 $section The Age Average Table$$
@@ -17,59 +17,59 @@ $cref/age_min/age_table/age/age_min/$$,
 $cref/age_max/age_table/age/age_max/$$,
 to denote the minimum and maximum ages in the age table.
 We use $cref/
-	ode_step_size/
-	option_table/
-	Age Average Grid/
-	ode_step_size
+   ode_step_size/
+   option_table/
+   Age Average Grid/
+   ode_step_size
 /$$
 to denote its value in the option table.
 Let $icode%N% >= 1%$$ be the minimum integer such that
 $codei%
-	%s% = ( %age_max% - %age_min% ) / %N% <= %ode_step_size%
+   %s% = ( %age_max% - %age_min% ) / %N% <= %ode_step_size%
 %$$
 Define the set of age points
 $latex a_i = i * s$$ for $latex i = 0, \ldots , N$$, and define the set
 $latex \[
-	S = \{ a_0, a_1 , \ldots , a_N \}
+   S = \{ a_0, a_1 , \ldots , a_N \}
 \] $$
 Note that $latex a_0$$ is $icode age_min$$
 and $latex a_N$$ is $icode age_max$$.
 The age average grid is the union of the set $latex S$$
 and the set of age points in
 $cref/
-	age_avg_split/
-	option_table/
-	Age Average Grid/
-	age_avg_split
+   age_avg_split/
+   option_table/
+   Age Average Grid/
+   age_avg_split
 /$$.
 This grid is used both for
 $cref/approximating averages/numeric_average/$$
 and for approximation the solution of the dismod_at
 $cref/ordinary differential equation
-	/avg_integrand
-	/Ordinary Differential Equation
+   /avg_integrand
+   /Ordinary Differential Equation
 /$$.
 If $cref/
-	age_avg_split/
-	option_table/
-	Age Average Grid/
-	age_avg_split
+   age_avg_split/
+   option_table/
+   Age Average Grid/
+   age_avg_split
 /$$ is the empty set,
 the age average grid is the set $latex S$$.
 
 $head Creation$$
 This table changes each time the
 $cref/
-	ode_step_size/
-	option_table/
-	Age Average Grid/
-	ode_step_size
+   ode_step_size/
+   option_table/
+   Age Average Grid/
+   ode_step_size
 /$$ or the
 $cref/
-	age_avg_split/
-	option_table/
-	Age Average Grid/
-	age_avg_split
+   age_avg_split/
+   option_table/
+   Age Average Grid/
+   age_avg_split
 /$$ changes.
 These value can change without having to re-execute the
 $cref init_command$$.

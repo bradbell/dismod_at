@@ -8,7 +8,7 @@ $begin random_number$$
 $section Pseudo Random Number Generation$$
 
 $childtable%devel/utility/manage_gsl_rng.omh
-	%devel/utility/sim_random.cpp
+   %devel/utility/sim_random.cpp
 %$$
 
 $end

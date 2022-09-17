@@ -4,9 +4,9 @@
 # ----------------------------------------------------------------------------
 $begin covariate_table$$
 $spell
-	covariate
-	covariates
-	avgint
+   covariate
+   covariates
+   avgint
 $$
 
 $section The Covariate Table$$

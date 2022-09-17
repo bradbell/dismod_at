@@ -5,10 +5,10 @@
 # ----------------------------------------------------------------------------
 $begin manage_gsl_rng$$
 $spell
-	std
-	gsl
-	rng
-	CppAD
+   std
+   gsl
+   rng
+   CppAD
 $$
 
 $section Set, Get, And Free A GSL Random Number Generator$$
@@ -33,7 +33,7 @@ can be called again.
 $subhead s_in$$
 This argument has prototype
 $codei%
-	size_t %s_in%
+   size_t %s_in%
 %$$
 If $icode%s_in% != 0%$$,
 it is used as a seed for the random number generator.
@@ -45,7 +45,7 @@ seed from being used by calls that are close together in time.)
 $subhead s_out$$
 This return value prototype
 $codei%
-	size_t %s_out%
+   size_t %s_out%
 %$$
 and is the actual seed that was used to initialize the random number generator.
 
@@ -59,19 +59,19 @@ Otherwise it returns the null pointer.
 $subhead rng$$
 The return value $icode rng$$ has prototype
 $codei%
-	gsl_rng* %rng%
+   gsl_rng* %rng%
 %$$
 
 $head free_gsl_rng$$
 Once you are done with a generator created by $code new_gsl_rng$$,
 you should free the corresponding memory using
 $codei%
-	gsl_rng_free()
+   gsl_rng_free()
 %$$.
 
 
 $children%
-	example/devel/utility/manage_gsl_rng_xam.cpp
+   example/devel/utility/manage_gsl_rng_xam.cpp
 %$$
 $head Example$$
 The file $cref manage_gsl_rng_xam.cpp$$ contains an example and test of

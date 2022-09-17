@@ -11,9 +11,9 @@
 namespace dismod_at {
 
 CppAD::vector<double> age_avg_grid(
-	double                         ode_step_size  ,
-	const std::string              age_avg_split  ,
-	const CppAD::vector<double>&   age_table
+   double                         ode_step_size  ,
+   const std::string              age_avg_split  ,
+   const CppAD::vector<double>&   age_table
 );
 
 }

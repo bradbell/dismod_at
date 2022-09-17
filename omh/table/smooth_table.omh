@@ -4,10 +4,10 @@
 # ----------------------------------------------------------------------------
 $begin smooth_table$$
 $spell
-	mulstd
-	grid
-	dage
-	dtime
+   mulstd
+   grid
+   dage
+   dtime
 $$
 
 $section The Smoothing Table$$

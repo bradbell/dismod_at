@@ -4,10 +4,10 @@
 # ----------------------------------------------------------------------------
 $begin database$$
 $spell
-	avgint
-	tbl
-	std
-	dismod
+   avgint
+   tbl
+   std
+   dismod
 $$
 
 $section The Dismod_at Database Tables$$
@@ -87,8 +87,8 @@ $code text$$. The type names $code INTEGER$$, $code REAL$$, and $code TEXT$$
 can also be used.
 
 $childtable%
-	omh/table/input.omh
-	%omh/table/data_flow.omh
+   omh/table/input.omh
+   %omh/table/data_flow.omh
 %$$
 
 $end

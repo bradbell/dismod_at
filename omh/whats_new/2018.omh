@@ -5,61 +5,61 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin whats_new_2018$$
 $spell
-	nonsmooth
-	dev
-	suitesparse
-	Dismod
-	covariate
-	covariates
-	mulcov
-	csv
-	sim
-	std
-	cppad_cxx
-	gcc
-	Wshadow
-	Wconversion
-	Wpedantic
-	optimizer
-	da
-	dt
-	var
-	rel
-	nans
-	nslist
-	hpp
-	messaging
-	ty
-	grep
-	txt
-	init
-	py
-	dage
-	dtime
-	dismodat
-	sql
-	ik
-	subvector
-	cv
-	integrands
-	cholmod
-	eigen
-	mtother
-	CppAD
-	Avgint
-	pini
+   nonsmooth
+   dev
+   suitesparse
+   Dismod
+   covariate
+   covariates
+   mulcov
+   csv
+   sim
+   std
+   cppad_cxx
+   gcc
+   Wshadow
+   Wconversion
+   Wpedantic
+   optimizer
+   da
+   dt
+   var
+   rel
+   nans
+   nslist
+   hpp
+   messaging
+   ty
+   grep
+   txt
+   init
+   py
+   dage
+   dtime
+   dismodat
+   sql
+   ik
+   subvector
+   cv
+   integrands
+   cholmod
+   eigen
+   mtother
+   CppAD
+   Avgint
+   pini
 $$
 $navigate%
-	Up%Location%
-	Across%Search%
-	Prev%Prev%
-	Next%Next%
-	Down_up_4%_up_4%
-	Down_up_3%_up_3%
-	Down_up_2%_up_2%
-	Down_up_1%_up_1%
-	Down_up_0%_up_0%
-	Current%Heading
+   Up%Location%
+   Across%Search%
+   Prev%Prev%
+   Next%Next%
+   Down_up_4%_up_4%
+   Down_up_3%_up_3%
+   Down_up_2%_up_2%
+   Down_up_1%_up_1%
+   Down_up_0%_up_0%
+   Current%Heading
 %$$
 
 $section Changes and Additions to Dismod_at During 2018$$
@@ -68,15 +68,15 @@ $section Changes and Additions to Dismod_at During 2018$$
 $head 12-19$$
 The
 $cref/add_var_scale_log
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-	/add_var_scale_log
+   /data_like
+   /Adjusted Standard Deviation, delta_i(theta)
+   /add_var_scale_log
 /$$ would sometimes fail to converge
 when the initial value of corresponding covariate multiplier
 $cref/gamma_j (a, t)
-	/data_like
-	/Measurement Noise Covariates
-	/gamma_j (a, t)
+   /data_like
+   /Measurement Noise Covariates
+   /gamma_j (a, t)
 /$$ was zero.
 This was because the derivative of the object w.r.t. this
 multiplier was zero even though zero is not the solution.
@@ -91,15 +91,15 @@ Add options for how the measurement noise effect
 $cref/meas_noise_effect/option_table/meas_noise_effect/$$ is defined.
 The gives the choice of
 $cref/adding variances or standard deviations
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-	/Add Variance or Standard Deviation
+   /data_like
+   /Adjusted Standard Deviation, delta_i(theta)
+   /Add Variance or Standard Deviation
 /$$.
 It also gives the choice to
 $cref/scale
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-	/Scaling
+   /data_like
+   /Adjusted Standard Deviation, delta_i(theta)
+   /Scaling
 /$$
 the added standard deviations for non-log densities.
 
@@ -114,10 +114,10 @@ $head 10-30$$
 $list number$$
 The $icode avg_age_split$$ option was changed to the
 $cref/
-	age_avg_split/
-	option_table/
-	Age Average Grid/
-	age_avg_split
+   age_avg_split/
+   option_table/
+   Age Average Grid/
+   age_avg_split
 /$$ option.
 This way the $cref age_avg_table$$ does not appear
 to have the same primary key as the $cref age_table$$.
@@ -126,19 +126,19 @@ The
 $cref/age average grid/age_avg_table/Age Average Grid/$$
 is now output in the $cref age_avg_table$$ to make
 $cref/
-	age_avg_split/
-	option_table/
-	Age Average Grid/
-	age_avg_split
+   age_avg_split/
+   option_table/
+   Age Average Grid/
+   age_avg_split
 /$$ easier to use.
 $lnext
 There was a bug in the age_avg_split option
 when two splits occurred in the same
 $cref/
-	ode_step_size/
-	option_table/
-	Age Average Grid/
-	ode_step_size
+   ode_step_size/
+   option_table/
+   Age Average Grid/
+   ode_step_size
 /$$ interval.
 This has been fixed.
 $lnext
@@ -153,10 +153,10 @@ $cref/text can be null, not empty/database/Null/Text can be Null, not Empty/$$
 rule and has been fixed.
 $lnext
 If the $cref/
-	age_avg_split/
-	option_table/
-	Age Average Grid/
-	age_avg_split
+   age_avg_split/
+   option_table/
+   Age Average Grid/
+   age_avg_split
 /$$ was not sorted,
 the program would error even if the $cref set_command$$ was
 trying to fix it. This has been changed so the set command
@@ -191,10 +191,10 @@ It does not use $icode age_avg_split$$ to vary the spacing of the age grid.
 $head 10-13$$
 $list number$$
 The $cref/
-	ode_step_size/
-	option_table/
-	Age Average Grid/
-	ode_step_size
+   ode_step_size/
+   option_table/
+   Age Average Grid/
+   ode_step_size
 /$$ documentation
 was changed to reflect the fact that it is also used for approximating
 the integrals in the average integrand.
@@ -210,8 +210,8 @@ $lend
 $head 10-05$$
 Fix typos in the
 $cref/Data or Avgint Table Notation
-	/avg_integrand
-	/Data or Avgint Table Notation
+   /avg_integrand
+   /Data or Avgint Table Notation
 /$$.
 To be specific, change $latex a_i$$ to $latex b_i$$, $latex s_i$$
 or $latex t_i$$ where appropriate.
@@ -226,7 +226,7 @@ $lnext
 Advance to cppad-0180925 and cppad_mixed-0180925.
 This had the following effect timing result for $code bin/speed.sh$$:
 $table
-		$cnext user time    $cnext memory         $rnext
+      $cnext user time    $cnext memory         $rnext
 before  $cnext 10.395 sec   $cnext 1.265 GB       $rnext
 after   $cnext 9.376  sec   $cnext 1.247 GB
 $tend
@@ -721,9 +721,9 @@ $head 04-07$$
 $list number$$
 Add
 $cref/limited_memory_max_history_fixed
-	/option_table
-	/Optimize Fixed Only
-	/limited_memory_max_history_fixed
+   /option_table
+   /Optimize Fixed Only
+   /limited_memory_max_history_fixed
 /$$
 to the option table.
 The default for this option was previously hard coded into the program
@@ -780,7 +780,7 @@ $head 03-10$$
 The install $cref/download/install_unix/Download dismod_at.git/$$ procedure was changed
 to use the following command to determine the version number:
 $codep
-	grep '^SET(dismod_at_version' CMakeLists.txt
+   grep '^SET(dismod_at_version' CMakeLists.txt
 $$
 
 $head 03-08$$
@@ -788,7 +788,7 @@ There was a mistake in the error message for wrong column
 type detected in an $cref input$$ table.
 To be specific, a syntax error would occur on the line
 $codep
-	 msg  = 'expected type ' + ty ++  ' for column ' + name
+    msg  = 'expected type ' + ty ++  ' for column ' + name
 $$
 This was fixed by changing $code ++$$ to $code +$$.
 
@@ -840,9 +840,9 @@ to the problem parameters.
 $lnext
 Change
 $cref/fit_with_noise_in_data
-	/user_diabetes.py
-	/Problem Parameters
-	/fit_with_noise_in_data
+   /user_diabetes.py
+   /Problem Parameters
+   /fit_with_noise_in_data
 /$$
 to be false, so less data can result in tests passing; i.e,
 makes automated testing faster.
@@ -900,9 +900,9 @@ during the optimization process.
 $lnext
 Add
 $cref/derivative_test_fixed
-	/user_diabetes.py
-	/Problem Parameters
-	/derivative_test_fixed
+   /user_diabetes.py
+   /Problem Parameters
+   /derivative_test_fixed
 /$$, and
 $cref/mulcov_dict/user_diabetes.py/Problem Parameters/mulcov_dict/$$
 to the set of problem parameters.
@@ -1052,8 +1052,8 @@ the corresponding $cref/n_age/smooth_table/n_age/$$
 $lnext
 The definition of the
 $cref/adjusted standard deviation
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
+   /data_like
+   /Adjusted Standard Deviation, delta_i(theta)
 /$$
 for the log transformed densities was changed so that the standard deviation
 effect multiplies
@@ -1072,7 +1072,7 @@ $head 01-24$$
 Change the specification for the
 $cref/smooth_table/create_database/smooth_table/$$ function
 $codei%
-	(%v%, %da%, %dt%) = %fun%(%a%, %t%)
+   (%v%, %da%, %dt%) = %fun%(%a%, %t%)
 %$$
 so that $code None$$ can be returned for $icode da$$ and $icode dt$$
 when there is no such forward difference.

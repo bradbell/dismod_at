@@ -4,9 +4,9 @@
 # ----------------------------------------------------------------------------
 $begin density_table$$
 $spell
-	covariate
-	cen
-	Nonsmooth
+   covariate
+   cen
+   Nonsmooth
 $$
 
 $section The Density Table$$
@@ -44,9 +44,9 @@ $cref/Log-Gaussian/statistic/Log-Density Function, D/Log-Gaussian/$$
 
 $subhead cen_log_gaussian$$
 $cref/Censored Log-Gaussian
-	/statistic
-	/Log-Density Function, D
-	/Censored Log-Gaussian
+   /statistic
+   /Log-Density Function, D
+   /Censored Log-Gaussian
 /$$
 
 $subhead laplace$$
@@ -60,9 +60,9 @@ $cref/Log-Laplace/statistic/Log-Density Function, D/Log-Laplace/$$
 
 $subhead cen_log_laplace$$
 $cref/Censored Log-Laplace
-	/statistic
-	/Log-Density Function, D
-	/Censored Log-Laplace
+   /statistic
+   /Log-Density Function, D
+   /Censored Log-Laplace
 /$$
 
 $subhead students$$

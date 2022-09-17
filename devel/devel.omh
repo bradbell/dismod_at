@@ -4,17 +4,17 @@
 # ----------------------------------------------------------------------------
 $begin devel$$
 $spell
-	cppad
-	dismod
+   cppad
+   dismod
 $$
 
 $section Dismod_at Developer Documentation$$
 
 $childtable%
-	devel/table/table.omh
-	%devel/utility/utility.omh
-	%devel/model/model.omh
-	%example/devel/example_devel.cpp
+   devel/table/table.omh
+   %devel/utility/utility.omh
+   %devel/model/model.omh
+   %example/devel/example_devel.cpp
 %$$
 
 $end

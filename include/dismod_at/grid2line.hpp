@@ -11,12 +11,12 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 template <class Grid_info, class Float>
 CppAD::vector<Float> grid2line(
-	const CppAD::vector<double>& line_age     ,
-	const CppAD::vector<double>& line_time    ,
-	const CppAD::vector<double>& age_table    ,
-	const CppAD::vector<double>& time_table   ,
-	const Grid_info&             g_info       ,
-	const CppAD::vector<Float>&  grid_value
+   const CppAD::vector<double>& line_age     ,
+   const CppAD::vector<double>& line_time    ,
+   const CppAD::vector<double>& age_table    ,
+   const CppAD::vector<double>& time_table   ,
+   const Grid_info&             g_info       ,
+   const CppAD::vector<Float>&  grid_value
 );
 
 

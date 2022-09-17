@@ -10,14 +10,14 @@
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-	void create_table(
-		sqlite3*                            db             ,
-		const std::string&                  table_name     ,
-		const CppAD::vector<std::string>&   col_name       ,
-		const CppAD::vector<std::string>&   col_type       ,
-		const CppAD::vector<bool>&          col_unique     ,
-		const CppAD::vector<std::string>&   row_value
-	);
+   void create_table(
+      sqlite3*                            db             ,
+      const std::string&                  table_name     ,
+      const CppAD::vector<std::string>&   col_name       ,
+      const CppAD::vector<std::string>&   col_type       ,
+      const CppAD::vector<bool>&          col_unique     ,
+      const CppAD::vector<std::string>&   row_value
+   );
 }
 
 # endif

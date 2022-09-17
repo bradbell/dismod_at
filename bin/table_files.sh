@@ -5,14 +5,14 @@
 # ----------------------------------------------------------------------------
 if [ "$0" != 'bin/table_files.sh' ]
 then
-	echo 'bin/table_files.sh must be executed from its parent directory'
-	exit 1
+   echo 'bin/table_files.sh must be executed from its parent directory'
+   exit 1
 fi
 if [ "$1" == '' ]
 then
-	echo 'usage: bin/table_files.sh table_name'
-	echo 'lists the files that change when a table changes.'
-	exit 1
+   echo 'usage: bin/table_files.sh table_name'
+   echo 'lists the files that change when a table changes.'
+   exit 1
 fi
 name="$1"
 # ---------------------------------------------------------------------------
@@ -22,19 +22,19 @@ wlt=''
 len=`expr length $name`
 if [ $len -gt 7 ]
 then
-	diff=`expr $len - 7`
-	for i in $(seq 1 $diff)
-	do
-		wgt="$wgt "
-	done
+   diff=`expr $len - 7`
+   for i in $(seq 1 $diff)
+   do
+      wgt="$wgt "
+   done
 fi
 if [ $len -lt 7 ]
 then
-	diff=`expr 7 - $len`
-	for i in $(seq 1 $diff)
-	do
-		wlt="$wlt "
-	done
+   diff=`expr 7 - $len`
+   for i in $(seq 1 $diff)
+   do
+      wlt="$wlt "
+   done
 fi
 cat << EOF
 omh/table/${name}_table.omh$wlt                   user doc for $name table

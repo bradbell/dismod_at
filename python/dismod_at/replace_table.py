@@ -5,9 +5,9 @@
 # ----------------------------------------------------------------------------
 # $begin replace_table$$ $newlinech #$$
 # $spell
-#	dismod
-#	str
-#	tbl
+#  dismod
+#  str
+#  tbl
 # $$
 #
 # $section Replace A a Table$$
@@ -43,31 +43,31 @@
 # $end
 # ---------------------------------------------------------------------------
 def replace_table(connection, tbl_name, table_dict) :
-	import dismod_at
-	#
-	# col_name, col_type
-	(col_name, col_type) = dismod_at.get_name_type(connection, tbl_name)
-	#
-	# remove primary key becasue it is automatically added bo create_table
-	primary_key = tbl_name + '_id'
-	assert col_name[0] == primary_key
-	assert col_type[0] == 'integer primary key'
-	del col_name[0]
-	del col_type[0]
-	#
-	# remove the old table
-	cmd    = 'DROP TABLE ' + tbl_name
-	cursor = connection.cursor()
-	cursor.execute(cmd)
-	#
-	# row_list
-	row_list = list()
-	for row in table_dict :
-		this_row = list()
-		for col in col_name :
-			this_row.append( row[col] )
-		row_list.append( this_row )
-	#
-	# write the new table
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	connection.commit()
+   import dismod_at
+   #
+   # col_name, col_type
+   (col_name, col_type) = dismod_at.get_name_type(connection, tbl_name)
+   #
+   # remove primary key becasue it is automatically added bo create_table
+   primary_key = tbl_name + '_id'
+   assert col_name[0] == primary_key
+   assert col_type[0] == 'integer primary key'
+   del col_name[0]
+   del col_type[0]
+   #
+   # remove the old table
+   cmd    = 'DROP TABLE ' + tbl_name
+   cursor = connection.cursor()
+   cursor.execute(cmd)
+   #
+   # row_list
+   row_list = list()
+   for row in table_dict :
+      this_row = list()
+      for col in col_name :
+         this_row.append( row[col] )
+      row_list.append( this_row )
+   #
+   # write the new table
+   dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+   connection.commit()

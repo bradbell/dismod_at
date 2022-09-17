@@ -14,14 +14,14 @@
 # include "get_nslist_pair.hpp"
 
 namespace dismod_at {
-	void check_child_nslist(
-		sqlite3*                                 db             ,
-		const CppAD::vector<option_struct>&      option_table   ,
-		const CppAD::vector<rate_struct>&        rate_table     ,
-		const CppAD::vector<node_struct>&        node_table     ,
-		const CppAD::vector<std::string>&        nslist_table   ,
-		const CppAD::vector<nslist_pair_struct>& nslist_pair
-	);
+   void check_child_nslist(
+      sqlite3*                                 db             ,
+      const CppAD::vector<option_struct>&      option_table   ,
+      const CppAD::vector<rate_struct>&        rate_table     ,
+      const CppAD::vector<node_struct>&        node_table     ,
+      const CppAD::vector<std::string>&        nslist_table   ,
+      const CppAD::vector<nslist_pair_struct>& nslist_pair
+   );
 }
 
 # endif

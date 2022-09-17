@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 $begin depend_var_table$$
 $spell
-	py
-	var
+   py
+   var
 $$
 
 $section Which Variables The Model Depends On$$
@@ -23,7 +23,7 @@ Its initial value is zero, and it increments by one for each row.
 The $icode depend_var_id$$ column is also a foreign key for the
 $cref var_table$$; i.e.,
 $codei%
-	%depend_var_id% = %var_id%
+   %depend_var_id% = %var_id%
 %$$
 In addition, the size of both tables is the same.
 

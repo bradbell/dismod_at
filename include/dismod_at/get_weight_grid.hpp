@@ -10,13 +10,13 @@
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-	struct weight_grid_struct {
-		int    weight_id;
-		int    age_id;
-		int    time_id;
-		double weight;
-	};
-	extern CppAD::vector<weight_grid_struct> get_weight_grid(sqlite3*  db);
+   struct weight_grid_struct {
+      int    weight_id;
+      int    age_id;
+      int    time_id;
+      double weight;
+   };
+   extern CppAD::vector<weight_grid_struct> get_weight_grid(sqlite3*  db);
 }
 
 # endif

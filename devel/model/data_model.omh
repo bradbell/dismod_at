@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 $begin devel_data_model$$
 $spell
-	var
+   var
 $$
 
 $section Model for Data Given Model Variables$$

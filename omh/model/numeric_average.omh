@@ -4,9 +4,9 @@
 # ----------------------------------------------------------------------------
 $begin numeric_average$$
 $spell
-	avgint
-	pini
-	integrands
+   avgint
+   pini
+   integrands
 $$
 
 $section Numerical Approximation of Average Integrands$$
@@ -14,9 +14,9 @@ $section Numerical Approximation of Average Integrands$$
 $head Average Noise Effect$$
 This technique is also used to compute the
 $cref/average noise effect
-	/data_like
-	/Measurement Noise Covariates
-	/Average Noise Effect, E_i(theta)
+   /data_like
+   /Measurement Noise Covariates
+   /Average Noise Effect, E_i(theta)
 /$$.
 
 
@@ -25,7 +25,7 @@ We compute an
 $cref/average integrand/avg_integrand/Average Integrand, A_i/$$
 over a rectangular region defined as
 $codei%
-	[ %age_lower%, %age_upper% ] x [ %time_lower%, %time_upper% ]
+   [ %age_lower%, %age_upper% ] x [ %time_lower%, %time_upper% ]
 %$$
 by the $cref data_table$$ or the $cref avgint_table$$.
 Given a data table index or avgint table index $latex i$$,
@@ -37,8 +37,8 @@ The index $latex i$$ is fixed and not included in the discussion below.
 $head ODE$$
 Some integrands require solution of the
 $cref/ordinary differential equation
-	/avg_integrand
-	/Ordinary Differential Equation
+   /avg_integrand
+   /Ordinary Differential Equation
 /$$;
 see $cref/ODE/integrand_table/integrand_name/ODE/$$.
 The ODE is solved along cohort lines, i.e., lines where
@@ -73,10 +73,10 @@ $cref/time_upper/data_table/time_upper/$$ value.
 $head Average Integrand Time Step, Delta t$$
 The average integrand time step $latex \Delta t$$
 is specified by $cref/
-	ode_step_size/
-	option_table/
-	Age Average Grid/
-	ode_step_size
+   ode_step_size/
+   option_table/
+   Age Average Grid/
+   ode_step_size
 /$$
 in the option table.
 
@@ -195,8 +195,8 @@ $head w(a, t)$$
 We use $latex w(a, t)$$ to denote a weighting function
 for this average and define
 $latex \[
-	\bar{w} = \int_{a(L)}^{a(U)} \int_{t(L)}^{t(U)}
-		w( a , t) \; \B{d} t \; \B{d} a
+   \bar{w} = \int_{a(L)}^{a(U)} \int_{t(L)}^{t(U)}
+      w( a , t) \; \B{d} t \; \B{d} a
 \] $$
 Note that if $latex w(a, t)$$ is one,
 $latex \bar{w} = ( a_U - a_L ) ( t_U - t_L )$$.
@@ -207,7 +207,7 @@ with respect to age and time, in the definition of $latex A$$; i.e.,
 $latex \[
 A =
 \frac{1}{ \bar{w} } \int_{a(L)}^{a(U)} \int_{t(L)}^{t(U)}
-	w(a, t) g( a , t) \; \B{d} t \; \B{d} a
+   w(a, t) g( a , t) \; \B{d} t \; \B{d} a
 \] $$
 
 $head Time Integration$$
@@ -223,7 +223,7 @@ $latex \[
 W( a_j )
 =
 \sum_{i=1}^{i=N-1}
-	\frac{w( a_j , t_{i-1} ) + w( a_j , t_i )}{2} ( t_i - t_{i-1} )
+   \frac{w( a_j , t_{i-1} ) + w( a_j , t_i )}{2} ( t_i - t_{i-1} )
 \approx
 \int_{t(L)}^{t(U)} w( a_j , t) \; \B{d} t
 \] $$
@@ -245,14 +245,14 @@ $latex \[
 \bar{W}
 =
 \sum_{j=1}^{j=J-1}
-	\frac{ W( a_{j-1}  ) + W( a_j ) }{2} ( a_j - a_{j-1} )
+   \frac{ W( a_{j-1}  ) + W( a_j ) }{2} ( a_j - a_{j-1} )
 \] $$
 $latex \[
 A
 \approx
 \frac{1}{ \bar{W} }
 \sum_{j=1}^{j=J-1}
-	\frac{ G( a_{j-1}  ) + G( a_j ) }{2} ( a_j - a_{j-1} )
+   \frac{ G( a_{j-1}  ) + G( a_j ) }{2} ( a_j - a_{j-1} )
 \] $$
 
 

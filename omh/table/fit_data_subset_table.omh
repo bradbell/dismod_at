@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 $begin fit_data_subset_table$$
 $spell
-	var
+   var
 $$
 
 $section The Model and Weighted Residuals Corresponding to a Fit$$
@@ -22,7 +22,7 @@ Its initial value is zero, and it increments by one for each row.
 The $icode fit_data_subset_id$$ column is also a foreign key for the
 $cref data_subset_table$$; i.e.,
 $codei%
-	%data_subset_id% = %fit_data_subset_id%
+   %data_subset_id% = %fit_data_subset_id%
 %$$
 In addition, the size of both tables is the same.
 
@@ -40,8 +40,8 @@ $cref/data_subset_id/data_subset_table/data_subset_id/$$.
 $head weighted_residual$$
 The column has type $code real$$ and contains the
 $cref/weighted_residuals
-	/statistic
-	/Weighted Residual Function, R
+   /statistic
+   /Weighted Residual Function, R
 /$$
 that correspond to the
 $cref model_variables$$ obtained by the fit; see

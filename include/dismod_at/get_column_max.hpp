@@ -8,11 +8,11 @@
 # include <sqlite3.h>
 # include <string>
 namespace dismod_at {
-	extern std::string get_column_max(
-		sqlite3*           db          ,
-		const std::string& table_name  ,
-		const std::string& column_name
-	);
+   extern std::string get_column_max(
+      sqlite3*           db          ,
+      const std::string& table_name  ,
+      const std::string& column_name
+   );
 }
 
 # endif

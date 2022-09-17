@@ -9,16 +9,16 @@
 # include "prior_model.hpp"
 
 namespace dismod_at {
-	// data_depend
-	CppAD::vector<bool> data_depend(
-		const CppAD::vector<double>& pack_vec     ,
-		data_model&                  data_object
-	);
-	// prior_depend
-	CppAD::vector<bool> prior_depend(
-		const CppAD::vector<double>& pack_vec     ,
-		const prior_model&           prior_object
-	);
+   // data_depend
+   CppAD::vector<bool> data_depend(
+      const CppAD::vector<double>& pack_vec     ,
+      data_model&                  data_object
+   );
+   // prior_depend
+   CppAD::vector<bool> prior_depend(
+      const CppAD::vector<double>& pack_vec     ,
+      const prior_model&           prior_object
+   );
 }
 
 # endif

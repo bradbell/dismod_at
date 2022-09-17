@@ -4,14 +4,14 @@
 # ----------------------------------------------------------------------------
 $begin smooth_grid_table$$
 $spell
-	grid
-	agetime
-	std
-	dage
-	dtime
-	smoothings
-	const
-	cen
+   grid
+   agetime
+   std
+   dage
+   dtime
+   smoothings
+   const
+   cen
 $$
 
 $section The Smooth Grid Table$$

@@ -11,13 +11,13 @@
 # include <dismod_at/remove_const.hpp>
 
 namespace dismod_at {
-	CppAD::mixed::d_sparse_rcv ran_con_rcv(
-		double                        bound_random           ,
-		const CppAD::vector<bool>&    zero_sum_child_rate    ,
-		const CppAD::vector<bool>&    zero_sum_mulcov_group  ,
-		const pack_info&              pack_object            ,
-		const remove_const&           random_const
-	);
+   CppAD::mixed::d_sparse_rcv ran_con_rcv(
+      double                        bound_random           ,
+      const CppAD::vector<bool>&    zero_sum_child_rate    ,
+      const CppAD::vector<bool>&    zero_sum_mulcov_group  ,
+      const pack_info&              pack_object            ,
+      const remove_const&           random_const
+   );
 }
 
 # endif

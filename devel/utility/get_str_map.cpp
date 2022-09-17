@@ -5,9 +5,9 @@
 /*
 $begin get_str_map$$
 $spell
-	const
-	str
-	std
+   const
+   str
+   std
 $$
 
 $section Get a Value from a Const String to String Map$$
@@ -45,28 +45,28 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 // BEGIN_GET_STR_MAP_2
 const std::string& get_str_map(
-	const std::map<std::string, std::string>&  std_map       ,
-	const std::string&                         key           )
+   const std::map<std::string, std::string>&  std_map       ,
+   const std::string&                         key           )
 // END_GET_STR_MAP_2
-{	//
-	std::map<std::string, std::string>::const_iterator map_itr;
-	map_itr = std_map.find(key);
-	assert( map_itr != std_map.end() );
-	return map_itr->second;
+{  //
+   std::map<std::string, std::string>::const_iterator map_itr;
+   map_itr = std_map.find(key);
+   assert( map_itr != std_map.end() );
+   return map_itr->second;
 }
 
 // BEGIN_GET_STR_MAP_3
 const std::string& get_str_map(
-	const std::map<std::string, std::string>&  std_map       ,
-	const std::string&                         key           ,
-	const std::string&                         default_value )
+   const std::map<std::string, std::string>&  std_map       ,
+   const std::string&                         key           ,
+   const std::string&                         default_value )
 // END_GET_STR_MAP_3
-{	//
-	std::map<std::string, std::string>::const_iterator map_itr;
-	map_itr = std_map.find(key);
-	if( map_itr == std_map.end() )
-		return default_value;
-	return map_itr->second;
+{  //
+   std::map<std::string, std::string>::const_iterator map_itr;
+   map_itr = std_map.find(key);
+   if( map_itr == std_map.end() )
+      return default_value;
+   return map_itr->second;
 }
 
 } // END DISMOD_AT_NAMESPACE

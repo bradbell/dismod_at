@@ -4,11 +4,11 @@
 # ----------------------------------------------------------------------------
 $begin smooth_dtime$$
 $spell
-	mulstd
-	dtime
-	ij
-	std
-	mu
+   mulstd
+   dtime
+   ij
+   std
+   mu
 $$
 
 $section Prior Density Function for Smoothing Time Difference$$
@@ -65,8 +65,8 @@ $latex \[
 \log T^s (s, v, \theta )
 =
 \sum_{i=0}^{I-1} \sum_{j=0}^{J-2} D \left(
-	v_{i,j+1} \W{,} v_{i,j} \W{,}
-	\mu_{i,j} \W{,} \lambda \sigma_{i,j}  \W{,} d_{i,j}
+   v_{i,j+1} \W{,} v_{i,j} \W{,}
+   \mu_{i,j} \W{,} \lambda \sigma_{i,j}  \W{,} d_{i,j}
 \right)
 \] $$
 where $latex D$$ is the

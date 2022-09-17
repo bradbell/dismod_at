@@ -16,11 +16,11 @@
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void bnd_mulcov_command(
-	sqlite3*                                      db                ,
-	const std::string&                            max_abs_effect    ,
-	const std::string&                            covariate_name    ,
-	const CppAD::vector<covariate_struct>&        covariate_table   ,
-	const CppAD::vector<mulcov_struct>&           mulcov_table
+   sqlite3*                                      db                ,
+   const std::string&                            max_abs_effect    ,
+   const std::string&                            covariate_name    ,
+   const CppAD::vector<covariate_struct>&        covariate_table   ,
+   const CppAD::vector<mulcov_struct>&           mulcov_table
 );
 
 } // END_DISMOD_AT_NAMESPACE

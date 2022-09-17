@@ -10,7 +10,7 @@
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-	extern CppAD::vector<double> get_age_table(sqlite3*  db);
+   extern CppAD::vector<double> get_age_table(sqlite3*  db);
 }
 
 # endif

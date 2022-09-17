@@ -5,123 +5,123 @@
 # ----------------------------------------------------------------------------
 # (age_grid, time_grid, value_prior, dage_prior, dtime_prior) =
 def pini_parent_smoothing(
-	age_table, time_table, density_name2id, integrand_data
+   age_table, time_table, density_name2id, integrand_data
 ) :
-	age_grid     = [ age_table[0]['age'] ]
-	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
-	density_id   = density_name2id['uniform']
-	value_prior = {
-		'prior_name' : 'parent_smoothing_pini_value_prior' ,
-		'density_id' : density_id      ,
-		'lower'      : 1e-5            ,
-		'upper'      : 1e-5            ,
-		'mean'       : 1e-5            ,
-		'std'        : None            ,
-		'eta'        : None            ,
-		'nu'         : None            ,
-	}
-	dage_prior = {
-		'prior_name' : 'parent_smoothing_pini_dage_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : None           ,
-		'eta'        : None           ,
-		'nu'         : None           ,
-	}
-	dtime_prior = {
-		'prior_name' : 'parent_smooting_pini_dtime_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : None           ,
-		'eta'        : None           ,
-		'nu'         : None           ,
-	}
-	return (age_grid, time_grid, value_prior, dage_prior, dtime_prior)
+   age_grid     = [ age_table[0]['age'] ]
+   time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
+   density_id   = density_name2id['uniform']
+   value_prior = {
+      'prior_name' : 'parent_smoothing_pini_value_prior' ,
+      'density_id' : density_id      ,
+      'lower'      : 1e-5            ,
+      'upper'      : 1e-5            ,
+      'mean'       : 1e-5            ,
+      'std'        : None            ,
+      'eta'        : None            ,
+      'nu'         : None            ,
+   }
+   dage_prior = {
+      'prior_name' : 'parent_smoothing_pini_dage_prior',
+      'density_id' : density_id     ,
+      'lower'      : None           ,
+      'upper'      : None           ,
+      'mean'       : 0.0            ,
+      'std'        : None           ,
+      'eta'        : None           ,
+      'nu'         : None           ,
+   }
+   dtime_prior = {
+      'prior_name' : 'parent_smooting_pini_dtime_prior',
+      'density_id' : density_id     ,
+      'lower'      : None           ,
+      'upper'      : None           ,
+      'mean'       : 0.0            ,
+      'std'        : None           ,
+      'eta'        : None           ,
+      'nu'         : None           ,
+   }
+   return (age_grid, time_grid, value_prior, dage_prior, dtime_prior)
 #
 # ----------------------------------------------------------------------------
 # (age_grid, time_grid, value_prior, dage_prior, dtime_prior) =
 def iota_parent_smoothing(
-	age_table, time_table, density_name2id, integrand_data
+   age_table, time_table, density_name2id, integrand_data
 ) :
-	age_grid     = [ float(age)  for age in range(0, 110, 10) ]
-	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
-	density_id   = density_name2id['log_gaussian']
-	value_prior = {
-		'prior_name' : 'parent_smoothing_iota_value_prior' ,
-		'density_id' : density_id      ,
-		'lower'      : 1e-19           ,
-		'upper'      : 0.1             ,
-		'mean'       : 1e-5            ,
-		'std'        : 5.0             ,
-		'eta'        : 1e-6            ,
-		'nu'         : None            ,
-	}
-	dage_prior = {
-		'prior_name' : 'parent_smoothing_iota_dage_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 0.1            ,
-		'eta'        : 1e-8           ,
-		'nu'         : None           ,
-	}
-	dtime_prior = {
-		'prior_name' : 'parent_smooting_iota_dtime_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 0.01           ,
-		'eta'        : 1e-8           ,
-		'nu'         : None           ,
-	}
-	return (age_grid, time_grid, value_prior, dage_prior, dtime_prior)
+   age_grid     = [ float(age)  for age in range(0, 110, 10) ]
+   time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
+   density_id   = density_name2id['log_gaussian']
+   value_prior = {
+      'prior_name' : 'parent_smoothing_iota_value_prior' ,
+      'density_id' : density_id      ,
+      'lower'      : 1e-19           ,
+      'upper'      : 0.1             ,
+      'mean'       : 1e-5            ,
+      'std'        : 5.0             ,
+      'eta'        : 1e-6            ,
+      'nu'         : None            ,
+   }
+   dage_prior = {
+      'prior_name' : 'parent_smoothing_iota_dage_prior',
+      'density_id' : density_id     ,
+      'lower'      : None           ,
+      'upper'      : None           ,
+      'mean'       : 0.0            ,
+      'std'        : 0.1            ,
+      'eta'        : 1e-8           ,
+      'nu'         : None           ,
+   }
+   dtime_prior = {
+      'prior_name' : 'parent_smooting_iota_dtime_prior',
+      'density_id' : density_id     ,
+      'lower'      : None           ,
+      'upper'      : None           ,
+      'mean'       : 0.0            ,
+      'std'        : 0.01           ,
+      'eta'        : 1e-8           ,
+      'nu'         : None           ,
+   }
+   return (age_grid, time_grid, value_prior, dage_prior, dtime_prior)
 # ----------------------------------------------------------------------------
 # (age_grid, time_grid, value_prior, dage_prior, dtime_prior) =
 def chi_parent_smoothing(
-	age_table, time_table, density_name2id, integrand_data
+   age_table, time_table, density_name2id, integrand_data
 ) :
-	age_grid     = [ float(age)  for age in range(0, 110, 10) ]
-	time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
-	density_id   = density_name2id['log_gaussian']
-	value_prior = {
-		'prior_name' : 'parent_smoothing_chi_value_prior' ,
-		'density_id' : density_id      ,
-		'lower'      : 1e-6            ,
-		'upper'      : 1.0             ,
-		'mean'       : 1e-3            ,
-		# This standard deviation is very small, but we can fit the data
-		# with it. We need more data to better resolve chi.
-		'std'        : 0.1             ,
-		'eta'        : 1e-6            ,
-		'nu'         : None            ,
-	}
-	dage_prior = {
-		'prior_name' : 'parent_smoothing_chi_dage_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 0.1            ,
-		'eta'        : 1e-8           ,
-		'nu'         : None           ,
-	}
-	dtime_prior = {
-		'prior_name' : 'parent_smooting_chi_dtime_prior',
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : 0.01           ,
-		'eta'        : 1e-8           ,
-		'nu'         : None           ,
-	}
-	return (age_grid, time_grid, value_prior, dage_prior, dtime_prior)
+   age_grid     = [ float(age)  for age in range(0, 110, 10) ]
+   time_grid    = [ float(time) for time in range(1990, 2020, 5) ]
+   density_id   = density_name2id['log_gaussian']
+   value_prior = {
+      'prior_name' : 'parent_smoothing_chi_value_prior' ,
+      'density_id' : density_id      ,
+      'lower'      : 1e-6            ,
+      'upper'      : 1.0             ,
+      'mean'       : 1e-3            ,
+      # This standard deviation is very small, but we can fit the data
+      # with it. We need more data to better resolve chi.
+      'std'        : 0.1             ,
+      'eta'        : 1e-6            ,
+      'nu'         : None            ,
+   }
+   dage_prior = {
+      'prior_name' : 'parent_smoothing_chi_dage_prior',
+      'density_id' : density_id     ,
+      'lower'      : None           ,
+      'upper'      : None           ,
+      'mean'       : 0.0            ,
+      'std'        : 0.1            ,
+      'eta'        : 1e-8           ,
+      'nu'         : None           ,
+   }
+   dtime_prior = {
+      'prior_name' : 'parent_smooting_chi_dtime_prior',
+      'density_id' : density_id     ,
+      'lower'      : None           ,
+      'upper'      : None           ,
+      'mean'       : 0.0            ,
+      'std'        : 0.01           ,
+      'eta'        : 1e-8           ,
+      'nu'         : None           ,
+   }
+   return (age_grid, time_grid, value_prior, dage_prior, dtime_prior)
 # ----------------------------------------------------------------------------
 # relative path for original ihme database
 relative_path = 'data/475718/dbs/70/1/dismod.db'

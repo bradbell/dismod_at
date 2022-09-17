@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 $begin nslist_pair_table$$
 $spell
-	nslist
-	smoothings
+   nslist
+   smoothings
 $$
 
 $section Lists of Node Smoothing Pairs$$

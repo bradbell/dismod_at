@@ -4,28 +4,28 @@
 # ----------------------------------------------------------------------------
 $begin avg_integrand$$
 $spell
-	Avgint
-	Sincidence
-	Tincidence
-	wbar
-	mulcov
-	ik
-	covariate
-	ij
-	jk
-	pini
-	Ibar
-	mtspecific
-	mtall
-	mtstandard
-	relrisk
-	mtexcess
-	mtother
-	mtwith
-	susceptible
-	covariates
-	dismod
-	Integrands
+   Avgint
+   Sincidence
+   Tincidence
+   wbar
+   mulcov
+   ik
+   covariate
+   ij
+   jk
+   pini
+   Ibar
+   mtspecific
+   mtall
+   mtstandard
+   relrisk
+   mtexcess
+   mtother
+   mtwith
+   susceptible
+   covariates
+   dismod
+   Integrands
 $$
 
 $section Model for the Average Integrand$$
@@ -35,9 +35,9 @@ In the case where the $cref/rates/rate_table/$$ do not depend on time,
 the dismod_ode ordinary differential equation is
 $latex \[
 \begin{array}{rcl}
-	S'(a) & = & - [ \iota(a) + \omega (a) ] S(a) + \rho(a) C(a)
-	\\
-	C'(a) & = & + \iota(a) S(a) - [ \rho(a) + \chi(a) + \omega (a) ] C(a)
+   S'(a) & = & - [ \iota(a) + \omega (a) ] S(a) + \rho(a) C(a)
+   \\
+   C'(a) & = & + \iota(a) S(a) - [ \rho(a) + \chi(a) + \omega (a) ] C(a)
 \end{array}
 \] $$
 with the initial condition $latex C(0) = p_0$$ and $latex S(0) = 1 - p_0$$.
@@ -113,9 +113,9 @@ $cref/rate_id/rate_table/rate_id/$$ and
 $latex q_k (a, t)$$ the piecewise linear rate function
 for the corresponding to the
 $cref/parent rate
-	/model_variables
-	/Fixed Effects, theta
-	/Parent Rates
+   /model_variables
+   /Fixed Effects, theta
+   /Parent Rates
 /$$.
 This is the model for the rate corresponding to the
 $cref/parent node/option_table/Parent Node/$$
@@ -132,9 +132,9 @@ or a descendant of a child node,
 $latex u_{i,k} (a, t)$$ is the piecewise linear random effect
 for the corresponding
 $cref/child and rate
-	/model_variables
-	/Random Effects, u
-	/Child Rate Effects
+   /model_variables
+   /Random Effects, u
+   /Child Rate Effects
 /$$.
 If $latex n_i$$ is the parent node,
 there is no random effect for this data and
@@ -157,9 +157,9 @@ and each covariate index $latex j \in J_k$$,
 we use $latex \alpha_{j,k} (a, t)$$ to denote the
 piecewise linear function corresponding to the
 $cref/group covariate multiplier
-	/model_variables
-	/Fixed Effects, theta
-	/Group Covariate Multipliers
+   /model_variables
+   /Fixed Effects, theta
+   /Group Covariate Multipliers
 /$$.
 Note that these are
 $cref/rate_value/mulcov_table/mulcov_type/rate_value/$$ covariate multipliers
@@ -171,9 +171,9 @@ and each covariate index $latex j \in J_k$$,
 we use $latex \Delta \alpha_{j,k} (a, t)$$ to denote the
 piecewise linear function corresponding to the $latex s_i$$
 $cref/subgroup covariate multiplier
-	/model_variables
-	/Random Effects, u
-	/Subgroup Covariate Multipliers
+   /model_variables
+   /Random Effects, u
+   /Subgroup Covariate Multipliers
 /$$.
 
 $subhead Adjusted Rate, r_ik$$
@@ -182,8 +182,8 @@ $latex \[
 r_{i,k} (a , t)
 =
 \exp \left \{
-	u_{i,k} (a, t) + \sum_{j \in J(k)}
-		x_{i,j} [ \alpha_{j,k} (a, t) + \Delta \alpha_{j,k} (a, t) ]
+   u_{i,k} (a, t) + \sum_{j \in J(k)}
+      x_{i,j} [ \alpha_{j,k} (a, t) + \Delta \alpha_{j,k} (a, t) ]
 \right \}
 q_k ( a, t )
 \] $$
@@ -242,7 +242,7 @@ $cref/adjusted rates/avg_integrand/Rate Functions/Adjusted Rate, r_ik/$$
 to simplify notation in the equations below.
 The with condition and susceptible fractions at age zero are
 $latex \[
-	C (0, t) =  p_0 (t) \; , \; S (0, t) = 1 - p_0 (t)
+   C (0, t) =  p_0 (t) \; , \; S (0, t) = 1 - p_0 (t)
 \] $$
 We use $latex c$$ to denote cohort; i.e., $latex t = a + c$$,
 Given the rates (initial prevalence is called a rate),
@@ -351,9 +351,9 @@ For each covariate index $latex j \in K_i$$,
 we use $latex \beta_j (a, t) $$ to denote the
 piecewise linear function corresponding to the
 $cref/group covariate multiplier
-	/model_variables/
-	Fixed Effects, theta/
-	Group Covariate Multipliers
+   /model_variables/
+   Fixed Effects, theta/
+   Group Covariate Multipliers
 /$$.
 Note that these are
 $cref/meas_value/mulcov_table/mulcov_type/meas_value/$$ covariate multipliers
@@ -364,23 +364,23 @@ For each covariate index $latex j \in K_i$$,
 we use $latex \Delta \beta_j (a, t) $$ to denote the
 piecewise linear function corresponding to the $latex s_i$$
 $cref/subgroup covariate multiplier
-	/model_variables/
-	Random Effects, u/
-	Subgroup Covariate Multipliers
+   /model_variables/
+   Random Effects, u/
+   Subgroup Covariate Multipliers
 /$$.
 
 $subhead Measurement Effect$$
 The effect for the $th i$$ measurement value,
 as a function of the fixed effects $latex \theta$$, is
 $latex \[
-	E_i ( a, t ) = \sum_{j \in K_i}
-		x_{i,j} [ \beta_j (a, t) + \Delta \beta_j (a, t) ]
+   E_i ( a, t ) = \sum_{j \in K_i}
+      x_{i,j} [ \beta_j (a, t) + \Delta \beta_j (a, t) ]
 \] $$
 
 $head Adjusted Integrand$$
 The adjusted integrand is the following function of age and time:
 $latex \[
-	I_i (a, t) \; \exp \left[ E_i (a, t) \right]
+   I_i (a, t) \; \exp \left[ E_i (a, t) \right]
 \] $$
 Note that if $latex I_i (a, t)$$ is a covariate multiplier
 $cref/mulcov/avg_integrand/Integrand, I_i(a,t)/mulcov/$$,

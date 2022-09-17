@@ -9,7 +9,7 @@
 # include <sqlite3.h>
 
 namespace dismod_at {
-	extern size_t check_table_id(sqlite3* db, const std::string& table_name);
+   extern size_t check_table_id(sqlite3* db, const std::string& table_name);
 }
 
 # endif

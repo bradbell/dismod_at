@@ -6,15 +6,15 @@
 # ----------------------------------------------------------------------------
 if [ $0 != 'bin/time_memory.sh' ]
 then
-	echo 'bin/time_memory.sh: must be executed from its parent directory'
-	exit 1
+   echo 'bin/time_memory.sh: must be executed from its parent directory'
+   exit 1
 fi
 # -----------------------------------------------------------------------------
 if [ "$1" == '' ]
 then
-	echo 'usage: time_memory random_seed'
-	echo 'use zero for choosing seed from clock'
-	exit 1
+   echo 'usage: time_memory random_seed'
+   echo 'use zero for choosing seed from clock'
+   exit 1
 fi
 random_seed="$1"
 # -----------------------------------------------------------------------------

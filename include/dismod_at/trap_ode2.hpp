@@ -8,11 +8,11 @@
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-	template <class Float>
-	extern CppAD::vector<Float> trap_ode2(
-		const CppAD::vector<Float>&  b           ,
-		const CppAD::vector<Float>&  yi          ,
-		const Float&                 tf
-	);
+   template <class Float>
+   extern CppAD::vector<Float> trap_ode2(
+      const CppAD::vector<Float>&  b           ,
+      const CppAD::vector<Float>&  yi          ,
+      const Float&                 tf
+   );
 }
 # endif

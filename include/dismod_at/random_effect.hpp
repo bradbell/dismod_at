@@ -9,23 +9,23 @@
 # include "pack_info.hpp"
 
 namespace dismod_at {
-	extern CppAD::vector<size_t> random2var_id(
-		const pack_info&             pack_object
-	);
-	//
-	template <class Float>
-	extern void unpack_random(
-		const pack_info&            pack_object  ,
-		const CppAD::vector<Float>& pack_vec     ,
-		CppAD::vector<Float>&       random_vec
-	);
-	//
-	template <class Float>
-	extern void pack_random(
-		const pack_info&            pack_object  ,
-		CppAD::vector<Float>&       pack_vec     ,
-		const CppAD::vector<Float>& random_vec
-	);
+   extern CppAD::vector<size_t> random2var_id(
+      const pack_info&             pack_object
+   );
+   //
+   template <class Float>
+   extern void unpack_random(
+      const pack_info&            pack_object  ,
+      const CppAD::vector<Float>& pack_vec     ,
+      CppAD::vector<Float>&       random_vec
+   );
+   //
+   template <class Float>
+   extern void pack_random(
+      const pack_info&            pack_object  ,
+      CppAD::vector<Float>&       pack_vec     ,
+      const CppAD::vector<Float>& random_vec
+   );
 }
 
 # endif

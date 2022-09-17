@@ -9,11 +9,11 @@
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-	struct bnd_mulcov_struct {
-		double max_cov_diff;
-		double max_mulcov;
-	};
-	extern CppAD::vector<bnd_mulcov_struct> get_bnd_mulcov_table(sqlite3* db);
+   struct bnd_mulcov_struct {
+      double max_cov_diff;
+      double max_mulcov;
+   };
+   extern CppAD::vector<bnd_mulcov_struct> get_bnd_mulcov_table(sqlite3* db);
 }
 
 # endif

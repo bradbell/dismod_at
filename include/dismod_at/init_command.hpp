@@ -15,13 +15,13 @@
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void init_command(
-	sqlite3*                                         db                  ,
-	const CppAD::vector<double>&                     prior_mean          ,
-	const pack_info&                                 pack_object         ,
-	const db_input_struct&                           db_input            ,
-	const size_t&                                    parent_node_id      ,
-	const child_info&                                child_info4data     ,
-	const CppAD::vector<smooth_info>&                s_info_vec
+   sqlite3*                                         db                  ,
+   const CppAD::vector<double>&                     prior_mean          ,
+   const pack_info&                                 pack_object         ,
+   const db_input_struct&                           db_input            ,
+   const size_t&                                    parent_node_id      ,
+   const child_info&                                child_info4data     ,
+   const CppAD::vector<smooth_info>&                s_info_vec
 );
 
 } // END_DISMOD_AT_NAMESPACE

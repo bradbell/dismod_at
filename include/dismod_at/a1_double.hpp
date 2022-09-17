@@ -9,11 +9,11 @@
 /*
 $begin a1_double$$
 $spell
-	CppAD
-	namespace
-	dismod
-	typedef
-	hpp
+   CppAD
+   namespace
+   dismod
+   typedef
+   hpp
 $$
 
 $section Declare a1_double Type$$
@@ -24,7 +24,7 @@ $codei%# include <dismod_at/a1_double.hpp>%$$
 $head Source Code$$
 $srccode%cpp% */
 namespace dismod_at {
-	typedef CppAD::AD<double>  a1_double;
+   typedef CppAD::AD<double>  a1_double;
 }
 /* %$$
 $end

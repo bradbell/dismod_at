@@ -4,35 +4,35 @@
 # ----------------------------------------------------------------------------
 $begin option_table$$
 $spell
-	zsum
-	mulcov
-	optimizer
-	CppAD
-	mtother
-	csv
-	nslist
-	py
-	frac
-	cppad
-	var
-	pos
-	dismod
-	integrands
-	Sincidence
-	mtexcess
-	mtwith
-	relrisk
-	tol
-	num_iter
-	Ipopt
-	inf
-	avgint
-	cv
-	std
-	stderr
-	covariate
-	init
-	eigen
+   zsum
+   mulcov
+   optimizer
+   CppAD
+   mtother
+   csv
+   nslist
+   py
+   frac
+   cppad
+   var
+   pos
+   dismod
+   integrands
+   Sincidence
+   mtexcess
+   mtwith
+   relrisk
+   tol
+   num_iter
+   Ipopt
+   inf
+   avgint
+   cv
+   std
+   stderr
+   covariate
+   init
+   eigen
 $$
 
 $section The Option Table$$
@@ -129,9 +129,9 @@ $cref/rate names/rate_table/rate_name/$$.
 For each rate in the list, each age, and each time,
 the sum of the corresponding
 $cref/child rate effect
-	/model_variables
-	/Random Effects, u
-	/Child Rate Effects
+   /model_variables
+   /Random Effects, u
+   /Child Rate Effects
 /$$
 estimates is constrained to be zero.
 These are additional constraints in the optimization problem for the
@@ -150,9 +150,9 @@ For each group in the list, each age, and each time, and each
 $cref/mulcov_id/mulcov_table/mulcov_id/$$,
 the sum of the corresponding
 $cref/subgroup covariate multiplier
-	/model_variables
-	/Random Effects, u
-	/Subgroup Covariate Multipliers
+   /model_variables
+   /Random Effects, u
+   /Subgroup Covariate Multipliers
 /$$
 estimates is constrained to be zero.
 These are additional constraints in the optimization problem for the
@@ -187,8 +187,8 @@ the corresponding $icode option_value$$
 is a positive floating point number (greater than zero)
 that specifies step size used to approximate the solution of the
 $cref/ordinary differential equation
-	/avg_integrand
-	/Ordinary Differential Equation
+   /avg_integrand
+   /Ordinary Differential Equation
 /$$.
 It is also the step size is also used to approximate the integrals in
 the definition of the
@@ -274,32 +274,32 @@ because the other choices will take more execution time
 and are for program validation.)
 $table
 $icode option_value$$
-	$cnext Description
-	$cnext Restrictions
+   $cnext Description
+   $cnext Restrictions
 $rnext
 $code none$$
-	$cnext do not perform derivative test
-	$cnext none
+   $cnext do not perform derivative test
+   $cnext none
 $rnext
 $code first-order$$
-	$cnext test first derivatives
-	$cnext none
+   $cnext test first derivatives
+   $cnext none
 $rnext
 $code second-order$$
-	$cnext test first and second derivatives
-	$cnext in fixed case $icode quasi_fixed$$ must be false.
+   $cnext test first and second derivatives
+   $cnext in fixed case $icode quasi_fixed$$ must be false.
 $rnext
 $code only-second-order $$
-	$cnext only test second derivatives
-	$cnext in fixed case $icode quasi_fixed$$ must be false.
+   $cnext only test second derivatives
+   $cnext in fixed case $icode quasi_fixed$$ must be false.
 $rnext
 $code adaptive $$
-	$cnext a step size adaptive first order derivative test
-	$cnext only for fixed case
+   $cnext a step size adaptive first order derivative test
+   $cnext only for fixed case
 $rnext
 $code trace-adaptive $$
-	$cnext trace adaptive test on standard output
-	$cnext only for fixed case
+   $cnext trace adaptive test on standard output
+   $cnext only for fixed case
 $tend
 
 $subhead max_num_iter$$
@@ -373,7 +373,7 @@ is moved to be interior to the corresponding upper and lower bounds.
 If there is an upper or lower bound for a fixed effect,
 then both are present in the $cref prior_table$$ and
 $codei%
-	%bound_frac_fixed% * (%upper% - %lower%)
+   %bound_frac_fixed% * (%upper% - %lower%)
 %$$
 is the maximum that $code start_var$$ table value is moved.
 This is called $code bound_frac$$ in the Ipopt documentation
@@ -422,9 +422,9 @@ $lnext
 The bound $icode bound_random$$ does apply to
 random effects corresponding to
 $cref/constant child value priors
-	/rate_table
-	/Child Value Priors
-	/Constant
+   /rate_table
+   /Child Value Priors
+   /Constant
 /$$.
 The theory for fitting with constant random effects is just fine
 because they are treated a parameters, and not random effects,
@@ -459,41 +459,41 @@ $head meas_noise_effect$$
 If $icode%option_name% = meas_noise_effect%$$,
 $icode option_value$$ determines how the
 $cref/average noise effect
-	/data_like
-	/Measurement Noise Covariates
-	/Average Noise Effect, E_i(theta)
+   /data_like
+   /Measurement Noise Covariates
+   /Average Noise Effect, E_i(theta)
 /$$
 changes the measurement noise.
 The possible $icode option_value$$ are:
 $cref/add_std_scale_all
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-	/add_std_scale_all
+   /data_like
+   /Adjusted Standard Deviation, delta_i(theta)
+   /add_std_scale_all
 /$$,
 $cref/add_std_scale_none
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-	/add_std_scale_none
+   /data_like
+   /Adjusted Standard Deviation, delta_i(theta)
+   /add_std_scale_none
 /$$,
 $cref/add_std_scale_log
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-	/add_std_scale_log
+   /data_like
+   /Adjusted Standard Deviation, delta_i(theta)
+   /add_std_scale_log
 /$$,
 $cref/add_var_scale_all
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-	/add_var_scale_all
+   /data_like
+   /Adjusted Standard Deviation, delta_i(theta)
+   /add_var_scale_all
 /$$,
 $cref/add_var_scale_none
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-	/add_var_scale_none
+   /data_like
+   /Adjusted Standard Deviation, delta_i(theta)
+   /add_var_scale_none
 /$$,
 $cref/add_var_scale_log
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-	/add_var_scale_log
+   /data_like
+   /Adjusted Standard Deviation, delta_i(theta)
+   /add_var_scale_log
 /$$.
 
 $head warn_on_stderr$$
@@ -540,19 +540,19 @@ $cref/time_lower/data_table/time_lower/$$,
 the model for the data does not require integration over an interval.
 The average for data table age intervals with
 $codei%
-	%age_upper% - %age_lower% <= %age_size%
+   %age_upper% - %age_lower% <= %age_size%
 %$$
 is approximated by the value at age
 $codei%
-	(%age_upper% + %age_lower%) / 2.0
+   (%age_upper% + %age_lower%) / 2.0
 %$$
 The average for data table time intervals with
 $codei%
-	%time_upper% - %time_lower% <= %time_size%
+   %time_upper% - %time_lower% <= %time_size%
 %$$
 is approximated by the value at time
 $codei%
-	(%time_upper% + %time_lower%) / 2.0
+   (%time_upper% + %time_lower%) / 2.0
 %$$
 The default value for $icode age_size$$ and $icode time_size$$ is zero; i.e.,
 no age or time compression.
@@ -569,8 +569,8 @@ This gives one an indication of progress for large problems where
 this initialization takes a long time.
 
 $children%
-	omh/table/option_default.omh%
-	example/table/option_table.py
+   omh/table/option_default.omh%
+   example/table/option_table.py
 %$$
 $head Example$$
 The files $cref option_table.py$$

@@ -8,10 +8,10 @@
 # include <sqlite3.h>
 # include <string>
 namespace dismod_at {
-	extern sqlite3* open_connection(
-		const std::string& file_name,
-		bool               new_file
-	);
+   extern sqlite3* open_connection(
+      const std::string& file_name,
+      bool               new_file
+   );
 }
 
 # endif

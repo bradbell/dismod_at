@@ -8,38 +8,38 @@
 # ----------------------------------------------------------------------------
 # (age_grid, time_grid, value_prior, dage_prior, dtime_prior) =
 def child_smoothing_fun(
-	age_table, time_table, density_name2id, integrand_data
+   age_table, time_table, density_name2id, integrand_data
 ) :
-	import copy
-	import math
-	age_grid      = [0.0]
-	time_grid     = [1990]
-	density_id    = density_name2id['uniform']
-	#
-	# default prior
-	default_prior = {
-		'prior_name' : ''             ,
-		'density_id' : density_id     ,
-		'lower'      : None           ,
-		'upper'      : None           ,
-		'mean'       : 0.0            ,
-		'std'        : None           ,
-		'eta'        : None           ,
-		'nu'         : None           ,
-	}
-	# value_prior
-	value_prior = copy.copy( default_prior )
-	value_prior['prior_name'] = 'child_smoothing_value_prior'
-	value_prior['density_id'] = density_name2id['gaussian']
-	value_prior['std']        = 0.1
-	#
-	# dage_prior
-	dage_prior  = default_prior
-	#
-	# dtime_prior
-	dtime_prior = default_prior
-	#
-	return (age_grid, time_grid, value_prior, dage_prior, dtime_prior)
+   import copy
+   import math
+   age_grid      = [0.0]
+   time_grid     = [1990]
+   density_id    = density_name2id['uniform']
+   #
+   # default prior
+   default_prior = {
+      'prior_name' : ''             ,
+      'density_id' : density_id     ,
+      'lower'      : None           ,
+      'upper'      : None           ,
+      'mean'       : 0.0            ,
+      'std'        : None           ,
+      'eta'        : None           ,
+      'nu'         : None           ,
+   }
+   # value_prior
+   value_prior = copy.copy( default_prior )
+   value_prior['prior_name'] = 'child_smoothing_value_prior'
+   value_prior['density_id'] = density_name2id['gaussian']
+   value_prior['std']        = 0.1
+   #
+   # dage_prior
+   dage_prior  = default_prior
+   #
+   # dtime_prior
+   dtime_prior = default_prior
+   #
+   return (age_grid, time_grid, value_prior, dage_prior, dtime_prior)
 #
 # relative path for original ihme database
 relative_path = 'data/unknown/475588-102-3.db'

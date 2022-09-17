@@ -4,9 +4,9 @@
 # ----------------------------------------------------------------------------
 $begin subgroup_table$$
 $spell
-	covariate
-	py
-	mulcov
+   covariate
+   py
+   mulcov
 $$
 $section The Subgroup Table$$
 
@@ -39,10 +39,10 @@ Rows that have the same (different) $icode group_id$$ must have the same
 (different) $icode group_name$$.
 Spaces are not allowed the $icode group_name$$ because they are used by the
 $cref/
-	zero_sum_mulcov_group/
-	option_table/
-	Zero Sum Constraints/
-	zero_sum_mulcov_group
+   zero_sum_mulcov_group/
+   option_table/
+   Zero Sum Constraints/
+   zero_sum_mulcov_group
 /$$
 option to separate group names.
 The $icode group_name$$ must be different for different $icode group_id$$

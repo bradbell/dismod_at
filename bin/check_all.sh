@@ -9,37 +9,37 @@ export PYTHONPATH=''
 # ---------------------------------------------------------------------------
 if [ "$0" != "bin/check_all.sh" ]
 then
-	echo 'bin/check_all.sh build_type'
-	echo 'must be executed from its parent directory'
-	exit 1
+   echo 'bin/check_all.sh build_type'
+   echo 'must be executed from its parent directory'
+   exit 1
 fi
 if [ "$1" != 'debug' ] && [ "$1" != 'release' ]
 then
-	echo 'bin/check_all.sh build_type'
-	echo 'build_type is not debug or release'
-	exit 1
+   echo 'bin/check_all.sh build_type'
+   echo 'build_type is not debug or release'
+   exit 1
 fi
 build_type="$1"
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-	echo $*
-	eval $*
+   echo $*
+   eval $*
 }
 # -----------------------------------------------------------------------------
 # check build_type in run_cmake.sh
 if ! grep "^build_type='release'" bin/run_cmake.sh > /dev/null
 then
-	echo 'bin/check_all.sh: build_type in bin/run_cmake.sh is not release'
-	exit 1
+   echo 'bin/check_all.sh: build_type in bin/run_cmake.sh is not release'
+   exit 1
 fi
 #
 # run bin/check_*.sh with exception of this file and bin/check_install.sh
 list=`ls bin/check_*.sh | sed \
-	-e '/check_all.sh/d' -e '/check_install.sh/d'`
+   -e '/check_all.sh/d' -e '/check_install.sh/d'`
 for script in $list
 do
-	$script
+   $script
 done
 #
 # check version number
@@ -54,9 +54,9 @@ echo_eval run_omhelp.sh doc
 # run cmake
 if [ "$build_type" == 'debug' ]
 then
-	flag='--debug'
+   flag='--debug'
 else
-	flag=''
+   flag=''
 fi
 #
 echo "bin/run_cmake.sh $flag >& cmake.log"
@@ -80,11 +80,11 @@ bin/check_install.sh $build_type >& install.log
 # and re-runs. If a warning occurs a second time, bin/user_tes.sh error exits.
 for target in cmake speed install
 do
-	if grep -i 'warning:' $target.log
-	then
-		echo "bin/run_check_all.sh: $target.log has warnings."
-		exit 1
-	fi
+   if grep -i 'warning:' $target.log
+   then
+      echo "bin/run_check_all.sh: $target.log has warnings."
+      exit 1
+   fi
 done
 # -----------------------------------------------------------------------------
 echo 'check_all.sh: OK'

@@ -4,10 +4,10 @@
 # ----------------------------------------------------------------------------
 $begin fixed_prior$$
 $spell
-	covariate
-	mulstd
-	dage
-	dtime
+   covariate
+   mulstd
+   dage
+   dtime
 $$
 
 $section Prior for Fixed Effect Values$$
@@ -18,24 +18,24 @@ $subhead lambda$$
 We use $latex \lambda$$ to denote
 the sub-vector of the fixed effects that are
 $cref/standard deviation multipliers
-	/model_variables
-	/Fixed Effects, theta
-	/Smoothing Standard Deviation Multipliers, lambda
+   /model_variables
+   /Fixed Effects, theta
+   /Smoothing Standard Deviation Multipliers, lambda
 /$$.
 
 $subhead beta$$
 We use $latex \beta$$ to denote
 the sub-vector of the fixed effects that are
 $cref/parent rates
-	/model_variables
-	/Fixed Effects, theta
-	/Parent Rates
+   /model_variables
+   /Fixed Effects, theta
+   /Parent Rates
 /$$
 or
 $cref/group covariate multipliers
-	/model_variables
-	/Fixed Effects, theta
-	/Group Covariate Multipliers
+   /model_variables
+   /Fixed Effects, theta
+   /Group Covariate Multipliers
 /$$.
 
 $subhead theta$$
@@ -118,7 +118,7 @@ $latex \theta$$ such that the following conditions hold:
 $list number$$
 For all $latex k$$,
 $latex \[
-	L_k^v \leq \theta_k \leq U_k^v
+   L_k^v \leq \theta_k \leq U_k^v
 \] $$
 $lnext
 For $latex k$$,
@@ -126,7 +126,7 @@ that are not standard deviation multipliers,
 and such that $latex a_{i(k)}$$ is not the maximum age
 for the corresponding smoothing,
 $latex \[
-	L_k^a \leq \Delta^a_k \theta \leq U_k^a
+   L_k^a \leq \Delta^a_k \theta \leq U_k^a
 \] $$
 $lnext
 For $latex k$$,
@@ -134,7 +134,7 @@ that are not standard deviation multipliers,
 and such that $latex t_{j(k)}$$ is not the maximum time
 for the corresponding smoothing,
 $latex \[
-	L_k^t \leq \Delta^t_k \theta \leq U_k^t
+   L_k^t \leq \Delta^t_k \theta \leq U_k^t
 \] $$
 $lend
 
@@ -144,8 +144,8 @@ $latex \[
 C_\theta
 =
 \int_{\Theta}
-	V^\theta ( \theta ) A^\theta ( \theta ) T^\theta ( \theta )
-		\; \B{d} \theta
+   V^\theta ( \theta ) A^\theta ( \theta ) T^\theta ( \theta )
+      \; \B{d} \theta
 \] $$
 See $cref/V^theta/fixed_value/V^theta/$$,
 $cref/A^theta/fixed_diff/A^theta/$$, and

@@ -4,16 +4,16 @@
 # ----------------------------------------------------------------------------
 $begin avgint_table$$
 $spell
-	avgint
-	covariate
-	covariates
-	std
-	dismod
-	integrands
-	Sincidence
-	mtexcess
-	mtother
-	mulcov
+   avgint
+   covariate
+   covariates
+   std
+   dismod
+   integrands
+   Sincidence
+   mtexcess
+   mtother
+   mulcov
 $$
 
 $section The avgint Table: Defines Average Integrand Cases$$

@@ -5,13 +5,13 @@
 # ----------------------------------------------------------------------------
 # $begin dock_dismod_at.sh$$ $newlinech #$$
 # $spell
-#	dismod
-#	busybox
-#	rmi
-#	Dockerfile
-#	dismodat.py
-#	rm
-#	ps
+#  dismod
+#  busybox
+#  rmi
+#  Dockerfile
+#  dismodat.py
+#  rm
+#  ps
 #   podman
 # $$
 #
@@ -37,7 +37,7 @@
 # The $icode driver$$ program, determined by this setting, can be either
 # docker or podman:
 # $srccode%sh%
-	driver='podman'
+   driver='podman'
 # %$$
 # Below we referee to the value of this shell variable as $icode driver$$.
 #
@@ -46,13 +46,13 @@
 # standard output and standard error to a file.
 # For example,
 # $codei%
-#	./dock_dismod_at.sh image base >& %log_file%
+#  ./dock_dismod_at.sh image base >& %log_file%
 # %$$
 # will redirect standard output and standard error to $icode log_file$$.
 # If you do this, you will not see the progress during execution.
 # If also want to monitor the progress, in another window use
 # $codei%
-#	tail -f %log_file%
+#  tail -f %log_file%
 # %$$
 # This $code tail$$ command will not terminate until you enter
 # control-C in the window where it is running.
@@ -64,7 +64,7 @@
 # $cref/install_dismod_at/install_unix/$$.
 # You can get a copy of this script at the following link
 # $href%https://raw.githubusercontent.com/bradbell/dismod_at/master/bin/dock_dismod_at.sh
-#	%dock_dismod_at.sh
+#  %dock_dismod_at.sh
 # %$$
 # If you understand docker, this script also serves as an example
 # install of dismod_at.
@@ -75,7 +75,7 @@
 # installed on your system.
 # You can test this on your system by trying to execute the following command:
 # $codei%
-#	%driver% run busybox echo 'Hello World'
+#  %driver% run busybox echo 'Hello World'
 # %$$
 #
 # $head Building Images$$
@@ -87,15 +87,15 @@
 # $subhead dismod_at_version$$
 # This script will build the following version of dismod_at image:
 # $srccode%sh%
-	dismod_at_version='20220826'
-	dismod_at_hash='bcf01e4dbdf528c2672ca05758493b0fc66ebcfd'
+   dismod_at_version='20220826'
+   dismod_at_hash='bcf01e4dbdf528c2672ca05758493b0fc66ebcfd'
 # %$$
 #
 # $subhead at_cascade_version$$
 # This script can build the following version of the optional at_cascade image:
 # $srccode%sh%
-	at_cascade_version='2022.8.27'
-	at_cascade_hash='9ebbde05d9ad5742db9d40ae82aca6152f2b7c46'
+   at_cascade_version='2022.8.27'
+   at_cascade_hash='9ebbde05d9ad5742db9d40ae82aca6152f2b7c46'
 # %$$
 #
 #
@@ -134,18 +134,18 @@
 # you will be prompted with the corresponding $icode container_id$$.
 # The command
 # $codei%
-#	%driver% rm %container_id%
+#  %driver% rm %container_id%
 # %$$
 # will remove the container.
 # If the container is still running, you will need to use
 # $codei%
-#	%driver% rm --force %container_id%
+#  %driver% rm --force %container_id%
 # %$$
 #
 # $subhead Removing Images$$
 # You can remove an old image using the command
 # $codei%
-#	%driver% rmi %name%
+#  %driver% rmi %name%
 # %$$
 # For example, $icode name$$ could be
 # $code dismod_at.base$$,
@@ -153,8 +153,8 @@
 # $code dismod_at.image$$.
 # You can keep the old image, under a different name, using the commands
 # $codei%
-#	%driver% tag %name% %different_name%
-#	%driver% rmi %name%
+#  %driver% tag %name% %different_name%
+#  %driver% rmi %name%
 # %$$
 #
 # $subhead Dockerfile$$
@@ -167,7 +167,7 @@
 # $list number$$
 # If you get the error message
 # $codei%
-#	 Unable to fetch some archives, maybe run apt-get update %...%
+#   Unable to fetch some archives, maybe run apt-get update %...%
 # %$$
 # There may be an old OCI image result for $code apt-get update$$
 # that is out of date.
@@ -197,12 +197,12 @@
 # you will be prompted with the corresponding $icode container_id$$.
 # The command
 # $codei%
-#	%driver% rm %container_id%
+#  %driver% rm %container_id%
 # %$$
 # will remove the container.
 # If the container is still running, you will need to use
 # $codei%
-#	%driver% rm --force %container_id%
+#  %driver% rm --force %container_id%
 # %$$
 #
 # $subhead build_type$$
@@ -237,23 +237,23 @@
 #
 # $subhead Determine Container Id$$
 # $codei%
-#	%driver% ps -a
+#  %driver% ps -a
 # %$$
 # If $icode driver$$ is podman, the following might work better
 # $codei%
-#	podman ps --all --storage
+#  podman ps --all --storage
 # %$$
 #
 # $subhead Start Container$$
 # If a container status is $code Exited$$, you can start it using:
 # $codei%
-#	%driver% start %container_id
+#  %driver% start %container_id
 # %$$
 #
 # $subhead Run Container$$
 # If a container status is $code Up$$, you can run it using:
 # $codei%
-#	%driver% exec -it %container_id% bash
+#  %driver% exec -it %container_id% bash
 # %$$
 # You will be in the container until you $code exit$$
 # the $code bash$$ shell that is run by the command above.
@@ -261,37 +261,37 @@
 # $subhead Stop Container$$
 # If a container status is $code Up$$, you can stop it using:
 # $codei%
-#	%driver% stop %container_id
+#  %driver% stop %container_id
 # %$$
 #
 # $end
 # ---------------------------------------------------------------------------
 if [ "$1" == 'image' ]
 then
-	if [ "$2" != 'base' ] \
-	&& [ "$2" != 'mixed' ] \
-	&& [ "$2" != 'dismod_at' ] \
-	&& [ "$2" != 'at_cascade' ]
-	then
-		echo 'usage: dock_dismod_at.sh image base'
-		echo 'usage: dock_dismod_at.sh image mixed'
-		echo 'usage: dock_dismod_at.sh image dismod_at'
-		echo 'usage: dock_dismod_at.sh image at_cascade'
-		echo 'usage: dock_dismod_at.sh debug database command ...'
-		echo 'usage: dock_dismod_at.sh release database command ...'
-		exit 1
-	fi
+   if [ "$2" != 'base' ] \
+   && [ "$2" != 'mixed' ] \
+   && [ "$2" != 'dismod_at' ] \
+   && [ "$2" != 'at_cascade' ]
+   then
+      echo 'usage: dock_dismod_at.sh image base'
+      echo 'usage: dock_dismod_at.sh image mixed'
+      echo 'usage: dock_dismod_at.sh image dismod_at'
+      echo 'usage: dock_dismod_at.sh image at_cascade'
+      echo 'usage: dock_dismod_at.sh debug database command ...'
+      echo 'usage: dock_dismod_at.sh release database command ...'
+      exit 1
+   fi
 else
-	if [ "$1" != 'debug' ] && [ "$1" != 'release' ]
-	then
-		echo 'usage: dock_dismod_at.sh image base'
-		echo 'usage: dock_dismod_at.sh image mixed'
-		echo 'usage: dock_dismod_at.sh image dismod_at'
-		echo 'usage: dock_dismod_at.sh image at_cascade'
-		echo 'usage: dock_dismod_at.sh debug   database command ...'
-		echo 'usage: dock_dismod_at.sh release database command ...'
-		exit 1
-	fi
+   if [ "$1" != 'debug' ] && [ "$1" != 'release' ]
+   then
+      echo 'usage: dock_dismod_at.sh image base'
+      echo 'usage: dock_dismod_at.sh image mixed'
+      echo 'usage: dock_dismod_at.sh image dismod_at'
+      echo 'usage: dock_dismod_at.sh image at_cascade'
+      echo 'usage: dock_dismod_at.sh debug   database command ...'
+      echo 'usage: dock_dismod_at.sh release database command ...'
+      exit 1
+   fi
 fi
 # ---------------------------------------------------------------------------
 if ! $driver ps > /dev/null
@@ -299,63 +299,63 @@ then
 cat << EOF
 Cannot run docker ps
 If docker deamon is not running perhaps one of the following will start it:
-	sudo systemctl start docker
-	sudo service docker start
+   sudo systemctl start docker
+   sudo service docker start
 If it is a premission problem perhaps one of the following will get permission:
-	sudo groupadd docker
-	sudo usermod -aG docker $USER
+   sudo groupadd docker
+   sudo usermod -aG docker $USER
 then log out and long back on this system.
 EOF
-	exit 1
+   exit 1
 fi
 # ---------------------------------------------------------------------------
 # Build images
 # ----------------------------------------------------------------------------
 if [ "$1" == 'image' ]
 then
-	if [ "$2" == 'base' ]
-	then
-		image_name='dismod_at.base'
-	elif [ "$2" == 'mixed' ]
-	then
-		image_name='dismod_at.mixed'
-	elif [ "$2" == 'dismod_at' ]
-	then
-		image_name='dismod_at.image'
-	elif [ "$2" == 'at_cascade' ]
-	then
-		image_name='at_cascade.image'
-	else
-		'dock_dismod_at.sh: program error'
-		exit 1
-	fi
-	if [ -e 'Dockerfile' ]
-	then
-		echo 'dock_dismod_at.sh Error'
-		echo "Must first remove ./Dockerfile"
-		exit 1
-	fi
-	if $driver ps -a | grep "$image_name" > /dev/null
-	then
-		echo 'dock_dismod_at.sh Error'
-		echo 'Must first remove following OCI containers:'
-		$driver ps -a | head -1
-		$driver ps -a | grep "$image_name"
-		echo 'Use the following command for each container_id above:'
-		echo "$driver rm contain_id"
-		exit 1
-	fi
-	if $driver images | grep "$image_name " > /dev/null
-	then
-		echo 'dock_dismod_at.sh Error'
-		echo 'Must first remove following images:'
-		$driver images | head -1
-		$driver images | grep "$image_name "
-		echo 'Use the following command for each image above:'
-		echo "$driver rmi image_id"
-		exit 1
-	fi
-	echo 'Creating Dockerfile'
+   if [ "$2" == 'base' ]
+   then
+      image_name='dismod_at.base'
+   elif [ "$2" == 'mixed' ]
+   then
+      image_name='dismod_at.mixed'
+   elif [ "$2" == 'dismod_at' ]
+   then
+      image_name='dismod_at.image'
+   elif [ "$2" == 'at_cascade' ]
+   then
+      image_name='at_cascade.image'
+   else
+      'dock_dismod_at.sh: program error'
+      exit 1
+   fi
+   if [ -e 'Dockerfile' ]
+   then
+      echo 'dock_dismod_at.sh Error'
+      echo "Must first remove ./Dockerfile"
+      exit 1
+   fi
+   if $driver ps -a | grep "$image_name" > /dev/null
+   then
+      echo 'dock_dismod_at.sh Error'
+      echo 'Must first remove following OCI containers:'
+      $driver ps -a | head -1
+      $driver ps -a | grep "$image_name"
+      echo 'Use the following command for each container_id above:'
+      echo "$driver rm contain_id"
+      exit 1
+   fi
+   if $driver images | grep "$image_name " > /dev/null
+   then
+      echo 'dock_dismod_at.sh Error'
+      echo 'Must first remove following images:'
+      $driver images | head -1
+      $driver images | grep "$image_name "
+      echo 'Use the following command for each image above:'
+      echo "$driver rmi image_id"
+      exit 1
+   fi
+   echo 'Creating Dockerfile'
 # ----------------------------------------------------------------------------
 if [ "$image_name" == 'dismod_at.base' ]
 then
@@ -498,7 +498,7 @@ bin/check_all.sh
 # 3. Install debug
 RUN python3 -m build && \
 pip3 install --force-reinstall dist/at_cascade-$at_cascade_version.tar.gz \
-	--prefix=$dir/dismod_at
+   --prefix=$dir/dismod_at
 
 # 4. Test release
 WORKDIR /home/at_cascade.git
@@ -512,19 +512,19 @@ bin/check_all.sh
 # 5. Install release
 RUN python3 -m build && \
 pip3 install --force-reinstall dist/at_cascade-$at_cascade_version.tar.gz \
-	--prefix=$dir/dismod_at
+   --prefix=$dir/dismod_at
 EOF
 # ----------------------------------------------------------------------------
 else
-	echo 'dock_dismod_at.sh: program error'
-	exit 1
+   echo 'dock_dismod_at.sh: program error'
+   exit 1
 fi
 #
-	echo "Creating $image_name"
-	$driver build --tag $image_name .
-	#
-	echo "dock_dismod_at.sh $1 $2: OK"
-	exit 0
+   echo "Creating $image_name"
+   $driver build --tag $image_name .
+   #
+   echo "dock_dismod_at.sh $1 $2: OK"
+   exit 0
 fi
 # ---------------------------------------------------------------------------
 # Run dismod_at in Docker container
@@ -540,42 +540,42 @@ dismodat_py_cmd='db2csv csv2db modify'
 program=''
 for check in $dismod_at_cmd
 do
-	if [ "$check" == "$cmd" ]
-	then
-		program='dismod_at'
-	fi
+   if [ "$check" == "$cmd" ]
+   then
+      program='dismod_at'
+   fi
 done
 for check in $dismodat_py_cmd
 do
-	if [ "$check" == "$cmd" ]
-	then
-		program='dismodat.py'
-	fi
+   if [ "$check" == "$cmd" ]
+   then
+      program='dismodat.py'
+   fi
 done
 if [ "$program" == '' ]
 then
-	echo 'dock_dismod_at.sh Error'
-	echo "$cmd is not a valid dismod_at command"
-	exit 1
+   echo 'dock_dismod_at.sh Error'
+   echo "$cmd is not a valid dismod_at command"
+   exit 1
 fi
 # ----------------------------------------------------------------------------
 if [ ! -f "$database" ]
 then
-	echo 'dock_dismod_at.sh Error'
-	echo "cannot find the database $database"
-	exit 1
+   echo 'dock_dismod_at.sh Error'
+   echo "cannot find the database $database"
+   exit 1
 fi
 container_name="dismod_at.$USER"
 # check that the previous dismod_at container has been deleted
 if $driver ps -a | grep " $container_name\$" > /dev/null
 then
-	echo 'dock_dismod_at.sh Error'
-	echo 'Must first remove following containers:'
-	$driver ps -a | head -1
-	$driver ps -a | grep " $container_name\$"
-	echo 'Use the following command for each container_id above:'
-	echo "$driver rm contain_id"
-	exit 1
+   echo 'dock_dismod_at.sh Error'
+   echo 'Must first remove following containers:'
+   $driver ps -a | head -1
+   $driver ps -a | grep " $container_name\$"
+   echo 'Use the following command for each container_id above:'
+   echo "$driver rm contain_id"
+   exit 1
 fi
 #
 # create a new dismod_at container
@@ -611,7 +611,7 @@ export PYTHONPATH=\`find -L \$prefix -name site-packages\`
 # Set debug or release
 if [ -e \$prefix ]
 then
-	rm \$prefix
+   rm \$prefix
 fi
 ln -s \$prefix.$build_type \$prefix
 #
@@ -644,12 +644,12 @@ $driver rm --force $container_id
 # copy the results from temporary directory to working directory
 for file in `ls $temporary_dir/work/*`
 do
-	name=`echo $file | sed -e 's|.*/||'`
-	if [ "$name" != 'work.sh' ]
-	then
-		echo "cp $file $name"
-		cp $file $name
-	fi
+   name=`echo $file | sed -e 's|.*/||'`
+   if [ "$name" != 'work.sh' ]
+   then
+      echo "cp $file $name"
+      cp $file $name
+   fi
 done
 #
 # remove the temporary directory

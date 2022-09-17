@@ -4,11 +4,11 @@
 # ----------------------------------------------------------------------------
 $begin fit_var_table$$
 $spell
-	cppad
-	var
-	dage
-	dtime
-	dismod
+   cppad
+   var
+   dage
+   dtime
+   dismod
 $$
 
 $section The Optimization Results for Variables$$
@@ -31,7 +31,7 @@ Its initial value is zero, and it increments by one for each row.
 The $icode fit_var_id$$ column is also a foreign key for the
 $cref var_table$$; i.e.,
 $codei%
-	%var_id% = %fit_var_id%
+   %var_id% = %fit_var_id%
 %$$
 In addition, the size of both tables is the same.
 

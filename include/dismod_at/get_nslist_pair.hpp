@@ -9,12 +9,12 @@
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-	struct nslist_pair_struct {
-		int         nslist_id;
-		int         node_id;
-		int         smooth_id;
-	};
-	CppAD::vector<nslist_pair_struct> get_nslist_pair(sqlite3*  db);
+   struct nslist_pair_struct {
+      int         nslist_id;
+      int         node_id;
+      int         smooth_id;
+   };
+   CppAD::vector<nslist_pair_struct> get_nslist_pair(sqlite3*  db);
 }
 
 # endif

@@ -5,26 +5,26 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin wish_list$$
 $spell
-	cppad
-	args
-	checkpointing
-	cpp
-	cv
-	dage
-	def
-	dev
-	dismod
-	dtime
-	eigen
-	integrands
-	ipopt
-	kwargs
-	mu
-	optimizer
-	pos
-	sim
-	std
-	var
+   cppad
+   args
+   checkpointing
+   cpp
+   cv
+   dage
+   def
+   dev
+   dismod
+   dtime
+   eigen
+   integrands
+   ipopt
+   kwargs
+   mu
+   optimizer
+   pos
+   sim
+   std
+   var
 $$
 
 $section Dismod_at Wish List$$
@@ -129,16 +129,16 @@ i.e., at the maximum age (time).
 $head Censored Laplace$$
 The censored density formula for a Gaussian
 $cref/G(y,mu,delta,c)
-	/censor_density
-	/Gaussian
-	/Censored Density, G(y,mu,delta,c)
+   /censor_density
+   /Gaussian
+   /Censored Density, G(y,mu,delta,c)
 /$$
 is correct even if $latex c > \mu$$.
 On the other hand, the formula for the Laplace case
 $cref/L(y,mu,delta,c)
-	/censor_density
-	/Laplace
-	/Censored Density, L(y,mu,delta,c)
+   /censor_density
+   /Laplace
+   /Censored Density, L(y,mu,delta,c)
 /$$
 requires $latex c \leq \mu$$.
 The Laplace case can be extended using the fact that it is symmetric,
@@ -154,7 +154,7 @@ Make a version of $cref create_database$$ that uses
 keyword arguments and replaces the ones that are not present by
 default values. This could be done using the prototype
 $codei%
-	def create_database(*%args%, **%kwargs%) :
+   def create_database(*%args%, **%kwargs%) :
 %$$
 where $icode args$$ are the positional arguments and
 $icode kwargs$$ are the keyword arguments.
@@ -165,10 +165,10 @@ $head ODE Solution$$
 $subhead Prevalence ODE$$
 If $latex S$$ and $latex C$$ satisfy the dismod_at
 $cref/ordinary differential equation
-	/avg_integrand/Ordinary Differential Equation
+   /avg_integrand/Ordinary Differential Equation
 /$$ then prevalence $latex P = C / (S + C)$$ satisfies
 $latex \[
-	P' = \iota  [ 1 - P ] - \rho P - \chi  [ 1 - P] P
+   P' = \iota  [ 1 - P ] - \rho P - \chi  [ 1 - P] P
 \] $$
 We can therefore solve for prevalence without other cause mortality
 $latex \omega$$ or all cause mortality $latex \omega + \chi P$$.
@@ -186,7 +186,7 @@ once we have solved for $latex P$$,
 we can compute $latex \omega = \alpha - \chi P$$.
 Furthermore
 $latex \[
-	(S + C)' = - \alpha (S + C)
+   (S + C)' = - \alpha (S + C)
 \] $$
 So we can also compute $latex S + C$$, and
 $latex C = P (S + C)$$,

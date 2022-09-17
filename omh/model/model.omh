@@ -4,21 +4,21 @@
 # ----------------------------------------------------------------------------
 $begin model$$
 $spell
-	dismod
+   dismod
 $$
 
 $section The Age-Time Dismod Model$$
 
 $childtable%
-	omh/model/model_variable.omh%
-	omh/model/avg_integrand.omh%
-	omh/model/data_like.omh%
-	omh/model/variable_prior.omh%
-	omh/model/statistic.omh%
-	omh/model/bilinear.omh%
-	omh/model/posterior.omh%
-	omh/model/prev_depend.omh%
-	omh/model/numeric_average.omh
+   omh/model/model_variable.omh%
+   omh/model/avg_integrand.omh%
+   omh/model/data_like.omh%
+   omh/model/variable_prior.omh%
+   omh/model/statistic.omh%
+   omh/model/bilinear.omh%
+   omh/model/posterior.omh%
+   omh/model/prev_depend.omh%
+   omh/model/numeric_average.omh
 %$$
 
 $end

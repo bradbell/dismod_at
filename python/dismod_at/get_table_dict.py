@@ -5,10 +5,10 @@
 # ----------------------------------------------------------------------------
 # $begin get_table_dict$$ $newlinech #$$
 # $spell
-#	dismod
-#	tbl
-#	str
-#	Sql
+#  dismod
+#  tbl
+#  str
+#  Sql
 # $$
 #
 # $section Get All Data From a Table$$
@@ -53,14 +53,14 @@
 # $end
 # ---------------------------------------------------------------------------
 def get_table_dict(connection, tbl_name) :
-	import dismod_at
-	#
-	(col_name, col_type) = dismod_at.get_name_type(connection, tbl_name)
-	assert col_name[0] == tbl_name + '_id'
-	del col_name[0]
-	#
-	row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
-	table_dict = list()
-	for row in row_list :
-		table_dict.append( dict( zip(col_name, row) ) )
-	return table_dict
+   import dismod_at
+   #
+   (col_name, col_type) = dismod_at.get_name_type(connection, tbl_name)
+   assert col_name[0] == tbl_name + '_id'
+   del col_name[0]
+   #
+   row_list   = dismod_at.get_row_list(connection, tbl_name, col_name)
+   table_dict = list()
+   for row in row_list :
+      table_dict.append( dict( zip(col_name, row) ) )
+   return table_dict

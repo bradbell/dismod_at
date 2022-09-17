@@ -11,5 +11,5 @@ dismod_at: Estimating Disease Rates as Functions of Age and Time
 
 # Documentation
 [documentation link (also at top of this page)](
-	https://bradbell.github.io/dismod_at/doc/index.html
+   https://bradbell.github.io/dismod_at/doc/index.html
 )

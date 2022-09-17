@@ -5,12 +5,12 @@
 # ----------------------------------------------------------------------------
 # $begin unicode_tuple$$ $newlinech #$$
 # $spell
-#	iterable
-#	unicode
-#	tuple
-#	str
-#	dismod
-#	sqlite
+#  iterable
+#  unicode
+#  tuple
+#  str
+#  dismod
+#  sqlite
 # $$
 #
 # $section Convert an Iterable Object to a Unicode String$$
@@ -44,7 +44,7 @@
 # is a unicode string representation of the tuple containing the elements.
 # To be specific it is given by
 # $codei%
-#	%u_tuple% = u'( %u_1%, %u_2%, %...%, %u_n% )'
+#  %u_tuple% = u'( %u_1%, %u_2%, %...%, %u_n% )'
 # %$$
 # where $icode n$$ is the number of elements
 # and $icode u_1$$ is the $th i$$ element.
@@ -57,28 +57,28 @@
 #
 # $end
 def unicode_infinity() :
-	import sys
-	import math
-	exponent = int( math.log( sys.float_info.max ) / math.log(10.) ) + 10
-	inf      = u'10e' + str(exponent)
-	return inf
+   import sys
+   import math
+   exponent = int( math.log( sys.float_info.max ) / math.log(10.) ) + 10
+   inf      = u'10e' + str(exponent)
+   return inf
 def unicode_tuple(iterable, quote_string) :
-	u_tuple = u'('
-	count   = 0
-	for element in iterable :
-		if count > 0 :
-			u_tuple += u','
-		count += 1
-		#
-		if element == None :
-			u_tuple += u' null'
-		elif isinstance(element, float) and element == float('inf') :
-			u_tuple += u' ' + unicode_infinity()
-		elif isinstance(element, float) and element == - float('inf') :
-			u_tuple += u' -' + unicode_infinity()
-		elif quote_string and isinstance(element, str) :
-			u_tuple += u' ' + u"'" + str(element) + u"'"
-		else :
-			u_tuple += u' ' + str(element)
-	u_tuple     += u' )'
-	return u_tuple
+   u_tuple = u'('
+   count   = 0
+   for element in iterable :
+      if count > 0 :
+         u_tuple += u','
+      count += 1
+      #
+      if element == None :
+         u_tuple += u' null'
+      elif isinstance(element, float) and element == float('inf') :
+         u_tuple += u' ' + unicode_infinity()
+      elif isinstance(element, float) and element == - float('inf') :
+         u_tuple += u' -' + unicode_infinity()
+      elif quote_string and isinstance(element, str) :
+         u_tuple += u' ' + u"'" + str(element) + u"'"
+      else :
+         u_tuple += u' ' + str(element)
+   u_tuple     += u' )'
+   return u_tuple

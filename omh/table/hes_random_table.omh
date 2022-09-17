@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 $begin hes_random_table$$
 $spell
-	hes
-	var
+   hes
+   var
 $$
 
 $section Hessian of The Random Effect Objective Function$$

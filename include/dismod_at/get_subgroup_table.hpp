@@ -10,13 +10,13 @@
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-	struct subgroup_struct {
-		std::string  subgroup_name;
-		int          group_id;
-		std::string  group_name;
-	};
-	extern CppAD::vector<subgroup_struct>
-	get_subgroup_table(sqlite3* db);
+   struct subgroup_struct {
+      std::string  subgroup_name;
+      int          group_id;
+      std::string  group_name;
+   };
+   extern CppAD::vector<subgroup_struct>
+   get_subgroup_table(sqlite3* db);
 }
 
 

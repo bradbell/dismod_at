@@ -12,11 +12,11 @@
 # include "get_prior_table.hpp"
 
 namespace dismod_at {
-	extern size_t number_random_const(
-		const pack_info&                     pack_object  ,
-		const pack_prior&                    var2prior    ,
-		const CppAD::vector<prior_struct>&   prior_table
-	);
+   extern size_t number_random_const(
+      const pack_info&                     pack_object  ,
+      const pack_prior&                    var2prior    ,
+      const CppAD::vector<prior_struct>&   prior_table
+   );
 }
 
 # endif

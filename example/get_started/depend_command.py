@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 # $begin depend_command.py$$ $newlinech #$$
 # $spell
-#	dismod
+#  dismod
 # $$
 #
 # $section depend Command: Example and Test$$
@@ -20,15 +20,15 @@ import copy
 # check execution is from distribution directory
 example = 'example/get_started/depend_command.py'
 if sys.argv[0] != example  or len(sys.argv) != 1 :
-	usage  = 'python3 ' + example + '\n'
-	usage += 'where python3 is the python 3 program on your system\n'
-	usage += 'and working directory is the dismod_at distribution directory\n'
-	sys.exit(usage)
+   usage  = 'python3 ' + example + '\n'
+   usage += 'where python3 is the python 3 program on your system\n'
+   usage += 'and working directory is the dismod_at distribution directory\n'
+   sys.exit(usage)
 #
 # import dismod_at
 local_dir = os.getcwd() + '/python'
 if( os.path.isdir( local_dir + '/dismod_at' ) ) :
-	sys.path.insert(0, local_dir)
+   sys.path.insert(0, local_dir)
 import dismod_at
 #
 # import get_started_db example
@@ -37,7 +37,7 @@ import get_started_db
 #
 # change into the build/example/get_started directory
 if not os.path.exists('build/example/get_started') :
-	os.makedirs('build/example/get_started')
+   os.makedirs('build/example/get_started')
 os.chdir('build/example/get_started')
 # ---------------------------------------------------------------------------
 # create get_started.db
@@ -57,12 +57,12 @@ var_table         = dismod_at.get_table_dict(connection, 'var')
 depend_var_table  = dismod_at.get_table_dict(connection, 'depend_var')
 #
 for var_id in range( len(var_table) ) :
-	var_row         = var_table[var_id]
-	depend_var_row  = depend_var_table[var_id]
-	# data depends on both variables
-	assert depend_var_row[ 'data_depend' ] == 1
-	# uniform prior does not depend on argument value
-	assert depend_var_row[ 'prior_depend' ] == 0
+   var_row         = var_table[var_id]
+   depend_var_row  = depend_var_table[var_id]
+   # data depends on both variables
+   assert depend_var_row[ 'data_depend' ] == 1
+   # uniform prior does not depend on argument value
+   assert depend_var_row[ 'prior_depend' ] == 0
 # -----------------------------------------------------------------------
 print('depend_command: OK')
 # END PYTHON

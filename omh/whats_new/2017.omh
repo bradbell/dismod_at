@@ -5,59 +5,59 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin whats_new_2017$$
 $spell
-	eigen
-	dev
-	sim
-	ran_obj_tst
-	const
-	Dismod
-	cppad
-	optimizer
-	covariate
-	csv
-	cmake
-	suitesparse
-	lrt
-	avgint
-	init
-	cv
-	std
-	fabs
-	stderr
-	nslist
-	dage
-	dtime
-	messaging
-	config
-	integrands
-	mulstd
-	var
-	frac
-	tru
-	sqlite
-	gsl
-	ipopt
-	hes
-	rev
-	github
-	libdir
-	py
-	CppAD
-	subgraph
-	covariates
-	mulcov
+   eigen
+   dev
+   sim
+   ran_obj_tst
+   const
+   Dismod
+   cppad
+   optimizer
+   covariate
+   csv
+   cmake
+   suitesparse
+   lrt
+   avgint
+   init
+   cv
+   std
+   fabs
+   stderr
+   nslist
+   dage
+   dtime
+   messaging
+   config
+   integrands
+   mulstd
+   var
+   frac
+   tru
+   sqlite
+   gsl
+   ipopt
+   hes
+   rev
+   github
+   libdir
+   py
+   CppAD
+   subgraph
+   covariates
+   mulcov
 $$
 $navigate%
-	Up%Location%
-	Across%Search%
-	Prev%Prev%
-	Next%Next%
-	Down_up_4%_up_4%
-	Down_up_3%_up_3%
-	Down_up_2%_up_2%
-	Down_up_1%_up_1%
-	Down_up_0%_up_0%
-	Current%Heading
+   Up%Location%
+   Across%Search%
+   Prev%Prev%
+   Next%Next%
+   Down_up_4%_up_4%
+   Down_up_3%_up_3%
+   Down_up_2%_up_2%
+   Down_up_1%_up_1%
+   Down_up_0%_up_0%
+   Current%Heading
 %$$
 
 $section Changes and Additions to Dismod_at During 2017$$
@@ -134,8 +134,8 @@ $head 11-12$$
 $list number$$
 Fix the definition of the
 $cref/adjusted standard deviation
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
+   /data_like
+   /Adjusted Standard Deviation, delta_i(theta)
 /$$
 for the measurement values
 (the definition for log an linear cases is the same).
@@ -143,15 +143,15 @@ $lnext
 Fix the definition of the
 $cref/meas_value/mulcov_table/mulcov_type/meas_value/$$ covariate multipliers
 $cref/beta_j
-	/avg_integrand
-	/Measurement Value Covariates
-	/Subgroup Measurement Covariate Multiplier, Delta beta_j
+   /avg_integrand
+   /Measurement Value Covariates
+   /Subgroup Measurement Covariate Multiplier, Delta beta_j
 /$$
 and the
 $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ covariate multipliers
 $cref/gamma_j (a, t)
-	/data_like
-	/Measurement Noise Covariates/gamma_j (a, t)
+   /data_like
+   /Measurement Noise Covariates/gamma_j (a, t)
 /$$.
 They used to be $latex \beta_{i,j}$$ and $latex \gamma_{i,j}$$
 but they do not depend on the data index $latex i$$.
@@ -333,8 +333,8 @@ it can be anything but Laplace and Log-Laplace.
 The user needs to be careful to ensure that the Hessian
 of the likelihood with respect to the random effects is positive definite; see
 $cref/random effects Hessian/rate_table
-	/child_smooth_id
-	/Random Effects Hessian
+   /child_smooth_id
+   /Random Effects Hessian
 /$$.
 $lnext
 Add specifications for
@@ -350,10 +350,10 @@ Change $code random_bound$$ to
 $cref/bound_random/option_table/Optimize Random Only/bound_random/$$.
 Change $code zero_sum_child_rate$$ to
 $cref/
-	zero_sum_child_rate/
-	option_table/
-	Zero Sum Constraints/
-	zero_sum_child_rate
+   zero_sum_child_rate/
+   option_table/
+   Zero Sum Constraints/
+   zero_sum_child_rate
 /$$.
 Change $code fixed_bound_frac$$ to
 $cref/bound_frac_fixed/option_table/Optimize Fixed Only/bound_frac_fixed/$$.
@@ -423,7 +423,7 @@ This change was merged into the master branch on 09-29.
 Remove the $code start$$ command.
 It has been replace by the $cref set_command$$ syntax
 $codei%
-	dismod_at set start_var %source%
+   dismod_at set start_var %source%
 %$$
 $lnext
 Fix a bug in $cref db2csv_command$$ that occurred when
@@ -435,16 +435,16 @@ $cref/warn_on_stderr/option_table/warn_on_stderr/$$ was present.
 $lnext
 Fix a bug in $cref db2csv_command$$ when
 $cref/
-	data_extra_columns/
-	option_table/
-	Extra Columns/
-	data_extra_columns
+   data_extra_columns/
+   option_table/
+   Extra Columns/
+   data_extra_columns
 /$$ or
 $cref/
-	avgint_extra_columns/
-	option_table/
-	Extra Columns/
-	avgint_extra_columns
+   avgint_extra_columns/
+   option_table/
+   Extra Columns/
+   avgint_extra_columns
 /$$ was
 present and null.
 $lnext
@@ -463,7 +463,7 @@ $lnext
 Remove the $code truth$$ command.
 It has been replace by the $cref set_command$$ syntax
 $codei%
-	dismod_at set truth_var fit_var
+   dismod_at set truth_var fit_var
 %$$
 $lend
 
@@ -564,7 +564,7 @@ $head 08-30$$
 Advance to cppad-20170830. This fixes a problem with the cmake command;
 to be specific,
 $codei%
-	Policy CMP0046 is not set: Error on non-existent dependency
+   Policy CMP0046 is not set: Error on non-existent dependency
 %$$
 
 $head 08-07$$
@@ -598,8 +598,8 @@ The noise covariate multipliers effect
 used to scale the measurement standard deviation.
 Now it is directly added to the measurement standard deviation; see
 $cref/adjusted standard deviation
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
+   /data_like
+   /Adjusted Standard Deviation, delta_i(theta)
 /$$.
 This makes the $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$
 covariate multipliers more difficult to use because they have units.
@@ -649,20 +649,20 @@ There was a bug and the case
 $cref/fit fixed/fit_command/variables/fixed/$$ would not run
 when
 $cref/
-	zero_sum_child_rate/
-	option_table/
-	Zero Sum Constraints/
-	zero_sum_child_rate
+   zero_sum_child_rate/
+   option_table/
+   Zero Sum Constraints/
+   zero_sum_child_rate
 /$$ was not null
 (specified one or more rates).
 This has been fixed.
 $lnext
 For each $icode rate_name$$ in
 $cref/
-	zero_sum_child_rate/
-	option_table/
-	Zero Sum Constraints/
-	zero_sum_child_rate
+   zero_sum_child_rate/
+   option_table/
+   Zero Sum Constraints/
+   zero_sum_child_rate
 /$$
 the corresponding
 $cref/child_nslist_id/rate_table/child_nslist_id/$$
@@ -672,10 +672,10 @@ $lend
 
 $head 04-27$$
 Change the $cref/
-	zero_sum_child_rate/
-	option_table/
-	Zero Sum Constraints/
-	zero_sum_child_rate
+   zero_sum_child_rate/
+   option_table/
+   Zero Sum Constraints/
+   zero_sum_child_rate
 /$$ option
 so it can select specific rates to have zero sum.
 This was necessary so that
@@ -696,10 +696,10 @@ The $cref/avgint_id/db2csv_command/predict.csv/avgint_id/$$ was
 added to the $code predict.csv$$ file.
 $lnext
 Add $cref/
-	data_extra_columns/
-	option_table/
-	Extra Columns/
-	data_extra_columns
+   data_extra_columns/
+   option_table/
+   Extra Columns/
+   data_extra_columns
 /$$
 and remove $code data_name$$ column from the data table.
 $lend
@@ -721,10 +721,10 @@ $lnext
 Add the $cref/warn_on_stderr/option_table/warn_on_stderr/$$ option.
 $lnext
 Add the $cref/
-	avgint_extra_columns/
-	option_table/
-	Extra Columns/
-	avgint_extra_columns
+   avgint_extra_columns/
+   option_table/
+   Extra Columns/
+   avgint_extra_columns
 /$$ option.
 $lend
 
@@ -789,8 +789,8 @@ $cref/eta/data_table/eta/$$.
 $head 04-18$$
 Change the definition of adjusted standard deviation for data in the
 $cref/Gaussian and Laplace
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
+   /data_like
+   /Adjusted Standard Deviation, delta_i(theta)
 /$$
 case (it is now different from the Log-Gaussian and Log-Laplace case).
 (This has since been changed back.)
@@ -819,9 +819,9 @@ $head 04-15$$
 It is now possible to constrain each random effect to have a specific value;
 see
 $cref/constant child value priors
-	/rate_table
-	/Child Value Priors
-	/Constant
+   /rate_table
+   /Child Value Priors
+   /Constant
 /$$.
 
 $head 04-09$$
@@ -856,9 +856,9 @@ $head 04-05$$
 $list number$$
 The definition of the average integrand has been changed to include the
 $cref/measurement value covariate effect
-	/avg_integrand
-	/Measurement Value Covariates
-	/Measurement Effect
+   /avg_integrand
+   /Measurement Value Covariates
+   /Measurement Effect
 /$$.
 $lnext
 The $code bin/install_suitesparse.sh$$ script has been changed to

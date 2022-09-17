@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 $begin sample_table$$
 $spell
-	sim
-	var
+   sim
+   var
 $$
 
 $section The Sample Table: Samples of Variable Values$$
@@ -35,7 +35,7 @@ in the $code data_sim$$ table, that a complete set of $cref model_variables$$,
 in the $code sample$$ table, corresponds to.
 If $icode n_var$$ is the number of rows in the $cref var_table$$,
 $codei%
-	%sample_index% = mod(%sample_id%, %n_var%)
+   %sample_index% = mod(%sample_id%, %n_var%)
 %$$
 The range of $icode sample_index$$ is form zero to
 $cref/number_simulate/simulate_command/number_simulate/$$ minus one.
@@ -47,7 +47,7 @@ that $icode var_value$$ corresponds to;
 see $cref/var_id/var_table/var_id/$$.
 If $icode n_var$$ and $icode sample$$ index are as above,
 $codei%
-	%sample_id% = %sample_index% * %n_var% + %var_id%
+   %sample_id% = %sample_index% * %n_var% + %var_id%
 %$$
 
 $head var_value$$

@@ -6,30 +6,30 @@
 # $OMhelpKeyCharacter=&
 # &begin run_cmake.sh&& &newlinech #&&
 # &spell
-#	libdir
-#	cmake
-#	makefile
-#	cxx
-#	std
-#	dismod
-#	lcppad
-#	cholmod
-#	xam
-#	cpp
-#	usr
-#	eigen
-#	ipopt
-#	cppad
-#	bools
-#	devel
-#	hpp
-#	pthread
-#	checkpointing
-#	Wshadow
-#	Wconversion
-#	Wpedantic
-#	gcc
-#	gfortran
+#  libdir
+#  cmake
+#  makefile
+#  cxx
+#  std
+#  dismod
+#  lcppad
+#  cholmod
+#  xam
+#  cpp
+#  usr
+#  eigen
+#  ipopt
+#  cppad
+#  bools
+#  devel
+#  hpp
+#  pthread
+#  checkpointing
+#  Wshadow
+#  Wconversion
+#  Wpedantic
+#  gcc
+#  gfortran
 # &&
 #
 # &section bin/run_cmake.sh: User Configuration Options&&
@@ -86,7 +86,7 @@ python3_executable='/usr/bin/python3'
 # This variable allows you to set a specific compiler for
 # C, and or CXX and or FC. For example
 # &code
-#	specific_compiler='CC=gcc CXX=g++ FC=gfortran'
+#  specific_compiler='CC=gcc CXX=g++ FC=gfortran'
 # &&
 # uses the gnu versions of these compilers.
 # The configuration will automatically find compilers that are not specified;
@@ -120,97 +120,97 @@ system_specific_library_list=''
 # ============================================================================
 # bash function that echos and executes a command
 echo_eval() {
-	echo $*
-	eval $*
+   echo $*
+   eval $*
 }
 # -----------------------------------------------------------------------------
 if [ "$0" != 'bin/run_cmake.sh' ]
 then
-	echo 'bin/run_cmake.sh: must be executed from its parent directory'
-	exit 1
+   echo 'bin/run_cmake.sh: must be executed from its parent directory'
+   exit 1
 fi
 while [ "$1" != '' ]
 do
-	if [ "$1" == '--help' ]
-	then
-		cat << EOF
+   if [ "$1" == '--help' ]
+   then
+      cat << EOF
 usage: bin/run_cmake.sh \\
-	[--help] \\
-	[--debug] \\
-	[--verbose]
+   [--help] \\
+   [--debug] \\
+   [--verbose]
 EOF
-		exit 0
-	fi
-	if [  "$1" == '--debug' ]
-	then
-		build_type='debug'
-	elif [ "$1" == '--verbose' ]
-	then
-		verbose_makefile='yes'
-	else
-		echo "'$1' is an invalid option"
-		bin/run_cmake.sh --help
-		exit 1
-	fi
-	shift
+      exit 0
+   fi
+   if [  "$1" == '--debug' ]
+   then
+      build_type='debug'
+   elif [ "$1" == '--verbose' ]
+   then
+      verbose_makefile='yes'
+   else
+      echo "'$1' is an invalid option"
+      bin/run_cmake.sh --help
+      exit 1
+   fi
+   shift
 done
 # --------------------------------------------------------------------------
 export PKG_CONFIG_PATH="$dismod_at_prefix/$cmake_libdir/pkgconfig"
 # --------------------------------------------------------------------------
 if echo "$dismod_at_prefix" | grep '/dismod_at$' > /dev/null
 then
-	bin/build_type.sh run_cmake $dismod_at_prefix $build_type
+   bin/build_type.sh run_cmake $dismod_at_prefix $build_type
 fi
 # --------------------------------------------------------------------------
 echo_eval cd build
 if [ -e 'CMakeCache.txt' ]
 then
-	echo_eval rm CMakeCache.txt
+   echo_eval rm CMakeCache.txt
 fi
 # --------------------------------------------------------------------------
 # cmake_cxx_compiler
 if echo $specific_compiler | grep 'CXX=' > /dev/null
 then
-	cxx=$(echo $specific_compiler | sed -e 's|.*CXX=\([^ ]*\).*|\1|')
-	if ! which $cxx > /dev/null
-	then
-		echo "run_cmake.sh: specific_compiler: cannot execute $cxx compiler"
-		exit 1
-	fi
-	cxx_path=$(which $cxx)
-	cmake_cxx_compiler="-D CMAKE_CXX_COMPILER=$cxx_path"
+   cxx=$(echo $specific_compiler | sed -e 's|.*CXX=\([^ ]*\).*|\1|')
+   if ! which $cxx > /dev/null
+   then
+      echo "run_cmake.sh: specific_compiler: cannot execute $cxx compiler"
+      exit 1
+   fi
+   cxx_path=$(which $cxx)
+   cmake_cxx_compiler="-D CMAKE_CXX_COMPILER=$cxx_path"
 else
-	cmake_cxx_compiler=''
+   cmake_cxx_compiler=''
 fi
 # --------------------------------------------------------------------------
 # cmake_c_compiler
 if echo $specific_compiler | grep 'CC=' > /dev/null
 then
-	cc=$(echo $specific_compiler | sed -e 's|.*CC=\([^ ]*\).*|\1|')
-	if ! which $cc > /dev/null
-	then
-		echo "run_cmake.sh: specific_compiler: cannot execute $cc compiler"
-		exit 1
-	fi
-	c_path=$(which $cc)
-	cmake_c_compiler="-D CMAKE_C_COMPILER=$c_path"
+   cc=$(echo $specific_compiler | sed -e 's|.*CC=\([^ ]*\).*|\1|')
+   if ! which $cc > /dev/null
+   then
+      echo "run_cmake.sh: specific_compiler: cannot execute $cc compiler"
+      exit 1
+   fi
+   c_path=$(which $cc)
+   cmake_c_compiler="-D CMAKE_C_COMPILER=$c_path"
 else
-	cmake_c_compiler=''
+   cmake_c_compiler=''
 fi
 # --------------------------------------------------------------------------
 cmake \
-	-Wno-dev \
-	-D CMAKE_VERBOSE_MAKEFILE=$verbose_makefile \
-	-D CMAKE_BUILD_TYPE=$build_type \
-	$cmake_cxx_compiler \
-	$cmake_c_compiler \
-	\
-	-D python3_executable=$python3_executable \
-	-D extra_cxx_flags="$extra_cxx_flags" \
-	-D cmake_libdir="$cmake_libdir" \
-	\
-	-D dismod_at_prefix="$dismod_at_prefix" \
-	-D system_specific_library_list="$system_specific_library_list" \
-	..
+   -Wno-dev \
+   -D CMAKE_VERBOSE_MAKEFILE=$verbose_makefile \
+   -D CMAKE_BUILD_TYPE=$build_type \
+   $cmake_cxx_compiler \
+   $cmake_c_compiler \
+   \
+   -D python3_executable=$python3_executable \
+   -D extra_cxx_flags="$extra_cxx_flags" \
+   -D cmake_libdir="$cmake_libdir" \
+   \
+   -D dismod_at_prefix="$dismod_at_prefix" \
+   -D system_specific_library_list="$system_specific_library_list" \
+   ..
 # --------------------------------------------------------------------------
 echo 'run_cmake.sh: OK'

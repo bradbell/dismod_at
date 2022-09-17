@@ -10,12 +10,12 @@
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-	struct weight_struct {
-		std::string weight_name;
-		int         n_age;
-		int         n_time;
-	};
-	extern CppAD::vector<weight_struct> get_weight_table(sqlite3*  db);
+   struct weight_struct {
+      std::string weight_name;
+      int         n_age;
+      int         n_time;
+   };
+   extern CppAD::vector<weight_struct> get_weight_table(sqlite3*  db);
 }
 
 # endif

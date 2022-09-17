@@ -5,8 +5,8 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin command$$
 $spell
-	dismod
-	init
+   dismod
+   init
 $$
 
 $section The dismod_at Commands$$
@@ -25,18 +25,18 @@ The second is an $code end$$ message and signifies that the command completed.
 
 $comment BEGIN_SORT_THIS_LINE_PLUS_2$$
 $children%
-	bin/dismodat.py.in%
-	devel/cmd/bnd_mulcov_command.cpp%
-	devel/cmd/data_density_command.cpp%
-	devel/cmd/depend_command.cpp%
-	devel/cmd/fit_command.cpp%
-	devel/cmd/hold_out_command.cpp%
-	devel/cmd/init_command.cpp%
-	devel/cmd/old2new_command.cpp%
-	devel/cmd/predict_command.cpp%
-	devel/cmd/sample_command.cpp%
-	devel/cmd/set_command.cpp%
-	devel/cmd/simulate_command.cpp
+   bin/dismodat.py.in%
+   devel/cmd/bnd_mulcov_command.cpp%
+   devel/cmd/data_density_command.cpp%
+   devel/cmd/depend_command.cpp%
+   devel/cmd/fit_command.cpp%
+   devel/cmd/hold_out_command.cpp%
+   devel/cmd/init_command.cpp%
+   devel/cmd/old2new_command.cpp%
+   devel/cmd/predict_command.cpp%
+   devel/cmd/sample_command.cpp%
+   devel/cmd/set_command.cpp%
+   devel/cmd/simulate_command.cpp
 %$$
 $comment END_SORT_THIS_LINE_MINUS_2$$
 

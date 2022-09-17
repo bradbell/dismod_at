@@ -18,19 +18,19 @@
 # include <dismod_at/get_density_table.hpp>
 
 namespace dismod_at {
-	void fit_command(
-		bool                                          use_warm_start   ,
-		const std::string&                            variables        ,
-		const std::string&                            simulate_index   ,
-		sqlite3*                                      db               ,
-		CppAD::vector<dismod_at::subset_data_struct>& subset_data_obj  ,
-		dismod_at::data_model&                        data_object      ,
-		dismod_at::prior_model&                       prior_object     ,
-		const dismod_at::pack_info&                   pack_object      ,
-		const dismod_at::pack_prior&                  var2prior        ,
-		const dismod_at::db_input_struct&             db_input         ,
-		const std::map<std::string, std::string>&     option_map
-	);
+   void fit_command(
+      bool                                          use_warm_start   ,
+      const std::string&                            variables        ,
+      const std::string&                            simulate_index   ,
+      sqlite3*                                      db               ,
+      CppAD::vector<dismod_at::subset_data_struct>& subset_data_obj  ,
+      dismod_at::data_model&                        data_object      ,
+      dismod_at::prior_model&                       prior_object     ,
+      const dismod_at::pack_info&                   pack_object      ,
+      const dismod_at::pack_prior&                  var2prior        ,
+      const dismod_at::db_input_struct&             db_input         ,
+      const std::map<std::string, std::string>&     option_map
+   );
 }
 
 # endif

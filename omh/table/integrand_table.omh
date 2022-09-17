@@ -4,23 +4,23 @@
 # ----------------------------------------------------------------------------
 $begin integrand_table$$
 $spell
-	Sincidence
-	Tincidence
-	dismod
-	integrands
-	str
-	mtexcess
-	mtother
-	mtwith
-	mtall
-	mtspecific
-	mtstandard
-	relrisk
-	covariate
-	cv
-	std
-	mulcov
-	avgint
+   Sincidence
+   Tincidence
+   dismod
+   integrands
+   str
+   mtexcess
+   mtother
+   mtwith
+   mtall
+   mtspecific
+   mtstandard
+   relrisk
+   covariate
+   cv
+   std
+   mulcov
+   avgint
 $$
 
 $section The Integrand Table$$
@@ -45,7 +45,7 @@ $cref/meas_value/data_table/meas_value/$$ is the measurement value, and
 $cref/meas_std/data_table/meas_std/$$ is the measurement standard,
 the minimum cv measurement standard deviation is
 $codei%
-	%Delta% = max(%meas_std%, %minimum_meas_cv% * |%meas_value%| )
+   %Delta% = max(%meas_std%, %minimum_meas_cv% * |%meas_value%| )
 %$$
 see $cref/Delta/data_like/Notation/Minimum CV Standard Deviation, Delta_i/$$
 in the data likelihood section.
@@ -69,76 +69,76 @@ needs to be solved for each cohort
 that intersects or surrounds the age-time span for this data point.
 (The space between cohorts is determined by the
 $cref/
-	ode_step_size/
-	option_table/
-	Age Average Grid/
-	ode_step_size
+   ode_step_size/
+   option_table/
+   Age Average Grid/
+   ode_step_size
 /$$.)
 
 This computation is preformed each time the $cref model_variables$$ change.
 
 $subhead Names$$
 $table
-	Integrand Name
-	$cnext Description
-	$cnext ODE
+   Integrand Name
+   $cnext Description
+   $cnext ODE
 $rnext
-	$cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$
-	$cnext incidence rate relative to susceptible population
-	$cnext no
+   $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$
+   $cnext incidence rate relative to susceptible population
+   $cnext no
 $rnext
-	$cref/remission/avg_integrand/Integrand, I_i(a,t)/remission/$$
-	$cnext remission rate
-	$cnext no
+   $cref/remission/avg_integrand/Integrand, I_i(a,t)/remission/$$
+   $cnext remission rate
+   $cnext no
 $rnext
-	$cref/mtexcess/avg_integrand/Integrand, I_i(a,t)/mtexcess/$$
-	$cnext excess mortality rate
-	$cnext no
+   $cref/mtexcess/avg_integrand/Integrand, I_i(a,t)/mtexcess/$$
+   $cnext excess mortality rate
+   $cnext no
 $rnext
-	$cref/mtother/avg_integrand/Integrand, I_i(a,t)/mtother/$$
-	$cnext other cause mortality rate
-	$cnext no
+   $cref/mtother/avg_integrand/Integrand, I_i(a,t)/mtother/$$
+   $cnext other cause mortality rate
+   $cnext no
 $rnext
-	$cref/mtwith/avg_integrand/Integrand, I_i(a,t)/mtwith/$$
-	$cnext with condition mortality rate
-	$cnext no
+   $cref/mtwith/avg_integrand/Integrand, I_i(a,t)/mtwith/$$
+   $cnext with condition mortality rate
+   $cnext no
 $rnext
-	$cref/relrisk/avg_integrand/Integrand, I_i(a,t)/relrisk/$$
-	$cnext relative risk
-	$cnext no
+   $cref/relrisk/avg_integrand/Integrand, I_i(a,t)/relrisk/$$
+   $cnext relative risk
+   $cnext no
 $rnext
-	$cref/susceptible/avg_integrand/Integrand, I_i(a,t)/susceptible/$$
-	$cnext susceptible fraction of the population
-	$cnext yes
+   $cref/susceptible/avg_integrand/Integrand, I_i(a,t)/susceptible/$$
+   $cnext susceptible fraction of the population
+   $cnext yes
 $rnext
-	$cref/withC/avg_integrand/Integrand, I_i(a,t)/withC/$$
-	$cnext with condition fraction of the population
-	$cnext yes
+   $cref/withC/avg_integrand/Integrand, I_i(a,t)/withC/$$
+   $cnext with condition fraction of the population
+   $cnext yes
 $rnext
-	$cref/prevalence/avg_integrand/Integrand, I_i(a,t)/prevalence/$$
-	$cnext prevalence of the condition
-	$cnext yes
+   $cref/prevalence/avg_integrand/Integrand, I_i(a,t)/prevalence/$$
+   $cnext prevalence of the condition
+   $cnext yes
 $rnext
-	$cref/Tincidence/avg_integrand/Integrand, I_i(a,t)/Tincidence/$$
-	$cnext incidence rate relative to total population
-	$cnext yes
+   $cref/Tincidence/avg_integrand/Integrand, I_i(a,t)/Tincidence/$$
+   $cnext incidence rate relative to total population
+   $cnext yes
 $rnext
-	$cref/mtspecific/avg_integrand/Integrand, I_i(a,t)/mtspecific/$$
-	$cnext cause specific mortality rate
-	$cnext yes
+   $cref/mtspecific/avg_integrand/Integrand, I_i(a,t)/mtspecific/$$
+   $cnext cause specific mortality rate
+   $cnext yes
 $rnext
-	$cref/mtall/avg_integrand/Integrand, I_i(a,t)/mtall/$$
-	$cnext all cause mortality rate
-	$cnext yes
+   $cref/mtall/avg_integrand/Integrand, I_i(a,t)/mtall/$$
+   $cnext all cause mortality rate
+   $cnext yes
 $rnext
-	$cref/mtstandard/avg_integrand/Integrand, I_i(a,t)/mtstandard/$$
-	$cnext standardized mortality ratio
-	$cnext yes
+   $cref/mtstandard/avg_integrand/Integrand, I_i(a,t)/mtstandard/$$
+   $cnext standardized mortality ratio
+   $cnext yes
 $rnext
-	$codei%mulcov_%mulcov_id%$$
-	$cnext the group covariate multiplier specified by
-	$cref/mulcov_id/mulcov_table/mulcov_id/$$
-	$cnext no
+   $codei%mulcov_%mulcov_id%$$
+   $cnext the group covariate multiplier specified by
+   $cref/mulcov_id/mulcov_table/mulcov_id/$$
+   $cnext no
 $tend
 
 $children%example/table/integrand_table.py

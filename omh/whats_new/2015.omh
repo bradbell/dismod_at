@@ -5,63 +5,63 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin whats_new_2015$$
 $spell
-	eigen
-	dev
-	mixed mixed
-	num_iter
-	relrisk
-	mtwith
-	cppad
-	avgint
-	init
-	var
-	Sincidence
-	Tincidence
-	sqlite
-	Dismod_at
-	mulcov
-	nullptr
-	dage
-	dtime
-	gsl
-	covariate
-	std
-	cov
-	py
-	arg
-	sim
-	xam
-	cpp
-	libdir
-	cmake
-	devel
-	integrands
-	eigen
-	cppad
-	bool
-	enum
-	ipopt
-	optimizer
-	lapprox
-	valgrind
-	csv
-	pos
-	Jacobian
-	mulstd
-	ihme
-	hpp
+   eigen
+   dev
+   mixed mixed
+   num_iter
+   relrisk
+   mtwith
+   cppad
+   avgint
+   init
+   var
+   Sincidence
+   Tincidence
+   sqlite
+   Dismod_at
+   mulcov
+   nullptr
+   dage
+   dtime
+   gsl
+   covariate
+   std
+   cov
+   py
+   arg
+   sim
+   xam
+   cpp
+   libdir
+   cmake
+   devel
+   integrands
+   eigen
+   cppad
+   bool
+   enum
+   ipopt
+   optimizer
+   lapprox
+   valgrind
+   csv
+   pos
+   Jacobian
+   mulstd
+   ihme
+   hpp
 $$
 $navigate%
-	Up%Location%
-	Across%Search%
-	Prev%Prev%
-	Next%Next%
-	Down_up_4%_up_4%
-	Down_up_3%_up_3%
-	Down_up_2%_up_2%
-	Down_up_1%_up_1%
-	Down_up_0%_up_0%
-	Current%Heading
+   Up%Location%
+   Across%Search%
+   Prev%Prev%
+   Next%Next%
+   Down_up_4%_up_4%
+   Down_up_3%_up_3%
+   Down_up_2%_up_2%
+   Down_up_1%_up_1%
+   Down_up_0%_up_0%
+   Current%Heading
 %$$
 
 $section Changes and Additions to Dismod_at During 2015$$
@@ -353,7 +353,7 @@ Change $code bin/database2csv.py$$ to only take one argument.
 $lnext
 Change all the $cref/commands/command/$$ to have syntax
 $codei%
-	dismod_at %file_name% %command%
+   dismod_at %file_name% %command%
 %$$
 i.e., switch the order of $icode file_name$$ and $icode command$$.
 $lend
@@ -386,13 +386,13 @@ documentation for the weighted residuals and log-densities.
 In addition, the actual definitions were changed for the differences;
 see the difference version of the
 $cref/weighted residuals
-	/statistic
-	/Weighted Residual Function, R
+   /statistic
+   /Weighted Residual Function, R
 /$$
 and
 $cref/log-densities
-	/statistic
-	/Log-Density Function, D
+   /statistic
+   /Log-Density Function, D
 /$$.
 The corresponding wish list item has been removed.
 $lend
@@ -413,9 +413,9 @@ $lnext
 A large reduction in memory, and an increase in speed,
 was accomplished by making the
 $cref/transformed standard deviation
-	/data_like
-	/Notation
-	/Transformed Standard Deviation, sigma_i
+   /data_like
+   /Notation
+   /Transformed Standard Deviation, sigma_i
 /$$
 depend the data and not on the $cref model_variables$$.
 To be specific, $code valgrind --tool=massif$$ reported the following
@@ -453,7 +453,7 @@ $head 10-28$$
 $list number$$
 Advance to a newer version of CppAD. The requires that you re-run
 $codep
-	bin/install_cppad.sh
+   bin/install_cppad.sh
 $$
 $lnext
 Remove some unused code in the dismod_at
@@ -470,7 +470,7 @@ The dismod_at and cppad_mixed speed tests were placed in the
 $code speed$$ directory.
 They are now run separately from the correctness tests with the command
 $codep
-	make speed
+   make speed
 $$
 See instructions for running the
 $cref/tests/install_unix/dismod_at/Test/$$.
@@ -499,11 +499,11 @@ Changed the specification for the $cref create_database$$ argument
 $cref/option_table/create_database/option_table/$$.
 To be specific, the row
 $codei%
-	{ 'name':'parent_node_id' , 'value':'%parent_node_id%' }
+   { 'name':'parent_node_id' , 'value':'%parent_node_id%' }
 %$$
 was replace by the row
 $codei%
-	{ 'name':'parent_node_name' , 'value':'%parent_node_name%' }
+   { 'name':'parent_node_name' , 'value':'%parent_node_name%' }
 %$$
 
 $head 10-25$$
@@ -634,9 +634,9 @@ Remove the special prior that is a constant one from the
 $cref user_example$$ examples (since 08-12 $code null$$ can be used to
 the same effect for
 $cref/standard deviation multipliers
-	/model_variables
-	/Fixed Effects, theta
-	/Smoothing Standard Deviation Multipliers, lambda
+   /model_variables
+   /Fixed Effects, theta
+   /Smoothing Standard Deviation Multipliers, lambda
 /$$).
 $lend
 
@@ -683,9 +683,9 @@ The $code var_command$$ was changed back to the $cref init_command$$
 $lnext
 There was a bug whereby the
 $cref/standard deviation multipliers
-	/model_variables
-	/Fixed Effects, theta
-	/Smoothing Standard Deviation Multipliers, lambda
+   /model_variables
+   /Fixed Effects, theta
+   /Smoothing Standard Deviation Multipliers, lambda
 /$$
 were not being used.
 This has been fixed.
@@ -771,7 +771,7 @@ $head 08-01$$
 $list number$$
 The Hessian w.r.t. $latex \beta$$,
 $latex \[
-	H^{(2)}_\beta H( \beta, \theta, u)
+   H^{(2)}_\beta H( \beta, \theta, u)
 \]$$
 is no longer recorded as a separate AD function, but is rather
 evaluated using the recording for $latex H( \beta , \theta , u)$$
@@ -787,13 +787,13 @@ $list number$$
 The term
 'prior negative log-likelihood' was change to
 $code cppad_mixed fixed likelihood
-	Fixed Likelihood, g(theta)
+   Fixed Likelihood, g(theta)
 /$$.
 $lnext
 The term
 'joint negative log-likelihood' was change to
 $code cppad_mixed random likelihood
-	Random Likelihood, f(theta, u)
+   Random Likelihood, f(theta, u)
 /$$.
 $lend
 
@@ -1079,8 +1079,8 @@ $lnext
 For $icode cov_type$$ equal $code rate_value$$, $code meas_value$$,
 and $code meas_std$$, change
 $codei%
-	%cov_type%_mulcov_n_cov -> mulcov_%cov_type%_n_cov
-	%cov_type%_mulcov_info -> mulcov_%cov_type%_info
+   %cov_type%_mulcov_n_cov -> mulcov_%cov_type%_n_cov
+   %cov_type%_mulcov_info -> mulcov_%cov_type%_info
 %$$
 see
 $cref/mulcov_rate_value/var_table/var_type/mulcov_rate_value/$$,
@@ -1114,8 +1114,8 @@ $lnext
 There was a bug in reading the data tables whereby the following error
 would be incorrectly generated:
 $codei%
-	%table_name%_id must start at zero and increment by one.
-	Detected in %table_name% table at %table_name%_id = %index%.
+   %table_name%_id must start at zero and increment by one.
+   Detected in %table_name% table at %table_name%_id = %index%.
 %$$
 where $icode table_name$$ is any table name.
 This has been fixed.

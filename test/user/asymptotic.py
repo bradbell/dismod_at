@@ -18,10 +18,10 @@ quasi_fixed = 'false'
 # $head ode_step_size$$
 # This argument is a floating point value and specifies the
 # $cref/
-#	ode_step_size/
-#	option_table/
-#	Age Average Grid/
-#	ode_step_size
+#  ode_step_size/
+#  option_table/
+#  Age Average Grid/
+#  ode_step_size
 # /$$
 # in the option table.
 # The total work for the test increases with proportional to the
@@ -88,174 +88,174 @@ import time
 import numpy
 test_program = 'test/user/asymptotic.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
-	usage  = 'python3 ' + test_program + '\n'
-	usage += 'where python3 is the python 3 program on your system\n'
-	usage += 'and working directory is the dismod_at distribution directory\n'
-	sys.exit(usage)
+   usage  = 'python3 ' + test_program + '\n'
+   usage += 'where python3 is the python 3 program on your system\n'
+   usage += 'and working directory is the dismod_at distribution directory\n'
+   sys.exit(usage)
 #
 # import dismod_at
 local_dir = os.getcwd() + '/python'
 if( os.path.isdir( local_dir + '/dismod_at' ) ) :
-	sys.path.insert(0, local_dir)
+   sys.path.insert(0, local_dir)
 import dismod_at
 #
 # change into the build/tst/user directory
 if not os.path.exists('build/test/user') :
-	os.makedirs('build/test/user')
+   os.makedirs('build/test/user')
 os.chdir('build/test/user')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
-	# note that the a, t values are not used for this case
-	def fun_rate_child(a, t) :
-		return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
-	def fun_iota_parent(a, t) :
-		return ('prior_iota_parent', 'prior_gauss_zero', 'prior_gauss_zero')
-	import copy
-	import dismod_at
-	import math
-	# ----------------------------------------------------------------------
-	# age table: uses age_list defined above
-	#
-	# time table: uses time_list defined above
-	#
-	# integrand table:
-	integrand_table = [
-		{ 'name':'Sincidence' },
-		{ 'name':'prevalence' }
-	]
-	#
-	# node table:
-	node_table = [ { 'name':'world', 'parent':'' } ]
-	#
-	# weight table:
-	weight_table = list()
-	#
-	# covariate table:
-	covariate_table = [
-		{'name':'income', 'reference':0.5},
-		{'name':'sex',    'reference':0.0, 'max_difference':0.6}
-	]
-	#
-	# mulcov table:
-	# income has been scaled the same as sex so man use same smoothing
-	mulcov_table = list()
-	# ----------------------------------------------------------------------
-	# data table:
-	data_table = list()
-	# values that are the same for all data rows
-	age = 50.0
-	row = {
-		'density':     'gaussian',
-		'weight':      '',
-		'hold_out':     False,
-		'age_lower':    age,
-		'age_upper':    age,
-		'time_lower':   2000.,
-		'time_upper':   2000.,
-		'node':         'world',
-		'subgroup':     'world',
-	}
-	# values that change between rows:
-	for data_id in range( n_data ) :
-		row['income']    = data_id / float(n_data-1)
-		row['sex']       = ( data_id % 3 - 1.0 ) / 2.0
-		row['integrand'] = integrand_table[ data_id % 2 ]['name']
-		if row['integrand'] == 'Sincidence' :
-			# no noise measurement
-			row['meas_value'] = iota_parent_true
-		elif row['integrand'] == 'prevalence' :
-			# no noise measurement
-			row['meas_value'] = 1.0 - math.exp(- age * iota_parent_true)
-		else :
-			assert(False)
-		row['meas_std']   = measure_cv * row['meas_value']
-		data_table.append( copy.copy(row) )
-	#
-	# ----------------------------------------------------------------------
-	# prior_table
-	prior_table = [
-		{	# prior_gauss_zero
-			'name':     'prior_gauss_zero',
-			'density':  'gaussian',
-			'mean':     0.0,
-			'std':      0.01,
-		},{ # prior_iota_parent
-			'name':     'prior_iota_parent',
-			'density':  'uniform',
-			'lower':    iota_parent_true / 30.0,
-			'upper':    iota_parent_true * 30.0,
-			'mean':     iota_parent_true / 3.0
-		}
-	]
-	# ----------------------------------------------------------------------
-	# smooth table
-	name      = 'smooth_iota_parent'
-	fun       = fun_iota_parent
-	age_grid  = list( range( len(age_list) ) )
-	time_grid = [0]
-	smooth_table = [ {
-		'name':name, 'age_id':age_grid, 'time_id':time_grid, 'fun':fun
-	} ]
-	# ----------------------------------------------------------------------
-	# rate table:
-	rate_table = [
-		{	'name':          'iota',
-			'parent_smooth': 'smooth_iota_parent',
-			'child_smooth': None,
-		}
-	]
-	# ----------------------------------------------------------------------
-	# option_table
-	option_table = [
-		{ 'name':'rate_case',              'value':'iota_pos_rho_zero' },
-		{ 'name':'parent_node_name',       'value':'world'            },
-		{ 'name':'ode_step_size',          'value':ode_step_size      },
-		{ 'name':'random_seed',            'value':random_seed        },
+   # note that the a, t values are not used for this case
+   def fun_rate_child(a, t) :
+      return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
+   def fun_iota_parent(a, t) :
+      return ('prior_iota_parent', 'prior_gauss_zero', 'prior_gauss_zero')
+   import copy
+   import dismod_at
+   import math
+   # ----------------------------------------------------------------------
+   # age table: uses age_list defined above
+   #
+   # time table: uses time_list defined above
+   #
+   # integrand table:
+   integrand_table = [
+      { 'name':'Sincidence' },
+      { 'name':'prevalence' }
+   ]
+   #
+   # node table:
+   node_table = [ { 'name':'world', 'parent':'' } ]
+   #
+   # weight table:
+   weight_table = list()
+   #
+   # covariate table:
+   covariate_table = [
+      {'name':'income', 'reference':0.5},
+      {'name':'sex',    'reference':0.0, 'max_difference':0.6}
+   ]
+   #
+   # mulcov table:
+   # income has been scaled the same as sex so man use same smoothing
+   mulcov_table = list()
+   # ----------------------------------------------------------------------
+   # data table:
+   data_table = list()
+   # values that are the same for all data rows
+   age = 50.0
+   row = {
+      'density':     'gaussian',
+      'weight':      '',
+      'hold_out':     False,
+      'age_lower':    age,
+      'age_upper':    age,
+      'time_lower':   2000.,
+      'time_upper':   2000.,
+      'node':         'world',
+      'subgroup':     'world',
+   }
+   # values that change between rows:
+   for data_id in range( n_data ) :
+      row['income']    = data_id / float(n_data-1)
+      row['sex']       = ( data_id % 3 - 1.0 ) / 2.0
+      row['integrand'] = integrand_table[ data_id % 2 ]['name']
+      if row['integrand'] == 'Sincidence' :
+         # no noise measurement
+         row['meas_value'] = iota_parent_true
+      elif row['integrand'] == 'prevalence' :
+         # no noise measurement
+         row['meas_value'] = 1.0 - math.exp(- age * iota_parent_true)
+      else :
+         assert(False)
+      row['meas_std']   = measure_cv * row['meas_value']
+      data_table.append( copy.copy(row) )
+   #
+   # ----------------------------------------------------------------------
+   # prior_table
+   prior_table = [
+      {  # prior_gauss_zero
+         'name':     'prior_gauss_zero',
+         'density':  'gaussian',
+         'mean':     0.0,
+         'std':      0.01,
+      },{ # prior_iota_parent
+         'name':     'prior_iota_parent',
+         'density':  'uniform',
+         'lower':    iota_parent_true / 30.0,
+         'upper':    iota_parent_true * 30.0,
+         'mean':     iota_parent_true / 3.0
+      }
+   ]
+   # ----------------------------------------------------------------------
+   # smooth table
+   name      = 'smooth_iota_parent'
+   fun       = fun_iota_parent
+   age_grid  = list( range( len(age_list) ) )
+   time_grid = [0]
+   smooth_table = [ {
+      'name':name, 'age_id':age_grid, 'time_id':time_grid, 'fun':fun
+   } ]
+   # ----------------------------------------------------------------------
+   # rate table:
+   rate_table = [
+      {  'name':          'iota',
+         'parent_smooth': 'smooth_iota_parent',
+         'child_smooth': None,
+      }
+   ]
+   # ----------------------------------------------------------------------
+   # option_table
+   option_table = [
+      { 'name':'rate_case',              'value':'iota_pos_rho_zero' },
+      { 'name':'parent_node_name',       'value':'world'            },
+      { 'name':'ode_step_size',          'value':ode_step_size      },
+      { 'name':'random_seed',            'value':random_seed        },
 
-		{ 'name':'quasi_fixed',            'value':quasi_fixed        },
-		{ 'name':'derivative_test_fixed',  'value':'none'             },
-		{ 'name':'max_num_iter_fixed',     'value':'100'              },
-		{ 'name':'print_level_fixed',      'value':'0'                },
-		{ 'name':'tolerance_fixed',        'value':'1e-8'             },
-		{ 'name':'accept_after_max_steps_fixed',     'value':'10'     },
-		{ 'name':'limited_memory_max_history_fixed', 'value':'30'     },
+      { 'name':'quasi_fixed',            'value':quasi_fixed        },
+      { 'name':'derivative_test_fixed',  'value':'none'             },
+      { 'name':'max_num_iter_fixed',     'value':'100'              },
+      { 'name':'print_level_fixed',      'value':'0'                },
+      { 'name':'tolerance_fixed',        'value':'1e-8'             },
+      { 'name':'accept_after_max_steps_fixed',     'value':'10'     },
+      { 'name':'limited_memory_max_history_fixed', 'value':'30'     },
 
-		{ 'name':'derivative_test_random', 'value':'none'             },
-		{ 'name':'max_num_iter_random',    'value':'100'              },
-		{ 'name':'print_level_random',     'value':'0'                },
-		{ 'name':'tolerance_random',       'value':'1e-8'             }
-	]
-	# ----------------------------------------------------------------------
-	# avgint table: empty
-	avgint_table = list()
-	# ----------------------------------------------------------------------
-	# nslist_table:
-	nslist_table = dict()
-	# ----------------------------------------------------------------------
-	# subgroup_table
-	subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
-	# ----------------------------------------------------------------------
-	# create database
-	dismod_at.create_database(
-		file_name,
-		age_list,
-		time_list,
-		integrand_table,
-		node_table,
-		subgroup_table,
-		weight_table,
-		covariate_table,
-		avgint_table,
-		data_table,
-		prior_table,
-		smooth_table,
-		nslist_table,
-		rate_table,
-		mulcov_table,
-		option_table
-	)
-	# ----------------------------------------------------------------------
-	return
+      { 'name':'derivative_test_random', 'value':'none'             },
+      { 'name':'max_num_iter_random',    'value':'100'              },
+      { 'name':'print_level_random',     'value':'0'                },
+      { 'name':'tolerance_random',       'value':'1e-8'             }
+   ]
+   # ----------------------------------------------------------------------
+   # avgint table: empty
+   avgint_table = list()
+   # ----------------------------------------------------------------------
+   # nslist_table:
+   nslist_table = dict()
+   # ----------------------------------------------------------------------
+   # subgroup_table
+   subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
+   # ----------------------------------------------------------------------
+   # create database
+   dismod_at.create_database(
+      file_name,
+      age_list,
+      time_list,
+      integrand_table,
+      node_table,
+      subgroup_table,
+      weight_table,
+      covariate_table,
+      avgint_table,
+      data_table,
+      prior_table,
+      smooth_table,
+      nslist_table,
+      rate_table,
+      mulcov_table,
+      option_table
+   )
+   # ----------------------------------------------------------------------
+   return
 # ===========================================================================
 # Run the init command to create the var table
 file_name  = 'example.db'
@@ -278,32 +278,32 @@ col_type     = [ 'real' ]
 row_list     = list()
 var_id2true  = list()
 for var_id in range( len(var_table) ) :
-	var_info        = var_table[var_id]
-	truth_var_value = None
-	var_type = var_info['var_type']
-	assert( var_type == 'rate' )
-	rate_id   = var_info['rate_id']
-	rate_name = rate_table[rate_id]['rate_name']
-	assert rate_name == 'iota'
-	node_id   = var_info['node_id']
-	assert node_id == 0
-	truth_var_value = iota_parent_true
-	var_id2true.append( truth_var_value )
-	row_list.append( [ truth_var_value ] )
+   var_info        = var_table[var_id]
+   truth_var_value = None
+   var_type = var_info['var_type']
+   assert( var_type == 'rate' )
+   rate_id   = var_info['rate_id']
+   rate_name = rate_table[rate_id]['rate_name']
+   assert rate_name == 'iota'
+   node_id   = var_info['node_id']
+   assert node_id == 0
+   truth_var_value = iota_parent_true
+   var_id2true.append( truth_var_value )
+   row_list.append( [ truth_var_value ] )
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------
 # simulate_command
 dismod_at.system_command_prc(
-	[ program, file_name, 'simulate', '1' ]
+   [ program, file_name, 'simulate', '1' ]
 )
 # fit_command
 dismod_at.system_command_prc(
-	[ program, file_name, 'fit', 'fixed', '0' ]
+   [ program, file_name, 'fit', 'fixed', '0' ]
 )
 # sample_command
 dismod_at.system_command_prc(
-	[ program, file_name, 'sample', 'asymptotic', 'both', '100', '0' ]
+   [ program, file_name, 'sample', 'asymptotic', 'both', '100', '0' ]
 )
 # -----------------------------------------------------------------------
 # result tables
@@ -316,12 +316,12 @@ connection.close()
 # -----------------------------------------------------------------------
 # determine random seed the was used
 if int(random_seed) == 0 :
-	for row in log_dict :
-		if row['message_type'] == 'command' :
-			message = row['message'].split()
-			if message[0] == 'begin' and message[1] == 'simulate' :
-				random_seed = int(row['unix_time'])
-	assert random_seed != 0
+   for row in log_dict :
+      if row['message_type'] == 'command' :
+         message = row['message'].split()
+         if message[0] == 'begin' and message[1] == 'simulate' :
+            random_seed = int(row['unix_time'])
+   assert random_seed != 0
 # -----------------------------------------------------------------------
 # sample_mean, sample_std
 n_var    = len(var_table)
@@ -329,10 +329,10 @@ n_sample = int( len(sample_table) / n_var )
 assert len(sample_table) == n_sample * n_var
 sample_array    = numpy.zeros( (n_sample, n_var) , dtype=float )
 for row in sample_table :
-	sample_index = row['sample_index']
-	var_id       = row['var_id']
-	var_value    = row['var_value']
-	sample_array[sample_index, var_id] = var_value
+   sample_index = row['sample_index']
+   var_id       = row['var_id']
+   var_value    = row['var_value']
+   sample_array[sample_index, var_id] = var_value
 sample_mean = numpy.mean(sample_array, axis=0)
 sample_std  = numpy.std(sample_array, axis=0, ddof=1)
 #
@@ -341,22 +341,22 @@ sample_std  = numpy.std(sample_array, axis=0, ddof=1)
 assert( len(fit_var_table) == n_var )
 max_error       = 0.0
 for var_id in range( n_var ) :
-	row          = fit_var_table[var_id]
-	fit_value    = row['fit_var_value']
-	true_value   = var_id2true[var_id]
-	if true_value == 0.0 :
-		max_error = max(abs(fit_value), max_error)
-	else :
-		max_error = max( abs(fit_value / true_value - 1.0), max_error)
-	mean_value    = sample_mean[var_id]
-	std_value     = sample_std[var_id]
-	max_error     = max(abs(mean_value - fit_value), max_error)
-	max_error     = max(std_value, max_error)
+   row          = fit_var_table[var_id]
+   fit_value    = row['fit_var_value']
+   true_value   = var_id2true[var_id]
+   if true_value == 0.0 :
+      max_error = max(abs(fit_value), max_error)
+   else :
+      max_error = max( abs(fit_value / true_value - 1.0), max_error)
+   mean_value    = sample_mean[var_id]
+   std_value     = sample_std[var_id]
+   max_error     = max(abs(mean_value - fit_value), max_error)
+   max_error     = max(std_value, max_error)
 if max_error > 5e-2 :
-	print('random_seed      = ', random_seed)
-	print('max_error        = ', max_error)
-	print('asymptotic.py: Error')
-	assert(False)
+   print('random_seed      = ', random_seed)
+   print('max_error        = ', max_error)
+   print('asymptotic.py: Error')
+   assert(False)
 # -----------------------------------------------------------------------------
 print('asymptotic.py: OK')
 # -----------------------------------------------------------------------------

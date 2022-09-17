@@ -5,10 +5,10 @@
 # ----------------------------------------------------------------------------
 # $begin get_row_list$$ $newlinech #$$
 # $spell
-#	Sql
-#	dismod
-#	str
-#	tbl
+#  Sql
+#  dismod
+#  str
+#  tbl
 # $$
 #
 # $section Get Data From a Table$$
@@ -64,18 +64,18 @@
 # $end
 # ---------------------------------------------------------------------------
 def get_row_list(connection, tbl_name, col_name) :
-	import collections
-	#
-	cursor      = connection.cursor()
-	n_col       = len(col_name)
-	columns     = ','.join(col_name)
-	primary_key = tbl_name + '_id'
-	cmd         = 'SELECT ' + columns + ' FROM ' + tbl_name
-	cmd        += ' ORDER BY ' + primary_key
-	row_list  = list()
-	for row in cursor.execute(cmd) :
-		row_tmp = list()
-		for j in range(n_col) :
-			row_tmp.append( row[j] )
-		row_list.append(row_tmp)
-	return row_list
+   import collections
+   #
+   cursor      = connection.cursor()
+   n_col       = len(col_name)
+   columns     = ','.join(col_name)
+   primary_key = tbl_name + '_id'
+   cmd         = 'SELECT ' + columns + ' FROM ' + tbl_name
+   cmd        += ' ORDER BY ' + primary_key
+   row_list  = list()
+   for row in cursor.execute(cmd) :
+      row_tmp = list()
+      for j in range(n_col) :
+         row_tmp.append( row[j] )
+      row_list.append(row_tmp)
+   return row_list

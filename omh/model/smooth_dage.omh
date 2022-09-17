@@ -4,11 +4,11 @@
 # ----------------------------------------------------------------------------
 $begin smooth_dage$$
 $spell
-	mulstd
-	dage
-	ij
-	std
-	mu
+   mulstd
+   dage
+   ij
+   std
+   mu
 $$
 
 $section Prior Density Function for Smoothing Age Difference$$
@@ -64,8 +64,8 @@ $latex \[
 \log A^s (s, v, \theta )
 =
 \sum_{i=0}^{I-2} \sum_{j=0}^{J-1} D \left(
-	v_{i+1,j} \W{,} v_{i,j} \W{,}
-	\mu_{i,j} \W{,} \lambda \sigma_{i,j}  \W{,} d_{i,j}
+   v_{i+1,j} \W{,} v_{i,j} \W{,}
+   \mu_{i,j} \W{,} \lambda \sigma_{i,j}  \W{,} d_{i,j}
 \right)
 \] $$
 where $latex D$$ is the

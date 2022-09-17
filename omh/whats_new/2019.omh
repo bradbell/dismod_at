@@ -5,54 +5,54 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin whats_new_2019$$
 $spell
-	const
-	ubuntu
-	dage
-	dtime
-	dev
-	Dismod
-	py
-	cv
-	csv
-	var
-	covariate
-	covariates
-	std
-	mulcov
-	avgint
-	misspecification
-	smoothings
-	cen
-	omh
-	omhelp
-	nonsmooth
-	sim
-	mu
-	stdcv
-	sqlite
-	cppad
-	CppAD
-	messaging
-	Ipopt
-	frac
-	Dockerfile
-	num_iter
-	cmake
-	checkpointing
-	Goto
-	nslist
+   const
+   ubuntu
+   dage
+   dtime
+   dev
+   Dismod
+   py
+   cv
+   csv
+   var
+   covariate
+   covariates
+   std
+   mulcov
+   avgint
+   misspecification
+   smoothings
+   cen
+   omh
+   omhelp
+   nonsmooth
+   sim
+   mu
+   stdcv
+   sqlite
+   cppad
+   CppAD
+   messaging
+   Ipopt
+   frac
+   Dockerfile
+   num_iter
+   cmake
+   checkpointing
+   Goto
+   nslist
 $$
 $navigate%
-	Up%Location%
-	Across%Search%
-	Prev%Prev%
-	Next%Next%
-	Down_up_4%_up_4%
-	Down_up_3%_up_3%
-	Down_up_2%_up_2%
-	Down_up_1%_up_1%
-	Down_up_0%_up_0%
-	Current%Heading
+   Up%Location%
+   Across%Search%
+   Prev%Prev%
+   Next%Next%
+   Down_up_4%_up_4%
+   Down_up_3%_up_3%
+   Down_up_2%_up_2%
+   Down_up_1%_up_1%
+   Down_up_0%_up_0%
+   Current%Heading
 %$$
 
 $section Changes and Additions to Dismod_at During 2019$$
@@ -64,9 +64,9 @@ A check was added to make sure there are no such spaces.
 $head 12-06$$
 Document the fact that there are no
 $cref/subgroup covariate multipliers
-	/model_variables
-	/Random Effects, u
-	/Subgroup Covariate Multipliers
+   /model_variables
+   /Random Effects, u
+   /Subgroup Covariate Multipliers
 /$$
 that affect the measurement noise; see
 $cref/meas_noise/mulcov_table/subgroup_smooth_id/meas_noise/$$
@@ -86,7 +86,7 @@ $icode subgroup_id$$, this has been fixed.
 $lnext
 Advance $cref dock_dismod_at.sh$$ to version 20191205. This requires running
 $codei%
-	./dock_dismod_at.sh image dismod_at
+   ./dock_dismod_at.sh image dismod_at
 %$$
 $lend
 
@@ -95,10 +95,10 @@ $list number$$
 Add the $cref user_zsum_mulcov_meas.py$$ example
 which demonstrates using the
 $cref/
-	zero_sum_mulcov_group/
-	option_table/
-	Zero Sum Constraints/
-	zero_sum_mulcov_group
+   zero_sum_mulcov_group/
+   option_table/
+   Zero Sum Constraints/
+   zero_sum_mulcov_group
 /$$
 option with subgroup measurement covariate multipliers.
 $lnext
@@ -108,7 +108,7 @@ in the variable.csv file created by the db2csv command.
 $lnext
 Advance $cref dock_dismod_at.sh$$ to version 20191204. This requires running
 $codei%
-	./dock_dismod_at.sh image dismod_at
+   ./dock_dismod_at.sh image dismod_at
 %$$
 $lend
 
@@ -116,20 +116,20 @@ $head 11-30$$
 Add the $cref user_zsum_mulcov_rate.py$$ example
 which demonstrates using the
 $cref/
-	zero_sum_mulcov_group/
-	option_table/
-	Zero Sum Constraints/
-	zero_sum_mulcov_group
+   zero_sum_mulcov_group/
+   option_table/
+   Zero Sum Constraints/
+   zero_sum_mulcov_group
 /$$
 option with subgroup rate covariate multipliers.
 
 $head 11-29$$
 The $code zero_sum_random$$ option was changed to
 $cref/
-	zero_sum_child_rate/
-	option_table/
-	Zero Sum Constraints/
-	zero_sum_child_rate
+   zero_sum_child_rate/
+   option_table/
+   Zero Sum Constraints/
+   zero_sum_child_rate
 /$$.
 A warning is printed when $code zero_sum_random$$ is used and
 this change is made automatically.
@@ -141,9 +141,9 @@ $list number$$
 Add the $cref user_bilevel_random.py$$ example demonstrating
 fitting two levels of random effects using
 $cref/subgroup covariate multipliers
-	/model_variables
-	/Random Effects, u
-	/Subgroup Covariate Multipliers
+   /model_variables
+   /Random Effects, u
+   /Subgroup Covariate Multipliers
 /$$.
 $lnext
 Fix the coverage check in $cref user_cascade.py$$.
@@ -190,9 +190,9 @@ to the database in a backward compatible fashion; see
 $cref old2new_command$$ and 11-22 below.
 In addition, directions for obtaining this
 $cref/backward compatibility
-	/create_database
-	/subgroup_table
-	/Backward Compatibility
+   /create_database
+   /subgroup_table
+   /Backward Compatibility
 /$$
 was added to the $code create_database$$ function.
 $lnext
@@ -263,17 +263,17 @@ Advance $cref dock_dismod_at.sh$$ to version 20191008, which
 includes to changes under 10-08 below.
 This requires running
 $codei%
-	./dock_dismod_at.sh image dismod_at
+   ./dock_dismod_at.sh image dismod_at
 %$$
 
 $head 10-08$$
 $list number$$
 Fix a bug in the
 $cref/
-	zero_sum_child_rate/
-	option_table/
-	Zero Sum Constraints/
-	zero_sum_child_rate
+   zero_sum_child_rate/
+   option_table/
+   Zero Sum Constraints/
+   zero_sum_child_rate
 /$$ option.
 This bug caused $cref user_const_value.py$$ to fail  when one switched
 the role of $icode iota$$ and $icode omega$$;
@@ -336,14 +336,14 @@ $cref/dismod_at.base/dock_dismod_at.sh/Building Images/dismod_at.base/$$
 was changed from 18.04 to 19.10.
 This requires running
 $codei%
-	./dock_dismod_at.sh image base
-	./dock_dismod_at.sh image dismod_at
+   ./dock_dismod_at.sh image base
+   ./dock_dismod_at.sh image dismod_at
 %$$
 This fixed a warning during the install of
 $cref/cppad/install_unix/Special Requirements/cppad/$$;
 see
 $href%https://cmake.org/pipermail/cmake/2019-September/069977.html
-	%cmake mailing list
+   %cmake mailing list
 %$$.
 $lend
 $head 09-22$$
@@ -391,11 +391,11 @@ The change of random failure in the $cref user_censor.py$$ example
 was reduced by reducing the number of values that get censored.
 To be specific, the line
 $srccode%py%
-	meas_std = 2.0 * iota_true;
+   meas_std = 2.0 * iota_true;
 %$$
 was changed to
 $srccode%py%
-	meas_std = 1.5 * iota_true;
+   meas_std = 1.5 * iota_true;
 %$$
 $lend
 
@@ -474,17 +474,17 @@ $cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
 to 20190912.
 $lnext
 If $cref/
-	zero_sum_child_rate/
-	option_table/
-	Zero Sum Constraints/
-	zero_sum_child_rate
+   zero_sum_child_rate/
+   option_table/
+   Zero Sum Constraints/
+   zero_sum_child_rate
 /$$
 is chosen for a rate, the simulated prior values for that
 corresponding child rate effects at each grid point now sum to zero; see
 $cref/zero_sum_child_rate
-	/prior_sim_table
-	/prior_sim_value
-	/zero_sum_child_rate
+   /prior_sim_table
+   /prior_sim_value
+   /zero_sum_child_rate
 /$$
 in the prior_sim table documentation.
 $lnext
@@ -493,10 +493,10 @@ was added.
 This gives a different choice for optimizing the random effects.
 $lnext
 The $cref/
-	zero_sum_child_rate/
-	option_table/
-	Zero Sum Constraints/
-	zero_sum_child_rate
+   zero_sum_child_rate/
+   option_table/
+   Zero Sum Constraints/
+   zero_sum_child_rate
 /$$ value in
 $cref/option.csv/db2csv_command/option.csv/$$ written by the $code db2csv$$
 command was $code false$$ when it should have been empty.
@@ -605,8 +605,8 @@ Add discussion of relation ship between the
 measurement standard deviation $icode meas_std$$ and the
 adjusted standard deviation
 $cref/delta(theta)
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
+   /data_like
+   /Adjusted Standard Deviation, delta_i(theta)
 /$$
 to the
 $cref/meas_std/data_table/meas_std/$$ documentation.
@@ -641,9 +641,9 @@ $cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
 in the Dockerfile created by dock_dismod_at.sh.
 In addition, more detection and discussion was added for
 $cref/removing containers
-	/dock_dismod_at.sh
-	/Building Images
-	/Removing Containers
+   /dock_dismod_at.sh
+   /Building Images
+   /Removing Containers
 /$$.
 
 $head 06-24$$
@@ -759,9 +759,9 @@ $cref/delta_i/data_like/Adjusted Standard Deviation, delta_i(theta)/$$.
 $lnext
 The value $icode Delta$$, is now referred to as the
 $cref/minimum cv standard deviation
-	/data_like
-	/Notation
-	/Minimum CV Standard Deviation, Delta_i
+   /data_like
+   /Notation
+   /Minimum CV Standard Deviation, Delta_i
 /$$.
 $lnext
 The $icode sim_stdcv$$ column has been added
@@ -798,9 +798,9 @@ This check has been changed to make sure $latex \mu + \eta$$ is positive.
 $lnext
 Add a discussion of the
 $cref/difference between means
-	/censor_density
-	/Gaussian
-	/Difference Between Means
+   /censor_density
+   /Gaussian
+   /Difference Between Means
 /$$
 for the censored distributions.
 $lnext
@@ -936,10 +936,10 @@ Add the $cref user_cascade.py$$ example.
 This example is currently under construction; i.e., not yet complete.
 $lnext
 Change $cref/
-	ode_step_size/
-	option_table/
-	Age Average Grid/
-	ode_step_size
+   ode_step_size/
+   option_table/
+   Age Average Grid/
+   ode_step_size
 /$$ in
 $cref user_csv2db.py$$ from 1.0 to 5.0 (to make automated testing
 faster when running in debug mode).
@@ -966,8 +966,8 @@ $lnext
 Remove the Ode Grid section from the documentation.
 It has been replaced by the
 $cref/average integrand time step
-	/numeric_average
-	/Average Integrand Time Step, Delta t
+   /numeric_average
+   /Average Integrand Time Step, Delta t
 /$$
 and the
 $cref/age average grid/age_avg_table/Age Average Grid/$$.
@@ -985,9 +985,9 @@ and other places where it was not correctly stated.
 $lnext
 The $latex x_{i,j}$$ values are now called
 $cref/covariate difference
-	/avg_integrand
-	/Data or Avgint Table Notation
-	/Covariate Difference, x_ij
+   /avg_integrand
+   /Data or Avgint Table Notation
+   /Covariate Difference, x_ij
 /$$
 to distinguish them from the
 $cref/covariate values/avgint_table/Covariates/$$ in the
@@ -1072,11 +1072,11 @@ The $cref data_sim_table$$ documentation formula for
 $cref/log scaled/density_table/Notation/Log Scaled/$$
 data was
 $latex \[
-	y = \exp(e) * ( A + \eta )
+   y = \exp(e) * ( A + \eta )
 \] $$
 The correct formula is
 $latex \[
-	y = \exp(e) * ( A + \eta ) - \eta
+   y = \exp(e) * ( A + \eta ) - \eta
 \] $$
 The documentation has been fixed
 (the implementation in software was correct).

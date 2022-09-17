@@ -4,53 +4,53 @@
 # ----------------------------------------------------------------------------
 $begin devel_table$$
 $spell
-	avgint
-	dismod
+   avgint
+   dismod
 $$
 
 $section Dismod_at Developer Table Documentation$$
 
 $comment BEGIN_SORT_THIS_LINE_PLUS_2$$
 $childtable%
-	devel/table/blob_table.cpp%
-	devel/table/check_child_prior.cpp%
-	devel/table/check_pini_n_age.cpp%
-	devel/table/check_rate_limit.cpp%
-	devel/table/check_table_id.cpp%
-	devel/table/check_zero_sum.cpp%
-	devel/table/create_table.cpp%
-	devel/table/exec_sql_cmd.cpp%
-	devel/table/get_age_table.cpp%
-	devel/table/get_avgint_table.cpp%
-	devel/table/get_bnd_mulcov_table.cpp%
-	devel/table/get_column_max.cpp%
-	devel/table/get_covariate_table.cpp%
-	devel/table/get_data_sim_table.cpp%
-	devel/table/get_data_subset.cpp%
-	devel/table/get_data_table.cpp%
-	devel/table/get_db_input.cpp%
-	devel/table/get_density_table.cpp%
-	devel/table/get_integrand_table.cpp%
-	devel/table/get_mulcov_table.cpp%
-	devel/table/get_node_table.cpp%
-	devel/table/get_nslist_pair.cpp%
-	devel/table/get_nslist_table.cpp%
-	devel/table/get_option_table.cpp%
-	devel/table/get_prior_table.cpp%
-	devel/table/get_rate_table.cpp%
-	devel/table/get_sample_table.cpp%
-	devel/table/get_smooth_grid.cpp%
-	devel/table/get_smooth_table.cpp%
-	devel/table/get_subgroup_table.cpp%
-	devel/table/get_table_column.cpp%
-	devel/table/get_time_table.cpp%
-	devel/table/get_weight_grid.cpp%
-	devel/table/get_weight_table.cpp%
-	devel/table/log_message.cpp%
-	devel/table/open_connection.cpp%
-	devel/table/put_table_row.cpp%
-	devel/table/smooth_info.omh%
-	devel/table/weight_info.cpp
+   devel/table/blob_table.cpp%
+   devel/table/check_child_prior.cpp%
+   devel/table/check_pini_n_age.cpp%
+   devel/table/check_rate_limit.cpp%
+   devel/table/check_table_id.cpp%
+   devel/table/check_zero_sum.cpp%
+   devel/table/create_table.cpp%
+   devel/table/exec_sql_cmd.cpp%
+   devel/table/get_age_table.cpp%
+   devel/table/get_avgint_table.cpp%
+   devel/table/get_bnd_mulcov_table.cpp%
+   devel/table/get_column_max.cpp%
+   devel/table/get_covariate_table.cpp%
+   devel/table/get_data_sim_table.cpp%
+   devel/table/get_data_subset.cpp%
+   devel/table/get_data_table.cpp%
+   devel/table/get_db_input.cpp%
+   devel/table/get_density_table.cpp%
+   devel/table/get_integrand_table.cpp%
+   devel/table/get_mulcov_table.cpp%
+   devel/table/get_node_table.cpp%
+   devel/table/get_nslist_pair.cpp%
+   devel/table/get_nslist_table.cpp%
+   devel/table/get_option_table.cpp%
+   devel/table/get_prior_table.cpp%
+   devel/table/get_rate_table.cpp%
+   devel/table/get_sample_table.cpp%
+   devel/table/get_smooth_grid.cpp%
+   devel/table/get_smooth_table.cpp%
+   devel/table/get_subgroup_table.cpp%
+   devel/table/get_table_column.cpp%
+   devel/table/get_time_table.cpp%
+   devel/table/get_weight_grid.cpp%
+   devel/table/get_weight_table.cpp%
+   devel/table/log_message.cpp%
+   devel/table/open_connection.cpp%
+   devel/table/put_table_row.cpp%
+   devel/table/smooth_info.omh%
+   devel/table/weight_info.cpp
 %$$
 $comment END_SORT_THIS_LINE_MINUS_2$$
 

@@ -5,14 +5,14 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin install$$
 $spell
-	dismod_at
+   dismod_at
 $$
 
 $section Installing dismod_at$$
 
 $childtable%
-	bin/dock_dismod_at.sh%
-	omh/install/unix.omh
+   bin/dock_dismod_at.sh%
+   omh/install/unix.omh
 %$$
 
 $end

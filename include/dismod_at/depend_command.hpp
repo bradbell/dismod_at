@@ -13,11 +13,11 @@
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void depend_command(
-	sqlite3*                                  db               ,
-	const CppAD::vector<double>&              prior_mean       ,
-	data_model&                               data_object      ,
-	const CppAD::vector<subset_data_struct>&  subset_data_obj  ,
-	const prior_model&                        prior_object
+   sqlite3*                                  db               ,
+   const CppAD::vector<double>&              prior_mean       ,
+   data_model&                               data_object      ,
+   const CppAD::vector<subset_data_struct>&  subset_data_obj  ,
+   const prior_model&                        prior_object
 );
 
 } // END_DISMOD_AT_NAMESPACE

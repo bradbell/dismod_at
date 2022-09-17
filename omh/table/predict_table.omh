@@ -4,11 +4,11 @@
 # ----------------------------------------------------------------------------
 $begin predict_table$$
 $spell
-	avgint
-	var
-	py
-	covariate
-	covariates
+   avgint
+   var
+   py
+   covariate
+   covariates
 $$
 
 $section The Predict Table: Average Integrand Predictions$$

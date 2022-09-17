@@ -4,15 +4,15 @@
 # ----------------------------------------------------------------------------
 $begin mulcov_table$$
 $spell
-	pini
-	mulcov
-	std
-	dage
-	dtime
-	covariate
-	jk
-	ij
-	covariates
+   pini
+   mulcov
+   std
+   dage
+   dtime
+   covariate
+   jk
+   ij
+   covariates
 $$
 
 $section The mulcov Table: Covariate Multipliers$$
@@ -35,14 +35,14 @@ $subhead rate_value$$
 This covariate multiplier
 adjusts a rate in the average integrand calculation;
 see $cref/alpha
-	/avg_integrand
-	/Rate Functions
-	/Group Rate Covariate Multiplier, alpha_jk
+   /avg_integrand
+   /Rate Functions
+   /Group Rate Covariate Multiplier, alpha_jk
 /$$.
 A separate solution of the
 $cref/ordinary differential equation
-	/avg_integrand
-	/Ordinary Differential Equation
+   /avg_integrand
+   /Ordinary Differential Equation
 /$$
 is required for each cohort and each measurement,
 that has values not equal to the
@@ -55,9 +55,9 @@ $subhead meas_value$$
 This covariate multiplier adjusts the average integrand to match the
 $cref/measurement value/data_table/meas_value/$$; see
 $cref/beta
-	/avg_integrand
-	/Measurement Value Covariates
-	/Group Measurement Covariate Multiplier, beta_j
+   /avg_integrand
+   /Measurement Value Covariates
+   /Group Measurement Covariate Multiplier, beta_j
 /$$.
 
 $subhead meas_noise$$

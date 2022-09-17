@@ -4,10 +4,10 @@
 # ----------------------------------------------------------------------------
 $begin censor_density$$
 $spell
-	mu
-	neg
-	py
-	Lebesgue
+   mu
+   neg
+   py
+   Lebesgue
 $$
 
 $section The Censored Gaussian and Laplace Densities$$
@@ -30,9 +30,9 @@ censoring the random variable at.
 The censored random variable is defined by
 $latex \[
 \underline{y} = \left\{ \begin{array}{ll}
-	c & \R{if} \; y \leq c
-	\\
-	y & \R{otherwise}
+   c & \R{if} \; y \leq c
+   \\
+   y & \R{otherwise}
 \end{array} \right.
 \] $$
 The crucial property is that the
@@ -88,7 +88,7 @@ and its integral from minus infinity to plus infinity is one.
 Hence
 $latex \[
 \frac{
-	1 - \R{erf}\left( \sqrt{2}^{-1} ( \mu - c ) / \delta \right)
+   1 - \R{erf}\left( \sqrt{2}^{-1} ( \mu - c ) / \delta \right)
 }{2}
 =
 \sqrt{ \frac{1}{2 \pi \delta^2} }
@@ -186,10 +186,10 @@ L ( \underline{y} , \mu , \delta , c )
 \left\{ \begin{array}{ll}
 (1 / 2 )
 \exp \left( - ( \mu - c ) \sqrt{2} / \delta \right)
-	& \R{if} \; \underline{y} = c
-	\\
-	L( \underline{y} , \mu , \delta )
-	& \R{otherwise}
+   & \R{if} \; \underline{y} = c
+   \\
+   L( \underline{y} , \mu , \delta )
+   & \R{otherwise}
 \end{array} \right.
 \] $$
 This density function is with respect to the
@@ -213,9 +213,9 @@ Using integration by parts,
 one can obtain a formula for $latex \overline{\underline{y}} - \mu$$
 in a manner similar to calculation of the
 $cref/difference between means
-	/censor_density
-	/Gaussian
-	/Difference Between Means
+   /censor_density
+   /Gaussian
+   /Difference Between Means
 /$$
 for the Gaussian case.
 

@@ -10,12 +10,12 @@
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-	struct sample_struct {
-		int         sample_index;
-		int         var_id;
-		double      var_value;
-	};
-	extern CppAD::vector<sample_struct> get_sample_table(sqlite3*  db);
+   struct sample_struct {
+      int         sample_index;
+      int         var_id;
+      double      var_value;
+   };
+   extern CppAD::vector<sample_struct> get_sample_table(sqlite3*  db);
 }
 
 # endif

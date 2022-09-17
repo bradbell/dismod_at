@@ -4,15 +4,15 @@
 # ----------------------------------------------------------------------------
 $begin data_like$$
 $spell
-	jk
-	std
-	ij
-	covariate
-	covariates
-	mulcov
-	cv
-	var
-	csv
+   jk
+   std
+   ij
+   covariate
+   covariates
+   mulcov
+   cv
+   var
+   csv
 $$
 
 $section Data Likelihood and Weighted Residuals$$
@@ -85,11 +85,11 @@ $subhead Transformed Standard Deviation, sigma_i$$
 The transformed standard deviation is
 $latex \[
 \sigma_i = \left\{ \begin{array}{ll}
-	\log[ y_i + \eta_i + \Delta_i ] - \log( y_i + \eta_i )
-		& \R{if \; log \; density}
-	\\
-	\Delta_i
-		& \R{otherwise}
+   \log[ y_i + \eta_i + \Delta_i ] - \log( y_i + \eta_i )
+      & \R{if \; log \; density}
+   \\
+   \Delta_i
+      & \R{otherwise}
 \end{array} \right.
 \] $$
 
@@ -127,9 +127,9 @@ For each covariate index $latex j \in K_i$$ ,
 we use $latex \gamma_j (a, t) $$ to denote the
 piecewise linear function corresponding to the
 $cref/group covariate multiplier
-	/model_variables/
-	Fixed Effects, theta/
-	Group Covariate Multipliers
+   /model_variables/
+   Fixed Effects, theta/
+   Group Covariate Multipliers
 /$$
 variables for the corresponding
 $cref/mulcov_id/mulcov_table/mulcov_id/$$.
@@ -142,11 +142,11 @@ $latex \[
 E_i ( \theta )
 =
 \frac{1}{\bar{w}_i}
-	\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
-	\left(
-		\sum_{j \in K_i} x_{i,j} \gamma_j (a, t)
-	\right)
-	w_i (a,t) \; \B{d} t \; \B{d} a
+   \int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
+   \left(
+      \sum_{j \in K_i} x_{i,j} \gamma_j (a, t)
+   \right)
+   w_i (a,t) \; \B{d} t \; \B{d} a
 \] $$
 
 $head Adjusted Standard Deviation, delta_i(theta)$$
@@ -200,8 +200,8 @@ If $icode meas_noise_effect$$ is $code add_std_scale_log$$
 the adjusted standard deviation is
 $latex \[
 \delta_i ( \theta ) = \left\{ \begin{array}{ll}
-	\sigma_i [ 1 + E_i (\theta) ] & \R{if \; log \; density} \\
-	\sigma_i + E_i (\theta)       & \R{otherwise}
+   \sigma_i [ 1 + E_i (\theta) ] & \R{if \; log \; density} \\
+   \sigma_i + E_i (\theta)       & \R{otherwise}
 \end{array} \right.
 \] $$
 
@@ -228,8 +228,8 @@ If $icode meas_noise_effect$$ is $code add_var_scale_log$$
 the adjusted standard deviation is
 $latex \[
 \delta_i ( \theta ) = \left\{ \begin{array}{ll}
-	\sigma_i \sqrt{ 1 + E_i (\theta) } & \R{if \; log \; density} \\
-	\sqrt{ \sigma_i^2 + E_i (\theta) } & \R{otherwise}
+   \sigma_i \sqrt{ 1 + E_i (\theta) } & \R{if \; log \; density} \\
+   \sqrt{ \sigma_i^2 + E_i (\theta) } & \R{otherwise}
 \end{array} \right.
 \] $$
 
@@ -248,10 +248,10 @@ is a function of the random effects $latex u$$
 and the fixed effects $latex \theta$$,
 $latex \[
  R [
-	y_i                  \W{,}
-	A_i ( u, \theta )    \W{,}
-	\delta_i ( \theta )  \W{,}
-	d_i
+   y_i                  \W{,}
+   A_i ( u, \theta )    \W{,}
+   \delta_i ( \theta )  \W{,}
+   d_i
 ]
 \] $$
 The likelihood is
@@ -259,10 +259,10 @@ $latex \[
 \B{p}( y_i | u , \theta )
 =
 \exp \left( D [
-	y_i                  \W{,}
-	A_i ( u, \theta )    \W{,}
-	\delta_i ( \theta )  \W{,}
-	d_i
+   y_i                  \W{,}
+   A_i ( u, \theta )    \W{,}
+   \delta_i ( \theta )  \W{,}
+   d_i
 ] \right)
 \] $$
 see the log-density function

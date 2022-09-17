@@ -11,11 +11,11 @@
 # include <dismod_at/get_option_table.hpp>
 
 namespace dismod_at {
-	void check_zero_sum(
-		sqlite3*                                  db            ,
-		const CppAD::vector<rate_struct>&         rate_table    ,
-		const CppAD::vector<option_struct>&       option_table
-	);
+   void check_zero_sum(
+      sqlite3*                                  db            ,
+      const CppAD::vector<rate_struct>&         rate_table    ,
+      const CppAD::vector<option_struct>&       option_table
+   );
 }
 
 # endif

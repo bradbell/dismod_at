@@ -6,41 +6,41 @@ $Id:$
 $begin install_unix$$
 $dollar @$$
 $spell
-	grep
-	https://github.com/bradbell/dismod_at.git
-	ls
-	metis
-	py
-	suitesparse
-	tgz
-	pkgconfig
-	cppad
-	make make
-	dismod
-	cmake
-	CppAD
-	Ipopt
-	config
-	eigen
-	tarball
-	xzf
-	gsl
-	sqlite
-	devel
-	numpy
-	txt
-	dev
-	libname
-	modversion
-	install install
-	matplotlib
-	scipy
+   grep
+   https://github.com/bradbell/dismod_at.git
+   ls
+   metis
+   py
+   suitesparse
+   tgz
+   pkgconfig
+   cppad
+   make make
+   dismod
+   cmake
+   CppAD
+   Ipopt
+   config
+   eigen
+   tarball
+   xzf
+   gsl
+   sqlite
+   devel
+   numpy
+   txt
+   dev
+   libname
+   modversion
+   install install
+   matplotlib
+   scipy
 $$
 
 $section Installing dismod_at in Unix$$
 
 $children%bin/run_cmake.sh
-	%bin/example_install.sh
+   %bin/example_install.sh
 %$$
 
 $head System Requirements$$
@@ -103,20 +103,20 @@ $head Download dismod_at.git$$
 After installing the requirements above,
 use the following command to get the current version of dismod_at:
 $codei%
-	git clone https://github.com/bradbell/dismod_at.git dismod_at.git
-	cd dismod_at.git
+   git clone https://github.com/bradbell/dismod_at.git dismod_at.git
+   cd dismod_at.git
 %$$
 You can determine the $icode git_hash$$ and version number
 corresponding to this checkout of the master branch using the commands:
 $codei%
-	git show-ref | grep 'refs/heads/master'
-	grep '^SET(dismod_at_version' CMakeLists.txt
+   git show-ref | grep 'refs/heads/master'
+   grep '^SET(dismod_at_version' CMakeLists.txt
 %$$
 You can checkout an old version corresponding to a specific $icode git_hash$$,
 and check its version number, using the commands:
 $codei%
-	git checkout -q %git_hash%
-	grep '^SET(dismod_at_version' CMakeLists.txt
+   git checkout -q %git_hash%
+   grep '^SET(dismod_at_version' CMakeLists.txt
 %$$
 
 $head Paths$$
@@ -127,17 +127,17 @@ $subhead Adding to a Path$$
 The instructions below may require you to add to a $icode path_name$$.
 Use the command
 $codei%
-	echo @%path_name%
+   echo @%path_name%
 %$$
 to see if your initial path is empty. If it is empty,
 use the command
 $codei%
-	export %path_name%=%directory%
+   export %path_name%=%directory%
 %$$
 to add $icode directory$$ to the path.
 If it is non-empty, use
 $codei%
-	export %path_name%="@%path_name%:%directory%"
+   export %path_name%="@%path_name%:%directory%"
 %$$
 to add $icode directory$$ to the path.
 
@@ -145,22 +145,22 @@ $subhead PKG_CONFIG_PATH$$
 After $code sqlite3$$ and $code gsl$$ are installed
 the following commands should work:
 $codep
-	pkg-config sqlite3 --modversion
-	pkg-config gsl     --modversion
+   pkg-config sqlite3 --modversion
+   pkg-config gsl     --modversion
 $$
 If one of them fails, a corresponding directory is missing
 from the $code PKG_CONFIG_PATH$$ environment variable.
 If $icode prefix$$ is the prefix where $code gsl$$ was installed,
 the command
 $codei%
-	find -L %prefix% -name gsl.pc 2> /dev/null
+   find -L %prefix% -name gsl.pc 2> /dev/null
 %$$
 should find the directory where $code gsl.pc$$ is located.
 After $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
 is installed (see below),
 the following command should work:
 $codei%
-	pkg-config %pkg% --modversion
+   pkg-config %pkg% --modversion
 %$$
 where $icode pkg$$ is any of the
 $cref/special requirements/install_unix/Special Requirements/$$
@@ -169,7 +169,7 @@ below.
 $icode pkg$$ above.)
 If one of these commands fails,
 $codei%
-	find -L %dismod_at_prefix% -name %pkg%.pc 2> /dev/null
+   find -L %dismod_at_prefix% -name %pkg%.pc 2> /dev/null
 %$$
 should find the directory where $icode%pkg%.pc%$$ is located;
 see $cref/dismod_at_prefix/run_cmake.sh/dismod_at_prefix/$$.
@@ -188,14 +188,14 @@ $subhead PATH$$
 After you install dismod_at (see below)
 you should be able to execute the command
 $codei%
-	dismod_at
+   dismod_at
 %$$
 from any directory.
 If you get the error $code dismod_at: command not found$$,
 you will need to add the binary install directory to you path.
 Use the following command to find it:
 $codei%
-	find -L %dismod_at_prefix% -name dismod_at 2> /dev/null
+   find -L %dismod_at_prefix% -name dismod_at 2> /dev/null
 %$$
 see $cref/dismod_at_prefix/run_cmake.sh/dismod_at_prefix/$$.
 
@@ -203,9 +203,9 @@ $subhead PYTHONPATH$$
 After you install dismod_at
 you should be able to execute the following commands:
 $codei%
-	%python3%
-	import dismod_at
-	quit()
+   %python3%
+   import dismod_at
+   quit()
 %$$
 where $icode python3$$ is your
 $cref/python3 executable/run_cmake.sh/python3_executable/$$.
@@ -214,7 +214,7 @@ you will need to add the directory where the module is installed
 to your python path.
 Use the following command to find it:
 $codei%
-	find -L %dismod_at_prefix% -name site-packages 2> /dev/null
+   find -L %dismod_at_prefix% -name site-packages 2> /dev/null
 %$$
 
 $head Special Requirements$$
@@ -252,7 +252,7 @@ The $href%https://bradbell.github.io/cppad_mixed%cppad_mixed%$$
 C++ random effects modeling package.
 Starting in the $code dismod_at.git$$ directory, the command
 $codei%
-	bin/get_cppad_mixed.sh
+   bin/get_cppad_mixed.sh
 %$$
 can be used to install eigen, ipopt, and cppad_mixed.
 This script also serves as an example of how to install cppad_mixed.
@@ -273,7 +273,7 @@ After changing $code bin/run_cmake.sh$$ to work for your system,
 in the $code dismod_at.git$$ directory
 execute the following command:
 $codep
-	bin/run_cmake.sh
+   bin/run_cmake.sh
 $$
 The script also serves as an example of how to install dismod_at.
 
@@ -281,9 +281,9 @@ $subhead Build$$
 The following command is option and will just build the
 executable program $code build/devel/dismod_at$$:
 $codep
-	cd build
-	make
-	cd ..
+   cd build
+   make
+   cd ..
 $$
 
 $subhead Test$$
@@ -292,10 +292,10 @@ build the dismod_at executable,
 build the examples and tests,
 and run the examples, correctness tests, and speed tests:
 $codep
-	cd build
-	make check
-	make speed
-	cd ..
+   cd build
+   make check
+   make speed
+   cd ..
 $$
 Some of the tests use different random number simulations each time
 they are run.
@@ -310,9 +310,9 @@ The following command will,
 build the dismod_at library and executable if necessary,
 and install dismod_at:
 $codep
-	cd build
-	make install install_python
-	cd ..
+   cd build
+   make install install_python
+   cd ..
 $$
 
 

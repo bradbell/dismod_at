@@ -4,15 +4,15 @@
 # ----------------------------------------------------------------------------
 $begin option_default$$
 $spell
-	avgint
-	frac
-	num_iter
-	stderr
-	mulcov
-	std
-	ipopt
-	pos
-	init
+   avgint
+   frac
+   num_iter
+   stderr
+   mulcov
+   std
+   ipopt
+   pos
+   init
 $$
 
 $section List of Option Default Values$$
@@ -32,235 +32,235 @@ Option Name $cnext Default $cnext Link to Documentation
 $rnext
 $code accept_after_max_steps_fixed$$ $cnext 5 $cnext
 $cref/
-	accept_after_max_steps/
-	option_table/
-	Optimize Fixed and Random/
-	accept_after_max_steps
+   accept_after_max_steps/
+   option_table/
+   Optimize Fixed and Random/
+   accept_after_max_steps
 /$$
 $rnext
 $code accept_after_max_steps_random$$ $cnext 5 $cnext
 $cref/
-	accept_after_max_steps/
-	option_table/
-	Optimize Fixed and Random/
-	accept_after_max_steps
+   accept_after_max_steps/
+   option_table/
+   Optimize Fixed and Random/
+   accept_after_max_steps
 /$$
 $rnext
 $code age_avg_split$$ $cnext $code null$$ $cnext
 $cref/
-	age_avg_split/
-	option_table/
-	Age Average Grid/
-	age_avg_split
+   age_avg_split/
+   option_table/
+   Age Average Grid/
+   age_avg_split
 /$$
 $rnext
 $code avgint_extra_columns$$ $cnext $code null$$ $cnext
 $cref/
-	avgint_extra_columns/
-	option_table/
-	Extra Columns/
-	avgint_extra_columns
+   avgint_extra_columns/
+   option_table/
+   Extra Columns/
+   avgint_extra_columns
 /$$
 $rnext
 $code bound_frac_fixed$$ $cnext 1e-2 $cnext
 $cref/
-	bound_frac_fixed/
-	option_table/
-	Optimize Fixed Only/
-	bound_frac_fixed
+   bound_frac_fixed/
+   option_table/
+   Optimize Fixed Only/
+   bound_frac_fixed
 /$$
 $rnext
 $code bound_random$$ $cnext $code null$$ $cnext
 $cref/
-	bound_random/
-	option_table/
-	Optimize Random Only/
-	bound_random
+   bound_random/
+   option_table/
+   Optimize Random Only/
+   bound_random
 /$$
 $rnext
 $code compress_interval$$ $cnext 0 0 $cnext
 $cref/
-	compress_interval/
-	option_table/
-	compress_interval
+   compress_interval/
+   option_table/
+   compress_interval
 /$$
 $rnext
 $code data_extra_columns$$ $cnext $code null$$ $cnext
 $cref/
-	data_extra_columns/
-	option_table/
-	Extra Columns/
-	data_extra_columns
+   data_extra_columns/
+   option_table/
+   Extra Columns/
+   data_extra_columns
 /$$
 $rnext
 $code derivative_test_fixed$$ $cnext none $cnext
 $cref/
-	derivative_test/
-	option_table/
-	Optimize Fixed and Random/
-	derivative_test
+   derivative_test/
+   option_table/
+   Optimize Fixed and Random/
+   derivative_test
 /$$
 $rnext
 $code derivative_test_random$$ $cnext none $cnext
 $cref/
-	derivative_test/
-	option_table/
-	Optimize Fixed and Random/
-	derivative_test
+   derivative_test/
+   option_table/
+   Optimize Fixed and Random/
+   derivative_test
 /$$
 $rnext
 $code hold_out_integrand$$ $cnext $code null$$ $cnext
 $cref/
-	hold_out_integrand/
-	option_table/
-	hold_out_integrand
+   hold_out_integrand/
+   option_table/
+   hold_out_integrand
 /$$
 $rnext
 $code limited_memory_max_history_fixed$$ $cnext 30 $cnext
 $cref/
-	limited_memory_max_history_fixed/
-	option_table/
-	Optimize Fixed Only/
-	limited_memory_max_history_fixed
+   limited_memory_max_history_fixed/
+   option_table/
+   Optimize Fixed Only/
+   limited_memory_max_history_fixed
 /$$
 $rnext
 $code max_num_iter_fixed$$ $cnext 100 $cnext
 $cref/
-	max_num_iter/
-	option_table/
-	Optimize Fixed and Random/
-	max_num_iter
+   max_num_iter/
+   option_table/
+   Optimize Fixed and Random/
+   max_num_iter
 /$$
 $rnext
 $code max_num_iter_random$$ $cnext 100 $cnext
 $cref/
-	max_num_iter/
-	option_table/
-	Optimize Fixed and Random/
-	max_num_iter
+   max_num_iter/
+   option_table/
+   Optimize Fixed and Random/
+   max_num_iter
 /$$
 $rnext
 $code meas_noise_effect$$ $cnext add_std_scale_all $cnext
 $cref/
-	meas_noise_effect/
-	option_table/
-	meas_noise_effect
+   meas_noise_effect/
+   option_table/
+   meas_noise_effect
 /$$
 $rnext
 $code method_random$$ $cnext ipopt_random $cnext
 $cref/
-	method_random/
-	option_table/
-	Optimize Random Only/
-	method_random
+   method_random/
+   option_table/
+   Optimize Random Only/
+   method_random
 /$$
 $rnext
 $code ode_step_size$$ $cnext 10.0 $cnext
 $cref/
-	ode_step_size/
-	option_table/
-	Age Average Grid/
-	ode_step_size
+   ode_step_size/
+   option_table/
+   Age Average Grid/
+   ode_step_size
 /$$
 $rnext
 $code parent_node_id$$ $cnext $code null$$ $cnext
 $cref/
-	parent_node_id/
-	option_table/
-	Parent Node/
-	parent_node_id
+   parent_node_id/
+   option_table/
+   Parent Node/
+   parent_node_id
 /$$
 $rnext
 $code parent_node_name$$ $cnext $code null$$ $cnext
 $cref/
-	parent_node_name/
-	option_table/
-	Parent Node/
-	parent_node_name
+   parent_node_name/
+   option_table/
+   Parent Node/
+   parent_node_name
 /$$
 $rnext
 $code print_level_fixed$$ $cnext 0 $cnext
 $cref/
-	print_level/
-	option_table/
-	Optimize Fixed and Random/
-	print_level
+   print_level/
+   option_table/
+   Optimize Fixed and Random/
+   print_level
 /$$
 $rnext
 $code print_level_random$$ $cnext 0 $cnext
 $cref/
-	print_level/
-	option_table/
-	Optimize Fixed and Random/
-	print_level
+   print_level/
+   option_table/
+   Optimize Fixed and Random/
+   print_level
 /$$
 $rnext
 $code quasi_fixed$$ $cnext true $cnext
 $cref/
-	quasi_fixed/
-	option_table/
-	Optimize Fixed Only/
-	quasi_fixed
+   quasi_fixed/
+   option_table/
+   Optimize Fixed Only/
+   quasi_fixed
 /$$
 $rnext
 $code random_seed$$ $cnext 0 $cnext
 $cref/
-	quasi_fixed/
-	option_table/
-	random_seed
+   quasi_fixed/
+   option_table/
+   random_seed
 /$$
 $rnext
 $code rate_case$$ $cnext iota_pos_rho_zero $cnext
 $cref/
-	rate_case/
-	option_table/
-	rate_case
+   rate_case/
+   option_table/
+   rate_case
 /$$
 $rnext
 $code tolerance_fixed$$ $cnext 1e-8 $cnext
 $cref/
-	tolerance/
-	option_table/
-	Optimize Fixed and Random/
-	tolerance
+   tolerance/
+   option_table/
+   Optimize Fixed and Random/
+   tolerance
 /$$
 $rnext
 $code tolerance_random$$ $cnext 1e-8 $cnext
 $cref/
-	tolerance/
-	option_table/
-	Optimize Fixed and Random/
-	tolerance
+   tolerance/
+   option_table/
+   Optimize Fixed and Random/
+   tolerance
 /$$
 $rnext
 $code trace_init_fit_model$$ $cnext false $cnext
 $cref/
-	trace_int_fit_model/
-	option_table/
-	trace_init_fit_model
+   trace_int_fit_model/
+   option_table/
+   trace_init_fit_model
 /$$
 $rnext
 $code warn_on_stderr$$ $cnext true $cnext
 $cref/
-	warn_on_stderr/
-	option_table/
-	warn_on_stderr
+   warn_on_stderr/
+   option_table/
+   warn_on_stderr
 /$$
 $rnext
 $code zero_sum_child_rate$$ $cnext $code null$$ $cnext
 $cref/
-	zero_sum_child_rate/
-	option_table/
-	Zero Sum Constraints/
-	zero_sum_child_rate
+   zero_sum_child_rate/
+   option_table/
+   Zero Sum Constraints/
+   zero_sum_child_rate
 /$$
 $rnext
 $code zero_sum_mulcov_group$$ $cnext $code null$$ $cnext
 $cref/
-	zero_sum_mulcov_group/
-	option_table/
-	Zero Sum Constraints/
-	zero_sum_mulcov_group
+   zero_sum_mulcov_group/
+   option_table/
+   Zero Sum Constraints/
+   zero_sum_mulcov_group
 /$$
 $tend
 

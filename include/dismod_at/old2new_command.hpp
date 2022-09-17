@@ -9,7 +9,7 @@
 # include <dismod_at/get_db_input.hpp>
 
 namespace dismod_at {
-	void old2new_command(sqlite3* db);
+   void old2new_command(sqlite3* db);
 }
 
 # endif

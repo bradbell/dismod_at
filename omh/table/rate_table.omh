@@ -4,17 +4,17 @@
 # ----------------------------------------------------------------------------
 $begin rate_table$$
 $spell
-	nslist
-	std
-	dage
-	dtime
-	pini
-	smoothings
-	covariate
-	cppad
-	exp
-	ik
-	nonsmooth
+   nslist
+   std
+   dage
+   dtime
+   pini
+   smoothings
+   covariate
+   cppad
+   exp
+   ik
+   nonsmooth
 $$
 
 $section The Rate Table$$
@@ -56,8 +56,8 @@ This is because prevalence at the initial age
 is only a function of time, and does not depend on age.
 Note that, unlike the other rates, initial prevalence is not a rate in the
 $cref/ordinary differential equation
-	/avg_integrand
-	/Ordinary Differential Equation
+   /avg_integrand
+   /Ordinary Differential Equation
 /$$.
 On the other hand, and like the other rates,
 initial prevalence is a necessary input to solve the ODE.
@@ -108,7 +108,7 @@ $cref/smooth_id/smooth_grid_table/smooth_id/$$
 in the $code smooth_grid$$ table.
 It specifies a single smoothing used as a prior for the
 $cref/child rate effects
-	/model_variables/Random Effects, u/Child Rate Effects/$$
+   /model_variables/Random Effects, u/Child Rate Effects/$$
 for this rate.
 
 $subhead Random Effects Hessian$$

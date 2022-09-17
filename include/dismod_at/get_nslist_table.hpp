@@ -10,7 +10,7 @@
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-	extern CppAD::vector<std::string> get_nslist_table(sqlite3*  db);
+   extern CppAD::vector<std::string> get_nslist_table(sqlite3*  db);
 }
 
 # endif

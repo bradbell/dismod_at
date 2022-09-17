@@ -11,12 +11,12 @@
 # include "get_prior_table.hpp"
 
 namespace dismod_at {
-	void get_var_limits(
-		CppAD::vector<double>&               lower_limit  ,
-		CppAD::vector<double>&               upper_limit  ,
-	    const pack_prior&                    var2prior    ,
-		const CppAD::vector<prior_struct>&   prior_table
-	);
+   void get_var_limits(
+      CppAD::vector<double>&               lower_limit  ,
+      CppAD::vector<double>&               upper_limit  ,
+       const pack_prior&                    var2prior    ,
+      const CppAD::vector<prior_struct>&   prior_table
+   );
 }
 
 # endif

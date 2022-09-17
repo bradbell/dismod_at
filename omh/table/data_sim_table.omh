@@ -4,13 +4,13 @@
 # ----------------------------------------------------------------------------
 $begin data_sim_table$$
 $spell
-	sim
-	std
-	covariate
-	covariates
-	cv
-	stdcv
-	var
+   sim
+   std
+   covariate
+   covariates
+   cv
+   stdcv
+   var
 $$
 
 $section Simulated Measurements and Adjusted Standard Deviations$$
@@ -45,7 +45,7 @@ This identifies which $cref/data_id/data_subset_table/data_id/$$
 each row of the data_sim table corresponds to.
 If $icode n_subset$$ is the number of rows in the data_subset table,
 $codei%
-	%data_sim_id% = %simulate_index% * %n_subset% + %data_subset_id%
+   %data_sim_id% = %simulate_index% * %n_subset% + %data_subset_id%
 %$$
 for $icode simulate_index$$ equal zero to $icode%number_simulate%-1%$$
 and $icode data_subset_id$$ equal zero to $codei%n_subset%-1%$$.
@@ -72,9 +72,9 @@ corresponding to this $icode data_id$$.
 $subhead Upper Case Delta$$
 We use $latex \Delta$$ to denote the
 $cref/minimum cv standard deviation
-	/data_like
-	/Notation
-	/Minimum CV Standard Deviation, Delta_i
+   /data_like
+   /Notation
+   /Minimum CV Standard Deviation, Delta_i
 /$$
 corresponding to the data table and this $icode data_id$$.
 
@@ -98,9 +98,9 @@ and this $icode data_id$$.
 $subhead E$$
 We use $latex E$$ for the
 $cref/average noise effect
-	/data_like
-	/Measurement Noise Covariates
-	/Average Noise Effect, E_i(theta)
+   /data_like
+   /Measurement Noise Covariates
+   /Average Noise Effect, E_i(theta)
 /$$
 corresponding to the truth_var table
 value for the model variables, the values in the data table,
@@ -109,16 +109,16 @@ and this $icode data_id$$.
 $subhead sigma$$
 We use $latex \sigma$$ to denote the
 $cref/transformed standard deviation
-	/data_like
-	/Notation
-	/Transformed Standard Deviation, sigma_i
+   /data_like
+   /Notation
+   /Transformed Standard Deviation, sigma_i
 /$$
 corresponding to the data table and this $icode data_id$$; i.e.,
 $latex \[
 \sigma = \left\{ \begin{array}{ll}
-	\log( y + \eta + \Delta ) - \log(y + \eta) & \R{if \; log \; density}
-	\\
-	\Delta                                     & \R{otherwise}
+   \log( y + \eta + \Delta ) - \log(y + \eta) & \R{if \; log \; density}
+   \\
+   \Delta                                     & \R{otherwise}
 \end{array} \right.
 \] $$
 Note that $latex \sigma$$ does not depend on simulated noise
@@ -128,8 +128,8 @@ instead of $latex z$$).
 $subhead Lower Case delta$$
 We use $latex \delta$$ to denote the
 $cref/adjusted standard deviation
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
+   /data_like
+   /Adjusted Standard Deviation, delta_i(theta)
 /$$
 corresponding to the truth_var table
 value for the model variables,
@@ -150,16 +150,16 @@ We use $latex z$$ to denote the simulated data value
 $icode data_sim_value$$ corresponding to this $icode data_sim_id$$.
 It the density is $cref/linear/density_table/Notation/Linear/$$,
 $latex \[
-	z = A + e
+   z = A + e
 \]$$
 It the density is $cref/log scaled/density_table/Notation/Log Scaled/$$,
 $latex \[
 \begin{array}{rcl}
-	e        & = & \log( z + \eta ) - \log( A + \eta )
-	\\
-	\exp (e) & = & ( z + \eta ) / ( A + \eta )
-	\\
-	z        & = & \exp(e) ( A + \eta ) - \eta
+   e        & = & \log( z + \eta ) - \log( A + \eta )
+   \\
+   \exp (e) & = & ( z + \eta ) / ( A + \eta )
+   \\
+   z        & = & \exp(e) ( A + \eta ) - \eta
 \end{array}
 \] $$
 

@@ -4,16 +4,16 @@
 # ----------------------------------------------------------------------------
 $begin fixed_diff$$
 $spell
-	covariate
-	covariates
-	mulcov
-	mulstd
-	dtime
-	dage
-	mu
-	std
-	smoothings
-	subvector
+   covariate
+   covariates
+   mulcov
+   mulstd
+   dtime
+   dage
+   mu
+   std
+   smoothings
+   subvector
 $$
 
 $section Fixed Effects Differences Density Function$$

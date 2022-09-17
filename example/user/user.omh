@@ -5,16 +5,16 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin user_example$$
 $spell
-	dage
-	dtime
-	py
-	sqlite
-	init
-	const
-	diff
-	sim
-	covariate
-	dismod
+   dage
+   dtime
+   py
+   sqlite
+   init
+   const
+   diff
+   sim
+   covariate
+   dismod
 $$
 
 $section User Examples and Tests$$
@@ -29,7 +29,7 @@ are in the directory
 $cref/dismod_at.git/install_unix/Download dismod_at.git/$$,
 you can run one of these examples with the command
 $codei%
-	%python3_executable% example/user/%name%
+   %python3_executable% example/user/%name%
 %$$
 where $cref/python3_executable/run_cmake.sh/python3_executable/$$
 is the python3 program and $icode name$$ is the name of the example.
@@ -44,65 +44,65 @@ $cref/syntax/user_speed.py/Syntax/$$.
 $head example.db$$
 Each of these examples will create a corresponding database called
 $codei%
-	build/example/user/example.db
+   build/example/user/example.db
 %$$
 which can be inspected using any sqlite viewer; e.g.,
 $href%http://sqlitebrowser.org/%$$.
 
 $comment BEGIN_SORT_THIS_LINE_PLUS_2$$
 $children%
-	example/user/age_avg_split.py%
-	example/user/bilevel_random.py%
-	example/user/bnd_mulcov.py%
-	example/user/cascade.py%
-	example/user/censor.py%
-	example/user/change_grid.py%
-	example/user/compress.py%
-	example/user/const_random.py%
-	example/user/const_value.py%
-	example/user/continue_fit.py%
-	example/user/covid_19.py%
-	example/user/csv2db.py%
-	example/user/data_density.py%
-	example/user/data_sim.py%
-	example/user/diabetes.py%
-	example/user/diff_constraint.py%
-	example/user/fit_fixed_both.py%
-	example/user/fit_meas_noise.py%
-	example/user/fit_random.py%
-	example/user/fit_sim.py%
-	example/user/group_mulcov.py%
-	example/user/hes_fixed_math.py%
-	example/user/hes_random.py%
-	example/user/hold_out_1.py%
-	example/user/hold_out_2.py%
-	example/user/ill_condition.py%
-	example/user/jump_at_age.py%
-	example/user/lasso_covariate.py%
-	example/user/mulstd.py%
-	example/user/no_children.py%
-	example/user/one_function.py%
-	example/user/plot_curve.py%
-	example/user/plot_data_fit.py%
-	example/user/plot_rate_fit.py%
-	example/user/predict_fit.py%
-	example/user/predict_mulcov.py%
-	example/user/re_scale.py%
-	example/user/residual.py%
-	example/user/sample_asy.py%
-	example/user/sample_asy_sim.py%
-	example/user/sample_sim.py%
-	example/user/sim_log.py%
-	example/user/speed.py%
-	example/user/subgroup_mulcov.py%
-	example/user/sum_residual.py%
-	example/user/system_command_prc.py%
-	example/user/trace_init.py%
-	example/user/trapezoidal.py%
-	example/user/warm_start.py%
-	example/user/zsum_child_rate.py%
-	example/user/zsum_mulcov_meas.py%
-	example/user/zsum_mulcov_rate.py
+   example/user/age_avg_split.py%
+   example/user/bilevel_random.py%
+   example/user/bnd_mulcov.py%
+   example/user/cascade.py%
+   example/user/censor.py%
+   example/user/change_grid.py%
+   example/user/compress.py%
+   example/user/const_random.py%
+   example/user/const_value.py%
+   example/user/continue_fit.py%
+   example/user/covid_19.py%
+   example/user/csv2db.py%
+   example/user/data_density.py%
+   example/user/data_sim.py%
+   example/user/diabetes.py%
+   example/user/diff_constraint.py%
+   example/user/fit_fixed_both.py%
+   example/user/fit_meas_noise.py%
+   example/user/fit_random.py%
+   example/user/fit_sim.py%
+   example/user/group_mulcov.py%
+   example/user/hes_fixed_math.py%
+   example/user/hes_random.py%
+   example/user/hold_out_1.py%
+   example/user/hold_out_2.py%
+   example/user/ill_condition.py%
+   example/user/jump_at_age.py%
+   example/user/lasso_covariate.py%
+   example/user/mulstd.py%
+   example/user/no_children.py%
+   example/user/one_function.py%
+   example/user/plot_curve.py%
+   example/user/plot_data_fit.py%
+   example/user/plot_rate_fit.py%
+   example/user/predict_fit.py%
+   example/user/predict_mulcov.py%
+   example/user/re_scale.py%
+   example/user/residual.py%
+   example/user/sample_asy.py%
+   example/user/sample_asy_sim.py%
+   example/user/sample_sim.py%
+   example/user/sim_log.py%
+   example/user/speed.py%
+   example/user/subgroup_mulcov.py%
+   example/user/sum_residual.py%
+   example/user/system_command_prc.py%
+   example/user/trace_init.py%
+   example/user/trapezoidal.py%
+   example/user/warm_start.py%
+   example/user/zsum_child_rate.py%
+   example/user/zsum_mulcov_meas.py%
+   example/user/zsum_mulcov_rate.py
 %$$
 $comment END_SORT_THIS_LINE_MINUS_2$$
 

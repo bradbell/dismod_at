@@ -10,20 +10,20 @@
 # include "get_density_table.hpp"
 
 namespace dismod_at {
-	struct prior_struct {
-		std::string prior_name;
-		int         density_id;
-		double      lower;
-		double      upper;
-		double      mean;
-		double      std;
-		double      eta;
-		double      nu;
-	};
-	extern CppAD::vector<prior_struct> get_prior_table(
-		sqlite3*                           db            ,
-		const CppAD::vector<density_enum>& density_table
-	);
+   struct prior_struct {
+      std::string prior_name;
+      int         density_id;
+      double      lower;
+      double      upper;
+      double      mean;
+      double      std;
+      double      eta;
+      double      nu;
+   };
+   extern CppAD::vector<prior_struct> get_prior_table(
+      sqlite3*                           db            ,
+      const CppAD::vector<density_enum>& density_table
+   );
 }
 
 # endif

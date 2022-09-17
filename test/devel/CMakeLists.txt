@@ -7,23 +7,23 @@
 #
 # Program is not installed, and depends on following source files
 ADD_EXECUTABLE(test_devel EXCLUDE_FROM_ALL
-	age_time_order.cpp
-	data_model_subset.cpp
-	grid2line.cpp
-	meas_mulcov.cpp
-	rate_mulcov.cpp
-	test_devel.cpp
-	cppad_mixed_xam.cpp
+   age_time_order.cpp
+   data_model_subset.cpp
+   grid2line.cpp
+   meas_mulcov.cpp
+   rate_mulcov.cpp
+   test_devel.cpp
+   cppad_mixed_xam.cpp
 )
 SET_TARGET_PROPERTIES(
-	test_devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
+   test_devel PROPERTIES COMPILE_FLAGS "${extra_cxx_flags}"
 )
 TARGET_LINK_LIBRARIES(test_devel
-	devel
-	${cppad_mixed_LIBRARIES}
-	${gsl_LIBRARIES}
-	${sqlite3_LIBRARIES}
-	${ipopt_LIBRARIES}
-	${system_specific_library_list}
+   devel
+   ${cppad_mixed_LIBRARIES}
+   ${gsl_LIBRARIES}
+   ${sqlite3_LIBRARIES}
+   ${ipopt_LIBRARIES}
+   ${system_specific_library_list}
 )
 ADD_CUSTOM_TARGET(check_test_devel test_devel DEPENDS test_devel )

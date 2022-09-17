@@ -10,12 +10,12 @@
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-	struct data_sim_struct {
-		int         simulate_index;
-		int         data_subset_id;
-		double      data_sim_value;
-	};
-	extern CppAD::vector<data_sim_struct> get_data_sim_table(sqlite3*  db);
+   struct data_sim_struct {
+      int         simulate_index;
+      int         data_subset_id;
+      double      data_sim_value;
+   };
+   extern CppAD::vector<data_sim_struct> get_data_sim_table(sqlite3*  db);
 }
 
 # endif

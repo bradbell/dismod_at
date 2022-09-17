@@ -5,10 +5,10 @@
 /*
 $begin get_time_table$$
 $spell
-	sqlite
-	enum
-	cpp
-	std
+   sqlite
+   enum
+   cpp
+   std
 $$
 
 $section C++: Get the Time Table Information$$
@@ -22,18 +22,18 @@ To read the $cref time_table$$ and return it as a C++ data structure.
 $head db$$
 The argument $icode db$$ has prototype
 $codei%
-	sqlite3* %db%
+   sqlite3* %db%
 %$$
 and is an open connection to the database.
 
 $head time_table$$
 The return value $icode time_table$$ has prototype
 $codei%
-	CppAD::vector<double>  %time_table%
+   CppAD::vector<double>  %time_table%
 %$$
 For each $cref/time_id/time_table/time_id/$$,
 $codei%
-	%time_table%[%time_id%]
+   %time_table%[%time_id%]
 %$$
 is the time for the corresponding
 $cref/time/time_table/time/$$.
@@ -54,19 +54,19 @@ $end
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 CppAD::vector<double> get_time_table(sqlite3* db)
-{	using std::string;
+{  using std::string;
 
-	string table_name  = "time";
-	string column_name = "time";
-	CppAD::vector<double>  time;
-	get_table_column(db, table_name, column_name, time);
+   string table_name  = "time";
+   string column_name = "time";
+   CppAD::vector<double>  time;
+   get_table_column(db, table_name, column_name, time);
 
 # ifndef NDEBUG
-	size_t n_time      = check_table_id(db, table_name);
-	assert( time.size() == n_time );
+   size_t n_time      = check_table_id(db, table_name);
+   assert( time.size() == n_time );
 # endif
 
-	return time;
+   return time;
 }
 
 } // END DISMOD_AT_NAMESPACE

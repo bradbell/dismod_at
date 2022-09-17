@@ -5,9 +5,9 @@
 # ----------------------------------------------------------------------------
 # $begin create_connection$$ $newlinech #$$
 # $spell
-#	str
-#	sqlite
-#	dismod
+#  str
+#  sqlite
+#  dismod
 # $$
 #
 # $section Create a Python sqlite3 Database Connection$$
@@ -29,25 +29,25 @@
 # $head connection$$
 # The return value is an sqlite3
 # $href%https://docs.python.org/2/library/sqlite3.html#connection-objects
-#	%connection object
+#  %connection object
 # %$$
 # You must close this connection when you are done with it by executing
 # $codei%
-#	%connection%.close()
+#  %connection%.close()
 # %$$
 #
 # $end
 # ---------------------------------------------------------------------------
 import sqlite3
 def create_connection(file_name, new) :
-	import os
-	import sys
-	if new :
-		if	os.path.isfile(file_name) :
-			os.remove(file_name)
-	else :
-		if not os.path.isfile(file_name) :
-			msg = 'create_connection: ' + file_name + ' does not exist.'
-			assert False, msg
-	connection = sqlite3.connect(file_name)
-	return connection
+   import os
+   import sys
+   if new :
+      if  os.path.isfile(file_name) :
+         os.remove(file_name)
+   else :
+      if not os.path.isfile(file_name) :
+         msg = 'create_connection: ' + file_name + ' does not exist.'
+         assert False, msg
+   connection = sqlite3.connect(file_name)
+   return connection

@@ -10,20 +10,20 @@
 # include <ctime>
 
 namespace dismod_at {
-	extern std::time_t log_message(
-		sqlite3*           db           ,
-		std::ostream*      os           ,
-		const std::string& message_type ,
-		const std::string& message
-	);
-	extern std::time_t log_message(
-		sqlite3*           db           ,
-		std::ostream*      os           ,
-		const std::string& message_type ,
-		const std::string& message      ,
-		const std::string& table_name   ,
-		const size_t&      row_id
-	);
+   extern std::time_t log_message(
+      sqlite3*           db           ,
+      std::ostream*      os           ,
+      const std::string& message_type ,
+      const std::string& message
+   );
+   extern std::time_t log_message(
+      sqlite3*           db           ,
+      std::ostream*      os           ,
+      const std::string& message_type ,
+      const std::string& message      ,
+      const std::string& table_name   ,
+      const size_t&      row_id
+   );
 }
 
 # endif

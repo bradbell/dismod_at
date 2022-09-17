@@ -4,16 +4,16 @@
 # ----------------------------------------------------------------------------
 $begin random_diff$$
 $spell
-	covariate
-	covariates
-	mulcov
-	mulstd
-	dtime
-	dage
-	mu
-	std
-	smoothings
-	subvector
+   covariate
+   covariates
+   mulcov
+   mulstd
+   dtime
+   dage
+   mu
+   std
+   smoothings
+   subvector
 $$
 
 $section Random Effects Differences Density Function$$

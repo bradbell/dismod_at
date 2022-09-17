@@ -9,15 +9,15 @@
 # include <string>
 
 namespace dismod_at {
-	const std::string& get_str_map(
-			const std::map<std::string, std::string>& std_map ,
-			const std::string&                        key
-	);
-	const std::string& get_str_map(
-			const std::map<std::string, std::string>& std_map       ,
-			const std::string&                        key           ,
-			const std::string&                        default_value
-	);
+   const std::string& get_str_map(
+         const std::map<std::string, std::string>& std_map ,
+         const std::string&                        key
+   );
+   const std::string& get_str_map(
+         const std::map<std::string, std::string>& std_map       ,
+         const std::string&                        key           ,
+         const std::string&                        default_value
+   );
 }
 
 # endif

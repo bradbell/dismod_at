@@ -5,39 +5,39 @@
 # ----------------------------------------------------------------------------
 if [ "$0" != 'bin/user_test.sh' ]
 then
-	echo 'bin/user_test.sh: must be executed from its parent directory'
-	exit 1
+   echo 'bin/user_test.sh: must be executed from its parent directory'
+   exit 1
 fi
 if [ ! -e "$1" ]
 then
-	echo 'usage: bin/user_test.sh user_test'
-	echo "The user_test '$1' does not exist."
-	exit 1
+   echo 'usage: bin/user_test.sh user_test'
+   echo "The user_test '$1' does not exist."
+   exit 1
 fi
 user_test="$1"
 for try in {1..3}
 do
-	if @python3_executable@ $user_test >& user_test.tmp
-	then
-		sed -i.tmp \
-			-e '/warning: Adding subgroup informtion to following tables:/d' \
-			user_test.tmp
-		#
-		if ! grep 'warning:' user_test.tmp > /dev/null
-		then
-			cat user_test.tmp
-			rm user_test.tmp
-			rm user_test.tmp.tmp
-			echo 'user_test.sh: OK'
-			exit 0
-		fi
-	fi
-	if [ "$try" != '3' ]
-	then
-		echo "$user_test: Error or warning, re-running with a different seed:"
-		echo 'sleep 1'
-		sleep 1
-	fi
+   if @python3_executable@ $user_test >& user_test.tmp
+   then
+      sed -i.tmp \
+         -e '/warning: Adding subgroup informtion to following tables:/d' \
+         user_test.tmp
+      #
+      if ! grep 'warning:' user_test.tmp > /dev/null
+      then
+         cat user_test.tmp
+         rm user_test.tmp
+         rm user_test.tmp.tmp
+         echo 'user_test.sh: OK'
+         exit 0
+      fi
+   fi
+   if [ "$try" != '3' ]
+   then
+      echo "$user_test: Error or warning, re-running with a different seed:"
+      echo 'sleep 1'
+      sleep 1
+   fi
 done
 cat user_test.tmp
 rm user_test.tmp

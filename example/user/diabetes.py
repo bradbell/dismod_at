@@ -4,30 +4,30 @@
 # ----------------------------------------------------------------------------
 # $begin user_diabetes.py$$ $newlinech #$$
 # $spell
-#	sim
-#	nslist
-#	ae
-#	ts
-#	te
-#	mtother
-#	mtspecific
-#	covariate
-#	covariates
-#	jk
-#	mulcov
-#	smoothings
-#	pini
-#	cv
-#	std
-#	integrand
-#	integrands
-#	py
-#	str
-#	bool
-#	var
-#	rel
-#	bmi
-#	ik
+#  sim
+#  nslist
+#  ae
+#  ts
+#  te
+#  mtother
+#  mtspecific
+#  covariate
+#  covariates
+#  jk
+#  mulcov
+#  smoothings
+#  pini
+#  cv
+#  std
+#  integrand
+#  integrands
+#  py
+#  str
+#  bool
+#  var
+#  rel
+#  bmi
+#  ik
 # $$
 #
 # $section An Example / Speed Test Fitting Simulated Diabetes Data$$
@@ -171,8 +171,8 @@ node_list = [ 'US', 'Alabama', 'California' ]
 # given prevalence, mtspecific should determine chi.
 # $srccode%py%
 integrand_table = [
-	 { 'name':'mtspecific' },
-	 { 'name':'prevalence' }
+    { 'name':'mtspecific' },
+    { 'name':'prevalence' }
 ]
 # %$$
 #
@@ -253,10 +253,10 @@ child_time_grid  = { 'index':[0], 'std':0.2 }
 # $subhead ode_step_size$$
 # This is a $code str$$ that specifies the
 # $cref/
-#	ode_step_size/
-#	option_table/
-#	Age Average Grid/
-#	ode_step_size
+#  ode_step_size/
+#  option_table/
+#  Age Average Grid/
+#  ode_step_size
 # /$$.
 # It is suggest that this value be less than the intervals in the
 # age and time grids:
@@ -268,7 +268,7 @@ ode_step_size = '10.0'
 # This is a $code float$$ that specifies the measurement standard deviations
 # $cref/meas_std/data_table/meas_std/$$ by
 # $codei%
-#	%meas_std% = %meas_cv% * %meas_value%
+#  %meas_std% = %meas_cv% * %meas_value%
 # %$$
 # For this example, the data table column
 # $cref/meas_value/data_table/meas_value/$$ does not have any noise; i.e.,
@@ -355,7 +355,7 @@ derivative_test_fixed = 'none'
 # $subhead truth2start$$
 # This is a $code float$$ that is used to map
 # $codei%
-#	%start_var_value% = %truth2start% * %truth_var_value%
+#  %start_var_value% = %truth2start% * %truth_var_value%
 # %$$
 # for each model variable that is not constrained to a specific value.
 # The notation
@@ -376,7 +376,7 @@ truth2start = 0.3
 # to be accepted as passing the test.
 # If the test passes, for each model variable
 # $codei%
-#	%accept_rel_err% >= %fit_var_value% / %truth_var_value% - 1.0
+#  %accept_rel_err% >= %fit_var_value% / %truth_var_value% - 1.0
 # %$$
 # where
 # $cref/truth_var_value/truth_var_table/truth_var_value/$$ is the true value
@@ -400,593 +400,593 @@ import math
 import time
 test_program = 'example/user/diabetes.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
-	usage  = 'python3 ' + test_program + '\n'
-	usage += 'where python3 is the python 3 program on your system\n'
-	usage += 'and working directory is the dismod_at distribution directory\n'
-	sys.exit(usage)
+   usage  = 'python3 ' + test_program + '\n'
+   usage += 'where python3 is the python 3 program on your system\n'
+   usage += 'and working directory is the dismod_at distribution directory\n'
+   sys.exit(usage)
 start_second = time.time()
 #
 # import dismod_at
 local_dir = os.getcwd() + '/python'
 if( os.path.isdir( local_dir + '/dismod_at' ) ) :
-	sys.path.insert(0, local_dir)
+   sys.path.insert(0, local_dir)
 import dismod_at
 #
 # change into the build/example/user directory
 if not os.path.exists('build/example/user') :
-	os.makedirs('build/example/user')
+   os.makedirs('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 def log_bilinear(grid_value, a, t) :
-	# denominator
-	da  = parent_age_grid['end'] - parent_age_grid['start']
-	dt  = parent_time_grid['end'] - parent_time_grid['start']
-	den = da * dt;
-	num = 0.0
-	#
-	# value at start age and start time
-	da   = parent_age_grid['end'] - a
-	dt   = parent_time_grid['end'] - t
-	num += math.log( grid_value['start_age, start_time'] ) * da * dt
-	#
-	# value at start age and end time
-	da   = parent_age_grid['end'] - a
-	dt   = t - parent_time_grid['start']
-	num += math.log( grid_value['start_age, end_time'] ) * da * dt
-	#
-	# value at end age and start time
-	da   = a - parent_age_grid['start']
-	dt   = parent_time_grid['end'] - t
-	num += math.log( grid_value['end_age, start_time'] ) * da * dt
-	#
-	# value at end age and end time
-	da   = a - parent_age_grid['start']
-	dt   = t - parent_time_grid['start']
-	num += math.log( grid_value['end_age, end_time'] ) * da * dt
-	#
-	return math.exp( num / den )
+   # denominator
+   da  = parent_age_grid['end'] - parent_age_grid['start']
+   dt  = parent_time_grid['end'] - parent_time_grid['start']
+   den = da * dt;
+   num = 0.0
+   #
+   # value at start age and start time
+   da   = parent_age_grid['end'] - a
+   dt   = parent_time_grid['end'] - t
+   num += math.log( grid_value['start_age, start_time'] ) * da * dt
+   #
+   # value at start age and end time
+   da   = parent_age_grid['end'] - a
+   dt   = t - parent_time_grid['start']
+   num += math.log( grid_value['start_age, end_time'] ) * da * dt
+   #
+   # value at end age and start time
+   da   = a - parent_age_grid['start']
+   dt   = parent_time_grid['end'] - t
+   num += math.log( grid_value['end_age, start_time'] ) * da * dt
+   #
+   # value at end age and end time
+   da   = a - parent_age_grid['start']
+   dt   = t - parent_time_grid['start']
+   num += math.log( grid_value['end_age, end_time'] ) * da * dt
+   #
+   return math.exp( num / den )
 #
 def true_rate(node, rate, a, t) :
-	parent_node = node_list[0]
-	if node != parent_node :
-		even_child = node_list.index(node) % 2 == 0
-	# default
-	grid_value = dict()
-	# -------------------------------------------------------------------------
-	if rate == 'pini' :
-		if node == parent_node :
-			grid_value['start_age, start_time'] = .01
-			grid_value['start_age, end_time']   = .01
-		elif even_child :
-			grid_value['start_age, start_time'] = math.exp(0.1)
-			grid_value['start_age, end_time']   = math.exp(0.1)
-		else :
-			grid_value['start_age, start_time'] = math.exp(-0.1)
-			grid_value['start_age, end_time']   = math.exp(-0.1)
-		#
-		# pini is constant in age
-		grid_value['end_age, start_time'] = grid_value['start_age, start_time']
-		grid_value['end_age, end_time']   = grid_value['start_age, end_time']
-		#
-		ret = log_bilinear(grid_value, a, t)
-		if node != parent_node :
-			ret = math.log(ret)
-	# -------------------------------------------------------------------------
-	elif rate == 'iota' :
-		if node == parent_node :
-			grid_value['start_age, start_time'] = .001
-			grid_value['start_age, end_time']   = .002
-			grid_value['end_age, start_time']   = .01
-			grid_value['end_age, end_time']     = .02
-		elif even_child :
-			grid_value['start_age, start_time'] = math.exp(.15)
-			grid_value['start_age, end_time']   = math.exp(.15)
-			grid_value['end_age, start_time']   = math.exp(.15)
-			grid_value['end_age, end_time']     = math.exp(.15)
-		else :
-			grid_value['start_age, start_time'] = math.exp(-.15)
-			grid_value['start_age, end_time']   = math.exp(-.15)
-			grid_value['end_age, start_time']   = math.exp(-.15)
-			grid_value['end_age, end_time']     = math.exp(-.15)
-		#
-		ret = log_bilinear(grid_value, a, t)
-		if node != parent_node :
-			ret = math.log(ret)
-	# -------------------------------------------------------------------------
-	# we are constraining omega to its true value so we do a detailed
-	# simulation of the random effect for omega; i.e., it is not constant
-	elif rate == 'omega' :
-		if node == parent_node :
-			grid_value['start_age, start_time'] = .003
-			grid_value['start_age, end_time']   = .002
-			grid_value['end_age, start_time']   = .3
-			grid_value['end_age, end_time']     = .2
-		elif even_child :
-			grid_value['start_age, start_time'] = math.exp(.10)
-			grid_value['start_age, end_time']   = math.exp(.20)
-			grid_value['end_age, start_time']   = math.exp(.20)
-			grid_value['end_age, end_time']     = math.exp(.30)
-		else :
-			grid_value['start_age, start_time'] = math.exp(-.10)
-			grid_value['start_age, end_time']   = math.exp(-.20)
-			grid_value['end_age, start_time']   = math.exp(-.20)
-			grid_value['end_age, end_time']     = math.exp(-.30)
-		#
-		ret = log_bilinear(grid_value, a, t)
-		if node != parent_node :
-			ret = math.log(ret)
-	# -------------------------------------------------------------------------
-	elif rate == 'chi' :
-		if node == parent_node :
-			grid_value['start_age, start_time'] = .004
-			grid_value['start_age, end_time']   = .002
-			grid_value['end_age, start_time']   = .1
-			grid_value['end_age, end_time']     = .05
-		elif even_child :
-			grid_value['start_age, start_time'] = math.exp(.25)
-			grid_value['start_age, end_time']   = math.exp(.25)
-			grid_value['end_age, start_time']   = math.exp(.25)
-			grid_value['end_age, end_time']     = math.exp(.25)
-		else :
-			grid_value['start_age, start_time'] = math.exp(-.25)
-			grid_value['start_age, end_time']   = math.exp(-.25)
-			grid_value['end_age, start_time']   = math.exp(-.25)
-			grid_value['end_age, end_time']     = math.exp(-.25)
-		#
-		ret = log_bilinear(grid_value, a, t)
-		if node != parent_node :
-			ret = math.log(ret)
-	# -------------------------------------------------------------------------
-	else :
-		assert False
-	#
-	return ret
+   parent_node = node_list[0]
+   if node != parent_node :
+      even_child = node_list.index(node) % 2 == 0
+   # default
+   grid_value = dict()
+   # -------------------------------------------------------------------------
+   if rate == 'pini' :
+      if node == parent_node :
+         grid_value['start_age, start_time'] = .01
+         grid_value['start_age, end_time']   = .01
+      elif even_child :
+         grid_value['start_age, start_time'] = math.exp(0.1)
+         grid_value['start_age, end_time']   = math.exp(0.1)
+      else :
+         grid_value['start_age, start_time'] = math.exp(-0.1)
+         grid_value['start_age, end_time']   = math.exp(-0.1)
+      #
+      # pini is constant in age
+      grid_value['end_age, start_time'] = grid_value['start_age, start_time']
+      grid_value['end_age, end_time']   = grid_value['start_age, end_time']
+      #
+      ret = log_bilinear(grid_value, a, t)
+      if node != parent_node :
+         ret = math.log(ret)
+   # -------------------------------------------------------------------------
+   elif rate == 'iota' :
+      if node == parent_node :
+         grid_value['start_age, start_time'] = .001
+         grid_value['start_age, end_time']   = .002
+         grid_value['end_age, start_time']   = .01
+         grid_value['end_age, end_time']     = .02
+      elif even_child :
+         grid_value['start_age, start_time'] = math.exp(.15)
+         grid_value['start_age, end_time']   = math.exp(.15)
+         grid_value['end_age, start_time']   = math.exp(.15)
+         grid_value['end_age, end_time']     = math.exp(.15)
+      else :
+         grid_value['start_age, start_time'] = math.exp(-.15)
+         grid_value['start_age, end_time']   = math.exp(-.15)
+         grid_value['end_age, start_time']   = math.exp(-.15)
+         grid_value['end_age, end_time']     = math.exp(-.15)
+      #
+      ret = log_bilinear(grid_value, a, t)
+      if node != parent_node :
+         ret = math.log(ret)
+   # -------------------------------------------------------------------------
+   # we are constraining omega to its true value so we do a detailed
+   # simulation of the random effect for omega; i.e., it is not constant
+   elif rate == 'omega' :
+      if node == parent_node :
+         grid_value['start_age, start_time'] = .003
+         grid_value['start_age, end_time']   = .002
+         grid_value['end_age, start_time']   = .3
+         grid_value['end_age, end_time']     = .2
+      elif even_child :
+         grid_value['start_age, start_time'] = math.exp(.10)
+         grid_value['start_age, end_time']   = math.exp(.20)
+         grid_value['end_age, start_time']   = math.exp(.20)
+         grid_value['end_age, end_time']     = math.exp(.30)
+      else :
+         grid_value['start_age, start_time'] = math.exp(-.10)
+         grid_value['start_age, end_time']   = math.exp(-.20)
+         grid_value['end_age, start_time']   = math.exp(-.20)
+         grid_value['end_age, end_time']     = math.exp(-.30)
+      #
+      ret = log_bilinear(grid_value, a, t)
+      if node != parent_node :
+         ret = math.log(ret)
+   # -------------------------------------------------------------------------
+   elif rate == 'chi' :
+      if node == parent_node :
+         grid_value['start_age, start_time'] = .004
+         grid_value['start_age, end_time']   = .002
+         grid_value['end_age, start_time']   = .1
+         grid_value['end_age, end_time']     = .05
+      elif even_child :
+         grid_value['start_age, start_time'] = math.exp(.25)
+         grid_value['start_age, end_time']   = math.exp(.25)
+         grid_value['end_age, start_time']   = math.exp(.25)
+         grid_value['end_age, end_time']     = math.exp(.25)
+      else :
+         grid_value['start_age, start_time'] = math.exp(-.25)
+         grid_value['start_age, end_time']   = math.exp(-.25)
+         grid_value['end_age, start_time']   = math.exp(-.25)
+         grid_value['end_age, end_time']     = math.exp(-.25)
+      #
+      ret = log_bilinear(grid_value, a, t)
+      if node != parent_node :
+         ret = math.log(ret)
+   # -------------------------------------------------------------------------
+   else :
+      assert False
+   #
+   return ret
 # ------------------------------------------------------------------------
 def example_db (file_name) :
-	# ------------------------------------------------------------------------
-	# functions used for priors in smoothing
-	#
-	# Note that there are no forward differences for covariate multiplier grids.
-	def fun_mulcov_sex(a, t) :
-		return('prior_sex',          None, None)
-	def fun_mulcov_bmi(a, t) :
-		return('prior_bmi',         None, None)
-	def fun_mulcov_ms_2000(a, t) :
-		return('prior_ms_2000',     None, None)
-	#
-	# priors used in smoothing for iota
-	def fun_iota_parent(a, t) :
-		return ( \
-			'prior_pos_parent_value', 'prior_parent_age', 'prior_parent_time')
-	def fun_iota_child(a, t) :
-		return ('prior_N(0,0.5)', 'prior_child_age', 'prior_child_time')
-	#
-	# priors used in smoothing for chi
-	def fun_chi_parent(a, t) :
-		return ( \
-			'prior_pos_parent_value', 'prior_parent_age', 'prior_parent_time')
-	def fun_chi_child(a, t) :
-		return ('prior_N(0,0.5)', 'prior_child_age', 'prior_child_time')
-	#
-	# use const_value to constrain omega to true value
-	def fun_omega(node) :
-		# Use default argument to bind the value of node at point of
-		# definition instead of at point of call.
-		def fun_omega_node(a, t, node = node) :
-			true_value = true_rate(node, 'omega', a, t)
-			return (true_value, 'prior_U(-inf,inf)', 'prior_U(-inf,inf)')
-		return fun_omega_node
-	#
-	# priors used in smoothing for pini
-	def fun_pini_parent(a, t) :
-		return ('prior_pini_parent_value', None, 'prior_parent_time')
-	def fun_pini_child(a, t) :
-		return ('prior_N(0,0.5)', None, 'prior_child_time')
-	# ----------------------------------------------------------------------
-	fun                       = dict()
-	fun['mulcov_sex']         = fun_mulcov_sex
-	fun['mulcov_bmi']         = fun_mulcov_bmi
-	fun['mulcov_ms_2000']     = fun_mulcov_ms_2000
-	fun['iota_parent']        = fun_iota_parent
-	fun['iota_child']         = fun_iota_child
-	fun['chi_parent']         = fun_chi_parent
-	fun['chi_child']          = fun_chi_child
-	fun['pini_parent']        = fun_pini_parent
-	fun['pini_child']         = fun_pini_child
-	# ----------------------------------------------------------------------
-	# age_list, age_index_rate_parent, age_indexrate__child
-	start                     = parent_age_grid['start']
-	end                       = parent_age_grid['end']
-	number                    = parent_age_grid['number']
-	interval                  = (end - start) / (number - 1)
-	age_list                  = [ start + j * interval for j in range(number) ]
-	age_index_rate_parent     = range(number)
-	age_index_rate_child      = child_age_grid['index']
-	#
-	# ----------------------------------------------------------------------
-	# time_list, time_index_rate_parent, time_index_rate_child
-	start                  = parent_time_grid['start']
-	end                    = parent_time_grid['end']
-	number                 = parent_time_grid['number']
-	interval               = (end - start) / (number - 1)
-	time_list              = [ start + i * interval for i in range(number) ]
-	time_index_rate_parent = range(number)
-	time_index_rate_child  = child_time_grid['index']
-	# ----------------------------------------------------------------------
-	# node table:
-	parent_node = node_list[0]
-	node_table = [ { 'name':parent_node, 'parent':'' } ]
-	for i in range(1, len(node_list) ) :
-		node_table.append( { 'name':node_list[i], 'parent':parent_node } )
-	#
-	# ----------------------------------------------------------------------
-	# weight table
-	weight_table = list()
-	# ----------------------------------------------------------------------
-	# prior_table
-	prior_table = [
-		{
-			# prior_N(0,0.5)
-			'name':     'prior_N(0,0.5)',
-			'density':  'gaussian',
-			'mean':     0.0,
-			'std':      math.sqrt(0.5),
-		} , {
-			# prior_U(-inf,inf)
-			'name':     'prior_U(-inf,inf)',
-			'density':  'uniform',
-			'mean':     0.0,
-		} , {
-			# prior_pini_parent_value
-			'name':     'prior_pini_parent_value',
-			'density':  'uniform',
-			'mean':     0.1,  # setting start_var table so mean has no affect
-			'lower':    0.0,
-			'upper':    1.0,
-			'eta':      1e-5, # used for log-scaling during optimization
-		} , {
-			# prior_pos_parent_value
-			'name':     'prior_pos_parent_value',
-			'density':  'uniform',
-			'mean':     0.1, # setting start_var table so mean has no affect
-			'lower':    1e-8,
-			'upper':    1.0,
-			'eta':      0.0, # used for log-scaling during optimization
-		} , {
-			# prior_parent_age
-			'name':     'prior_parent_age',
-			'density':  'log_gaussian',
-			'mean':     0.0,
-			'std':      parent_age_grid['std'],
-			'eta':      1e-5,
-		} , {
-			# prior_parent_time
-			'name':     'prior_parent_time',
-			'density':  'log_gaussian',
-			'mean':     0.0,
-			'std':      parent_time_grid['std'],
-			'eta':      1e-5,
-		} , {
-			# prior_child_age
-			'name':     'prior_child_age',
-			'density':  'gaussian',
-			'mean':     0.0,
-			'std':      child_age_grid['std'],
-			'eta':      1e-5,
-		} , {
-			# prior_child_time
-			'name':     'prior_child_time',
-			'density':  'gaussian',
-			'mean':     0.0,
-			'std':      child_time_grid['std'],
-			'eta':      1e-5,
-		} , {
-			# prior_sex
-			'name':     'prior_sex',
-			'density':  'uniform',
-			'mean':     0.0,
-			'lower':    -2.0,
-			'upper':    +2.0,
-		} , {
-			# prior_bmi
-			'name':     'prior_bmi',
-			'density':  'uniform',
-			'mean':     0.0,
-			'lower':    -0.1,
-			'upper':    +0.1
-		} , {
-			# prior_ms_2000
-			'name':     'prior_ms_2000',
-			'density':  'uniform',
-			'mean':     0.0,
-			'lower':    -1.0,
-			'upper':    +1.0,
-			'mean':     0.0,
-		}
-	]
-	# ----------------------------------------------------------------------
-	# smooth table and nslist_table
-	smooth_table   = list()
-	nslist_table   = dict()
-	#
-	# smooth_mulcov
-	for cov in [ 'sex', 'bmi', 'ms_2000' ] :
-		smooth_table.append( {
-			'name':     'smooth_mulcov_' + cov,
-			'age_id':   [0],
-			'time_id':  [0],
-			'fun':      fun['mulcov_' + cov]
-		} )
-	for rate in [ 'pini', 'iota', 'chi' ] :
-		age_index = age_index_rate_parent
-		if rate == 'pini' :
-			age_index = [0]
-		#
-		# smooth_rate_parent
-		name = rate + '_parent'
-		smooth_table.append( {
-			'name':        'smooth_' + name        ,
-			'age_id':       age_index              ,
-			'time_id':      time_index_rate_parent ,
-			'fun':          fun[name]
-		} )
-		#
-		age_index = age_index_rate_child
-		if rate == 'pini' :
-			age_index = [0]
-		#
-		# smooth_rate_child
-		name = rate + '_child'
-		smooth_table.append( {
-			'name':        'smooth_' + name       ,
-			'age_id':       age_index             ,
-			'time_id':      time_index_rate_child ,
-			'fun':          fun[name]
-		} )
-	#
-	nslist_table['nslist_omega_child'] = list()
-	for node in node_list :
-		name                 = 'smooth_omega_' + node
-		smoothing            = { 'name': name }
-		smoothing['age_id']  = age_index_rate_parent
-		smoothing['time_id'] = time_index_rate_parent
-		smoothing['fun']     = fun_omega(node)
-		smooth_table.append( smoothing )
-		#
-		if node != parent_node :
-			nslist_table['nslist_omega_child'].append( (node, name) )
-	#
-	# no standard deviation multipliers
-	for dictionary in smooth_table :
-		for name in [ 'value' , 'dage', 'dtime' ] :
-			key   = 'mulstd_' + name + '_prior_name'
-			value = None
-			dictionary[key] = value
-	# -----------------------------------------------------------------------
-	# covariate table:
-	covariate_table = [
-		{'name':'sex',     'reference':0.0,  'max_difference':0.6  } ,
-		{'name':'bmi',     'reference':27.0, 'max_difference':None } ,
-		{'name':'ms_2000', 'reference':0.0,  'max_difference':None } ,
-	]
-	#
-	# mulcov table:
-	mulcov_table = [
-		{
-			# alpha for iota and sex
-			'covariate': 'sex',
-			'type':      'rate_value',
-			'effected':  'iota',
-			'group':     'world',
-			'smooth':    'smooth_mulcov_sex'
-		} , {
-			# alpha for iota and bmi
-			'covariate': 'bmi',
-			'type':      'rate_value',
-			'effected':  'iota',
-			'group':     'world',
-			'smooth':    'smooth_mulcov_bmi'
-		} , {
-			# beta for prevalence and ms_2000
-			'covariate': 'ms_2000',
-			'type':      'meas_value',
-			'effected':  'prevalence',
-			'group':     'world',
-			'smooth':    'smooth_mulcov_ms_2000'
-		}
-	]
-	# ----------------------------------------------------------------------
-	# rate table:
-	rate_table = [
-		{	'name':          'pini',
-			'parent_smooth': 'smooth_pini_parent',
-			'child_smooth':  'smooth_pini_child',
-			'child_nslist':  None,
-		} , {
-			'name':          'iota',
-			'parent_smooth': 'smooth_iota_parent',
-			'child_smooth':  'smooth_iota_child',
-			'child_nslist':  None,
-		} , {
-			'name':          'rho',
-			'parent_smooth': None,
-			'child_smooth':  None,
-		} , {
-			'name':          'chi',
-			'parent_smooth': 'smooth_chi_parent',
-			'child_smooth':  'smooth_chi_child',
-			'child_nslist':  None,
-		} , {
-			'name':          'omega',
-			'parent_smooth': 'smooth_omega_' + parent_node,
-			'child_smooth':  None,
-			'child_nslist':  'nslist_omega_child',
-		}
-	]
-	# ----------------------------------------------------------------------
-	# data table, avgint_table:
-	data_table   = list()
-	avgint_table = list()
-	#
-	# for each integrand, age, time, node
-	n_integrand = len(integrand_table)
-	n_age       = len(age_list)
-	n_time      = len(time_list)
-	n_node      = len(node_table)
-	for k1 in range(n_integrand * n_age * n_time * n_node * meas_repeat) :
-		den         = n_age * n_time * n_node * meas_repeat
-		i_integrand = int( k1 / den )
-		k2          =      k1 % den
-		#
-		den         = n_time * n_node * meas_repeat
-		i_age       = int( k2 / den )
-		k3          =      k2 % den
-		#
-		den         = n_node * meas_repeat
-		i_time      = int( k3 / den )
-		k4          =      k3 % den
-		#
-		den         = meas_repeat
-		i_node      = int( k4 / den )
-		#
-		age         = age_list[i_age]
-		time        = time_list[i_time]
-		integrand   = integrand_table[i_integrand]['name']
-		node        = node_table[i_node]['name']
-		#
-		# sex
-		if k1 % 2 == 0 :
-			sex = -0.5
-		else :
-			sex = +0.5
-		#
-		# market scan
-		if k1 % 6 < 3 :
-			ms_2000 = 1.0
-		else :
-			ms_2000 = 0.0
-		#
-		# body mass index
-		bmi = 20 + k1 % 17
-		#
-		row = {
-			'node':        node,
-			'subgroup':    'world',
-			'integrand':   integrand,
-			'density':     'log_gaussian',
-			'weight':      '',
-			'age_lower':    age,
-			'age_upper':    age,
-			'time_lower':   time,
-			'time_upper':   time,
-			'sex':          sex,
-			'ms_2000':      ms_2000,
-			'bmi':          bmi,
-			'one':          1,
-		}
-		avgint_table.append( copy.copy(row) )
-		#
-		if i_age > 0 and i_time > 0 :
-			age  = (age_list[i_age]   + age_list[i_age-1])   / 2.0
-			time = (time_list[i_time] + time_list[i_time-1]) / 2.0
-		row = {
-			'node':        node,
-			'subgroup':    'world',
-			'integrand':   integrand,
-			'density':     'log_gaussian',
-			'weight':      '',
-			'age_lower':    age,
-			'age_upper':    age,
-			'time_lower':   time,
-			'time_upper':   time,
-			'sex':          sex,
-			'ms_2000':      ms_2000,
-			'bmi':          bmi,
-			'one':          1,
-		}
-		avgint_table.append( copy.copy(row) )
-	# ----------------------------------------------------------------------
-	# option_table
-	option_table = [
-		{ 'name':'rate_case',              'value':'iota_pos_rho_zero'    },
-		{ 'name':'parent_node_name',       'value':parent_node            },
-		{ 'name':'ode_step_size',          'value':ode_step_size          },
-		{ 'name':'random_seed',            'value':random_seed            },
-		{ 'name':'bound_random',           'value':'1.0'                  },
+   # ------------------------------------------------------------------------
+   # functions used for priors in smoothing
+   #
+   # Note that there are no forward differences for covariate multiplier grids.
+   def fun_mulcov_sex(a, t) :
+      return('prior_sex',          None, None)
+   def fun_mulcov_bmi(a, t) :
+      return('prior_bmi',         None, None)
+   def fun_mulcov_ms_2000(a, t) :
+      return('prior_ms_2000',     None, None)
+   #
+   # priors used in smoothing for iota
+   def fun_iota_parent(a, t) :
+      return ( \
+         'prior_pos_parent_value', 'prior_parent_age', 'prior_parent_time')
+   def fun_iota_child(a, t) :
+      return ('prior_N(0,0.5)', 'prior_child_age', 'prior_child_time')
+   #
+   # priors used in smoothing for chi
+   def fun_chi_parent(a, t) :
+      return ( \
+         'prior_pos_parent_value', 'prior_parent_age', 'prior_parent_time')
+   def fun_chi_child(a, t) :
+      return ('prior_N(0,0.5)', 'prior_child_age', 'prior_child_time')
+   #
+   # use const_value to constrain omega to true value
+   def fun_omega(node) :
+      # Use default argument to bind the value of node at point of
+      # definition instead of at point of call.
+      def fun_omega_node(a, t, node = node) :
+         true_value = true_rate(node, 'omega', a, t)
+         return (true_value, 'prior_U(-inf,inf)', 'prior_U(-inf,inf)')
+      return fun_omega_node
+   #
+   # priors used in smoothing for pini
+   def fun_pini_parent(a, t) :
+      return ('prior_pini_parent_value', None, 'prior_parent_time')
+   def fun_pini_child(a, t) :
+      return ('prior_N(0,0.5)', None, 'prior_child_time')
+   # ----------------------------------------------------------------------
+   fun                       = dict()
+   fun['mulcov_sex']         = fun_mulcov_sex
+   fun['mulcov_bmi']         = fun_mulcov_bmi
+   fun['mulcov_ms_2000']     = fun_mulcov_ms_2000
+   fun['iota_parent']        = fun_iota_parent
+   fun['iota_child']         = fun_iota_child
+   fun['chi_parent']         = fun_chi_parent
+   fun['chi_child']          = fun_chi_child
+   fun['pini_parent']        = fun_pini_parent
+   fun['pini_child']         = fun_pini_child
+   # ----------------------------------------------------------------------
+   # age_list, age_index_rate_parent, age_indexrate__child
+   start                     = parent_age_grid['start']
+   end                       = parent_age_grid['end']
+   number                    = parent_age_grid['number']
+   interval                  = (end - start) / (number - 1)
+   age_list                  = [ start + j * interval for j in range(number) ]
+   age_index_rate_parent     = range(number)
+   age_index_rate_child      = child_age_grid['index']
+   #
+   # ----------------------------------------------------------------------
+   # time_list, time_index_rate_parent, time_index_rate_child
+   start                  = parent_time_grid['start']
+   end                    = parent_time_grid['end']
+   number                 = parent_time_grid['number']
+   interval               = (end - start) / (number - 1)
+   time_list              = [ start + i * interval for i in range(number) ]
+   time_index_rate_parent = range(number)
+   time_index_rate_child  = child_time_grid['index']
+   # ----------------------------------------------------------------------
+   # node table:
+   parent_node = node_list[0]
+   node_table = [ { 'name':parent_node, 'parent':'' } ]
+   for i in range(1, len(node_list) ) :
+      node_table.append( { 'name':node_list[i], 'parent':parent_node } )
+   #
+   # ----------------------------------------------------------------------
+   # weight table
+   weight_table = list()
+   # ----------------------------------------------------------------------
+   # prior_table
+   prior_table = [
+      {
+         # prior_N(0,0.5)
+         'name':     'prior_N(0,0.5)',
+         'density':  'gaussian',
+         'mean':     0.0,
+         'std':      math.sqrt(0.5),
+      } , {
+         # prior_U(-inf,inf)
+         'name':     'prior_U(-inf,inf)',
+         'density':  'uniform',
+         'mean':     0.0,
+      } , {
+         # prior_pini_parent_value
+         'name':     'prior_pini_parent_value',
+         'density':  'uniform',
+         'mean':     0.1,  # setting start_var table so mean has no affect
+         'lower':    0.0,
+         'upper':    1.0,
+         'eta':      1e-5, # used for log-scaling during optimization
+      } , {
+         # prior_pos_parent_value
+         'name':     'prior_pos_parent_value',
+         'density':  'uniform',
+         'mean':     0.1, # setting start_var table so mean has no affect
+         'lower':    1e-8,
+         'upper':    1.0,
+         'eta':      0.0, # used for log-scaling during optimization
+      } , {
+         # prior_parent_age
+         'name':     'prior_parent_age',
+         'density':  'log_gaussian',
+         'mean':     0.0,
+         'std':      parent_age_grid['std'],
+         'eta':      1e-5,
+      } , {
+         # prior_parent_time
+         'name':     'prior_parent_time',
+         'density':  'log_gaussian',
+         'mean':     0.0,
+         'std':      parent_time_grid['std'],
+         'eta':      1e-5,
+      } , {
+         # prior_child_age
+         'name':     'prior_child_age',
+         'density':  'gaussian',
+         'mean':     0.0,
+         'std':      child_age_grid['std'],
+         'eta':      1e-5,
+      } , {
+         # prior_child_time
+         'name':     'prior_child_time',
+         'density':  'gaussian',
+         'mean':     0.0,
+         'std':      child_time_grid['std'],
+         'eta':      1e-5,
+      } , {
+         # prior_sex
+         'name':     'prior_sex',
+         'density':  'uniform',
+         'mean':     0.0,
+         'lower':    -2.0,
+         'upper':    +2.0,
+      } , {
+         # prior_bmi
+         'name':     'prior_bmi',
+         'density':  'uniform',
+         'mean':     0.0,
+         'lower':    -0.1,
+         'upper':    +0.1
+      } , {
+         # prior_ms_2000
+         'name':     'prior_ms_2000',
+         'density':  'uniform',
+         'mean':     0.0,
+         'lower':    -1.0,
+         'upper':    +1.0,
+         'mean':     0.0,
+      }
+   ]
+   # ----------------------------------------------------------------------
+   # smooth table and nslist_table
+   smooth_table   = list()
+   nslist_table   = dict()
+   #
+   # smooth_mulcov
+   for cov in [ 'sex', 'bmi', 'ms_2000' ] :
+      smooth_table.append( {
+         'name':     'smooth_mulcov_' + cov,
+         'age_id':   [0],
+         'time_id':  [0],
+         'fun':      fun['mulcov_' + cov]
+      } )
+   for rate in [ 'pini', 'iota', 'chi' ] :
+      age_index = age_index_rate_parent
+      if rate == 'pini' :
+         age_index = [0]
+      #
+      # smooth_rate_parent
+      name = rate + '_parent'
+      smooth_table.append( {
+         'name':        'smooth_' + name        ,
+         'age_id':       age_index              ,
+         'time_id':      time_index_rate_parent ,
+         'fun':          fun[name]
+      } )
+      #
+      age_index = age_index_rate_child
+      if rate == 'pini' :
+         age_index = [0]
+      #
+      # smooth_rate_child
+      name = rate + '_child'
+      smooth_table.append( {
+         'name':        'smooth_' + name       ,
+         'age_id':       age_index             ,
+         'time_id':      time_index_rate_child ,
+         'fun':          fun[name]
+      } )
+   #
+   nslist_table['nslist_omega_child'] = list()
+   for node in node_list :
+      name                 = 'smooth_omega_' + node
+      smoothing            = { 'name': name }
+      smoothing['age_id']  = age_index_rate_parent
+      smoothing['time_id'] = time_index_rate_parent
+      smoothing['fun']     = fun_omega(node)
+      smooth_table.append( smoothing )
+      #
+      if node != parent_node :
+         nslist_table['nslist_omega_child'].append( (node, name) )
+   #
+   # no standard deviation multipliers
+   for dictionary in smooth_table :
+      for name in [ 'value' , 'dage', 'dtime' ] :
+         key   = 'mulstd_' + name + '_prior_name'
+         value = None
+         dictionary[key] = value
+   # -----------------------------------------------------------------------
+   # covariate table:
+   covariate_table = [
+      {'name':'sex',     'reference':0.0,  'max_difference':0.6  } ,
+      {'name':'bmi',     'reference':27.0, 'max_difference':None } ,
+      {'name':'ms_2000', 'reference':0.0,  'max_difference':None } ,
+   ]
+   #
+   # mulcov table:
+   mulcov_table = [
+      {
+         # alpha for iota and sex
+         'covariate': 'sex',
+         'type':      'rate_value',
+         'effected':  'iota',
+         'group':     'world',
+         'smooth':    'smooth_mulcov_sex'
+      } , {
+         # alpha for iota and bmi
+         'covariate': 'bmi',
+         'type':      'rate_value',
+         'effected':  'iota',
+         'group':     'world',
+         'smooth':    'smooth_mulcov_bmi'
+      } , {
+         # beta for prevalence and ms_2000
+         'covariate': 'ms_2000',
+         'type':      'meas_value',
+         'effected':  'prevalence',
+         'group':     'world',
+         'smooth':    'smooth_mulcov_ms_2000'
+      }
+   ]
+   # ----------------------------------------------------------------------
+   # rate table:
+   rate_table = [
+      {  'name':          'pini',
+         'parent_smooth': 'smooth_pini_parent',
+         'child_smooth':  'smooth_pini_child',
+         'child_nslist':  None,
+      } , {
+         'name':          'iota',
+         'parent_smooth': 'smooth_iota_parent',
+         'child_smooth':  'smooth_iota_child',
+         'child_nslist':  None,
+      } , {
+         'name':          'rho',
+         'parent_smooth': None,
+         'child_smooth':  None,
+      } , {
+         'name':          'chi',
+         'parent_smooth': 'smooth_chi_parent',
+         'child_smooth':  'smooth_chi_child',
+         'child_nslist':  None,
+      } , {
+         'name':          'omega',
+         'parent_smooth': 'smooth_omega_' + parent_node,
+         'child_smooth':  None,
+         'child_nslist':  'nslist_omega_child',
+      }
+   ]
+   # ----------------------------------------------------------------------
+   # data table, avgint_table:
+   data_table   = list()
+   avgint_table = list()
+   #
+   # for each integrand, age, time, node
+   n_integrand = len(integrand_table)
+   n_age       = len(age_list)
+   n_time      = len(time_list)
+   n_node      = len(node_table)
+   for k1 in range(n_integrand * n_age * n_time * n_node * meas_repeat) :
+      den         = n_age * n_time * n_node * meas_repeat
+      i_integrand = int( k1 / den )
+      k2          =      k1 % den
+      #
+      den         = n_time * n_node * meas_repeat
+      i_age       = int( k2 / den )
+      k3          =      k2 % den
+      #
+      den         = n_node * meas_repeat
+      i_time      = int( k3 / den )
+      k4          =      k3 % den
+      #
+      den         = meas_repeat
+      i_node      = int( k4 / den )
+      #
+      age         = age_list[i_age]
+      time        = time_list[i_time]
+      integrand   = integrand_table[i_integrand]['name']
+      node        = node_table[i_node]['name']
+      #
+      # sex
+      if k1 % 2 == 0 :
+         sex = -0.5
+      else :
+         sex = +0.5
+      #
+      # market scan
+      if k1 % 6 < 3 :
+         ms_2000 = 1.0
+      else :
+         ms_2000 = 0.0
+      #
+      # body mass index
+      bmi = 20 + k1 % 17
+      #
+      row = {
+         'node':        node,
+         'subgroup':    'world',
+         'integrand':   integrand,
+         'density':     'log_gaussian',
+         'weight':      '',
+         'age_lower':    age,
+         'age_upper':    age,
+         'time_lower':   time,
+         'time_upper':   time,
+         'sex':          sex,
+         'ms_2000':      ms_2000,
+         'bmi':          bmi,
+         'one':          1,
+      }
+      avgint_table.append( copy.copy(row) )
+      #
+      if i_age > 0 and i_time > 0 :
+         age  = (age_list[i_age]   + age_list[i_age-1])   / 2.0
+         time = (time_list[i_time] + time_list[i_time-1]) / 2.0
+      row = {
+         'node':        node,
+         'subgroup':    'world',
+         'integrand':   integrand,
+         'density':     'log_gaussian',
+         'weight':      '',
+         'age_lower':    age,
+         'age_upper':    age,
+         'time_lower':   time,
+         'time_upper':   time,
+         'sex':          sex,
+         'ms_2000':      ms_2000,
+         'bmi':          bmi,
+         'one':          1,
+      }
+      avgint_table.append( copy.copy(row) )
+   # ----------------------------------------------------------------------
+   # option_table
+   option_table = [
+      { 'name':'rate_case',              'value':'iota_pos_rho_zero'    },
+      { 'name':'parent_node_name',       'value':parent_node            },
+      { 'name':'ode_step_size',          'value':ode_step_size          },
+      { 'name':'random_seed',            'value':random_seed            },
+      { 'name':'bound_random',           'value':'1.0'                  },
 
-		{ 'name':'quasi_fixed',            'value':quasi_fixed            },
-		{ 'name':'max_num_iter_fixed',     'value':'300'                  },
-		{ 'name':'print_level_fixed',      'value':'5'                    },
-		{ 'name':'tolerance_fixed',        'value':tolerance_fixed        },
-		{ 'name':'derivative_test_fixed',  'value':derivative_test_fixed  },
+      { 'name':'quasi_fixed',            'value':quasi_fixed            },
+      { 'name':'max_num_iter_fixed',     'value':'300'                  },
+      { 'name':'print_level_fixed',      'value':'5'                    },
+      { 'name':'tolerance_fixed',        'value':tolerance_fixed        },
+      { 'name':'derivative_test_fixed',  'value':derivative_test_fixed  },
 
-		{ 'name':'max_num_iter_random',    'value':'50'                   },
-		{ 'name':'print_level_random',     'value':'0'                    },
-		{ 'name':'tolerance_random',       'value':'1e-8'                 }
-	]
-	# ----------------------------------------------------------------------
-	# subgroup_table
-	subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
-	# ----------------------------------------------------------------------
-	# create database
-	dismod_at.create_database(
-		file_name,
-		age_list,
-		time_list,
-		integrand_table,
-		node_table,
-		subgroup_table,
-		weight_table,
-		covariate_table,
-		avgint_table,
-		data_table,
-		prior_table,
-		smooth_table,
-		nslist_table,
-		rate_table,
-		mulcov_table,
-		option_table
-	)
-	# ----------------------------------------------------------------------
-	return
+      { 'name':'max_num_iter_random',    'value':'50'                   },
+      { 'name':'print_level_random',     'value':'0'                    },
+      { 'name':'tolerance_random',       'value':'1e-8'                 }
+   ]
+   # ----------------------------------------------------------------------
+   # subgroup_table
+   subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
+   # ----------------------------------------------------------------------
+   # create database
+   dismod_at.create_database(
+      file_name,
+      age_list,
+      time_list,
+      integrand_table,
+      node_table,
+      subgroup_table,
+      weight_table,
+      covariate_table,
+      avgint_table,
+      data_table,
+      prior_table,
+      smooth_table,
+      nslist_table,
+      rate_table,
+      mulcov_table,
+      option_table
+   )
+   # ----------------------------------------------------------------------
+   return
 # -----------------------------------------------------------------------
 def create_truth_var_table() :
-	new             = False
-	connection      = dismod_at.create_connection(file_name, new)
-	var_table       = dismod_at.get_table_dict(connection, 'var')
-	rate_table      = dismod_at.get_table_dict(connection, 'rate')
-	covariate_table = dismod_at.get_table_dict(connection, 'covariate')
-	integrand_table = dismod_at.get_table_dict(connection, 'integrand')
-	node_table      = dismod_at.get_table_dict(connection, 'node')
-	time_table      = dismod_at.get_table_dict(connection, 'time')
-	age_table       = dismod_at.get_table_dict(connection, 'age')
-	# -------------------------------------------------------------------------
-	# create truth table
-	tbl_name     = 'truth_var'
-	col_name     = [ 'truth_var_value' ]
-	col_type     = [ 'real' ]
-	row_list     = list()
-	for var_id in range( len(var_table) ) :
-		value = None
-		#
-		row          = var_table[var_id]
-		var_type     = row['var_type']
-		age          = age_table[ row['age_id'] ] ['age']
-		time         = time_table[ row['time_id'] ] ['time']
-		if var_type.startswith('mulcov_') :
-			covariate = covariate_table[row['covariate_id' ]]['covariate_name']
-			value     = mulcov_dict[covariate]
-		elif var_type == 'rate' :
-			node  = node_table[ row['node_id'] ] ['node_name']
-			rate  = rate_table[ row['rate_id'] ] ['rate_name']
-			value = true_rate(node, rate, age, time)
-		else :
-			assert False
-		#
-		row_list.append( [ value ] )
-	dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-	connection.close()
-	return
+   new             = False
+   connection      = dismod_at.create_connection(file_name, new)
+   var_table       = dismod_at.get_table_dict(connection, 'var')
+   rate_table      = dismod_at.get_table_dict(connection, 'rate')
+   covariate_table = dismod_at.get_table_dict(connection, 'covariate')
+   integrand_table = dismod_at.get_table_dict(connection, 'integrand')
+   node_table      = dismod_at.get_table_dict(connection, 'node')
+   time_table      = dismod_at.get_table_dict(connection, 'time')
+   age_table       = dismod_at.get_table_dict(connection, 'age')
+   # -------------------------------------------------------------------------
+   # create truth table
+   tbl_name     = 'truth_var'
+   col_name     = [ 'truth_var_value' ]
+   col_type     = [ 'real' ]
+   row_list     = list()
+   for var_id in range( len(var_table) ) :
+      value = None
+      #
+      row          = var_table[var_id]
+      var_type     = row['var_type']
+      age          = age_table[ row['age_id'] ] ['age']
+      time         = time_table[ row['time_id'] ] ['time']
+      if var_type.startswith('mulcov_') :
+         covariate = covariate_table[row['covariate_id' ]]['covariate_name']
+         value     = mulcov_dict[covariate]
+      elif var_type == 'rate' :
+         node  = node_table[ row['node_id'] ] ['node_name']
+         rate  = rate_table[ row['rate_id'] ] ['rate_name']
+         value = true_rate(node, rate, age, time)
+      else :
+         assert False
+      #
+      row_list.append( [ value ] )
+   dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+   connection.close()
+   return
 # ===========================================================================
 # Run the init command to create the var table
 file_name = 'example.db'
@@ -1023,38 +1023,38 @@ row_list = list()
 # density_id for log_gaussian
 log_gaussian_id = None
 for density_id in range( len( density_table ) ) :
-	if density_table[density_id]['density_name'] == 'log_gaussian' :
-		log_gaussian_id = density_id
+   if density_table[density_id]['density_name'] == 'log_gaussian' :
+      log_gaussian_id = density_id
 #
 for predict_id in range( len(predict_table) ) :
-	#
-	# get prediction for average integrand
-	row = predict_table[predict_id]
-	assert row['sample_index'] == None
-	assert row['avgint_id']    == predict_id
-	avg_integrand = row['avg_integrand']
-	#
-	# initial row using information in avgint table
-	row = copy.copy( avgint_table[predict_id] )
-	#
-	# add information, that is not in avgint_table, to row
-	eta        = 1e-7                     # a very small eta
-	meas_value = avg_integrand            # no noise version of meas_value
-	meas_std   = meas_cv * avg_integrand # noise in simulated data
-	row['density_id'] = log_gaussian_id
-	row['hold_out']   = 0
-	row['meas_std']   = meas_std
-	row['meas_value'] = meas_value
-	row['eta']        = eta
-	row['nu']         = None
-	#
-	# values in same order as col_name
-	row_value = list()
-	for key in col_name :
-		if key != 'data_id' :
-			row_value.append( row[key] )
-	#
-	row_list.append( row_value )
+   #
+   # get prediction for average integrand
+   row = predict_table[predict_id]
+   assert row['sample_index'] == None
+   assert row['avgint_id']    == predict_id
+   avg_integrand = row['avg_integrand']
+   #
+   # initial row using information in avgint table
+   row = copy.copy( avgint_table[predict_id] )
+   #
+   # add information, that is not in avgint_table, to row
+   eta        = 1e-7                     # a very small eta
+   meas_value = avg_integrand            # no noise version of meas_value
+   meas_std   = meas_cv * avg_integrand # noise in simulated data
+   row['density_id'] = log_gaussian_id
+   row['hold_out']   = 0
+   row['meas_std']   = meas_std
+   row['meas_value'] = meas_value
+   row['eta']        = eta
+   row['nu']         = None
+   #
+   # values in same order as col_name
+   row_value = list()
+   for key in col_name :
+      if key != 'data_id' :
+         row_value.append( row[key] )
+   #
+   row_list.append( row_value )
 #
 # drop the old data table
 command = 'DROP TABLE data'
@@ -1085,14 +1085,14 @@ col_name        = [ 'start_var_value' ]
 col_type        = [ 'real' ]
 row_list        = list()
 for var_id in range( len(var_table) ) :
-	truth_var_value  = truth_var_table[var_id]['truth_var_value']
-	var_type         = var_table[var_id]['var_type']
-	rate_id          = var_table[var_id]['rate_id']
-	start_var_value  = truth2start * truth_var_value
-	if var_type == 'rate' :
-			if rate_table[rate_id]['rate_name'] == 'omega' :
-				start_var_value  = truth_var_value
-	row_list.append( [start_var_value] )
+   truth_var_value  = truth_var_table[var_id]['truth_var_value']
+   var_type         = var_table[var_id]['var_type']
+   rate_id          = var_table[var_id]['rate_id']
+   start_var_value  = truth2start * truth_var_value
+   if var_type == 'rate' :
+         if rate_table[rate_id]['rate_name'] == 'omega' :
+            start_var_value  = truth_var_value
+   row_list.append( [start_var_value] )
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 #
@@ -1106,8 +1106,8 @@ dismod_at.system_command_prc([ program, file_name, 'simulate', number_simulate ]
 # Do a fit with no random effects
 cmd            = [ program, file_name, 'fit', 'fixed' ]
 if fit_with_noise_in_data :
-	simulate_index = '0'
-	cmd += [ simulate_index ]
+   simulate_index = '0'
+   cmd += [ simulate_index ]
 dismod_at.system_command_prc(cmd)
 #
 # copy fit_var table to start_var table
@@ -1116,8 +1116,8 @@ dismod_at.system_command_prc([ program, file_name, 'set' , 'start_var', 'fit_var
 # Do a fit with random effects
 cmd            = [ program, file_name, 'fit', 'both' ]
 if fit_with_noise_in_data :
-	simulate_index = '0'
-	cmd += [ simulate_index ]
+   simulate_index = '0'
+   cmd += [ simulate_index ]
 dismod_at.system_command_prc(cmd)
 # -----------------------------------------------------------------------------
 # compare truth and fit
@@ -1130,15 +1130,15 @@ fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 ok              = True
 max_err         = 0.0
 for var_id in range( len(var_table) ) :
-	truth_var_value = truth_var_table[var_id]['truth_var_value']
-	fit_var_value   = fit_var_table[var_id]['fit_var_value']
-	if truth_var_value != 0.0 :
-		rel_err = fit_var_value / truth_var_value - 1.0
-		flag    = abs( rel_err ) <= accept_rel_err
-		ok     &= flag
-		if not flag :
-			print('var_id = ', var_id, ', rel_err = ', rel_err)
-		max_err = max( max_err, abs(rel_err) )
+   truth_var_value = truth_var_table[var_id]['truth_var_value']
+   fit_var_value   = fit_var_table[var_id]['fit_var_value']
+   if truth_var_value != 0.0 :
+      rel_err = fit_var_value / truth_var_value - 1.0
+      flag    = abs( rel_err ) <= accept_rel_err
+      ok     &= flag
+      if not flag :
+         print('var_id = ', var_id, ', rel_err = ', rel_err)
+      max_err = max( max_err, abs(rel_err) )
 assert ok
 # -----------------------------------------------------------------------------
 print('max_err = ', max_err )

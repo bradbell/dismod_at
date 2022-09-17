@@ -6,11 +6,11 @@
 /*
 $begin fixed_effect$$
 $spell
-	vec
-	CppAD
-	var
-	cpp
-	const
+   vec
+   CppAD
+   var
+   cpp
+   const
 $$
 
 $section Setting and Getting the Fixed Effect Vector$$
@@ -39,7 +39,7 @@ $icode fixed_vec$$ back.
 $head pack_object$$
 This argument has prototype
 $codei%
-	const pack_info& %pack_object%
+   const pack_info& %pack_object%
 %$$
 It is the $cref pack_info$$ information corresponding
 to the $cref model_variables$$.
@@ -47,7 +47,7 @@ to the $cref model_variables$$.
 $head n_fixed$$
 This return value has prototype
 $codei%
-	size_t %n_fixed%
+   size_t %n_fixed%
 %$$
 It is the number of
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$ in the model.
@@ -55,7 +55,7 @@ $cref/fixed effects/model_variables/Fixed Effects, theta/$$ in the model.
 $head pack_index$$
 This return value has prototype
 $codei%
-	CppAD::vector<size_t> %pack_index%
+   CppAD::vector<size_t> %pack_index%
 %$$
 It size is equal to $icode n_fixed$$; i.e., the number of
 $cref/fixed effects/model_variables/Fixed Effects, theta/$$ in the model.
@@ -71,7 +71,7 @@ to $icode fixed_vec$$.
 $subhead pack_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<%Float%>& %pack_vec%
+   const CppAD::vector<%Float%>& %pack_vec%
 %$$
 and its size is $icode%pack_object%.size()%$$.
 It specifies the value for all the $cref model_variables$$
@@ -80,7 +80,7 @@ in $cref pack_info$$ format.
 $subhead fixed_vec$$
 This argument has prototype
 $codei%
-	CppAD::vector<%Float%>& %fixed_vec%
+   CppAD::vector<%Float%>& %fixed_vec%
 %$$
 and its size is $icode n_fixed$$.
 It is a copy of the fixed effects in $icode pack_vec$$
@@ -94,7 +94,7 @@ to $icode pack_vec$$.
 $subhead pack_vec$$
 This argument has prototype
 $codei%
-	CppAD::vector<%Float%>& %pack_vec%
+   CppAD::vector<%Float%>& %pack_vec%
 %$$
 and its size is $icode%pack_object%.size()%$$.
 It specifies the value for all the $cref model_variables$$
@@ -105,14 +105,14 @@ the fixed effects correspond to the values in $icode fixed_vec$$.
 $subhead fixed_vec$$
 This argument has prototype
 $codei%
-	const CppAD::vector<%Float%>& %fixed_vec%
+   const CppAD::vector<%Float%>& %fixed_vec%
 %$$
 and its size is $icode n_fixed$$.
 It contains the fixed effects
 as one contiguous vector in an unspecified order.
 
 $children%
-	example/devel/utility/fixed_effect_xam.cpp
+   example/devel/utility/fixed_effect_xam.cpp
 %$$
 $head Example$$
 The file $cref fixed_effect_xam.cpp$$
@@ -131,69 +131,69 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 // ---------------------------------------------------------------------------
 // number fixed
 size_t number_fixed(const pack_info&  pack_object)
-{	assert( pack_object.size() > pack_object.random_size() );
-	return pack_object.size() - pack_object.random_size();
+{  assert( pack_object.size() > pack_object.random_size() );
+   return pack_object.size() - pack_object.random_size();
 }
 // ---------------------------------------------------------------------------
 // fixed2var_id
 CppAD::vector<size_t> fixed2var_id(const pack_info& pack_object )
 {
-	size_t n_random = pack_object.random_size();
-	size_t n_fixed  = number_fixed( pack_object );
-	CppAD::vector<size_t> result( n_fixed );
-	for(size_t fixed_index = 0; fixed_index < n_fixed; ++fixed_index)
-		result[fixed_index] = n_random + fixed_index;
+   size_t n_random = pack_object.random_size();
+   size_t n_fixed  = number_fixed( pack_object );
+   CppAD::vector<size_t> result( n_fixed );
+   for(size_t fixed_index = 0; fixed_index < n_fixed; ++fixed_index)
+      result[fixed_index] = n_random + fixed_index;
 
-	return result;
+   return result;
 }
 // ---------------------------------------------------------------------------
 // unpack_fixed
 template <class Float>
 void unpack_fixed(
-	const pack_info&             pack_object  ,
-	const CppAD::vector<Float>&  pack_vec     ,
-	CppAD::vector<Float>&        fixed_vec    )
-{	assert( fixed_vec.size() == number_fixed(pack_object) );
-	assert( pack_vec.size()  == pack_object.size() );
-	//
-	size_t n_random = pack_object.random_size();
-	size_t n_fixed  = number_fixed( pack_object );
-	for(size_t fixed_index = 0; fixed_index < n_fixed; ++fixed_index)
-		fixed_vec[fixed_index] = pack_vec[fixed_index + n_random];
+   const pack_info&             pack_object  ,
+   const CppAD::vector<Float>&  pack_vec     ,
+   CppAD::vector<Float>&        fixed_vec    )
+{  assert( fixed_vec.size() == number_fixed(pack_object) );
+   assert( pack_vec.size()  == pack_object.size() );
+   //
+   size_t n_random = pack_object.random_size();
+   size_t n_fixed  = number_fixed( pack_object );
+   for(size_t fixed_index = 0; fixed_index < n_fixed; ++fixed_index)
+      fixed_vec[fixed_index] = pack_vec[fixed_index + n_random];
 
-	return;
+   return;
 }
 // ---------------------------------------------------------------------------
 // pack_fixed
 template <class Float>
 void pack_fixed(
-	const pack_info&             pack_object  ,
-	CppAD::vector<Float>&        pack_vec     ,
-	const CppAD::vector<Float>&  fixed_vec    )
-{	assert( fixed_vec.size() == number_fixed(pack_object) );
-	assert( pack_vec.size()  == pack_object.size() );
-	//
-	size_t n_random = pack_object.random_size();
-	size_t n_fixed  = number_fixed( pack_object );
-	for(size_t fixed_index = 0; fixed_index < n_fixed; ++fixed_index)
-		pack_vec[fixed_index + n_random] = fixed_vec[fixed_index];
+   const pack_info&             pack_object  ,
+   CppAD::vector<Float>&        pack_vec     ,
+   const CppAD::vector<Float>&  fixed_vec    )
+{  assert( fixed_vec.size() == number_fixed(pack_object) );
+   assert( pack_vec.size()  == pack_object.size() );
+   //
+   size_t n_random = pack_object.random_size();
+   size_t n_fixed  = number_fixed( pack_object );
+   for(size_t fixed_index = 0; fixed_index < n_fixed; ++fixed_index)
+      pack_vec[fixed_index + n_random] = fixed_vec[fixed_index];
 
 
-	return;
+   return;
 }
 // ---------------------------------------------------------------------------
 
 # define DISMOD_AT_INSTANTIATE_FIXED_EFFECT(Float)        \
-	template void unpack_fixed(                           \
-	const pack_info&             pack_object  ,           \
-	const CppAD::vector<Float>&  pack_vec     ,           \
-	CppAD::vector<Float>&        fixed_vec                \
-	);                                                    \
-	template void pack_fixed(                             \
-	const pack_info&             pack_object  ,           \
-	CppAD::vector<Float>&        pack_vec     ,           \
-	const CppAD::vector<Float>&  fixed_vec                \
-	);
+   template void unpack_fixed(                           \
+   const pack_info&             pack_object  ,           \
+   const CppAD::vector<Float>&  pack_vec     ,           \
+   CppAD::vector<Float>&        fixed_vec                \
+   );                                                    \
+   template void pack_fixed(                             \
+   const pack_info&             pack_object  ,           \
+   CppAD::vector<Float>&        pack_vec     ,           \
+   const CppAD::vector<Float>&  fixed_vec                \
+   );
 
 // instantiations
 DISMOD_AT_INSTANTIATE_FIXED_EFFECT( double )

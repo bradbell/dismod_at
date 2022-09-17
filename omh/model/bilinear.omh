@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 $begin bilinear$$
 $spell
-	dismod
-	Interpolant
+   dismod
+   Interpolant
 $$
 
 
@@ -23,10 +23,10 @@ $head Function Grid$$
 In addition,
 we are given a grid of function values to be interpolated
 $latex \[
-	\left\{
-			\left. v_{i,j} = f( a_i , t_j ) \; \right| \;
-			i = 0, \ldots , M-1 , j = 0 , \ldots , N-1
-	\right\} \; .
+   \left\{
+         \left. v_{i,j} = f( a_i , t_j ) \; \right| \;
+         i = 0, \ldots , M-1 , j = 0 , \ldots , N-1
+   \right\} \; .
 \] $$
 
 $head Interpolant$$
@@ -43,16 +43,16 @@ $latex \[
 f( \alpha , s )
 =
 \frac{a_{i+1} - \alpha}{a_{i+1} - a_i}
-	\frac{t_{j+1} - s}{t_{j+1} - t_j} v_{i,j}
+   \frac{t_{j+1} - s}{t_{j+1} - t_j} v_{i,j}
 +
 \frac{\alpha - a_i}{a_{i+1} - a_i}
-	\frac{t_{j+1} - s}{t_{j+1} - t_j} v_{i+1,j}
+   \frac{t_{j+1} - s}{t_{j+1} - t_j} v_{i+1,j}
 +
 \frac{a_{i+1} - s}{a_{i+1} - a_i}
-	\frac{s - t_j}{t_{j+1} - t_j} v_{i+1,j}
+   \frac{s - t_j}{t_{j+1} - t_j} v_{i+1,j}
 +
 \frac{\alpha - a_i}{a_{i+1} - a_i}
-	\frac{s - t_j}{t_{j+1} - t_j} v_{i+1,j+1}
+   \frac{s - t_j}{t_{j+1} - t_j} v_{i+1,j+1}
 \] $$
 
 $subhead Below Minimum Age$$

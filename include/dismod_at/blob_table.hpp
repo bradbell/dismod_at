@@ -9,20 +9,20 @@
 # include <string>
 
 namespace dismod_at {
-	void write_blob_table(
-		sqlite3*                            db             ,
-		const std::string&                  table_name     ,
-		const std::string&                  col_name       ,
-		const size_t&                       sizeof_data    ,
-		const void*                         data
-	);
-	void read_blob_table(
-		sqlite3*                            db             ,
-		const std::string&                  table_name     ,
-		const std::string&                  col_name       ,
-		size_t&                             sizeof_data    ,
-		void*                               data
-	);
+   void write_blob_table(
+      sqlite3*                            db             ,
+      const std::string&                  table_name     ,
+      const std::string&                  col_name       ,
+      const size_t&                       sizeof_data    ,
+      const void*                         data
+   );
+   void read_blob_table(
+      sqlite3*                            db             ,
+      const std::string&                  table_name     ,
+      const std::string&                  col_name       ,
+      size_t&                             sizeof_data    ,
+      void*                               data
+   );
 }
 
 # endif

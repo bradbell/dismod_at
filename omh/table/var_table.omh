@@ -4,14 +4,14 @@
 # ----------------------------------------------------------------------------
 $begin var_table$$
 $spell
-	var
-	dismod
-	mulstd
-	dage
-	dtime
-	mulcov
-	covariate
-	std
+   var
+   dismod
+   mulstd
+   dage
+   dtime
+   mulcov
+   covariate
+   std
 $$
 
 $section Identifying Model Variables$$
@@ -37,9 +37,9 @@ This variable multiplies the standard deviation in the
 $cref/mulstd_value_prior/smooth_table/mulstd_value_prior_id/$$
 for the corresponding $icode smooth_id$$; see
 $cref/smoothing standard deviation multiplier
-	/model_variables
-	/Fixed Effects, theta
-	/Smoothing Standard Deviation Multipliers, lambda
+   /model_variables
+   /Fixed Effects, theta
+   /Smoothing Standard Deviation Multipliers, lambda
 /$$.
 
 $subhead mulstd_dage$$
@@ -47,9 +47,9 @@ This variable multiplies the standard deviation in the
 $cref/mulstd_dage_prior/smooth_table/mulstd_dage_prior_id/$$
 for the corresponding $icode smooth_id$$; see
 $cref/smoothing standard deviation multiplier
-	/model_variables
-	/Fixed Effects, theta
-	/Smoothing Standard Deviation Multipliers, lambda
+   /model_variables
+   /Fixed Effects, theta
+   /Smoothing Standard Deviation Multipliers, lambda
 /$$.
 
 $subhead mulstd_dtime$$
@@ -57,9 +57,9 @@ This variable multiplies the standard deviation in the
 $cref/mulstd_dtime_prior/smooth_table/mulstd_dtime_prior_id/$$
 for the corresponding $icode smooth_id$$; see
 $cref/smoothing standard deviation multiplier
-	/model_variables
-	/Fixed Effects, theta
-	/Smoothing Standard Deviation Multipliers, lambda
+   /model_variables
+   /Fixed Effects, theta
+   /Smoothing Standard Deviation Multipliers, lambda
 /$$.
 
 $subhead rate$$
@@ -75,15 +75,15 @@ $cref/random effect/model_variables/Random Effects, u/Child Rate Effects/$$.
 $subhead mulcov_rate_value$$
 This variable corresponds to a
 $cref/group
-	/model_variables
-	/Fixed Effects, theta
-	/Group Covariate Multipliers
+   /model_variables
+   /Fixed Effects, theta
+   /Group Covariate Multipliers
 /$$
 or
 $cref/subgroup
-	/model_variables
-	/Random Effects, u
-	/Subgroup Covariate Multipliers
+   /model_variables
+   /Random Effects, u
+   /Subgroup Covariate Multipliers
 /$$
 covariate multiplier that affects the rate for the corresponding
 $icode age_id$$, $icode time_id$$,

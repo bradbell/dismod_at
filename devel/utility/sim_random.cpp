@@ -6,20 +6,20 @@
 /*
 $begin sim_random$$
 $spell
-	Dismod
-	sim
-	mu
-	enum
-	gsl_rng
-	bool
-	cen
+   Dismod
+   sim
+   mu
+   enum
+   gsl_rng
+   bool
+   cen
 $$
 
 $section Simulate a Dismod_at Random Distribution$$
 
 $head Syntax$$
 $icode%z% = sim_random(
-	%density%, %mu%, %delta%, %eta%, %nu%)%$$
+   %density%, %mu%, %delta%, %eta%, %nu%)%$$
 
 $head manage_gsl_rng$$
 The routine $cref manage_gsl_rng$$ sets up and controls the underlying
@@ -28,7 +28,7 @@ simulated random number generator.
 $head density$$
 This argument has prototype
 $codei%
-	density_enum %density%
+   density_enum %density%
 %$$
 It specifies the $cref/density/get_density_table/density_enum/$$
 for the distribution that we are simulating.
@@ -65,7 +65,7 @@ $tend
 $head mu$$
 This argument has prototype
 $codei%
-	double %mu%
+   double %mu%
 %$$
 In the case were $icode density$$ is
 $cref/linear/density_table/Notation/Linear/$$,
@@ -77,7 +77,7 @@ log of the data we are simulating.
 $head delta$$
 This argument has prototype
 $codei%
-	double %delta%
+   double %delta%
 %$$
 It is assumed $icode delta$$ is greater than zero and not infinity.
 
@@ -92,13 +92,13 @@ If the density is
 $cref/log scaled/density_table/Notation/Log Scaled/$$,
 $icode delta$$ is the standard deviation for
 $codei%
-	log( %z% + %eta% ) - log( %mu% + %eta% )
+   log( %z% + %eta% ) - log( %mu% + %eta% )
 %$$
 
 $head eta$$
 This argument has prototype
 $codei%
-	double %eta%
+   double %eta%
 %$$
 In the case were $icode density$$ is
 $code log_gaussian_enum$$, $code log_laplace_enum$$
@@ -110,7 +110,7 @@ Otherwise, $icode eta$$ is not used.
 $head nu$$
 This argument has prototype
 $codei%
-	double %nu%
+   double %nu%
 %$$
 In the case were $icode density$$ is
 $code students_enum$$ or $code log_students_enum$$, it is
@@ -120,7 +120,7 @@ Otherwise it is not used.
 $head z$$
 The return value has prototype
 $codei%
-	double %z%
+   double %z%
 %$$
 It simulates a sample from the specified distribution that is independent
 for the any previous return values.
@@ -141,70 +141,70 @@ $end
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 double sim_random(
-	density_enum density,
-	double       mu     ,
-	double       delta  ,
-	double       eta    ,
-	double nu           )
-{	gsl_rng* rng = CppAD::mixed::get_gsl_rng();
-	//
-	assert( density != uniform_enum );
-	assert( delta > 0.0 );
-	// -----------------------------------------------------------------------
-	// linear Gaussian
-	if( density == gaussian_enum )
-		return mu + gsl_ran_gaussian(rng, delta);
-	if( density == cen_gaussian_enum )
-		return std::max(0.0, mu + gsl_ran_gaussian(rng, delta) );
-	//
-	// linear Laplace
-	if( density == laplace_enum )
-	{	double width = delta / std::sqrt(2.0);
-		return mu + gsl_ran_laplace(rng, width);
-	}
-	if( density == cen_laplace_enum )
-	{	double width = delta / std::sqrt(2.0);
-		return std::max(0.0, mu + gsl_ran_laplace(rng, width) );
-	}
-	//
-	// linear students
-	if( density == students_enum )
-	{	assert( nu > 2.0 );
-		double x = gsl_ran_tdist(rng, nu);
-		return  mu +  x * std::sqrt( (nu - 2.0) / nu ) * delta;
-	}
-	// ----------------------------------------------------------------------
-	// log transformed cases
-	assert( mu + eta > 0.0 );
-	//
-	// difference from mean in transformed space
-	double d_log;
-	if( density == log_gaussian_enum || density == cen_log_gaussian_enum )
-	{	// log Gaussian
-		d_log = gsl_ran_gaussian(rng, delta);
-	}
-	else if( density == log_laplace_enum || density == cen_log_laplace_enum )
-	{	// log Laplace
-		double width = delta / std::sqrt(2.0);
-		d_log = gsl_ran_laplace(rng, width);
-	}
-	else
-	{	// log Students
-		assert( density == log_students_enum );
-		assert( nu > 2.0 );
-		double x = gsl_ran_tdist(rng, nu);
-		d_log = x * std::sqrt( (nu - 2.0) / nu ) * delta;
-	}
-	//
-	// d_log = log(z + eta) - log(mu + eta)
-	double z = std::exp( d_log ) * (mu + eta) - eta;
-	//
-	// log censored cases
-	if( density == cen_log_gaussian_enum || density == cen_log_laplace_enum )
-		z = std::max(0.0, z);
-	//
-	// log and not censored
-	return z;
+   density_enum density,
+   double       mu     ,
+   double       delta  ,
+   double       eta    ,
+   double nu           )
+{  gsl_rng* rng = CppAD::mixed::get_gsl_rng();
+   //
+   assert( density != uniform_enum );
+   assert( delta > 0.0 );
+   // -----------------------------------------------------------------------
+   // linear Gaussian
+   if( density == gaussian_enum )
+      return mu + gsl_ran_gaussian(rng, delta);
+   if( density == cen_gaussian_enum )
+      return std::max(0.0, mu + gsl_ran_gaussian(rng, delta) );
+   //
+   // linear Laplace
+   if( density == laplace_enum )
+   {  double width = delta / std::sqrt(2.0);
+      return mu + gsl_ran_laplace(rng, width);
+   }
+   if( density == cen_laplace_enum )
+   {  double width = delta / std::sqrt(2.0);
+      return std::max(0.0, mu + gsl_ran_laplace(rng, width) );
+   }
+   //
+   // linear students
+   if( density == students_enum )
+   {  assert( nu > 2.0 );
+      double x = gsl_ran_tdist(rng, nu);
+      return  mu +  x * std::sqrt( (nu - 2.0) / nu ) * delta;
+   }
+   // ----------------------------------------------------------------------
+   // log transformed cases
+   assert( mu + eta > 0.0 );
+   //
+   // difference from mean in transformed space
+   double d_log;
+   if( density == log_gaussian_enum || density == cen_log_gaussian_enum )
+   {  // log Gaussian
+      d_log = gsl_ran_gaussian(rng, delta);
+   }
+   else if( density == log_laplace_enum || density == cen_log_laplace_enum )
+   {  // log Laplace
+      double width = delta / std::sqrt(2.0);
+      d_log = gsl_ran_laplace(rng, width);
+   }
+   else
+   {  // log Students
+      assert( density == log_students_enum );
+      assert( nu > 2.0 );
+      double x = gsl_ran_tdist(rng, nu);
+      d_log = x * std::sqrt( (nu - 2.0) / nu ) * delta;
+   }
+   //
+   // d_log = log(z + eta) - log(mu + eta)
+   double z = std::exp( d_log ) * (mu + eta) - eta;
+   //
+   // log censored cases
+   if( density == cen_log_gaussian_enum || density == cen_log_laplace_enum )
+      z = std::max(0.0, z);
+   //
+   // log and not censored
+   return z;
 }
 
 } // END_DISMOD_AT_NAMESPACE

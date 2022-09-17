@@ -4,11 +4,11 @@
 # ----------------------------------------------------------------------------
 $begin statistic$$
 $spell
-	differencing
-	nu
-	mu
-	cen
-	ij
+   differencing
+   nu
+   mu
+   cen
+   ij
 $$
 
 $section Some Statistical Function Definitions$$
@@ -48,8 +48,8 @@ Note that $latex \delta$$ has a different definition for different cases:
 $list number$$
 For data cases, $latex \delta$$ is the
 $cref/adjusted standard deviation
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
+   /data_like
+   /Adjusted Standard Deviation, delta_i(theta)
 /$$ $latex \delta_i( \theta )$$.
 $lnext
 For priors cases, $latex \delta$$ is the transformed standard deviation;
@@ -90,25 +90,25 @@ If the density is
 $cref/uniform/density_table/density_name/uniform/$$,
 the weighted residual function for values is
 $latex \[
-	R(y, \mu, \delta, d) = 0
+   R(y, \mu, \delta, d) = 0
 \] $$
 If the density is
 $cref/linear/density_table/Notation/Linear/$$,
 the weighted residual function for values is
 $latex \[
-	R(y, \mu, \delta, d) = \frac{y - \mu}{\delta}
+   R(y, \mu, \delta, d) = \frac{y - \mu}{\delta}
 \] $$
 If the density is
 $cref/log scaled/density_table/Notation/Log Scaled/$$,
 the weighted residual function for values is
 $latex \[
-	R(y, \mu, \delta, d)
-	=
-	\frac{
-		\log( y + \eta[d] ) - \log( \mu + \eta[d] )
-	}{
-		\delta
-	}
+   R(y, \mu, \delta, d)
+   =
+   \frac{
+      \log( y + \eta[d] ) - \log( \mu + \eta[d] )
+   }{
+      \delta
+   }
 \] $$
 Note that, for both the linear and log case,
 $latex \mu$$ has the same units as $latex y$$.
@@ -118,13 +118,13 @@ $subhead Difference$$
 If the density is uniform,
 the weighted residual function for differences is
 $latex \[
-	R(z, y, \mu, \delta, d) = 0
+   R(z, y, \mu, \delta, d) = 0
 \] $$
 If the density is
 $cref/linear/density_table/Notation/Linear/$$,
 the weighted residual function for differences is
 $latex \[
-	R(z, y, \mu, \delta, d) = \frac{z - y - \mu}{\delta}
+   R(z, y, \mu, \delta, d) = \frac{z - y - \mu}{\delta}
 \] $$
 Note that, in the linear case, all the arguments (except $latex d$$)
 have the same units.
@@ -132,13 +132,13 @@ If the density is
 $cref/log scaled/density_table/Notation/Log Scaled/$$,
 the weighted residual function for differences is
 $latex \[
-	R(z, y, \mu, \delta, d)
-	=
-	\frac{
-		\log(z + \eta[d] ) - \log( y + \eta[d] ) - \mu
-	}{
-		\delta
-	}
+   R(z, y, \mu, \delta, d)
+   =
+   \frac{
+      \log(z + \eta[d] ) - \log( y + \eta[d] ) - \mu
+   }{
+      \delta
+   }
 \] $$
 Note that in the log case, $latex z, y$$ and $latex \eta$$ have the same units
 while $latex \mu$$ and $latex \delta$$ are in log space.
@@ -167,8 +167,8 @@ D
 \] $$
 where $latex D$$ and $latex R$$ have the same arguments;
 see $cref/Weighted Residual Function, R
-	/statistic
-	/Weighted Residual Function, R
+   /statistic
+   /Weighted Residual Function, R
 /$$.
 
 $subhead Censored Gaussian$$
@@ -186,9 +186,9 @@ D(y, \mu, \delta, d)
 where $latex \R{erfc}$$ is the complementary error function;
 see the Gaussian case for the
 $cref/censored density
-	/censor_density
-	/Gaussian
-	/Censored Density, G(y,mu,delta,c)
+   /censor_density
+   /Gaussian
+   /Censored Density, G(y,mu,delta,c)
 /$$
 where the censoring value is $latex c = 0$$.
 
@@ -226,9 +226,9 @@ in the log Gaussian case
 and $latex \R{erfc}$$ is the complementary error function;
 see the Gaussian case for the
 $cref/censored density
-	/censor_density
-	/Gaussian
-	/Censored Density, G(y,mu,delta,c)
+   /censor_density
+   /Gaussian
+   /Censored Density, G(y,mu,delta,c)
 /$$
 where the censoring value is $latex c = \eta$$.
 
@@ -259,9 +259,9 @@ D(y, \mu, \delta, d)
 where $latex \R{erfc}$$ is the complementary error function;
 see the Gaussian case for the
 $cref/censored density
-	/censor_density
-	/Laplace
-	/Censored Density, L(y,mu,delta,c)
+   /censor_density
+   /Laplace
+   /Censored Density, L(y,mu,delta,c)
 /$$
 where the censoring value is $latex c = 0$$.
 
@@ -298,9 +298,9 @@ where we the arguments to $latex \delta$$ are the same as
 in the log Laplace case.
 See the Laplace case for the
 $cref/censored density
-	/censor_density
-	/Laplace
-	/Censored Density, L(y,mu,delta,c)
+   /censor_density
+   /Laplace
+   /Censored Density, L(y,mu,delta,c)
 /$$
 where the censoring value is $latex c = \eta$$.
 

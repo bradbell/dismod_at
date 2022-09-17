@@ -11,11 +11,11 @@
 # include "get_smooth_table.hpp"
 
 namespace dismod_at {
-	void check_pini_n_age(
-		sqlite3*                            db          ,
-		const CppAD::vector<rate_struct>&   rate_table  ,
-		const CppAD::vector<smooth_struct>& smooth_table
-	);
+   void check_pini_n_age(
+      sqlite3*                            db          ,
+      const CppAD::vector<rate_struct>&   rate_table  ,
+      const CppAD::vector<smooth_struct>& smooth_table
+   );
 }
 
 # endif

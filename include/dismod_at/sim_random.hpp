@@ -8,13 +8,13 @@
 # include <dismod_at/get_density_table.hpp>
 
 namespace dismod_at {
-	double sim_random(
-		density_enum density,
-		double       mu,
-		double       delta,
-		double       eta,
-		double       nu
-	);
+   double sim_random(
+      density_enum density,
+      double       mu,
+      double       delta,
+      double       eta,
+      double       nu
+   );
 }
 
 # endif

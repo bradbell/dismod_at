@@ -5,9 +5,9 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin get_started$$
 $spell
-	Dismod
-	py
-	sqlite
+   Dismod
+   py
+   sqlite
 $$
 
 $section Dismod_at Getting Started Examples / Tests $$
@@ -28,7 +28,7 @@ are in the directory
 $cref/dismod_at.git/install_unix/Download dismod_at.git/$$,
 you can run one of these examples with the command
 $codei%
-	%python3_executable% example/get_started/%name%
+   %python3_executable% example/get_started/%name%
 %$$
 where $cref/python3_executable/run_cmake.sh/python3_executable/$$
 is the python3 program and $icode name$$ is the name of the example.
@@ -38,7 +38,7 @@ includes the $code .py$$ extension at the end.
 $head get_started.db$$
 Each of these examples uses the database
 $codei%
-	build/example/get_started/get_started.db
+   build/example/get_started/get_started.db
 %$$
 which is created by $cref get_started_db.py$$ and
 can be inspected using any sqlite viewer; e.g.,

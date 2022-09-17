@@ -23,97 +23,97 @@
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 class data_model {
-	// infromation for each data point
-	typedef struct {
-		density_enum          density;
-		size_t                child;
-		bool                  depend_on_ran_var;
-	} data_ode_info;
+   // infromation for each data point
+   typedef struct {
+      density_enum          density;
+      size_t                child;
+      bool                  depend_on_ran_var;
+   } data_ode_info;
 private:
-	// constant values
-	const bool                   fit_simulated_data_;
-	const size_t                 n_covariate_;
-	const double                 ode_step_size_;
-	const size_t                 n_child_;
-	const CppAD::vector<double>& subset_cov_value_;
-	const pack_info&             pack_object_;
-	//
-	// set by constructor and not changed
-	meas_noise_effect_enum         meas_noise_effect_;
-	CppAD::vector<data_ode_info>   data_info_;
-	CppAD::vector<double>          minimum_meas_cv_;
-	//
-	// Has replace_like been called.
-	// Set false by constructor and true by replace_like.
-	bool                         replace_like_called_;
+   // constant values
+   const bool                   fit_simulated_data_;
+   const size_t                 n_covariate_;
+   const double                 ode_step_size_;
+   const size_t                 n_child_;
+   const CppAD::vector<double>& subset_cov_value_;
+   const pack_info&             pack_object_;
+   //
+   // set by constructor and not changed
+   meas_noise_effect_enum         meas_noise_effect_;
+   CppAD::vector<data_ode_info>   data_info_;
+   CppAD::vector<double>          minimum_meas_cv_;
+   //
+   // Has replace_like been called.
+   // Set false by constructor and true by replace_like.
+   bool                         replace_like_called_;
 
-	// set by consructor, except that following fields set by replace_like
-	// subset_data_obj_[subset_id].density_id
-	// subset_data_obj_[subset_id].hold_out
-	// subset_data_obj_[subset_id].meas_value
-	// subset_data_obj_[subset_id].meas_std
-	CppAD::vector<subset_data_struct>         subset_data_obj_;
+   // set by consructor, except that following fields set by replace_like
+   // subset_data_obj_[subset_id].density_id
+   // subset_data_obj_[subset_id].hold_out
+   // subset_data_obj_[subset_id].meas_value
+   // subset_data_obj_[subset_id].meas_std
+   CppAD::vector<subset_data_struct>         subset_data_obj_;
 
-	// Used to compute average of integrands
-	// (effectively const)
-	avg_integrand                avgint_obj_;
+   // Used to compute average of integrands
+   // (effectively const)
+   avg_integrand                avgint_obj_;
 
-	// Used to compute average of noise effects
-	// (effectively const)
-	avg_noise_effect             avg_noise_obj_;
+   // Used to compute average of noise effects
+   // (effectively const)
+   avg_noise_effect             avg_noise_obj_;
 
 public:
-	template <class SubsetStruct>
-	data_model(
-		bool                                     fit_simulated_data ,
-		const std::string&                       meas_noise_effect  ,
-		const std::string&                       rate_case          ,
-		double                                   bound_random       ,
-		size_t                                   n_covariate        ,
-		double                                   ode_step_size      ,
-		const CppAD::vector<double>&             age_avg_grid       ,
-		const CppAD::vector<double>&             age_table          ,
-		const CppAD::vector<double>&             time_table         ,
-		const CppAD::vector<subgroup_struct>&    subgroup_table     ,
-		const CppAD::vector<integrand_struct>&   integrand_table    ,
-		const CppAD::vector<mulcov_struct>&      mulcov_table       ,
-		const CppAD::vector<prior_struct>&       prior_table        ,
-		const CppAD::vector<SubsetStruct>&       subset_object      ,
-		const CppAD::vector<double>&             subset_cov_value   ,
-		const CppAD::vector<weight_info>&        w_info_vec         ,
-		const CppAD::vector<smooth_info>&        s_info_vec         ,
-		const pack_info&                         pack_object        ,
-		const child_info&                        child_info4data
-	);
-	~data_model(void);
-	//
-	void replace_like(
-		const CppAD::vector<subset_data_struct>& subset_data_obj
-	);
-	//
-	// compute an average integrand: data_model is effectively const
-	template <class Float>
-	Float average(
-		size_t                        data_id  ,
-		const  CppAD::vector<Float>&  pack_vec
-	);
-	// compute weighted residual and log-likelihood for one data points
-	// (effectively const)
-	template <class Float>
-	residual_struct<Float> like_one(
-		size_t                        data_id  ,
-		const  CppAD::vector<Float>&  pack_vec ,
-		const  Float&                 avg      ,
-		Float&                        delta
-	);
-	// compute weighted residual and log-likelihood for all data points
-	// (effectively const)
-	template <class Float>
-	CppAD::vector< residual_struct<Float> > like_all(
-		bool                          hold_out ,
-		bool                          parent   ,
-		const  CppAD::vector<Float>&  pack_vec
-	);
+   template <class SubsetStruct>
+   data_model(
+      bool                                     fit_simulated_data ,
+      const std::string&                       meas_noise_effect  ,
+      const std::string&                       rate_case          ,
+      double                                   bound_random       ,
+      size_t                                   n_covariate        ,
+      double                                   ode_step_size      ,
+      const CppAD::vector<double>&             age_avg_grid       ,
+      const CppAD::vector<double>&             age_table          ,
+      const CppAD::vector<double>&             time_table         ,
+      const CppAD::vector<subgroup_struct>&    subgroup_table     ,
+      const CppAD::vector<integrand_struct>&   integrand_table    ,
+      const CppAD::vector<mulcov_struct>&      mulcov_table       ,
+      const CppAD::vector<prior_struct>&       prior_table        ,
+      const CppAD::vector<SubsetStruct>&       subset_object      ,
+      const CppAD::vector<double>&             subset_cov_value   ,
+      const CppAD::vector<weight_info>&        w_info_vec         ,
+      const CppAD::vector<smooth_info>&        s_info_vec         ,
+      const pack_info&                         pack_object        ,
+      const child_info&                        child_info4data
+   );
+   ~data_model(void);
+   //
+   void replace_like(
+      const CppAD::vector<subset_data_struct>& subset_data_obj
+   );
+   //
+   // compute an average integrand: data_model is effectively const
+   template <class Float>
+   Float average(
+      size_t                        data_id  ,
+      const  CppAD::vector<Float>&  pack_vec
+   );
+   // compute weighted residual and log-likelihood for one data points
+   // (effectively const)
+   template <class Float>
+   residual_struct<Float> like_one(
+      size_t                        data_id  ,
+      const  CppAD::vector<Float>&  pack_vec ,
+      const  Float&                 avg      ,
+      Float&                        delta
+   );
+   // compute weighted residual and log-likelihood for all data points
+   // (effectively const)
+   template <class Float>
+   CppAD::vector< residual_struct<Float> > like_all(
+      bool                          hold_out ,
+      bool                          parent   ,
+      const  CppAD::vector<Float>&  pack_vec
+   );
 };
 
 } // END_DISMOD_AT_NAMESPACE

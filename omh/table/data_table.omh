@@ -4,12 +4,12 @@
 # ----------------------------------------------------------------------------
 $begin data_table$$
 $spell
-	covariate
-	covariates
-	std
-	dismod
-	Nonsmooth
-	cv
+   covariate
+   covariates
+   std
+   dismod
+   Nonsmooth
+   cv
 $$
 
 $section The Data Table$$
@@ -123,18 +123,18 @@ and must be a positive number.
 This is not the only contribution to the standard deviation
 used in the data likelihood; see
 $cref/minimum cv standard deviation
-	/data_like
-	/Notation
-	/Minimum CV Standard Deviation, Delta_i
+   /data_like
+   /Notation
+   /Minimum CV Standard Deviation, Delta_i
 /$$ $latex \Delta$$,
 $cref/transformed standard deviation
-	/data_like
-	/Notation
-	/Transformed Standard Deviation, sigma_i
+   /data_like
+   /Notation
+   /Transformed Standard Deviation, sigma_i
 /$$ $latex \sigma$$, and
 $cref/adjusted standard deviation
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
+   /data_like
+   /Adjusted Standard Deviation, delta_i(theta)
 /$$ $latex \delta ( \theta )$$.
 
 $head eta$$
@@ -145,8 +145,8 @@ $icode eta$$ must be greater than or equal zero and is
 the offset in the log transformation for this data point; see
 log scaled case definition of the
 $cref/weighted residual function
-	/statistic
-	/Weighted Residual Function, R
+   /statistic
+   /Weighted Residual Function, R
 /$$.
 This offset may be replaced using the $cref data_density_command$$.
 

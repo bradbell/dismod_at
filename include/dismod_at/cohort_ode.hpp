@@ -9,18 +9,18 @@
 
 namespace dismod_at {
 
-	template <class Float>
-	extern void cohort_ode(
-		const std::string&           rate_case ,
-		const CppAD::vector<double>& age       ,
-		const Float&                 pini      ,
-		const CppAD::vector<Float>&  iota      ,
-		const CppAD::vector<Float>&  rho       ,
-		const CppAD::vector<Float>&  chi       ,
-		const CppAD::vector<Float>&  omega     ,
-		      CppAD::vector<Float>&  s_out     ,
-		      CppAD::vector<Float>&  c_out
-	);
+   template <class Float>
+   extern void cohort_ode(
+      const std::string&           rate_case ,
+      const CppAD::vector<double>& age       ,
+      const Float&                 pini      ,
+      const CppAD::vector<Float>&  iota      ,
+      const CppAD::vector<Float>&  rho       ,
+      const CppAD::vector<Float>&  chi       ,
+      const CppAD::vector<Float>&  omega     ,
+            CppAD::vector<Float>&  s_out     ,
+            CppAD::vector<Float>&  c_out
+   );
 }
 
 # endif

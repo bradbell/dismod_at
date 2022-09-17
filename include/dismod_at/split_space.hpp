@@ -9,7 +9,7 @@
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-		CppAD::vector<std::string> split_space(const std::string& str);
+      CppAD::vector<std::string> split_space(const std::string& str);
 }
 
 # endif

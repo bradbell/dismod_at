@@ -4,19 +4,19 @@
 # ----------------------------------------------------------------------------
 $begin devel_model$$
 $spell
-	dismod
+   dismod
 $$
 
 $section Dismod_at Developer Model Documentation$$
 
 $childtable%devel/model/data_model.omh
-	%devel/model/prior_model.omh
-	%devel/model/fit_model.omh
-	%devel/model/depend.omh
-	%devel/model/adj_integrand.cpp
-	%include/dismod_at/avg_integrand.hpp
-	%include/dismod_at/avg_noise_effect.hpp
-	%devel/model/ran_con_rcv.cpp
+   %devel/model/prior_model.omh
+   %devel/model/fit_model.omh
+   %devel/model/depend.omh
+   %devel/model/adj_integrand.cpp
+   %include/dismod_at/avg_integrand.hpp
+   %include/dismod_at/avg_noise_effect.hpp
+   %devel/model/ran_con_rcv.cpp
 %$$
 
 $end

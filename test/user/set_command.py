@@ -10,15 +10,15 @@ import subprocess
 # check execution is from distribution directory
 script = 'test/user/set_command.py'
 if sys.argv[0] != script  or len(sys.argv) != 1 :
-	usage  = 'python3 ' + script + '\n'
-	usage += 'where python3 is the python 3 program on your system\n'
-	usage += 'and working directory is the dismod_at distribution directory\n'
-	sys.exit(usage)
+   usage  = 'python3 ' + script + '\n'
+   usage += 'where python3 is the python 3 program on your system\n'
+   usage += 'and working directory is the dismod_at distribution directory\n'
+   sys.exit(usage)
 #
 # import dismod_at
 local_dir = os.getcwd() + '/python'
 if( os.path.isdir( local_dir + '/dismod_at' ) ) :
-	sys.path.insert(0, local_dir)
+   sys.path.insert(0, local_dir)
 import dismod_at
 #
 # import get_started_db example
@@ -27,7 +27,7 @@ import get_started_db
 #
 # change into the build/test/user directory
 if not os.path.exists('build/test/user') :
-	os.makedirs('build/test/user')
+   os.makedirs('build/test/user')
 os.chdir('build/test/user')
 # ---------------------------------------------------------------------------
 # create get_started.db
@@ -39,7 +39,7 @@ cmd        = [ program, file_name, 'set', 'avgint', 'data' ]
 print( ' '.join(cmd) )
 flag = subprocess.call( cmd )
 if flag != 0 :
-	sys.exit('The dismod_at command failed.')
+   sys.exit('The dismod_at command failed.')
 # -----------------------------------------------------------------------
 # connect to database
 new          = False

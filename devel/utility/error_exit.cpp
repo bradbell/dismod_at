@@ -5,9 +5,9 @@
 /*
 $begin error_exit$$
 $spell
-	sqlite
-	const
-	std
+   sqlite
+   const
+   std
 $$
 
 $section Printing and Logging Fatal Error Messages$$
@@ -24,13 +24,13 @@ $codei%error_exit(%message%, %table_name%, %row_id%)%$$
 $head db$$
 This argument has prototype
 $codei%
-	sqlite3* %db%
+   sqlite3* %db%
 %$$
 
 $head message$$
 This argument has prototype
 $codei%
-	const std::string& %message%
+   const std::string& %message%
 %$$
 This value gets written to
 standard error (and an end of line is printed after it).
@@ -46,7 +46,7 @@ and to standard error.
 $head table_name$$
 This argument has prototype
 $codei%
-	const std::string& %table_name%
+   const std::string& %table_name%
 %$$
 If $icode db$$ is not the null pointer, this value gets written in the
 $cref/table_name/log_table/table_name/$$ column of the log table.
@@ -57,7 +57,7 @@ If $icode table_name$$ is not empty, it is also written
 $head row_id$$
 This argument has prototype
 $codei%
-	const size_t& %row_id%
+   const size_t& %row_id%
 %$$
 If $icode db$$ is not the null pointer, this value gets written in the
 $cref/row_id/log_table/row_id/$$ column of the log table.
@@ -87,55 +87,55 @@ $end
 # include <dismod_at/configure.hpp>
 
 namespace {
-	// initial value corresponding to not initialized
-	// 2DO: this is not thread safe
-	sqlite3* db_previous_ = DISMOD_AT_NULL_PTR;
+   // initial value corresponding to not initialized
+   // 2DO: this is not thread safe
+   sqlite3* db_previous_ = DISMOD_AT_NULL_PTR;
 }
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void error_exit(
-	const std::string& message      ,
-	const std::string& table_name   ,
-	const size_t&      row_id       )
+   const std::string& message      ,
+   const std::string& table_name   ,
+   const size_t&      row_id       )
 {
-	sqlite3* db = db_previous_;
+   sqlite3* db = db_previous_;
 
-	// check that if table_name is empty, row_id is null
-	assert( table_name != "" || row_id == DISMOD_AT_NULL_SIZE_T );
+   // check that if table_name is empty, row_id is null
+   assert( table_name != "" || row_id == DISMOD_AT_NULL_SIZE_T );
 
-	// db should never be null
-	assert( db != DISMOD_AT_NULL_PTR );
+   // db should never be null
+   assert( db != DISMOD_AT_NULL_PTR );
 
-	// write to standard error and log table
-	std::string message_type = "error";
-	log_message(db, &std::cerr, message_type, message, table_name, row_id);
-	//
-	// close the database
-	sqlite3_close(db);
-	//
-	// if running in debugger, stop here
-	assert(false);
-	//
-	// now exit program
-	std::exit(1);
+   // write to standard error and log table
+   std::string message_type = "error";
+   log_message(db, &std::cerr, message_type, message, table_name, row_id);
+   //
+   // close the database
+   sqlite3_close(db);
+   //
+   // if running in debugger, stop here
+   assert(false);
+   //
+   // now exit program
+   std::exit(1);
 }
 void error_exit(
-	const std::string& message      ,
-	const std::string& table_name   )
-{	size_t      row_id     = DISMOD_AT_NULL_SIZE_T;
-	error_exit(message, table_name, row_id);
-	return;
+   const std::string& message      ,
+   const std::string& table_name   )
+{  size_t      row_id     = DISMOD_AT_NULL_SIZE_T;
+   error_exit(message, table_name, row_id);
+   return;
 }
 void error_exit(
-	const std::string& message      )
-{	std::string table_name = "";
-	error_exit(message, table_name);
-	return;
+   const std::string& message      )
+{  std::string table_name = "";
+   error_exit(message, table_name);
+   return;
 }
 
 // Turn error logging on and off using this call
 void error_exit(sqlite3* db)
-{	db_previous_ = db; }
+{  db_previous_ = db; }
 
 } // END_DISMOD_AT_NAMESPACE

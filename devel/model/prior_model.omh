@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 $begin prior_model$$
 $spell
-	var
+   var
 $$
 
 $section Prior Model for Model Variables$$

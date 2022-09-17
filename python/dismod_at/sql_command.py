@@ -5,9 +5,9 @@
 # ----------------------------------------------------------------------------
 # $begin sql_command$$ $newlinech #$$
 # $spell
-#	sql
-#	str
-#	dismod
+#  sql
+#  str
+#  dismod
 # $$
 #
 # $section Execute an SQL command$$
@@ -29,7 +29,7 @@
 # $end
 # ---------------------------------------------------------------------------
 def sql_command(connection, command) :
-	cursor = connection.cursor()
-	cursor.execute(command)
-	connection.commit()
-	return cursor.fetchall()
+   cursor = connection.cursor()
+   cursor.execute(command)
+   connection.commit()
+   return cursor.fetchall()

@@ -4,9 +4,9 @@
 # ----------------------------------------------------------------------------
 $begin random_value$$
 $spell
-	mulstd
-	mu
-	std
+   mulstd
+   mu
+   std
 $$
 
 $section The Random Effects Value Density Function$$
@@ -56,10 +56,10 @@ We use $latex \sigma_j$$ to denote the transformed standard deviation
 corresponding to $icode prior_id$$
 $latex \[
 \sigma_j = \left\{ \begin{array}{ll}
-	\log ( \mu_j + \eta_j + \varepsilon_j ) - \log( \mu_j + \eta_j )
-		& \R{if \; log \; density}
-	\\
-	\varepsilon_j & \R{otherwise}
+   \log ( \mu_j + \eta_j + \varepsilon_j ) - \log( \mu_j + \eta_j )
+      & \R{if \; log \; density}
+   \\
+   \varepsilon_j & \R{otherwise}
 \end{array} \right.
 \] $$
 
@@ -69,7 +69,7 @@ $latex \[
 V_j^u ( u | \theta )
 =
 \exp \left[ D \left(
-	u_j \W{,} \mu_j \W{,} \lambda_j \sigma_j \W{,} d_j
+   u_j \W{,} \mu_j \W{,} \lambda_j \sigma_j \W{,} d_j
 \right) \right]
 \] $$
 where $latex D$$ is the
@@ -79,7 +79,7 @@ $head V^u$$
 Let $latex n$$ be the number of random effects.
 The value density for all the random effects $latex u$$ is defined by
 $latex \[
-	V^u ( u | \theta ) = \prod_{j=0}^{n-1} V_j^u ( u | \theta )
+   V^u ( u | \theta ) = \prod_{j=0}^{n-1} V_j^u ( u | \theta )
 \] $$
 
 $end

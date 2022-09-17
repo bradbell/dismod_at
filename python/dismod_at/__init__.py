@@ -8,26 +8,26 @@
 #
 # $comment BEGIN_SORT_THIS_LINE_PLUS_2$$
 # $childtable%
-#	python/dismod_at/average_integrand.py%
-#	python/dismod_at/connection_file.py%
-#	python/dismod_at/create_connection.py%
-#	python/dismod_at/create_database.py%
-#	python/dismod_at/create_table.py%
-#	python/dismod_at/csv2db_command.py%
-#	python/dismod_at/db2csv_command.py%
-#	python/dismod_at/get_name_type.py%
-#	python/dismod_at/get_row_list.py%
-#	python/dismod_at/get_table_dict.py%
-#	python/dismod_at/metropolis.py%
-#	python/dismod_at/modify_command.py%
-#	python/dismod_at/perturb_command.py%
-#	python/dismod_at/plot_curve.py%
-#	python/dismod_at/plot_data_fit.py%
-#	python/dismod_at/plot_rate_fit.py%
-#	python/dismod_at/replace_table.py%
-#	python/dismod_at/sql_command.py%
-#	python/dismod_at/system_command_prc.py%
-#	python/dismod_at/unicode_tuple.py
+#  python/dismod_at/average_integrand.py%
+#  python/dismod_at/connection_file.py%
+#  python/dismod_at/create_connection.py%
+#  python/dismod_at/create_database.py%
+#  python/dismod_at/create_table.py%
+#  python/dismod_at/csv2db_command.py%
+#  python/dismod_at/db2csv_command.py%
+#  python/dismod_at/get_name_type.py%
+#  python/dismod_at/get_row_list.py%
+#  python/dismod_at/get_table_dict.py%
+#  python/dismod_at/metropolis.py%
+#  python/dismod_at/modify_command.py%
+#  python/dismod_at/perturb_command.py%
+#  python/dismod_at/plot_curve.py%
+#  python/dismod_at/plot_data_fit.py%
+#  python/dismod_at/plot_rate_fit.py%
+#  python/dismod_at/replace_table.py%
+#  python/dismod_at/sql_command.py%
+#  python/dismod_at/system_command_prc.py%
+#  python/dismod_at/unicode_tuple.py
 # %$$
 # $comment END_SORT_THIS_LINE_MINUS_2$$
 #

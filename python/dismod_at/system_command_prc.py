@@ -5,12 +5,12 @@
 # ----------------------------------------------------------------------------
 # $begin system_command_prc$$ $newlinech #$$
 # $spell
-#	dismod
-#	prc
-#	str
-#	stdout
-#	stderr
-#	returncode
+#  dismod
+#  prc
+#  str
+#  stdout
+#  stderr
+#  returncode
 # $$
 #
 # $section Print Run and Check a System Command$$
@@ -101,86 +101,86 @@
 def system_command_prc(
 # BEGIN syntax
 # result = system_command_prc(
-	command                ,
-	print_command  = True  ,
-	return_stdout  = False ,
-	return_stderr  = False ,
-	file_stdout    = None  ,
-	file_stderr    = None  ,
-	write_command  = False ,
+   command                ,
+   print_command  = True  ,
+   return_stdout  = False ,
+   return_stderr  = False ,
+   file_stdout    = None  ,
+   file_stderr    = None  ,
+   write_command  = False ,
 # )
 # END syntax
-	) :
-	import sys
-	import subprocess
-	#
-	if file_stdout is not None :
-		assert not return_stdout
-	if file_stderr is not None :
-		assert not return_stderr
-	if file_stdout is None :
-		assert not write_command
-	#
-	# capture_stderr
-	capture_stderr = return_stderr or (file_stderr is not None)
-	#
-	# command_str
-	command_str = ''
-	for arg in command :
-		if ' ' in arg :
-			command_str += f" '{arg}'"
-		else :
-			command_str += f' {arg}'
-	command_str = command_str[1:]
-	#
-	# print
-	if print_command :
-		print(command_str)
-	#
-	# write
-	if write_command :
-		file_stdout.write(command_str + '\n')
-		file_stdout.flush()
-	#
-	# stdout
-	if return_stdout :
-		stdout = subprocess.PIPE
-	else :
-		stdout = file_stdout
-	#
-	# stderr
-	if return_stderr or file_stderr is None :
-		stderr = subprocess.PIPE
-	else :
-		stderr = file_stderr
-	#
-	# subprocess_return
-	subprocess_return = subprocess.run(
-		command,
-		stdout   = stdout  ,
-		stderr   = stderr  ,
-		encoding = 'utf-8' ,
-	)
-	#
-	# result
-	if return_stderr :
-		result = subprocess_return
-	elif return_stdout :
-		result = subprocess_return.stdout
-	else :
-		result = None
-	#
-	if capture_stderr :
-		return result
-	#
-	# return_stderr is false so check the command return code
-	returncode = subprocess_return.returncode
-	if returncode != 0 :
-		# print error messages
-		msg  = f'system_command_prc failed: returncode = {returncode}\n'
-		msg += subprocess_return.stderr
-		#
-		# raise an exception
-		assert False, msg
-	#
-	return result
+   ) :
+   import sys
+   import subprocess
+   #
+   if file_stdout is not None :
+      assert not return_stdout
+   if file_stderr is not None :
+      assert not return_stderr
+   if file_stdout is None :
+      assert not write_command
+   #
+   # capture_stderr
+   capture_stderr = return_stderr or (file_stderr is not None)
+   #
+   # command_str
+   command_str = ''
+   for arg in command :
+      if ' ' in arg :
+         command_str += f" '{arg}'"
+      else :
+         command_str += f' {arg}'
+   command_str = command_str[1:]
+   #
+   # print
+   if print_command :
+      print(command_str)
+   #
+   # write
+   if write_command :
+      file_stdout.write(command_str + '\n')
+      file_stdout.flush()
+   #
+   # stdout
+   if return_stdout :
+      stdout = subprocess.PIPE
+   else :
+      stdout = file_stdout
+   #
+   # stderr
+   if return_stderr or file_stderr is None :
+      stderr = subprocess.PIPE
+   else :
+      stderr = file_stderr
+   #
+   # subprocess_return
+   subprocess_return = subprocess.run(
+      command,
+      stdout   = stdout  ,
+      stderr   = stderr  ,
+      encoding = 'utf-8' ,
+   )
+   #
+   # result
+   if return_stderr :
+      result = subprocess_return
+   elif return_stdout :
+      result = subprocess_return.stdout
+   else :
+      result = None
+   #
+   if capture_stderr :
+      return result
+   #
+   # return_stderr is false so check the command return code
+   returncode = subprocess_return.returncode
+   if returncode != 0 :
+      # print error messages
+      msg  = f'system_command_prc failed: returncode = {returncode}\n'
+      msg += subprocess_return.stderr
+      #
+      # raise an exception
+      assert False, msg
+   #
+   return result

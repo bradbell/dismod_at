@@ -4,13 +4,13 @@
 # ----------------------------------------------------------------------------
 $begin pack_info$$
 $spell
-	devel
+   devel
 $$
 
 $section Devel Packing Variables into a Single Vector$$
 
 $childtable%devel/utility/pack_info.cpp
-	%example/devel/utility/pack_info_xam.cpp
+   %example/devel/utility/pack_info_xam.cpp
 %$$
 $head Example$$
 The file $cref pack_info_xam.cpp$$ contains

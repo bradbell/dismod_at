@@ -4,11 +4,11 @@
 # ----------------------------------------------------------------------------
 # $begin user_covid_19.py$$ $newlinech #$$
 # $spell
-#	Covid
-#	csv
-#	dismod
-#	covariates
-#	covariate
+#  Covid
+#  csv
+#  dismod
+#  covariates
+#  covariate
 # $$
 #
 # $section Model The Covid-19 Epidemic$$
@@ -41,9 +41,9 @@
 # The SIR Model for an epidemic is the following differential equations:
 # $latex \[
 # \begin{array}{rcll}
-#	\dot{Q} & = & - \beta Q I \\
-#	\dot{I} & = & + \beta Q I & - ( \gamma + \chi ) I \\
-#	\dot{R} & = & + \gamma I
+#  \dot{Q} & = & - \beta Q I \\
+#  \dot{I} & = & + \beta Q I & - ( \gamma + \chi ) I \\
+#  \dot{R} & = & + \gamma I
 # \end{array}
 # \] $$
 # $table
@@ -58,7 +58,7 @@
 # $subhead Data Model$$
 # The model for a measurement of the i-th difference in cumulative death is
 # $latex \[
-#	d_i = e_i + \int_{a(i)}^{b(i)} \chi(t) I (t) dt
+#  d_i = e_i + \int_{a(i)}^{b(i)} \chi(t) I (t) dt
 # \] $$
 # $table
 # $latex d_i$$ $cnext the i-th difference in cumulative death            $rnext
@@ -84,13 +84,13 @@
 # The Dismod model for an epidemic is the following ODE:
 # $latex \[
 # \begin{array}{rcll}
-#	\dot{S} & = & - \iota S & + \rho            C    \\
-#	\dot{C} & = & + \iota S & - ( \rho + \chi ) C
+#  \dot{S} & = & - \iota S & + \rho            C    \\
+#  \dot{C} & = & + \iota S & - ( \rho + \chi ) C
 # \end{array}
 # \] $$
 # together with the following cumulative death model
 # $latex \[
-#	d_i = e_i + \int_{a(i)}^{b(i)} \chi(t) \frac{C(t)}{S(t) + C(t)} dt
+#  d_i = e_i + \int_{a(i)}^{b(i)} \chi(t) \frac{C(t)}{S(t) + C(t)} dt
 # \] $$
 # Remission $latex \rho$$ is $latex \gamma$$ in the SIR model.
 # Prevalence $latex C(t) / [ S(t) + C(t) ]$$
@@ -175,21 +175,21 @@ import matplotlib.pyplot
 import matplotlib.gridspec
 test_program = 'example/user/covid_19.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
-	usage  = 'python3 ' + test_program + '\n'
-	usage += 'where python3 is the python 3 program on your system\n'
-	usage += 'and working directory is the dismod_at distribution directory\n'
-	sys.exit(usage)
+   usage  = 'python3 ' + test_program + '\n'
+   usage += 'where python3 is the python 3 program on your system\n'
+   usage += 'and working directory is the dismod_at distribution directory\n'
+   sys.exit(usage)
 print(test_program)
 #
 # import dismod_at
 local_dir = os.getcwd() + '/python'
 if( os.path.isdir( local_dir + '/dismod_at' ) ) :
-	sys.path.insert(0, local_dir)
+   sys.path.insert(0, local_dir)
 import dismod_at
 #
 # change into the build/example/user directory
 if not os.path.exists('build/example/user') :
-	os.makedirs('build/example/user')
+   os.makedirs('build/example/user')
 os.chdir('build/example/user')
 #
 # ------------------------------------------------------------------------------------
@@ -252,222 +252,222 @@ csv_file_data = '''day,death,mobility,testing
 '''
 # ====================================================================================
 def example_db(file_name) :
-	def fun_iota_prior (a, t) :
-		return ('prior_iota_value', None, 'prior_iota_dtime')
-	def fun_pini_prior (a, t) :
-		return ('prior_pini_value', None, None)
-	def fun_rho_prior (a, t) :
-		return ('prior_rho_value', None, None)
-	def fun_chi_prior (a, t) :
-		return ('prior_chi_value', None, None)
-	def fun_covariate_prior (a, t) :
-		return ('prior_covariate_value', None, None)
-	#
-	# file_data
-	file_data  = list()
-	reader    = csv.DictReader( csv_file_data.splitlines() )
-	for row in reader :
-		for key in row :
-			row[key] = float( row[key] )
-		file_data.append( copy.copy( row ) )
-	#
-	# age_list
-	# This analysis has no age variation
-	age_list = [0.0, 100.0]
-	#
-	# time_list
-	time_list = list()
-	for row in file_data :
-		time_list.append( row['day'] )
-	#
-	# integrand_table
-	integrand_table = [ { 'name' : 'mtspecific' } ]
-	#
-	# node_table
-	node_table = [ { 'name': 'world', 'parent': '' } ]
-	#
-	# subgroup_table
-	subgroup_table = [ {'subgroup' : 'world', 'group' : 'world' } ]
-	#
-	# weight_table
-	weight_table = list()
-	#
-	# covariate_table
-	covariate_table = [ {
-		'name'      : 'mobility',
-		'reference' : 0.0,
-		},{
-		'name'      : 'testing',
-		'reference' : 0.0,
-	} ]
-	#
-	# avgint_table
-	avgint_table = list()
-	#
-	# data_table
-	data_table = list()
-	row_out = {
-		'hold_out'  : False       ,
-		'integrand' : 'mtspecific',
-		'node'      : 'world'     ,
-		'subgroup'  : 'world'     ,
-		'weight'    : ''          ,
-		'age_lower' : 50.0        ,
-		'age_upper' : 50.0        ,
-		'density'   : 'gaussian'  ,
-	}
-	data_cv = 0.25
-	n_data  = len(file_data) - 1
-	for i in range(n_data) :
-		row_avg = dict()
-		for key in [ 'day', 'mobility', 'testing' ] :
-			row_avg[key] = ( file_data[i][key] + file_data[i+1][key] ) / 2.0
-		row_out['time_lower'] = row_avg['day']
-		row_out['time_upper'] = row_avg['day']
-		row_out['mobility']   = row_avg['mobility']
-		row_out['testing']    = row_avg['testing']
-		death_difference      = file_data[i+1]['death'] - file_data[i]['death']
-		day_difference        = file_data[i+1]['day'] - file_data[i]['day']
-		row_out['meas_value'] = death_difference / day_difference
-		row_out['meas_std']   = data_cv * row_out['meas_value']
-		data_table.append( copy.copy(row_out) )
-	#
-	# prior_table
-	prior_table = [ {
-		'name'    : 'prior_iota_value',
-		'lower'   : 1e-6,
-		'upper'   : 1e0,
-		'mean'    : 1e-3,
-		'density' : 'uniform',
-	},{
-		'name'    : 'prior_iota_dtime',
-		'density' : 'log_gaussian',
-		'mean'    : 0.0,
-		'std'     : 0.1,
-		'eta'     : 1e-5,
-	},{
-		'name'    : 'prior_rho_value',
-		'density' : 'uniform',
-		'mean'    : 0.1,
-		'lower'   : 0.1,
-		'upper'   : 0.1,
-	},{
-		'name'    : 'prior_chi_value',
-		'density' : 'uniform',
-		'mean'    : 0.01,
-		'lower'   : 0.01,
-		'upper'   : 0.01,
-	},{
-		'name'    : 'prior_pini_value',
-		'density' : 'uniform',
-		'lower'   : 1e-7,
-		'upper'   : 1e-3,
-		'mean'    : 1e-5,
-	},{
-		'name'    : 'prior_covariate_value',
-		'density' : 'uniform',
-		'mean'    : 0.0,
-		'lower'   : - 1.0,
-		'upper'   : + 1.0,
-	} ]
-	#
-	# smooth_table
-	time_id = list( range( len( time_list ) ) )
-	smooth_table = [ {
-		'name'    : 'smooth_pini',
-		'age_id'  : [ 0 ],
-		'time_id' : [ 0 ],
-		'fun'     : fun_pini_prior,
-	},{
-		'name'    : 'smooth_iota',
-		'age_id'  : [ 0 ],
-		'time_id' : time_id,
-		'fun'     : fun_iota_prior,
-	},{
-		'name'    : 'smooth_rho',
-		'name'    : 'smooth_rho',
-		'age_id'  : [ 0 ],
-		'time_id' : [ 0 ],
-		'fun'     : fun_rho_prior,
-	},{
-		'name'    : 'smooth_chi',
-		'age_id'  : [ 0 ],
-		'time_id' : [ 0 ],
-		'fun'     : fun_chi_prior,
-	},{
-		'name'    : 'smooth_covariate',
-		'age_id'  : [ 0 ],
-		'time_id' : [ 0 ],
-		'fun'     : fun_covariate_prior,
+   def fun_iota_prior (a, t) :
+      return ('prior_iota_value', None, 'prior_iota_dtime')
+   def fun_pini_prior (a, t) :
+      return ('prior_pini_value', None, None)
+   def fun_rho_prior (a, t) :
+      return ('prior_rho_value', None, None)
+   def fun_chi_prior (a, t) :
+      return ('prior_chi_value', None, None)
+   def fun_covariate_prior (a, t) :
+      return ('prior_covariate_value', None, None)
+   #
+   # file_data
+   file_data  = list()
+   reader    = csv.DictReader( csv_file_data.splitlines() )
+   for row in reader :
+      for key in row :
+         row[key] = float( row[key] )
+      file_data.append( copy.copy( row ) )
+   #
+   # age_list
+   # This analysis has no age variation
+   age_list = [0.0, 100.0]
+   #
+   # time_list
+   time_list = list()
+   for row in file_data :
+      time_list.append( row['day'] )
+   #
+   # integrand_table
+   integrand_table = [ { 'name' : 'mtspecific' } ]
+   #
+   # node_table
+   node_table = [ { 'name': 'world', 'parent': '' } ]
+   #
+   # subgroup_table
+   subgroup_table = [ {'subgroup' : 'world', 'group' : 'world' } ]
+   #
+   # weight_table
+   weight_table = list()
+   #
+   # covariate_table
+   covariate_table = [ {
+      'name'      : 'mobility',
+      'reference' : 0.0,
+      },{
+      'name'      : 'testing',
+      'reference' : 0.0,
+   } ]
+   #
+   # avgint_table
+   avgint_table = list()
+   #
+   # data_table
+   data_table = list()
+   row_out = {
+      'hold_out'  : False       ,
+      'integrand' : 'mtspecific',
+      'node'      : 'world'     ,
+      'subgroup'  : 'world'     ,
+      'weight'    : ''          ,
+      'age_lower' : 50.0        ,
+      'age_upper' : 50.0        ,
+      'density'   : 'gaussian'  ,
+   }
+   data_cv = 0.25
+   n_data  = len(file_data) - 1
+   for i in range(n_data) :
+      row_avg = dict()
+      for key in [ 'day', 'mobility', 'testing' ] :
+         row_avg[key] = ( file_data[i][key] + file_data[i+1][key] ) / 2.0
+      row_out['time_lower'] = row_avg['day']
+      row_out['time_upper'] = row_avg['day']
+      row_out['mobility']   = row_avg['mobility']
+      row_out['testing']    = row_avg['testing']
+      death_difference      = file_data[i+1]['death'] - file_data[i]['death']
+      day_difference        = file_data[i+1]['day'] - file_data[i]['day']
+      row_out['meas_value'] = death_difference / day_difference
+      row_out['meas_std']   = data_cv * row_out['meas_value']
+      data_table.append( copy.copy(row_out) )
+   #
+   # prior_table
+   prior_table = [ {
+      'name'    : 'prior_iota_value',
+      'lower'   : 1e-6,
+      'upper'   : 1e0,
+      'mean'    : 1e-3,
+      'density' : 'uniform',
+   },{
+      'name'    : 'prior_iota_dtime',
+      'density' : 'log_gaussian',
+      'mean'    : 0.0,
+      'std'     : 0.1,
+      'eta'     : 1e-5,
+   },{
+      'name'    : 'prior_rho_value',
+      'density' : 'uniform',
+      'mean'    : 0.1,
+      'lower'   : 0.1,
+      'upper'   : 0.1,
+   },{
+      'name'    : 'prior_chi_value',
+      'density' : 'uniform',
+      'mean'    : 0.01,
+      'lower'   : 0.01,
+      'upper'   : 0.01,
+   },{
+      'name'    : 'prior_pini_value',
+      'density' : 'uniform',
+      'lower'   : 1e-7,
+      'upper'   : 1e-3,
+      'mean'    : 1e-5,
+   },{
+      'name'    : 'prior_covariate_value',
+      'density' : 'uniform',
+      'mean'    : 0.0,
+      'lower'   : - 1.0,
+      'upper'   : + 1.0,
+   } ]
+   #
+   # smooth_table
+   time_id = list( range( len( time_list ) ) )
+   smooth_table = [ {
+      'name'    : 'smooth_pini',
+      'age_id'  : [ 0 ],
+      'time_id' : [ 0 ],
+      'fun'     : fun_pini_prior,
+   },{
+      'name'    : 'smooth_iota',
+      'age_id'  : [ 0 ],
+      'time_id' : time_id,
+      'fun'     : fun_iota_prior,
+   },{
+      'name'    : 'smooth_rho',
+      'name'    : 'smooth_rho',
+      'age_id'  : [ 0 ],
+      'time_id' : [ 0 ],
+      'fun'     : fun_rho_prior,
+   },{
+      'name'    : 'smooth_chi',
+      'age_id'  : [ 0 ],
+      'time_id' : [ 0 ],
+      'fun'     : fun_chi_prior,
+   },{
+      'name'    : 'smooth_covariate',
+      'age_id'  : [ 0 ],
+      'time_id' : [ 0 ],
+      'fun'     : fun_covariate_prior,
 
-	} ]
-	#
-	# nslist_table
-	nslist_table = dict()
-	#
-	# rate_table
-	rate_table = [ {
-		'name'          : 'pini',
-		'parent_smooth' : 'smooth_pini',
-	},{
-		'name'          : 'iota',
-		'parent_smooth' : 'smooth_iota',
-	},{
-		'name'          : 'rho',
-		'parent_smooth' : 'smooth_rho',
-	},{
-		'name'          : 'chi',
-		'parent_smooth' : 'smooth_chi',
-	} ]
-	#
-	# mulcov_table
-	mulcov_table = [ {
-		'covariate' : 'mobility',
-		'type':       'rate_value',
-		'effected':   'iota',
-		'group':      'world',
-		'smooth':     'smooth_covariate',
-	},{
-		'covariate' : 'testing',
-		'type':       'rate_value',
-		'effected':   'iota',
-		'group':      'world',
-		'smooth':     'smooth_covariate',
-	} ]
-	#
-	# option_table
-	if display_fit :
-		print_level = '5'
-	else :
-		print_level = '0'
-	option_table = [
-		{ 'name'  : 'parent_node_name',   'value' : 'world'            },
-		{ 'name'  : 'rate_case',          'value' : 'iota_pos_rho_pos' },
-		{ 'name'  : 'print_level_fixed',  'value' : print_level        },
-		{ 'name'  : 'quasi_fixed',        'value' : 'false'            },
-		{ 'name'  : 'tolerance_fixed',    'value' : '1e-11'            },
-	]
-	# ----------------------------------------------------------------------
-	# create database
-	dismod_at.create_database(
-		file_name,
-		age_list,
-		time_list,
-		integrand_table,
-		node_table,
-		subgroup_table,
-		weight_table,
-		covariate_table,
-		avgint_table,
-		data_table,
-		prior_table,
-		smooth_table,
-		nslist_table,
-		rate_table,
-		mulcov_table,
-		option_table
-	)
-	return
+   } ]
+   #
+   # nslist_table
+   nslist_table = dict()
+   #
+   # rate_table
+   rate_table = [ {
+      'name'          : 'pini',
+      'parent_smooth' : 'smooth_pini',
+   },{
+      'name'          : 'iota',
+      'parent_smooth' : 'smooth_iota',
+   },{
+      'name'          : 'rho',
+      'parent_smooth' : 'smooth_rho',
+   },{
+      'name'          : 'chi',
+      'parent_smooth' : 'smooth_chi',
+   } ]
+   #
+   # mulcov_table
+   mulcov_table = [ {
+      'covariate' : 'mobility',
+      'type':       'rate_value',
+      'effected':   'iota',
+      'group':      'world',
+      'smooth':     'smooth_covariate',
+   },{
+      'covariate' : 'testing',
+      'type':       'rate_value',
+      'effected':   'iota',
+      'group':      'world',
+      'smooth':     'smooth_covariate',
+   } ]
+   #
+   # option_table
+   if display_fit :
+      print_level = '5'
+   else :
+      print_level = '0'
+   option_table = [
+      { 'name'  : 'parent_node_name',   'value' : 'world'            },
+      { 'name'  : 'rate_case',          'value' : 'iota_pos_rho_pos' },
+      { 'name'  : 'print_level_fixed',  'value' : print_level        },
+      { 'name'  : 'quasi_fixed',        'value' : 'false'            },
+      { 'name'  : 'tolerance_fixed',    'value' : '1e-11'            },
+   ]
+   # ----------------------------------------------------------------------
+   # create database
+   dismod_at.create_database(
+      file_name,
+      age_list,
+      time_list,
+      integrand_table,
+      node_table,
+      subgroup_table,
+      weight_table,
+      covariate_table,
+      avgint_table,
+      data_table,
+      prior_table,
+      smooth_table,
+      nslist_table,
+      rate_table,
+      mulcov_table,
+      option_table
+   )
+   return
 # ===========================================================================
 # create the database
 file_name  = 'example.db'
@@ -487,49 +487,49 @@ reader   = csv.DictReader(file_in)
 time_r   = list()
 residual = list()
 for row in reader :
-	assert row['integrand'] == 'mtspecific'
-	assert row['time_lo']   == row['time_up']
-	time_r.append( float( row['time_lo'] ) )
-	residual.append( float( row['residual'] ) )
+   assert row['integrand'] == 'mtspecific'
+   assert row['time_lo']   == row['time_up']
+   time_r.append( float( row['time_lo'] ) )
+   residual.append( float( row['residual'] ) )
 residual_max  = numpy.max(residual)
 residual_min  = numpy.min(residual)
 residual_avg  = numpy.mean(residual)
 #
 if display_fit :
-	# print residual statistics
-	print( 'residual_max = ', residual_max )
-	print( 'residual_max = ', residual_max )
-	print( 'residual_avg = ', residual_avg )
-	#
-	# plot setup
-	fig     = matplotlib.pyplot.figure(tight_layout = True)
-	gs      = matplotlib.gridspec.GridSpec(2,1)
-	ax1     = fig.add_subplot(gs[0,0])
-	ax2     = fig.add_subplot(gs[1,0])
-	#
-	# plot death data weighted residuals
-	ax2.plot(time_r, residual, 'k+')
-	ax2.plot( [time_r[0], time_r[-1]], [0.0, 0.0], 'k-')
-	ax2.set_xlabel('time')
-	ax2.set_ylabel('weighted residuals')
-	#
-	# plot iota(t)
-	file_in = 'variable.csv'
-	file_in = open(file_in, 'r')
-	reader  = csv.DictReader(file_in)
-	time_i  = list()
-	iota    = list()
-	for row in reader :
-		if row['var_type'] == 'rate' and row['rate'] == 'iota' :
-			time_i.append( float(row['time']) )
-			iota.append( float(row['fit_value']) )
-	ax1.plot(time_i, iota, 'k-')
-	ax1.set(xlabel = 'day')
-	ax1.set(ylabel = 'iota' )
-	file_in.close()
-	#
-	# display plot
-	matplotlib.pyplot.show()
+   # print residual statistics
+   print( 'residual_max = ', residual_max )
+   print( 'residual_max = ', residual_max )
+   print( 'residual_avg = ', residual_avg )
+   #
+   # plot setup
+   fig     = matplotlib.pyplot.figure(tight_layout = True)
+   gs      = matplotlib.gridspec.GridSpec(2,1)
+   ax1     = fig.add_subplot(gs[0,0])
+   ax2     = fig.add_subplot(gs[1,0])
+   #
+   # plot death data weighted residuals
+   ax2.plot(time_r, residual, 'k+')
+   ax2.plot( [time_r[0], time_r[-1]], [0.0, 0.0], 'k-')
+   ax2.set_xlabel('time')
+   ax2.set_ylabel('weighted residuals')
+   #
+   # plot iota(t)
+   file_in = 'variable.csv'
+   file_in = open(file_in, 'r')
+   reader  = csv.DictReader(file_in)
+   time_i  = list()
+   iota    = list()
+   for row in reader :
+      if row['var_type'] == 'rate' and row['rate'] == 'iota' :
+         time_i.append( float(row['time']) )
+         iota.append( float(row['fit_value']) )
+   ax1.plot(time_i, iota, 'k-')
+   ax1.set(xlabel = 'day')
+   ax1.set(ylabel = 'iota' )
+   file_in.close()
+   #
+   # display plot
+   matplotlib.pyplot.show()
 #
 # check residuals
 assert residual_max < 4.0

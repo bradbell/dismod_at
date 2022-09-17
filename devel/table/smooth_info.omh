@@ -9,7 +9,7 @@ $$
 $section smooth_info: The Smoothing Information Class$$
 
 $childtable%
-	devel/table/smooth_info.cpp
+   devel/table/smooth_info.cpp
 %$$
 
 $end

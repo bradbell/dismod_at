@@ -5,9 +5,9 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin release_notes$$
 $spell
-	Dismod
-	devel
-	cpp
+   Dismod
+   devel
+   cpp
 $$
 
 $section Changes and Additions to Dismod_at$$
@@ -19,14 +19,14 @@ The purpose of these sections is to
 assist you in learning about changes between various versions of dismod_at.
 
 $children%
-	omh/whats_new/2022.omh%
-	omh/whats_new/2021.omh%
-	omh/whats_new/2020.omh%
-	omh/whats_new/2019.omh%
-	omh/whats_new/2018.omh%
-	omh/whats_new/2017.omh%
-	omh/whats_new/2016.omh%
-	omh/whats_new/2015.omh
+   omh/whats_new/2022.omh%
+   omh/whats_new/2021.omh%
+   omh/whats_new/2020.omh%
+   omh/whats_new/2019.omh%
+   omh/whats_new/2018.omh%
+   omh/whats_new/2017.omh%
+   omh/whats_new/2016.omh%
+   omh/whats_new/2015.omh
 %$$
 
 $head This Year$$

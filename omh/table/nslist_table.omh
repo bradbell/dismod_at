@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 $begin nslist_table$$
 $spell
-	nslist
+   nslist
 $$
 
 $section The Node Smoothing List Table$$

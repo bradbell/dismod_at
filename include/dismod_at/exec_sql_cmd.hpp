@@ -8,15 +8,15 @@
 # include <sqlite3.h>
 # include <string>
 namespace dismod_at {
-	extern void exec_sql_cmd(
-		sqlite3*           db,
-		const std::string& sql_cmd
-	);
-	extern std::string exec_sql_cmd(
-		sqlite3*           db        ,
-		const std::string& sql_cmd   ,
-		char               sep
-	);
+   extern void exec_sql_cmd(
+      sqlite3*           db,
+      const std::string& sql_cmd
+   );
+   extern std::string exec_sql_cmd(
+      sqlite3*           db        ,
+      const std::string& sql_cmd   ,
+      char               sep
+   );
 }
 
 # endif

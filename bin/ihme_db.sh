@@ -6,12 +6,12 @@
 # ----------------------------------------------------------------------------
 # $begin ihme_db.sh$$ $newlinech #$$
 # $spell
-#	dismod
-#	ihme
-#	dir
-#	epi
-#	csv
-#	cmake
+#  dismod
+#  ihme
+#  dir
+#  epi
+#  csv
+#  cmake
 # $$
 #
 # $section Make a Local Copy an IHME Dismod_at Database$$
@@ -40,7 +40,7 @@
 # $cref/run_cmake.sh/run_cmake.sh/python3_executable/$$ file.
 # If that setting is not correct, change it, and then execute the command
 # $codei%
-#	bin/run_cmake.sh
+#  bin/run_cmake.sh
 # %$$
 #
 # $head absolute_dir$$
@@ -90,47 +90,47 @@
 # ---------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
-	echo $*
-	eval $*
+   echo $*
+   eval $*
 }
 # -----------------------------------------------------------------------------
 if [ "$0" != 'bin/ihme_db.sh' ]
 then
-	echo 'bin/ihme_db.sh: must be executed from its parent directory'
-	exit 1
+   echo 'bin/ihme_db.sh: must be executed from its parent directory'
+   exit 1
 fi
 if [ ! -d '/ihme' ]
 then
-	echo 'bin/ihme_db.sh: The directory /ihme does not exist.'
-	exit 1
+   echo 'bin/ihme_db.sh: The directory /ihme does not exist.'
+   exit 1
 fi
 absolute_path='/ihme/epi/at_cascade'
 if [[ "$1" == --* ]]
 then
-	user=`echo "$1" | sed -e 's|^--||'`
-	absolute_path="/ihme/homes/$user"
-	shift
+   user=`echo "$1" | sed -e 's|^--||'`
+   absolute_path="/ihme/homes/$user"
+   shift
 fi
 if [ "$2" == '' ]
 then
-	echo 'usage: bin/ihme_db.sh [--user] relative_dir database'
-	echo 'see: https://bradbell.github.io/dismod_at/doc/ihme_db.sh.htm'
-	exit 1
+   echo 'usage: bin/ihme_db.sh [--user] relative_dir database'
+   echo 'see: https://bradbell.github.io/dismod_at/doc/ihme_db.sh.htm'
+   exit 1
 fi
 relative_dir="$1"
 database="$2"
 full_path="$absolute_path/$relative_dir/$database"
 if [ ! -e "$full_path" ]
 then
-	echo 'bin/ihme_db.sh: Cannot find the following database:'
-	echo "$full_path"
-	exit 1
+   echo 'bin/ihme_db.sh: Cannot find the following database:'
+   echo "$full_path"
+   exit 1
 fi
 # -----------------------------------------------------------------------------
 local_dir="ihme_db/$relative_dir"
 if [ ! -e "$local_dir" ]
 then
-	echo_eval mkdir -p "$local_dir"
+   echo_eval mkdir -p "$local_dir"
 fi
 echo_eval cp $full_path $local_dir/$database
 echo_eval chmod a+w $local_dir/$database

@@ -10,14 +10,14 @@
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-	struct prior_sim_struct {
-		int         simulate_index;
-		int         var_id;
-		double      prior_sim_value;
-		double      prior_sim_dage;
-		double      prior_sim_dtime;
-	};
-	extern CppAD::vector<prior_sim_struct> get_prior_sim_table(sqlite3*  db);
+   struct prior_sim_struct {
+      int         simulate_index;
+      int         var_id;
+      double      prior_sim_value;
+      double      prior_sim_dage;
+      double      prior_sim_dtime;
+   };
+   extern CppAD::vector<prior_sim_struct> get_prior_sim_table(sqlite3*  db);
 }
 
 # endif

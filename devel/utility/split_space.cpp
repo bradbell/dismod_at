@@ -8,9 +8,9 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
 $begin split_space$$
 $spell
-	Substrings
-	vec
-	str
+   Substrings
+   vec
+   str
 $$
 
 $section Split String Into Substrings With Spaces as Delimiter$$
@@ -44,22 +44,22 @@ CppAD::vector<std::string> split_space(const std::string& str)
 /* %$$
 $end
 */
-{	CppAD::vector<std::string> result;
-	size_t start = 0;
-	while( start < str.size() )
-	{	while( start < str.size() && str[start] == ' ' )
-			++start;
-		if( start < str.size() )
-		{	size_t stop = start + 1;
-			while( stop < str.size() && str[stop] != ' ' )
-				++stop;
-			std::string sub = str.substr(start, stop - start);
-			result.push_back(sub);
-			//
-			start = stop;
-		}
-	}
-	return result;
+{  CppAD::vector<std::string> result;
+   size_t start = 0;
+   while( start < str.size() )
+   {  while( start < str.size() && str[start] == ' ' )
+         ++start;
+      if( start < str.size() )
+      {  size_t stop = start + 1;
+         while( stop < str.size() && str[stop] != ' ' )
+            ++stop;
+         std::string sub = str.substr(start, stop - start);
+         result.push_back(sub);
+         //
+         start = stop;
+      }
+   }
+   return result;
 }
 
 } // END_DISMOD_AT_NAMEPSACE

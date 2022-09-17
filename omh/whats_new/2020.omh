@@ -5,40 +5,40 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin whats_new_2020$$
 $spell
-	Dismod
-	devel
-	cpp
-	optimizer
-	avgint
-	csv
-	py
-	dage
-	dtime
-	sim
-	cppad
-	hes
-	ipopt
-	coinbrew
-	eigen
-	Ip
-	ldlt_cholmod
-	std
-	modversion
-	messaging
-	Chron's
-	checkpointing
+   Dismod
+   devel
+   cpp
+   optimizer
+   avgint
+   csv
+   py
+   dage
+   dtime
+   sim
+   cppad
+   hes
+   ipopt
+   coinbrew
+   eigen
+   Ip
+   ldlt_cholmod
+   std
+   modversion
+   messaging
+   Chron's
+   checkpointing
 $$
 $navigate%
-	Up%Location%
-	Across%Search%
-	Prev%Prev%
-	Next%Next%
-	Down_up_4%_up_4%
-	Down_up_3%_up_3%
-	Down_up_2%_up_2%
-	Down_up_1%_up_1%
-	Down_up_0%_up_0%
-	Current%Heading
+   Up%Location%
+   Across%Search%
+   Prev%Prev%
+   Next%Next%
+   Down_up_4%_up_4%
+   Down_up_3%_up_3%
+   Down_up_2%_up_2%
+   Down_up_1%_up_1%
+   Down_up_0%_up_0%
+   Current%Heading
 %$$
 
 $section Changes and Additions to Dismod_at During 2020$$
@@ -249,9 +249,9 @@ $list number$$
 Add simplification to the scaling of the asymptotic statistics
 in the case were we have
 $cref/optimal fixed effects
-	/user_hes_fixed_math.py
-	/Scaling Fixed Effects
-	/Optimal Fixed Effects
+   /user_hes_fixed_math.py
+   /Scaling Fixed Effects
+   /Optimal Fixed Effects
 /$$.
 $lnext
 Advance to $code cppad_mixed-20200328$$.
@@ -305,9 +305,9 @@ $lnext
 The sample command asymptotic method uses a normal distribution,
 but the scaled fixed effects variables are normal in the scaled space; see
 $cref/fixed effects distribution
-	/sample_command
-	/asymptotic
-	/Fixed Effects Distribution
+   /sample_command
+   /asymptotic
+   /Fixed Effects Distribution
 /$$
 $lnext
 Add a test of
@@ -551,8 +551,8 @@ $lend
 $head 01-07$$
 Fix the following compile error when $code NDEBUG$$ is not defined:
 $codei%
-	%...%/devel/table/get_subgroup_table.cpp:128:31: error:
-	'subgroup_id' was not declared in this scope
+   %...%/devel/table/get_subgroup_table.cpp:128:31: error:
+   'subgroup_id' was not declared in this scope
 %$$
 
 

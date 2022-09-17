@@ -9,12 +9,12 @@
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-	struct covariate_struct {
-		std::string covariate_name;
-		double      reference;
-		double      max_difference;
-	};
-	extern CppAD::vector<covariate_struct> get_covariate_table(sqlite3*  db);
+   struct covariate_struct {
+      std::string covariate_name;
+      double      reference;
+      double      max_difference;
+   };
+   extern CppAD::vector<covariate_struct> get_covariate_table(sqlite3*  db);
 }
 
 # endif

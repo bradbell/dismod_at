@@ -13,13 +13,13 @@
 # include "get_prior_table.hpp"
 
 namespace dismod_at {
-	void check_child_prior(
-		sqlite3*                                 db          ,
-		const CppAD::vector<rate_struct>&        rate_table  ,
-		const CppAD::vector<smooth_grid_struct>& smooth_grid ,
-		const CppAD::vector<nslist_pair_struct>& nslist_pair ,
-		const CppAD::vector<prior_struct>&       prior_table
-	);
+   void check_child_prior(
+      sqlite3*                                 db          ,
+      const CppAD::vector<rate_struct>&        rate_table  ,
+      const CppAD::vector<smooth_grid_struct>& smooth_grid ,
+      const CppAD::vector<nslist_pair_struct>& nslist_pair ,
+      const CppAD::vector<prior_struct>&       prior_table
+   );
 }
 
 # endif

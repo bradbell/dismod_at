@@ -6,12 +6,12 @@
 # define DISMOD_AT_MULCOV_TYPE_HPP
 
 namespace dismod_at {
-	enum mulcov_type_enum {
-		rate_value_enum,
-		meas_value_enum,
-		meas_noise_enum,
-		number_mulcov_type_enum
-	};
+   enum mulcov_type_enum {
+      rate_value_enum,
+      meas_value_enum,
+      meas_noise_enum,
+      number_mulcov_type_enum
+   };
 }
 
 # endif

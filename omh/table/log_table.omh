@@ -4,9 +4,9 @@
 # ----------------------------------------------------------------------------
 $begin log_table$$
 $spell
-	std
-	datetime
-	unixepoch
+   std
+   datetime
+   unixepoch
 $$
 
 $section The Log Table$$
@@ -70,7 +70,7 @@ the return value of the C++ function $code std::time$$; i.e.,
 the number of seconds since January 1, 1970.
 You can convert it to GMT with the SQL command
 $codei%
-	select datetime(unix_time,'unixepoch') from log;
+   select datetime(unix_time,'unixepoch') from log;
 %$$
 
 $head message$$

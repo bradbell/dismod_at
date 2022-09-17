@@ -5,8 +5,8 @@
 
 $begin math_ode$$
 $spell
-	dismod
-	pini
+   dismod
+   pini
 $$
 
 $section The Dismod_at Ordinary Differential Equation$$
@@ -23,7 +23,7 @@ $head Prevalence, P(a, t)$$
 The prevalence $latex P(a, t)$$ is the fraction of the population that
 has the condition; i.e.,
 $latex \[
-	P(a, t) = \frac{ C(a, t) }{ S(a, t) + C(a, t) }
+   P(a, t) = \frac{ C(a, t) }{ S(a, t) + C(a, t) }
 \] $$
 
 $head Incidence, iota(a, t)$$

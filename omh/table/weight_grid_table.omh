@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 $begin weight_grid_table$$
 $spell
-	agetime
-	grid
+   agetime
+   grid
 $$
 
 $section The Weight Grid Table$$

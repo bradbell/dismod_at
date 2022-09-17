@@ -8,15 +8,15 @@
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-		double bilinear_interp(
-			double                         x          ,
-			double                         y          ,
-			const CppAD::vector<double>&   x_grid     ,
-			const CppAD::vector<double>&   y_grid     ,
-			const CppAD::vector<double>&   z_grid     ,
-			size_t&                        i          ,
-			size_t&                        j
-		);
+      double bilinear_interp(
+         double                         x          ,
+         double                         y          ,
+         const CppAD::vector<double>&   x_grid     ,
+         const CppAD::vector<double>&   y_grid     ,
+         const CppAD::vector<double>&   z_grid     ,
+         size_t&                        i          ,
+         size_t&                        j
+      );
 }
 
 # endif

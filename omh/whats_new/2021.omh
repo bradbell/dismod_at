@@ -5,62 +5,62 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin whats_new_2021$$
 $spell
-	complementarity
-	cppad
-	Ipopt
-	num_iter
-	Dismod
-	dage
-	dtime
-	sim_stdcv
-	var
-	std
-	csv
-	dismodat.py
-	ihme
-	crohns
-	msys
-	cygwin
-	covid
-	covariates
-	covariate
-	ubuntu
-	init
-	integrands
-	diff
-	bnd
-	eigen
-	hes
-	integrators
-	cen
-	cmake
-	prc
-	stderr
-	mulcov
-	avgint
-	stdout
-	cov
-	pdf
-	podman
-	distutils
-	dir
-	util
-	mkpath
-	makedirs
-	sys
+   complementarity
+   cppad
+   Ipopt
+   num_iter
+   Dismod
+   dage
+   dtime
+   sim_stdcv
+   var
+   std
+   csv
+   dismodat.py
+   ihme
+   crohns
+   msys
+   cygwin
+   covid
+   covariates
+   covariate
+   ubuntu
+   init
+   integrands
+   diff
+   bnd
+   eigen
+   hes
+   integrators
+   cen
+   cmake
+   prc
+   stderr
+   mulcov
+   avgint
+   stdout
+   cov
+   pdf
+   podman
+   distutils
+   dir
+   util
+   mkpath
+   makedirs
+   sys
 
 $$
 $navigate%
-	Up%Location%
-	Across%Search%
-	Prev%Prev%
-	Next%Next%
-	Down_up_4%_up_4%
-	Down_up_3%_up_3%
-	Down_up_2%_up_2%
-	Down_up_1%_up_1%
-	Down_up_0%_up_0%
-	Current%Heading
+   Up%Location%
+   Across%Search%
+   Prev%Prev%
+   Next%Next%
+   Down_up_4%_up_4%
+   Down_up_3%_up_3%
+   Down_up_2%_up_2%
+   Down_up_1%_up_1%
+   Down_up_0%_up_0%
+   Current%Heading
 %$$
 
 $section Changes and Additions to Dismod_at During 2021$$
@@ -137,7 +137,7 @@ $cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
 to 20211121.
 This requires re-running
 $codei%
-	./dock_dismod_at.sh image mixed
+   ./dock_dismod_at.sh image mixed
 %$$
 because the version of cppad_mixed changed.
 $lend
@@ -257,12 +257,12 @@ $head 09-01$$
 If the file name for a database in a $cref command$$ did not exist,
 most commands gave the error message:
 $codei%
-	Could not find table or column in table.
-	detected in age table
+   Could not find table or column in table.
+   detected in age table
 %$$
 This has been changed to
 $codei%
-	Cannot find the database %file_name%
+   Cannot find the database %file_name%
 %$$
 where $icode file_name$$ is the name used for the database.
 
@@ -339,17 +339,17 @@ $list number$$
 $bold API Change$$:
 The
 $cref/transformed standard deviation
-	/data_like
-	/Notation
-	/Transformed Standard Deviation, sigma_i
+   /data_like
+   /Notation
+   /Transformed Standard Deviation, sigma_i
 /$$
 is now computed before the standard deviation adjustment, hence $latex \sigma$$
 no longer depends on the $cref model_variables$$.
 As a consequence for
 $cref/log scaled/density_table/Notation/Log Scaled/$$ densities, the
 $cref/adjusted standard deviation
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
+   /data_like
+   /Adjusted Standard Deviation, delta_i(theta)
 /$$
 is now in log of the data space (it used be have the same units as the data).
 This fixes a problem with simulating data that has
@@ -537,8 +537,8 @@ $list number$$
 The $cref db2csv_command$$ would fail, if the previous fit had a
 $cref/warm_start/fit_command/warm_start/$$, with the following message:
 $codep
-	Previous fit command in log table used simulated data but
-	cannot find data_sim table
+   Previous fit command in log table used simulated data but
+   cannot find data_sim table
 $$
 This has been fixed.
 $lnext
@@ -651,8 +651,8 @@ $list number$$
 Advance to $cref dock_dismod_at.sh$$ version 20210416.
 Building this new image will require executing
 $srccode%sh%
-	./dock_dismod_at image mixed
-	./dock_dismod_at image dismod_at
+   ./dock_dismod_at image mixed
+   ./dock_dismod_at image dismod_at
 %$$
 The $cref/dismod_at.mixed/dock_dismod_at.sh/Building Images/dismod_at.mixed/$$
 image is necessary because the version of cppad_mixed has changed since
@@ -660,11 +660,11 @@ the last advancement of dock_dismod_at.sh.
 $lnext
 In the $code user_data_sim_py$$ example the code
 $srccode%py%
-	residual = (math.log(z + eta + delta) - math.log(mu + eta)) / sigma
+   residual = (math.log(z + eta + delta) - math.log(mu + eta)) / sigma
 %$$
 was incorrect and was changed to
 $srccode%py%
-	residual = (math.log(z + eta) - math.log(mu + eta)) / sigma
+   residual = (math.log(z + eta) - math.log(mu + eta)) / sigma
 %$$
 $lnext
 Change the default setting for
@@ -683,7 +683,7 @@ the calculation of $code data_sim_delta$$ and $code data_sim_stdcv$$ in the
 $cref data_sim_table$$ often resulted in zero or negative values
 which does not make sense and would cause dismod_at to abort with the message
 $codei%
-	%...% simulate_command sim_stdcv is nan or less than zero %...%
+   %...% simulate_command sim_stdcv is nan or less than zero %...%
 %$$
 This problem has been fixed using the
 adjusted standard deviation
@@ -696,9 +696,9 @@ instead of the simulated measurements
 $cref/data_sim_value/data_sim_table/data_sim_value/$$
 to define the corresponding
 $cref/transformed standard deviation
-	/data_like
-	/Notation
-	/Transformed Standard Deviation, sigma_i
+   /data_like
+   /Notation
+   /Transformed Standard Deviation, sigma_i
 /$$.
 $list number$$
 Add the $cref user_sim_log.py$$ example to highlight this change.
@@ -741,10 +741,10 @@ $head 04-16$$
 $list number$$
 The $cref/fit both/fit_command/variables/both/$$ command was failing when
 $cref/
-	zero_sum_child_rate/
-	option_table/
-	Zero Sum Constraints/
-	zero_sum_child_rate
+   zero_sum_child_rate/
+   option_table/
+   Zero Sum Constraints/
+   zero_sum_child_rate
 /$$
 was specified for a rate that did not have any children.
 This has been fixed.
@@ -814,14 +814,14 @@ was corrected (better testing show it was incorrect).
 $lnext
 Add following $cref/meas_noise_effect/option_table/meas_noise_effect/$$ cases:
 $cref/add_std_scale_none
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-	/add_std_scale_none
+   /data_like
+   /Adjusted Standard Deviation, delta_i(theta)
+   /add_std_scale_none
 /$$,
 $cref/add_var_scale_none
-	/data_like
-	/Adjusted Standard Deviation, delta_i(theta)
-	/add_var_scale_none
+   /data_like
+   /Adjusted Standard Deviation, delta_i(theta)
+   /add_var_scale_none
 /$$.
 $lend
 
@@ -845,9 +845,9 @@ In addition, the definition was move from the $cref statistic$$ section
 to a place where the different cases are easier to understand; see
 $icode sigma$$ in
 $cref/data_like
-	/data_like
-	/Notation
-	/Transformed Standard Deviation, sigma_i
+   /data_like
+   /Notation
+   /Transformed Standard Deviation, sigma_i
 /$$,
 $cref/fixed_value/fixed_value/sigma_j/$$,
 $cref/random_value/random_value/sigma_j/$$,

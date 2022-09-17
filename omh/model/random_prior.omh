@@ -4,10 +4,10 @@
 # ----------------------------------------------------------------------------
 $begin random_prior$$
 $spell
-	covariate
-	mulstd
-	dage
-	dtime
+   covariate
+   mulstd
+   dage
+   dtime
 $$
 
 $section Prior for Random Effect Values$$

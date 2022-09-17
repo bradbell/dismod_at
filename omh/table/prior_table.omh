@@ -4,9 +4,9 @@
 # ----------------------------------------------------------------------------
 $begin prior_table$$
 $spell
-	optimizer
-	std
-	var
+   optimizer
+   std
+   var
 $$
 
 $section The Prior Table$$
@@ -57,7 +57,7 @@ This column has type $code real$$ and specifies the mean
 for the prior.
 It must hold that
 $codei%
-	%lower% <= %mean% <= %upper%
+   %lower% <= %mean% <= %upper%
 %$$
 
 $subhead uniform$$
@@ -88,7 +88,7 @@ If the density is
 $cref/log scaled/density_table/Notation/Log Scaled/$$ and for a
 $cref/value/statistic/Weighted Residual Function, R/Value/$$,
 $codei%
-	%sigma% = log(%mean% + %eta% + %std%) - log(%mean% + %eta%)
+   %sigma% = log(%mean% + %eta% + %std%) - log(%mean% + %eta%)
 %$$
 is the standard deviation for the
 log of the random variable plus $icode eta$$; see
@@ -98,7 +98,7 @@ Using the notation $code ~=$$ for approximately equal,
 and taking the derivative of the log at the midpoint for the difference,
 we get
 $codei%
-	%sigma% ~= %std% / ( %mean% + %eta% + %std%/2 )
+   %sigma% ~= %std% / ( %mean% + %eta% + %std%/2 )
 %$$
 If this density is used for a
 $cref/difference/statistic/Weighted Residual Function, R/Difference/$$,

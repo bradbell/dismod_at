@@ -4,13 +4,13 @@
 # ----------------------------------------------------------------------------
 $begin data_flow$$
 $spell
-	ipopt
-	sim
-	Dismod
-	init
-	var
-	hes
-	bnd_mulcov
+   ipopt
+   sim
+   Dismod
+   init
+   var
+   hes
+   bnd_mulcov
 $$
 
 $section The Dismod_at Data Flow$$
@@ -28,25 +28,25 @@ it is never erased and restarted.
 
 $comment BEGIN_SORT_THIS_LINE_PLUS_2%$$
 $children%
-	omh/table/age_avg_table.omh%
-	omh/table/bnd_mulcov_table.omh%
-	omh/table/data_sim_table.omh%
-	omh/table/data_subset_table.omh%
-	omh/table/depend_var_table.omh%
-	omh/table/fit_data_subset_table.omh%
-	omh/table/fit_var_table.omh%
-	omh/table/hes_fixed_table.omh%
-	omh/table/hes_random_table.omh%
-	omh/table/log_table.omh%
-	omh/table/mixed_info_table.omh%
-	omh/table/predict_table.omh%
-	omh/table/prior_sim_table.omh%
-	omh/table/sample_table.omh%
-	omh/table/scale_var_table.omh%
-	omh/table/start_var_table.omh%
-	omh/table/trace_fixed_table.omh%
-	omh/table/truth_var_table.omh%
-	omh/table/var_table.omh
+   omh/table/age_avg_table.omh%
+   omh/table/bnd_mulcov_table.omh%
+   omh/table/data_sim_table.omh%
+   omh/table/data_subset_table.omh%
+   omh/table/depend_var_table.omh%
+   omh/table/fit_data_subset_table.omh%
+   omh/table/fit_var_table.omh%
+   omh/table/hes_fixed_table.omh%
+   omh/table/hes_random_table.omh%
+   omh/table/log_table.omh%
+   omh/table/mixed_info_table.omh%
+   omh/table/predict_table.omh%
+   omh/table/prior_sim_table.omh%
+   omh/table/sample_table.omh%
+   omh/table/scale_var_table.omh%
+   omh/table/start_var_table.omh%
+   omh/table/trace_fixed_table.omh%
+   omh/table/truth_var_table.omh%
+   omh/table/var_table.omh
 %$$
 $comment END_SORT_THIS_LINE_MINUS_2$$
 

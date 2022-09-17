@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 # $begin user_age_avg_split.py$$ $newlinech #$$
 # $spell
-#	init
+#  init
 # $$
 #
 # $section Non-uniform Age Average Grid$$
@@ -12,10 +12,10 @@
 # $head Purpose$$
 # This example demonstrate one reason for using the
 # $cref/
-#	age_avg_split/
-#	option_table/
-#	Age Average Grid/
-#	age_avg_split
+#  age_avg_split/
+#  option_table/
+#  Age Average Grid/
+#  age_avg_split
 # /$$ option to create an
 # $cref/age average grid/age_avg_table/Age Average Grid/$$
 # that is not uniformly spaced.
@@ -45,10 +45,10 @@
 #
 # $head ode_step_size$$
 # The $cref/
-#	ode_step_size/
-#	option_table/
-#	Age Average Grid/
-#	ode_step_size
+#  ode_step_size/
+#  option_table/
+#  Age Average Grid/
+#  ode_step_size
 # /$$ is
 # $code 50.0$$ for this example.
 # If there were no $icode age_avg_split$$, a linear approximation
@@ -77,158 +77,158 @@ import os
 import copy
 test_program = 'example/user/age_avg_split.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
-	usage  = 'python3 ' + test_program + '\n'
-	usage += 'where python3 is the python 3 program on your system\n'
-	usage += 'and working directory is the dismod_at distribution directory\n'
-	sys.exit(usage)
+   usage  = 'python3 ' + test_program + '\n'
+   usage += 'where python3 is the python 3 program on your system\n'
+   usage += 'and working directory is the dismod_at distribution directory\n'
+   sys.exit(usage)
 print(test_program)
 #
 # import dismod_at
 local_dir = os.getcwd() + '/python'
 if( os.path.isdir( local_dir + '/dismod_at' ) ) :
-	sys.path.insert(0, local_dir)
+   sys.path.insert(0, local_dir)
 import dismod_at
 #
 # change into the build/example/user directory
 if not os.path.exists('build/example/user') :
-	os.makedirs('build/example/user')
+   os.makedirs('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 # Note that the a, t values are used for this example
 def example_db (file_name) :
-	#
-	def fun_omega_parent(a, t) :
-		if  a <= 1.0 :
-			return ('prior_0_1', 'prior_none', 'prior_none')
-		else :
-			return ('prior_1_100', 'prior_none', 'prior_none')
-	#
-	def omega_true(a) :
-		if a < 1.0 :
-			return omega_0_1
-		else :
-			return omega_1_100
-	#
-	# ----------------------------------------------------------------------
-	# age table
-	age_list    = [ 0.0, 0.9, 1.1, 100.0 ]
-	#
-	# time table
-	time_list   = [ 1995.0, 2015.0 ]
-	#
-	# integrand table
-	integrand_table = [
-		{ 'name':'mtother' }
-	]
-	#
-	# node table: world
-	node_table = [ { 'name':'world',         'parent':'' } ]
-	#
-	# weight table:
-	weight_table = list()
-	#
-	# covariate table:
-	covariate_table = list()
-	#
-	# mulcov table
-	mulcov_table = list()
-	#
-	# avgint table
-	avgint_table = list()
-	row = {
-		'integrand':  'mtother',
-		'node':       'world',
-		'subgroup':   'world',
-		'weight':     '',
-	}
-	row['age_lower'] = 0.0
-	row['age_upper'] = 0.9
-	row['time_lower'] = 2000.0
-	row['time_upper'] = 2000.0
-	avgint_table.append( copy.copy(row) )
-	row['age_lower'] = 1.1
-	row['age_upper'] = 100.0
-	row['time_lower'] = 2000.0
-	row['time_upper'] = 2000.0
-	avgint_table.append( copy.copy(row) )
-	#
-	# nslist_table:
-	nslist_table = dict()
-	#
-	# data table:
-	data_table = list()
-	# ----------------------------------------------------------------------
-	# prior_table
-	prior_table = [
-		{	# prior_none
-			'name':     'prior_none',
-			'density':  'uniform',
-			'mean':     0.0,
-		},{ # prior_0_1
-			'name':     'prior_0_1',
-			'density':  'gaussian',
-			'mean':     omega_0_1,
-			'std':      1e-1 * omega_0_1
-		},{ # prior_1_100
-			'name':     'prior_1_100',
-			'density':  'gaussian',
-			'mean':     omega_1_100,
-			'std':      1e-1 * omega_1_100
-		}
-	]
-	# ----------------------------------------------------------------------
-	# smooth table
-	#
-	smooth_table = [
-		{ # smooth_omega_parent
-			'name':                     'smooth_omega_parent',
-			'age_id':                   [0, 1, 2, 3],
-			'time_id':                  [0, 1],
-			'fun':                      fun_omega_parent
-		}
-	]
-	# ----------------------------------------------------------------------
-	# rate table
-	rate_table = [
-		{
-			'name':          'omega',
-			'parent_smooth': 'smooth_omega_parent'
-		}
-	]
-	# ----------------------------------------------------------------------
-	# option_table
-	option_table = [
-		{ 'name':'parent_node_name',       'value':'world'               },
-		{ 'name':'ode_step_size',          'value':'50.0'                },
-		{ 'name':'age_avg_split',          'value':'1.0'                 },
-		{ 'name':'random_seed',            'value':'0'                   },
-		{ 'name':'rate_case',              'value':'iota_zero_rho_zero'  }
-	]
-	# ----------------------------------------------------------------------
-	# subgroup_table
-	subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
-	# ----------------------------------------------------------------------
-	# create database
-	dismod_at.create_database(
-		file_name,
-		age_list,
-		time_list,
-		integrand_table,
-		node_table,
-		subgroup_table,
-		weight_table,
-		covariate_table,
-		avgint_table,
-		data_table,
-		prior_table,
-		smooth_table,
-		nslist_table,
-		rate_table,
-		mulcov_table,
-		option_table
-	)
-	# ----------------------------------------------------------------------
-	return
+   #
+   def fun_omega_parent(a, t) :
+      if  a <= 1.0 :
+         return ('prior_0_1', 'prior_none', 'prior_none')
+      else :
+         return ('prior_1_100', 'prior_none', 'prior_none')
+   #
+   def omega_true(a) :
+      if a < 1.0 :
+         return omega_0_1
+      else :
+         return omega_1_100
+   #
+   # ----------------------------------------------------------------------
+   # age table
+   age_list    = [ 0.0, 0.9, 1.1, 100.0 ]
+   #
+   # time table
+   time_list   = [ 1995.0, 2015.0 ]
+   #
+   # integrand table
+   integrand_table = [
+      { 'name':'mtother' }
+   ]
+   #
+   # node table: world
+   node_table = [ { 'name':'world',         'parent':'' } ]
+   #
+   # weight table:
+   weight_table = list()
+   #
+   # covariate table:
+   covariate_table = list()
+   #
+   # mulcov table
+   mulcov_table = list()
+   #
+   # avgint table
+   avgint_table = list()
+   row = {
+      'integrand':  'mtother',
+      'node':       'world',
+      'subgroup':   'world',
+      'weight':     '',
+   }
+   row['age_lower'] = 0.0
+   row['age_upper'] = 0.9
+   row['time_lower'] = 2000.0
+   row['time_upper'] = 2000.0
+   avgint_table.append( copy.copy(row) )
+   row['age_lower'] = 1.1
+   row['age_upper'] = 100.0
+   row['time_lower'] = 2000.0
+   row['time_upper'] = 2000.0
+   avgint_table.append( copy.copy(row) )
+   #
+   # nslist_table:
+   nslist_table = dict()
+   #
+   # data table:
+   data_table = list()
+   # ----------------------------------------------------------------------
+   # prior_table
+   prior_table = [
+      {  # prior_none
+         'name':     'prior_none',
+         'density':  'uniform',
+         'mean':     0.0,
+      },{ # prior_0_1
+         'name':     'prior_0_1',
+         'density':  'gaussian',
+         'mean':     omega_0_1,
+         'std':      1e-1 * omega_0_1
+      },{ # prior_1_100
+         'name':     'prior_1_100',
+         'density':  'gaussian',
+         'mean':     omega_1_100,
+         'std':      1e-1 * omega_1_100
+      }
+   ]
+   # ----------------------------------------------------------------------
+   # smooth table
+   #
+   smooth_table = [
+      { # smooth_omega_parent
+         'name':                     'smooth_omega_parent',
+         'age_id':                   [0, 1, 2, 3],
+         'time_id':                  [0, 1],
+         'fun':                      fun_omega_parent
+      }
+   ]
+   # ----------------------------------------------------------------------
+   # rate table
+   rate_table = [
+      {
+         'name':          'omega',
+         'parent_smooth': 'smooth_omega_parent'
+      }
+   ]
+   # ----------------------------------------------------------------------
+   # option_table
+   option_table = [
+      { 'name':'parent_node_name',       'value':'world'               },
+      { 'name':'ode_step_size',          'value':'50.0'                },
+      { 'name':'age_avg_split',          'value':'1.0'                 },
+      { 'name':'random_seed',            'value':'0'                   },
+      { 'name':'rate_case',              'value':'iota_zero_rho_zero'  }
+   ]
+   # ----------------------------------------------------------------------
+   # subgroup_table
+   subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
+   # ----------------------------------------------------------------------
+   # create database
+   dismod_at.create_database(
+      file_name,
+      age_list,
+      time_list,
+      integrand_table,
+      node_table,
+      subgroup_table,
+      weight_table,
+      covariate_table,
+      avgint_table,
+      data_table,
+      prior_table,
+      smooth_table,
+      nslist_table,
+      rate_table,
+      mulcov_table,
+      option_table
+   )
+   # ----------------------------------------------------------------------
+   return
 # ===========================================================================
 file_name = 'example.db'
 example_db(file_name)
@@ -252,13 +252,13 @@ eps            = 1e-4
 # check rates values
 tolerance         = 1e-10
 for row in predict_table :
-	avgint_id = row['avgint_id']
-	if avgint_id == 0 :
-		value_true = omega_0_1
-	else :
-		value_true = omega_1_100
-	value      = row['avg_integrand']
-	assert(abs(1.0 - value / value_true) < tolerance)
+   avgint_id = row['avgint_id']
+   if avgint_id == 0 :
+      value_true = omega_0_1
+   else :
+      value_true = omega_1_100
+   value      = row['avg_integrand']
+   assert(abs(1.0 - value / value_true) < tolerance)
 # -----------------------------------------------------------------------------
 print('age_avg_split.py: OK')
 # -----------------------------------------------------------------------------

@@ -4,19 +4,19 @@
 # ----------------------------------------------------------------------------
 $begin trace_fixed_table$$
 $spell
-	ipopt
-	dismod
-	cppad
-	iter
-	mu
-	ls
-	Wachter
-	Biegler
-	obj
-	inf
-	pr
-	du
-	infeasibility
+   ipopt
+   dismod
+   cppad
+   iter
+   mu
+   ls
+   Wachter
+   Biegler
+   obj
+   inf
+   pr
+   du
+   infeasibility
 $$
 
 $section The Fixed Effects Optimization Trace Table$$
@@ -62,7 +62,7 @@ This quantity measure the infinity-norm (max) of the
 internal dual infeasibility, i.e, the derivative of the lagrangian
 with respect to the primal variables
 $latex \[
-	\nabla f(x) \nabla c(x) \lambda - z
+   \nabla f(x) \nabla c(x) \lambda - z
 \]$$
 where $latex z $$ are the lagrange multipliers for the box constraints and
 $latex c(x) $$ are the nonlinear equality constraints

@@ -4,11 +4,11 @@
 # ----------------------------------------------------------------------------
 # $begin user_hold_out_1.py$$ $newlinech #$$
 # $spell
-#	num_iter
-#	py
-#	Integrands
-#	Sincidence
-#	exp
+#  num_iter
+#  py
+#  Integrands
+#  Sincidence
+#  exp
 # $$
 #
 # $section Using hold_out in Data, Subset Data, and Option Tables$$
@@ -71,176 +71,176 @@ import copy
 import math
 test_program = 'example/user/hold_out_1.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
-	usage  = 'python3 ' + test_program + '\n'
-	usage += 'where python3 is the python 3 program on your system\n'
-	usage += 'and working directory is the dismod_at distribution directory\n'
-	sys.exit(usage)
+   usage  = 'python3 ' + test_program + '\n'
+   usage += 'where python3 is the python 3 program on your system\n'
+   usage += 'and working directory is the dismod_at distribution directory\n'
+   sys.exit(usage)
 print(test_program)
 #
 # import dismod_at
 local_dir = os.getcwd() + '/python'
 if( os.path.isdir( local_dir + '/dismod_at' ) ) :
-	sys.path.insert(0, local_dir)
+   sys.path.insert(0, local_dir)
 import dismod_at
 #
 # change into the build/example/user directory
 if not os.path.exists('build/example/user') :
-	os.makedirs('build/example/user')
+   os.makedirs('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
-	# note that the a, t values are not used for this case
-	def fun_iota(a, t) :
-		return ('prior_iota', None, None)
-	# ----------------------------------------------------------------------
-	# age table:
-	age_list    = [ 0.0, 5.0, 15.0, 35.0, 50.0, 75.0, 90.0, 100.0 ]
-	#
-	# time table:
-	time_list   = [ 1990.0, 2000.0, 2010.0, 2200.0 ]
-	#
-	# integrand table:
-	integrand_table = [
-		 { 'name':'Sincidence' },
-	     { 'name':'prevalence' }
-	]
-	#
-	# node table:
-	node_table = [ { 'name':'n0', 'parent':'' } ]
-	for node_id in range(1, n_node) :
-		node_table.append( { 'name':f'n{node_id}', 'parent':'n0' } )
-	#
-	# weight table:
-	weight_table = list()
-	#
-	# covariate table:
-	covariate_table = list()
-	#
-	# mulcov table:
-	mulcov_table = list()
-	#
-	# avgint table: empty
-	avgint_table = list()
-	#
-	# nslist_table:
-	nslist_table = dict()
-	# ----------------------------------------------------------------------
-	# data table:
-	data_table = list()
-	#
-	# values that are the same for all data points
-	row = {
-		'density':     'gaussian',
-		'meas_std':    iota_true / 10.,
-		'weight':      '',
-		'age_lower':    50.0,
-		'age_upper':    50.0,
-		'time_lower':   2000.,
-		'time_upper':   2000.,
-		'node':         'world',
-		'subgroup':     'world',
-	}
-	#
-	# prevalence data point with value 0.0 and held out
-	# using option table hold_out command
-	row['node']       = 'n0'
-	row['integrand']  = 'prevalence'
-	row['meas_value'] = 0.0
-	row['hold_out']   = False;
-	data_table.append( copy.copy(row) )
-	#
-	# Sincidence data point with value 0.0 and data_table hold_out 1
-	row['node']       = 'n0'
-	row['integrand']  = 'Sincidence'
-	row['hold_out']   = True
-	row['meas_value'] = 0.0
-	data_table.append( copy.copy(row) )
-	#
-	# Sincidence data points with value iota_true and data_table hold_out 0
-	# Note that only every other child node has data
-	row['integrand']  = 'Sincidence'
-	row['hold_out']   = False
-	row['meas_value'] = iota_true
-	for node_id in range(0, n_node, 2) :
-		row['node'] = f'n{node_id}'
-		for k in range(4) :
-			data_table.append( copy.copy(row) )
-	#
-	# ----------------------------------------------------------------------
-	# prior_table
-	prior_table = [
-		{ # prior_iota
-			'name':     'prior_iota',
-			'density':  'uniform',
-			'lower':    iota_true / 10.0,
-			'upper':    iota_true * 10.0,
-			'mean':     iota_true * 2.0,
-		}
-	]
-	# ----------------------------------------------------------------------
-	# smooth table
-	name           = 'smooth_iota'
-	fun            = fun_iota
-	smooth_table = [
-		{	'name':name,
-			'age_id':[0],
-			'time_id':[0],
-			'fun':fun
-		}
-	]
-	# ----------------------------------------------------------------------
-	# rate table:
-	rate_table = [
-		{	'name':          'iota',
-			'parent_smooth': 'smooth_iota',
-		}
-	]
-	# ----------------------------------------------------------------------
-	# option_table
-	option_table = [
-		{ 'name':'rate_case',              'value':'iota_pos_rho_zero'   },
-		{ 'name':'parent_node_name',       'value':'n0'                  },
-		{ 'name':'warn_on_stderr',         'value':'false'               },
+   # note that the a, t values are not used for this case
+   def fun_iota(a, t) :
+      return ('prior_iota', None, None)
+   # ----------------------------------------------------------------------
+   # age table:
+   age_list    = [ 0.0, 5.0, 15.0, 35.0, 50.0, 75.0, 90.0, 100.0 ]
+   #
+   # time table:
+   time_list   = [ 1990.0, 2000.0, 2010.0, 2200.0 ]
+   #
+   # integrand table:
+   integrand_table = [
+       { 'name':'Sincidence' },
+        { 'name':'prevalence' }
+   ]
+   #
+   # node table:
+   node_table = [ { 'name':'n0', 'parent':'' } ]
+   for node_id in range(1, n_node) :
+      node_table.append( { 'name':f'n{node_id}', 'parent':'n0' } )
+   #
+   # weight table:
+   weight_table = list()
+   #
+   # covariate table:
+   covariate_table = list()
+   #
+   # mulcov table:
+   mulcov_table = list()
+   #
+   # avgint table: empty
+   avgint_table = list()
+   #
+   # nslist_table:
+   nslist_table = dict()
+   # ----------------------------------------------------------------------
+   # data table:
+   data_table = list()
+   #
+   # values that are the same for all data points
+   row = {
+      'density':     'gaussian',
+      'meas_std':    iota_true / 10.,
+      'weight':      '',
+      'age_lower':    50.0,
+      'age_upper':    50.0,
+      'time_lower':   2000.,
+      'time_upper':   2000.,
+      'node':         'world',
+      'subgroup':     'world',
+   }
+   #
+   # prevalence data point with value 0.0 and held out
+   # using option table hold_out command
+   row['node']       = 'n0'
+   row['integrand']  = 'prevalence'
+   row['meas_value'] = 0.0
+   row['hold_out']   = False;
+   data_table.append( copy.copy(row) )
+   #
+   # Sincidence data point with value 0.0 and data_table hold_out 1
+   row['node']       = 'n0'
+   row['integrand']  = 'Sincidence'
+   row['hold_out']   = True
+   row['meas_value'] = 0.0
+   data_table.append( copy.copy(row) )
+   #
+   # Sincidence data points with value iota_true and data_table hold_out 0
+   # Note that only every other child node has data
+   row['integrand']  = 'Sincidence'
+   row['hold_out']   = False
+   row['meas_value'] = iota_true
+   for node_id in range(0, n_node, 2) :
+      row['node'] = f'n{node_id}'
+      for k in range(4) :
+         data_table.append( copy.copy(row) )
+   #
+   # ----------------------------------------------------------------------
+   # prior_table
+   prior_table = [
+      { # prior_iota
+         'name':     'prior_iota',
+         'density':  'uniform',
+         'lower':    iota_true / 10.0,
+         'upper':    iota_true * 10.0,
+         'mean':     iota_true * 2.0,
+      }
+   ]
+   # ----------------------------------------------------------------------
+   # smooth table
+   name           = 'smooth_iota'
+   fun            = fun_iota
+   smooth_table = [
+      {  'name':name,
+         'age_id':[0],
+         'time_id':[0],
+         'fun':fun
+      }
+   ]
+   # ----------------------------------------------------------------------
+   # rate table:
+   rate_table = [
+      {  'name':          'iota',
+         'parent_smooth': 'smooth_iota',
+      }
+   ]
+   # ----------------------------------------------------------------------
+   # option_table
+   option_table = [
+      { 'name':'rate_case',              'value':'iota_pos_rho_zero'   },
+      { 'name':'parent_node_name',       'value':'n0'                  },
+      { 'name':'warn_on_stderr',         'value':'false'               },
 
-		{ 'name':'quasi_fixed',            'value':'false'               },
-		{ 'name':'max_num_iter_fixed',     'value':'50'                  },
-		{ 'name':'print_level_fixed',      'value':'0'                   },
-		{ 'name':'tolerance_fixed',        'value':'1e-8'                },
+      { 'name':'quasi_fixed',            'value':'false'               },
+      { 'name':'max_num_iter_fixed',     'value':'50'                  },
+      { 'name':'print_level_fixed',      'value':'0'                   },
+      { 'name':'tolerance_fixed',        'value':'1e-8'                },
 
-		{ 'name':'max_num_iter_random',    'value':'50'                  },
-		{ 'name':'print_level_random',     'value':'0'                   },
-		{ 'name':'tolerance_random',       'value':'1e-10'               },
-	]
-	# hold out all prevalence data no matter what hold_out in data table
-	option_table.append(
-		{ 'name':'hold_out_integrand',     'value':'prevalence'          }
-	)
-	# ----------------------------------------------------------------------
-	# subgroup_table
-	subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
-	# ----------------------------------------------------------------------
-	# create database
-	dismod_at.create_database(
-		file_name,
-		age_list,
-		time_list,
-		integrand_table,
-		node_table,
-		subgroup_table,
-		weight_table,
-		covariate_table,
-		avgint_table,
-		data_table,
-		prior_table,
-		smooth_table,
-		nslist_table,
-		rate_table,
-		mulcov_table,
-		option_table
-	)
-	# ----------------------------------------------------------------------
-	return
+      { 'name':'max_num_iter_random',    'value':'50'                  },
+      { 'name':'print_level_random',     'value':'0'                   },
+      { 'name':'tolerance_random',       'value':'1e-10'               },
+   ]
+   # hold out all prevalence data no matter what hold_out in data table
+   option_table.append(
+      { 'name':'hold_out_integrand',     'value':'prevalence'          }
+   )
+   # ----------------------------------------------------------------------
+   # subgroup_table
+   subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
+   # ----------------------------------------------------------------------
+   # create database
+   dismod_at.create_database(
+      file_name,
+      age_list,
+      time_list,
+      integrand_table,
+      node_table,
+      subgroup_table,
+      weight_table,
+      covariate_table,
+      avgint_table,
+      data_table,
+      prior_table,
+      smooth_table,
+      nslist_table,
+      rate_table,
+      mulcov_table,
+      option_table
+   )
+   # ----------------------------------------------------------------------
+   return
 # ===========================================================================
 # Create database
 file_name = 'example.db'
@@ -253,7 +253,7 @@ dismod_at.system_command_prc([ program, file_name, 'init' ])
 integrand = 'Sincidence'
 max_fit   = 2 * n_node
 dismod_at.system_command_prc(
-	[ program, file_name, 'hold_out', integrand, str(max_fit) ]
+   [ program, file_name, 'hold_out', integrand, str(max_fit) ]
 )
 dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
 # -----------------------------------------------------------------------
@@ -280,14 +280,14 @@ assert len(fit_data_subset_table) == len(data_table)
 # check that max_fit Sincidence values are no held out
 count_fit = 0
 for subset_row in data_subset_table :
-	data_id         = subset_row['data_id']
-	data_row        = data_table[data_id]
-	integrand_id    = data_row['integrand_id']
-	integrand_name  = integrand_table[integrand_id]['integrand_name']
-	if integrand_name == 'Sincidence' :
-		hold_out    = data_row['hold_out'] == 1 or subset_row['hold_out'] == 1
-		if not hold_out :
-			count_fit += 1
+   data_id         = subset_row['data_id']
+   data_row        = data_table[data_id]
+   integrand_id    = data_row['integrand_id']
+   integrand_name  = integrand_table[integrand_id]['integrand_name']
+   if integrand_name == 'Sincidence' :
+      hold_out    = data_row['hold_out'] == 1 or subset_row['hold_out'] == 1
+      if not hold_out :
+         count_fit += 1
 assert count_fit == max_fit
 #
 # check fitted value for iota
@@ -296,20 +296,20 @@ assert abs( 1.0 - iota_fit / iota_true ) < 1e-6
 #
 # check residuals for non-zero data
 for (subset_id, fit_row) in enumerate(fit_data_subset_table) :
-	data_row          = data_table[data_id]
-	meas_value        = data_row['meas_value']
-	meas_std          = data_row['meas_std']
-	weighted_residual = fit_row['weighted_residual']
-	integrand_id      = data_row['integrand_id']
-	integrand_name    = integrand_table[integrand_id]['integrand_name']
-	if integrand_name == 'prevalence' :
-		age      = data_row['age_lower']
-		model    = 1.0 - math.exp( - iota_fit * age )
-	else :
-		model    = iota_fit
+   data_row          = data_table[data_id]
+   meas_value        = data_row['meas_value']
+   meas_std          = data_row['meas_std']
+   weighted_residual = fit_row['weighted_residual']
+   integrand_id      = data_row['integrand_id']
+   integrand_name    = integrand_table[integrand_id]['integrand_name']
+   if integrand_name == 'prevalence' :
+      age      = data_row['age_lower']
+      model    = 1.0 - math.exp( - iota_fit * age )
+   else :
+      model    = iota_fit
 
-	check    = ( meas_value - model ) / meas_std
-	assert( 1.0 - weighted_residual / check ) < 1e-6
+   check    = ( meas_value - model ) / meas_std
+   assert( 1.0 - weighted_residual / check ) < 1e-6
 #
 # -----------------------------------------------------------------------------
 print('hold_out_1.py: OK')

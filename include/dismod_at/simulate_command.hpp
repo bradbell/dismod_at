@@ -17,16 +17,16 @@
 namespace dismod_at {
 
 void simulate_command(
-	const std::string&                       number_simulate   ,
-	const std::string&                       meas_noise_effect ,
-	sqlite3*                                 db                ,
-	const CppAD::vector<subset_data_struct>& subset_data_obj   ,
-	data_model&                              data_object       ,
-	const pack_prior&                        var2prior         ,
-	const pack_info&                         pack_object       ,
-	const db_input_struct&                   db_input          ,
-	// effectively const
-	std::map<std::string, std::string>&      option_map
+   const std::string&                       number_simulate   ,
+   const std::string&                       meas_noise_effect ,
+   sqlite3*                                 db                ,
+   const CppAD::vector<subset_data_struct>& subset_data_obj   ,
+   data_model&                              data_object       ,
+   const pack_prior&                        var2prior         ,
+   const pack_info&                         pack_object       ,
+   const db_input_struct&                   db_input          ,
+   // effectively const
+   std::map<std::string, std::string>&      option_map
 );
 
 }
