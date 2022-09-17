@@ -88,7 +88,7 @@
 # This is the measured value; see
 # $cref/y/data_sim_table/Method/y/$$.
 #
-# $subhead Upper Case Delta$$
+# $subhead Capital Delta$$
 # This is the minimum cv standard deviation corresponding to $latex y$$; see
 # $cref/Delta
 #  /data_like
@@ -106,11 +106,11 @@
 #
 # $subhead E$$
 # This is the average noise effect corresponding to $latex y$$; see
-# $cref/E/data_sim_table/Method/E/$$.
+# $cref/E/data_sim_table/Method/Capital E/$$.
 #
-# $subhead Lower Case delta$$
+# $subhead delta$$
 # This is the adjusted standard deviation corresponding to $latex y$$; see
-# $cref/delta/data_sim_table/Method/Lower Case delta/$$.
+# $cref/delta/data_sim_table/Method/delta/$$.
 #
 # $head Simulation Notation$$
 #

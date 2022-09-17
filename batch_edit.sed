@@ -25,14 +25,23 @@
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
+#  omh/table/data_sim_table.omh
+#  omh/model/fixed_prior.omh
 # '
 # list of sed commands that are applied to the extra files,
 # after the other sed commands in this file.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # extra_seds='
+#  s|subhead@sE|subhead@sCapital@sE|
+#  s|head@sTheta|head@sCapital@sTheta|
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-/import distutils.dir_util/d
-s|^distutils.dir_util.mkpath(\([^)]*\))|if not os.path.exists(\1) :\
-   os.makedirs(\1)|
+s|$head Lower Case |$head |
+s|$subhead Lower Case |$subhead |
+#
+s|$head Upper Case |$head Capital |
+s|$subhead Upper Case |$subhead Capital |
+#
+s|/Lower Case delta/|/delta/|
+s|/data_sim_table/Method/E/|/data_sim_table/Method/Capital E/|

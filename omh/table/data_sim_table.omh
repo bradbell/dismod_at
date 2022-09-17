@@ -69,7 +69,7 @@ We use $latex y$$ to denote the data table
 $cref/meas_value/data_table/meas_value/$$
 corresponding to this $icode data_id$$.
 
-$subhead Upper Case Delta$$
+$subhead Capital Delta$$
 We use $latex \Delta$$ to denote the
 $cref/minimum cv standard deviation
    /data_like
@@ -95,7 +95,7 @@ corresponding to the truth_var table
 value for the model variables, the values in the data table,
 and this $icode data_id$$.
 
-$subhead E$$
+$subhead Capital E$$
 We use $latex E$$ for the
 $cref/average noise effect
    /data_like
@@ -125,7 +125,7 @@ Note that $latex \sigma$$ does not depend on simulated noise
 $latex e$$ defined below (because it is defined using $latex y$$
 instead of $latex z$$).
 
-$subhead Lower Case delta$$
+$subhead delta$$
 We use $latex \delta$$ to denote the
 $cref/adjusted standard deviation
    /data_like
