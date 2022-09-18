@@ -64,7 +64,7 @@ namespace dismod_at {
       CppAD::vector<size_t>             var_id2fixed_;
       //
       // Lower and upper limits for random effects and
-      // number of components that have eqaul lower and upper limits.
+      // number of components that have equal lower and upper limits.
       CppAD::vector<double>             random_lower_;
       CppAD::vector<double>             random_upper_;
       size_t                            n_random_equal_;

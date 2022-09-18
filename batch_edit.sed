@@ -1,7 +1,4 @@
 # Plan for future changes on master branch
-# 1. s|^\t\(  *\)GNU Affero|        GNU Affero|
-# 2. s|covaraite|covariate|
-# 3. s|eqaul|equal|
 # ----------------------------------------------------------------------------
 # None of the lists below can have white space or a dollar sign in an entry.
 #
@@ -25,23 +22,13 @@
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
-#  omh/table/data_sim_table.omh
-#  omh/model/fixed_prior.omh
 # '
 # list of sed commands that are applied to the extra files,
 # after the other sed commands in this file.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # extra_seds='
-#  s|subhead@sE|subhead@sCapital@sE|
-#  s|head@sTheta|head@sCapital@sTheta|
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|$head Lower Case |$head |
-s|$subhead Lower Case |$subhead |
-#
-s|$head Upper Case |$head Capital |
-s|$subhead Upper Case |$subhead Capital |
-#
-s|/Lower Case delta/|/delta/|
-s|/data_sim_table/Method/E/|/data_sim_table/Method/Capital E/|
+s|covaraite|covariate|
+s|eqaul|equal|

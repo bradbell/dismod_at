@@ -8,7 +8,7 @@
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/age_avg_grid.hpp>
 
-// Testing rate covaraite multipliers
+// Testing rate covariate multipliers
 
 namespace {
    double age_max_, time_max_, x_j = 0.5;
