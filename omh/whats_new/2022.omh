@@ -38,6 +38,12 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2022$$
 
+$head 10-14$$
+Advance the dock_dismod_at.sh
+$cref/at_cascade_version/dock_dismod_at.sh/Building Images/at_cascade_version/$$
+to 2022.10.14
+You should build the new at_cascade image.
+
 $head 09-16$$
 $list number$$
 Change copyright and license declaration to SPDX format.

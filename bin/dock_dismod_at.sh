@@ -94,8 +94,8 @@
 # $subhead at_cascade_version$$
 # This script can build the following version of the optional at_cascade image:
 # $srccode%sh%
-   at_cascade_version='2022.8.27'
-   at_cascade_hash='9ebbde05d9ad5742db9d40ae82aca6152f2b7c46'
+   at_cascade_version='2022.10.14'
+   at_cascade_hash='4fdc5002864a1a86bcbe0e819af0191c987d95d4'
 # %$$
 #
 #
