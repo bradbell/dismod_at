@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2018</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2018">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2018 12-19 12-15 12-14 10-30 10-22 10-21 10-13 10-05 09-30 09-28 09-24 09-14 08-30 08-29 08-22 08-13 08-09 08-08 08-07 08-06 07-31 07-30 07-27 07-26 api change other 07-25 07-23 07-21 07-13 06-30 06-29 06-21 06-20 06-18 06-14 06-09 06-04 05-24 05-23 05-21 05-14 05-09 05-08 05-07 05-05 05-04 05-02 04-30 04-26 04-25 04-24 04-23 04-22 04-21 04-16 04-13 04-12 04-11 04-10 04-09 04-08 04-07 04-06 03-21 03-13 03-10 03-08 03-06 02-20 02-17 02-14 02-13 02-12 02-11 02-09 02-08 02-05 02-04 02-03 02-02 02-01 01-31 01-30 01-28 01-26 01-25 01-24 01-23 01-22 01-21 01-20 01-18 01-16 01-12 01-09 ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -160,8 +160,8 @@ A:active { color : purple }
 </select>
 </td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
@@ -373,7 +373,7 @@ Advance to cppad-0180925 and cppad_mixed-0180925.
 This had the following effect timing result for <code><font color="blue">bin/speed.sh</font></code>:
 <table><tr><td align='left'  valign='top'>
 
-        </td><td align='left'  valign='top'>
+      </td><td align='left'  valign='top'>
  user time    </td><td align='left'  valign='top'>
  memory         </td></tr><tr><td align='left'  valign='top'>
 
@@ -864,11 +864,12 @@ There was a bug in the simulation of age difference and time
 difference prior means introduced on
 <a href="whats_new_2018.htm" target="_top"><span style='white-space: nowrap'>04-24</span></a>
 .
-To be specific
-<small>@(@
-/sigma/statistic/Log-Transformed Standard Deviation/
+To be specific <small>@(@
+\sigma
 @)@</small>
-was being used where delta should have been.
+was being used where <small>@(@
+\delta
+@)@</small> should have been.
 
 
 <br>
@@ -1324,7 +1325,7 @@ The install <a href="install_unix.htm#Download dismod_at.git" target="_top"><spa
  procedure was changed
 to use the following command to determine the version number:
 <code><font color='blue'><pre style='display:inline'> 
-     grep '^SET(dismod_at_version' CMakeLists.txt
+   grep '^SET(dismod_at_version' CMakeLists.txt
 </pre></font></code>
 <br>
 <b><big><a name="03-08" id="03-08">03-08</a></big></b>
@@ -1334,7 +1335,7 @@ type detected in an <a href="input.htm" target="_top"><span style='white-space: 
  table.
 To be specific, a syntax error would occur on the line
 <code><font color='blue'><pre style='display:inline'> 
-      msg  = 'expected type ' + ty ++  ' for column ' + name
+    msg  = 'expected type ' + ty ++  ' for column ' + name
 </pre></font></code>
 This was fixed by changing <code><font color="blue">++</font></code> to <code><font color="blue">+</font></code>.
 
@@ -1792,7 +1793,7 @@ Change the specification for the
  function
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>da</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dt</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>da</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dt</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 so that <code><font color="blue">None</font></code> can be returned for 
 <code><i><font color="black"><span style='white-space: nowrap'>da</span></font></i></code>

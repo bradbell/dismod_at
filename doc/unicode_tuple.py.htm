@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>unicode_tuple: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="unicode_tuple: Example and Test">
-<meta name="keywords" id="keywords" content=" unicode_tuple: example test ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,18 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>python</option>
-<option>unicode_tuple</option>
-<option>unicode_tuple.py</option>
-</select>
-</td>
-<td>
+<td><a href="unicode_tuple.htm" target="_top">Prev</a>
+</td><td><a href="release_notes.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -50,9 +43,16 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="unicode_tuple.htm" target="_top">Prev</a>
-</td><td><a href="release_notes.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>unicode_tuple</option>
+<option>unicode_tuple.py</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -63,8 +63,8 @@ A:active { color : purple }
 </td>
 <td>unicode_tuple.py</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@ 
 
 
@@ -72,15 +72,15 @@ A:active { color : purple }
 
 <br><pre><tt><i><font color="#9A1900">#</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">unicode_tuple</font></b><font color="#990000">()</font> <font color="#990000">:</font>
-     <b><font color="#000080">import</font></b> dismod_at
-     <i><font color="#9A1900">#</font></i>
-     iterable     <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">2.00</font><font color="#990000">,</font> <font color="#FF0000">'three'</font> <font color="#990000">]</font>
-     quote_string <font color="#990000">=</font> True
-     u_tuple      <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">unicode_tuple</font></b><font color="#990000">(</font>iterable<font color="#990000">,</font> quote_string<font color="#990000">)</font>
-     check        <font color="#990000">=</font> u<font color="#FF0000">'( 1, 2.0, \'three\' )'</font>
-     <b><font color="#0000FF">assert</font></b> u_tuple <font color="#990000">==</font> check
-     <i><font color="#9A1900">#</font></i>
-     <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'unicode_tuple: OK'</font><font color="#990000">)</font></tt></pre>
+   <b><font color="#000080">import</font></b> dismod_at
+   <i><font color="#9A1900">#</font></i>
+   iterable     <font color="#990000">=</font> <font color="#990000">[</font> <font color="#993399">1</font><font color="#990000">,</font> <font color="#993399">2.00</font><font color="#990000">,</font> <font color="#FF0000">'three'</font> <font color="#990000">]</font>
+   quote_string <font color="#990000">=</font> True
+   u_tuple      <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">unicode_tuple</font></b><font color="#990000">(</font>iterable<font color="#990000">,</font> quote_string<font color="#990000">)</font>
+   check        <font color="#990000">=</font> u<font color="#FF0000">'( 1, 2.0, \'three\' )'</font>
+   <b><font color="#0000FF">assert</font></b> u_tuple <font color="#990000">==</font> check
+   <i><font color="#9A1900">#</font></i>
+   <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'unicode_tuple: OK'</font><font color="#990000">)</font></tt></pre>
 
 <hr>Input File: example/table/unicode_tuple.py
 

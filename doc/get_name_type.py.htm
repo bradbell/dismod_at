@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>get_name_type: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="get_name_type: Example and Test">
-<meta name="keywords" id="keywords" content=" get_name_type: example test ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,18 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>python</option>
-<option>get_name_type</option>
-<option>get_name_type.py</option>
-</select>
-</td>
-<td>
+<td><a href="get_name_type.htm" target="_top">Prev</a>
+</td><td><a href="get_row_list.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -50,9 +43,16 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="get_name_type.htm" target="_top">Prev</a>
-</td><td><a href="get_row_list.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>get_name_type</option>
+<option>get_name_type.py</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -63,8 +63,8 @@ A:active { color : purple }
 </td>
 <td>get_name_type.py</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@ 
 
 
@@ -72,33 +72,33 @@ A:active { color : purple }
 
 <br><pre><tt><i><font color="#9A1900">#</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">get_name_type</font></b><font color="#990000">()</font> <font color="#990000">:</font>
-     <b><font color="#000080">import</font></b> dismod_at
-     <i><font color="#9A1900">#</font></i>
-     file_name      <font color="#990000">=</font> <font color="#FF0000">'example.db'</font>
-     new            <font color="#990000">=</font> True
-     connection     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
-     cursor         <font color="#990000">=</font> connection<font color="#990000">.</font><b><font color="#000000">cursor</font></b><font color="#990000">()</font>
-     <i><font color="#9A1900">#</font></i>
-     <i><font color="#9A1900"># create temp table</font></i>
-     col_name <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'int_name'</font><font color="#990000">,</font> <font color="#FF0000">'real_name'</font><font color="#990000">,</font> <font color="#FF0000">'text_name'</font>  <font color="#990000">]</font>
-     col_type <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'integer'</font><font color="#990000">,</font>  <font color="#FF0000">'real'</font><font color="#990000">,</font>       <font color="#FF0000">'text'</font>      <font color="#990000">]</font>
-     row_list <font color="#990000">=</font> <font color="#990000">[</font>
-          <font color="#990000">[</font> <font color="#993399">1</font><font color="#990000">,</font>          <font color="#993399">2.0</font><font color="#990000">,</font>          <font color="#FF0000">'three'</font>     <font color="#990000">]</font>
-     <font color="#990000">]</font>
-     tbl_name <font color="#990000">=</font> <font color="#FF0000">'temp'</font>
-     dismod_at<font color="#990000">.</font><b><font color="#000000">create_table</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> col_name<font color="#990000">,</font> col_type<font color="#990000">,</font> row_list<font color="#990000">)</font>
-     <i><font color="#9A1900">#</font></i>
-     check_name <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'temp_id'</font> <font color="#990000">]</font> <font color="#990000">+</font> col_name
-     check_type <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'integer primary key'</font><font color="#990000">]</font> <font color="#990000">+</font> col_type
-     <i><font color="#9A1900">#</font></i>
-     <i><font color="#9A1900"># get the column names and corresponding types</font></i>
-     <font color="#990000">(</font>col_name<font color="#990000">,</font> col_type<font color="#990000">)</font> <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_name_type</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">)</font>
-     <i><font color="#9A1900">#</font></i>
-     <b><font color="#0000FF">assert</font></b> col_name <font color="#990000">==</font> check_name
-     <b><font color="#0000FF">assert</font></b> col_type <font color="#990000">==</font> check_type
-     <i><font color="#9A1900">#</font></i>
-     connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
-     <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'get_name_type: OK'</font><font color="#990000">)</font></tt></pre>
+   <b><font color="#000080">import</font></b> dismod_at
+   <i><font color="#9A1900">#</font></i>
+   file_name      <font color="#990000">=</font> <font color="#FF0000">'example.db'</font>
+   new            <font color="#990000">=</font> True
+   connection     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
+   cursor         <font color="#990000">=</font> connection<font color="#990000">.</font><b><font color="#000000">cursor</font></b><font color="#990000">()</font>
+   <i><font color="#9A1900">#</font></i>
+   <i><font color="#9A1900"># create temp table</font></i>
+   col_name <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'int_name'</font><font color="#990000">,</font> <font color="#FF0000">'real_name'</font><font color="#990000">,</font> <font color="#FF0000">'text_name'</font>  <font color="#990000">]</font>
+   col_type <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'integer'</font><font color="#990000">,</font>  <font color="#FF0000">'real'</font><font color="#990000">,</font>       <font color="#FF0000">'text'</font>      <font color="#990000">]</font>
+   row_list <font color="#990000">=</font> <font color="#990000">[</font>
+      <font color="#990000">[</font> <font color="#993399">1</font><font color="#990000">,</font>          <font color="#993399">2.0</font><font color="#990000">,</font>          <font color="#FF0000">'three'</font>     <font color="#990000">]</font>
+   <font color="#990000">]</font>
+   tbl_name <font color="#990000">=</font> <font color="#FF0000">'temp'</font>
+   dismod_at<font color="#990000">.</font><b><font color="#000000">create_table</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> col_name<font color="#990000">,</font> col_type<font color="#990000">,</font> row_list<font color="#990000">)</font>
+   <i><font color="#9A1900">#</font></i>
+   check_name <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'temp_id'</font> <font color="#990000">]</font> <font color="#990000">+</font> col_name
+   check_type <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'integer primary key'</font><font color="#990000">]</font> <font color="#990000">+</font> col_type
+   <i><font color="#9A1900">#</font></i>
+   <i><font color="#9A1900"># get the column names and corresponding types</font></i>
+   <font color="#990000">(</font>col_name<font color="#990000">,</font> col_type<font color="#990000">)</font> <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_name_type</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">)</font>
+   <i><font color="#9A1900">#</font></i>
+   <b><font color="#0000FF">assert</font></b> col_name <font color="#990000">==</font> check_name
+   <b><font color="#0000FF">assert</font></b> col_type <font color="#990000">==</font> check_type
+   <i><font color="#9A1900">#</font></i>
+   connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
+   <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'get_name_type: OK'</font><font color="#990000">)</font></tt></pre>
 
 <hr>Input File: example/table/get_name_type.py
 

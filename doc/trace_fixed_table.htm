@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Fixed Effects Optimization Trace Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Fixed Effects Optimization Trace Table">
-<meta name="keywords" id="keywords" content=" the fixed effects optimization trace table discussion trace_fixed_id iter obj_value inf_pr inf_du mu d_norm regularization_size alpha_du alpha_pr ls_trials restoration reference ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,18 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>database</option>
-<option>data_flow</option>
-<option>trace_fixed_table</option>
-</select>
-</td>
-<td>
+<td><a href="start_var_table.htm" target="_top">Prev</a>
+</td><td><a href="truth_var_table.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -50,9 +43,16 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="start_var_table.htm" target="_top">Prev</a>
-</td><td><a href="truth_var_table.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>data_flow</option>
+<option>trace_fixed_table</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -63,8 +63,8 @@ A:active { color : purple }
 </td>
 <td>trace_fixed_table</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
@@ -149,7 +149,7 @@ internal dual infeasibility, i.e, the derivative of the lagrangian
 with respect to the primal variables
 <small>@[@
 
-	\nabla f(x) \nabla c(x) \lambda - z
+   \nabla f(x) \nabla c(x) \lambda - z
 
 @]@</small>
 where <small>@(@

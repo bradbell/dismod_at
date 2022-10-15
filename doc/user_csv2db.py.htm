@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>csv2db_command: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="csv2db_command: Example and Test">
-<meta name="keywords" id="keywords" content=" csv2db_command: example test using this discussion rate_true p rate grids data predictions mtall source code ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>user_example</option>
-<option>user_csv2db.py</option>
-</select>
-</td>
-<td>
+<td><a href="user_covid_19.py.htm" target="_top">Prev</a>
+</td><td><a href="user_data_density.py.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="user_covid_19.py.htm" target="_top">Prev</a>
-</td><td><a href="user_data_density.py.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>user_example</option>
+<option>user_csv2db.py</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -59,8 +59,8 @@ A:active { color : purple }
 </td>
 <td>user_csv2db.py</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>csv2db_command: Example and Test</big></big></b></center>
 
 <br><a href="user_csv2db.py.htm#Using This Example" target="_top">Using&nbsp;This&nbsp;Example</a>
@@ -80,7 +80,7 @@ See <a href="user_example.htm#Run One Example" target="_top"><span style='white-
 on running just this example.
 After doing that, one can run the command
 <code><font color='blue'><pre style='display:inline'> 
-     bin/dismodat.py build/example/user/example.db
+ bin/dismodat.py build/example/user/example.db
 </pre></font></code>
 To generate the csv files corresponding to the example database.
 One can then inspect the csv files in the <code><font color="blue">build/example/user</font></code>
@@ -122,12 +122,12 @@ P(a) = C(a) / [S(a) + C(a)]
 is solved for using the ODE:
 <small>@[@
 
-	\begin{array}{rcl}
-	S(0)    & = & 1 \\
-	C(0)    & = & 0 \\
-	S'(a)   & = & - \iota S(a) + \rho C(a)  - \omega S(a) \\
-	C'(a)   & = & + \iota S(a) - \rho C(a)  - \omega C(a) - \chi C(a)
-	\end{array}
+ \begin{array}{rcl}
+ S(0)    & = & 1 \\
+ C(0)    & = & 0 \\
+ S'(a)   & = & - \iota S(a) + \rho C(a)  - \omega S(a) \\
+ C'(a)   & = & + \iota S(a) - \rho C(a)  - \omega C(a) - \chi C(a)
+ \end{array}
 
 @]@</small>
 
@@ -201,21 +201,21 @@ As a check, we include the mtall data with hold_out equal to one.
 <i><font color="#9A1900"># dismod_at</font></i>
 local_dir <font color="#990000">=</font> os<font color="#990000">.</font><b><font color="#000000">getcwd</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#FF0000">'/python'</font>
 <b><font color="#0000FF">if</font></b><font color="#990000">(</font> os<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">isdir</font></b><font color="#990000">(</font> local_dir <font color="#990000">+</font> <font color="#FF0000">'/dismod_at'</font> <font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
-     sys<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> local_dir<font color="#990000">)</font>
+   sys<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> local_dir<font color="#990000">)</font>
 <b><font color="#000080">import</font></b> dismod_at
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># check execution is from distribution directory</font></i>
 example <font color="#990000">=</font> <font color="#FF0000">'example/user/csv2db.py'</font>
 <b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> example  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">:</font>
-     usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> example <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
-     usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
-     usage <font color="#990000">+=</font> <font color="#FF0000">'and working directory is the dismod_at distribution directory\n'</font>
-     sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font>usage<font color="#990000">)</font>
+   usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> example <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
+   usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
+   usage <font color="#990000">+=</font> <font color="#FF0000">'and working directory is the dismod_at distribution directory\n'</font>
+   sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font>usage<font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># change into the build/example/user directory</font></i>
 <b><font color="#0000FF">if</font></b> <b><font color="#0000FF">not</font></b> os<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">exists</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font> <font color="#990000">:</font>
-    os<font color="#990000">.</font><b><font color="#000000">makedirs</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
+   os<font color="#990000">.</font><b><font color="#000000">makedirs</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
 os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
 <i><font color="#9A1900"># ----------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># BEGIN RATE_TRUE</font></i>
@@ -224,16 +224,16 @@ rate_true <font color="#990000">=</font> <font color="#990000">{</font> <font co
 <i><font color="#9A1900"># ----------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># compute P (prevalence) at integer ages 0, 1, ..., 100</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">dSC_da</font></b><font color="#990000">(</font>SC<font color="#990000">,</font> a<font color="#990000">)</font> <font color="#990000">:</font>
-     S     <font color="#990000">=</font> SC<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
-     C     <font color="#990000">=</font> SC<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>
-     iota  <font color="#990000">=</font> rate_true<font color="#990000">[</font><font color="#FF0000">'iota'</font><font color="#990000">]</font>
-     rho   <font color="#990000">=</font> rate_true<font color="#990000">[</font><font color="#FF0000">'rho'</font><font color="#990000">]</font>
-     chi   <font color="#990000">=</font> rate_true<font color="#990000">[</font><font color="#FF0000">'chi'</font><font color="#990000">]</font>
-     omega <font color="#990000">=</font> rate_true<font color="#990000">[</font><font color="#FF0000">'omega'</font><font color="#990000">]</font>
-     <i><font color="#9A1900">#</font></i>
-     dS_da <font color="#990000">=</font> <font color="#990000">-</font> iota <font color="#990000">*</font> S <font color="#990000">+</font> rho <font color="#990000">*</font> C <font color="#990000">-</font> omega <font color="#990000">*</font> S
-     dC_da <font color="#990000">=</font> <font color="#990000">+</font> iota <font color="#990000">*</font> S <font color="#990000">-</font> rho <font color="#990000">*</font> C <font color="#990000">-</font> omega <font color="#990000">*</font> C <font color="#990000">-</font> chi <font color="#990000">*</font> C
-     <b><font color="#0000FF">return</font></b> numpy<font color="#990000">.</font><b><font color="#000000">array</font></b><font color="#990000">(</font> <font color="#990000">[</font>dS_da<font color="#990000">,</font> dC_da<font color="#990000">]</font> <font color="#990000">)</font>
+   S     <font color="#990000">=</font> SC<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
+   C     <font color="#990000">=</font> SC<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>
+   iota  <font color="#990000">=</font> rate_true<font color="#990000">[</font><font color="#FF0000">'iota'</font><font color="#990000">]</font>
+   rho   <font color="#990000">=</font> rate_true<font color="#990000">[</font><font color="#FF0000">'rho'</font><font color="#990000">]</font>
+   chi   <font color="#990000">=</font> rate_true<font color="#990000">[</font><font color="#FF0000">'chi'</font><font color="#990000">]</font>
+   omega <font color="#990000">=</font> rate_true<font color="#990000">[</font><font color="#FF0000">'omega'</font><font color="#990000">]</font>
+   <i><font color="#9A1900">#</font></i>
+   dS_da <font color="#990000">=</font> <font color="#990000">-</font> iota <font color="#990000">*</font> S <font color="#990000">+</font> rho <font color="#990000">*</font> C <font color="#990000">-</font> omega <font color="#990000">*</font> S
+   dC_da <font color="#990000">=</font> <font color="#990000">+</font> iota <font color="#990000">*</font> S <font color="#990000">-</font> rho <font color="#990000">*</font> C <font color="#990000">-</font> omega <font color="#990000">*</font> C <font color="#990000">-</font> chi <font color="#990000">*</font> C
+   <b><font color="#0000FF">return</font></b> numpy<font color="#990000">.</font><b><font color="#000000">array</font></b><font color="#990000">(</font> <font color="#990000">[</font>dS_da<font color="#990000">,</font> dC_da<font color="#990000">]</font> <font color="#990000">)</font>
 SC0     <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">array</font></b><font color="#990000">(</font> <font color="#990000">[</font> <font color="#993399">1.0</font><font color="#990000">,</font> <font color="#993399">0.0</font> <font color="#990000">]</font> <font color="#990000">)</font> <i><font color="#9A1900"># initial prevalence is zero</font></i>
 age_ode <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">(</font> <b><font color="#000000">range</font></b><font color="#990000">(</font><font color="#993399">101</font><font color="#990000">)</font> <font color="#990000">)</font>
 age_ode <font color="#990000">=</font> numpy<font color="#990000">.</font><b><font color="#000000">array</font></b><font color="#990000">(</font>age_ode<font color="#990000">,</font> dtype <font color="#990000">=</font> float <font color="#990000">)</font>
@@ -260,14 +260,14 @@ file_ptr<font color="#990000">.</font><b><font color="#000000">close</font></b><
 file_name  <font color="#990000">=</font> <font color="#FF0000">'measure.csv'</font>
 file_ptr   <font color="#990000">=</font> <b><font color="#000000">open</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> <font color="#FF0000">'w'</font><font color="#990000">)</font>
 fieldnames <font color="#990000">=</font> <font color="#990000">[</font>
-     <font color="#FF0000">'integrand'</font><font color="#990000">,</font>
-     <font color="#FF0000">'age_lower'</font><font color="#990000">,</font>
-     <font color="#FF0000">'age_upper'</font><font color="#990000">,</font>
-     <font color="#FF0000">'time_lower'</font><font color="#990000">,</font>
-     <font color="#FF0000">'time_upper'</font><font color="#990000">,</font>
-     <font color="#FF0000">'meas_value'</font><font color="#990000">,</font>
-     <font color="#FF0000">'meas_std'</font><font color="#990000">,</font>
-<i><font color="#9A1900">     'hold_out'</font></i>
+   <font color="#FF0000">'integrand'</font><font color="#990000">,</font>
+   <font color="#FF0000">'age_lower'</font><font color="#990000">,</font>
+   <font color="#FF0000">'age_upper'</font><font color="#990000">,</font>
+   <font color="#FF0000">'time_lower'</font><font color="#990000">,</font>
+   <font color="#FF0000">'time_upper'</font><font color="#990000">,</font>
+   <font color="#FF0000">'meas_value'</font><font color="#990000">,</font>
+   <font color="#FF0000">'meas_std'</font><font color="#990000">,</font>
+<i><font color="#9A1900">   'hold_out'</font></i>
 <font color="#990000">]</font>
 writer     <font color="#990000">=</font> csv<font color="#990000">.</font><b><font color="#000000">DictWriter</font></b><font color="#990000">(</font>file_ptr<font color="#990000">,</font> fieldnames<font color="#990000">=</font>fieldnames<font color="#990000">)</font>
 <i><font color="#9A1900"># ----------------------------------------------------------------------------</font></i>
@@ -284,62 +284,62 @@ n_age          <font color="#990000">=</font> <b><font color="#000000">len</font
 n_time         <font color="#990000">=</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>time_intervals<font color="#990000">)</font>
 mtall_data     <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
 <b><font color="#0000FF">for</font></b> integrand <b><font color="#0000FF">in</font></b> <font color="#990000">[</font> <font color="#FF0000">'remission'</font><font color="#990000">,</font> <font color="#FF0000">'mtexcess'</font><font color="#990000">,</font> <font color="#FF0000">'prevalence'</font><font color="#990000">,</font> <font color="#FF0000">'mtall'</font> <font color="#990000">]</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">for</font></b> <font color="#990000">(</font>age_lower<font color="#990000">,</font> age_upper<font color="#990000">)</font> <b><font color="#0000FF">in</font></b> age_intervals <font color="#990000">:</font>
-          <i><font color="#9A1900"># trapoziodal approximation to integral of prevalence w.r.t. age</font></i>
-          P_sum  <font color="#990000">=</font> <font color="#990000">(</font>P<font color="#990000">[</font>age_lower<font color="#990000">]</font> <font color="#990000">+</font> P<font color="#990000">[</font>age_upper<font color="#990000">])</font> <font color="#990000">/</font> <font color="#993399">2.0</font>
-          P_sum <font color="#990000">+=</font> <b><font color="#000000">sum</font></b><font color="#990000">(</font> P<font color="#990000">[</font>age_lower <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">:</font> age_upper <font color="#990000">]</font> <font color="#990000">)</font>
-          P_avg  <font color="#990000">=</font> P_sum <font color="#990000">/</font> <font color="#990000">(</font>age_upper <font color="#990000">-</font> age_lower<font color="#990000">)</font>
-          <i><font color="#9A1900">#</font></i>
-          <b><font color="#0000FF">for</font></b> <font color="#990000">(</font>time_lower<font color="#990000">,</font> time_upper<font color="#990000">)</font> <b><font color="#0000FF">in</font></b> time_intervals <font color="#990000">:</font>
-               row               <font color="#990000">=</font> <b><font color="#000000">dict</font></b><font color="#990000">()</font>
-               row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font>  <font color="#990000">=</font> integrand
-               row<font color="#990000">[</font><font color="#FF0000">'age_lower'</font><font color="#990000">]</font>  <font color="#990000">=</font> age_lower
-               row<font color="#990000">[</font><font color="#FF0000">'age_upper'</font><font color="#990000">]</font>  <font color="#990000">=</font> age_upper
-               row<font color="#990000">[</font><font color="#FF0000">'time_lower'</font><font color="#990000">]</font> <font color="#990000">=</font> time_lower
-               row<font color="#990000">[</font><font color="#FF0000">'time_upper'</font><font color="#990000">]</font> <font color="#990000">=</font> time_upper
-               <b><font color="#0000FF">if</font></b> integrand <font color="#990000">==</font> <font color="#FF0000">'remission'</font> <font color="#990000">:</font>
-                    row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> rate_true<font color="#990000">[</font><font color="#FF0000">'rho'</font><font color="#990000">]</font>
-               <b><font color="#0000FF">elif</font></b> integrand <font color="#990000">==</font> <font color="#FF0000">'mtexcess'</font> <font color="#990000">:</font>
-                    row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> rate_true<font color="#990000">[</font><font color="#FF0000">'chi'</font><font color="#990000">]</font>
-               <b><font color="#0000FF">elif</font></b> integrand <font color="#990000">==</font> <font color="#FF0000">'prevalence'</font><font color="#990000">:</font>
-                    row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> P_avg
-               <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
-                    <i><font color="#9A1900"># if the true omega or chi were not constant, we would do</font></i>
-                    <i><font color="#9A1900"># a separate integration for mtall.</font></i>
-                    row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">\</font>
-                         rate_true<font color="#990000">[</font><font color="#FF0000">'omega'</font><font color="#990000">]</font> <font color="#990000">+</font> P_avg <font color="#990000">*</font> rate_true<font color="#990000">[</font><font color="#FF0000">'chi'</font><font color="#990000">]</font>
-               <i><font color="#9A1900">#</font></i>
-               row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">round</font></b><font color="#990000">(</font>row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">],</font> <font color="#993399">6</font><font color="#990000">)</font>
-               row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>   <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">/</font> <font color="#993399">10.0</font>
-               row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">0</font>
-               <b><font color="#0000FF">if</font></b> integrand <font color="#990000">==</font> <font color="#FF0000">'mtall'</font> <font color="#990000">:</font>
-                    <i><font color="#9A1900"># change so weighted residual is a coefficient of variation</font></i>
-                    row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>   <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font>
-                    <i><font color="#9A1900"># hold out because used for omega constaint</font></i>
-                    row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1</font>
-                    <i><font color="#9A1900"># save a copy for use by omega constraint</font></i>
-                    mtall_data<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">)</font>
-               <i><font color="#9A1900">#</font></i>
-               writer<font color="#990000">.</font><b><font color="#000000">writerow</font></b><font color="#990000">(</font>row<font color="#990000">)</font>
-               <i><font color="#9A1900">#</font></i>
+   <b><font color="#0000FF">for</font></b> <font color="#990000">(</font>age_lower<font color="#990000">,</font> age_upper<font color="#990000">)</font> <b><font color="#0000FF">in</font></b> age_intervals <font color="#990000">:</font>
+      <i><font color="#9A1900"># trapoziodal approximation to integral of prevalence w.r.t. age</font></i>
+      P_sum  <font color="#990000">=</font> <font color="#990000">(</font>P<font color="#990000">[</font>age_lower<font color="#990000">]</font> <font color="#990000">+</font> P<font color="#990000">[</font>age_upper<font color="#990000">])</font> <font color="#990000">/</font> <font color="#993399">2.0</font>
+      P_sum <font color="#990000">+=</font> <b><font color="#000000">sum</font></b><font color="#990000">(</font> P<font color="#990000">[</font>age_lower <font color="#990000">+</font> <font color="#993399">1</font> <font color="#990000">:</font> age_upper <font color="#990000">]</font> <font color="#990000">)</font>
+      P_avg  <font color="#990000">=</font> P_sum <font color="#990000">/</font> <font color="#990000">(</font>age_upper <font color="#990000">-</font> age_lower<font color="#990000">)</font>
+      <i><font color="#9A1900">#</font></i>
+      <b><font color="#0000FF">for</font></b> <font color="#990000">(</font>time_lower<font color="#990000">,</font> time_upper<font color="#990000">)</font> <b><font color="#0000FF">in</font></b> time_intervals <font color="#990000">:</font>
+         row               <font color="#990000">=</font> <b><font color="#000000">dict</font></b><font color="#990000">()</font>
+         row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font>  <font color="#990000">=</font> integrand
+         row<font color="#990000">[</font><font color="#FF0000">'age_lower'</font><font color="#990000">]</font>  <font color="#990000">=</font> age_lower
+         row<font color="#990000">[</font><font color="#FF0000">'age_upper'</font><font color="#990000">]</font>  <font color="#990000">=</font> age_upper
+         row<font color="#990000">[</font><font color="#FF0000">'time_lower'</font><font color="#990000">]</font> <font color="#990000">=</font> time_lower
+         row<font color="#990000">[</font><font color="#FF0000">'time_upper'</font><font color="#990000">]</font> <font color="#990000">=</font> time_upper
+         <b><font color="#0000FF">if</font></b> integrand <font color="#990000">==</font> <font color="#FF0000">'remission'</font> <font color="#990000">:</font>
+            row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> rate_true<font color="#990000">[</font><font color="#FF0000">'rho'</font><font color="#990000">]</font>
+         <b><font color="#0000FF">elif</font></b> integrand <font color="#990000">==</font> <font color="#FF0000">'mtexcess'</font> <font color="#990000">:</font>
+            row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> rate_true<font color="#990000">[</font><font color="#FF0000">'chi'</font><font color="#990000">]</font>
+         <b><font color="#0000FF">elif</font></b> integrand <font color="#990000">==</font> <font color="#FF0000">'prevalence'</font><font color="#990000">:</font>
+            row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> P_avg
+         <b><font color="#0000FF">else</font></b> <font color="#990000">:</font>
+            <i><font color="#9A1900"># if the true omega or chi were not constant, we would do</font></i>
+            <i><font color="#9A1900"># a separate integration for mtall.</font></i>
+            row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> <font color="#990000">\</font>
+               rate_true<font color="#990000">[</font><font color="#FF0000">'omega'</font><font color="#990000">]</font> <font color="#990000">+</font> P_avg <font color="#990000">*</font> rate_true<font color="#990000">[</font><font color="#FF0000">'chi'</font><font color="#990000">]</font>
+         <i><font color="#9A1900">#</font></i>
+         row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> <b><font color="#000000">round</font></b><font color="#990000">(</font>row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">],</font> <font color="#993399">6</font><font color="#990000">)</font>
+         row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>   <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">/</font> <font color="#993399">10.0</font>
+         row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">0</font>
+         <b><font color="#0000FF">if</font></b> integrand <font color="#990000">==</font> <font color="#FF0000">'mtall'</font> <font color="#990000">:</font>
+            <i><font color="#9A1900"># change so weighted residual is a coefficient of variation</font></i>
+            row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>   <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font>
+            <i><font color="#9A1900"># hold out because used for omega constaint</font></i>
+            row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1</font>
+            <i><font color="#9A1900"># save a copy for use by omega constraint</font></i>
+            mtall_data<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">)</font>
+         <i><font color="#9A1900">#</font></i>
+         writer<font color="#990000">.</font><b><font color="#000000">writerow</font></b><font color="#990000">(</font>row<font color="#990000">)</font>
+         <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900">#-----------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># mtother data</font></i>
 mtall_index <font color="#990000">=</font> <font color="#993399">0</font>
 <b><font color="#0000FF">for</font></b> <font color="#990000">(</font>age_lower<font color="#990000">,</font> age_upper<font color="#990000">)</font> <b><font color="#0000FF">in</font></b> age_intervals <font color="#990000">:</font>
-     <b><font color="#0000FF">for</font></b> <font color="#990000">(</font>time_lower<font color="#990000">,</font> time_upper<font color="#990000">)</font> <b><font color="#0000FF">in</font></b> time_intervals <font color="#990000">:</font>
-          row               <font color="#990000">=</font> <b><font color="#000000">dict</font></b><font color="#990000">()</font>
-          age               <font color="#990000">=</font> <font color="#990000">(</font>age_lower <font color="#990000">+</font> age_upper<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2.0</font>
-          time              <font color="#990000">=</font> <font color="#990000">(</font>time_lower <font color="#990000">+</font> time_upper<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2.0</font>
-          row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#FF0000">'mtother'</font>
-          row<font color="#990000">[</font><font color="#FF0000">'age_lower'</font><font color="#990000">]</font>  <font color="#990000">=</font> age
-          row<font color="#990000">[</font><font color="#FF0000">'age_upper'</font><font color="#990000">]</font>  <font color="#990000">=</font> age
-          row<font color="#990000">[</font><font color="#FF0000">'time_lower'</font><font color="#990000">]</font> <font color="#990000">=</font> time
-          row<font color="#990000">[</font><font color="#FF0000">'time_upper'</font><font color="#990000">]</font> <font color="#990000">=</font> time
-          row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> mtall_data<font color="#990000">[</font>mtall_index<font color="#990000">]</font>
-          row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>   <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">/</font> <font color="#993399">10.0</font>
-          row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1</font> <i><font color="#9A1900"># used for constraint, not data</font></i>
-          writer<font color="#990000">.</font><b><font color="#000000">writerow</font></b><font color="#990000">(</font>row<font color="#990000">)</font>
-          mtall_index      <font color="#990000">+=</font> <font color="#993399">1</font>
+   <b><font color="#0000FF">for</font></b> <font color="#990000">(</font>time_lower<font color="#990000">,</font> time_upper<font color="#990000">)</font> <b><font color="#0000FF">in</font></b> time_intervals <font color="#990000">:</font>
+      row               <font color="#990000">=</font> <b><font color="#000000">dict</font></b><font color="#990000">()</font>
+      age               <font color="#990000">=</font> <font color="#990000">(</font>age_lower <font color="#990000">+</font> age_upper<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2.0</font>
+      time              <font color="#990000">=</font> <font color="#990000">(</font>time_lower <font color="#990000">+</font> time_upper<font color="#990000">)</font> <font color="#990000">/</font> <font color="#993399">2.0</font>
+      row<font color="#990000">[</font><font color="#FF0000">'integrand'</font><font color="#990000">]</font>  <font color="#990000">=</font> <font color="#FF0000">'mtother'</font>
+      row<font color="#990000">[</font><font color="#FF0000">'age_lower'</font><font color="#990000">]</font>  <font color="#990000">=</font> age
+      row<font color="#990000">[</font><font color="#FF0000">'age_upper'</font><font color="#990000">]</font>  <font color="#990000">=</font> age
+      row<font color="#990000">[</font><font color="#FF0000">'time_lower'</font><font color="#990000">]</font> <font color="#990000">=</font> time
+      row<font color="#990000">[</font><font color="#FF0000">'time_upper'</font><font color="#990000">]</font> <font color="#990000">=</font> time
+      row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">=</font> mtall_data<font color="#990000">[</font>mtall_index<font color="#990000">]</font>
+      row<font color="#990000">[</font><font color="#FF0000">'meas_std'</font><font color="#990000">]</font>   <font color="#990000">=</font> row<font color="#990000">[</font><font color="#FF0000">'meas_value'</font><font color="#990000">]</font> <font color="#990000">/</font> <font color="#993399">10.0</font>
+      row<font color="#990000">[</font><font color="#FF0000">'hold_out'</font><font color="#990000">]</font>   <font color="#990000">=</font> <font color="#993399">1</font> <i><font color="#9A1900"># used for constraint, not data</font></i>
+      writer<font color="#990000">.</font><b><font color="#000000">writerow</font></b><font color="#990000">(</font>row<font color="#990000">)</font>
+      mtall_index      <font color="#990000">+=</font> <font color="#993399">1</font>
 <b><font color="#0000FF">assert</font></b> mtall_index <font color="#990000">==</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>mtall_data<font color="#990000">)</font>
 file_ptr<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
 <i><font color="#9A1900"># ----------------------------------------------------------------------------</font></i>
@@ -353,9 +353,9 @@ dismod_at<font color="#990000">.</font><b><font color="#000000">csv2db_command</
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># run dismod_at commands</font></i>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">exec_shell_cmd</font></b><font color="#990000">(</font>cmd<font color="#990000">)</font> <font color="#990000">:</font>
-     program    <font color="#990000">=</font> <font color="#FF0000">'../../devel/dismod_at'</font>
-     command    <font color="#990000">=</font> <font color="#990000">[</font> program<font color="#990000">,</font> database <font color="#990000">]</font> <font color="#990000">+</font> cmd<font color="#990000">.</font><b><font color="#000000">split</font></b><font color="#990000">()</font>
-     dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>command<font color="#990000">)</font>
+   program    <font color="#990000">=</font> <font color="#FF0000">'../../devel/dismod_at'</font>
+   command    <font color="#990000">=</font> <font color="#990000">[</font> program<font color="#990000">,</font> database <font color="#990000">]</font> <font color="#990000">+</font> cmd<font color="#990000">.</font><b><font color="#000000">split</font></b><font color="#990000">()</font>
+   dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>command<font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <b><font color="#000000">exec_shell_cmd</font></b><font color="#990000">(</font> <font color="#FF0000">'set option quasi_fixed       false'</font> <font color="#990000">)</font>
 <b><font color="#000000">exec_shell_cmd</font></b><font color="#990000">(</font> <font color="#FF0000">'set option ode_step_size     5'</font>     <font color="#990000">)</font>
@@ -378,28 +378,28 @@ fit_data_subset   <font color="#990000">=</font> dismod_at<font color="#990000">
 <i><font color="#9A1900">#</font></i>
 max_abs_err <font color="#990000">=</font> <font color="#993399">0.0</font>
 <b><font color="#0000FF">for</font></b> var_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>var_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
-     var_row        <font color="#990000">=</font> var_table<font color="#990000">[</font>var_id<font color="#990000">]</font>
-     fit_row        <font color="#990000">=</font> fit_var_table<font color="#990000">[</font>var_id<font color="#990000">]</font>
-     var_type       <font color="#990000">=</font> var_row<font color="#990000">[</font><font color="#FF0000">'var_type'</font><font color="#990000">]</font>
-     rate_id        <font color="#990000">=</font> var_row<font color="#990000">[</font><font color="#FF0000">'rate_id'</font><font color="#990000">]</font>
-     rate_name      <font color="#990000">=</font> rate_table<font color="#990000">[</font>rate_id<font color="#990000">][</font><font color="#FF0000">'rate_name'</font><font color="#990000">]</font>
-     fit_var_value  <font color="#990000">=</font> fit_row<font color="#990000">[</font><font color="#FF0000">'fit_var_value'</font><font color="#990000">]</font>
-     relative_err   <font color="#990000">=</font> fit_var_value <font color="#990000">/</font> rate_true<font color="#990000">[</font>rate_name<font color="#990000">]</font>  <font color="#990000">-</font> <font color="#993399">1.0</font>
-     max_abs_err    <font color="#990000">=</font> <b><font color="#000000">max</font></b><font color="#990000">(</font>max_abs_err<font color="#990000">,</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font>relative_err<font color="#990000">)</font> <font color="#990000">)</font>
+   var_row        <font color="#990000">=</font> var_table<font color="#990000">[</font>var_id<font color="#990000">]</font>
+   fit_row        <font color="#990000">=</font> fit_var_table<font color="#990000">[</font>var_id<font color="#990000">]</font>
+   var_type       <font color="#990000">=</font> var_row<font color="#990000">[</font><font color="#FF0000">'var_type'</font><font color="#990000">]</font>
+   rate_id        <font color="#990000">=</font> var_row<font color="#990000">[</font><font color="#FF0000">'rate_id'</font><font color="#990000">]</font>
+   rate_name      <font color="#990000">=</font> rate_table<font color="#990000">[</font>rate_id<font color="#990000">][</font><font color="#FF0000">'rate_name'</font><font color="#990000">]</font>
+   fit_var_value  <font color="#990000">=</font> fit_row<font color="#990000">[</font><font color="#FF0000">'fit_var_value'</font><font color="#990000">]</font>
+   relative_err   <font color="#990000">=</font> fit_var_value <font color="#990000">/</font> rate_true<font color="#990000">[</font>rate_name<font color="#990000">]</font>  <font color="#990000">-</font> <font color="#993399">1.0</font>
+   max_abs_err    <font color="#990000">=</font> <b><font color="#000000">max</font></b><font color="#990000">(</font>max_abs_err<font color="#990000">,</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font>relative_err<font color="#990000">)</font> <font color="#990000">)</font>
 <b><font color="#0000FF">if</font></b> max_abs_err <font color="#990000">&gt;</font> <font color="#993399">0.1</font> <font color="#990000">:</font>
-     sys<font color="#990000">.</font><b><font color="#000000">msg</font></b><font color="#990000">(</font><font color="#FF0000">'csv2db.py: max_abs_err = '</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>max_abs_err<font color="#990000">)</font> <font color="#990000">)</font>
+   sys<font color="#990000">.</font><b><font color="#000000">msg</font></b><font color="#990000">(</font><font color="#FF0000">'csv2db.py: max_abs_err = '</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>max_abs_err<font color="#990000">)</font> <font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># check error in mtall approximation</font></i>
 max_abs_res <font color="#990000">=</font> <font color="#993399">0.0</font>
 <b><font color="#0000FF">for</font></b> data_id <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>data_table<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">assert</font></b> data_id <font color="#990000">==</font> data_subset_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'data_id'</font><font color="#990000">]</font>
-     integrand_id    <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'integrand_id'</font><font color="#990000">]</font>
-     integrand_name  <font color="#990000">=</font> integrand_table<font color="#990000">[</font>integrand_id<font color="#990000">][</font><font color="#FF0000">'integrand_name'</font><font color="#990000">]</font>
-     <b><font color="#0000FF">if</font></b> integrand_name <font color="#990000">==</font> <font color="#FF0000">'mtall'</font> <font color="#990000">:</font>
-          weighted_residual <font color="#990000">=</font> fit_data_subset<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'weighted_residual'</font><font color="#990000">]</font>
-          max_abs_res       <font color="#990000">=</font> <b><font color="#000000">max</font></b><font color="#990000">(</font>max_abs_res<font color="#990000">,</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font>weighted_residual<font color="#990000">)</font> <font color="#990000">)</font>
+   <b><font color="#0000FF">assert</font></b> data_id <font color="#990000">==</font> data_subset_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'data_id'</font><font color="#990000">]</font>
+   integrand_id    <font color="#990000">=</font> data_table<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'integrand_id'</font><font color="#990000">]</font>
+   integrand_name  <font color="#990000">=</font> integrand_table<font color="#990000">[</font>integrand_id<font color="#990000">][</font><font color="#FF0000">'integrand_name'</font><font color="#990000">]</font>
+   <b><font color="#0000FF">if</font></b> integrand_name <font color="#990000">==</font> <font color="#FF0000">'mtall'</font> <font color="#990000">:</font>
+      weighted_residual <font color="#990000">=</font> fit_data_subset<font color="#990000">[</font>data_id<font color="#990000">][</font><font color="#FF0000">'weighted_residual'</font><font color="#990000">]</font>
+      max_abs_res       <font color="#990000">=</font> <b><font color="#000000">max</font></b><font color="#990000">(</font>max_abs_res<font color="#990000">,</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font>weighted_residual<font color="#990000">)</font> <font color="#990000">)</font>
 <b><font color="#0000FF">if</font></b> max_abs_res <font color="#990000">&gt;</font> <font color="#993399">0.1</font> <font color="#990000">:</font>
-     sys<font color="#990000">.</font><b><font color="#000000">msg</font></b><font color="#990000">(</font><font color="#FF0000">'csv2db.py: max_abs_res = '</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>max_abs_res<font color="#990000">)</font> <font color="#990000">)</font>
+   sys<font color="#990000">.</font><b><font color="#000000">msg</font></b><font color="#990000">(</font><font color="#FF0000">'csv2db.py: max_abs_res = '</font> <font color="#990000">+</font> <b><font color="#000000">str</font></b><font color="#990000">(</font>max_abs_res<font color="#990000">)</font> <font color="#990000">)</font>
 <i><font color="#9A1900"># ---------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># csv representation of database</font></i>
 dismod_at<font color="#990000">.</font><b><font color="#000000">db2csv_command</font></b><font color="#990000">(</font>database<font color="#990000">)</font>

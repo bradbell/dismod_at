@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Prevalence Only ODE</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Prevalence Only ODE">
-<meta name="keywords" id="keywords" content=" the prevalence only ode theorem proof advantage integrands s c ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>math_abstract</option>
-<option>prevalence_ode</option>
-</select>
-</td>
-<td>
+<td><a href="censor_density.htm" target="_top">Prev</a>
+</td><td><a href="install.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="censor_density.htm" target="_top">Prev</a>
-</td><td><a href="install.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>math_abstract</option>
+<option>prevalence_ode</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -59,8 +59,8 @@ A:active { color : purple }
 </td>
 <td>prevalence_ode</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
@@ -85,7 +85,7 @@ P = C / (S + C)
 @)@</small> satisfies
 <small>@[@
 
-    P' = + \iota  - ( \iota + \rho + \chi ) P  +  \chi  P^2
+   P' = + \iota  - ( \iota + \rho + \chi ) P  +  \chi  P^2
 
 @]@</small>
 
@@ -103,15 +103,15 @@ C(a)
 <small>@[@
 
 \begin{array}{rrr}
-    S' =&  - ( \iota + \omega ) S &                     + \rho C \\
-    C' =&               + \iota S & - ( \rho + \chi + \omega ) C
+   S' =&  - ( \iota + \omega ) S &                     + \rho C \\
+   C' =&               + \iota S & - ( \rho + \chi + \omega ) C
 \end{array}
 
 @]@</small>
 It follows that
 <small>@[@
 
-    (S + C)' = - \omega S - ( \omega + \chi ) C
+   (S + C)' = - \omega S - ( \omega + \chi ) C
 
 @]@</small>
 Using <small>@(@
@@ -125,12 +125,12 @@ C'         & = & (S + C)' P + (S + C) P'
 (S + C) P' & = & C' - (S + C)' P
 \\
 (S + C) P' & = &
-    + \iota S - ( \rho + \chi + \omega ) C
-    + \omega S P + ( \omega + \chi ) C P
+   + \iota S - ( \rho + \chi + \omega ) C
+   + \omega S P + ( \omega + \chi ) C P
 \\
 P' & = &
-    + \iota (1 - P) - ( \rho + \chi + \omega ) P
-    + \omega (1 - P) P + ( \omega + \chi ) P^2
+   + \iota (1 - P) - ( \rho + \chi + \omega ) P
+   + \omega (1 - P) P + ( \omega + \chi ) P^2
 \\
 P' & = & + \iota  - ( \iota + \rho + \chi ) P  +  \chi  P^2
 \end{array}
@@ -183,7 +183,7 @@ we can compute <small>@(@
 Furthermore
 <small>@[@
 
-	(S + C)' = - \alpha (S + C)
+   (S + C)' = - \alpha (S + C)
 
 @]@</small>
 We can also compute <small>@(@

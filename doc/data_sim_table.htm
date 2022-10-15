@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Simulated Measurements and Adjusted Standard Deviations</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Simulated Measurements and Adjusted Standard Deviations">
-<meta name="keywords" id="keywords" content=" simulated measurements adjusted standard deviations discussion data_sim_id simulate_index data_subset_id data_sim_value method data_id y delta d eta e sigma z example ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,18 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>database</option>
-<option>data_flow</option>
-<option>data_sim_table</option>
-</select>
-</td>
-<td>
+<td><a href="bnd_mulcov_table.htm" target="_top">Prev</a>
+</td><td><a href="data_subset_table.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -50,9 +43,16 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="bnd_mulcov_table.htm" target="_top">Prev</a>
-</td><td><a href="data_subset_table.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>data_flow</option>
+<option>data_sim_table</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -63,8 +63,8 @@ A:active { color : purple }
 </td>
 <td>data_sim_table</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
@@ -78,11 +78,11 @@ A:active { color : purple }
 <br><a href="data_sim_table.htm#Method" target="_top">Method</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.data_id" target="_top">data_id</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.y" target="_top">y</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.Delta" target="_top">Delta</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.Capital Delta" target="_top">Capital&nbsp;Delta</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.d" target="_top">d</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.eta" target="_top">eta</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.A" target="_top">A</a>
-<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.E" target="_top">E</a>
+<br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.Capital E" target="_top">Capital&nbsp;E</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.sigma" target="_top">sigma</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.delta" target="_top">delta</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="data_sim_table.htm#Method.e" target="_top">e</a>
@@ -145,7 +145,7 @@ If
  is the number of rows in the data_subset table,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_sim_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_subset</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_subset_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_sim_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>n_subset</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_subset_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 for 
 <code><i><font color="black"><span style='white-space: nowrap'>simulate_index</span></font></i></code>
@@ -212,7 +212,7 @@ corresponding to this
 
 <br>
 <br>
-<big><a name="Method.Delta" id="Method.Delta">Delta</a></big>
+<big><a name="Method.Capital Delta" id="Method.Capital Delta">Capital Delta</a></big>
 <br>
 We use <small>@(@
 \Delta
@@ -266,7 +266,7 @@ and this
 
 <br>
 <br>
-<big><a name="Method.E" id="Method.E">E</a></big>
+<big><a name="Method.Capital E" id="Method.Capital E">Capital E</a></big>
 <br>
 We use <small>@(@
 E
@@ -294,9 +294,9 @@ corresponding to the data table and this
 <small>@[@
 
 \sigma = \left\{ \begin{array}{ll}
-	\log( y + \eta + \Delta ) - \log(y + \eta) & \R{if \; log \; density}
-	\\
-	\Delta                                     & \R{otherwise}
+   \log( y + \eta + \Delta ) - \log(y + \eta) & \R{if \; log \; density}
+   \\
+   \Delta                                     & \R{otherwise}
 \end{array} \right.
 
 @]@</small>
@@ -370,7 +370,7 @@ It the density is <a href="density_table.htm#Notation.Linear" target="_top"><spa
 ,
 <small>@[@
 
-	z = A + e
+   z = A + e
 
 @]@</small>
 It the density is <a href="density_table.htm#Notation.Log Scaled" target="_top"><span style='white-space: nowrap'>log&nbsp;scaled</span></a>
@@ -378,11 +378,11 @@ It the density is <a href="density_table.htm#Notation.Log Scaled" target="_top">
 <small>@[@
 
 \begin{array}{rcl}
-	e        & = & \log( z + \eta ) - \log( A + \eta )
-	\\
-	\exp (e) & = & ( z + \eta ) / ( A + \eta )
-	\\
-	z        & = & \exp(e) ( A + \eta ) - \eta
+   e        & = & \log( z + \eta ) - \log( A + \eta )
+   \\
+   \exp (e) & = & ( z + \eta ) / ( A + \eta )
+   \\
+   z        & = & \exp(e) ( A + \eta ) - \eta
 \end{array}
 
 @]@</small>

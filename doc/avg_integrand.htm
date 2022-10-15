@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Model for the Average Integrand</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Model for the Average Integrand">
-<meta name="keywords" id="keywords" content=" model the average integrand ordinary differential equation data avgint table notation i a_i b_i c_i d_i s_i g_i covariate difference x_ij w_i n_i rate functions parent q_k child effect u_ik j_k group multiplier alpha_jk subgroup delta adjusted r_ik pini p_i0(t) iota_i(at) rho_i(at) chi_i(at) omega_i(at) s_i(at) c_i(at) i_i(at) sincidence remission mtexcess mtother mtwith susceptible withc prevalence tincidence mtspecific mtall mtstandard relrisk mulcov measurement value covariates k_i beta_j weight integral wbar_i ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>model</option>
-<option>avg_integrand</option>
-</select>
-</td>
-<td>
+<td><a href="model_variables.htm" target="_top">Prev</a>
+</td><td><a href="data_like.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="model_variables.htm" target="_top">Prev</a>
-</td><td><a href="data_like.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>avg_integrand</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -59,8 +59,8 @@ A:active { color : purple }
 </td>
 <td>avg_integrand</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
@@ -125,9 +125,9 @@ the dismod_ode ordinary differential equation is
 <small>@[@
 
 \begin{array}{rcl}
-	S'(a) & = & - [ \iota(a) + \omega (a) ] S(a) + \rho(a) C(a)
-	\\
-	C'(a) & = & + \iota(a) S(a) - [ \rho(a) + \chi(a) + \omega (a) ] C(a)
+   S'(a) & = & - [ \iota(a) + \omega (a) ] S(a) + \rho(a) C(a)
+   \\
+   C'(a) & = & + \iota(a) S(a) - [ \rho(a) + \chi(a) + \omega (a) ] C(a)
 \end{array}
 
 @]@</small>
@@ -424,8 +424,8 @@ We define the adjusted <code><i>k</i></code>-th rate for the <code><i>i</i></cod
 r_{i,k} (a , t)
 =
 \exp \left \{
-	u_{i,k} (a, t) + \sum_{j \in J(k)}
-		x_{i,j} [ \alpha_{j,k} (a, t) + \Delta \alpha_{j,k} (a, t) ]
+   u_{i,k} (a, t) + \sum_{j \in J(k)}
+      x_{i,j} [ \alpha_{j,k} (a, t) + \Delta \alpha_{j,k} (a, t) ]
 \right \}
 q_k ( a, t )
 
@@ -557,7 +557,7 @@ to simplify notation in the equations below.
 The with condition and susceptible fractions at age zero are
 <small>@[@
 
-	C (0, t) =  p_0 (t) \; , \; S (0, t) = 1 - p_0 (t)
+   C (0, t) =  p_0 (t) \; , \; S (0, t) = 1 - p_0 (t)
 
 @]@</small>
 We use <small>@(@
@@ -828,8 +828,8 @@ as a function of the fixed effects <small>@(@
 @)@</small>, is
 <small>@[@
 
-	E_i ( a, t ) = \sum_{j \in K_i}
-		x_{i,j} [ \beta_j (a, t) + \Delta \beta_j (a, t) ]
+   E_i ( a, t ) = \sum_{j \in K_i}
+      x_{i,j} [ \beta_j (a, t) + \Delta \beta_j (a, t) ]
 
 @]@</small>
 
@@ -840,7 +840,7 @@ as a function of the fixed effects <small>@(@
 The adjusted integrand is the following function of age and time:
 <small>@[@
 
-	I_i (a, t) \; \exp \left[ E_i (a, t) \right]
+   I_i (a, t) \; \exp \left[ E_i (a, t) \right]
 
 @]@</small>
 Note that if <small>@(@

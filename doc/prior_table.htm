@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Prior Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Prior Table">
-<meta name="keywords" id="keywords" content=" the prior table purpose prior_id prior_name density_id lower upper mean uniform std linear scaling log eta null fixed effects nu example ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,18 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>database</option>
-<option>input</option>
-<option>prior_table</option>
-</select>
-</td>
-<td>
+<td><a href="option_table.py.htm" target="_top">Prev</a>
+</td><td><a href="prior_table.py.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -50,9 +43,16 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="option_table.py.htm" target="_top">Prev</a>
-</td><td><a href="prior_table.py.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>input</option>
+<option>prior_table</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -65,8 +65,8 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_prior_table_htm.js'></script>
 </td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Prior Table</big></big></b></center>
 
 <br><a href="prior_table.htm#Purpose" target="_top">Purpose</a>
@@ -162,7 +162,7 @@ for the prior.
 It must hold that
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>upper</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>upper</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <big><a name="mean.uniform" id="mean.uniform">uniform</a></big>
@@ -219,7 +219,7 @@ If the density is
 ,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sigma</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>std</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;-&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sigma</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>std</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;-&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 is the standard deviation for the
 log of the random variable plus 
@@ -236,7 +236,7 @@ and taking the derivative of the log at the midpoint for the difference,
 we get
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sigma</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;~=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>std</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>std</span></font></i><font color="blue"><span style='white-space: nowrap'>/2&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>sigma</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;~=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>std</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;/&nbsp;(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mean</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>std</span></font></i><font color="blue"><span style='white-space: nowrap'>/2&nbsp;)<br>
 </span></font></code>
 If this density is used for a
 <a href="statistic.htm#Weighted Residual Function, R.Difference" target="_top"><span style='white-space: nowrap'>difference</span></a>

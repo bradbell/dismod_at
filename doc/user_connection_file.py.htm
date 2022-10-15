@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Example Using connection_file</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Example Using connection_file">
-<meta name="keywords" id="keywords" content=" example using connection_file source code ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,18 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>python</option>
-<option>connection_file</option>
-<option>user_connection_file.py</option>
-</select>
-</td>
-<td>
+<td><a href="connection_file.htm" target="_top">Prev</a>
+</td><td><a href="create_connection.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -50,9 +43,16 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="connection_file.htm" target="_top">Prev</a>
-</td><td><a href="create_connection.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>connection_file</option>
+<option>user_connection_file.py</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -63,8 +63,8 @@ A:active { color : purple }
 </td>
 <td>user_connection_file.py</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
@@ -80,20 +80,20 @@ A:active { color : purple }
 <i><font color="#9A1900">#</font></i>
 test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/connection_file.py'</font>
 <b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">:</font>
-     usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
-     usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
-     usage <font color="#990000">+=</font> <font color="#FF0000">'and working directory is the dismod_at distribution directory\n'</font>
-     sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font>usage<font color="#990000">)</font>
+   usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
+   usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
+   usage <font color="#990000">+=</font> <font color="#FF0000">'and working directory is the dismod_at distribution directory\n'</font>
+   sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font>usage<font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># import dismod_at</font></i>
 local_dir <font color="#990000">=</font> os<font color="#990000">.</font><b><font color="#000000">getcwd</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#FF0000">'/python'</font>
 <b><font color="#0000FF">if</font></b><font color="#990000">(</font> os<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">isdir</font></b><font color="#990000">(</font> local_dir <font color="#990000">+</font> <font color="#FF0000">'/dismod_at'</font> <font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
-     sys<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> local_dir<font color="#990000">)</font>
+   sys<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> local_dir<font color="#990000">)</font>
 <b><font color="#000080">import</font></b> dismod_at
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># change into the build/example/user directory</font></i>
 <b><font color="#0000FF">if</font></b> <b><font color="#0000FF">not</font></b> os<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">exists</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font> <font color="#990000">:</font>
-    os<font color="#990000">.</font><b><font color="#000000">makedirs</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
+   os<font color="#990000">.</font><b><font color="#000000">makedirs</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
 os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># connection</font></i>

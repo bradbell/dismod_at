@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Model Variables</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Model Variables">
-<meta name="keywords" id="keywords" content=" the model variables introduction prior variable standard deviation multipliers functions age time children fixed effects theta smoothing lambda parent rates group covariate random u child rate subgroup variation multiplier initial prevalence other cases ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>model</option>
-<option>model_variables</option>
-</select>
-</td>
-<td>
+<td><a href="model.htm" target="_top">Prev</a>
+</td><td><a href="avg_integrand.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="model.htm" target="_top">Prev</a>
-</td><td><a href="avg_integrand.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>model_variables</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -59,8 +59,8 @@ A:active { color : purple }
 </td>
 <td>model_variables</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Model Variables</big></big></b></center>
 
 <br><a href="model_variables.htm#Introduction" target="_top">Introduction</a>
@@ -132,49 +132,49 @@ specifies its prior as follows:
 <a href="smooth_table.htm#n_age" target="_top"><span style='white-space: nowrap'>n_age</span></a>
  </td><td align='left'  valign='top'>
 
-	number of age points used to represent the function
+   number of age points used to represent the function
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="smooth_table.htm#n_time" target="_top"><span style='white-space: nowrap'>n_time</span></a>
  </td><td align='left'  valign='top'>
 
-	number of time points used to represent the function
+   number of time points used to represent the function
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="smooth_grid_table.htm#age_id" target="_top"><span style='white-space: nowrap'>age_id</span></a>
  </td><td align='left'  valign='top'>
 
-	identifies age value for a variable
+   identifies age value for a variable
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="smooth_grid_table.htm#time_id" target="_top"><span style='white-space: nowrap'>time_id</span></a>
  </td><td align='left'  valign='top'>
 
-	identifies time value for a variable
+   identifies time value for a variable
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="smooth_grid_table.htm#const_value" target="_top"><span style='white-space: nowrap'>const_value</span></a>
  </td><td align='left'  valign='top'>
 
-	null or a value that a variable is constrained to
+   null or a value that a variable is constrained to
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="smooth_grid_table.htm#value_prior_id" target="_top"><span style='white-space: nowrap'>value_prior_id</span></a>
  </td><td align='left'  valign='top'>
 
-	value prior for a variable
+   value prior for a variable
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="smooth_grid_table.htm#dage_prior_id" target="_top"><span style='white-space: nowrap'>dage_prior_id</span></a>
   </td><td align='left'  valign='top'>
 
-	difference prior for a variable (and next variable) in age direction
+   difference prior for a variable (and next variable) in age direction
 </td></tr><tr><td align='left'  valign='top'>
 
 <a href="smooth_grid_table.htm#dtime_prior_id" target="_top"><span style='white-space: nowrap'>dtime_prior_id</span></a>
   </td><td align='left'  valign='top'>
 
-	difference prior for a variable (and next variable) in time direction
+   difference prior for a variable (and next variable) in time direction
 </td></tr>
 </table>
 The number of variables (number of grid points)

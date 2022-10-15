@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>User Examples and Tests</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="User Examples and Tests">
-<meta name="keywords" id="keywords" content=" user examples tests see also run one example user_speed.py example.db with explanation more ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,16 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>user_example</option>
-</select>
-</td>
-<td>
+<td><a href="get_started_db.py.htm" target="_top">Prev</a>
+</td><td><a href="user_age_avg_split.py.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -48,17 +43,22 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="get_started_db.py.htm" target="_top">Prev</a>
-</td><td><a href="user_age_avg_split.py.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>user_example</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
 <script type='text/javascript' language='JavaScript' src='_childtable_user_example_htm.js'></script>
 </td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>User Examples and Tests</big></big></b></center>
 
 <br><a href="user_example.htm#See Also" target="_top">See&nbsp;Also</a>
@@ -87,7 +87,7 @@ are in the directory
 you can run one of these examples with the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>python3_executable</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;example/user/</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>python3_executable</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;example/user/</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 where <a href="run_cmake.sh.htm#python3_executable" target="_top"><span style='white-space: nowrap'>python3_executable</span></a>
 
@@ -113,7 +113,7 @@ The <code><font color="blue">user_speed.py</font></code> example is an exception
 Each of these examples will create a corresponding database called
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;build/example/user/example.db<br>
+&nbsp;&nbsp;&nbsp;build/example/user/example.db<br>
 </span></font></code>
 which can be inspected using any sqlite viewer; e.g.,
 <a href="http://sqlitebrowser.org/" target="_top"><span style='white-space: nowrap'>http://sqlitebrowser.org/</span></a>
@@ -129,10 +129,6 @@ which can be inspected using any sqlite viewer; e.g.,
 
 <table><tr><td align='left'  valign='top'>
 
-
-<a href="user_trapezoidal.py.htm" target="_top">user_trapezoidal.py</a></td><td>
-Using the Trapezoidal ODE Solver</td></tr>
-<tr><td>
 
 <a href="user_age_avg_split.py.htm" target="_top">user_age_avg_split.py</a></td><td>
 Non-uniform Age Average Grid</td></tr>
@@ -318,6 +314,10 @@ Example Using system_command_prc</td></tr>
 Using Initialization Trace Option</td></tr>
 <tr><td>
 
+<a href="user_trapezoidal.py.htm" target="_top">user_trapezoidal.py</a></td><td>
+Using the Trapezoidal ODE Solver</td></tr>
+<tr><td>
+
 <a href="user_warm_start.py.htm" target="_top">user_warm_start.py</a></td><td>
 Continuing a Fit Using Ipopt Warm Start</td></tr>
 <tr><td>
@@ -333,7 +333,6 @@ Constrain Sum of Subgroup Measurement Covariate Multipliers to Zero</td></tr>
 <a href="user_zsum_mulcov_rate.py.htm" target="_top">user_zsum_mulcov_rate.py</a></td><td>
 Constrain Sum of Subgroup Rate Covariate Multipliers to Zero</td></tr>
 <tr><td>
-
 
 </td></tr>
 </table>

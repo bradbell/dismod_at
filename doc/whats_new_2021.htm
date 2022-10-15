@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2021</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2021">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2021 12-31 12-30 12-27 12-22 12-14 12-09 12-08 12-05 11-29 11-27 11-19 11-16 11-15 11-14 11-07 11-06 11-05 11-03 10-31 10-25 10-24 10-23 10-15 10-14 10-12 10-11 10-07 10-06 09-01 08-30 08-25 08-24 08-23 08-22 08-21 08-18 08-17 08-15 08-12 08-08 07-29 07-25 07-24 07-22 07-14 07-05 07-04 07-02 06-24 06-22 06-18 06-17 06-15 06-14 06-13 06-12 06-11 06-10 06-09 06-08 06-07 06-06 06-01 05-31 05-29 05-21 05-20 05-19 05-18 05-15 05-07 05-06 04-16 03-02 01-28 01-22 01-21 01-19 01-11 01-10 01-09 01-08 ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -146,8 +146,8 @@ A:active { color : purple }
 </select>
 </td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
@@ -284,7 +284,7 @@ to 20211121.
 This requires re-running
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;./dock_dismod_at.sh&nbsp;image&nbsp;mixed<br>
+&nbsp;&nbsp;&nbsp;./dock_dismod_at.sh&nbsp;image&nbsp;mixed<br>
 </span></font></code>
 because the version of cppad_mixed changed.
 </li></ol>
@@ -524,13 +524,13 @@ If the file name for a database in a <a href="command.htm" target="_top"><span s
 most commands gave the error message:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Could&nbsp;not&nbsp;find&nbsp;table&nbsp;or&nbsp;column&nbsp;in&nbsp;table.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;detected&nbsp;in&nbsp;age&nbsp;table<br>
+&nbsp;&nbsp;&nbsp;Could&nbsp;not&nbsp;find&nbsp;table&nbsp;or&nbsp;column&nbsp;in&nbsp;table.<br>
+&nbsp;&nbsp;&nbsp;detected&nbsp;in&nbsp;age&nbsp;table<br>
 </span></font></code>
 This has been changed to
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cannot&nbsp;find&nbsp;the&nbsp;database&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>file_name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;Cannot&nbsp;find&nbsp;the&nbsp;database&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>file_name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>file_name</span></font></i></code>
@@ -656,7 +656,8 @@ see the items between 06-24 and 08-12 in this section.
 <br>
 <br>
 <b><big><a name="08-08" id="08-08">08-08</a></big></b>
- 
+
+
 <ol type="1"><li>
 <b>API Change</b>:
 The
@@ -986,8 +987,8 @@ The <a href="db2csv_command.htm" target="_top"><span style='white-space: nowrap'
 <a href="fit_command.htm#warm_start" target="_top"><span style='white-space: nowrap'>warm_start</span></a>
 , with the following message:
 <code><font color='blue'><pre style='display:inline'> 
-     Previous fit command in log table used simulated data but
-     cannot find data_sim table
+   Previous fit command in log table used simulated data but
+   cannot find data_sim table
 </pre></font></code>
 This has been fixed.
 </li><li>
@@ -1178,8 +1179,8 @@ Advance to <a href="dock_dismod_at.sh.htm" target="_top"><span style='white-spac
  version 20210416.
 Building this new image will require executing
 <pre style='display:inline'><tt>
-     <font color="#990000">.</font>/dock_dismod_at image mixed
-     <font color="#990000">.</font>/dock_dismod_at image dismod_at
+   <font color="#990000">.</font>/dock_dismod_at image mixed
+   <font color="#990000">.</font>/dock_dismod_at image dismod_at
 </tt></pre>
 The <a href="dock_dismod_at.sh.htm#Building Images.dismod_at.mixed" target="_top"><span style='white-space: nowrap'>dismod_at.mixed</span></a>
 
@@ -1189,11 +1190,11 @@ the last advancement of dock_dismod_at.sh.
 
 In the <code><font color="blue">user_data_sim_py</font></code> example the code
 <pre style='display:inline'><tt>
-     residual <font color="#990000">=</font> <font color="#990000">(</font>math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>z <font color="#990000">+</font> eta <font color="#990000">+</font> delta<font color="#990000">)</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>mu <font color="#990000">+</font> eta<font color="#990000">))</font> <font color="#990000">/</font> sigma
+   residual <font color="#990000">=</font> <font color="#990000">(</font>math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>z <font color="#990000">+</font> eta <font color="#990000">+</font> delta<font color="#990000">)</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>mu <font color="#990000">+</font> eta<font color="#990000">))</font> <font color="#990000">/</font> sigma
 </tt></pre>
 was incorrect and was changed to
 <pre style='display:inline'><tt>
-     residual <font color="#990000">=</font> <font color="#990000">(</font>math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>z <font color="#990000">+</font> eta<font color="#990000">)</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>mu <font color="#990000">+</font> eta<font color="#990000">))</font> <font color="#990000">/</font> sigma
+   residual <font color="#990000">=</font> <font color="#990000">(</font>math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>z <font color="#990000">+</font> eta<font color="#990000">)</font> <font color="#990000">-</font> math<font color="#990000">.</font><b><font color="#000000">log</font></b><font color="#990000">(</font>mu <font color="#990000">+</font> eta<font color="#990000">))</font> <font color="#990000">/</font> sigma
 </tt></pre>
 </li><li>
 Change the default setting for
@@ -1214,7 +1215,8 @@ smaller.
 <br>
 <br>
 <b><big><a name="05-20" id="05-20">05-20</a></big></b>
- <br>
+
+<br>
 During a <a href="simulate_command.htm" target="_top"><span style='white-space: nowrap'>simulate_command</span></a>
 ,
 the calculation of <code><font color="blue">data_sim_delta</font></code> and <code><font color="blue">data_sim_stdcv</font></code> in the
@@ -1223,7 +1225,7 @@ the calculation of <code><font color="blue">data_sim_delta</font></code> and <co
 which does not make sense and would cause dismod_at to abort with the message
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;simulate_command&nbsp;sim_stdcv&nbsp;is&nbsp;nan&nbsp;or&nbsp;less&nbsp;than&nbsp;zero&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;simulate_command&nbsp;sim_stdcv&nbsp;is&nbsp;nan&nbsp;or&nbsp;less&nbsp;than&nbsp;zero&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 This problem has been fixed using the
 adjusted standard deviation

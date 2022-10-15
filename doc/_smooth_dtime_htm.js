@@ -1,9 +1,3 @@
-var list_up0 = [
-'dismod_at.htm',
-'model.htm',
-'variable_prior.htm',
-'smooth_dtime.htm'
-];
 var list_across0 = [
 '_contents.htm',
 '_reference.htm',
@@ -11,17 +5,23 @@ var list_across0 = [
 '_search.htm',
 '_external.htm'
 ];
-function choose_up0(item)
-{	var index          = item.selectedIndex;
-	item.selectedIndex = 0;
-	if(index > 0)
-		document.location = list_up0[index-1];
-}
+var list_up0 = [
+'dismod_at.htm',
+'model.htm',
+'variable_prior.htm',
+'smooth_dtime.htm'
+];
 function choose_across0(item)
 {	var index          = item.selectedIndex;
 	item.selectedIndex = 0;
 	if(index > 0)
 		document.location = list_across0[index-1];
+}
+function choose_up0(item)
+{	var index          = item.selectedIndex;
+	item.selectedIndex = 0;
+	if(index > 0)
+		document.location = list_up0[index-1];
 }
 function choose_down3(item)
 {	var index          = item.selectedIndex;

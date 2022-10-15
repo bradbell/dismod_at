@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Plot The Data Fit By Integrand</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Plot The Data Fit By Integrand">
-<meta name="keywords" id="keywords" content=" plot the data fit integrand syntax database pdf_file plot_title max_plot integrand_list n_fit_dict legend table hold out point symbol plus green red black example ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>python</option>
-<option>plot_data_fit</option>
-</select>
-</td>
-<td>
+<td><a href="plot_curve.htm" target="_top">Prev</a>
+</td><td><a href="plot_rate_fit.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="plot_curve.htm" target="_top">Prev</a>
-</td><td><a href="plot_rate_fit.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>plot_data_fit</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -59,8 +59,8 @@ A:active { color : purple }
 </td>
 <td>plot_data_fit</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
@@ -85,11 +85,11 @@ A:active { color : purple }
 
 <pre><tt>
 <i><font color="#9A1900"># n_fit_dict = plot_data_fit(</font></i>
-     database          <font color="#990000">=</font> None<font color="#990000">,</font>
-     pdf_file          <font color="#990000">=</font> None<font color="#990000">,</font>
-     plot_title        <font color="#990000">=</font> None<font color="#990000">,</font>
-     max_plot          <font color="#990000">=</font> None<font color="#990000">,</font>
-     integrand_list    <font color="#990000">=</font> None<font color="#990000">,</font>
+   database          <font color="#990000">=</font> None<font color="#990000">,</font>
+   pdf_file          <font color="#990000">=</font> None<font color="#990000">,</font>
+   plot_title        <font color="#990000">=</font> None<font color="#990000">,</font>
+   max_plot          <font color="#990000">=</font> None<font color="#990000">,</font>
+   integrand_list    <font color="#990000">=</font> None<font color="#990000">,</font>
 <i><font color="#9A1900"># )</font></i></tt></pre>
 <br>
 <b><big><a name="database" id="database">database</a></big></b>

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Integrand Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Integrand Table">
-<meta name="keywords" id="keywords" content=" the integrand table discussion integrand_id minimum_meas_cv integrand_name ode names example ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,18 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>database</option>
-<option>input</option>
-<option>integrand_table</option>
-</select>
-</td>
-<td>
+<td><a href="density_table.py.htm" target="_top">Prev</a>
+</td><td><a href="integrand_table.py.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -50,9 +43,16 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="density_table.py.htm" target="_top">Prev</a>
-</td><td><a href="integrand_table.py.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>input</option>
+<option>integrand_table</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -65,8 +65,8 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_integrand_table_htm.js'></script>
 </td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Integrand Table</big></big></b></center>
 
 <br><a href="integrand_table.htm#Discussion" target="_top">Discussion</a>
@@ -108,7 +108,7 @@ To be specific; for the data table
 the minimum cv measurement standard deviation is
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Delta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;max(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>minimum_meas_cv</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;|</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>|&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>Delta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;max(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>minimum_meas_cv</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;|</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>|&nbsp;)<br>
 </span></font></code>
 see <a href="data_like.htm#Notation.Minimum CV Standard Deviation, Delta_i" target="_top"><span style='white-space: nowrap'>Delta</span></a>
 
@@ -159,125 +159,125 @@ This computation is preformed each time the <a href="model_variables.htm" target
 
 <table><tr><td align='left'  valign='top'>
 
-	Integrand Name
-	</td><td align='left'  valign='top'>
+   Integrand Name
+   </td><td align='left'  valign='top'>
  Description
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  ODE
 </td></tr><tr><td align='left'  valign='top'>
 
-	<a href="avg_integrand.htm#Integrand, I_i(a,t).Sincidence" target="_top"><span style='white-space: nowrap'>Sincidence</span></a>
+   <a href="avg_integrand.htm#Integrand, I_i(a,t).Sincidence" target="_top"><span style='white-space: nowrap'>Sincidence</span></a>
 
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  incidence rate relative to susceptible population
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  no
 </td></tr><tr><td align='left'  valign='top'>
 
-	<a href="avg_integrand.htm#Integrand, I_i(a,t).remission" target="_top"><span style='white-space: nowrap'>remission</span></a>
+   <a href="avg_integrand.htm#Integrand, I_i(a,t).remission" target="_top"><span style='white-space: nowrap'>remission</span></a>
 
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  remission rate
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  no
 </td></tr><tr><td align='left'  valign='top'>
 
-	<a href="avg_integrand.htm#Integrand, I_i(a,t).mtexcess" target="_top"><span style='white-space: nowrap'>mtexcess</span></a>
+   <a href="avg_integrand.htm#Integrand, I_i(a,t).mtexcess" target="_top"><span style='white-space: nowrap'>mtexcess</span></a>
 
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  excess mortality rate
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  no
 </td></tr><tr><td align='left'  valign='top'>
 
-	<a href="avg_integrand.htm#Integrand, I_i(a,t).mtother" target="_top"><span style='white-space: nowrap'>mtother</span></a>
+   <a href="avg_integrand.htm#Integrand, I_i(a,t).mtother" target="_top"><span style='white-space: nowrap'>mtother</span></a>
 
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  other cause mortality rate
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  no
 </td></tr><tr><td align='left'  valign='top'>
 
-	<a href="avg_integrand.htm#Integrand, I_i(a,t).mtwith" target="_top"><span style='white-space: nowrap'>mtwith</span></a>
+   <a href="avg_integrand.htm#Integrand, I_i(a,t).mtwith" target="_top"><span style='white-space: nowrap'>mtwith</span></a>
 
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  with condition mortality rate
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  no
 </td></tr><tr><td align='left'  valign='top'>
 
-	<a href="avg_integrand.htm#Integrand, I_i(a,t).relrisk" target="_top"><span style='white-space: nowrap'>relrisk</span></a>
+   <a href="avg_integrand.htm#Integrand, I_i(a,t).relrisk" target="_top"><span style='white-space: nowrap'>relrisk</span></a>
 
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  relative risk
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  no
 </td></tr><tr><td align='left'  valign='top'>
 
-	<a href="avg_integrand.htm#Integrand, I_i(a,t).susceptible" target="_top"><span style='white-space: nowrap'>susceptible</span></a>
+   <a href="avg_integrand.htm#Integrand, I_i(a,t).susceptible" target="_top"><span style='white-space: nowrap'>susceptible</span></a>
 
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  susceptible fraction of the population
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  yes
 </td></tr><tr><td align='left'  valign='top'>
 
-	<a href="avg_integrand.htm#Integrand, I_i(a,t).withC" target="_top"><span style='white-space: nowrap'>withC</span></a>
+   <a href="avg_integrand.htm#Integrand, I_i(a,t).withC" target="_top"><span style='white-space: nowrap'>withC</span></a>
 
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  with condition fraction of the population
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  yes
 </td></tr><tr><td align='left'  valign='top'>
 
-	<a href="avg_integrand.htm#Integrand, I_i(a,t).prevalence" target="_top"><span style='white-space: nowrap'>prevalence</span></a>
+   <a href="avg_integrand.htm#Integrand, I_i(a,t).prevalence" target="_top"><span style='white-space: nowrap'>prevalence</span></a>
 
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  prevalence of the condition
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  yes
 </td></tr><tr><td align='left'  valign='top'>
 
-	<a href="avg_integrand.htm#Integrand, I_i(a,t).Tincidence" target="_top"><span style='white-space: nowrap'>Tincidence</span></a>
+   <a href="avg_integrand.htm#Integrand, I_i(a,t).Tincidence" target="_top"><span style='white-space: nowrap'>Tincidence</span></a>
 
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  incidence rate relative to total population
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  yes
 </td></tr><tr><td align='left'  valign='top'>
 
-	<a href="avg_integrand.htm#Integrand, I_i(a,t).mtspecific" target="_top"><span style='white-space: nowrap'>mtspecific</span></a>
+   <a href="avg_integrand.htm#Integrand, I_i(a,t).mtspecific" target="_top"><span style='white-space: nowrap'>mtspecific</span></a>
 
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  cause specific mortality rate
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  yes
 </td></tr><tr><td align='left'  valign='top'>
 
-	<a href="avg_integrand.htm#Integrand, I_i(a,t).mtall" target="_top"><span style='white-space: nowrap'>mtall</span></a>
+   <a href="avg_integrand.htm#Integrand, I_i(a,t).mtall" target="_top"><span style='white-space: nowrap'>mtall</span></a>
 
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  all cause mortality rate
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  yes
 </td></tr><tr><td align='left'  valign='top'>
 
-	<a href="avg_integrand.htm#Integrand, I_i(a,t).mtstandard" target="_top"><span style='white-space: nowrap'>mtstandard</span></a>
+   <a href="avg_integrand.htm#Integrand, I_i(a,t).mtstandard" target="_top"><span style='white-space: nowrap'>mtstandard</span></a>
 
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  standardized mortality ratio
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  yes
 </td></tr><tr><td align='left'  valign='top'>
 
-	
+   
 <code><font color="blue"><span style='white-space: nowrap'>mulcov_</span></font><i><font color="black"><span style='white-space: nowrap'>mulcov_id</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  the group covariate multiplier specified by
-	<a href="mulcov_table.htm#mulcov_id" target="_top"><span style='white-space: nowrap'>mulcov_id</span></a>
+   <a href="mulcov_table.htm#mulcov_id" target="_top"><span style='white-space: nowrap'>mulcov_id</span></a>
 
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  no
 </td></tr>
 </table>

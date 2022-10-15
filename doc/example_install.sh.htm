@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>An Example Installation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="An Example Installation">
-<meta name="keywords" id="keywords" content=" example installation syntax ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,18 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>install</option>
-<option>install_unix</option>
-<option>example_install.sh</option>
-</select>
-</td>
-<td>
+<td><a href="run_cmake.sh.htm" target="_top">Prev</a>
+</td><td><a href="get_started.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -50,9 +43,16 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="run_cmake.sh.htm" target="_top">Prev</a>
-</td><td><a href="get_started.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>install</option>
+<option>install_unix</option>
+<option>example_install.sh</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -63,8 +63,8 @@ A:active { color : purple }
 </td>
 <td>example_install.sh</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>An Example Installation</big></big></b></center>
 
 <br><a href="example_install.sh.htm#Syntax" target="_top">Syntax</a>
@@ -85,27 +85,27 @@ bin/example_install.sh</font></code>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># bash function that echos and executes a command</font></i>
 <b><font color="#000000">echo_eval()</font></b> {
-     echo <font color="#009900">$*</font>
-     <b><font color="#0000FF">eval</font></b> <font color="#009900">$*</font>
+   echo <font color="#009900">$*</font>
+   <b><font color="#0000FF">eval</font></b> <font color="#009900">$*</font>
 }
 <i><font color="#9A1900"># --------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># remove old version of</font></i>
 <i><font color="#9A1900"># example_install.log, example_install.err, cpapd_mixed.log, cppad_mixed.err</font></i>
 <b><font color="#0000FF">for</font></b> script <b><font color="#0000FF">in</font></b> example_install get_cppad_mixed
 <b><font color="#0000FF">do</font></b>
-     <b><font color="#0000FF">for</font></b> ext <b><font color="#0000FF">in</font></b> log err
-     <b><font color="#0000FF">do</font></b>
-          <b><font color="#0000FF">if</font></b> <font color="#990000">[</font> -e <font color="#FF0000">"$script.$ext"</font> <font color="#990000">]</font>
-          <b><font color="#0000FF">then</font></b>
-               echo_eval rm <font color="#FF0000">"$script.$ext"</font>
-          <b><font color="#0000FF">fi</font></b>
-     <b><font color="#0000FF">done</font></b>
+   <b><font color="#0000FF">for</font></b> ext <b><font color="#0000FF">in</font></b> log err
+   <b><font color="#0000FF">do</font></b>
+      <b><font color="#0000FF">if</font></b> <font color="#990000">[</font> -e <font color="#FF0000">"$script.$ext"</font> <font color="#990000">]</font>
+      <b><font color="#0000FF">then</font></b>
+         echo_eval rm <font color="#FF0000">"$script.$ext"</font>
+      <b><font color="#0000FF">fi</font></b>
+   <b><font color="#0000FF">done</font></b>
 <b><font color="#0000FF">done</font></b>
 <i><font color="#9A1900"># --------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># set build link to build.debug or build.release depending on build_type</font></i>
 <b><font color="#0000FF">if</font></b> echo <font color="#FF0000">"$dismod_at_prefix"</font> <font color="#990000">|</font> grep <font color="#FF0000">'/dismod_at$'</font> <font color="#990000">&gt;</font> /dev/null
 <b><font color="#0000FF">then</font></b>
-     bin/build_type<font color="#990000">.</font>sh example_install<font color="#990000">.</font>sh <font color="#009900">$dismod_at_prefix</font> <font color="#009900">$build_type</font>
+   bin/build_type<font color="#990000">.</font>sh example_install<font color="#990000">.</font>sh <font color="#009900">$dismod_at_prefix</font> <font color="#009900">$build_type</font>
 <b><font color="#0000FF">fi</font></b>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># install the special requirements</font></i>
@@ -117,11 +117,11 @@ echo_eval bin/get_cppad_mixed<font color="#990000">.</font>sh
 <font color="#009900">dir</font><font color="#990000">=</font>`find -L <font color="#009900">$dismod_at_prefix</font> -name <font color="#FF0000">'ipopt.pc'</font> <font color="#990000">|</font> sed -e <font color="#FF0000">'s|/ipopt.pc||'</font>`
 <b><font color="#0000FF">if</font></b> <font color="#990000">[</font> <font color="#FF0000">"$dir"</font> <font color="#990000">==</font> <font color="#FF0000">''</font> <font color="#990000">]</font>
 <b><font color="#0000FF">then</font></b>
-     echo <font color="#FF0000">"Cannot find ipopt.pc in $dismod_at_prefix directory"</font>
-     <b><font color="#0000FF">exit</font></b> <font color="#993399">1</font>
+   echo <font color="#FF0000">"Cannot find ipopt.pc in $dismod_at_prefix directory"</font>
+   <b><font color="#0000FF">exit</font></b> <font color="#993399">1</font>
 <b><font color="#0000FF">else</font></b>
-     echo <font color="#FF0000">'pkg-config setting for ipopt'</font>
-     echo_eval <b><font color="#0000FF">export</font></b> <font color="#009900">PKG_CONFIG_PATH</font><font color="#990000">=</font><font color="#FF0000">"$dir"</font>
+   echo <font color="#FF0000">'pkg-config setting for ipopt'</font>
+   echo_eval <b><font color="#0000FF">export</font></b> <font color="#009900">PKG_CONFIG_PATH</font><font color="#990000">=</font><font color="#FF0000">"$dir"</font>
 <b><font color="#0000FF">fi</font></b>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># bin/run_cmake.sh</font></i>
@@ -133,31 +133,31 @@ echo_eval cd build
 <i><font color="#9A1900">#</font></i>
 <b><font color="#0000FF">if</font></b> which nproc <font color="#990000">&gt;&amp;</font> /dev/null
 <b><font color="#0000FF">then</font></b>
-    <font color="#009900">n_job</font><font color="#990000">=</font><font color="#009900">$(nproc)</font>
+   <font color="#009900">n_job</font><font color="#990000">=</font><font color="#009900">$(nproc)</font>
 <b><font color="#0000FF">else</font></b>
-    <font color="#009900">n_job</font><font color="#990000">=</font><font color="#009900">$(</font>sysctl -n hw<font color="#990000">.</font>ncpu<font color="#990000">)</font>
+   <font color="#009900">n_job</font><font color="#990000">=</font><font color="#009900">$(</font>sysctl -n hw<font color="#990000">.</font>ncpu<font color="#990000">)</font>
 <b><font color="#0000FF">fi</font></b>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># build dismod_at using n_jobs</font></i>
 echo <font color="#FF0000">"make -j $n_job 1&gt;&gt; ../example_install.log 2&gt;&gt; ../example_install.err"</font>
 <b><font color="#0000FF">if</font></b> <font color="#990000">!</font> make -j <font color="#009900">$n_job</font> <font color="#993399">1</font><font color="#990000">&gt;&gt;</font> <font color="#990000">..</font>/example_install<font color="#990000">.</font>log <font color="#993399">2</font><font color="#990000">&gt;&gt;</font> <font color="#990000">..</font>/example_install<font color="#990000">.</font>err
 <b><font color="#0000FF">then</font></b>
-     echo <font color="#FF0000">"Try running the follow command in $(pwd)"</font>
-     echo <font color="#FF0000">"    make -j $n_job"</font>
-     echo <font color="#FF0000">'to see wy the build of dismod_at failed.'</font>
-     <b><font color="#0000FF">exit</font></b> <font color="#993399">1</font>
+   echo <font color="#FF0000">"Try running the follow command in $(pwd)"</font>
+   echo <font color="#FF0000">"    make -j $n_job"</font>
+   echo <font color="#FF0000">'to see wy the build of dismod_at failed.'</font>
+   <b><font color="#0000FF">exit</font></b> <font color="#993399">1</font>
 <b><font color="#0000FF">fi</font></b>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># make check, speed, and install</font></i>
 <b><font color="#0000FF">for</font></b> cmd <b><font color="#0000FF">in</font></b> check speed install install_python
 <b><font color="#0000FF">do</font></b>
-     echo <font color="#FF0000">"make $cmd 1&gt;&gt; example_install.log 2&gt;&gt; example_install.err"</font>
-     <b><font color="#0000FF">if</font></b> <font color="#990000">!</font> make <font color="#009900">$cmd</font> <font color="#993399">1</font><font color="#990000">&gt;&gt;</font> <font color="#990000">..</font>/example_install<font color="#990000">.</font>log <font color="#993399">2</font><font color="#990000">&gt;&gt;</font> <font color="#990000">..</font>/example_install<font color="#990000">.</font>err
-     <b><font color="#0000FF">then</font></b>
-          echo <font color="#FF0000">"Try running the follow command in $(pwd)"</font>
-          echo <font color="#FF0000">"    make $cmd"</font>
-          echo <font color="#FF0000">'to see wy the check of dismod_at failed.'</font>
-     <b><font color="#0000FF">fi</font></b>
+   echo <font color="#FF0000">"make $cmd 1&gt;&gt; example_install.log 2&gt;&gt; example_install.err"</font>
+   <b><font color="#0000FF">if</font></b> <font color="#990000">!</font> make <font color="#009900">$cmd</font> <font color="#993399">1</font><font color="#990000">&gt;&gt;</font> <font color="#990000">..</font>/example_install<font color="#990000">.</font>log <font color="#993399">2</font><font color="#990000">&gt;&gt;</font> <font color="#990000">..</font>/example_install<font color="#990000">.</font>err
+   <b><font color="#0000FF">then</font></b>
+      echo <font color="#FF0000">"Try running the follow command in $(pwd)"</font>
+      echo <font color="#FF0000">"    make $cmd"</font>
+      echo <font color="#FF0000">'to see wy the check of dismod_at failed.'</font>
+   <b><font color="#0000FF">fi</font></b>
 <b><font color="#0000FF">done</font></b>
 cd <font color="#990000">..</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>

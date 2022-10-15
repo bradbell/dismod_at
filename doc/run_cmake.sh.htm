@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>bin/run_cmake.sh: User Configuration Options</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="bin/run_cmake.sh: User Configuration Options">
-<meta name="keywords" id="keywords" content=" bin/run_cmake.sh: user configuration options verbose_makefile build_type dismod_at_prefix debug release python3_executable specific_compiler extra_cxx_flags cmake_libdir system_specific_library_list ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,18 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>install</option>
-<option>install_unix</option>
-<option>run_cmake.sh</option>
-</select>
-</td>
-<td>
+<td><a href="install_unix.htm" target="_top">Prev</a>
+</td><td><a href="example_install.sh.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -50,9 +43,16 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="install_unix.htm" target="_top">Prev</a>
-</td><td><a href="example_install.sh.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>install</option>
+<option>install_unix</option>
+<option>run_cmake.sh</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -63,8 +63,8 @@ A:active { color : purple }
 </td>
 <td>run_cmake.sh</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@ 
 
 
@@ -153,7 +153,7 @@ different compiler systems for fortran and C++; see
 This variable allows you to set a specific compiler for
 C, and or CXX and or FC. For example
 <code><font color="blue">
-	specific_compiler='CC=gcc CXX=g++ FC=gfortran'
+ specific_compiler='CC=gcc CXX=g++ FC=gfortran'
 </font></code>
 uses the gnu versions of these compilers.
 The configuration will automatically find compilers that are not specified;

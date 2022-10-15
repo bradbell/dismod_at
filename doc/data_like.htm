@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Data Likelihood and Weighted Residuals</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Data Likelihood and Weighted Residuals">
-<meta name="keywords" id="keywords" content=" data likelihood weighted residuals notation i a_i b_i d_i i_i s_i t_i w_i x_ij y_i minimum cv standard deviation delta_i transformed sigma_i fixed effects theta random u average integrand a_i(u theta) measurement noise covariates k_i gamma_j (a t) effect e_i(theta) adjusted delta_i(theta) scaling add variance add_std_scale_none add_std_scale_log add_std_scale_all add_var_scale_none add_var_scale_log add_var_scale_all residual ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>model</option>
-<option>data_like</option>
-</select>
-</td>
-<td>
+<td><a href="avg_integrand.htm" target="_top">Prev</a>
+</td><td><a href="variable_prior.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="avg_integrand.htm" target="_top">Prev</a>
-</td><td><a href="variable_prior.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>data_like</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -59,8 +59,8 @@ A:active { color : purple }
 </td>
 <td>data_like</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
@@ -236,27 +236,26 @@ correspond to this data table
 <a href="data_table.htm#data_id" target="_top"><span style='white-space: nowrap'>data_id</span></a>
 .
 The minimum cv standard deviation is defined by
-<code><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></code> <small>@(@
+<small>@(@
 \Delta_i =
 @)@</small>
-
+<code><span style='white-space: nowrap'><br>
+</span></code>
 <code><font color="blue"><span style='white-space: nowrap'>max(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_std</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>minimum_meas_cv</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;|</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>|&nbsp;)</span></font></code>
 
-
-<br>
-<br>
+<code><span style='white-space: nowrap'><br>
+</span></code><br>
 <big><a name="Notation.Transformed Standard Deviation, sigma_i" id="Notation.Transformed Standard Deviation, sigma_i">Transformed Standard Deviation, sigma_i</a></big>
 <br>
 The transformed standard deviation is
 <small>@[@
 
 \sigma_i = \left\{ \begin{array}{ll}
-	\log[ y_i + \eta_i + \Delta_i ] - \log( y_i + \eta_i )
-		& \R{if \; log \; density}
-	\\
-	\Delta_i
-		& \R{otherwise}
+   \log[ y_i + \eta_i + \Delta_i ] - \log( y_i + \eta_i )
+      & \R{if \; log \; density}
+   \\
+   \Delta_i
+      & \R{otherwise}
 \end{array} \right.
 
 @]@</small>
@@ -361,11 +360,11 @@ We define the average noise effect by
 E_i ( \theta )
 =
 \frac{1}{\bar{w}_i}
-	\int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
-	\left(
-		\sum_{j \in K_i} x_{i,j} \gamma_j (a, t)
-	\right)
-	w_i (a,t) \; \B{d} t \; \B{d} a
+   \int_{a(i)}^{b(i)}  \int_{s(i)}^{t(i)}
+   \left(
+      \sum_{j \in K_i} x_{i,j} \gamma_j (a, t)
+   \right)
+   w_i (a,t) \; \B{d} t \; \B{d} a
 
 @]@</small>
 
@@ -474,8 +473,8 @@ the adjusted standard deviation is
 <small>@[@
 
 \delta_i ( \theta ) = \left\{ \begin{array}{ll}
-	\sigma_i [ 1 + E_i (\theta) ] & \R{if \; log \; density} \\
-	\sigma_i + E_i (\theta)       & \R{otherwise}
+   \sigma_i [ 1 + E_i (\theta) ] & \R{if \; log \; density} \\
+   \sigma_i + E_i (\theta)       & \R{otherwise}
 \end{array} \right.
 
 @]@</small>
@@ -522,8 +521,8 @@ the adjusted standard deviation is
 <small>@[@
 
 \delta_i ( \theta ) = \left\{ \begin{array}{ll}
-	\sigma_i \sqrt{ 1 + E_i (\theta) } & \R{if \; log \; density} \\
-	\sqrt{ \sigma_i^2 + E_i (\theta) } & \R{otherwise}
+   \sigma_i \sqrt{ 1 + E_i (\theta) } & \R{if \; log \; density} \\
+   \sqrt{ \sigma_i^2 + E_i (\theta) } & \R{otherwise}
 \end{array} \right.
 
 @]@</small>
@@ -559,10 +558,10 @@ and the fixed effects <small>@(@
 <small>@[@
 
  R [
-	y_i                  \W{,}
-	A_i ( u, \theta )    \W{,}
-	\delta_i ( \theta )  \W{,}
-	d_i
+   y_i                  \W{,}
+   A_i ( u, \theta )    \W{,}
+   \delta_i ( \theta )  \W{,}
+   d_i
 ]
 
 @]@</small>
@@ -572,10 +571,10 @@ The likelihood is
 \B{p}( y_i | u , \theta )
 =
 \exp \left( D [
-	y_i                  \W{,}
-	A_i ( u, \theta )    \W{,}
-	\delta_i ( \theta )  \W{,}
-	d_i
+   y_i                  \W{,}
+   A_i ( u, \theta )    \W{,}
+   \delta_i ( \theta )  \W{,}
+   d_i
 ] \right)
 
 @]@</small>

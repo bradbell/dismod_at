@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Predict Average Integrand Using Results of a Fit</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Predict Average Integrand Using Results of a Fit">
-<meta name="keywords" id="keywords" content=" predict average integrand using results fit source code ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,18 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>python</option>
-<option>metropolis</option>
-<option>user_metropolis.py</option>
-</select>
-</td>
-<td>
+<td><a href="metropolis.htm" target="_top">Prev</a>
+</td><td><a href="modify_command.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -50,9 +43,16 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="metropolis.htm" target="_top">Prev</a>
-</td><td><a href="modify_command.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>metropolis</option>
+<option>user_metropolis.py</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -63,8 +63,8 @@ A:active { color : purple }
 </td>
 <td>user_metropolis.py</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@ 
 
 
@@ -79,16 +79,16 @@ A:active { color : purple }
 <b><font color="#000080">import</font></b> os
 test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/metropolis.py'</font>
 <b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">:</font>
-     usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
-     usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
-     usage <font color="#990000">+=</font> <font color="#FF0000">'and working directory is the dismod_at distribution directory\n'</font>
-     sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font>usage<font color="#990000">)</font>
+   usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
+   usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
+   usage <font color="#990000">+=</font> <font color="#FF0000">'and working directory is the dismod_at distribution directory\n'</font>
+   sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font>usage<font color="#990000">)</font>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font>test_program<font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># import dismod_at</font></i>
 local_dir <font color="#990000">=</font> os<font color="#990000">.</font><b><font color="#000000">getcwd</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#FF0000">'/python'</font>
 <b><font color="#0000FF">if</font></b><font color="#990000">(</font> os<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">isdir</font></b><font color="#990000">(</font> local_dir <font color="#990000">+</font> <font color="#FF0000">'/dismod_at'</font> <font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
-     sys<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> local_dir<font color="#990000">)</font>
+   sys<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> local_dir<font color="#990000">)</font>
 <b><font color="#000080">import</font></b> dismod_at
 <i><font color="#9A1900">#</font></i>
 <b><font color="#000080">import</font></b> scipy<font color="#990000">.</font>stats
@@ -106,11 +106,11 @@ y          <font color="#990000">=</font> scipy<font color="#990000">.</font>sta
 <i><font color="#9A1900"># model the data as N(mu, sigma) where x = (mu, sigma) is unknown</font></i>
 minus_infinity <font color="#990000">=</font> <font color="#990000">-</font> <b><font color="#000000">float</font></b><font color="#990000">(</font><font color="#FF0000">"inf"</font><font color="#990000">)</font>
 <b><font color="#0000FF">def</font></b> <b><font color="#000000">log_f</font></b><font color="#990000">(</font>x<font color="#990000">)</font> <font color="#990000">:</font>
-     mu    <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
-     sigma <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>
-     <b><font color="#0000FF">if</font></b> sigma <font color="#990000">&lt;=</font> <font color="#993399">0</font> <font color="#990000">:</font>
-          <b><font color="#0000FF">return</font></b> minus_infinity
-     <b><font color="#0000FF">return</font></b> <b><font color="#000000">sum</font></b><font color="#990000">(</font> scipy<font color="#990000">.</font>stats<font color="#990000">.</font>norm<font color="#990000">.</font><b><font color="#000000">logpdf</font></b><font color="#990000">(</font>y<font color="#990000">,</font> loc<font color="#990000">=</font>mu<font color="#990000">,</font> scale<font color="#990000">=</font>sigma<font color="#990000">)</font> <font color="#990000">)</font>
+   mu    <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
+   sigma <font color="#990000">=</font> x<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font>
+   <b><font color="#0000FF">if</font></b> sigma <font color="#990000">&lt;=</font> <font color="#993399">0</font> <font color="#990000">:</font>
+      <b><font color="#0000FF">return</font></b> minus_infinity
+   <b><font color="#0000FF">return</font></b> <b><font color="#000000">sum</font></b><font color="#990000">(</font> scipy<font color="#990000">.</font>stats<font color="#990000">.</font>norm<font color="#990000">.</font><b><font color="#000000">logpdf</font></b><font color="#990000">(</font>y<font color="#990000">,</font> loc<font color="#990000">=</font>mu<font color="#990000">,</font> scale<font color="#990000">=</font>sigma<font color="#990000">)</font> <font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
 <i><font color="#9A1900"># run the metropolis algorithm to estimate (mu, sigma)</font></i>
 m   <font color="#990000">=</font> <font color="#993399">2000</font>                 <i><font color="#9A1900"># length of the chain</font></i>
@@ -127,12 +127,12 @@ sigma_estimate <font color="#990000">=</font> x_estimate<font color="#990000">[<
 <i><font color="#9A1900">#</font></i>
 relerr <font color="#990000">=</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font> mu_estimate <font color="#990000">/</font> mu_true <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font>
 <b><font color="#0000FF">if</font></b> relerr <font color="#990000">&gt;</font> <font color="#993399">0.05</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'relerr = '</font><font color="#990000">,</font> relerr<font color="#990000">,</font> <font color="#FF0000">", python_seed = "</font><font color="#990000">,</font> python_seed<font color="#990000">)</font>
-     <b><font color="#0000FF">assert</font></b><font color="#990000">(</font>False<font color="#990000">)</font>
+   <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'relerr = '</font><font color="#990000">,</font> relerr<font color="#990000">,</font> <font color="#FF0000">", python_seed = "</font><font color="#990000">,</font> python_seed<font color="#990000">)</font>
+   <b><font color="#0000FF">assert</font></b><font color="#990000">(</font>False<font color="#990000">)</font>
 relerr <font color="#990000">=</font> <b><font color="#000000">abs</font></b><font color="#990000">(</font> sigma_estimate <font color="#990000">/</font> sigma_true <font color="#990000">-</font> <font color="#993399">1.0</font> <font color="#990000">)</font>
 <b><font color="#0000FF">if</font></b> relerr <font color="#990000">&gt;</font> <font color="#993399">0.05</font> <font color="#990000">:</font>
-     <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'relerr = '</font><font color="#990000">,</font> relerr<font color="#990000">,</font> <font color="#FF0000">", python_seed = "</font><font color="#990000">,</font> python_seed<font color="#990000">)</font>
-     <b><font color="#0000FF">assert</font></b><font color="#990000">(</font>False<font color="#990000">)</font>
+   <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'relerr = '</font><font color="#990000">,</font> relerr<font color="#990000">,</font> <font color="#FF0000">", python_seed = "</font><font color="#990000">,</font> python_seed<font color="#990000">)</font>
+   <b><font color="#0000FF">assert</font></b><font color="#990000">(</font>False<font color="#990000">)</font>
 <i><font color="#9A1900"># -----------------------------------------------------------------------------</font></i>
 <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'metropolis.py: OK'</font><font color="#990000">)</font></tt></pre>
 

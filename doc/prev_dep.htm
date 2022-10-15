@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Prevalence Does Not Depend On Other Cause Mortality</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Prevalence Does Not Depend On Other Cause Mortality">
-<meta name="keywords" id="keywords" content=" prevalence does not depend on other cause mortality lemma proof ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>model</option>
-<option>prev_dep</option>
-</select>
-</td>
-<td>
+<td><a href="posterior.htm" target="_top">Prev</a>
+</td><td><a href="numeric_average.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="posterior.htm" target="_top">Prev</a>
-</td><td><a href="numeric_average.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>prev_dep</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -59,8 +59,8 @@ A:active { color : purple }
 </td>
 <td>prev_dep</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
@@ -88,7 +88,7 @@ S(0) = s_0 > 0
 @)@</small> and
 <small>@[@
 
-	S'(t) =  - [ \iota (t) + \omega (t) ] S(t)
+   S'(t) =  - [ \iota (t) + \omega (t) ] S(t)
 
 @]@</small>
 Define <small>@(@
@@ -99,7 +99,7 @@ C(0) = c_0 > 0
 @)@</small> and
 <small>@[@
 
-	C'(t) =  + \iota (t) S(t) - [ \chi (t) + \omega (t) ] C(t)
+   C'(t) =  + \iota (t) S(t) - [ \chi (t) + \omega (t) ] C(t)
 
 @]@</small>
 Define <small>@(@
@@ -127,7 +127,7 @@ t
 @)@</small> and
 <small>@[@
 
-	P(t) = 1 / [ 1 + S(t) / C(t) ]
+   P(t) = 1 / [ 1 + S(t) / C(t) ]
 
 @]@</small>
 Define <small>@(@
@@ -143,7 +143,7 @@ Q(t)
 @)@</small> we have
 <small>@[@
 
-	Q'(t) = [ C'(t) S(t) - S'(t) C(t) ] / S(t)^2
+   Q'(t) = [ C'(t) S(t) - S'(t) C(t) ] / S(t)^2
 
 @]@</small>
 Dropping the dependence on <small>@(@
@@ -172,7 +172,7 @@ Q(0) = c_0 / s_0
 @)@</small> and
 <small>@[@
 
-	Q'(t) = \iota(t) + [ \iota(t) - \chi (t) ] Q(t)
+   Q'(t) = \iota(t) + [ \iota(t) - \chi (t) ] Q(t)
 
 @]@</small>
 If follows that <small>@(@

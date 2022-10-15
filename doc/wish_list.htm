@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Dismod_at Wish List</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Dismod_at Wish List">
-<meta name="keywords" id="keywords" content=" dismod_at wish list speed bound constraints laplace random effect immunity simulating priors multi-threading user examples meas_std lagrange multipliers censored create_database ode solution prevalence large excess mortality rate_case command diagrams real world example starting point windows install ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,16 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>wish_list</option>
-</select>
-</td>
-<td>
+<td><a href="whats_new_2015.htm" target="_top">Prev</a>
+</td><td><a href="_reference.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -48,15 +43,20 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="whats_new_2015.htm" target="_top">Prev</a>
-</td><td><a href="_reference.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>wish_list</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>wish_list</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
@@ -262,7 +262,7 @@ keyword arguments and replaces the ones that are not present by
 default values. This could be done using the prototype
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;def&nbsp;create_database(*</span></font><i><font color="black"><span style='white-space: nowrap'>args</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;**</span></font><i><font color="black"><span style='white-space: nowrap'>kwargs</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;def&nbsp;create_database(*</span></font><i><font color="black"><span style='white-space: nowrap'>args</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;**</span></font><i><font color="black"><span style='white-space: nowrap'>kwargs</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;:<br>
 </span></font></code>
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>args</span></font></i></code>
@@ -292,7 +292,7 @@ P = C / (S + C)
 @)@</small> satisfies
 <small>@[@
 
-	P' = \iota  [ 1 - P ] - \rho P - \chi  [ 1 - P] P
+   P' = \iota  [ 1 - P ] - \rho P - \chi  [ 1 - P] P
 
 @]@</small>
 We can therefore solve for prevalence without other cause mortality
@@ -332,7 +332,7 @@ we can compute <small>@(@
 Furthermore
 <small>@[@
 
-	(S + C)' = - \alpha (S + C)
+   (S + C)' = - \alpha (S + C)
 
 @]@</small>
 So we can also compute <small>@(@

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Numerical Approximation of Average Integrands</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Numerical Approximation of Average Integrands">
-<meta name="keywords" id="keywords" content=" numerical approximation average integrands noise effect ode initial age rectangle a_l a_u t_l t_u integrand time step delta t extended grid cohort solution line s_j lower cohorts upper refinement not required w(a t) g(a integration ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>model</option>
-<option>numeric_average</option>
-</select>
-</td>
-<td>
+<td><a href="prev_dep.htm" target="_top">Prev</a>
+</td><td><a href="command.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="prev_dep.htm" target="_top">Prev</a>
-</td><td><a href="command.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>numeric_average</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -59,8 +59,8 @@ A:active { color : purple }
 </td>
 <td>numeric_average</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
@@ -109,7 +109,7 @@ We compute an
 over a rectangular region defined as
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_upper</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;x&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_upper</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+&nbsp;&nbsp;&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_upper</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]&nbsp;x&nbsp;[&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_upper</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
 </span></font></code>
 by the <a href="data_table.htm" target="_top"><span style='white-space: nowrap'>data_table</span></a>
  or the <a href="avgint_table.htm" target="_top"><span style='white-space: nowrap'>avgint_table</span></a>
@@ -506,8 +506,8 @@ w(a, t)
 for this average and define
 <small>@[@
 
-	\bar{w} = \int_{a(L)}^{a(U)} \int_{t(L)}^{t(U)}
-		w( a , t) \; \B{d} t \; \B{d} a
+   \bar{w} = \int_{a(L)}^{a(U)} \int_{t(L)}^{t(U)}
+      w( a , t) \; \B{d} t \; \B{d} a
 
 @]@</small>
 Note that if <small>@(@
@@ -531,7 +531,7 @@ A
 
 A =
 \frac{1}{ \bar{w} } \int_{a(L)}^{a(U)} \int_{t(L)}^{t(U)}
-	w(a, t) g( a , t) \; \B{d} t \; \B{d} a
+   w(a, t) g( a , t) \; \B{d} t \; \B{d} a
 
 @]@</small>
 
@@ -570,7 +570,7 @@ Otherwise we define the approximations
 W( a_j )
 =
 \sum_{i=1}^{i=N-1}
-	\frac{w( a_j , t_{i-1} ) + w( a_j , t_i )}{2} ( t_i - t_{i-1} )
+   \frac{w( a_j , t_{i-1} ) + w( a_j , t_i )}{2} ( t_i - t_{i-1} )
 \approx
 \int_{t(L)}^{t(U)} w( a_j , t) \; \B{d} t
 
@@ -609,7 +609,7 @@ A
 \bar{W}
 =
 \sum_{j=1}^{j=J-1}
-	\frac{ W( a_{j-1}  ) + W( a_j ) }{2} ( a_j - a_{j-1} )
+   \frac{ W( a_{j-1}  ) + W( a_j ) }{2} ( a_j - a_{j-1} )
 
 @]@</small>
 <small>@[@
@@ -618,7 +618,7 @@ A
 \approx
 \frac{1}{ \bar{W} }
 \sum_{j=1}^{j=J-1}
-	\frac{ G( a_{j-1}  ) + G( a_j ) }{2} ( a_j - a_{j-1} )
+   \frac{ G( a_{j-1}  ) + G( a_j ) }{2} ( a_j - a_{j-1} )
 
 @]@</small>
 

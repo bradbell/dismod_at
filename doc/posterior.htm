@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Simulating Posterior Distribution for Model Variables</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Simulating Posterior Distribution for Model Variables">
-<meta name="keywords" id="keywords" content=" simulating posterior distribution model variables purpose lemma 1 proof remark 2 simulation ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>model</option>
-<option>posterior</option>
-</select>
-</td>
-<td>
+<td><a href="bilinear.htm" target="_top">Prev</a>
+</td><td><a href="prev_dep.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="bilinear.htm" target="_top">Prev</a>
-</td><td><a href="prev_dep.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>posterior</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -59,8 +59,8 @@ A:active { color : purple }
 </td>
 <td>posterior</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
@@ -131,7 +131,7 @@ y
 ( A^\R{T} V^{-1} A )^{-1}
 =
 - \; \left(
-	\frac{ \partial^2 } { \partial \theta^2 } \log \B{p} ( y | \theta )
+   \frac{ \partial^2 } { \partial \theta^2 } \log \B{p} ( y | \theta )
 \right)^{-1}
 
 @]@</small>
@@ -151,7 +151,7 @@ y
 \B{p} ( y | \theta )
 =
 \det ( 2 \pi V )^{-1/2} \exp \left[
-	- \frac{1}{2} ( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
+   - \frac{1}{2} ( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
 \right]
 
 @]@</small>
@@ -177,7 +177,7 @@ f^{(1)} ( \theta ) \in \B{R}^{1 \times n}
 is given by
 <small>@[@
 
-	f^{(1)} ( \theta ) = - ( y - A \theta )^\R{T} V^{-1} A
+   f^{(1)} ( \theta ) = - ( y - A \theta )^\R{T} V^{-1} A
 
 @]@</small>
 It follows that
@@ -195,7 +195,7 @@ of <small>@(@
 \B{p} ( y | \theta )
 @)@</small> in the statement of the lemma.
 <code><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></code>
+&nbsp;&nbsp;&nbsp;</span></code>
 The maximum likelihood estimate <small>@(@
 \hat{\theta}
 @)@</small> satisfies the
@@ -251,7 +251,7 @@ of <small>@(@
 \hat{\theta}
 @)@</small> in the statement of the lemma.
 <code><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></code>
+&nbsp;&nbsp;&nbsp;</span></code>
 It also follows, from the equation for <small>@(@
 \hat{\theta}
 @)@</small> above, that
@@ -329,14 +329,14 @@ It follows that
 <small>@[@
 
 \B{E} [
-	( \hat{\theta} - \B{E}[ \hat{\theta} ] )
-	( \hat{\theta} - \B{E}[ \hat{\theta} ] )^\R{T}
+   ( \hat{\theta} - \B{E}[ \hat{\theta} ] )
+   ( \hat{\theta} - \B{E}[ \hat{\theta} ] )^\R{T}
 \prec
 ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
 =
 - \; \left(
-	\frac{ \partial^2 } { \partial \theta^2 }
-	\log [ \B{p} ( y | \theta ) \B{p} ( \theta ) ]
+   \frac{ \partial^2 } { \partial \theta^2 }
+   \log [ \B{p} ( y | \theta ) \B{p} ( \theta ) ]
 \right)^{-1}
 
 @]@</small>
@@ -384,9 +384,9 @@ is the same as its prior distribution and has uncertainty.
 =
 \det ( 2 \pi V )^{-1/2} \det ( 2 \pi P )^{-1/2} \exp \left[
 - \frac{1}{2}
-	( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
+   ( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
 - \frac{1}{2}
-	( B \theta - z )^\R{T} P^{-1} ( B \theta - z )
+   ( B \theta - z )^\R{T} P^{-1} ( B \theta - z )
 \right]
 
 @]@</small>The derivative of the corresponding negative log likelihood is
@@ -399,7 +399,7 @@ From this point,
 the proof of the equation for the second partial is very similar to
 Lemma 1 and left to the reader.
 <code><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></code>
+&nbsp;&nbsp;&nbsp;</span></code>
 Setting the derivative to zero, we get the corresponding maximum likelihood
 estimate <small>@(@
 \hat{\theta}
@@ -440,8 +440,8 @@ It follows that
 ( A^\R{T} V^{-1} A \bar{\theta} + B^\R{T} P^{-1} z )
 \\
 \B{E} [
-	( \hat{\theta} - \B{E} [ \hat{\theta} ] )
-	( \hat{\theta} - \B{E} [ \hat{\theta} ] )^\R{T}
+   ( \hat{\theta} - \B{E} [ \hat{\theta} ] )
+   ( \hat{\theta} - \B{E} [ \hat{\theta} ] )^\R{T}
 ]
 & = &
 ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
@@ -472,8 +472,8 @@ for the variance of <small>@(@
 <small>@[@
 
 \B{E} [
-	( \hat{\theta} - \B{E} [ \hat{\theta} ] )
-	( \hat{\theta} - \B{E} [ \hat{\theta} ] )^\R{T}
+   ( \hat{\theta} - \B{E} [ \hat{\theta} ] )
+   ( \hat{\theta} - \B{E} [ \hat{\theta} ] )^\R{T}
 ]
 \prec
 ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
@@ -509,7 +509,7 @@ Furthermore, we define <small>@(@
 @)@</small> as the maximizer of
 <small>@[@
 
-	\B{p}( y, z | \theta ) = \B{p} ( y | \theta ) \B{p} ( z | \theta )
+   \B{p}( y, z | \theta ) = \B{p} ( y | \theta ) \B{p} ( z | \theta )
 
 @]@</small>
 We define <small>@(@

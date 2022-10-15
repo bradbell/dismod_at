@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Changes and Additions to Dismod_at During 2015</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Changes and Additions to Dismod_at During 2015">
-<meta name="keywords" id="keywords" content=" changes additions to dismod_at during 2015 12-29 12-24 12-15 12-14 12-10 12-09 11-23 11-22 11-21 11-20 11-17 11-16 11-15 11-14 11-12 11-10 11-09 11-07 11-06 11-05 11-04 11-03 11-02 11-01 10-30 10-29 10-28 10-27 10-26 10-25 10-24 10-20 10-19 10-16 10-15 10-14 09-18 09-03 08-31 08-27 08-21 08-18 08-15 08-14 08-13 08-12 08-09 08-08 08-04 08-03 08-02 08-01 07-29 07-28 07-27 07-25 07-24 07-23 07-22 07-21 07-20 07-19 07-17 07-16 07-15 07-14 07-13 07-11 07-10 07-09 07-08 07-07 07-05 07-04 07-03 07-01 06-30 06-29 06-27 06-26 06-25 06-24 06-23 06-22 ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -148,8 +148,8 @@ A:active { color : purple }
 </select>
 </td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
@@ -627,7 +627,7 @@ Change all the <a href="command.htm" target="_top"><span style='white-space: now
  to have syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>file_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>command</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;dismod_at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>file_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>command</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 i.e., switch the order of 
 <code><i><font color="black"><span style='white-space: nowrap'>file_name</span></font></i></code>
@@ -770,7 +770,7 @@ Add a <a href="wish_list.htm" target="_top"><span style='white-space: nowrap'>wi
 <ol type="1"><li>
 Advance to a newer version of CppAD. The requires that you re-run
 <code><font color='blue'><pre style='display:inline'> 
-     bin/install_cppad.sh
+   bin/install_cppad.sh
 </pre></font></code>
 </li><li>
 Remove some unused code in the dismod_at
@@ -793,7 +793,7 @@ The dismod_at and cppad_mixed speed tests were placed in the
 <code><font color="blue">speed</font></code> directory.
 They are now run separately from the correctness tests with the command
 <code><font color='blue'><pre style='display:inline'> 
-     make speed
+   make speed
 </pre></font></code>
 See instructions for running the
 <a href="install_unix.htm#dismod_at.Test" target="_top"><span style='white-space: nowrap'>tests</span></a>
@@ -844,12 +844,12 @@ Changed the specification for the <a href="create_database.htm" target="_top"><s
 To be specific, the row
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;'name':'parent_node_id'&nbsp;,&nbsp;'value':'</span></font><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i><font color="blue"><span style='white-space: nowrap'>'&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;{&nbsp;'name':'parent_node_id'&nbsp;,&nbsp;'value':'</span></font><i><font color="black"><span style='white-space: nowrap'>parent_node_id</span></font></i><font color="blue"><span style='white-space: nowrap'>'&nbsp;}<br>
 </span></font></code>
 was replace by the row
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;'name':'parent_node_name'&nbsp;,&nbsp;'value':'</span></font><i><font color="black"><span style='white-space: nowrap'>parent_node_name</span></font></i><font color="blue"><span style='white-space: nowrap'>'&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;{&nbsp;'name':'parent_node_name'&nbsp;,&nbsp;'value':'</span></font><i><font color="black"><span style='white-space: nowrap'>parent_node_name</span></font></i><font color="blue"><span style='white-space: nowrap'>'&nbsp;}<br>
 </span></font></code>
 <br>
 <b><big><a name="10-25" id="10-25">10-25</a></big></b>
@@ -1260,7 +1260,7 @@ The Hessian w.r.t. <small>@(@
 @)@</small>,
 <small>@[@
 
-	H^{(2)}_\beta H( \beta, \theta, u)
+   H^{(2)}_\beta H( \beta, \theta, u)
 
 @]@</small>
 is no longer recorded as a separate AD function, but is rather
@@ -1284,14 +1284,14 @@ use <code><font color="blue">a5_double</font></code> objects to <code><font colo
 The term
 'prior negative log-likelihood' was change to
 <code><font color="blue">cppad_mixed fixed likelihood
-	Fixed Likelihood, g(theta)
+   Fixed Likelihood, g(theta)
 /</font></code>.
 </li><li>
 
 The term
 'joint negative log-likelihood' was change to
 <code><font color="blue">cppad_mixed random likelihood
-	Random Likelihood, f(theta, u)
+   Random Likelihood, f(theta, u)
 /</font></code>.
 </li></ol>
 
@@ -1771,8 +1771,8 @@ For
 and <code><font color="blue">meas_std</font></code>, change
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cov_type</span></font></i><font color="blue"><span style='white-space: nowrap'>_mulcov_n_cov&nbsp;-&gt;&nbsp;mulcov_</span></font><i><font color="black"><span style='white-space: nowrap'>cov_type</span></font></i><font color="blue"><span style='white-space: nowrap'>_n_cov<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cov_type</span></font></i><font color="blue"><span style='white-space: nowrap'>_mulcov_info&nbsp;-&gt;&nbsp;mulcov_</span></font><i><font color="black"><span style='white-space: nowrap'>cov_type</span></font></i><font color="blue"><span style='white-space: nowrap'>_info<br>
+&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cov_type</span></font></i><font color="blue"><span style='white-space: nowrap'>_mulcov_n_cov&nbsp;-&gt;&nbsp;mulcov_</span></font><i><font color="black"><span style='white-space: nowrap'>cov_type</span></font></i><font color="blue"><span style='white-space: nowrap'>_n_cov<br>
+&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>cov_type</span></font></i><font color="blue"><span style='white-space: nowrap'>_mulcov_info&nbsp;-&gt;&nbsp;mulcov_</span></font><i><font color="black"><span style='white-space: nowrap'>cov_type</span></font></i><font color="blue"><span style='white-space: nowrap'>_info<br>
 </span></font></code>
 see
 <a href="var_table.htm#var_type.mulcov_rate_value" target="_top"><span style='white-space: nowrap'>mulcov_rate_value</span></a>
@@ -1825,8 +1825,8 @@ There was a bug in reading the data tables whereby the following error
 would be incorrectly generated:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'>_id&nbsp;must&nbsp;start&nbsp;at&nbsp;zero&nbsp;and&nbsp;increment&nbsp;by&nbsp;one.<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Detected&nbsp;in&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;table&nbsp;at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'>_id&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>.<br>
+&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'>_id&nbsp;must&nbsp;start&nbsp;at&nbsp;zero&nbsp;and&nbsp;increment&nbsp;by&nbsp;one.<br>
+&nbsp;&nbsp;&nbsp;Detected&nbsp;in&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;table&nbsp;at&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i><font color="blue"><span style='white-space: nowrap'>_id&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>index</span></font></i><font color="blue"><span style='white-space: nowrap'>.<br>
 </span></font></code>
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>table_name</span></font></i></code>

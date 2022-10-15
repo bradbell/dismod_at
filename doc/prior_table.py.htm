@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>prior_table: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="prior_table: Example and Test">
-<meta name="keywords" id="keywords" content=" prior_table: example test ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,9 +31,21 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
+<td><a href="prior_table.htm" target="_top">Prev</a>
+</td><td><a href="rate_table.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
 <td>
 <select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
+<option>Up-&gt;</option>
 <option>dismod_at</option>
 <option>database</option>
 <option>input</option>
@@ -42,18 +54,6 @@ A:active { color : purple }
 </select>
 </td>
 <td>
-<select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
-<option>contents</option>
-<option>reference</option>
-<option>index</option>
-<option>search</option>
-<option>external</option>
-</select>
-</td>
-<td><a href="prior_table.htm" target="_top">Prev</a>
-</td><td><a href="rate_table.htm" target="_top">Next</a>
-</td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -67,67 +67,67 @@ A:active { color : purple }
 </td>
 <td>prior_table.py</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@ 
 
 <center><b><big><big>prior_table: Example and Test</big></big></b></center>
 
 <br><pre><tt><b><font color="#0000FF">def</font></b> <b><font color="#000000">prior_table</font></b><font color="#990000">()</font> <font color="#990000">:</font>
-     <b><font color="#000080">import</font></b> dismod_at
-     <b><font color="#000080">import</font></b> copy
-     <b><font color="#000080">import</font></b> collections
-     <i><font color="#9A1900">#</font></i>
-     file_name      <font color="#990000">=</font> <font color="#FF0000">'example.db'</font>
-     new            <font color="#990000">=</font> True
-     connection     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
-     cursor         <font color="#990000">=</font> connection<font color="#990000">.</font><b><font color="#000000">cursor</font></b><font color="#990000">()</font>
-     <i><font color="#9A1900">#</font></i>
-     <i><font color="#9A1900"># create the prior table</font></i>
-     ptype    <font color="#990000">=</font> <font color="#FF0000">'integer primary key'</font>
-     col_name2type <font color="#990000">=</font> collections<font color="#990000">.</font><b><font color="#000000">OrderedDict</font></b><font color="#990000">(</font> <font color="#990000">[</font>
-          <font color="#990000">(</font><font color="#FF0000">'prior_name'</font><font color="#990000">,</font>  <font color="#FF0000">'text'</font>    <font color="#990000">),</font>
-          <font color="#990000">(</font><font color="#FF0000">'density_id'</font><font color="#990000">,</font>  <font color="#FF0000">'integer'</font> <font color="#990000">),</font>
-          <font color="#990000">(</font><font color="#FF0000">'lower'</font><font color="#990000">,</font>       <font color="#FF0000">'real'</font>    <font color="#990000">),</font>
-          <font color="#990000">(</font><font color="#FF0000">'upper'</font><font color="#990000">,</font>       <font color="#FF0000">'real'</font>    <font color="#990000">),</font>
-          <font color="#990000">(</font><font color="#FF0000">'mean'</font><font color="#990000">,</font>        <font color="#FF0000">'real'</font>    <font color="#990000">),</font>
-          <font color="#990000">(</font><font color="#FF0000">'std'</font><font color="#990000">,</font>         <font color="#FF0000">'real'</font>    <font color="#990000">),</font>
-          <font color="#990000">(</font><font color="#FF0000">'eta'</font><font color="#990000">,</font>         <font color="#FF0000">'real'</font>    <font color="#990000">)</font>
-     <font color="#990000">]</font> <font color="#990000">)</font>
-     col_name <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">(</font>col_name2type<font color="#990000">.</font><b><font color="#000000">keys</font></b><font color="#990000">())</font>
-     col_type <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">(</font>col_name2type<font color="#990000">.</font><b><font color="#000000">values</font></b><font color="#990000">())</font>
-     uniform_density_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
-     row_list <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">[</font>
-          <font color="#FF0000">'none'</font><font color="#990000">,</font>              <i><font color="#9A1900"># prior_name</font></i>
-          uniform_density_id<font color="#990000">,</font>  <i><font color="#9A1900"># density_id</font></i>
-          None<font color="#990000">,</font>                <i><font color="#9A1900"># lower</font></i>
-          None<font color="#990000">,</font>                <i><font color="#9A1900"># upper</font></i>
-          <font color="#993399">0</font><font color="#990000">,</font>                   <i><font color="#9A1900"># mean</font></i>
-          None<font color="#990000">,</font>                <i><font color="#9A1900"># std</font></i>
-          None                 <i><font color="#9A1900"># eta</font></i>
-     <font color="#990000">],[</font>
-          <font color="#FF0000">'rate'</font><font color="#990000">,</font>              <i><font color="#9A1900"># prior_name</font></i>
-          uniform_density_id<font color="#990000">,</font>  <i><font color="#9A1900"># density_id</font></i>
-          <font color="#993399">0.0</font><font color="#990000">,</font>                 <i><font color="#9A1900"># lower</font></i>
-          <font color="#993399">1.0</font><font color="#990000">,</font>                 <i><font color="#9A1900"># upper</font></i>
-          <font color="#993399">0.1</font><font color="#990000">,</font>                 <i><font color="#9A1900"># mean</font></i>
-          None<font color="#990000">,</font>                <i><font color="#9A1900"># std</font></i>
-          None                 <i><font color="#9A1900"># eta</font></i>
-     <font color="#990000">]</font> <font color="#990000">]</font>
-     tbl_name <font color="#990000">=</font> <font color="#FF0000">'prior'</font>
-     dismod_at<font color="#990000">.</font><b><font color="#000000">create_table</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> col_name<font color="#990000">,</font> col_type<font color="#990000">,</font> row_list<font color="#990000">)</font>
-     <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
-     <i><font color="#9A1900"># include primary key in test</font></i>
-     check_name <font color="#990000">=</font> <font color="#990000">[</font> tbl_name <font color="#990000">+</font> <font color="#FF0000">'_id'</font> <font color="#990000">]</font> <font color="#990000">+</font> col_name
-     check_list <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
-     <b><font color="#0000FF">for</font></b> i <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>row_list<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
-          check_list<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> <font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> row_list<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font>
-     <i><font color="#9A1900">#</font></i>
-     row_list <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_row_list</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> check_name<font color="#990000">)</font>
-     <b><font color="#0000FF">assert</font></b> row_list <font color="#990000">==</font> check_list
-     <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
-     connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
-     <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'prior_table: OK'</font><font color="#990000">)</font></tt></pre>
+   <b><font color="#000080">import</font></b> dismod_at
+   <b><font color="#000080">import</font></b> copy
+   <b><font color="#000080">import</font></b> collections
+   <i><font color="#9A1900">#</font></i>
+   file_name      <font color="#990000">=</font> <font color="#FF0000">'example.db'</font>
+   new            <font color="#990000">=</font> True
+   connection     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
+   cursor         <font color="#990000">=</font> connection<font color="#990000">.</font><b><font color="#000000">cursor</font></b><font color="#990000">()</font>
+   <i><font color="#9A1900">#</font></i>
+   <i><font color="#9A1900"># create the prior table</font></i>
+   ptype    <font color="#990000">=</font> <font color="#FF0000">'integer primary key'</font>
+   col_name2type <font color="#990000">=</font> collections<font color="#990000">.</font><b><font color="#000000">OrderedDict</font></b><font color="#990000">(</font> <font color="#990000">[</font>
+      <font color="#990000">(</font><font color="#FF0000">'prior_name'</font><font color="#990000">,</font>  <font color="#FF0000">'text'</font>    <font color="#990000">),</font>
+      <font color="#990000">(</font><font color="#FF0000">'density_id'</font><font color="#990000">,</font>  <font color="#FF0000">'integer'</font> <font color="#990000">),</font>
+      <font color="#990000">(</font><font color="#FF0000">'lower'</font><font color="#990000">,</font>       <font color="#FF0000">'real'</font>    <font color="#990000">),</font>
+      <font color="#990000">(</font><font color="#FF0000">'upper'</font><font color="#990000">,</font>       <font color="#FF0000">'real'</font>    <font color="#990000">),</font>
+      <font color="#990000">(</font><font color="#FF0000">'mean'</font><font color="#990000">,</font>        <font color="#FF0000">'real'</font>    <font color="#990000">),</font>
+      <font color="#990000">(</font><font color="#FF0000">'std'</font><font color="#990000">,</font>         <font color="#FF0000">'real'</font>    <font color="#990000">),</font>
+      <font color="#990000">(</font><font color="#FF0000">'eta'</font><font color="#990000">,</font>         <font color="#FF0000">'real'</font>    <font color="#990000">)</font>
+   <font color="#990000">]</font> <font color="#990000">)</font>
+   col_name <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">(</font>col_name2type<font color="#990000">.</font><b><font color="#000000">keys</font></b><font color="#990000">())</font>
+   col_type <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">(</font>col_name2type<font color="#990000">.</font><b><font color="#000000">values</font></b><font color="#990000">())</font>
+   uniform_density_id <font color="#990000">=</font> <font color="#993399">0</font><font color="#990000">;</font>
+   row_list <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">[</font>
+      <font color="#FF0000">'none'</font><font color="#990000">,</font>              <i><font color="#9A1900"># prior_name</font></i>
+      uniform_density_id<font color="#990000">,</font>  <i><font color="#9A1900"># density_id</font></i>
+      None<font color="#990000">,</font>                <i><font color="#9A1900"># lower</font></i>
+      None<font color="#990000">,</font>                <i><font color="#9A1900"># upper</font></i>
+      <font color="#993399">0</font><font color="#990000">,</font>                   <i><font color="#9A1900"># mean</font></i>
+      None<font color="#990000">,</font>                <i><font color="#9A1900"># std</font></i>
+      None                 <i><font color="#9A1900"># eta</font></i>
+   <font color="#990000">],[</font>
+      <font color="#FF0000">'rate'</font><font color="#990000">,</font>              <i><font color="#9A1900"># prior_name</font></i>
+      uniform_density_id<font color="#990000">,</font>  <i><font color="#9A1900"># density_id</font></i>
+      <font color="#993399">0.0</font><font color="#990000">,</font>                 <i><font color="#9A1900"># lower</font></i>
+      <font color="#993399">1.0</font><font color="#990000">,</font>                 <i><font color="#9A1900"># upper</font></i>
+      <font color="#993399">0.1</font><font color="#990000">,</font>                 <i><font color="#9A1900"># mean</font></i>
+      None<font color="#990000">,</font>                <i><font color="#9A1900"># std</font></i>
+      None                 <i><font color="#9A1900"># eta</font></i>
+   <font color="#990000">]</font> <font color="#990000">]</font>
+   tbl_name <font color="#990000">=</font> <font color="#FF0000">'prior'</font>
+   dismod_at<font color="#990000">.</font><b><font color="#000000">create_table</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> col_name<font color="#990000">,</font> col_type<font color="#990000">,</font> row_list<font color="#990000">)</font>
+   <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
+   <i><font color="#9A1900"># include primary key in test</font></i>
+   check_name <font color="#990000">=</font> <font color="#990000">[</font> tbl_name <font color="#990000">+</font> <font color="#FF0000">'_id'</font> <font color="#990000">]</font> <font color="#990000">+</font> col_name
+   check_list <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
+   <b><font color="#0000FF">for</font></b> i <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>row_list<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
+      check_list<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> <font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> row_list<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font>
+   <i><font color="#9A1900">#</font></i>
+   row_list <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_row_list</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> check_name<font color="#990000">)</font>
+   <b><font color="#0000FF">assert</font></b> row_list <font color="#990000">==</font> check_list
+   <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
+   connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
+   <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'prior_table: OK'</font><font color="#990000">)</font></tt></pre>
 
 <hr>Input File: example/table/prior_table.py
 

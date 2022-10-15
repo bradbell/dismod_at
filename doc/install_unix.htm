@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Installing dismod_at in Unix</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Installing dismod_at in Unix">
-<meta name="keywords" id="keywords" content=" installing dismod_at unix system requirements c++ compiler fortran git cmake pkg-config python3 sqlite3 gsl suitesparse download dismod_at.git paths adding to path pkg_config_path ld_library_path pythonpath special run_cmake.sh eigen ipopt cppad cppad_mixed setup command build test install example ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>install</option>
-<option>install_unix</option>
-</select>
-</td>
-<td>
+<td><a href="dock_dismod_at.sh.htm" target="_top">Prev</a>
+</td><td><a href="run_cmake.sh.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="dock_dismod_at.sh.htm" target="_top">Prev</a>
-</td><td><a href="run_cmake.sh.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>install</option>
+<option>install_unix</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -61,8 +61,8 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_install_unix_htm.js'></script>
 </td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Installing dismod_at in Unix</big></big></b></center>
 
 <br><a href="install_unix.htm#System Requirements" target="_top">System&nbsp;Requirements</a>
@@ -198,8 +198,8 @@ After installing the requirements above,
 use the following command to get the current version of dismod_at:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;clone&nbsp;https://github.com/bradbell/dismod_at.git&nbsp;dismod_at.git<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cd&nbsp;dismod_at.git<br>
+&nbsp;&nbsp;&nbsp;git&nbsp;clone&nbsp;https://github.com/bradbell/dismod_at.git&nbsp;dismod_at.git<br>
+&nbsp;&nbsp;&nbsp;cd&nbsp;dismod_at.git<br>
 </span></font></code>
 You can determine the 
 <code><i><font color="black"><span style='white-space: nowrap'>git_hash</span></font></i></code>
@@ -207,8 +207,8 @@ You can determine the
 corresponding to this checkout of the master branch using the commands:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;show-ref&nbsp;|&nbsp;grep&nbsp;'refs/heads/master'<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grep&nbsp;'^SET(dismod_at_version'&nbsp;CMakeLists.txt<br>
+&nbsp;&nbsp;&nbsp;git&nbsp;show-ref&nbsp;|&nbsp;grep&nbsp;'refs/heads/master'<br>
+&nbsp;&nbsp;&nbsp;grep&nbsp;'^SET(dismod_at_version'&nbsp;CMakeLists.txt<br>
 </span></font></code>
 You can checkout an old version corresponding to a specific 
 <code><i><font color="black"><span style='white-space: nowrap'>git_hash</span></font></i></code>
@@ -216,8 +216,8 @@ You can checkout an old version corresponding to a specific
 and check its version number, using the commands:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;git&nbsp;checkout&nbsp;-q&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>git_hash</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grep&nbsp;'^SET(dismod_at_version'&nbsp;CMakeLists.txt<br>
+&nbsp;&nbsp;&nbsp;git&nbsp;checkout&nbsp;-q&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>git_hash</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;grep&nbsp;'^SET(dismod_at_version'&nbsp;CMakeLists.txt<br>
 </span></font></code>
 <br>
 <b><big><a name="Paths" id="Paths">Paths</a></big></b>
@@ -235,13 +235,13 @@ The instructions below may require you to add to a
 Use the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;$</span></font><i><font color="black"><span style='white-space: nowrap'>path_name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;echo&nbsp;$</span></font><i><font color="black"><span style='white-space: nowrap'>path_name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 to see if your initial path is empty. If it is empty,
 use the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>path_name</span></font></i><font color="blue"><span style='white-space: nowrap'>=</span></font><i><font color="black"><span style='white-space: nowrap'>directory</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;export&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>path_name</span></font></i><font color="blue"><span style='white-space: nowrap'>=</span></font><i><font color="black"><span style='white-space: nowrap'>directory</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 to add 
 <code><i><font color="black"><span style='white-space: nowrap'>directory</span></font></i></code>
@@ -249,7 +249,7 @@ to add
 If it is non-empty, use
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;export&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>path_name</span></font></i><font color="blue"><span style='white-space: nowrap'>=&quot;$</span></font><i><font color="black"><span style='white-space: nowrap'>path_name</span></font></i><font color="blue"><span style='white-space: nowrap'>:</span></font><i><font color="black"><span style='white-space: nowrap'>directory</span></font></i><font color="blue"><span style='white-space: nowrap'>&quot;<br>
+&nbsp;&nbsp;&nbsp;export&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>path_name</span></font></i><font color="blue"><span style='white-space: nowrap'>=&quot;$</span></font><i><font color="black"><span style='white-space: nowrap'>path_name</span></font></i><font color="blue"><span style='white-space: nowrap'>:</span></font><i><font color="black"><span style='white-space: nowrap'>directory</span></font></i><font color="blue"><span style='white-space: nowrap'>&quot;<br>
 </span></font></code>
 to add 
 <code><i><font color="black"><span style='white-space: nowrap'>directory</span></font></i></code>
@@ -262,8 +262,8 @@ to add
 After <code><font color="blue">sqlite3</font></code> and <code><font color="blue">gsl</font></code> are installed
 the following commands should work:
 <code><font color='blue'><pre style='display:inline'> 
-     pkg-config sqlite3 --modversion
-     pkg-config gsl     --modversion
+   pkg-config sqlite3 --modversion
+   pkg-config gsl     --modversion
 </pre></font></code>
 If one of them fails, a corresponding directory is missing
 from the <code><font color="blue">PKG_CONFIG_PATH</font></code> environment variable.
@@ -273,7 +273,7 @@ If
 the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;find&nbsp;-L&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-name&nbsp;gsl.pc&nbsp;2&gt;&nbsp;/dev/null<br>
+&nbsp;&nbsp;&nbsp;find&nbsp;-L&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-name&nbsp;gsl.pc&nbsp;2&gt;&nbsp;/dev/null<br>
 </span></font></code>
 should find the directory where <code><font color="blue">gsl.pc</font></code> is located.
 After <a href="install_unix.htm#Special Requirements.cppad_mixed" target="_top"><span style='white-space: nowrap'>cppad_mixed</span></a>
@@ -282,7 +282,7 @@ is installed (see below),
 the following command should work:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pkg-config&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pkg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;--modversion<br>
+&nbsp;&nbsp;&nbsp;pkg-config&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pkg</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;--modversion<br>
 </span></font></code>
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>pkg</span></font></i></code>
@@ -297,7 +297,7 @@ below.
 If one of these commands fails,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;find&nbsp;-L&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-name&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pkg</span></font></i><font color="blue"><span style='white-space: nowrap'>.pc&nbsp;2&gt;&nbsp;/dev/null<br>
+&nbsp;&nbsp;&nbsp;find&nbsp;-L&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-name&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>pkg</span></font></i><font color="blue"><span style='white-space: nowrap'>.pc&nbsp;2&gt;&nbsp;/dev/null<br>
 </span></font></code>
 should find the directory where 
 <code><i><font color="black"><span style='white-space: nowrap'>pkg</span></font></i><font color="blue"><span style='white-space: nowrap'>.pc</span></font></code>
@@ -324,7 +324,7 @@ After you install dismod_at (see below)
 you should be able to execute the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dismod_at<br>
+&nbsp;&nbsp;&nbsp;dismod_at<br>
 </span></font></code>
 from any directory.
 If you get the error <code><font color="blue">dismod_at: command not found</font></code>,
@@ -332,7 +332,7 @@ you will need to add the binary install directory to you path.
 Use the following command to find it:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;find&nbsp;-L&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-name&nbsp;dismod_at&nbsp;2&gt;&nbsp;/dev/null<br>
+&nbsp;&nbsp;&nbsp;find&nbsp;-L&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-name&nbsp;dismod_at&nbsp;2&gt;&nbsp;/dev/null<br>
 </span></font></code>
 see <a href="run_cmake.sh.htm#dismod_at_prefix" target="_top"><span style='white-space: nowrap'>dismod_at_prefix</span></a>
 .
@@ -345,9 +345,9 @@ After you install dismod_at
 you should be able to execute the following commands:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>python3</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;import&nbsp;dismod_at<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;quit()<br>
+&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>python3</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;import&nbsp;dismod_at<br>
+&nbsp;&nbsp;&nbsp;quit()<br>
 </span></font></code>
 where 
 <code><i><font color="black"><span style='white-space: nowrap'>python3</span></font></i></code>
@@ -360,7 +360,7 @@ to your python path.
 Use the following command to find it:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;find&nbsp;-L&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-name&nbsp;site-packages&nbsp;2&gt;&nbsp;/dev/null<br>
+&nbsp;&nbsp;&nbsp;find&nbsp;-L&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dismod_at_prefix</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-name&nbsp;site-packages&nbsp;2&gt;&nbsp;/dev/null<br>
 </span></font></code>
 <br>
 <b><big><a name="Special Requirements" id="Special Requirements">Special Requirements</a></big></b>
@@ -420,7 +420,7 @@ C++ random effects modeling package.
 Starting in the <code><font color="blue">dismod_at.git</font></code> directory, the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/get_cppad_mixed.sh<br>
+&nbsp;&nbsp;&nbsp;bin/get_cppad_mixed.sh<br>
 </span></font></code>
 can be used to install eigen, ipopt, and cppad_mixed.
 This script also serves as an example of how to install cppad_mixed.
@@ -452,7 +452,7 @@ After changing <code><font color="blue">bin/run_cmake.sh</font></code> to work f
 in the <code><font color="blue">dismod_at.git</font></code> directory
 execute the following command:
 <code><font color='blue'><pre style='display:inline'> 
-     bin/run_cmake.sh
+   bin/run_cmake.sh
 </pre></font></code>
 The script also serves as an example of how to install dismod_at.
 
@@ -463,9 +463,9 @@ The script also serves as an example of how to install dismod_at.
 The following command is option and will just build the
 executable program <code><font color="blue">build/devel/dismod_at</font></code>:
 <code><font color='blue'><pre style='display:inline'> 
-     cd build
-     make
-     cd ..
+   cd build
+   make
+   cd ..
 </pre></font></code>
 <br>
 <big><a name="dismod_at.Test" id="dismod_at.Test">Test</a></big>
@@ -475,10 +475,10 @@ build the dismod_at executable,
 build the examples and tests,
 and run the examples, correctness tests, and speed tests:
 <code><font color='blue'><pre style='display:inline'> 
-     cd build
-     make check
-     make speed
-     cd ..
+   cd build
+   make check
+   make speed
+   cd ..
 </pre></font></code>
 Some of the tests use different random number simulations each time
 they are run.
@@ -496,9 +496,9 @@ The following command will,
 build the dismod_at library and executable if necessary,
 and install dismod_at:
 <code><font color='blue'><pre style='display:inline'> 
-     cd build
-     make install install_python
-     cd ..
+   cd build
+   make install install_python
+   cd ..
 </pre></font></code>
 <br>
 <b><big><a name="Example" id="Example">Example</a></big></b>

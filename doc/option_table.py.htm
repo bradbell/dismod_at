@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>option_table: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="option_table: Example and Test">
-<meta name="keywords" id="keywords" content=" option_table: example test ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,9 +31,21 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
+<td><a href="option_default.htm" target="_top">Prev</a>
+</td><td><a href="prior_table.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
 <td>
 <select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
+<option>Up-&gt;</option>
 <option>dismod_at</option>
 <option>database</option>
 <option>input</option>
@@ -42,18 +54,6 @@ A:active { color : purple }
 </select>
 </td>
 <td>
-<select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
-<option>contents</option>
-<option>reference</option>
-<option>index</option>
-<option>search</option>
-<option>external</option>
-</select>
-</td>
-<td><a href="option_default.htm" target="_top">Prev</a>
-</td><td><a href="prior_table.htm" target="_top">Next</a>
-</td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -67,45 +67,45 @@ A:active { color : purple }
 </td>
 <td>option_table.py</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>option_table: Example and Test</big></big></b></center>
 
 <br><pre><tt><b><font color="#0000FF">def</font></b> <b><font color="#000000">option_table</font></b><font color="#990000">()</font> <font color="#990000">:</font>
-     <b><font color="#000080">import</font></b> dismod_at
-     <b><font color="#000080">import</font></b> copy
-     <i><font color="#9A1900">#</font></i>
-     file_name      <font color="#990000">=</font> <font color="#FF0000">'example.db'</font>
-     new            <font color="#990000">=</font> True
-     connection     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
-     cursor         <font color="#990000">=</font> connection<font color="#990000">.</font><b><font color="#000000">cursor</font></b><font color="#990000">()</font>
-     <i><font color="#9A1900">#</font></i>
-     <i><font color="#9A1900"># create the option table</font></i>
-     col_name <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'option_name'</font><font color="#990000">,</font> <font color="#FF0000">'option_value'</font>  <font color="#990000">]</font>
-     col_type <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'text unique'</font>  <font color="#990000">,</font> <font color="#FF0000">'text'</font> <font color="#990000">]</font>
-     row_list <font color="#990000">=</font> <font color="#990000">[</font>
-          <font color="#990000">[</font><font color="#FF0000">'parent_node_id'</font><font color="#990000">,</font>        <font color="#FF0000">'0'</font>                <font color="#990000">]</font> <font color="#990000">,</font>
-          <font color="#990000">[</font><font color="#FF0000">'ode_step_size'</font><font color="#990000">,</font>         <font color="#FF0000">'20.0'</font>             <font color="#990000">]</font> <font color="#990000">,</font>
-          <font color="#990000">[</font><font color="#FF0000">'rate_case'</font><font color="#990000">,</font>             <font color="#FF0000">'iota_pos_rho_pos'</font> <font color="#990000">]</font> <font color="#990000">,</font>
-          <font color="#990000">[</font><font color="#FF0000">'tolerance_fixed'</font><font color="#990000">,</font>       <font color="#FF0000">'1e-8'</font>             <font color="#990000">]</font> <font color="#990000">,</font>
-          <font color="#990000">[</font><font color="#FF0000">'max_num_iter_fixed'</font><font color="#990000">,</font>    <font color="#FF0000">'100'</font>              <font color="#990000">]</font> <font color="#990000">,</font>
-          <font color="#990000">[</font><font color="#FF0000">'print_level_fixed'</font><font color="#990000">,</font>     <font color="#FF0000">'0'</font>                <font color="#990000">]</font> <font color="#990000">,</font>
-          <font color="#990000">[</font><font color="#FF0000">'derivative_test_fixed'</font><font color="#990000">,</font> <font color="#FF0000">'second-order'</font>     <font color="#990000">]</font> <font color="#990000">,</font>
-     <font color="#990000">]</font>
-     tbl_name <font color="#990000">=</font> <font color="#FF0000">'option'</font>
-     dismod_at<font color="#990000">.</font><b><font color="#000000">create_table</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> col_name<font color="#990000">,</font> col_type<font color="#990000">,</font> row_list<font color="#990000">)</font>
-     <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
-     <i><font color="#9A1900"># include primary key in test</font></i>
-     check_name <font color="#990000">=</font> <font color="#990000">[</font> tbl_name <font color="#990000">+</font> <font color="#FF0000">'_id'</font> <font color="#990000">]</font> <font color="#990000">+</font> col_name
-     check_list <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
-     <b><font color="#0000FF">for</font></b> i <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>row_list<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
-          check_list<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> <font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> row_list<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font>
-     <i><font color="#9A1900">#</font></i>
-     row_list <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_row_list</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> check_name<font color="#990000">)</font>
-     <b><font color="#0000FF">assert</font></b> row_list <font color="#990000">==</font> check_list
-     <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
-     connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
-     <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'option_table: OK'</font><font color="#990000">)</font></tt></pre>
+   <b><font color="#000080">import</font></b> dismod_at
+   <b><font color="#000080">import</font></b> copy
+   <i><font color="#9A1900">#</font></i>
+   file_name      <font color="#990000">=</font> <font color="#FF0000">'example.db'</font>
+   new            <font color="#990000">=</font> True
+   connection     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
+   cursor         <font color="#990000">=</font> connection<font color="#990000">.</font><b><font color="#000000">cursor</font></b><font color="#990000">()</font>
+   <i><font color="#9A1900">#</font></i>
+   <i><font color="#9A1900"># create the option table</font></i>
+   col_name <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'option_name'</font><font color="#990000">,</font> <font color="#FF0000">'option_value'</font>  <font color="#990000">]</font>
+   col_type <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'text unique'</font>  <font color="#990000">,</font> <font color="#FF0000">'text'</font> <font color="#990000">]</font>
+   row_list <font color="#990000">=</font> <font color="#990000">[</font>
+      <font color="#990000">[</font><font color="#FF0000">'parent_node_id'</font><font color="#990000">,</font>        <font color="#FF0000">'0'</font>                <font color="#990000">]</font> <font color="#990000">,</font>
+      <font color="#990000">[</font><font color="#FF0000">'ode_step_size'</font><font color="#990000">,</font>         <font color="#FF0000">'20.0'</font>             <font color="#990000">]</font> <font color="#990000">,</font>
+      <font color="#990000">[</font><font color="#FF0000">'rate_case'</font><font color="#990000">,</font>             <font color="#FF0000">'iota_pos_rho_pos'</font> <font color="#990000">]</font> <font color="#990000">,</font>
+      <font color="#990000">[</font><font color="#FF0000">'tolerance_fixed'</font><font color="#990000">,</font>       <font color="#FF0000">'1e-8'</font>             <font color="#990000">]</font> <font color="#990000">,</font>
+      <font color="#990000">[</font><font color="#FF0000">'max_num_iter_fixed'</font><font color="#990000">,</font>    <font color="#FF0000">'100'</font>              <font color="#990000">]</font> <font color="#990000">,</font>
+      <font color="#990000">[</font><font color="#FF0000">'print_level_fixed'</font><font color="#990000">,</font>     <font color="#FF0000">'0'</font>                <font color="#990000">]</font> <font color="#990000">,</font>
+      <font color="#990000">[</font><font color="#FF0000">'derivative_test_fixed'</font><font color="#990000">,</font> <font color="#FF0000">'second-order'</font>     <font color="#990000">]</font> <font color="#990000">,</font>
+   <font color="#990000">]</font>
+   tbl_name <font color="#990000">=</font> <font color="#FF0000">'option'</font>
+   dismod_at<font color="#990000">.</font><b><font color="#000000">create_table</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> col_name<font color="#990000">,</font> col_type<font color="#990000">,</font> row_list<font color="#990000">)</font>
+   <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
+   <i><font color="#9A1900"># include primary key in test</font></i>
+   check_name <font color="#990000">=</font> <font color="#990000">[</font> tbl_name <font color="#990000">+</font> <font color="#FF0000">'_id'</font> <font color="#990000">]</font> <font color="#990000">+</font> col_name
+   check_list <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
+   <b><font color="#0000FF">for</font></b> i <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>row_list<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
+      check_list<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> <font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> row_list<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font>
+   <i><font color="#9A1900">#</font></i>
+   row_list <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_row_list</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> check_name<font color="#990000">)</font>
+   <b><font color="#0000FF">assert</font></b> row_list <font color="#990000">==</font> check_list
+   <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
+   connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
+   <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'option_table: OK'</font><font color="#990000">)</font></tt></pre>
 
 <hr>Input File: example/table/option_table.py
 

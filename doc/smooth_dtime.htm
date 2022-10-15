@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Prior Density Function for Smoothing Time Difference</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Prior Density Function for Smoothing Time Difference">
-<meta name="keywords" id="keywords" content=" prior density function smoothing time difference s i j lambda prior_ij d_ij sigma_ij mu_ij v_ij t^s ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,18 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>model</option>
-<option>variable_prior</option>
-<option>smooth_dtime</option>
-</select>
-</td>
-<td>
+<td><a href="smooth_dage.htm" target="_top">Prev</a>
+</td><td><a href="fixed_diff.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -50,9 +43,16 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="smooth_dage.htm" target="_top">Prev</a>
-</td><td><a href="fixed_diff.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>variable_prior</option>
+<option>smooth_dtime</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -63,8 +63,8 @@ A:active { color : purple }
 </td>
 <td>smooth_dtime</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
@@ -210,8 +210,8 @@ T^s (s, v)
 \log T^s (s, v, \theta )
 =
 \sum_{i=0}^{I-1} \sum_{j=0}^{J-2} D \left(
-	v_{i,j+1} \W{,} v_{i,j} \W{,}
-	\mu_{i,j} \W{,} \lambda \sigma_{i,j}  \W{,} d_{i,j}
+   v_{i,j+1} \W{,} v_{i,j} \W{,}
+   \mu_{i,j} \W{,} \lambda \sigma_{i,j}  \W{,} d_{i,j}
 \right)
 
 @]@</small>

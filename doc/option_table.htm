@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Option Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Option Table">
-<meta name="keywords" id="keywords" content=" the option table format option_id option_name option_value default changing values parent node parent_node_id parent_node_name name id children data subset avgint zero sum constraints zero_sum_child_rate zero_sum_mulcov_group extra columns data_extra_columns avgint_extra_columns age average grid ode_step_size age_avg_split rate_case no_ode trapezoidal iota_zero_rho_zero iota_pos_rho_zero iota_zero_rho_pos iota_pos_rho_pos optimize fixed random derivative_test max_num_iter print_level accept_after_max_steps tolerance only quasi_fixed bound_frac_fixed limited_memory_max_history_fixed method_random bound_random meas_noise_effect warn_on_stderr minimum_meas_cv hold_out_integrand random_seed compress_interval trace_init_fit_model example ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,18 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>database</option>
-<option>input</option>
-<option>option_table</option>
-</select>
-</td>
-<td>
+<td><a href="nslist_table.py.htm" target="_top">Prev</a>
+</td><td><a href="option_default.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -50,9 +43,16 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="nslist_table.py.htm" target="_top">Prev</a>
-</td><td><a href="option_default.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>database</option>
+<option>input</option>
+<option>option_table</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -65,8 +65,8 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_option_table_htm.js'></script>
 </td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Option Table</big></big></b></center>
 
 <br><a href="option_table.htm#Table Format" target="_top">Table&nbsp;Format</a>
@@ -591,55 +591,55 @@ and are for program validation.)
 
 <code><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i></code>
 
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  Description
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  Restrictions
 </td></tr><tr><td align='left'  valign='top'>
 
 <code><font color="blue">none</font></code>
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  do not perform derivative test
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  none
 </td></tr><tr><td align='left'  valign='top'>
 
 <code><font color="blue">first-order</font></code>
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  test first derivatives
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  none
 </td></tr><tr><td align='left'  valign='top'>
 
 <code><font color="blue">second-order</font></code>
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  test first and second derivatives
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  in fixed case 
 <code><i><font color="black"><span style='white-space: nowrap'>quasi_fixed</span></font></i></code>
  must be false.
 </td></tr><tr><td align='left'  valign='top'>
 
 <code><font color="blue">only-second-order </font></code>
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  only test second derivatives
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  in fixed case 
 <code><i><font color="black"><span style='white-space: nowrap'>quasi_fixed</span></font></i></code>
  must be false.
 </td></tr><tr><td align='left'  valign='top'>
 
 <code><font color="blue">adaptive </font></code>
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  a step size adaptive first order derivative test
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  only for fixed case
 </td></tr><tr><td align='left'  valign='top'>
 
 <code><font color="blue">trace-adaptive </font></code>
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  trace adaptive test on standard output
-	</td><td align='left'  valign='top'>
+   </td><td align='left'  valign='top'>
  only for fixed case
 </td></tr>
 </table>
@@ -766,7 +766,7 @@ then both are present in the <a href="prior_table.htm" target="_top"><span style
  and
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>bound_frac_fixed</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>upper</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>lower</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>bound_frac_fixed</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>upper</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>lower</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 is the maximum that <code><font color="blue">start_var</font></code> table value is moved.
 This is called <code><font color="blue">bound_frac</font></code> in the Ipopt documentation
@@ -1014,22 +1014,22 @@ the model for the data does not require integration over an interval.
 The average for data table age intervals with
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_upper</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_size</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_upper</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_size</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 is approximated by the value at age
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>age_upper</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;/&nbsp;2.0<br>
+&nbsp;&nbsp;&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>age_upper</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;/&nbsp;2.0<br>
 </span></font></code>
 The average for data table time intervals with
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_upper</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_size</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_upper</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;-&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&lt;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_size</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 is approximated by the value at time
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>time_upper</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;/&nbsp;2.0<br>
+&nbsp;&nbsp;&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>time_upper</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_lower</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;/&nbsp;2.0<br>
 </span></font></code>
 The default value for 
 <code><i><font color="black"><span style='white-space: nowrap'>age_size</span></font></i></code>

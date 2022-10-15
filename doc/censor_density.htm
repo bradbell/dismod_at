@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Censored Gaussian and Laplace Densities</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Censored Gaussian and Laplace Densities">
-<meta name="keywords" id="keywords" content=" the censored gaussian laplace densities references discussion simulation test density g(ymudelta) error function g(ymudeltac) difference between means l(ymudelta) indefinite integral l(ymudeltac) ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>math_abstract</option>
-<option>censor_density</option>
-</select>
-</td>
-<td>
+<td><a href="math_ode.htm" target="_top">Prev</a>
+</td><td><a href="prevalence_ode.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="math_ode.htm" target="_top">Prev</a>
-</td><td><a href="prevalence_ode.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>math_abstract</option>
+<option>censor_density</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -59,8 +59,8 @@ A:active { color : purple }
 </td>
 <td>censor_density</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
@@ -113,9 +113,9 @@ The censored random variable is defined by
 <small>@[@
 
 \underline{y} = \left\{ \begin{array}{ll}
-	c & \R{if} \; y \leq c
-	\\
-	y & \R{otherwise}
+   c & \R{if} \; y \leq c
+   \\
+   y & \R{otherwise}
 \end{array} \right.
 
 @]@</small>
@@ -211,7 +211,7 @@ Hence
 <small>@[@
 
 \frac{
-	1 - \R{erf}\left( \sqrt{2}^{-1} ( \mu - c ) / \delta \right)
+   1 - \R{erf}\left( \sqrt{2}^{-1} ( \mu - c ) / \delta \right)
 }{2}
 =
 \sqrt{ \frac{1}{2 \pi \delta^2} }
@@ -352,10 +352,10 @@ L ( \underline{y} , \mu , \delta , c )
 \left\{ \begin{array}{ll}
 (1 / 2 )
 \exp \left( - ( \mu - c ) \sqrt{2} / \delta \right)
-	& \R{if} \; \underline{y} = c
-	\\
-	L( \underline{y} , \mu , \delta )
-	& \R{otherwise}
+   & \R{if} \; \underline{y} = c
+   \\
+   L( \underline{y} , \mu , \delta )
+   & \R{otherwise}
 \end{array} \right.
 
 @]@</small>

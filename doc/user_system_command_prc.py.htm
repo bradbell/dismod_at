@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Example Using system_command_prc</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Example Using system_command_prc">
-<meta name="keywords" id="keywords" content=" example using system_command_prc discussion source code ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>user_example</option>
-<option>user_system_command_prc.py</option>
-</select>
-</td>
-<td>
+<td><a href="user_sum_residual.py.htm" target="_top">Prev</a>
+</td><td><a href="user_trace_init.py.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="user_sum_residual.py.htm" target="_top">Prev</a>
-</td><td><a href="user_trace_init.py.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>user_example</option>
+<option>user_system_command_prc.py</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -59,8 +59,8 @@ A:active { color : purple }
 </td>
 <td>user_system_command_prc.py</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Example Using system_command_prc</big></big></b></center>
 
 <br><a href="user_system_command_prc.py.htm#Discussion" target="_top">Discussion</a>
@@ -83,20 +83,20 @@ This example demonstrates some of the different argument cases for the
 <i><font color="#9A1900">#</font></i>
 test_program <font color="#990000">=</font> <font color="#FF0000">'example/user/system_command_prc.py'</font>
 <b><font color="#0000FF">if</font></b> sys<font color="#990000">.</font>argv<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font> <font color="#990000">!=</font> test_program  <b><font color="#0000FF">or</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>sys<font color="#990000">.</font>argv<font color="#990000">)</font> <font color="#990000">!=</font> <font color="#993399">1</font> <font color="#990000">:</font>
-     usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
-     usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
-     usage <font color="#990000">+=</font> <font color="#FF0000">'and working directory is the dismod_at distribution directory\n'</font>
-     sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font>usage<font color="#990000">)</font>
+   usage  <font color="#990000">=</font> <font color="#FF0000">'python3 '</font> <font color="#990000">+</font> test_program <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
+   usage <font color="#990000">+=</font> <font color="#FF0000">'where python3 is the python 3 program on your system\n'</font>
+   usage <font color="#990000">+=</font> <font color="#FF0000">'and working directory is the dismod_at distribution directory\n'</font>
+   sys<font color="#990000">.</font><b><font color="#000000">exit</font></b><font color="#990000">(</font>usage<font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># import dismod_at</font></i>
 local_dir <font color="#990000">=</font> os<font color="#990000">.</font><b><font color="#000000">getcwd</font></b><font color="#990000">()</font> <font color="#990000">+</font> <font color="#FF0000">'/python'</font>
 <b><font color="#0000FF">if</font></b><font color="#990000">(</font> os<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">isdir</font></b><font color="#990000">(</font> local_dir <font color="#990000">+</font> <font color="#FF0000">'/dismod_at'</font> <font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
-     sys<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> local_dir<font color="#990000">)</font>
+   sys<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">insert</font></b><font color="#990000">(</font><font color="#993399">0</font><font color="#990000">,</font> local_dir<font color="#990000">)</font>
 <b><font color="#000080">import</font></b> dismod_at
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># change into the build/example/user directory</font></i>
 <b><font color="#0000FF">if</font></b> <b><font color="#0000FF">not</font></b> os<font color="#990000">.</font>path<font color="#990000">.</font><b><font color="#000000">exists</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font> <font color="#990000">:</font>
-    os<font color="#990000">.</font><b><font color="#000000">makedirs</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
+   os<font color="#990000">.</font><b><font color="#000000">makedirs</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
 os<font color="#990000">.</font><b><font color="#000000">chdir</font></b><font color="#990000">(</font><font color="#FF0000">'build/example/user'</font><font color="#990000">)</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># command</font></i>
@@ -104,37 +104,37 @@ command <font color="#990000">=</font> <font color="#990000">[</font> <font colo
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># result is stdout</font></i>
 result  <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
-     command                <font color="#990000">,</font>
-     print_command <font color="#990000">=</font> False  <font color="#990000">,</font>
-     return_stdout <font color="#990000">=</font> True   <font color="#990000">,</font>
-     return_stderr <font color="#990000">=</font> False  <font color="#990000">,</font>
-     file_stdout   <font color="#990000">=</font> None   <font color="#990000">,</font>
-     file_stderr   <font color="#990000">=</font> None   <font color="#990000">,</font>
-     write_command <font color="#990000">=</font> False  <font color="#990000">,</font>
+   command                <font color="#990000">,</font>
+   print_command <font color="#990000">=</font> False  <font color="#990000">,</font>
+   return_stdout <font color="#990000">=</font> True   <font color="#990000">,</font>
+   return_stderr <font color="#990000">=</font> False  <font color="#990000">,</font>
+   file_stdout   <font color="#990000">=</font> None   <font color="#990000">,</font>
+   file_stderr   <font color="#990000">=</font> None   <font color="#990000">,</font>
+   write_command <font color="#990000">=</font> False  <font color="#990000">,</font>
 <font color="#990000">)</font>
 <b><font color="#0000FF">assert</font></b> result  <font color="#990000">==</font> command<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># result is None</font></i>
 result  <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
-     command                <font color="#990000">,</font>
-     print_command <font color="#990000">=</font> False  <font color="#990000">,</font>
-     return_stdout <font color="#990000">=</font> False  <font color="#990000">,</font>
-     return_stderr <font color="#990000">=</font> False  <font color="#990000">,</font>
-     file_stdout   <font color="#990000">=</font> None   <font color="#990000">,</font>
-     file_stderr   <font color="#990000">=</font> None   <font color="#990000">,</font>
-     write_command <font color="#990000">=</font> False  <font color="#990000">,</font>
+   command                <font color="#990000">,</font>
+   print_command <font color="#990000">=</font> False  <font color="#990000">,</font>
+   return_stdout <font color="#990000">=</font> False  <font color="#990000">,</font>
+   return_stderr <font color="#990000">=</font> False  <font color="#990000">,</font>
+   file_stdout   <font color="#990000">=</font> None   <font color="#990000">,</font>
+   file_stderr   <font color="#990000">=</font> None   <font color="#990000">,</font>
+   write_command <font color="#990000">=</font> False  <font color="#990000">,</font>
 <font color="#990000">)</font>
 <b><font color="#0000FF">assert</font></b> result <b><font color="#0000FF">is</font></b> None
 <i><font color="#9A1900">#</font></i>
 <i><font color="#9A1900"># result is stdout and stderr</font></i>
 result  <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
-     command                <font color="#990000">,</font>
-     print_command <font color="#990000">=</font> False  <font color="#990000">,</font>
-     return_stdout <font color="#990000">=</font> True   <font color="#990000">,</font>
-     return_stderr <font color="#990000">=</font> True   <font color="#990000">,</font>
-     file_stdout   <font color="#990000">=</font> None   <font color="#990000">,</font>
-     file_stderr   <font color="#990000">=</font> None   <font color="#990000">,</font>
-     write_command <font color="#990000">=</font> False  <font color="#990000">,</font>
+   command                <font color="#990000">,</font>
+   print_command <font color="#990000">=</font> False  <font color="#990000">,</font>
+   return_stdout <font color="#990000">=</font> True   <font color="#990000">,</font>
+   return_stderr <font color="#990000">=</font> True   <font color="#990000">,</font>
+   file_stdout   <font color="#990000">=</font> None   <font color="#990000">,</font>
+   file_stderr   <font color="#990000">=</font> None   <font color="#990000">,</font>
+   write_command <font color="#990000">=</font> False  <font color="#990000">,</font>
 <font color="#990000">)</font>
 <b><font color="#0000FF">assert</font></b> result<font color="#990000">.</font>stdout  <font color="#990000">==</font> command<font color="#990000">[</font><font color="#993399">1</font><font color="#990000">]</font> <font color="#990000">+</font> <font color="#FF0000">'\n'</font>
 <b><font color="#0000FF">assert</font></b> result<font color="#990000">.</font>stderr  <font color="#990000">==</font> <font color="#FF0000">''</font>
@@ -143,13 +143,13 @@ result  <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b
 file_name   <font color="#990000">=</font> <font color="#FF0000">'system_command_prc.stdout'</font>
 file_stdout <font color="#990000">=</font> <b><font color="#000000">open</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> <font color="#FF0000">'w'</font><font color="#990000">)</font>
 dismod_at<font color="#990000">.</font><b><font color="#000000">system_command_prc</font></b><font color="#990000">(</font>
-     command                       <font color="#990000">,</font>
-     print_command <font color="#990000">=</font> False         <font color="#990000">,</font>
-     return_stdout <font color="#990000">=</font> False         <font color="#990000">,</font>
-     return_stderr <font color="#990000">=</font> False         <font color="#990000">,</font>
-     file_stdout   <font color="#990000">=</font> file_stdout   <font color="#990000">,</font>
-     file_stderr   <font color="#990000">=</font> None          <font color="#990000">,</font>
-     write_command <font color="#990000">=</font> False         <font color="#990000">,</font>
+   command                       <font color="#990000">,</font>
+   print_command <font color="#990000">=</font> False         <font color="#990000">,</font>
+   return_stdout <font color="#990000">=</font> False         <font color="#990000">,</font>
+   return_stderr <font color="#990000">=</font> False         <font color="#990000">,</font>
+   file_stdout   <font color="#990000">=</font> file_stdout   <font color="#990000">,</font>
+   file_stderr   <font color="#990000">=</font> None          <font color="#990000">,</font>
+   write_command <font color="#990000">=</font> False         <font color="#990000">,</font>
 <font color="#990000">)</font>
 file_stdout<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
 file_stdout <font color="#990000">=</font> <b><font color="#000000">open</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> <font color="#FF0000">'r'</font><font color="#990000">)</font>

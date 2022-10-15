@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Install and Run dismod_at in a Docker Image</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Install and Run dismod_at in a Docker Image">
-<meta name="keywords" id="keywords" content=" install run dismod_at docker image syntax oci driver logging output purpose requirements building images dismod_at_version at_cascade_version dismod_at.base dismod_at.mixed dismod_at.image at_cascade.image removing containers dockerfile errors new container build_type database command other arguments debugging determine id start stop ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>install</option>
-<option>dock_dismod_at.sh</option>
-</select>
-</td>
-<td>
+<td><a href="install.htm" target="_top">Prev</a>
+</td><td><a href="install_unix.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="install.htm" target="_top">Prev</a>
-</td><td><a href="install_unix.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>install</option>
+<option>dock_dismod_at.sh</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -59,8 +59,8 @@ A:active { color : purple }
 </td>
 <td>dock_dismod_at.sh</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Install and Run dismod_at in a Docker Image</big></big></b></center>
 
 <br><a href="dock_dismod_at.sh.htm#Syntax" target="_top">Syntax</a>
@@ -126,7 +126,7 @@ The
  program, determined by this setting, can be either
 docker or podman:
 <pre style='display:inline'><tt>
-     <font color="#009900">driver</font><font color="#990000">=</font><font color="#FF0000">'podman'</font>
+   <font color="#009900">driver</font><font color="#990000">=</font><font color="#FF0000">'podman'</font>
 </tt></pre>
 Below we referee to the value of this shell variable as 
 <code><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i></code>
@@ -141,7 +141,7 @@ standard output and standard error to a file.
 For example,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;./dock_dismod_at.sh&nbsp;image&nbsp;base&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>log_file</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;./dock_dismod_at.sh&nbsp;image&nbsp;base&nbsp;&gt;&amp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>log_file</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 will redirect standard output and standard error to 
 <code><i><font color="black"><span style='white-space: nowrap'>log_file</span></font></i></code>
@@ -150,7 +150,7 @@ If you do this, you will not see the progress during execution.
 If also want to monitor the progress, in another window use
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tail&nbsp;-f&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>log_file</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;tail&nbsp;-f&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>log_file</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 This <code><font color="blue">tail</font></code> command will not terminate until you enter
 control-C in the window where it is running.
@@ -182,7 +182,7 @@ installed on your system.
 You can test this on your system by trying to execute the following command:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;run&nbsp;busybox&nbsp;echo&nbsp;'Hello&nbsp;World'<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;run&nbsp;busybox&nbsp;echo&nbsp;'Hello&nbsp;World'<br>
 </span></font></code>
 <br>
 <b><big><a name="Building Images" id="Building Images">Building Images</a></big></b>
@@ -198,16 +198,16 @@ before you can execute the image command successfully.
 <br>
 This script will build the following version of dismod_at image:
 <pre style='display:inline'><tt>
-     <font color="#009900">dismod_at_version</font><font color="#990000">=</font><font color="#FF0000">'20220826'</font>
-     <font color="#009900">dismod_at_hash</font><font color="#990000">=</font><font color="#FF0000">'bcf01e4dbdf528c2672ca05758493b0fc66ebcfd'</font>
+   <font color="#009900">dismod_at_version</font><font color="#990000">=</font><font color="#FF0000">'20220826'</font>
+   <font color="#009900">dismod_at_hash</font><font color="#990000">=</font><font color="#FF0000">'bcf01e4dbdf528c2672ca05758493b0fc66ebcfd'</font>
 </tt></pre>
 <br>
 <big><a name="Building Images.at_cascade_version" id="Building Images.at_cascade_version">at_cascade_version</a></big>
 <br>
 This script can build the following version of the optional at_cascade image:
 <pre style='display:inline'><tt>
-    <font color="#009900">at_cascade_version</font><font color="#990000">=</font><font color="#FF0000">'2022.8.27'</font>
-    <font color="#009900">at_cascade_hash</font><font color="#990000">=</font><font color="#FF0000">'9ebbde05d9ad5742db9d40ae82aca6152f2b7c46'</font>
+   <font color="#009900">at_cascade_version</font><font color="#990000">=</font><font color="#FF0000">'2022.10.14'</font>
+   <font color="#009900">at_cascade_hash</font><font color="#990000">=</font><font color="#FF0000">'4fdc5002864a1a86bcbe0e819af0191c987d95d4'</font>
 </tt></pre>
 <br>
 <big><a name="Building Images.dismod_at.base" id="Building Images.dismod_at.base">dismod_at.base</a></big>
@@ -261,13 +261,13 @@ you will be prompted with the corresponding
 The command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;rm&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;rm&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 will remove the container.
 If the container is still running, you will need to use
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;rm&nbsp;--force&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;rm&nbsp;--force&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <big><a name="Building Images.Removing Images" id="Building Images.Removing Images">Removing Images</a></big>
@@ -275,7 +275,7 @@ If the container is still running, you will need to use
 You can remove an old image using the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;rmi&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;rmi&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 For example, 
 <code><i><font color="black"><span style='white-space: nowrap'>name</span></font></i></code>
@@ -286,8 +286,8 @@ For example,
 You can keep the old image, under a different name, using the commands
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;tag&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>different_name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;rmi&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;tag&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>different_name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;rmi&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>name</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <big><a name="Building Images.Dockerfile" id="Building Images.Dockerfile">Dockerfile</a></big>
@@ -306,7 +306,7 @@ If such a file already exists, it will need to be moved or deleted.
 If you get the error message
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Unable&nbsp;to&nbsp;fetch&nbsp;some&nbsp;archives,&nbsp;maybe&nbsp;run&nbsp;apt-get&nbsp;update&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;Unable&nbsp;to&nbsp;fetch&nbsp;some&nbsp;archives,&nbsp;maybe&nbsp;run&nbsp;apt-get&nbsp;update&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 There may be an old OCI image result for <code><font color="blue">apt-get update</font></code>
 that is out of date.
@@ -354,13 +354,13 @@ you will be prompted with the corresponding
 The command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;rm&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;rm&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 will remove the container.
 If the container is still running, you will need to use
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;rm&nbsp;--force&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;rm&nbsp;--force&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 <br>
 <big><a name="Run New Container.build_type" id="Run New Container.build_type">build_type</a></big>
@@ -428,14 +428,14 @@ The following instructions are useful for this:
 <br>
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;ps&nbsp;-a<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;ps&nbsp;-a<br>
 </span></font></code>
 If 
 <code><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i></code>
  is podman, the following might work better
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;podman&nbsp;ps&nbsp;--all&nbsp;--storage<br>
+&nbsp;podman&nbsp;ps&nbsp;--all&nbsp;--storage<br>
 </span></font></code>
 <br>
 <big><a name="Debugging.Start Container" id="Debugging.Start Container">Start Container</a></big>
@@ -443,7 +443,7 @@ If
 If a container status is <code><font color="blue">Exited</font></code>, you can start it using:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;start&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;start&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id<br>
 </span></font></i></code>
 <br>
 <big><a name="Debugging.Run Container" id="Debugging.Run Container">Run Container</a></big>
@@ -451,7 +451,7 @@ If a container status is <code><font color="blue">Exited</font></code>, you can 
 If a container status is <code><font color="blue">Up</font></code>, you can run it using:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;exec&nbsp;-it&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;bash<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;exec&nbsp;-it&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;bash<br>
 </span></font></code>
 You will be in the container until you <code><font color="blue">exit</font></code>
 the <code><font color="blue">bash</font></code> shell that is run by the command above.
@@ -463,7 +463,7 @@ the <code><font color="blue">bash</font></code> shell that is run by the command
 If a container status is <code><font color="blue">Up</font></code>, you can stop it using:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;stop&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>driver</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;stop&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>container_id<br>
 </span></font></i></code>
 
 <hr>Input File: bin/dock_dismod_at.sh

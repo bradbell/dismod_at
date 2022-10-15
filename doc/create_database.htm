@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create a Dismod_at Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create a Dismod_at Database">
-<meta name="keywords" id="keywords" content=" create dismod_at database syntax purpose primary key name column file_name age_list time_list integrand_table node_table subgroup_table backward compatibility weight_table covariate_table avgint_table subgroup weight covariates avgint_extra_columns data_table meas_std eta nu data_extra_columns prior_table smooth_table age_id time_id mulstd_value_prior_name mulstd_dage_prior_name mulstd_dtime_prior_name fun const_value nslist_table rate_table mulcov_table effected group subsmooth option_table example ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>python</option>
-<option>create_database</option>
-</select>
-</td>
-<td>
+<td><a href="create_connection.htm" target="_top">Prev</a>
+</td><td><a href="create_database.py.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="create_connection.htm" target="_top">Prev</a>
-</td><td><a href="create_database.py.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>create_database</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -61,8 +61,8 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_create_database_htm.js'></script>
 </td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Create a Dismod_at Database</big></big></b></center>
 
 <br><a href="create_database.htm#Syntax" target="_top">Syntax</a>
@@ -112,22 +112,22 @@ A:active { color : purple }
 <br>
 
 <code><font color="blue"><span style='white-space: nowrap'>create_database(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>file_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_list</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_list</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>node_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>subgroup_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>weight_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>covariate_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>avgint_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prior_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nslist_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mulcov_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>file_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>age_list</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time_list</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>node_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>subgroup_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>weight_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>covariate_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>avgint_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>data_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>prior_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nslist_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>mulcov_table</span></font></i><font color="blue"><span style='white-space: nowrap'>,<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_table</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )</span></font></code>
 
 
@@ -282,7 +282,7 @@ add the following table to the <code><font color="blue">create_database</font></
 ):
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>subgroup_table</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;[&nbsp;{&nbsp;'subgroup':'world',&nbsp;'group':'world'&nbsp;}&nbsp;]<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>subgroup_table</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;[&nbsp;{&nbsp;'subgroup':'world',&nbsp;'group':'world'&nbsp;}&nbsp;]<br>
 </span></font></code>
 No other changes to the <code><font color="blue">create_database</font></code> call should be necessary
 (for backward compatibility).
@@ -482,7 +482,7 @@ Note that
 ,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c_j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>covariate_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]['name']<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>c_j</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>covariate_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]['name']<br>
 </span></font></code>
 We refer to the columns above as the required columns for
 
@@ -712,7 +712,7 @@ to <code><font color="blue">null</font></code> in the database.
 This is a function with the following syntax:
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>da</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dt</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>v</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>da</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>dt</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>fun</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>a</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>t</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 The <code><font color="blue">str</font></code> results 
 <code><i><font color="black"><span style='white-space: nowrap'>v</span></font></i></code>
@@ -776,7 +776,7 @@ For each <a href="nslist_table.htm#nslist_name" target="_top"><span style='white
 ,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nslist_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>nslist_name</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;[&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>node_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_name</span></font></i><font color="blue"><span style='white-space: nowrap'>),&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>nslist_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>nslist_name</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;=&nbsp;[&nbsp;(</span></font><i><font color="black"><span style='white-space: nowrap'>node_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>smooth_name</span></font></i><font color="blue"><span style='white-space: nowrap'>),&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>...</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;]<br>
 </span></font></code>
 Note that each pair above is a python <code><font color="blue">tuple</font></code>:
 <table><tr><td align='left'  valign='top'>
@@ -918,8 +918,8 @@ that define the values
 The <code><i>i</i></code>-th row of the table will have
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]['name']<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]['value']<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_name</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]['name']<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>option_table</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>]['value']<br>
 </span></font></code>
 <br>
 <b><big><a name="Contents" id="Contents">Contents</a></big></b>

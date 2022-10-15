@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>dismod_at Bilinear Interpolation</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="dismod_at Bilinear Interpolation">
-<meta name="keywords" id="keywords" content=" dismod_at bilinear interpolation age grid time function interpolant below minimum above maximum outside both limits plotting ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>model</option>
-<option>bilinear</option>
-</select>
-</td>
-<td>
+<td><a href="statistic.htm" target="_top">Prev</a>
+</td><td><a href="posterior.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="statistic.htm" target="_top">Prev</a>
-</td><td><a href="posterior.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>bilinear</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -59,8 +59,8 @@ A:active { color : purple }
 </td>
 <td>bilinear</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
@@ -107,10 +107,10 @@ In addition,
 we are given a grid of function values to be interpolated
 <small>@[@
 
-	\left\{
-			\left. v_{i,j} = f( a_i , t_j ) \; \right| \;
-			i = 0, \ldots , M-1 , j = 0 , \ldots , N-1
-	\right\} \; .
+   \left\{
+         \left. v_{i,j} = f( a_i , t_j ) \; \right| \;
+         i = 0, \ldots , M-1 , j = 0 , \ldots , N-1
+   \right\} \; .
 
 @]@</small>
 
@@ -149,16 +149,16 @@ In this case the function is defined by
 f( \alpha , s )
 =
 \frac{a_{i+1} - \alpha}{a_{i+1} - a_i}
-	\frac{t_{j+1} - s}{t_{j+1} - t_j} v_{i,j}
+   \frac{t_{j+1} - s}{t_{j+1} - t_j} v_{i,j}
 +
 \frac{\alpha - a_i}{a_{i+1} - a_i}
-	\frac{t_{j+1} - s}{t_{j+1} - t_j} v_{i+1,j}
+   \frac{t_{j+1} - s}{t_{j+1} - t_j} v_{i+1,j}
 +
 \frac{a_{i+1} - s}{a_{i+1} - a_i}
-	\frac{s - t_j}{t_{j+1} - t_j} v_{i+1,j}
+   \frac{s - t_j}{t_{j+1} - t_j} v_{i+1,j}
 +
 \frac{\alpha - a_i}{a_{i+1} - a_i}
-	\frac{s - t_j}{t_{j+1} - t_j} v_{i+1,j+1}
+   \frac{s - t_j}{t_{j+1} - t_j} v_{i+1,j+1}
 
 @]@</small>
 

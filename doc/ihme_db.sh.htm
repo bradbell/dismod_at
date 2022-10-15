@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Make a Local Copy an IHME Dismod_at Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Make a Local Copy an IHME Dismod_at Database">
-<meta name="keywords" id="keywords" content=" make local copy ihme dismod_at database syntax purpose download python3 absolute_dir --user relative_dir db2csv ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,18 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>python</option>
-<option>db2csv_command</option>
-<option>ihme_db.sh</option>
-</select>
-</td>
-<td>
+<td><a href="db2csv_command.py.htm" target="_top">Prev</a>
+</td><td><a href="get_name_type.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -50,9 +43,16 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="db2csv_command.py.htm" target="_top">Prev</a>
-</td><td><a href="get_name_type.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>db2csv_command</option>
+<option>ihme_db.sh</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -63,8 +63,8 @@ A:active { color : purple }
 </td>
 <td>ihme_db.sh</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Make a Local Copy an IHME Dismod_at Database</big></big></b></center>
 
 <br><a href="ihme_db.sh.htm#Syntax" target="_top">Syntax</a>
@@ -115,7 +115,7 @@ The setting for this is in the
 If that setting is not correct, change it, and then execute the command
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bin/run_cmake.sh<br>
+&nbsp;bin/run_cmake.sh<br>
 </span></font></code>
 <br>
 <b><big><a name="absolute_dir" id="absolute_dir">absolute_dir</a></big></b>

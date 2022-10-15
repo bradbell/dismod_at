@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Metropolis MCMC Algorithm</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Metropolis MCMC Algorithm">
-<meta name="keywords" id="keywords" content=" metropolis mcmc algorithm syntax log_f m x0 s vector case float c example ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>python</option>
-<option>metropolis</option>
-</select>
-</td>
-<td>
+<td><a href="get_table_dict.py.htm" target="_top">Prev</a>
+</td><td><a href="user_metropolis.py.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="get_table_dict.py.htm" target="_top">Prev</a>
-</td><td><a href="user_metropolis.py.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>metropolis</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -61,8 +61,8 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_metropolis_htm.js'></script>
 </td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Metropolis MCMC Algorithm</big></big></b></center>
 
 <br><a href="metropolis.htm#Syntax" target="_top">Syntax</a>
@@ -90,7 +90,7 @@ Given a numpy <code><font color="blue">float</font></code> vector of length
 , the syntax
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>log_f</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>d</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>log_f</span></font></i><font color="blue"><span style='white-space: nowrap'>(</span></font><i><font color="black"><span style='white-space: nowrap'>x</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 sets the <code><font color="blue">float</font></code> 
 <code><i><font color="black"><span style='white-space: nowrap'>d</span></font></i></code>
@@ -154,7 +154,7 @@ y^i
 is given by
 <small>@[@
 
-	y_j^i = x_j^{i-1} + w_j^{i-1} s_j
+ y_j^i = x_j^{i-1} + w_j^{i-1} s_j
 
 @]@</small>
 where <small>@(@
@@ -170,7 +170,7 @@ If
  is a <code><font color="blue">float</font></code>,
 <small>@[@
 
-	y_j^i = x_j^{i-1} + w_j^{i-1} s
+ y_j^i = x_j^{i-1} + w_j^{i-1} s
 
 @]@</small>
 
@@ -210,9 +210,9 @@ m \rightarrow \infty
 @)@</small>,
 <small>@[@
 
-	\frac{1}{m} \sum_{i=0}^{m-1} g( x^i )
-	\rightarrow
-	\frac{ \int g( x ) f ( x ) \B{d} x  }{ \int f( x ) \B{d} x }
+ \frac{1}{m} \sum_{i=0}^{m-1} g( x^i )
+ \rightarrow
+ \frac{ \int g( x ) f ( x ) \B{d} x  }{ \int f( x ) \B{d} x }
 
 @]@</small>
 

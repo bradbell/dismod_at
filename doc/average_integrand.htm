@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Compute The Average Integrand</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Compute The Average Integrand">
-<meta name="keywords" id="keywords" content=" compute the average integrand syntax purpose rate integrand_name grid age time abs_tol avg_integrand example ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>python</option>
-<option>average_integrand</option>
-</select>
-</td>
-<td>
+<td><a href="python.htm" target="_top">Prev</a>
+</td><td><a href="user_average_integrand.py.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="python.htm" target="_top">Prev</a>
-</td><td><a href="user_average_integrand.py.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>average_integrand</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -61,8 +61,8 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_average_integrand_htm.js'></script>
 </td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Compute The Average Integrand</big></big></b></center>
 
 <br><a href="average_integrand.htm#Syntax" target="_top">Syntax</a>
@@ -81,7 +81,7 @@ A:active { color : purple }
 <br>
 
 <code><i><font color="black"><span style='white-space: nowrap'>avg_integrand</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;dismod_at.average_integrand(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>grid</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>abs_tol</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>integrand_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>grid</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>abs_tol</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )</span></font></code>
 
 
@@ -106,7 +106,7 @@ If a
  is a key in the dictionary,
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>key</span></font></i><font color="blue"><span style='white-space: nowrap'>](</span></font><i><font color="black"><span style='white-space: nowrap'>age</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>key</span></font></i><font color="blue"><span style='white-space: nowrap'>](</span></font><i><font color="black"><span style='white-space: nowrap'>age</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 returns a float equal to the value of the specified rate
 at the specified age and time.
@@ -115,7 +115,7 @@ Note that
  will always be zero when evaluating
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate</span></font></i><font color="blue"><span style='white-space: nowrap'>['pini'](</span></font><i><font color="black"><span style='white-space: nowrap'>age</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>rate</span></font></i><font color="blue"><span style='white-space: nowrap'>['pini'](</span></font><i><font color="black"><span style='white-space: nowrap'>age</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>time</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 If a rate name is not in the dictionary, the corresponding rate is zero.
 

@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Data Density Command: Change the Density for an Integrand</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Data Density Command: Change the Density for an Integrand">
-<meta name="keywords" id="keywords" content=" data density command: change the integrand syntax purpose database integrand_name density_name eta_factor nu data_subset_table density_id eta example ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>command</option>
-<option>data_density_command</option>
-</select>
-</td>
-<td>
+<td><a href="bnd_mulcov_command.htm" target="_top">Prev</a>
+</td><td><a href="depend_command.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="bnd_mulcov_command.htm" target="_top">Prev</a>
-</td><td><a href="depend_command.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>command</option>
+<option>data_density_command</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -59,8 +59,8 @@ A:active { color : purple }
 </td>
 <td>data_density_command</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
@@ -143,7 +143,7 @@ the value of
  used with this density is
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta_factor</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;median(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
+&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta_factor</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;*&nbsp;median(&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;)<br>
 </span></font></code>
 Here 
 <code><font color="blue"><span style='white-space: nowrap'>median(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>)</span></font></code>

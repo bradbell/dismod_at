@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Conversion of a Csv File to a Dismod_at Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Conversion of a Csv File to a Dismod_at Database">
-<meta name="keywords" id="keywords" content=" conversion csv file to dismod_at database deprecated syntax program python function see also example mtall mtother constraint age-time pairs rectangular grid hold_out rate predictions configure_csv non_zero_rates measure_csv integrand sincidence remission mtexcess mtwith susceptible withc prevalence tincidence mtspecific mtstandard relrisk age_lower age_upper time_lower time_upper meas_value meas_std ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>python</option>
-<option>csv2db_command</option>
-</select>
-</td>
-<td>
+<td><a href="create_table.py.htm" target="_top">Prev</a>
+</td><td><a href="db2csv_command.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="create_table.py.htm" target="_top">Prev</a>
-</td><td><a href="db2csv_command.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>csv2db_command</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -59,8 +59,8 @@ A:active { color : purple }
 </td>
 <td>csv2db_command</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Conversion of a Csv File to a Dismod_at Database</big></big></b></center>
 
 <br><a href="csv2db_command.htm#Deprecated" target="_top">Deprecated</a>
@@ -486,7 +486,7 @@ This column of
 the value of the average integrand plus measurement noise
 <small>@[@
 
-	e + \frac{1}{c-b} \frac{1}{s-r} \int_b^c \int_r^s I(a , t) \; da \; dt
+ e + \frac{1}{c-b} \frac{1}{s-r} \int_b^c \int_r^s I(a , t) \; da \; dt
 
 @]@</small>
 where <small>@(@

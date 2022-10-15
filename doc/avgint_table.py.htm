@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>avgint_table: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="avgint_table: Example and Test">
-<meta name="keywords" id="keywords" content=" avgint_table: example test ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,9 +31,21 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
+<td><a href="avgint_table.htm" target="_top">Prev</a>
+</td><td><a href="covariate_table.htm" target="_top">Next</a>
+</td><td>
+<select onchange='choose_across0(this)'>
+<option>Index-&gt;</option>
+<option>contents</option>
+<option>reference</option>
+<option>index</option>
+<option>search</option>
+<option>external</option>
+</select>
+</td>
 <td>
 <select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
+<option>Up-&gt;</option>
 <option>dismod_at</option>
 <option>database</option>
 <option>input</option>
@@ -42,18 +54,6 @@ A:active { color : purple }
 </select>
 </td>
 <td>
-<select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
-<option>contents</option>
-<option>reference</option>
-<option>index</option>
-<option>search</option>
-<option>external</option>
-</select>
-</td>
-<td><a href="avgint_table.htm" target="_top">Prev</a>
-</td><td><a href="covariate_table.htm" target="_top">Next</a>
-</td><td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -67,66 +67,66 @@ A:active { color : purple }
 </td>
 <td>avgint_table.py</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@ 
 
 
 <center><b><big><big>avgint_table: Example and Test</big></big></b></center>
 
 <br><pre><tt><b><font color="#0000FF">def</font></b> <b><font color="#000000">avgint_table</font></b><font color="#990000">()</font> <font color="#990000">:</font>
-     <b><font color="#000080">import</font></b> dismod_at
-     <b><font color="#000080">import</font></b> copy
-     <b><font color="#000080">import</font></b> collections
-     <i><font color="#9A1900">#</font></i>
-     file_name      <font color="#990000">=</font> <font color="#FF0000">'example.db'</font>
-     new            <font color="#990000">=</font> True
-     connection     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
-     <i><font color="#9A1900">#</font></i>
-     col_name2type <font color="#990000">=</font> collections<font color="#990000">.</font><b><font color="#000000">OrderedDict</font></b><font color="#990000">([</font>
-          <i><font color="#9A1900"># required columns</font></i>
-          <font color="#990000">(</font><font color="#FF0000">'integrand_id'</font><font color="#990000">,</font> <font color="#FF0000">'integer'</font><font color="#990000">),</font>
-          <font color="#990000">(</font><font color="#FF0000">'density_id'</font><font color="#990000">,</font>   <font color="#FF0000">'integer'</font><font color="#990000">),</font>
-          <font color="#990000">(</font><font color="#FF0000">'node_id'</font><font color="#990000">,</font>      <font color="#FF0000">'integer'</font><font color="#990000">),</font>
-          <font color="#990000">(</font><font color="#FF0000">'weight_id'</font><font color="#990000">,</font>    <font color="#FF0000">'integer'</font><font color="#990000">),</font>
-          <font color="#990000">(</font><font color="#FF0000">'age_lower'</font><font color="#990000">,</font>    <font color="#FF0000">'real'</font>   <font color="#990000">),</font>
-          <font color="#990000">(</font><font color="#FF0000">'age_upper'</font><font color="#990000">,</font>    <font color="#FF0000">'real'</font>   <font color="#990000">),</font>
-          <font color="#990000">(</font><font color="#FF0000">'time_lower'</font><font color="#990000">,</font>   <font color="#FF0000">'real'</font>   <font color="#990000">),</font>
-          <font color="#990000">(</font><font color="#FF0000">'time_upper'</font><font color="#990000">,</font>   <font color="#FF0000">'real'</font>   <font color="#990000">),</font>
-          <i><font color="#9A1900"># covariates</font></i>
-          <font color="#990000">(</font><font color="#FF0000">'x_sex'</font><font color="#990000">,</font>        <font color="#FF0000">'real'</font>   <font color="#990000">),</font>
-          <font color="#990000">(</font><font color="#FF0000">'x_income'</font><font color="#990000">,</font>     <font color="#FF0000">'real'</font>   <font color="#990000">),</font>
-     <font color="#990000">]</font> <font color="#990000">)</font>
-     col_name <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">(</font>col_name2type<font color="#990000">.</font><b><font color="#000000">keys</font></b><font color="#990000">())</font>
-     col_type <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">(</font>col_name2type<font color="#990000">.</font><b><font color="#000000">values</font></b><font color="#990000">())</font>
-     row_list <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">[</font>
-          <font color="#993399">1</font><font color="#990000">,</font>                      <i><font color="#9A1900"># integrand_id</font></i>
-          <font color="#993399">0</font><font color="#990000">,</font>                      <i><font color="#9A1900"># density_id</font></i>
-          <font color="#993399">3</font><font color="#990000">,</font>                      <i><font color="#9A1900"># node_id</font></i>
-          <font color="#993399">4</font><font color="#990000">,</font>                      <i><font color="#9A1900"># weight_id</font></i>
-          <font color="#993399">10.0</font><font color="#990000">,</font>                   <i><font color="#9A1900"># age_lower</font></i>
-          <font color="#993399">90.0</font><font color="#990000">,</font>                   <i><font color="#9A1900"># age_upper</font></i>
-          <font color="#993399">2000</font><font color="#990000">.,</font>                  <i><font color="#9A1900"># time_lower</font></i>
-          <font color="#993399">2005</font><font color="#990000">.,</font>                  <i><font color="#9A1900"># time_upper</font></i>
-          <font color="#993399">0.5</font><font color="#990000">,</font>                    <i><font color="#9A1900"># x_sex</font></i>
-          <font color="#993399">1000</font><font color="#990000">.</font>                  <i><font color="#9A1900"># x_income</font></i>
-     <font color="#990000">]</font> <font color="#990000">]</font>
+   <b><font color="#000080">import</font></b> dismod_at
+   <b><font color="#000080">import</font></b> copy
+   <b><font color="#000080">import</font></b> collections
+   <i><font color="#9A1900">#</font></i>
+   file_name      <font color="#990000">=</font> <font color="#FF0000">'example.db'</font>
+   new            <font color="#990000">=</font> True
+   connection     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
+   <i><font color="#9A1900">#</font></i>
+   col_name2type <font color="#990000">=</font> collections<font color="#990000">.</font><b><font color="#000000">OrderedDict</font></b><font color="#990000">([</font>
+      <i><font color="#9A1900"># required columns</font></i>
+      <font color="#990000">(</font><font color="#FF0000">'integrand_id'</font><font color="#990000">,</font> <font color="#FF0000">'integer'</font><font color="#990000">),</font>
+      <font color="#990000">(</font><font color="#FF0000">'density_id'</font><font color="#990000">,</font>   <font color="#FF0000">'integer'</font><font color="#990000">),</font>
+      <font color="#990000">(</font><font color="#FF0000">'node_id'</font><font color="#990000">,</font>      <font color="#FF0000">'integer'</font><font color="#990000">),</font>
+      <font color="#990000">(</font><font color="#FF0000">'weight_id'</font><font color="#990000">,</font>    <font color="#FF0000">'integer'</font><font color="#990000">),</font>
+      <font color="#990000">(</font><font color="#FF0000">'age_lower'</font><font color="#990000">,</font>    <font color="#FF0000">'real'</font>   <font color="#990000">),</font>
+      <font color="#990000">(</font><font color="#FF0000">'age_upper'</font><font color="#990000">,</font>    <font color="#FF0000">'real'</font>   <font color="#990000">),</font>
+      <font color="#990000">(</font><font color="#FF0000">'time_lower'</font><font color="#990000">,</font>   <font color="#FF0000">'real'</font>   <font color="#990000">),</font>
+      <font color="#990000">(</font><font color="#FF0000">'time_upper'</font><font color="#990000">,</font>   <font color="#FF0000">'real'</font>   <font color="#990000">),</font>
+      <i><font color="#9A1900"># covariates</font></i>
+      <font color="#990000">(</font><font color="#FF0000">'x_sex'</font><font color="#990000">,</font>        <font color="#FF0000">'real'</font>   <font color="#990000">),</font>
+      <font color="#990000">(</font><font color="#FF0000">'x_income'</font><font color="#990000">,</font>     <font color="#FF0000">'real'</font>   <font color="#990000">),</font>
+   <font color="#990000">]</font> <font color="#990000">)</font>
+   col_name <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">(</font>col_name2type<font color="#990000">.</font><b><font color="#000000">keys</font></b><font color="#990000">())</font>
+   col_type <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">(</font>col_name2type<font color="#990000">.</font><b><font color="#000000">values</font></b><font color="#990000">())</font>
+   row_list <font color="#990000">=</font> <font color="#990000">[</font> <font color="#990000">[</font>
+      <font color="#993399">1</font><font color="#990000">,</font>                      <i><font color="#9A1900"># integrand_id</font></i>
+      <font color="#993399">0</font><font color="#990000">,</font>                      <i><font color="#9A1900"># density_id</font></i>
+      <font color="#993399">3</font><font color="#990000">,</font>                      <i><font color="#9A1900"># node_id</font></i>
+      <font color="#993399">4</font><font color="#990000">,</font>                      <i><font color="#9A1900"># weight_id</font></i>
+      <font color="#993399">10.0</font><font color="#990000">,</font>                   <i><font color="#9A1900"># age_lower</font></i>
+      <font color="#993399">90.0</font><font color="#990000">,</font>                   <i><font color="#9A1900"># age_upper</font></i>
+      <font color="#993399">2000</font><font color="#990000">.,</font>                  <i><font color="#9A1900"># time_lower</font></i>
+      <font color="#993399">2005</font><font color="#990000">.,</font>                  <i><font color="#9A1900"># time_upper</font></i>
+      <font color="#993399">0.5</font><font color="#990000">,</font>                    <i><font color="#9A1900"># x_sex</font></i>
+      <font color="#993399">1000</font><font color="#990000">.</font>                  <i><font color="#9A1900"># x_income</font></i>
+   <font color="#990000">]</font> <font color="#990000">]</font>
 
-     <i><font color="#9A1900"># create the avgint table</font></i>
-     tbl_name <font color="#990000">=</font> <font color="#FF0000">'avgint'</font>
-     dismod_at<font color="#990000">.</font><b><font color="#000000">create_table</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> col_name<font color="#990000">,</font> col_type<font color="#990000">,</font> row_list<font color="#990000">)</font>
-     <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
-     <i><font color="#9A1900"># include primary key in test</font></i>
-     check_name <font color="#990000">=</font> <font color="#990000">[</font> tbl_name <font color="#990000">+</font> <font color="#FF0000">'_id'</font> <font color="#990000">]</font> <font color="#990000">+</font> col_name
-     check_list <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
-     <b><font color="#0000FF">for</font></b> i <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>row_list<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
-          check_list<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> <font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> row_list<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font>
-     <i><font color="#9A1900">#</font></i>
-     row_list <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_row_list</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> check_name<font color="#990000">)</font>
-     <b><font color="#0000FF">assert</font></b> row_list <font color="#990000">==</font> check_list
-     <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
-     connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
-     <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'avgint_table: OK'</font><font color="#990000">)</font></tt></pre>
+   <i><font color="#9A1900"># create the avgint table</font></i>
+   tbl_name <font color="#990000">=</font> <font color="#FF0000">'avgint'</font>
+   dismod_at<font color="#990000">.</font><b><font color="#000000">create_table</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> col_name<font color="#990000">,</font> col_type<font color="#990000">,</font> row_list<font color="#990000">)</font>
+   <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
+   <i><font color="#9A1900"># include primary key in test</font></i>
+   check_name <font color="#990000">=</font> <font color="#990000">[</font> tbl_name <font color="#990000">+</font> <font color="#FF0000">'_id'</font> <font color="#990000">]</font> <font color="#990000">+</font> col_name
+   check_list <font color="#990000">=</font> <b><font color="#000000">list</font></b><font color="#990000">()</font>
+   <b><font color="#0000FF">for</font></b> i <b><font color="#0000FF">in</font></b> <b><font color="#000000">range</font></b><font color="#990000">(</font> <b><font color="#000000">len</font></b><font color="#990000">(</font>row_list<font color="#990000">)</font> <font color="#990000">)</font> <font color="#990000">:</font>
+      check_list<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font> <font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">+</font> row_list<font color="#990000">[</font>i<font color="#990000">]</font> <font color="#990000">)</font>
+   <i><font color="#9A1900">#</font></i>
+   row_list <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_row_list</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> check_name<font color="#990000">)</font>
+   <b><font color="#0000FF">assert</font></b> row_list <font color="#990000">==</font> check_list
+   <i><font color="#9A1900"># ----------------------------------------------------------------------</font></i>
+   connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
+   <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'avgint_table: OK'</font><font color="#990000">)</font></tt></pre>
 
 <hr>Input File: example/table/avgint_table.py
 

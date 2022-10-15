@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>replace_table: Example and Test</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="replace_table: Example and Test">
-<meta name="keywords" id="keywords" content=" replace_table: example test ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,18 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>python</option>
-<option>replace_table</option>
-<option>replace_table.py</option>
-</select>
-</td>
-<td>
+<td><a href="replace_table.htm" target="_top">Prev</a>
+</td><td><a href="sql_command.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -50,9 +43,16 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="replace_table.htm" target="_top">Prev</a>
-</td><td><a href="sql_command.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>replace_table</option>
+<option>replace_table.py</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -63,51 +63,51 @@ A:active { color : purple }
 </td>
 <td>replace_table.py</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@ 
 
 
 <center><b><big><big>replace_table: Example and Test</big></big></b></center>
 
 <br><pre><tt><b><font color="#0000FF">def</font></b> <b><font color="#000000">replace_table</font></b><font color="#990000">()</font> <font color="#990000">:</font>
-     <b><font color="#000080">import</font></b> dismod_at
-     <i><font color="#9A1900">#</font></i>
-     file_name      <font color="#990000">=</font> <font color="#FF0000">'example.db'</font>
-     new            <font color="#990000">=</font> True
-     connection     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
-     cursor         <font color="#990000">=</font> connection<font color="#990000">.</font><b><font color="#000000">cursor</font></b><font color="#990000">()</font>
-     <i><font color="#9A1900">#</font></i>
-     <i><font color="#9A1900"># create my table</font></i>
-     col_name <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'int_name'</font><font color="#990000">,</font> <font color="#FF0000">'real_name'</font><font color="#990000">,</font> <font color="#FF0000">'text_name'</font>  <font color="#990000">]</font>
-     col_type <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'integer'</font><font color="#990000">,</font>  <font color="#FF0000">'real'</font><font color="#990000">,</font>       <font color="#FF0000">'text'</font>      <font color="#990000">]</font>
-     row_list <font color="#990000">=</font> <font color="#990000">[</font>
-          <font color="#990000">[</font> <font color="#993399">1</font><font color="#990000">,</font>          <font color="#993399">2.0</font><font color="#990000">,</font>          <font color="#FF0000">'three'</font>     <font color="#990000">]</font>
-     <font color="#990000">]</font>
-     tbl_name <font color="#990000">=</font> <font color="#FF0000">'my'</font>
-     dismod_at<font color="#990000">.</font><b><font color="#000000">create_table</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> col_name<font color="#990000">,</font> col_type<font color="#990000">,</font> row_list<font color="#990000">)</font>
-     <i><font color="#9A1900">#</font></i>
-     <i><font color="#9A1900"># original table</font></i>
-     my_table <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">)</font>
-     <i><font color="#9A1900">#</font></i>
-     <i><font color="#9A1900"># original values</font></i>
-     <b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>my_table<font color="#990000">)</font>         <font color="#990000">==</font> <font color="#993399">1</font>
-     row <font color="#990000">=</font> my_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
-     <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'int_name'</font><font color="#990000">]</font>  <font color="#990000">==</font> <font color="#993399">1</font>
-     <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'real_name'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">2.0</font>
-     <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'text_name'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'three'</font>
-     <i><font color="#9A1900">#</font></i>
-     <i><font color="#9A1900"># new row in the table</font></i>
-     row <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'int_name'</font><font color="#990000">:</font> <font color="#993399">2</font><font color="#990000">,</font> <font color="#FF0000">'real_name'</font><font color="#990000">:</font> <font color="#993399">3.0</font><font color="#990000">,</font> <font color="#FF0000">'text_name'</font><font color="#990000">:</font> <font color="#FF0000">'four'</font> <font color="#990000">}</font>
-     my_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font>row<font color="#990000">)</font>
-     dismod_at<font color="#990000">.</font><b><font color="#000000">replace_table</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> my_table<font color="#990000">)</font>
-     <i><font color="#9A1900">#</font></i>
-     <i><font color="#9A1900"># check the new table</font></i>
-     new_table <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'my'</font><font color="#990000">)</font>
-     <b><font color="#0000FF">assert</font></b> new_table <font color="#990000">==</font> my_table
-     <i><font color="#9A1900">#</font></i>
-     connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
-     <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'get_name_type: OK'</font><font color="#990000">)</font></tt></pre>
+   <b><font color="#000080">import</font></b> dismod_at
+   <i><font color="#9A1900">#</font></i>
+   file_name      <font color="#990000">=</font> <font color="#FF0000">'example.db'</font>
+   new            <font color="#990000">=</font> True
+   connection     <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">create_connection</font></b><font color="#990000">(</font>file_name<font color="#990000">,</font> new<font color="#990000">)</font>
+   cursor         <font color="#990000">=</font> connection<font color="#990000">.</font><b><font color="#000000">cursor</font></b><font color="#990000">()</font>
+   <i><font color="#9A1900">#</font></i>
+   <i><font color="#9A1900"># create my table</font></i>
+   col_name <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'int_name'</font><font color="#990000">,</font> <font color="#FF0000">'real_name'</font><font color="#990000">,</font> <font color="#FF0000">'text_name'</font>  <font color="#990000">]</font>
+   col_type <font color="#990000">=</font> <font color="#990000">[</font> <font color="#FF0000">'integer'</font><font color="#990000">,</font>  <font color="#FF0000">'real'</font><font color="#990000">,</font>       <font color="#FF0000">'text'</font>      <font color="#990000">]</font>
+   row_list <font color="#990000">=</font> <font color="#990000">[</font>
+      <font color="#990000">[</font> <font color="#993399">1</font><font color="#990000">,</font>          <font color="#993399">2.0</font><font color="#990000">,</font>          <font color="#FF0000">'three'</font>     <font color="#990000">]</font>
+   <font color="#990000">]</font>
+   tbl_name <font color="#990000">=</font> <font color="#FF0000">'my'</font>
+   dismod_at<font color="#990000">.</font><b><font color="#000000">create_table</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> col_name<font color="#990000">,</font> col_type<font color="#990000">,</font> row_list<font color="#990000">)</font>
+   <i><font color="#9A1900">#</font></i>
+   <i><font color="#9A1900"># original table</font></i>
+   my_table <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">)</font>
+   <i><font color="#9A1900">#</font></i>
+   <i><font color="#9A1900"># original values</font></i>
+   <b><font color="#0000FF">assert</font></b> <b><font color="#000000">len</font></b><font color="#990000">(</font>my_table<font color="#990000">)</font>         <font color="#990000">==</font> <font color="#993399">1</font>
+   row <font color="#990000">=</font> my_table<font color="#990000">[</font><font color="#993399">0</font><font color="#990000">]</font>
+   <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'int_name'</font><font color="#990000">]</font>  <font color="#990000">==</font> <font color="#993399">1</font>
+   <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'real_name'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#993399">2.0</font>
+   <b><font color="#0000FF">assert</font></b> row<font color="#990000">[</font><font color="#FF0000">'text_name'</font><font color="#990000">]</font> <font color="#990000">==</font> <font color="#FF0000">'three'</font>
+   <i><font color="#9A1900">#</font></i>
+   <i><font color="#9A1900"># new row in the table</font></i>
+   row <font color="#990000">=</font> <font color="#990000">{</font> <font color="#FF0000">'int_name'</font><font color="#990000">:</font> <font color="#993399">2</font><font color="#990000">,</font> <font color="#FF0000">'real_name'</font><font color="#990000">:</font> <font color="#993399">3.0</font><font color="#990000">,</font> <font color="#FF0000">'text_name'</font><font color="#990000">:</font> <font color="#FF0000">'four'</font> <font color="#990000">}</font>
+   my_table<font color="#990000">.</font><b><font color="#000000">append</font></b><font color="#990000">(</font>row<font color="#990000">)</font>
+   dismod_at<font color="#990000">.</font><b><font color="#000000">replace_table</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> tbl_name<font color="#990000">,</font> my_table<font color="#990000">)</font>
+   <i><font color="#9A1900">#</font></i>
+   <i><font color="#9A1900"># check the new table</font></i>
+   new_table <font color="#990000">=</font> dismod_at<font color="#990000">.</font><b><font color="#000000">get_table_dict</font></b><font color="#990000">(</font>connection<font color="#990000">,</font> <font color="#FF0000">'my'</font><font color="#990000">)</font>
+   <b><font color="#0000FF">assert</font></b> new_table <font color="#990000">==</font> my_table
+   <i><font color="#9A1900">#</font></i>
+   connection<font color="#990000">.</font><b><font color="#000000">close</font></b><font color="#990000">()</font>
+   <b><font color="#0000FF">print</font></b><font color="#990000">(</font><font color="#FF0000">'get_name_type: OK'</font><font color="#990000">)</font></tt></pre>
 
 <hr>Input File: example/table/replace_table.py
 

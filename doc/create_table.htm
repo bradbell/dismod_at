@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create a Database Table</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create a Database Table">
-<meta name="keywords" id="keywords" content=" create database table syntax connection tbl_name col_name unique col_type row_list tbl_name_id side effects example ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>python</option>
-<option>create_table</option>
-</select>
-</td>
-<td>
+<td><a href="create_database.py.htm" target="_top">Prev</a>
+</td><td><a href="create_table.py.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="create_database.py.htm" target="_top">Prev</a>
-</td><td><a href="create_table.py.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>create_table</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -61,8 +61,8 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_create_table_htm.js'></script>
 </td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>Create a Database Table</big></big></b></center>
 
 <br><a href="create_table.htm#Syntax" target="_top">Syntax</a>
@@ -81,7 +81,7 @@ A:active { color : purple }
 <br>
 
 <code><font color="blue"><span style='white-space: nowrap'>dismod_at.create_table(<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>connection</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tbl_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col_type</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row_list</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>connection</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>tbl_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col_name</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>col_type</span></font></i><font color="blue"><span style='white-space: nowrap'>,&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row_list</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 )</span></font></code>
 
 
@@ -147,7 +147,7 @@ before being written to the database.
 Note that the special value
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row_list</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>][</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;&nbsp;None<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>row_list</span></font></i><font color="blue"><span style='white-space: nowrap'>[</span></font><i><font color="black"><span style='white-space: nowrap'>i</span></font></i><font color="blue"><span style='white-space: nowrap'>][</span></font><i><font color="black"><span style='white-space: nowrap'>j</span></font></i><font color="blue"><span style='white-space: nowrap'>]&nbsp;==&nbsp;&nbsp;None<br>
 </span></font></code>
 gets converted to <code><font color="blue">null</font></code> in the table.
 
@@ -169,7 +169,7 @@ increment by one for each row.
 This routine does a
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>connection</span></font></i><font color="blue"><span style='white-space: nowrap'>.commit()<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>connection</span></font></i><font color="blue"><span style='white-space: nowrap'>.commit()<br>
 </span></font></code>
 to make sure the table exists before returning.
 

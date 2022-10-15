@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>The Fixed Effects Value Density Function</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="The Fixed Effects Value Density Function">
-<meta name="keywords" id="keywords" content=" the fixed effects value density function theta_j prior_id lambda_j mu_j epsilon_j eta_j d_j sigma_j v_j^theta v^theta ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,18 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>model</option>
-<option>variable_prior</option>
-<option>fixed_value</option>
-</select>
-</td>
-<td>
+<td><a href="variable_prior.htm" target="_top">Prev</a>
+</td><td><a href="random_value.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -50,9 +43,16 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="variable_prior.htm" target="_top">Prev</a>
-</td><td><a href="random_value.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>variable_prior</option>
+<option>fixed_value</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -63,8 +63,8 @@ A:active { color : purple }
 </td>
 <td>fixed_value</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@<center><b><big><big>The Fixed Effects Value Density Function</big></big></b></center>
 
 <br><a href="fixed_value.htm#theta_j" target="_top">theta_j</a>
@@ -196,10 +196,10 @@ corresponding to
 <small>@[@
 
 \sigma_j = \left\{ \begin{array}{ll}
-	\log ( \mu_j + \eta_j + \varepsilon_j ) - \log( \mu_j + \eta_j )
-		& \R{if \; log \; density}
-	\\
-	\varepsilon_j & \R{otherwise}
+   \log ( \mu_j + \eta_j + \varepsilon_j ) - \log( \mu_j + \eta_j )
+      & \R{if \; log \; density}
+   \\
+   \varepsilon_j & \R{otherwise}
 \end{array} \right.
 
 @]@</small>
@@ -216,7 +216,7 @@ The value density for the <code><i>j</i></code>-th component of <small>@(@
 V_j^\theta ( \theta )
 =
 \exp \left[ D \left(
-	\theta_j \W{,} \mu_j \W{,} \lambda_j \sigma_j \W{,} d_j
+   \theta_j \W{,} \mu_j \W{,} \lambda_j \sigma_j \W{,} d_j
 \right) \right]
 
 @]@</small>
@@ -238,7 +238,7 @@ The value density for all the fixed effects <small>@(@
 @)@</small> is defined by
 <small>@[@
 
-	V^\theta ( \theta ) = \prod_{j=0}^{n-1} V_j^\theta ( \theta )
+   V^\theta ( \theta ) = \prod_{j=0}^{n-1} V_j^\theta ( \theta )
 
 @]@</small>
 

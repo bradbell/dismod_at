@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Create Csv Files that Summarize The Database</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Create Csv Files that Summarize The Database">
-<meta name="keywords" id="keywords" content=" create csv files that summarize the database syntax program python function convention dir fit_var fit_data_subset simulate_index option.csv log.csv age_avg.csv hes_fixed.csv hes_random.csv trace_fixed.csv mixed_info.csv variable.csv var_id var_type s_id m_id m_diff bound age time rate integrand covariate node group subgroup fixed depend fit_value start scale truth sam_avg sam_std res_value res_dage res_dtime lag_value lag_dage lag_dtime sim_v sim_a sim_t prior_info data.csv data_id data_extra_columns child weight age_lo age_up time_lo time_up d_out s_out density eta nu meas_std meas_stdcv meas_delta meas_value avgint residual sim_value covariates predict.csv avgint_id avgint_extra_columns s_index example ihme_db.sh ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,17 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>python</option>
-<option>db2csv_command</option>
-</select>
-</td>
-<td>
+<td><a href="csv2db_command.htm" target="_top">Prev</a>
+</td><td><a href="db2csv_command.py.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -49,9 +43,15 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="csv2db_command.htm" target="_top">Prev</a>
-</td><td><a href="db2csv_command.py.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>python</option>
+<option>db2csv_command</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -61,8 +61,8 @@ A:active { color : purple }
 <script type='text/javascript' language='JavaScript' src='_childtable_db2csv_command_htm.js'></script>
 </td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@ 
 
 
@@ -685,7 +685,7 @@ for the
 There is a column named
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>field</span></font></i><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>character</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>field</span></font></i><font color="blue"><span style='white-space: nowrap'>_</span></font><i><font color="black"><span style='white-space: nowrap'>character</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 for 
 <code><i><font color="black"><span style='white-space: nowrap'>character</span></font></i></code>
@@ -935,12 +935,12 @@ If the density for this row is
 
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>meas_delta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>meas_delta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i><font color="blue"><span style='white-space: nowrap'><br>
 </span></font></code>
 Otherwise, the density is log scaled and
 
 <code><font color="blue"><span style='white-space: nowrap'><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>meas_delta</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;-&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;=&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>meas_delta</span></font></i><font color="blue"><span style='white-space: nowrap'>)&nbsp;-&nbsp;log(</span></font><i><font color="black"><span style='white-space: nowrap'>meas_value</span></font></i><font color="blue"><span style='white-space: nowrap'>&nbsp;+&nbsp;</span></font><i><font color="black"><span style='white-space: nowrap'>eta</span></font></i><font color="blue"><span style='white-space: nowrap'>)<br>
 </span></font></code>
 The value 
 <code><i><font color="black"><span style='white-space: nowrap'>delta</span></font></i></code>

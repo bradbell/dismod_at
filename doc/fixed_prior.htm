@@ -15,7 +15,7 @@ MathJax.Hub.Config({
 <title>Prior for Fixed Effect Values</title>
 <meta http-equiv='Content-Type' content='text/html' charset='utf-8'>
 <meta name="description" id="description" content="Prior for Fixed Effect Values">
-<meta name="keywords" id="keywords" content=" prior fixed effect values theta lambda beta value constraints theta_k l_k^v u_k^v age difference limits a_i(k) delta^a l_k^a u_k^a time normalization constant c_theta p(theta) ">
+<meta name="keywords" id="keywords" content=" ">
 <style type='text/css'>
 body { color : black }
 body { background-color : white }
@@ -31,18 +31,11 @@ A:active { color : purple }
 <td>
 <a href="https://bradbell.github.io/dismod_at" target="_top"><img border="0" src="_image.gif"></a>
 </td>
-<td>
-<select onchange='choose_up0(this)'>
-<option>Location-&gt;</option>
-<option>dismod_at</option>
-<option>model</option>
-<option>variable_prior</option>
-<option>fixed_prior</option>
-</select>
-</td>
-<td>
+<td><a href="random_diff.htm" target="_top">Prev</a>
+</td><td><a href="random_prior.htm" target="_top">Next</a>
+</td><td>
 <select onchange='choose_across0(this)'>
-<option>Search-&gt;</option>
+<option>Index-&gt;</option>
 <option>contents</option>
 <option>reference</option>
 <option>index</option>
@@ -50,9 +43,16 @@ A:active { color : purple }
 <option>external</option>
 </select>
 </td>
-<td><a href="random_diff.htm" target="_top">Prev</a>
-</td><td><a href="random_prior.htm" target="_top">Next</a>
-</td><td>
+<td>
+<select onchange='choose_up0(this)'>
+<option>Up-&gt;</option>
+<option>dismod_at</option>
+<option>model</option>
+<option>variable_prior</option>
+<option>fixed_prior</option>
+</select>
+</td>
+<td>
 <script type='text/javascript' language='JavaScript' src='_childtable_dismod_at_htm.js'></script>
 </td>
 <td>
@@ -63,8 +63,8 @@ A:active { color : purple }
 </td>
 <td>fixed_prior</td>
 </tr></table><br>
-@(@\newcommand{\R}[1]{ {\rm #1} }
-\newcommand{\B}[1]{ {\bf #1} }
+@(@\newcommand{\B}[1]{ {\bf #1} }
+\newcommand{\R}[1]{ {\rm #1} }
 \newcommand{\W}[1]{ \; #1 \; }@)@
 
 
@@ -84,7 +84,7 @@ A:active { color : purple }
 <br>&#160;&#160;&#160;&#160;&#160;<a href="fixed_prior.htm#Age Difference Limits.L_k^a" target="_top">L_k^a</a>
 <br>&#160;&#160;&#160;&#160;&#160;<a href="fixed_prior.htm#Age Difference Limits.U_k^a" target="_top">U_k^a</a>
 <br><a href="fixed_prior.htm#Time Difference Limits" target="_top">Time&nbsp;Difference&nbsp;Limits</a>
-<br><a href="fixed_prior.htm#Theta" target="_top">Theta</a>
+<br><a href="fixed_prior.htm#Capital Theta" target="_top">Capital&nbsp;Theta</a>
 <br><a href="fixed_prior.htm#Normalization Constant, C_theta" target="_top">Normalization&nbsp;Constant,&nbsp;C_theta</a>
 <br><a href="fixed_prior.htm#p(theta)" target="_top">p(theta)</a>
 <br><br>
@@ -283,7 +283,7 @@ similar as for the age differences.
 
 <br>
 <br>
-<b><big><a name="Theta" id="Theta">Theta</a></big></b>
+<b><big><a name="Capital Theta" id="Capital Theta">Capital Theta</a></big></b>
 <br>
 The constraint set <small>@(@
 \Theta
@@ -298,7 +298,7 @@ k
 @)@</small>,
 <small>@[@
 
-	L_k^v \leq \theta_k \leq U_k^v
+   L_k^v \leq \theta_k \leq U_k^v
 
 @]@</small>
 </li><li>
@@ -313,7 +313,7 @@ a_{i(k)}
 for the corresponding smoothing,
 <small>@[@
 
-	L_k^a \leq \Delta^a_k \theta \leq U_k^a
+   L_k^a \leq \Delta^a_k \theta \leq U_k^a
 
 @]@</small>
 </li><li>
@@ -328,7 +328,7 @@ t_{j(k)}
 for the corresponding smoothing,
 <small>@[@
 
-	L_k^t \leq \Delta^t_k \theta \leq U_k^t
+   L_k^t \leq \Delta^t_k \theta \leq U_k^t
 
 @]@</small>
 </li></ol>
@@ -344,8 +344,8 @@ The normalization constant for the fixed effects density is
 C_\theta
 =
 \int_{\Theta}
-	V^\theta ( \theta ) A^\theta ( \theta ) T^\theta ( \theta )
-		\; \B{d} \theta
+   V^\theta ( \theta ) A^\theta ( \theta ) T^\theta ( \theta )
+      \; \B{d} \theta
 
 @]@</small>
 See <a href="fixed_value.htm#V^theta" target="_top"><span style='white-space: nowrap'>V^theta</span></a>
