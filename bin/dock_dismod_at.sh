@@ -62,9 +62,9 @@
 # and can be run from any directory.
 # Using this script is an  alternative to going through the steps required to
 # $cref/install_dismod_at/install_unix/$$.
-# You can get a copy of this script at the following link
+# You can use the following link to get a get a copy of the dismod_at.sh
 # $href%https://raw.githubusercontent.com/bradbell/dismod_at/master/bin/dock_dismod_at.sh
-#  %dock_dismod_at.sh
+#  %bash script
 # %$$
 # If you understand docker, this script also serves as an example
 # install of dismod_at.
