@@ -171,8 +171,8 @@ node_list = [ 'US', 'Alabama', 'California' ]
 # given prevalence, mtspecific should determine chi.
 # $srccode%py%
 integrand_table = [
-    { 'name':'mtspecific' },
-    { 'name':'prevalence' }
+   { 'name':'mtspecific' },
+   { 'name':'prevalence' }
 ]
 # %$$
 #

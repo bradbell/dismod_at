@@ -788,7 +788,7 @@ There was a mistake in the error message for wrong column
 type detected in an $cref input$$ table.
 To be specific, a syntax error would occur on the line
 $codep
-    msg  = 'expected type ' + ty ++  ' for column ' + name
+   msg  = 'expected type ' + ty ++  ' for column ' + name
 $$
 This was fixed by changing $code ++$$ to $code +$$.
 

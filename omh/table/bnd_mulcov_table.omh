@@ -19,7 +19,7 @@ Its initial value is zero, and it increments by one for each row.
 The $code bnd_mulcov_id$$ column is also a foreign key for the
 $cref mulcov_table$$ ; i.e.,
 $codei%
-    %mulcov_id% = %bnd_mulcov_id%
+   %mulcov_id% = %bnd_mulcov_id%
 %$$
 In addition, the size of both tables is the same.
 

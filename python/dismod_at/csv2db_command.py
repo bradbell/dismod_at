@@ -558,20 +558,20 @@ def csv2db_command(database, configure_csv, measure_csv) :
    # -------------------------------------------------------------------------
    file_name = database
    dismod_at.create_database(
-        file_name,
-        age_list,
-        time_list,
-        integrand_table,
-        node_table,
-        subgroup_table,
-        weight_table,
-        covariate_table,
-        avgint_table,
-        data_table,
-        prior_table,
-        smooth_table,
-        nslist_table,
-        rate_table,
-        mulcov_table,
-        option_table
+      file_name,
+      age_list,
+      time_list,
+      integrand_table,
+      node_table,
+      subgroup_table,
+      weight_table,
+      covariate_table,
+      avgint_table,
+      data_table,
+      prior_table,
+      smooth_table,
+      nslist_table,
+      rate_table,
+      mulcov_table,
+      option_table
    )

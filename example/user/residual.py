@@ -214,7 +214,7 @@ def example_db ():
    # ---------------------------------------------------------------------
    # prior_table
    prior_table = [
-      { # prior_omega_value
+      {  # prior_omega_value
          'name':     'prior_omega_value',
          'density':  'log_gaussian',
          'lower':    0.0,
@@ -223,7 +223,7 @@ def example_db ():
          'std':      fun_omega_value_std(),
          'eta':      fun_omega_eta()
       },{
-        # prior_omega_dage
+         # prior_omega_dage
          'name':     'prior_omega_dage',
          'density':  'log_gaussian',
          'mean':     0.0,

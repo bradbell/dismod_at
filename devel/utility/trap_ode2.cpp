@@ -67,7 +67,7 @@ $latex \[
 $head Method$$
 The equation for $latex y^f$$ can be written as
 $latex \[
-    ( \R{I} - B t_f / 2 ) y^f =  ( \R{I} + B t_f / 2 ) y^i
+   ( \R{I} - B t_f / 2 ) y^f =  ( \R{I} + B t_f / 2 ) y^i
 \] $$
 where $latex \R{I}$$ is the identify matrix.
 This equation is solved using Cramer's rules so that

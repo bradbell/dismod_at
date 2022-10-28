@@ -102,8 +102,8 @@ def example_db (file_name) :
    #
    # integrand table:
    integrand_table = [
-       { 'name':'Sincidence' },
-        { 'name':'prevalence' }
+      { 'name':'Sincidence' },
+      { 'name':'prevalence' }
    ]
    #
    # node table:
