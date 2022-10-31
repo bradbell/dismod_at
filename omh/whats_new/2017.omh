@@ -5,6 +5,8 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin whats_new_2017$$
 $spell
+   mm
+   dd
    eigen
    dev
    sim
@@ -62,8 +64,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2017$$
 
+$head mm-dd$$
 
-$head 12-30$$
+
+$subhead 12-30$$
 Advance to using $code cppad_mixed-20171230$$.
 This uses the CppAD subgraph method to compute the Hessian
 with respect to the random effects.
@@ -71,17 +75,17 @@ It is expected to be faster on large problems, but more testing is required
 to verify this.
 
 
-$head 12-22$$
+$subhead 12-22$$
 Some users did not realize that $code bin/install_all.sh$$ was just
 an example install to help system administrators.
 This script has been included in the documentation and moved to
 $cref%bin/example_install.sh%example_install.sh%$$ to make this clear.
 
-$head 12-21$$
+$subhead 12-21$$
 Advance to using $code cppad-20171215$$
 which is required by $code cppad_mixed-20171218$$.
 
-$head 12-20$$
+$subhead 12-20$$
 $list number$$
 Advance to using $code cppad_mixed-20171218$$.
 This uses the CppAD subgraph method to compute the sparsity of the Hessian
@@ -93,7 +97,7 @@ Sometimes, new versions of the python files were not installed because the
 $code bin/setup.py$$ file was not executable. This has been fixed.
 $lend
 
-$head 12-16$$
+$subhead 12-16$$
 $list number$$
 There was a mistake in the linking of the
 $cref/sqlite3/install_unix/System Requirements/sqlite3/$$ and
@@ -108,7 +112,7 @@ in $code bin/run_cmake.sh$$
 $lend
 
 
-$head 12-13$$
+$subhead 12-13$$
 There was a bug in the
 $cref/predict sample/predict_command/source/sample/$$ command
 when $cref/build_type/run_cmake.sh/build_type/$$ was $code debug$$.
@@ -116,7 +120,7 @@ To be specific, the check to see if the database was consistent
 had an error in it.
 This has been fixed.
 
-$head 12-10$$
+$subhead 12-10$$
 $list number$$
 Move documentation from IHME to github; see
 $pre
@@ -130,7 +134,7 @@ The $cref/download/install_unix/Download dismod_at.git/$$ instructions
 were changed to use $code git$$ for distributing the program.
 $lend
 
-$head 11-12$$
+$subhead 11-12$$
 $list number$$
 Fix the definition of the
 $cref/adjusted standard deviation
@@ -158,13 +162,13 @@ but they do not depend on the data index $latex i$$.
 $lend
 
 
-$head 11-08$$
+$subhead 11-08$$
 Change the title of the $cref data_like$$ section and
 fix minor typos in the notation for the
 age upper limit $cref/b_i/data_like/Notation/b_i/$$ and
 time upper limit $cref/t_i/data_like/Notation/t_i/$$.
 
-$head 10-25$$
+$subhead 10-25$$
 $list number$$
 Advance to $code cppad_mixed-20171025$$
 and install it using the rev_hes_sparsity option.
@@ -173,7 +177,7 @@ Advance to $code cppad-20171023$$
 to avoid a compiler warning.
 $lend
 
-$head 10-24$$
+$subhead 10-24$$
 Some minor changes were made to the bilinear interpolation section.
 To be more specific, some typos were fixed in
 $cref/function grid/bilinear/Function Grid/$$ and the
@@ -182,7 +186,7 @@ discussions.
 In addition, the $cref/plotting/bilinear/Plotting/$$ discussion was added.
 
 
-$head 10-22$$
+$subhead 10-22$$
 $list number$$
 Add the option to specify
 $cref/parent_node_name/option_table/Parent Node/parent_node_name/$$
@@ -199,7 +203,7 @@ of the file did not exist.
 $lend
 
 
-$head 10-21$$
+$subhead 10-21$$
 $list number$$
 The $cref depend_command$$ was added and the
 $cref/depend/db2csv_command/variable.csv/depend/$$ column was
@@ -211,14 +215,14 @@ To be specific $cref fit_data_subset_table$$, not $cref data_subset_table$$,
 is output by the $cref fit_command$$.
 $lend
 
-$head 10-20$$
+$subhead 10-20$$
 Add the
 $code checkpoint_newton_step$$
 option to the dismod_at configuration script.
 The default value in $code run_cmake.sh$$ for this setting
 is $code yes$$ (it used to be set at $code no$$).
 
-$head 10-18$$
+$subhead 10-18$$
 $list number$$
 Improve documentation for following sections:
 $cref avg_integrand$$,
@@ -237,7 +241,7 @@ was added to the set command and the
 $cref/modify_command/modify_command/Warning/$$.
 $lend
 
-$head 10-17$$
+$subhead 10-17$$
 $list number$$
 The $cref db2csv_command.py$$ example / test was added
 and the corresponding $cref wish_list$$ item was removed.
@@ -258,7 +262,7 @@ $lnext
 The $cref modify_command$$ was added.
 $lend
 
-$head 10-14$$
+$subhead 10-14$$
 $list number$$
 Specifications were added to forbid
 $cref/child data/data_table/node_id/Child Data/$$
@@ -271,7 +275,7 @@ $cref/random_effects/data_like/Notation/Random Effects, u/$$ vector $latex u$$
 in the data likelihood model was improved.
 $lend
 
-$head 10-13$$
+$subhead 10-13$$
 $list number$$
 In the
 $cref/variable.csv/db2csv_command/variable.csv/$$ file
@@ -287,10 +291,10 @@ $cref/density_id/data_table/density_id/$$.
 $lend
 
 
-$head 10-09$$
+$subhead 10-09$$
 Advance to cppad_mixed-20171009.
 
-$head 10-06$$
+$subhead 10-06$$
 $list number$$
 Add the $cref/truth/db2csv_command/variable.csv/truth/$$
 column to the $code variable.csv$$ file create by the
@@ -322,7 +326,7 @@ might not be set correctly.
 This has been fixed.
 $lend
 
-$head 10-05$$
+$subhead 10-05$$
 $list number$$
 The restrictions on the
 $cref/child value priors/rate_table/Child Value Priors/$$ and
@@ -359,7 +363,7 @@ Change $code fixed_bound_frac$$ to
 $cref/bound_frac_fixed/option_table/Optimize Fixed Only/bound_frac_fixed/$$.
 $lend
 
-$head 10-04$$
+$subhead 10-04$$
 Add the $cref/Student's-t/statistic/Log-Density Function, D/Student's-t/$$ and
 $cref/Log-Student's-t/statistic/Log-Density Function, D/Log-Student's-t/$$
 density functions; see $code user_students.py$$.
@@ -370,7 +374,7 @@ $cref/log_students/density_table/density_name/log_students/$$ rows
 were added to the table.
 
 
-$head 10-02$$
+$subhead 10-02$$
 $list number$$
 Change the $code create_database$$
 $cref/data_table/create_database/data_table/$$ so that
@@ -382,7 +386,7 @@ Reduce the chance of random
 failure in the $cref user_lasso_covariate.py$$ example.
 $lend
 
-$head 10-01$$
+$subhead 10-01$$
 Simplify the weighted residual function
 $cref/R/statistic/Weighted Residual Function, R/$$
 and the log density function
@@ -391,15 +395,15 @@ To be specific,
 the $cref/density_id/density_table/density_id/$$
 and $cref/eta/prior_table/eta/$$ were combined into $latex d$$ in the
 
-$head 09-30$$
+$subhead 09-30$$
 Advance to cppad_mixed-20170930.
 This fixes a bug where the optimization of the fixed effects
 was terminating (instead of backing up) when the optimization
 of the random effects failed.
 
-$head 09-29$$
+$subhead 09-29$$
 $list number$$
-The change on $cref/09-20/whats_new_2017/09-20/$$
+The change on $cref/09-20/whats_new_2017/mm-dd/09-20/$$
 introduced a bug because it ignored the
 $cref/warn_on_stderr/option_table/warn_on_stderr/$$ option.
 This has been fixed.
@@ -411,13 +415,13 @@ Changes to the option table that are done this way get recorded in the
 $cref log_table$$.
 $lend
 
-$head 09-28$$
+$subhead 09-28$$
 Add the scale_var table which enables the user
 to have more control over scaling the objective. See
 $cref/scale_var_value/scale_var_table/scale_var_value/$$ and
 $cref/set command/set_command/table_out/scale_var/$$.
 
-$head 09-27$$
+$subhead 09-27$$
 $list number$$
 This change was merged into the master branch on 09-29.
 Remove the $code start$$ command.
@@ -449,10 +453,10 @@ $cref/
 present and null.
 $lnext
 A $code db2csv$$ wish list item was added (fulfilled on
-$cref/10-17/whats_new_2017/10-17/$$).
+$cref/10-17/whats_new_2017/mm-dd/10-17/$$).
 $lend
 
-$head 09-26$$
+$subhead 09-26$$
 These changes were merged into the master branch on 09-29.
 $list number$$
 Add the $cref sql_command$$ python function.
@@ -468,15 +472,15 @@ $codei%
 $lend
 
 
-$head 09-25$$
+$subhead 09-25$$
 Advance to cppad_mixed-20170925 for improved error handling
 and messaging.
 
-$head 09-23$$
+$subhead 09-23$$
 Advance to cppad_mixed-20170923 for improved error handling
 and messaging.
 
-$head 09-21$$
+$subhead 09-21$$
 $list number$$
 Advance to $code cppad_mixed-20160919$$
 We are working on improving error messaging when $code nan$$ occurs
@@ -489,12 +493,12 @@ These integrands were already available, see
 $cref/integrand_name/integrand_table/integrand_name/$$.
 $lend
 
-$head 09-20$$
+$subhead 09-20$$
 All warnings are now printed to standard error as well as being
 logged in the database.
 Errors are also printed, but this is not a change.
 
-$head 09-19$$
+$subhead 09-19$$
 $list number$$
 Some of the
 $cref/system requirements/install_unix/System Requirements/$$
@@ -507,7 +511,7 @@ The $code log_fatal_error$$ option was removed from $cref run_cmake.sh$$
 (by putting an assert before the exit in the fatal error routine).
 $lend
 
-$head 09-18$$
+$subhead 09-18$$
 $list number$$
 Advance to $code cppad_mixed-20160918$$; see
 $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
@@ -519,7 +523,7 @@ $cref/bounds/database/Null/Bounds/$$
 was improved.
 $lend
 
-$head 09-17$$
+$subhead 09-17$$
 $list number$$
 There was a bug in setting the lower and upper limits of random effects
 equal that sometimes caused a $code nan$$ result during $code initialize$$.
@@ -529,13 +533,13 @@ Make $cref bilinear$$ and $code ode_grid$$ separate sections
 and improve their presentations.
 $lend
 
-$head 09-16$$
+$subhead 09-16$$
 Advance to $code cppad_mixed-20160916$$; see
 $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$.
 This makes the optimization with respect to the random effects back
 up when the object results in a $code nan$$.
 
-$head 09-02$$
+$subhead 09-02$$
 $list number$$
 Instructions were added for building both the debug and release
 $cref/debug and release/run_cmake.sh/Debug and Release/$$
@@ -549,7 +553,7 @@ affects the speed and memory used by $code dismod_at$$ and
 not its results.
 $lend
 
-$head 09-01$$
+$subhead 09-01$$
 $list number$$
 Add the
 $cref/n_children/user_speed.py/n_children/$$ argument to the
@@ -560,14 +564,14 @@ $cref/children/option_table/Parent Node/Children/$$
 to the option table.
 $lend
 
-$head 08-30$$
+$subhead 08-30$$
 Advance to cppad-20170830. This fixes a problem with the cmake command;
 to be specific,
 $codei%
    Policy CMP0046 is not set: Error on non-existent dependency
 %$$
 
-$head 08-07$$
+$subhead 08-07$$
 $list number$$
 Advance to $code cppad_mixed-20170801$$ to fix an install problem where
 $code ran_obj_tst$$ was not defined.
@@ -582,10 +586,10 @@ $cref/sample command/sample_command/simulate/$$
 with $icode method$$ equal to $code data_sim$$.
 $lend
 
-$head 05-23$$
+$subhead 05-23$$
 Advance to cppad-20170522.
 
-$head 05-05$$
+$subhead 05-05$$
 Improved the detection of which
 $cref data_table$$ rows do not require the
 $cref/random effects/model_variables/Random Effects, u/$$
@@ -593,7 +597,7 @@ to make correspond $cref avg_integrand$$ model prediction.
 This may make the computation more efficient, but otherwise
 the user should see no difference.
 
-$head 05-02$$
+$subhead 05-02$$
 The noise covariate multipliers effect
 used to scale the measurement standard deviation.
 Now it is directly added to the measurement standard deviation; see
@@ -607,7 +611,7 @@ On the other hand, it is more flexible for
 use in meta-regression when the standard deviations for some measurements
 is small and the difference between measurement sets is large.
 
-$head 05-01$$
+$subhead 05-01$$
 $list number$$
 Remove recommendation for using
 $code prior_zero$$ and $code prior_one$$ as
@@ -637,7 +641,7 @@ $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$.
 $lend
 
 
-$head 04-29$$
+$subhead 04-29$$
 $list number$$
 The avgint_subset table has been removed.
 The avgint table is only
@@ -670,7 +674,7 @@ must be null.
 An error messages is reported if this is not the case.
 $lend
 
-$head 04-27$$
+$subhead 04-27$$
 Change the $cref/
    zero_sum_child_rate/
    option_table/
@@ -683,7 +687,7 @@ $cref/child_nslist_id/rate_table/child_nslist_id/$$ can be used
 to use different priors for each child and some rates,
 while other rates have the same prior for each child and zero sum.
 
-$head 04-26$$
+$subhead 04-26$$
 $list number$$
 In the $cref user_example$$ examples,
 move the setup of
@@ -704,7 +708,7 @@ Add $cref/
 and remove $code data_name$$ column from the data table.
 $lend
 
-$head 04-25$$
+$subhead 04-25$$
 $list number$$
 Advance to cppad_mixed-20170424.
 $lnext
@@ -728,18 +732,18 @@ Add the $cref/
 /$$ option.
 $lend
 
-$head 04-24$$
+$subhead 04-24$$
 Fix bug in $code dev::eigen_ode2.cpp$$ where
 the $code std::abs$$ function was being called and $code std::fabs$$
 should have been called.
 (This caused some tests to fail on the Mac but not on Fedora.)
 
-$head 04-23$$
+$subhead 04-23$$
 Advance to cppad_mixed-20170423, this improves the detection of
 convergence of the fixed effects optimization problem, see
 $cref fit_command$$.
 
-$head 04-22$$
+$subhead 04-22$$
 $list number$$
 The $cref init_command$$ now deletes any existing
 $cref/output tables/data_flow/Output Tables by Table Name/$$.
@@ -749,7 +753,7 @@ was stuck at $code 20160516$$; i.e., not being updated.
 This has been fixed.
 $lend
 
-$head 04-21$$
+$subhead 04-21$$
 $list number$$
 Change the name of the output section to the
 $cref data_flow$$ section.
@@ -765,7 +769,7 @@ $code log_laplace$$ negative data is set to zero.
 $lend
 
 
-$head 04-20$$
+$subhead 04-20$$
 $list number$$
 Add a comment about
 $cref/changing values/init_command/Changing Values/$$, in the input tables,
@@ -780,13 +784,13 @@ $cref/child rate effect/model_variables/Random Effects, u/Child Rate Effects/$$.
 $lend
 
 
-$head 04-19$$
+$subhead 04-19$$
 The offset in the log transformation for the data is now specified
 in the data table (for each data point) instead of in the
 integrand table (for all data points corresponding to an integrand); see
 $cref/eta/data_table/eta/$$.
 
-$head 04-18$$
+$subhead 04-18$$
 Change the definition of adjusted standard deviation for data in the
 $cref/Gaussian and Laplace
    /data_like
@@ -795,11 +799,11 @@ $cref/Gaussian and Laplace
 case (it is now different from the Log-Gaussian and Log-Laplace case).
 (This has since been changed back.)
 
-$head 04-17$$
+$subhead 04-17$$
 Add $code random$$ to possible choices for
 $cref/variables/fit_command/variables/$$ during the fit.
 
-$head 04-16$$
+$subhead 04-16$$
 $list number$$
 The change on 04-15 introduced a bug whereby non-zero values for
 $cref/bound_random/option_table/Optimize Random Only/bound_random/$$ were not having
@@ -815,7 +819,7 @@ $lnext
 The $cref wish_list$$ was updated.
 $lend
 
-$head 04-15$$
+$subhead 04-15$$
 It is now possible to constrain each random effect to have a specific value;
 see
 $cref/constant child value priors
@@ -824,7 +828,7 @@ $cref/constant child value priors
    /Constant
 /$$.
 
-$head 04-09$$
+$subhead 04-09$$
 $list number$$
 The $cref/const_value/smooth_grid_table/const_value/$$ option
 was added to the $code smooth_grid$$ table.
@@ -837,7 +841,7 @@ were added to the user example section.
 $lend
 
 
-$head 04-07$$
+$subhead 04-07$$
 $list number$$
 More discussion was added for how the
 $cref/parent node/option_table/Parent Node/$$
@@ -852,7 +856,7 @@ In addition, the $cref get_started_db.py$$ example is now
 a good starting point for editing to add more complexity to the model.
 $lend
 
-$head 04-05$$
+$subhead 04-05$$
 $list number$$
 The definition of the average integrand has been changed to include the
 $cref/measurement value covariate effect
@@ -868,18 +872,18 @@ The optimization tolerance in $cref user_group_mulcov.py$$
 was made smaller to avoid test failures on some machines.
 $lend
 
-$head 04-04$$
+$subhead 04-04$$
 The notation $italic average weight$$ (for $latex \bar{w}_i$$) was
 corrected to be
 $cref/weight integral/avg_integrand/Weight Integral, wbar_i/$$.
 
-$head 04-03$$
+$subhead 04-03$$
 Advance to $code cppad-20170402$$ and $code cppad_mixed-20170403$$.
 The Cppad change fixes a bug in the optimization of conditional expressions.
 This in turn enables Cppad Mixed to make more use of AD function optimization
 (and still pass all the tests in $code dismod_at$$).
 
-$head 04-01$$
+$subhead 04-01$$
 $list number$$
 Remove the need to set $icode PKG_CONFIG_PATH$$ during the
 $cref install_unix$$ procedure
@@ -890,26 +894,26 @@ Improve the discussion on setting the
 $cref/python path/install_unix/Paths/PYTHONPATH/$$.
 $lend
 
-$head 03-30$$
+$subhead 03-30$$
 Add $code susceptible$$ and $code withC$$ to the list
 of possible integrand names; see
 $cref/integrand_name/integrand_table/integrand_name/$$.
 
-$head 03-29$$
+$subhead 03-29$$
 Advance to cppad-20170329 and cppad_mixed-20170329.
 
-$head 03-17$$
+$subhead 03-17$$
 Advance to cppad_mixed-20170317.
 This includes a change to the $code cppad_mixed$$,
 but no change from the $code dismod_at$$ user's perspective.
 
-$head 03-06$$
+$subhead 03-06$$
 Advance to
 $cref/cppad-20170306/install_unix/Special Requirements/cppad/$$.
 This fixes another bug in Cppad.
 
 
-$head 03-04$$
+$subhead 03-04$$
 Advance to
 $cref/cppad-20170304/install_unix/Special Requirements/cppad/$$.
 This fixes a bug in Cppad.
@@ -918,14 +922,14 @@ $cref/cppad_mixed-20170304/install_unix/Special Requirements/cppad_mixed/$$.
 This improves the scaling and solution check for optimization of the
 fixed effects.
 
-$head 03-03$$
+$subhead 03-03$$
 Simplify the install procedure. Now it is only necessary to adjust
 the settings in
 $cref/run_cmake.sh/install_unix/Special Requirements/run_cmake.sh/$$.
 These settings are automatically used by all the
 $codei%bin/install_%package%.sh%$$ scripts.
 
-$head 01-27$$
+$subhead 01-27$$
 The values in the
 $cref/covariate/db2csv_command/predict.csv/Covariates/$$ columns
 of the $code predict.csv$$ file were not correct
@@ -933,24 +937,24 @@ of the $code predict.csv$$ file were not correct
 This has been fixed.
 
 
-$head 01-26$$
+$subhead 01-26$$
 Advance to cppad_mixed-20171126.
 This version includes the scaling mentioned under 01-24,
 but prints the original (unscaled) objective in the optimizer trace.
 
-$head 01-24$$
+$subhead 01-24$$
 Advance to cppad_mixed-20171124.
 This version re-scales the problem using the derivatives values at
 the starting point.
 This is in addition to the
 $cref/scaling/prior_table/eta/Scaling Fixed Effects/$$ done using $code eta$$.
 
-$head 01-14$$
+$subhead 01-14$$
 The $code adaptive$$ and $code trace-adaptive$$
 $cref/derivative_test/option_table/Optimize Fixed and Random/derivative_test/$$ options
 generated error messages. This has been fixed and they now work.
 
-$head 01-15$$
+$subhead 01-15$$
 Advance to cppad-20161113 and cppad_mixed-20170114.
 
 $end

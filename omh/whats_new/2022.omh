@@ -5,6 +5,8 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin whats_new_2022$$
 $spell
+   mm
+   dd
    Dismod
    mu
    cppad
@@ -38,20 +40,22 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2022$$
 
-$head 10-14$$
+$head mm-dd$$
+
+$subhead 10-14$$
 Advance the dock_dismod_at.sh
 $cref/at_cascade_version/dock_dismod_at.sh/Building Images/at_cascade_version/$$
 to 2022.10.14
 You should build the new at_cascade image.
 
-$head 09-16$$
+$subhead 09-16$$
 $list number$$
 Change copyright and license declaration to SPDX format.
 $lnext
 Change tabs to 3 spaces.
 $lend
 
-$head 08-27$$
+$subhead 08-27$$
 Advance the dock_dismod_at.sh
 $cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
 to 20220826 and
@@ -60,7 +64,7 @@ to 2022.8.27.
 You should build the new dismod_at image before the at_cascade image.
 
 
-$head 08-26$$
+$subhead 08-26$$
 $list number$$
 Remove $italic rel_tol$$ argument to $cref average_integrand$$
 because testing with $cref user_average_integrand.py$$ indicates
@@ -70,34 +74,34 @@ Change the average_integrand integrator to use lsoda (which switch
 automatically switches between stiff and non-stiff).
 $lend
 
-$head 08-15$$
+$subhead 08-15$$
 Add the optional $italic rel_tol$$
 argument to the average_integrand function.
 
-$head 05-19$$
+$subhead 05-19$$
 Add $code build$$ to the list of required
 $cref/python3/install_unix/System Requirements/python3/$$ packages.
 
-$head 05-18$$
+$subhead 05-18$$
 Advance to cppad_mixed-20220518.
 This makes the cppad-20220518 available.
 
-$head 05-02$$
+$subhead 05-02$$
 Add the optional
 $cref/at_cascade.image/dock_dismod_at.sh/Building Images/at_cascade.image/$$
 to dock_dismod_at.sh.
 
-$head 05-01$$
+$subhead 05-01$$
 Advance the dock_dismod_at.sh
 $cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
 to 20220421.
 You should rebuild all the images for this update.
 
-$head 04-21$$
+$subhead 04-21$$
 Advance to cppad_mixed-20220421.
 This makes the cppad-20220421 available.
 
-$head 04-19$$
+$subhead 04-19$$
 $list number$$
 Advance to cppad_mixed-20220419 which will include
 the CppAD example atomic ODE solver.
@@ -108,7 +112,7 @@ $lnext
 Add age to error message when prevalence cannot be calculated.
 $lend
 
-$head 04-05$$
+$subhead 04-05$$
 The $cref user_trapezoidal.py$$ example was added.
 
 $subhead API Change$$
@@ -118,21 +122,21 @@ False to True.
 This provides compatibility with the way system_command_prc used
 to function before the return_stdout argument was added.
 
-$head 04-04$$
+$subhead 04-04$$
 Add the $cref/trapezoidal/option_table/rate_case/trapezoidal/$$
 method as an option for solving the ODE.
 This option's name should be changed from rate_case to ode_method.
 
-$head 03-23$$
+$subhead 03-23$$
 Advance to cppad_mixed-20220323 which will in turn install cppad-20220323.
 
-$head 03-19$$
+$subhead 03-19$$
 Balancing
 $cref/covariates/hold_out_command/Balancing/Covariates/$$ was added
 to the hold_out command; see the new
 $cref user_hold_out_2.py$$ example.
 
-$head 03-11$$
+$subhead 03-11$$
 $list number$$
 In $cref plot_curve$$,
 find a way around Matplotlib bug when there are lots of figures.
@@ -141,14 +145,14 @@ $lnext
 Fix setting of C compiler in $cref run_cmake.sh$$.
 $lend
 
-$head 03-08$$
+$subhead 03-08$$
 $list number$$
 Advance to cppad_mixed-20220304 (more work on macOS homebrew problem).
 $lnext
 Fix linking suitesparse (on some macOS homebrew systems).
 $lend
 
-$head 03-04$$
+$subhead 03-04$$
 $list number$$
 Advance to cppad_mixed-20220304. This fixes some problems
 with the install on macOS with homebrew.
@@ -159,30 +163,30 @@ $lnext
 Make some improvements to $cref data_density_command$$ documentation.
 $lend
 
-$head 02-17$$
+$subhead 02-17$$
 Move the value columns
 $cref/fit_value/db2csv_command/variable.csv/fit_value/$$,
 start, scale, truth, sam_avg, and sam_std to the left in
 the $code variable.csv$$ file.
 
-$head 02-08$$
+$subhead 02-08$$
 Change from using $code distutils.core.setup$$ to using $code pip$$
 to install the python part of $code dismod_at$$; see
 $cref/install/install_unix/dismod_at/Install/$$.
 
-$head 02-05$$
+$subhead 02-05$$
 Advance to cppad_mixed-20220205 as part of removing the need to set
 $cref/LD_LIBRARY_PATH/install_unix/Paths/LD_LIBRARY_PATH/$$
 for the install to work.
 
-$head 01-23$$
+$subhead 01-23$$
 The debug version would mistakenly print a warning message about
 $icode mu + eta$$ being less than or equal zero.
 This was a mistake when computing log scaled difference priors because
 the mean mu of the difference does not appear inside the log term; see
 $cref/difference/statistic/Weighted Residual Function, R/Difference/$$.
 
-$head 01-22$$
+$subhead 01-22$$
 Add fact that null is the default value for $icode lower$$ and $icode upper$$
 to the documentation for the create_database
 $cref/prior_table/create_database/prior_table/$$.

@@ -5,6 +5,8 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin whats_new_2015$$
 $spell
+   mm
+   dd
    eigen
    dev
    mixed mixed
@@ -66,8 +68,10 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2015$$
 
+$head mm-dd$$
 
-$head 12-29$$
+
+$subhead 12-29$$
 $list number$$
 Advance to newer version of $code cppad$$ and $code cppad_mixed$$.
 $lnext
@@ -75,26 +79,26 @@ Use new CppAD $code to_string$$ utility in place off
 $code dismod_at/include/to_string.hpp$$.
 $lend
 
-$head 12-24$$
+$subhead 12-24$$
 Advance to newer version of $code cppad_mixed$$
 (rerun $code bin/install_cppad_mixed.sh$$).
 This fixed a bug in that package.
 
-$head 12-15$$
+$subhead 12-15$$
 Advance to newer version of $code cppad$$
 (rerun $code bin/install_cppad.sh$$).
 This should have been done on 12-09 when we converted to using
 $code cppad_mixed$$ package.
 
-$head 12-14$$
+$subhead 12-14$$
 Advance to a newer version of $code cppad_mixed$$
 (rerun $code bin/install_cppad_mixed.sh$$).
 
-$head 12-10$$
+$subhead 12-10$$
 Advance to a newer version of $code cppad_mixed$$
 (rerun $code bin/install_cppad_mixed.sh$$).
 
-$head 12-09$$
+$subhead 12-09$$
 First version of $code dismod_at$$ that has
 $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$
 split out as a separate package.
@@ -104,12 +108,12 @@ $code cppad_mixed_set_sparsity$$,
 $code cppad_mixed_libdir$$, and
 $code cppad_mixed_prefix$$.
 
-$head 11-23$$
+$subhead 11-23$$
 The Ipopt optimizer has a bound relaxation factor that caused
 dismod_at to try and evaluate its object at negative rates.
 This has been fixed by setting this factor to zero.
 
-$head 11-22$$
+$subhead 11-22$$
 $list number$$
 Move the $code fit_residual$$ table to the
 $cref fit_data_subset_table$$.
@@ -125,7 +129,7 @@ The $code fit_var$$ option
 uses the results of one fit as the starting value for the next.
 $lend
 
-$head 11-21$$
+$subhead 11-21$$
 $list number$$
 Change $cref create_database$$ so that it always uses $code None$$
 (not empty string) when the corresponding database value is $code null$$.
@@ -158,7 +162,7 @@ and 31 (at any time).
 $lend
 
 
-$head 11-20$$
+$subhead 11-20$$
 $list number$$
 Improve the new derivative checker.
 $lnext
@@ -175,15 +179,15 @@ $cref fit_var_table$$ and $cref fit_data_subset_table$$ tables.
 $lend
 
 
-$head 11-17$$
+$subhead 11-17$$
 Add another derivative checker
 $code cppad_mixed ipopt_fixed_check_grad_f$$
 (not yet part of $code cppad_mixed$$ user API).
 
-$head 11-16$$
+$subhead 11-16$$
 Add the $cref user_jump_at_age.py$$ example.
 
-$head 11-15$$
+$subhead 11-15$$
 $list number$$
 The $code fit_var_value$$ column in the fit table has been changed to
 the $cref/fit_var_value/fit_var_table/fit_var_value/$$ column.
@@ -195,7 +199,7 @@ $cref/dtime/fit_var_table/residual_dtime/$$
 to the fit_var table.
 $lend
 
-$head 11-14$$
+$subhead 11-14$$
 There was a bug when running models with no
 $cref/random effects/model_variables/Random Effects, u/$$
 because the $code cppad_mixed ran_like$$ was non-empty.
@@ -207,7 +211,7 @@ did not depend on the random effects, but the Laplace approximation
 was still being applied (correct but not efficient).
 This has also been fixed.
 
-$head 11-12$$
+$subhead 11-12$$
 $list number$$
 Add $cref/random_seed/option_table/random_seed/$$ to the speed tests
 $cref user_speed.py$$ and $code cppad_mixed capture_xam.cpp$$.
@@ -223,7 +227,7 @@ $cref/python install/install_unix/dismod_at/Install/$$ command to fail.
 This has been fixed.
 $lend
 
-$head 11-10$$
+$subhead 11-10$$
 $list number$$
 Group all of the user database documentation under the section
 $cref database$$
@@ -252,7 +256,7 @@ $icode age_id$$, $icode time_id$$ and $icode var_id$$
 the $cref var_table$$.
 $lend
 
-$head 11-09$$
+$subhead 11-09$$
 $list number$$
 Advance to a new version of CppAD; i.e., need to rerun
 $code bin/install_cppad.sh$$.
@@ -273,7 +277,7 @@ column types. In addition, if a column has an invalid type, report the
 table and column and invalid type.
 $lend
 
-$head 11-07$$
+$subhead 11-07$$
 $list number$$
 One can now inform $code dismod_at$$ that a specific
 parent rate (child rate effect) is always zero by setting
@@ -300,14 +304,14 @@ $lend
 
 
 
-$head 11-06$$
+$subhead 11-06$$
 Add lower and upper limits to the random effects in
 $code cppad_mixed optimize_random$$ and
 $code cppad_mixed optimize_fixed$$.
 This is represented by
 $cref/bound_random/option_table/Optimize Random Only/bound_random/$$ in the option table.
 
-$head 11-05$$
+$subhead 11-05$$
 $list number$$
 The $code relrisk$$ and $code mtwith$$ integrands were not being
 computed properly.
@@ -318,7 +322,7 @@ $code database2csv.py$$ output files (when they should have been there).
 This has been fixed.
 $lend
 
-$head 11-04$$
+$subhead 11-04$$
 $list number$$
 Add $cref/fit_simulate_index/fit_command/simulate_index/$$
 to the option table and
@@ -339,7 +343,7 @@ $lnext
 There was a bug in the solution of the differential equation.
 The $code iota_pos_rho_zero$$ and $code iota_zero_rho_pos$$
 $cref/rate_case/option_table/rate_case/$$ options were reversed.
-This bug was introduced on $cref/10-29/whats_new_2015/10-29/$$
+This bug was introduced on $cref/10-29/whats_new_2015/mm-dd/10-29/$$
 and has been fixed.
 $lnext
 The $code cppad_mixed ran_like$$ virtual
@@ -347,7 +351,7 @@ function must be implemented for both $code a1_double$$ and $code a2_double$$
 (one used to only need to implement $code a2_double$$).
 $lend
 
-$head 11-03$$
+$subhead 11-03$$
 $list number$$
 Change $code bin/database2csv.py$$ to only take one argument.
 $lnext
@@ -358,7 +362,7 @@ $codei%
 i.e., switch the order of $icode file_name$$ and $icode command$$.
 $lend
 
-$head 11-02$$
+$subhead 11-02$$
 $list number$$
 Added the data base dump program
 $code bin/database2csv.py$$.
@@ -371,7 +375,7 @@ $code bin/import_cascade.py$$,
 another undocumented example that may change with time.
 $lend
 
-$head 11-01$$
+$subhead 11-01$$
 $list number$$
 The reduction in memory and increase in speed on 10-30
 did not make sense and does not seem to be reproducible
@@ -397,7 +401,7 @@ $cref/log-densities
 The corresponding wish list item has been removed.
 $lend
 
-$head 10-30$$
+$subhead 10-30$$
 $list number$$
 The notation for the
 $cref/weighted residual/statistic/Weighted Residual Function, R/$$
@@ -426,9 +430,9 @@ total CPU secs in NLP function evaluations:
 $icode%old% = 12.98%$$, $icode%new% = 8.724%$$.
 $lend
 
-$head 10-29$$
+$subhead 10-29$$
 $list number$$
-The change on $cref/10-27/whats_new_2015/10-27/$$ whereby
+The change on $cref/10-27/whats_new_2015/mm-dd/10-27/$$ whereby
 $code node_rate_value_info$$ was reverted because it used three times
 as much memory and time.
 The name was however changed from $code node_rate_value_info$$ to
@@ -449,7 +453,7 @@ Add a $cref wish_list$$ item.
 $lend
 
 
-$head 10-28$$
+$subhead 10-28$$
 $list number$$
 Advance to a newer version of CppAD. The requires that you re-run
 $codep
@@ -476,7 +480,7 @@ See instructions for running the
 $cref/tests/install_unix/dismod_at/Test/$$.
 $lend
 
-$head 10-27$$
+$subhead 10-27$$
 $list number$$
 The values in the $cref prior_table$$ were checked to make sure that
 $icode%lower% <= %mean% <= %upper%$$,
@@ -494,7 +498,7 @@ Note that this is different from $code dev::pack_info_node_rate.cpp$$
 $lend
 
 
-$head 10-26$$
+$subhead 10-26$$
 Changed the specification for the $cref create_database$$ argument
 $cref/option_table/create_database/option_table/$$.
 To be specific, the row
@@ -506,7 +510,7 @@ $codei%
    { 'name':'parent_node_name' , 'value':'%parent_node_name%' }
 %$$
 
-$head 10-25$$
+$subhead 10-25$$
 $list number$$
 Make the choice between quasi-Newton and full Newton
 a program option for the $code cppad_mixed$$ package; see
@@ -517,7 +521,7 @@ for the fixed effects optimization was moved into the options table; see
 $cref/quasi_fixed/option_table/Optimize Fixed Only/quasi_fixed/$$.
 $lend
 
-$head 10-24$$
+$subhead 10-24$$
 $list number$$
 Reduce the probability of the
 $code test/cppad_mixed/binomial.cpp$$ test failed by chance
@@ -537,7 +541,7 @@ Create a separate documentation section for editing of
 $cref run_cmake.sh$$ during the install procedure.
 $lend
 
-$head 10-20$$
+$subhead 10-20$$
 $list number$$
 The $code approx_mixed$$ sub-package name was changed to
 $code cppad_mixed$$. In addition example names of the form
@@ -549,19 +553,19 @@ and the $code bin/check_cppad_mixed.sh$$ test failed.
 This has been fixed.
 $lend
 
-$head 10-19$$
+$subhead 10-19$$
 Added an example that demonstrates that the random effects variance
 term may cause the solution to move from an exact match with the
 data values; see $code cppad_mixed data_mismatch_xam.cpp$$.
 
-$head 10-16$$
+$subhead 10-16$$
 Two new tests were added to check cases where the solution
 for the random effects should be zero; see
 $code test/devel/cppad_mixed/zero_random.cpp$$ and
 $code test/user/zero_random.py$$.
 
 
-$head 10-15$$
+$subhead 10-15$$
 $list number$$
 The instructions in $cref install_unix$$ were modified to make it clear
 that the external package installers only need to be run once; see
@@ -579,19 +583,19 @@ Advance to a newer version of CppAD (to avoid another bug)
 and hence requires $code bin/install_cppad.sh$$ to be re-run.
 $lend
 
-$head 10-14$$
+$subhead 10-14$$
 Use full numerical precision when converting double precision values to strings
 for writing to $cref/output tables/data_flow/Output Tables by Table Name/$$
 (it used to be that only about six digits of precision were preserved).
 
-$head 09-18$$
+$subhead 09-18$$
 There was an error in the $cref user_no_children.py$$ example
 (the parent node was $code world$$ and should have been $code canada$$).
 This has been fixed.
 In addition, the fitted values are now checked at the end of the example
 (so that in the future, this type of mistake will be automatically detected).
 
-$head 09-03$$
+$subhead 09-03$$
 $list number$$
 Advance to a newer version of CppAD
 (to avoid a bug when used with c++98 compilers)
@@ -614,17 +618,17 @@ Print result of test for C++ $code nullptr$$ during
 $cref/cmake command/install_unix/dismod_at/Cmake Command/$$
 $lend
 
-$head 08-31$$
+$subhead 08-31$$
 Reduce memory required by $code cppad_mixed$$ sub-package.
 This required some recent improvements to CppAD and hence requires
 $code bin/install_cppad.sh$$ to be re-run.
 
-$head 08-27$$
+$subhead 08-27$$
 Reduce the chance of a false failure from
 $code example/devel/cppad_mixed/user/capture_xam.cpp$$
 (takes longer to run).
 
-$head 08-21$$
+$subhead 08-21$$
 $list number$$
 Edit discussion of text can be empty
 (now it must be $code null$$ instead of empty) see
@@ -640,7 +644,7 @@ $cref/standard deviation multipliers
 /$$).
 $lend
 
-$head 08-18$$
+$subhead 08-18$$
 $list number$$
 There was a problem with the
 $cref/eigen/install_unix/Special Requirements/eigen/$$
@@ -653,7 +657,7 @@ This now requires linking both the $code cppad_mixed$$ and
 $code cppad_mixed_eigen$$ libraries.
 $lend
 
-$head 08-15$$
+$subhead 08-15$$
 $list number$$
 Improve the $code cppad_mixed theory$$ section.
 $lnext
@@ -661,7 +665,7 @@ Add diagnostics as to the size of the $code cppad_mixed$$ problem
 representation; see $code cppad_mixed size_map$$.
 $lend
 
-$head 08-14$$
+$subhead 08-14$$
 $list number$$
 Change the name of the $code avg_case_table$$ to $cref avgint_table$$.
 $lnext
@@ -670,13 +674,13 @@ corresponding $cref data_table$$ or $cref avgint_table$$ value storage.
 (see speed comment for $code 08-13$$ below).
 $lend
 
-$head 08-13$$
+$subhead 08-13$$
 The covariate values storage was changed from a vector for each data row
 to one vector for all the data rows.
 For an example with 77,288 rows of data this changed to time to read
 the entire database from 334 seconds to one second.
 
-$head 08-12$$
+$subhead 08-12$$
 $list number$$
 The $code var_command$$ was changed back to the $cref init_command$$
 (because it creates more than just the $cref var_table$$).
@@ -694,7 +698,7 @@ Use $code null$$ for a standard deviation multiplier now
 eliminates it from the list of variables; see $cref smooth_table$$.
 $lend
 
-$head 08-09$$
+$subhead 08-09$$
 $list number$$
 There was a bug in the $code var_command$$ when there were
 $cref/covariate multipliers/mulcov_table/$$ for multiple integrands
@@ -709,10 +713,10 @@ run time was reduced to 3.5 minutes).
 $lnext
 The $code dev::get_db_input.cpp$$ routine now checks the lower and upper limits
 implied by the choice of $code node_rate_value_info$$.
-This was removed on $cref/2015-10-27/whats_new_2015/10-27/$$.
+This was removed on $cref/2015-10-27/whats_new_2015/mm-dd/10-27/$$.
 $lend
 
-$head 08-08$$
+$subhead 08-08$$
 $list number$$
 Change the $cref init_command$$ to the $code var_command$$
 (because it creates the $cref var_table$$).
@@ -736,12 +740,12 @@ Reduce the chance of a false failure from
 $code test/binomial_test.cpp$$.
 $lend
 
-$head 08-04$$
+$subhead 08-04$$
 Some compiler errors (on older compilers) were added.
 In addition, the minimal version of
 $cref/sqlite3/install_unix/System Requirements/sqlite3/$$ was specified.
 
-$head 08-03$$
+$subhead 08-03$$
 $list number$$
 First version that actually installs the $code cppad_mixed$$ sub-package
 using the $code cppad_mixed_libdir$$ option to the
@@ -754,7 +758,7 @@ Reduce the chance of random failure in $code test/devel/n_mixture.cpp$$
 (using more simulated data).
 $lend
 
-$head 08-02$$
+$subhead 08-02$$
 $list number$$
 Remove the option to include Laplace likelihoods (absolute value terms)
 in the $code cppad_mixed random negative log likelihood$$.
@@ -767,7 +771,7 @@ Add the $code cppad_mixed capture_xam.cpp$$ example and test.
 This is both a correctness and speed test.
 $lend
 
-$head 08-01$$
+$subhead 08-01$$
 $list number$$
 The Hessian w.r.t. $latex \beta$$,
 $latex \[
@@ -782,7 +786,7 @@ The $code cppad_mixed ran_like$$ function was changed from
 use $code a5_double$$ objects to $code a3_double$$ objects.
 $lend
 
-$head 07-29$$
+$subhead 07-29$$
 $list number$$
 The term
 'prior negative log-likelihood' was change to
@@ -798,7 +802,7 @@ $code cppad_mixed random likelihood
 $lend
 
 
-$head 07-28$$
+$subhead 07-28$$
 $list number$$
 Some example were missing, or were including the wrong source code.
 This has been fixed in the following user examples:
@@ -812,17 +816,17 @@ Handle the case where the
 $code cppad_mixed fix_like$$ is empty.
 $lend
 
-$head 07-27$$
+$subhead 07-27$$
 Grouped all the user level $code cppad_mixed$$ examples in the
 section $code cppad_mixed user$$.
 
-$head 07-25$$
+$subhead 07-25$$
 Add the $code dev::cpp_create_table.cpp$$ routine,
 and replace all uses of $code dev::put_table_row.cpp$$ by $code create_table$$
 (much faster).
 
 
-$head 07-24$$
+$subhead 07-24$$
 $list number$$
 Add the $cref/derivative_test/option_table/Optimize Fixed and Random/derivative_test/$$
 option (because it is to slow to do all the time).
@@ -831,7 +835,7 @@ Fix the automatic setting of the number of age and time points in the
 ode_grid.
 $lend
 
-$head 07-23$$
+$subhead 07-23$$
 $list number$$
 Add the $cref user_lasso_covariate.py$$ example / test.
 $lnext
@@ -845,7 +849,7 @@ $cref/density_id/data_table/density_id/$$ corresponds to a
 uniform distribution.
 $lend
 
-$head 07-22$$
+$subhead 07-22$$
 $list number$$
 Add the $cref user_no_children.py$$ example.
 $lnext
@@ -868,12 +872,12 @@ Laplace and Log-Laplace likelihoods for this data
 (with out affecting the Laplace approximation for the integral).
 $lend
 
-$head 07-21$$
+$subhead 07-21$$
 The $code cppad_mixed$$ sub-package was extended to work in the case
 were there are
 $code cppad_mixed no random effects$$.
 
-$head 07-20$$
+$subhead 07-20$$
 $list number$$
 If $cref/random_seed/option_table/random_seed/$$ is zero,
 use the $cref/unix_time/log_table/unix_time/$$ in the log table
@@ -894,7 +898,7 @@ Also fix a $latex \B{p} ( y , \theta )$$ that was written as
 $latex \B{p} ( y | \theta )$$ in the problem discussion.
 $lend
 
-$head 07-19$$
+$subhead 07-19$$
 $list number$$
 The name of the $code argument_table$$ was change to the $cref option_table$$.
 Some bugs were fixed in the
@@ -922,7 +926,7 @@ incorrectly when a fixed effect was at its lower or upper bound.
 This has been fixed.
 $lend
 
-$head 07-17$$
+$subhead 07-17$$
 $list number$$
 First version of the $code cppad_mixed$$ sub-package that works with
 $code cppad_mixed constraints$$; e.g., see
@@ -937,14 +941,14 @@ message type to the log table
 (it has since been removed).
 $lend
 
-$head 07-16$$
+$subhead 07-16$$
 In the $code cppad_mixed$$ sub-package,
 changed $code joint_density$$ to
 $code cppad_mixed ran_like$$
 and changed $code prior_density$$ to
 $code cppad_mixed fix_like$$.
 
-$head 07-15$$
+$subhead 07-15$$
 $list number$$
 Change $cref create_database$$ arguments to end in $icode _dict$$ when
 they are a list of dictionaries, so similar to
@@ -960,7 +964,7 @@ These table get overwritten when the corresponding command is executed;
 see $cref/output tables/data_flow/Output Tables by Table Name/$$.
 $lend
 
-$head 07-14$$
+$subhead 07-14$$
 $list number$$
 Add $cref/hold_out/data_table/hold_out/$$ to the data table
 and exclude the flagged data during the $cref fit_command$$.
@@ -969,7 +973,7 @@ Add the $cref fit_data_subset_table$$
 and compute it during a $cref fit_command$$.
 $lend
 
-$head 07-13$$
+$subhead 07-13$$
 $list number$$
 Record the start of and end of each $cref command$$ in the
 $cref log_table$$.
@@ -984,7 +988,7 @@ was added to the $code cppad_mixed$$ derived class.
 This enabled $code dismod_at$$ to log the $code cppad_mixed$$ error messages.
 $lend
 
-$head 07-11$$
+$subhead 07-11$$
 $list number$$
 Add an error message when the text value in a table is empty; see
 $cref/text can be null, not empty/database/Null/Text can be Null, not Empty/$$.
@@ -1006,7 +1010,7 @@ must appear in the corresponding primary key column,
 or it must be $code null$$.
 $lend
 
-$head 07-10$$
+$subhead 07-10$$
 $list number$$
 First version of $cref predict_command$$ that passes its
 example / test $cref predict_command.py$$.
@@ -1014,7 +1018,7 @@ $lnext
 List addition input and output tables in $cref data_flow$$ section.
 $lend
 
-$head 07-09$$
+$subhead 07-09$$
 $list number$$
 The $code sample$$ table column $code sample_value$$
 was changed to $cref/var_value/sample_table/var_value/$$.
@@ -1026,7 +1030,7 @@ The $code avgint_subset_table$$ was added as an output
 of the $cref init_command$$.
 $lend
 
-$head 07-08$$
+$subhead 07-08$$
 $list number$$
 Change the $code var_command$$ to $cref init_command$$
 and use this command to initialize output tables whenever
@@ -1035,10 +1039,10 @@ $lnext
 Add the $cref data_subset_table$$.
 $lend
 
-$head 07-07$$
+$subhead 07-07$$
 First version of $cref sample_command$$ that passes its example / test.
 
-$head 07-05$$
+$subhead 07-05$$
 $list number$$
 First version of the $cref simulate_command$$ that passes
 its example / test.
@@ -1055,7 +1059,7 @@ Use a $code var_command$$ to create the $cref var_table$$
 and put the $cref fit_command$$ results in a separate $cref fit_var_table$$.
 $lend
 
-$head 07-04$$
+$subhead 07-04$$
 $list number$$
 Remove the python $code pack_info$$ class
 (no longer necessary now that $cref var_table$$ has more information).
@@ -1067,7 +1071,7 @@ how to use the new $cref var_table$$ information
 and so that it can be run as is (without configuration).
 $lend
 
-$head 07-03$$
+$subhead 07-03$$
 $list number$$
 Remove the $code variable_name$$ from the $cref var_table$$,
 add extra columns to specify the exact variable using
@@ -1089,7 +1093,7 @@ $cref/mulcov_meas_noise/var_table/var_type/mulcov_meas_noise/$$.
 $lend
 
 
-$head 07-01$$
+$subhead 07-01$$
 $list number$$
 Simulating random numbers
 (for the $cref simulate_command$$ which is not yet working)
@@ -1101,7 +1105,7 @@ The $cref/foreign key/database/Foreign Key/$$ convention
 was added to the documentation.
 $lend
 
-$head 06-30$$
+$subhead 06-30$$
 $list number$$
 The python routine $code create_table$$ now adds the
 $cref/unique/create_table/col_name/unique/$$ constraint to
@@ -1133,11 +1137,11 @@ In addition, running the $cref/tests/install_unix/dismod_at/Test/$$
 is now optional.
 $lend
 
-$head 06-29$$
+$subhead 06-29$$
 $list number$$
 Add the $code node_rate_value_info$$ argument
 to the fit command.
-(This was removed on $cref/2015-10-27/whats_new_2015/10-27/$$.)
+(This was removed on $cref/2015-10-27/whats_new_2015/mm-dd/10-27/$$.)
 This enables taking advantage of cases where $icode rho$$
 or $icode iota$$ are zero (to speed integration).
 In addition, it allows for some cases where $icode chi$$ is zero.
@@ -1158,7 +1162,7 @@ In addition the new integrand $code Tincidence$$ has been
 added (which is relative to the total population).
 $lend
 
-$head 06-27$$
+$subhead 06-27$$
 $list number$$
 All of the $cref/prior_id/prior_table/prior_id/$$ columns in
 the $cref smooth_table$$ have been changed to end in $code _prior_id$$.
@@ -1173,7 +1177,7 @@ $lnext
 Update the $cref wish_list$$
 $lend
 
-$head 06-26$$
+$subhead 06-26$$
 $list number$$
 Remove the requirement that the
 $cref/age/age_table/age/$$ and $cref/time/time_table/time/$$
@@ -1186,7 +1190,7 @@ when the ages or times were not increasing.
 This was fixed and a second version for this date was created.
 $lend
 
-$head 06-25$$
+$subhead 06-25$$
 $list number$$
 Change $code variable_name$$
 for measurement covariate and rate covariate multipliers
@@ -1209,7 +1213,7 @@ have been included as comments under the install dismod_at
 $cref/Setup/install_unix/dismod_at/Setup/$$ heading.
 $lend
 
-$head 06-24$$
+$subhead 06-24$$
 $list number$$
 There was a bug in the $cref create_database$$ routine,
 to be specific, it was not calling $code commit$$ and $code close$$
@@ -1225,14 +1229,14 @@ from empty string to a descriptive name.
 (This column of the var table was later removed.)
 $lend
 
-$head 06-23$$
+$subhead 06-23$$
 The $cref fit_command$$ was changed so that there can only be
 on set of results in the data base.
 This changed the contents of the
 $code fit_arg_table$$ and the $cref var_table$$.
 
 
-$head 06-22$$
+$subhead 06-22$$
 First version of $code dismod_at$$ is available to be downloaded and installed;
 see $cref install_unix$$.
 

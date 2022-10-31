@@ -5,6 +5,8 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin whats_new_2020$$
 $spell
+   mm
+   dd
    Dismod
    devel
    cpp
@@ -43,7 +45,9 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2020$$
 
-$head 12-30$$
+$head mm-dd$$
+
+$subhead 12-30$$
 The
 $cref prior_sim_table$$,
 $cref hes_fixed_table$$,
@@ -52,11 +56,11 @@ $cref/output tables/data_flow/Output Tables by Table Name/$$
 were not being dropped (if they existed) during the $cref init_command$$.
 This has been fixed.
 
-$head 12-29$$
+$subhead 12-29$$
 Fix a problem when creating both debug and release builds.
 (This was not a problem before 12-22 when build/external moved to external).
 
-$head 12-26$$
+$subhead 12-26$$
 $list number$$
 Change $code bin/db_simplify.py$$ from a Chron's Disease to a Diabetes case.
 $lnext
@@ -67,14 +71,14 @@ Remove the checkpointing item
 $cref/rate_case/wish_list/ODE Solution/rate_case/$$.
 $lend
 
-$head 12-22$$
+$subhead 12-22$$
 Advance to cppad_mixed-20201222.
 This improves the error messaging during the install of
 $cref/cppad_mixed.sh/install_unix/Special Requirements/cppad_mixed/$$.
 In addition, this new version avoids ipopt creating of the file
 $code debug.out$$ (when $cref/build_type/run_cmake.sh/build_type/$$ is debug).
 
-$head 12-17$$
+$subhead 12-17$$
 $list number$$
 The example $cref user_sum_residual.py$$ discusses why the sum
 of the weighted residuals is not expected to be zero.
@@ -89,20 +93,20 @@ to help diagnose problems.
 $lend
 
 
-$head 11-24$$
+$subhead 11-24$$
 Advance $cref dock_dismod_at.sh$$ version 20201122.
 This should speed up the build process.
 It requires one to re-build dismod_at.mixed and dismod_at.image.
 
 
-$head 11-22$$
+$subhead 11-22$$
 Advance to cppad_mixed-20201124.
 This speeds up the build process when multiple processors are available.
 It also fixes a problem in $code cppad_mixed.pc$$ and thereby removes the need
 to specify a prefix for each of the
 $cref/special requirements/install_unix/Special Requirements/$$.
 
-$head 11-23$$
+$subhead 11-23$$
 $list number$$
 Advance to cppad_mixed and $cref dock_dismod_at.sh$$ version 20201122.
 This simplifies the build process because the script for building
@@ -118,11 +122,11 @@ $cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
 You must rebuild all of these images.
 $lend
 
-$head 10-10$$
+$subhead 10-10$$
 Improve the wording in the documentation of
 $cref/std/prior_table/std/$$ in the prior table.
 
-$head 08-31$$
+$subhead 08-31$$
 Advance to cppad_mixed and $cref dock_dismod_at.sh$$ version 20200831.
 This fixes a bug in the calculation of the first derivative of
 the fixed effects objective.
@@ -134,7 +138,7 @@ To use the new dock_dismod_at.sh you will have to build a new
 $cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
 
 
-$head 08-23$$
+$subhead 08-23$$
 $list number$$
 Fix location of upstream source in
 $code bin/install_eigen$$.
@@ -143,15 +147,15 @@ Patch Ipopt's source file $code IpIpoptApplication.cpp$$; see
 $href%https://github.com/coin-or/Ipopt/issues/393%ipopt issue 393%$$.
 $lend
 
-$head 08-20$$
+$subhead 08-20$$
 Change $code bin/install_ipopt.sh$$ to directly download and configure the
 necessary third party software (not use coinbrew).
 
-$head 08-16$$
+$subhead 08-16$$
 Improve the debug $cref/build_type/run_cmake.sh/build_type/$$
 so that ipopt and all its libraries also get built for debugging.
 
-$head 07-02$$
+$subhead 07-02$$
 $list number$$
 Fix a problem with the change on the previous day (see 07-01 below).
 To be specific, the tables for the Hessian with respect to the fixed
@@ -166,7 +170,7 @@ This will require building a new
 $cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
 $lend
 
-$head 07-01$$
+$subhead 07-01$$
 Dismod_at will exit with an error when the
 $cref/sample_table/sample_command/Output Tables/sample_table/$$
 is not created by the
@@ -175,7 +179,7 @@ If this is because the fixed effects information matrix is not
 positive definite,
 the $cref hes_fixed_table$$ will contain the information matrix
 
-$head 06-30$$
+$subhead 06-30$$
 Advance to cppad_mixed-20200630.
 This fixes a problem where the $cref sample_table$$ was invalid after the
 $cref/sample asymptotic/sample_command/asymptotic/$$ command
@@ -183,7 +187,7 @@ when an information matrix that is not positive definite.
 Now, in addition to the warning about the information matrix,
 the sample table does not exist after the command when this happens.
 
-$head 06-24$$
+$subhead 06-24$$
 Advance to the dock_dismod_at.sh
 $cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
 to 20200620
@@ -192,7 +196,7 @@ $cref/dismod_at.base/dock_dismod_at.sh/Building Images/dismod_at.base/$$
 and then
 $cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
 
-$head 06-20$$
+$subhead 06-20$$
 The $cref/variables/sample_command/variables/$$ argument was added
 to the sample command.
 This enables one to get statistics for fitting just the fixed effects.
@@ -200,14 +204,14 @@ It is not backward compatible because you will have to include the
 $icode variables$$ argument in your sample commands.
 To get the old behavior, set $icode variables$$ to $code both$$.
 
-$head 06-08$$
+$subhead 06-08$$
 Advance to ipopt-3.13.2, cppad-20200606, cppad_mixed-20200608.
 
-$head 05-30$$
+$subhead 05-30$$
 Advance to $code cppad_mixed-20200530$$
 (more work on the adaptive derivative checker).
 
-$head 05-29$$
+$subhead 05-29$$
 $list number$$
 A check was added for the case where there are more constraints on the random
 effects than there are random effects.
@@ -226,17 +230,17 @@ effects is not positive definite at the starting variable values and
 $cref/quasi_fixed/option_table/Optimize Fixed Only/quasi_fixed/$$ is false.
 $lend
 
-$head 05-27$$
+$subhead 05-27$$
 Advance to $code cppad_mixed-20200527$$.
 This should improve the output generated by the
 $cref/derivative_test/option_table/Optimize Fixed and Random/derivative_test/$$
 $code trace-adaptive$$ option.
 
 
-$head 05-21$$
+$subhead 05-21$$
 The $cref user_covid_19.py$$ example was added.
 
-$head 05-15$$
+$subhead 05-15$$
 Add another restriction on the $cref/group_name/subgroup_table/group_name/$$.
 To be specific, the only case were a group name can also be a subgroup name
 is when the group has only one subgroup and the same name is used for both.
@@ -244,7 +248,7 @@ In addition, more subgroup table error checking (that used to be only
 in the debug version) is done in the release version of dismod_at.
 
 
-$head 03-28$$
+$subhead 03-28$$
 $list number$$
 Add simplification to the scaling of the asymptotic statistics
 in the case were we have
@@ -260,7 +264,7 @@ $cref/asymptotic/sample_command/asymptotic/$$ sampling
 when there are no random effects.
 $lend
 
-$head 03-27$$
+$subhead 03-27$$
 $list number$$
 Add the $cref user_one_function.py$$ which demonstrates how to
 fit an arbitrary function and ignore the dismod_at
@@ -284,12 +288,12 @@ $cref/asymptotic/sample_command/asymptotic/$$ method.
 $lend
 
 
-$head 03-26$$
+$subhead 03-26$$
 The $code user_posterior.py$$ example was moved to
 $cref user_sample_asy_sim.py$$ and it was extended to include the
 asymptotic sampling method.
 
-$head 03-25$$
+$subhead 03-25$$
 $list number$$
 Advance to $code cppad_mixed-20200325$$.
 This fixed an assert in the debug version during
@@ -321,7 +325,7 @@ This will require building a new
 $cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
 $lend
 
-$head 03-24$$
+$subhead 03-24$$
 $list number$$
 The Hessian tables are now guaranteed to be in row major order; see
 representation for the
@@ -343,7 +347,7 @@ Check the $code hes_random.csv$$ file at the end of the
 $cref user_hes_random.py$$ example.
 $lend
 
-$head 03-23$$
+$subhead 03-23$$
 $list number$$
 Update to using version cppad_mixed-20200319.
 This enables computation of the Hessian of the random effects objective.
@@ -353,7 +357,7 @@ $cref/asymptotic/sample_command/asymptotic/$$ sample command.
 Add the $cref user_hes_random.py$$ example use of the hes_random table.
 $lend
 
-$head 03-22$$
+$subhead 03-22$$
 $list number$$
 Add the $cref/hes_fixed table/sample_command/Output Tables/hes_fixed_table/$$
 as an extra output when computing asymptotic samples.
@@ -372,16 +376,16 @@ Trying to optimize the random effects given the simulated fixed effects,
 without changing the data, often fails and does not make sense.
 $lend
 
-$head 03-21$$
+$subhead 03-21$$
 Add the $cref user_hes_fixed_math.py$$ example.
 
-$head 03-19$$
+$subhead 03-19$$
 Update to using version cppad_mixed-20200319.
 This fixes some asserts during the
 $cref/asymptotic/sample_command/asymptotic/$$ sampling method
 in the debug build.
 
-$head 03-18$$
+$subhead 03-18$$
 $list number$$
 Advance the dock_dismod_at.sh
 $cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
@@ -407,7 +411,7 @@ it works with both quasi-Newton and Newton method,
 and it includes an example / test of the asymptotic statistics.
 $lend
 
-$head 03-15$$
+$subhead 03-15$$
 $list number$$
 Advance the dock_dismod_at.sh
 $cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
@@ -436,7 +440,7 @@ $cref/problem parameters/user_sample_asy.py/Problem Parameters/$$
 were include in the documentation.
 $lend
 
-$head 03-09$$
+$subhead 03-09$$
 $list number$$
 There was a bug in the smoothing when there was a
 upper or lower bound in the prior for
@@ -453,12 +457,12 @@ This will require building a new
 $cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
 $lend
 
-$head 03-06$$
+$subhead 03-06$$
 The $code jump_at_age.py$$ example has been improved
 to include more discussion and the flexibility to change its
 $cref/parameters/user_jump_at_age.py/Parameters/$$.
 
-$head 02-29$$
+$subhead 02-29$$
 $list number$$
 Add the $cref user_residual.py$$ example.
 $lnext
@@ -468,14 +472,14 @@ in the option table, the corresponding parent node name is placed in the
 $cref/option.csv/db2csv_command/option.csv/$$.
 $lend
 
-$head 02-28$$
+$subhead 02-28$$
 Fix the formula for the age smoothing $cref/A^s/smooth_dage/A^s/$$,
 and the time smoothing $cref/T^s/smooth_dtime/T^s/$$.
 To be specific, the forward index comes before the current index; e.g.,
 $latex D(v_{i,j}, v_{i+1,j} \ldots )$$ was replaced by
 $latex D(v_{i+1,j}, v_{i,j} \ldots )$$.
 
-$head 02-26$$
+$subhead 02-26$$
 $list number$$
 Add an $cref/immunity/wish_list/Immunity/$$ wish list item.
 $lnext
@@ -490,7 +494,7 @@ $latex \sigma$$ in the data versus prior cases.
 $lend
 
 
-$head 02-20$$
+$subhead 02-20$$
 Advance the dock_dismod_at.sh
 $cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
 to 20200218.
@@ -498,7 +502,7 @@ This will require building a new
 $cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
 
 
-$head 02-18$$
+$subhead 02-18$$
 The $code dismod_at$$ program would crash if the
 $icode subgroup_id$$ in the
 $cref/data_table/data_table/subgroup_id/$$ or
@@ -506,11 +510,11 @@ $cref/avgint_table/avgint_table/subgroup_id/$$ as null.
 This has been fixed by detecting this case and printing an error message.
 
 
-$head 02-14$$
+$subhead 02-14$$
 The description of the $cref/hold_out/data_table/hold_out/$$ data
 has been improved.
 
-$head 02-13$$
+$subhead 02-13$$
 $list number$$
 The $cref/age_id/age_table/age_id/$$ and $cref/time_id/time_table/time_id/$$
 values in the $cref smooth_grid_table$$ and $cref weight_grid_table$$ were
@@ -525,15 +529,15 @@ This will require building a new
 $cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
 $lend
 
-$head 01-31$$
+$subhead 01-31$$
 A $cref/simulating priors/wish_list/Simulating Priors/$$ entry
 was added to the wish list.
 
-$head 01-16$$
+$subhead 01-16$$
 Add an optimizer warm start
 wish list item.
 
-$head 01-08$$
+$subhead 01-08$$
 $list number$$
 Add documentation for the arguments
 $cref/database/dock_dismod_at.sh/Run New Container/database/$$ and
@@ -548,7 +552,7 @@ This will require building a new
 $cref/dismod_at.image/dock_dismod_at.sh/Building Images/dismod_at.image/$$.
 $lend
 
-$head 01-07$$
+$subhead 01-07$$
 Fix the following compile error when $code NDEBUG$$ is not defined:
 $codei%
    %...%/devel/table/get_subgroup_table.cpp:128:31: error:

@@ -26,7 +26,7 @@ $codei%dismod_at %database% old2new%$$
 
 $head Subgroup Table$$
 The $cref subgroup_table$$ was added to the database input tables on
-$cref/2019-11-22/whats_new_2019/11-22/$$.
+$cref/2019-11-22/whats_new_2019/mm-dd/11-22/$$.
 If the original database does not contain a subgroup table,
 it is added with one row and the following values:
 $icode%
@@ -63,7 +63,7 @@ $cref/
    Zero Sum Constraints/
    zero_sum_child_rate
 /$$ on
-$cref/2019-11-29/whats_new_2019/11-29/$$.
+$cref/2019-11-29/whats_new_2019/mm-dd/11-29/$$.
 If the option name $code zero_sum_random$$ is in the option table, it is
 changed to $cref/
    zero_sum_child_rate/

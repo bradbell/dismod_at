@@ -5,6 +5,8 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin whats_new_2019$$
 $spell
+   mm
+   dd
    const
    ubuntu
    dage
@@ -57,11 +59,13 @@ $navigate%
 
 $section Changes and Additions to Dismod_at During 2019$$
 
-$head 12-07$$
+$head mm-dd$$
+
+$subhead 12-07$$
 Spaces in a $cref/group_name/subgroup_table/group_name/$$ are now forbidden.
 A check was added to make sure there are no such spaces.
 
-$head 12-06$$
+$subhead 12-06$$
 Document the fact that there are no
 $cref/subgroup covariate multipliers
    /model_variables
@@ -73,7 +77,7 @@ $cref/meas_noise/mulcov_table/subgroup_smooth_id/meas_noise/$$
 under $icode subgroup_smooth_id$$ in the mulcov table.
 In addition, report an error if these multipliers are requested.
 
-$head 12-05$$
+$subhead 12-05$$
 $list number$$
 The mulcov table $cref/group_id/mulcov_table/group_id/$$
 documentation what corrected to prohibit the null value.
@@ -90,7 +94,7 @@ $codei%
 %$$
 $lend
 
-$head 12-04$$
+$subhead 12-04$$
 $list number$$
 Add the $cref user_zsum_mulcov_meas.py$$ example
 which demonstrates using the
@@ -112,7 +116,7 @@ $codei%
 %$$
 $lend
 
-$head 11-30$$
+$subhead 11-30$$
 Add the $cref user_zsum_mulcov_rate.py$$ example
 which demonstrates using the
 $cref/
@@ -123,7 +127,7 @@ $cref/
 /$$
 option with subgroup rate covariate multipliers.
 
-$head 11-29$$
+$subhead 11-29$$
 The $code zero_sum_random$$ option was changed to
 $cref/
    zero_sum_child_rate/
@@ -136,7 +140,7 @@ this change is made automatically.
 In addition, the $code old2new$$ command will make this change to the
 $cref/option table/old2new_command/option Table/$$.
 
-$head 11-28$$
+$subhead 11-28$$
 $list number$$
 Add the $cref user_bilevel_random.py$$ example demonstrating
 fitting two levels of random effects using
@@ -158,7 +162,7 @@ $cref/avgint table/create_database/avgint_table/subgroup/$$
 ( $cref/mulcov table/create_database/mulcov_table/group/$$) tables.
 $lend
 
-$head 11-26$$
+$subhead 11-26$$
 $list number$$
 The $code meas_covariate.py$$ example was changed to be an example
 using group covariate multipliers; see $cref user_group_mulcov.py$$.
@@ -172,16 +176,16 @@ subset of that data that has extra measurement noise.
 $lnext
 The $code meas_std_effect$$
 $cref/option_name/option_table/Table Format/option_name/$$ was removed.
-It was deprecated (see $cref/04-08/whats_new_2019/04-08/$$ below)
+It was deprecated (see $cref/04-08/whats_new_2019/mm-dd/04-08/$$ below)
 and should have been replaced by
 $cref/meas_noise_effect/option_table/meas_noise_effect/$$.
 $lend
 
-$head 11-25$$
+$subhead 11-25$$
 Use $cref system_command_prc$$ to simplify the
 $cref get_started$$ examples.
 
-$head 11-24$$
+$subhead 11-24$$
 $list number$$
 An $code old2new_command$$ was added.
 This time it adds the $cref subgroup_table$$
@@ -200,14 +204,14 @@ The $cref db2csv_command$$ was modified in the following ways:
 The $code group/sub$$ column as added to
 $cref/variable.csv/db2csv_command/variable.csv/$$
 (changed to $code group$$ and $code subgroup$$ on
-$cref/12-04/whats_new_2019/12-04/$$).
+$cref/12-04/whats_new_2019/mm-dd/12-04/$$).
 The $cref%subgroup%db2csv_command%data.csv%subgroup%$$ and
 $cref%group%db2csv_command%data.csv%group%$$ columns were added to data.csv
 The $cref%subgroup%db2csv_command%data.csv%subgroup%$$
 column was added to predict.csv
 $lend
 
-$head 11-22$$
+$subhead 11-22$$
 The following changes below were made to the database input tables:
 $list number$$
 The $cref subgroup_table$$ was added.
@@ -225,25 +229,25 @@ In addition, the $cref/subgroup_table/create_database/subgroup_table/$$
 argument was added to the $code create_database$$ routine.
 
 
-$head 11-20$$
+$subhead 11-20$$
 $list number$$
 The automatic conversion of $code meas_std$$ to
 $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ has been removed;
-see $cref/04-08/whats_new_2019/04-08/$$ below.
+see $cref/04-08/whats_new_2019/mm-dd/04-08/$$ below.
 $lnext
 The $code old2new$$ command that added the
 $cref/mulcov_id/var_table/mulcov_id/$$ column to the var table was removed;
-see $cref/04-20/whats_new_2019/04-20/$$
-and $cref/04-23/whats_new_2019/04-23/$$ below.
+see $cref/04-20/whats_new_2019/mm-dd/04-20/$$
+and $cref/04-23/whats_new_2019/mm-dd/04-23/$$ below.
 $lend
 
-$head 11-18$$
+$subhead 11-18$$
 Group all of the sections for the prior of the model variables; see
 $cref variable_prior$$.
 In addition, simplify the differences using
 $cref smooth_dage$$ and $cref smooth_dtime$$.
 
-$head 11-17$$
+$subhead 11-17$$
 Fix some out of date statements and simplify the
 documentation for the value prior for the random effects
 $cref random_value$$.
@@ -251,14 +255,14 @@ To be specific, the corrections are necessary because we can now have
 different smoothings for different child nodes; see the rate table
 $cref/child_nslist_id/rate_table/child_nslist_id/$$.
 
-$head 10-24$$
+$subhead 10-24$$
 The order of the variables in the  $cref var_table$$ was changed
 so that the random effects come first.
 This is in preparation for adding more random effects.
 It also makes it easier to find specific variables in the var table and
 the  $cref/variable.csv/db2csv_command/variable.csv/$$ file.
 
-$head 10-09$$
+$subhead 10-09$$
 Advance $cref dock_dismod_at.sh$$ to version 20191008, which
 includes to changes under 10-08 below.
 This requires running
@@ -266,7 +270,7 @@ $codei%
    ./dock_dismod_at.sh image dismod_at
 %$$
 
-$head 10-08$$
+$subhead 10-08$$
 $list number$$
 Fix a bug in the
 $cref/
@@ -284,16 +288,16 @@ This adds a check on the zero sum random constraint that would have
 detected the bug mentioned in the previous item.
 $lend
 
-$head 10-06$$
+$subhead 10-06$$
 The $cref/bound_random/option_table/Optimize Random Only/bound_random/$$ documentation
 was improved by stating that it
 does not apply to random effects that have equal lower and upper limits.
 
-$head 10-02$$
+$subhead 10-02$$
 Add discussion at the top of the
 $cref user_zsum_child_rate.py$$ example.
 
-$head 10-01$$
+$subhead 10-01$$
 $list number$$
 The $cref system_command_prc$$ utility was added used
 to simplify the $cref user_example$$ examples.
@@ -302,7 +306,7 @@ The new $cref user_mulstd.py$$ example demonstrates
 estimating standard deviation multipliers.
 $lend
 
-$head 09-30$$
+$subhead 09-30$$
 Use a newer version of the program that generates the documentation
 $code omhelp$$.
 The search utility now shows the title and section tag in separate
@@ -311,7 +315,7 @@ Hitting return or double clicking in the title area,
 in addition to choosing the $code Goto$$ button, will go to
 the selected section.
 
-$head 09-24$$
+$subhead 09-24$$
 $list number$$
 Add mention that the install scripts under
 $cref/special requirements/install_unix/Special Requirements/$$ also
@@ -324,7 +328,7 @@ assume that the dismod_at user can write code in some scripting language
 and can read the Python $cref user_example$$ examples.
 $lend
 
-$head 09-23$$
+$subhead 09-23$$
 $list number$$
 The comments in the dock_dismod_at.sh
 $cref/Dockerfile/dock_dismod_at.sh/Building Images/Dockerfile/$$ were improved.
@@ -346,7 +350,7 @@ $href%https://cmake.org/pipermail/cmake/2019-September/069977.html
    %cmake mailing list
 %$$.
 $lend
-$head 09-22$$
+$subhead 09-22$$
 $list number$$
 Advance $code dock_dismod_at.sh$$ to version $code 20190922$$.
 $lnext
@@ -356,7 +360,7 @@ $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$ can now
 be used to specify an uninformative prior; i.e.,
 uniform from minus infinity to plus infinity.
 (The corresponding null prior id wish list item was removed; see
-$cref/09-20/whats_new_2019/09-20/$$.)
+$cref/09-20/whats_new_2019/mm-dd/09-20/$$.)
 $lnext
 The $cref user_const_value.py$$ example has been changed to use
 more grid points for the fixed rate effects than for the random rate effects.
@@ -379,7 +383,7 @@ $cref start_var_table$$ and $cref scale_var_table$$ are equal to the
 $cref truth_var_table$$.
 $lend
 
-$head 09-21$$
+$subhead 09-21$$
 $list number$$
 The
 $cref/rate_case/wish_list/ODE Solution/rate_case/$$ and checkpointing
@@ -399,7 +403,7 @@ $srccode%py%
 %$$
 $lend
 
-$head 09-20$$
+$subhead 09-20$$
 $list number$$
 The sampling random effects items was removed from the with list
 because the $cref user_sample_sim.py$$ method seems to work well.
@@ -410,7 +414,7 @@ were added to the wish list
 $lend
 
 
-$head 09-19$$
+$subhead 09-19$$
 $list number$$
 Move the sample command
 $cref/asymptotic/sample_command/asymptotic/$$ example from
@@ -432,7 +436,7 @@ $cref/dismod_at.base/dock_dismod_at.sh/Building Images/dismod_at.base/$$
 to get this fix.
 $lend
 
-$head 09-17$$
+$subhead 09-17$$
 $list number$$
 The constant weight change on 09-13 below introduced a bug in the
 $cref user_speed.py$$ example.
@@ -445,7 +449,7 @@ $cref/logging output/dock_dismod_at.sh/Logging Output/$$ from the
 $code dock_dismod_at.sh$$ program.
 $lend
 
-$head 09-15$$
+$subhead 09-15$$
 Discussion was added to the
 $cref user_const_value.py$$ example.
 In addition, it was modified
@@ -453,7 +457,7 @@ to show how to constrain child rates for omega
 (as one might do if they replaced all cause mortality data
 by constraints on other cause mortality).
 
-$head 09-13$$
+$subhead 09-13$$
 $list number$$
 The constant weighting can now be specified using
 $code null$$ as $icode weight_id$$ in the
@@ -467,7 +471,7 @@ $lnext
 Advance $code dock_dismod_at.sh$$ to version $code 20190913$$.
 $lend
 
-$head 09-12$$
+$subhead 09-12$$
 $list number$$
 Advance the dock_dismod_at.sh
 $cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
@@ -510,7 +514,7 @@ for the $code example/user/fit_sim.py$$ example.
 $lend
 
 
-$head 09-11$$
+$subhead 09-11$$
 $list number$$
 Increase speed and reduce chance of failure for
 $code test/user/fit_sim.py$$.
@@ -522,7 +526,7 @@ The $cref/simulate_index/data_sim_table/simulate_index/$$
 was added to error messages printed when fitting simulated data.
 $lend
 
-$head 08-24$$
+$subhead 08-24$$
 $list number$$
 The documentation now explicitly states that the empty string
 is stored as a null when it is used for the
@@ -540,7 +544,7 @@ when the docker daemon is not running
 or when you do not have the necessary permissions to run docker.
 $lend
 
-$head 07-25$$
+$subhead 07-25$$
 $list number$$
 The $code dock_dismod_at.sh$$ command now has two stages to its build process;
 $cref/dismod_at.base/dock_dismod_at.sh/Building Images/dismod_at.base/$$
@@ -556,28 +560,28 @@ $cref/building images/dock_dismod_at.sh/Building Images/$$ using
 $code dock_dismod_at.sh$$.
 $lend
 
-$head 07-24$$
+$subhead 07-24$$
 Advance to cppad_mixed-20190724.
 This gives better error reporting during initialization.
 It also automatically optimizes w.r.t. the random effect
 before initializing terms that require the Hessian w.r.t.
 the random effects to be positive definite.
 
-$head 07-20$$
+$subhead 07-20$$
 Advance to $code cppad_mixed-20190720$$.
 This fixes a print during the
 $cref/testing/install_unix/dismod_at/Test/$$ of $code dismod_at$$.
 
-$head 07-19$$
+$subhead 07-19$$
 Advance to $code cppad-20190719$$.
 This fixes a problem installing the CppAD binary library on the Mac.
 
-$head 07-13$$
+$subhead 07-13$$
 There was a mistake in the value of $icode dismod_at_hash$$ for
 $cref/dismod_at_version/dock_dismod_at.sh/Building Images/dismod_at_version/$$
 20190710 of $code dock_dismod_at.sh$$. This has been fixed.
 
-$head 07-10$$
+$subhead 07-10$$
 $list number$$
 Advance to $code cppad_mixed-20190710$$.
 This makes the Newton method for the fixed effects more robust
@@ -594,13 +598,13 @@ during the $code dock_dismod_at.sh build$$ command.
 $lend
 
 
-$head 07-06$$
+$subhead 07-06$$
 Improve the documentation for the
 $cref/max_num_iter/option_table/Optimize Fixed and Random/max_num_iter/$$ option.
 Most importantly, make it clear what value is returned for the random
 effects when $icode max_num_iter_fix$$ is $code -1$$.
 
-$head 06-28$$
+$subhead 06-28$$
 Add discussion of relation ship between the
 measurement standard deviation $icode meas_std$$ and the
 adjusted standard deviation
@@ -611,7 +615,7 @@ $cref/delta(theta)
 to the
 $cref/meas_std/data_table/meas_std/$$ documentation.
 
-$head 06-27$$
+$subhead 06-27$$
 The relation between of the standard deviations and
 the measured value (the mean value) was not clear for the
 $cref/log scaled/density_table/Notation/Log Scaled/$$ densities.
@@ -620,7 +624,7 @@ about log scaling the standard deviations in
 the $cref/data table/data_table/meas_std/$$
 (the $cref/prior table/prior_table/std/$$).
 
-$head 06-26$$
+$subhead 06-26$$
 The $cref/meas_delta/db2csv_command/data.csv/meas_delta/$$ column
 of the data.csv file output by the db2csv command has values when
 the previous fit corresponding to simulated data
@@ -632,7 +636,7 @@ $cref/fit_var, fit_data_subset/db2csv_command/fit_var, fit_data_subset/$$
 tables and the
 $cref/simulate_index/db2csv_command/simulate_index/$$.
 
-$head 06-25$$
+$subhead 06-25$$
 The $code build$$ option for $code dock_dismod_at.sh$$ was not updating
 the docker image when the remote repository changed.
 This has been fixed by adding a $code git pull$$
@@ -646,27 +650,27 @@ $cref/removing containers
    /Removing Containers
 /$$.
 
-$head 06-24$$
+$subhead 06-24$$
 Some minor improvements
 were made to the $cref dock_dismod_at.sh$$ documentation,
 as well as the comments in its bash script.
 
-$head 06-23$$
+$subhead 06-23$$
 If you have the $code docker$$ package,
 you can now avoid the $cref install_unix$$ process using
 $cref dock_dismod_at.sh$$ script.
 
-$head 06-22$$
+$subhead 06-22$$
 Print value used for $code PKG_CONFIG_PATH$$ and
 fix set exit status for $cref example_install.sh$$.
 
-$head 06-21$$
+$subhead 06-21$$
 Automatically set
 $cref/PKG_CONFIG_PATH/install_unix/Paths/PKG_CONFIG_PATH/$$ during the
 $code bin/install_cppad_mixed.sh$$ script which is used by
 $cref example_install.sh$$.
 
-$head 06-07$$
+$subhead 06-07$$
 $list number$$
 Advance to cppad_mixed-20190607.
 This gives better error messaging when $code nan$$ occurs
@@ -688,29 +692,29 @@ $cref/bound_frac_fixed/option_table/Optimize Fixed Only/bound_frac_fixed/$$
 option (and $icode bound_push$$ was set to zero).
 $lend
 
-$head 06-02$$
+$subhead 06-02$$
 The version number in the title for the level of the documentation
 $cref dismod_at$$ was not updating.
 This started with version $code 20190521$$ and has been fixed.
 
-$head 06-01$$
+$subhead 06-01$$
 $list number$$
 The $cref ihme_db.sh$$ script was improved and documented.
 $lnext
 In some cases, $code avg_age$$ was still being used instead of $code age_avg$$,
 see the discussion about the $code avg_age$$ on
-$cref/2018-10-30/whats_new_2018/10-30/$$.
+$cref/2018-10-30/whats_new_2018/mm-dd/10-30/$$.
 This has been fixed.
 $lnext
 This discussion of the $cref age_avg_table$$ in the $cref data_flow$$
 and $cref init_command$$ was improved.
 $lend
 
-$head 05-24$$
+$subhead 05-24$$
 Needed to also add a $code git checkout master$$ for problem mentioned
 on 05-21 below.
 
-$head 05-21$$
+$subhead 05-21$$
 There was a problem with the
 $cref/cppad/install_unix/Special Requirements/cppad/$$ and
 $cref/cppad_mixed/install_unix/Special Requirements/cppad_mixed/$$ install
@@ -718,11 +722,11 @@ scripts.
 They sometimes failed because the corresponding repository was out of date.
 This has been fixed by adding a $code git pull$$ to the corresponding scripts.
 
-$head 05-12$$
+$subhead 05-12$$
 Add a $cref/censored Laplace/wish_list/Censored Laplace/$$ entry
 to the wish list.
 
-$head 05-07$$
+$subhead 05-07$$
 Advance to using $code cppad-20190507$$.
 This enabled a fix of the
 $cref/cen_gaussian/density_table/density_name/cen_gaussian/$$ calculation.
@@ -733,12 +737,12 @@ This has been fixed using the complementary error functions
 which was recently added to CppAD.
 
 
-$head 05-05$$
+$subhead 05-05$$
 The new example $cref user_data_sim.py$$ detected a problem in the
 simulation of $cref/log scaled/density_table/Notation/Log Scaled/$$ data.
 This problem has been fixed.
 
-$head 05-03$$
+$subhead 05-03$$
 $bold API Change:$$
 The $cref/data.csv/db2csv_command/data.csv/$$ file columns
 $code Delta$$ and $code delta$$ have been changed to
@@ -772,7 +776,7 @@ $cref/method/data_sim_table/Method/$$ used to create the
 simulated data was improved and corrected.
 $lend
 
-$head 05-02$$
+$subhead 05-02$$
 $list number$$
 Add the
 $cref/cen_log_gaussian/density_table/density_name/cen_log_gaussian/$$ and
@@ -787,7 +791,7 @@ $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ covariates,
 that hopefully will be fixed soon.
 $lend
 
-$head 05-01$$
+$subhead 05-01$$
 $list number$$
 Due to the change in $cref prior_sim_table$$ on 04-30,
 $cref/log scaled/density_table/Notation/Log Scaled/$$ distributions
@@ -809,7 +813,7 @@ that are possibly provided by the user,
 are within their specified limits.
 $lend
 
-$head 04-30$$
+$subhead 04-30$$
 $list number$$
 The censored Laplace density
 $cref/cen_laplace/density_table/density_name/cen_laplace/$$ now works.
@@ -826,7 +830,7 @@ of simulated values in the $code prior_sim$$ table.
 $lend
 
 
-$head 04-29$$
+$subhead 04-29$$
 $list number$$
 The user version of the documentation no longer includes
 things that are only meant for developers and are not part of the API.
@@ -841,13 +845,13 @@ The $cref user_censor.py$$ example was extended to include
 simulating censored data using the $cref simulate_command$$.
 $lend
 
-$head 04-28$$
+$subhead 04-28$$
 Remove some dead code that was repeated between different
 $cref user_example$$ examples.
 In addition, use a local $code system_command$$ function
 to simplify the user examples.
 
-$head 04-27$$
+$subhead 04-27$$
 $list number$$
 Add the $cref/cen_gaussian/density_table/density_name/cen_gaussian/$$
 density; see the example $cref user_censor.py$$.
@@ -860,7 +864,7 @@ Fix bug in previous change to density table
 (should no longer need densities that are not used).
 $lend
 
-$head 04-26$$
+$subhead 04-26$$
 $list number$$
 The $cref density_table$$ no longer needs to contain
 all possible entries and the user can choose the order of the entries.
@@ -869,15 +873,15 @@ Add a wish list entry for keyword arguments in
 $cref/create_database/wish_list/create_database/$$.
 $lend
 
-$head 04-25$$
+$subhead 04-25$$
 Simplify the discussion of residuals and densities by
 placing the ones that are similar next to each other so it is
 easier to compare them.
 
-$head 04-24$$
+$subhead 04-24$$
 Add a plan for $cref/censoring negative data/censor_density/$$.
 
-$head 04-23$$
+$subhead 04-23$$
 $list number$$
 The detection and reporting of problems,
 when computing the value of an
@@ -887,7 +891,7 @@ $lnext
 The $code old2new_command$$ was added.
 $lend
 
-$head 04-22$$
+$subhead 04-22$$
 $list number$$
 Improve the $cref user_cascade.py$$ example.
 For example, use a Laplace prior to get a better estimate of
@@ -900,11 +904,11 @@ inside the corresponding function that defines a database;
 see $cref/fun/create_database/smooth_table/fun/$$.
 $lend
 
-$head 04-21$$
+$subhead 04-21$$
 First complete version of $cref user_cascade.py$$; i.e.,
 first version that passes priors for fitting one level down from the top level.
 
-$head 04-20$$
+$subhead 04-20$$
 $list number$$
 Improve the $cref user_predict_fit.py$$ example.
 $lnext
@@ -925,12 +929,12 @@ $cref/integrand name/integrand_table/integrand_name/$$ correspond to;
 see $cref init_command.py$$.
 $lend
 
-$head 04-18$$
+$subhead 04-18$$
 First version of $cref user_cascade.py$$ that gets
 good coverage by modeling the measurement noise covariate
 as model misspecification and using it to expand the posterior intervals.
 
-$head 04-17$$
+$subhead 04-17$$
 $list number$$
 Add the $cref user_cascade.py$$ example.
 This example is currently under construction; i.e., not yet complete.
@@ -945,18 +949,18 @@ $cref user_csv2db.py$$ from 1.0 to 5.0 (to make automated testing
 faster when running in debug mode).
 $lend
 
-$head 04-15$$
+$subhead 04-15$$
 Improve the $code user_students.py$$ example
 (this example has since moved to $cref user_data_density.py$$).
 
-$head 04-14$$
+$subhead 04-14$$
 Improve the $cref user_lasso_covariate.py$$ example.
 
-$head 04-12$$
+$subhead 04-12$$
 A discussion was added at the top of the
 $cref user_change_grid.py$$ example.
 
-$head 04-11$$
+$subhead 04-11$$
 $list number$$
 There was a bug in the db2csv computation of the adjusted standard deviation
 $cref/meas_delta/db2csv_command/data.csv/meas_delta/$$ for the log
@@ -973,7 +977,7 @@ and the
 $cref/age average grid/age_avg_table/Age Average Grid/$$.
 $lend
 
-$head 04-10$$
+$subhead 04-10$$
 $list number$$
 The $cref/parent node/option_table/Parent Node/$$,
 not just its $cref/descendants/node_table/parent/Descendant/$$,
@@ -999,7 +1003,7 @@ $cref/child/avgint_table/Purpose/Child Rates/$$ rates
 were added to the avgint table.
 $lend
 
-$head 04-09$$
+$subhead 04-09$$
 $list number$$
 In the case where the deprecated name $code meas_std$$
 is used, the corresponding $icode var_type$$ was
@@ -1023,7 +1027,7 @@ was improved by defining reversed
 $cref/weighted residuals/statistic/Weighted Residual Function, R/$$.
 $lend
 
-$head 04-08$$
+$subhead 04-08$$
 $list number$$
 The covariate multiplier type $code meas_std$$ was deprecated
 (and was later removed).
@@ -1035,16 +1039,16 @@ It should be changed to
 $cref/meas_noise_effect/option_table/meas_noise_effect/$$.
 $lend
 
-$head 04-06$$
+$subhead 04-06$$
 The documentation for the
 $cref/fit_var_value/fit_var_table/fit_var_value/$$ column of the
 fit_var table was improved.
 
-$head 02-16$$
+$subhead 02-16$$
 Add the script $code bin/speed_16_18.sh$$ which
 compares the last version of in 2016 with the last version in 2018.
 
-$head 01-26$$
+$subhead 01-26$$
 Extra wording was added to the description of
 $cref/age/age_table/age/$$ in the age table and
 $cref/time/time_table/time/$$ in the time table to
@@ -1055,16 +1059,16 @@ ages and times were not in increasing order.
 In addition, a discussion was added at the beginning of the
 $code jump_at_age.py$$ example.
 
-$head 01-23$$
+$subhead 01-23$$
 There was a bug in the var table where
 $cref/age_id/var_table/age_id/$$ and $cref/time_id/var_table/time_id/$$
 were sometimes incorrect for variables were covariate multipliers.
 This has been fixed.
 
-$head 01-22$$
+$subhead 01-22$$
 $list number$$
 A weighting wish list item was added (and was completed on
-$cref/09-13/whats_new_2019/09-13/$$).
+$cref/09-13/whats_new_2019/mm-dd/09-13/$$).
 $lnext
 The $cref user_ill_condition.py$$ example was added.
 $lnext
@@ -1082,19 +1086,19 @@ The documentation has been fixed
 (the implementation in software was correct).
 $lend
 
-$head 01-16$$
+$subhead 01-16$$
 Add the $cref/scale/db2csv_command/variable.csv/scale/$$ column
 to the $code variable.csv$$ file create by the $code db2csv$$ command.
 In addition, group the start, sale, fit_value, truth, and sam_avg
 columns next to each other because they are all values for the model
 variables.
 
-$head 01-15$$
+$subhead 01-15$$
 Change the option table
 $cref/minimum_meas_cv/option_table/minimum_meas_cv/$$
 to redirect one to the integrand table.
 
-$head 01-10$$
+$subhead 01-10$$
 Reduce the change of random failure in $code test/user/fit_meas_noise.py$$
 during $cref/testing/install_unix/dismod_at/Test/$$.
 
