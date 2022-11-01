@@ -1,3 +1,8 @@
+.. comment xrst preamble.rst
+
+.. |space| unicode:: 0xA0
+.. |tab| replace:: |space| |space| |space|
+
 .. rst-class:: hidden
 
    :math:`\newcommand{\B}[1]{ {\bf #1} }`
