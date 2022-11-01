@@ -29,6 +29,7 @@ ignore_files='
    python/pyproject.toml
    python/README.md
    sphinx/preamble.rst
+   sphinx/spelling
 '
 # ----------------------------------------------------------------------------
 echo "copyright_owner=$copyright_owner"
