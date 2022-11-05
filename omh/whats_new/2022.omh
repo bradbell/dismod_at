@@ -42,6 +42,10 @@ $section Changes and Additions to Dismod_at During 2022$$
 
 $head mm-dd$$
 
+$subhead 11-03$$
+Add the $cref/binomial distribution/wish_list/Binomial Distribution/$$
+wish list item.
+
 $subhead 10-14$$
 Advance the dock_dismod_at.sh
 $cref/at_cascade_version/dock_dismod_at.sh/Building Images/at_cascade_version/$$

@@ -29,6 +29,49 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head Binomial Distribution$$
+$table
+$icode n$$      $pre  $$ $cnext number of samples                      $rnext
+$icode p$$      $pre  $$ $cnext probability of success for each sample $rnext
+$icode k$$      $pre  $$ $cnext number of success events               $rnext
+$icode r$$      $pre  $$ $cnext rate of success; i.e., $latex k / n$$  $rnext
+$icode mu$$     $pre  $$ $cnext mean value for rate of success         $rnext
+$icode sigma$$  $pre  $$ $cnext standard deviation for rate of success $rnext
+$tend
+
+The mean of $latex k$$ is $latex n p$$
+and its variance is $latex n p (1-p)$$.
+It follows that $latex p = \mu$$ and
+$latex \[
+   n = \mu ( 1 - \mu ) / \sigma^2
+\] $$
+The probability mass function for $latex k$$ is
+$latex \[
+   \B{p} (k | n, p) = \frac{ n! }{ k! (n -k)! }  p^k (1-p)^{n-k}
+\] $$
+It follows that
+$latex \[
+\B{p} ( r | \mu , \sigma )
+=
+   \mu^{n r} (1 - \mu)^{ n(1-r) }
+   \frac{ \Gamma(n+1) }{ \Gamma( n r ) \Gamma[ n (1 - r) ] }
+\] $$
+where
+$latex \[
+   n( \mu , \sigma )  = \mu ( 1 - \mu ) / \sigma^2
+\] $$
+This representation of the density for $latex r$$ is smooth respect to
+$latex \mu$$ and hence can be included in dismod_at.
+Note that, in dismod_at, the standard deviation for a data point is fixed
+and hence the number of samples $latex n$$ depends on $latex \mu$$.
+This density is only defined for $latex 0 \leq \mu \leq 1$$
+and is zero at the end points.
+If $latex \mu$$ is a dismod_at rate and $latex r$$
+is a direct measurement of a $latex \mu$$, it will help to constrain
+the rate to the feasible region.
+
+
+
 $head Speed$$
 The CppADCodeGen package compiles CppAD code.
 While the compilation takes time, the resulting derivative evaluations
