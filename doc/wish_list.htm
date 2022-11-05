@@ -62,6 +62,7 @@ A:active { color : purple }
 
 <center><b><big><big>Dismod_at Wish List</big></big></b></center>
 
+<br><a href="wish_list.htm#Binomial Distribution" target="_top">Binomial&nbsp;Distribution</a>
 <br><a href="wish_list.htm#Speed" target="_top">Speed</a>
 <br><a href="wish_list.htm#Bound Constraints" target="_top">Bound&nbsp;Constraints</a>
 <br><a href="wish_list.htm#Laplace Random Effect" target="_top">Laplace&nbsp;Random&nbsp;Effect</a>
@@ -82,6 +83,113 @@ A:active { color : purple }
 <br><a href="wish_list.htm#Random Starting Point" target="_top">Random&nbsp;Starting&nbsp;Point</a>
 <br><a href="wish_list.htm#Windows Install" target="_top">Windows&nbsp;Install</a>
 <br><br>
+<b><big><a name="Binomial Distribution" id="Binomial Distribution">Binomial Distribution</a></big></b>
+
+<table><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>n</span></font></i></code>
+      <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ number of samples                      </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>p</span></font></i></code>
+      <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ probability of success for each sample </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>k</span></font></i></code>
+      <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ number of success events               </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>r</span></font></i></code>
+      <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ rate of success; i.e., <small>@(@
+k / n
+@)@</small>  </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>mu</span></font></i></code>
+     <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ mean value for rate of success         </td></tr><tr><td align='left'  valign='top'>
+
+
+<code><i><font color="black"><span style='white-space: nowrap'>sigma</span></font></i></code>
+  <code><span style='white-space: nowrap'>&nbsp;&nbsp;</span></code> </td><td align='left'  valign='top'>
+ standard deviation for rate of success </td></tr><tr><td align='left'  valign='top'>
+
+</td></tr>
+</table>
+The mean of <small>@(@
+k
+@)@</small> is <small>@(@
+n p
+@)@</small>
+and its variance is <small>@(@
+n p (1-p)
+@)@</small>.
+It follows that <small>@(@
+p = \mu
+@)@</small> and
+<small>@[@
+
+   n = \mu ( 1 - \mu ) / \sigma^2
+
+@]@</small>
+The probability mass function for <small>@(@
+k
+@)@</small> is
+<small>@[@
+
+   \B{p} (k | n, p) = \frac{ n! }{ k! (n -k)! }  p^k (1-p)^{n-k}
+
+@]@</small>
+It follows that
+<small>@[@
+
+\B{p} ( r | \mu , \sigma )
+=
+   \mu^{n r} (1 - \mu)^{ n(1-r) }
+   \frac{ \Gamma(n+1) }{ \Gamma( n r ) \Gamma[ n (1 - r) ] }
+
+@]@</small>
+where
+<small>@[@
+
+   n( \mu , \sigma )  = \mu ( 1 - \mu ) / \sigma^2
+
+@]@</small>
+This representation of the density for <small>@(@
+r
+@)@</small> is smooth respect to
+<small>@(@
+\mu
+@)@</small> and hence can be included in dismod_at.
+Note that, in dismod_at, the standard deviation for a data point is fixed
+and hence the number of samples <small>@(@
+n
+@)@</small> depends on <small>@(@
+\mu
+@)@</small>.
+This density is only defined for <small>@(@
+0 \leq \mu \leq 1
+@)@</small>
+and is zero at the end points.
+If <small>@(@
+\mu
+@)@</small> is a dismod_at rate and <small>@(@
+r
+@)@</small>
+is a direct measurement of a <small>@(@
+\mu
+@)@</small>, it will help to constrain
+the rate to the feasible region.
+
+
+
+<br>
+<br>
 <b><big><a name="Speed" id="Speed">Speed</a></big></b>
 <br>
 The CppADCodeGen package compiles CppAD code.
