@@ -23,6 +23,9 @@
 # a previous debug build that /build can point to
 /build.debug/
 #
+# directory where xrst puts its output
+/sphinx/rst
+#
 # directory where user documentation is built
 # /doc/
 #
