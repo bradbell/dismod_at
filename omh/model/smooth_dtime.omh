@@ -72,6 +72,6 @@ $latex \[
 where $latex D$$ is the
 $cref/log-density function/statistic/Log-Density Function, D/$$.
 Note that we include $latex \theta$$ as an argument because
-$latex lambda$$ is a component of $latex \theta$$.
+$latex \lambda$$ is a component of $latex \theta$$.
 
 $end
