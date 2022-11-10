@@ -14,7 +14,7 @@ $latex \newcommand{\B}[1]{ {\bf #1} } $$
 $latex \newcommand{\R}[1]{ {\rm #1} } $$
 $latex \newcommand{\W}[1]{ \; #1 \; } $$
 
-$section dismod_at-20221105: User Documentation and API$$
+$section dismod_at-20221109: User Documentation and API$$
 
 $head Purpose$$
 Estimating disease rates as functions of age and time.
