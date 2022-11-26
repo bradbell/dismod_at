@@ -10,6 +10,9 @@ $spell
    CppAD
    struct
    std
+   var
+   dage
+   dtime
 $$
 
 $section C++: Get the Prior Simulation Table$$

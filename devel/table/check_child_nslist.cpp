@@ -13,7 +13,7 @@ $spell
    nslist
 $$
 
-$section Check Assumptions About Lists of Child Node Smmothing Pairs$$
+$section Check Assumptions About Lists of Child Node Smoothing Pairs$$
 
 $head syntax$$
 $codei%check_child_nslist(
@@ -27,8 +27,8 @@ $codei%check_child_nslist(
 )%$$
 
 $head Purpose$$
-Checks the assumptions related to the list specifed by each
-$cref/child_nslist_id/rate_table/child_nslist/id/$$.
+Checks the assumptions related to the list specified by each
+$cref/child_nslist_id/rate_table/child_nslist_id/$$.
 
 $head db$$
 This argument has prototype
