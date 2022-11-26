@@ -51,7 +51,7 @@ $children%
    example/devel/utility/balance_pair_xam.cpp
 %$$
 $head Example$$
-$cref balance_pair.cpp$$
+$cref balance_pair_xam.cpp$$
 
 $end
 */

@@ -129,6 +129,12 @@ $codei%
 %$$
 is not the parent node and not a descendant of the parent node.
 
+$children%
+   example/devel/utility/child_info_xam.cpp
+%$$
+$head Example$$
+$cref child_info_xam.cpp$$
+
 $end
 */
 # include <dismod_at/child_info.hpp>

@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin balance_pair.cpp$$
+$begin balance_pair_xam.cpp$$
 $spell
    xam
 $$
