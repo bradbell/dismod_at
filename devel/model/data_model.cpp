@@ -995,6 +995,12 @@ for the data that is included,
 is the sum of the log of the densities corresponding to all the
 $cref/residuals/residual_density/$$ in $icode residual_vec$$.
 
+$children%
+   example/devel/model/like_all_xam.cpp
+%$$
+$head Example$$
+$cref like_all_xam.cpp$$
+
 $end
 */
 template <class Float>
