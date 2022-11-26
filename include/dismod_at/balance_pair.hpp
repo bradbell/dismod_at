@@ -47,6 +47,12 @@ $head sample_vec$$
 is the set of indices in $icode pair_vec$$ corresponding to the
 chosen set of pairs.
 
+$children%
+   example/devel/utility/balance_pair_xam.cpp
+%$$
+$head Example$$
+$cref balance_pair.cpp$$
+
 $end
 */
 # include <gsl/gsl_randist.h>
