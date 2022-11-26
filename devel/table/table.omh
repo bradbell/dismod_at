@@ -12,9 +12,8 @@ $section Dismod_at Developer Table Documentation$$
 
 $comment BEGIN_SORT_THIS_LINE_PLUS_2$$
 $childtable%
-   devel/table/check_child_nslist.cpp%
-   devel/table/get_prior_sim_table.cpp%
    devel/table/blob_table.cpp%
+   devel/table/check_child_nslist.cpp%
    devel/table/check_child_prior.cpp%
    devel/table/check_pini_n_age.cpp%
    devel/table/check_rate_limit.cpp%
@@ -38,6 +37,7 @@ $childtable%
    devel/table/get_nslist_pair.cpp%
    devel/table/get_nslist_table.cpp%
    devel/table/get_option_table.cpp%
+   devel/table/get_prior_sim_table.cpp%
    devel/table/get_prior_table.cpp%
    devel/table/get_rate_table.cpp%
    devel/table/get_sample_table.cpp%

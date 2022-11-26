@@ -6,6 +6,7 @@
 $begin check_pini_n_age_xam.cpp$$
 $spell
    xam
+   pini
 $$
 
 $section C++ check_pini_n_age: Example and Test$$
@@ -14,6 +15,7 @@ $srcthisfile%0%// BEGIN C++%// END C++%1%$$
 
 $end
 */
+// BEGIN C++
 # include <dismod_at/check_pini_n_age.hpp>
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/null_int.hpp>
@@ -54,3 +56,4 @@ bool check_pini_n_age_xam(void)
    //
    return ok;
 }
+// END C++

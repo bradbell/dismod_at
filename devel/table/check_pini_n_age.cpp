@@ -44,6 +44,12 @@ and it is the
 $cref/smooth_table/get_smooth_table/smooth_table/$$.
 For this table, only the $code n_age$$ field is used.
 
+$children%
+   example/devel/table/check_pini_n_age_xam.cpp
+%$$
+$head Example$$
+$cref check_pini_n_age_xam.cpp$$
+
 $end
 */
 # include <dismod_at/get_rate_table.hpp>
