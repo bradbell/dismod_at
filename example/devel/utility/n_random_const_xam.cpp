@@ -7,6 +7,7 @@ $begin n_random_const_xam.cpp$$
 $spell
    interp
    xam
+   const
 $$
 
 $section C++ n_random_const: Example and Test$$

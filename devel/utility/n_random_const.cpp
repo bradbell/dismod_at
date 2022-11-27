@@ -38,6 +38,13 @@ $head Prototype$$
 $srcthisfile%0%// BEGIN PROTOTYPE%// END PROTOTYPE%1%
 %$$
 
+$children%
+   example/devel/utility/n_random_const_xam.cpp
+%$$
+$head Example$$
+$cref n_random_const_xam.cpp$$
+
+
 $end
 */
 # include <dismod_at/n_random_const.hpp>

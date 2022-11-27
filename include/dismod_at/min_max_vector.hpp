@@ -7,6 +7,11 @@
 // ----------------------------------------------------------------------------
 /*
 $begin min_max_vector$$
+$spell
+   CppAD
+   vec
+   const
+$$
 
 $section Compute Minimum or Maximum Element of a CppAD Vector$$.
 
@@ -20,7 +25,7 @@ $head Scalar$$
 is the type of element in the vector.
 
 $head vec$$
-This arugment has ptotoype
+This argument has prototype
 $codei%
    const CppAD:vector<%Scalar%>& %vec%
 %$$
