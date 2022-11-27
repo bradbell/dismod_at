@@ -28,6 +28,7 @@
 #
 # directory where user documentation is built
 /doc/
+/rst/
 #
 # directory where developer documentation is built
 /dev/
