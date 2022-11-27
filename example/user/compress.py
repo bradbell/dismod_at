@@ -264,7 +264,7 @@ for var_id in range( len(var_table) ) :
 # ---------------------------------------------------------------------------
 # Now check data.csv for interval compression
 os.chdir('../../..')
-program   = 'bin/dismodat.py'
+program   = 'python/bin/dismodat.py'
 file_name = 'build/example/user/' + file_name
 dismod_at.system_command_prc([ program, file_name, 'db2csv' ])
 data_file      = open('build/example/user/data.csv', 'r')

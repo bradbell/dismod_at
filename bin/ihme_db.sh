@@ -134,7 +134,7 @@ then
 fi
 echo_eval cp $full_path $local_dir/$database
 echo_eval chmod a+w $local_dir/$database
-echo_eval bin/dismodat.py $local_dir/$database db2csv
+echo_eval python/bin/dismodat.py $local_dir/$database db2csv
 # ---------------------------------------------------------------------------
 echo 'bin/ihme_db.sh: OK'
 exit 0

@@ -6,7 +6,7 @@
 #
 # cmake configuration files that are put in source directory
 /include/dismod_at/configure.hpp
-/bin/dismodat.py
+/python/bin/dismodat.py
 /bin/user_test.sh
 #
 # Directory were builds take place. Note that /build is a link, hence

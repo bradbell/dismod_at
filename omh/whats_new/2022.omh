@@ -24,6 +24,8 @@ $spell
    rel_tol
    scipi
    lsoda
+   dismodat
+   ihme
 $$
 $navigate%
    Up%Location%
@@ -41,6 +43,12 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2022$$
 
 $head mm-dd$$
+
+$subhead 11-27$$
+There were duplicate copies of dismodat.py and fit_ihme.py
+in the bin and python/bin directories.
+This has been fixed and not the only database copy of these files
+is in python/bin.
 
 $subhead 11-03$$
 Add the $cref/binomial distribution/wish_list/Binomial Distribution/$$

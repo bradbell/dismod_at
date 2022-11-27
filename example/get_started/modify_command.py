@@ -56,7 +56,7 @@ get_started_db.get_started_db()
 # return to test_dir when done.
 os.chdir(dist_dir)
 print( os.getcwd() )
-program          = 'bin/dismodat.py'
+program          = 'python/bin/dismodat.py'
 file_name        = test_dir + '/get_started.db'
 command          = 'modify'
 table_name       = 'data'       # table we are modifiying

@@ -62,7 +62,7 @@ dismod_at.system_command_prc( [ program, file_name, 'fit', 'both' ] )
 # return to test_dir when done.
 os.chdir(dist_dir)
 print( os.getcwd() )
-program        = 'bin/dismodat.py'
+program        = 'python/bin/dismodat.py'
 file_name      = test_dir + '/get_started.db'
 dismod_at.system_command_prc( [ program, file_name, 'db2csv'] )
 os.chdir(test_dir)

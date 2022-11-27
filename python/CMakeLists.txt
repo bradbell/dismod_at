@@ -7,6 +7,10 @@ ADD_CUSTOM_TARGET(
    ${python3_executable} -m build
    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
+CONFIGURE_FILE(
+   ${CMAKE_CURRENT_SOURCE_DIR}/bin/dismodat.py.in
+   ${CMAKE_CURRENT_SOURCE_DIR}/bin/dismodat.py
+)
 ADD_CUSTOM_TARGET(
    install_python
    pip3 install --ignore-installed dist/dismod_at-${dismod_at_version}.tar.gz

@@ -174,11 +174,11 @@ dismod_at.system_command_prc( [program, file_name, 'init' ] )
 #
 os.chdir('../../..')
 dismod_at.system_command_prc( [
-   'bin/dismodat.py', 'build/test/user/example.db',
+   'python/bin/dismodat.py', 'build/test/user/example.db',
    'perturb', 'start_var', '.2'
 ] )
 dismod_at.system_command_prc( [
-   'bin/dismodat.py', 'build/test/user/example.db',
+   'python/bin/dismodat.py', 'build/test/user/example.db',
    'perturb', 'scale_var', '.2'
 ] )
 os.chdir('build/test/user')

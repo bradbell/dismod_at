@@ -25,7 +25,7 @@ The second is an $code end$$ message and signifies that the command completed.
 
 $comment BEGIN_SORT_THIS_LINE_PLUS_2$$
 $children%
-   bin/dismodat.py.in%
+   python/bin/dismodat.py.in%
    devel/cmd/bnd_mulcov_command.cpp%
    devel/cmd/data_density_command.cpp%
    devel/cmd/depend_command.cpp%

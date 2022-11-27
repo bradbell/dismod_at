@@ -204,7 +204,7 @@ assert( abs(residual / check - 1.0) < eps )
 # -----------------------------------------------------------------------
 # run sandbox version of dismodat.py example.db db2csv
 os.chdir('../../..')
-program        = 'bin/dismodat.py'
+program        = 'python/bin/dismodat.py'
 file_name      = 'build/test/user/example.db'
 command        = 'db2csv'
 cmd            = [ program, file_name, command ]

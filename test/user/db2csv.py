@@ -240,7 +240,7 @@ for command in command_list :
       sys.exit('db2csv.py: command failed')
 # must go back to distribution directory to run bin/dismodat.py in sandbox
 os.chdir('../../..')
-command = [ 'bin/dismodat.py', 'build/test/user/' + file_name, 'db2csv' ]
+command = [ 'python/bin/dismodat.py', 'build/test/user/' + file_name, 'db2csv' ]
 print( ' '.join(command) )
 flag = subprocess.call( command )
 if flag != 0 :

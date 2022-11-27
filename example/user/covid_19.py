@@ -475,7 +475,7 @@ example_db(file_name)
 #
 # fit data
 program_cpp = '../../devel/dismod_at'
-program_py  = '../../../bin/dismodat.py'
+program_py  = '../../../python/bin/dismodat.py'
 dismod_at.system_command_prc([ program_cpp, file_name, 'init' ])
 dismod_at.system_command_prc([ program_cpp, file_name, 'fit', 'fixed' ])
 dismod_at.system_command_prc([ program_py,  file_name, 'db2csv' ])

@@ -18,7 +18,7 @@
 # on running just this example.
 # After doing that, one can run the command
 # $codep
-#  bin/dismodat.py build/example/user/example.db
+#  python/bin/dismodat.py build/example/user/example.db
 # $$
 # To generate the csv files corresponding to the example database.
 # One can then inspect the csv files in the $code build/example/user$$

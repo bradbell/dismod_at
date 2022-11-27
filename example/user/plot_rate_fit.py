@@ -321,7 +321,7 @@ for (var_id, row) in enumerate(var_table) :
 # -----------------------------------------------------------------------------
 # Run plot at unix command line
 os.chdir('../../..')
-program  = 'bin/dismodat.py'
+program  = 'python/bin/dismodat.py'
 database = f'build/example/user/{database}'
 pdf_file = f'build/example/user/{pdf_file}'
 rate_set = 'iota chi'
