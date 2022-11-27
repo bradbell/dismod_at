@@ -45,10 +45,17 @@ $section Changes and Additions to Dismod_at During 2022$$
 $head mm-dd$$
 
 $subhead 11-27$$
+$list number$$
 There were duplicate copies of dismodat.py and fit_ihme.py
 in the bin and python/bin directories.
 This has been fixed and not the only database copy of these files
 is in python/bin.
+$lnext
+There were some documentation (not part of user API)
+that was not being included in the developer documentation.
+This has been fixed.
+It was detected while testing the conversion of the documentation to sphinx.
+$lend
 
 $subhead 11-03$$
 Add the $cref/binomial distribution/wish_list/Binomial Distribution/$$
