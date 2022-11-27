@@ -5,6 +5,8 @@
 /*
 $begin pack_warm_start$$
 $spell
+   vec
+   cppad
 $$
 $section Packing and Unpacking Warm Start Information in a Vector$$
 
@@ -15,8 +17,8 @@ $icode%warm_start% = unpack_warm_start(%vec%)
 %$$
 
 $head Prototype$$
-$srcthisfile%0%// BEGIN_PACK%//END_PACK%1%$$
-$srcthisfile%0%// BEGIN_UNPACK%//END_UNPACK%1%$$
+$srcthisfile%0%// BEGIN_PACK%// END_PACK%1%$$
+$srcthisfile%0%// BEGIN_UNPACK%// END_UNPACK%1%$$
 
 $head vec$$
 This is a single vector that contains a copy of the
