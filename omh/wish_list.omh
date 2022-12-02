@@ -29,6 +29,11 @@ $$
 
 $section Dismod_at Wish List$$
 
+$head Parallel Testing$$
+It would be good to changes the dismod_at test so that
+they did not use the same file name (e.g., example.db) and could be
+run in parallel.
+
 $head Binomial Distribution$$
 $table
 $icode n$$      $pre  $$ $cnext number of samples                      $rnext
@@ -71,15 +76,14 @@ is a direct measurement of a $latex \mu$$, it will help to constrain
 the rate to the feasible region.
 
 
-
 $head Speed$$
-The CppADCodeGen package compiles CppAD code.
+The CppADCodeGen package (and CppAD JIT) compiles CppAD code.
 While the compilation takes time, the resulting derivative evaluations
 are much faster; see
 $href%https://coin-or.github.io/CppAD/doc/speed_cppadcg.htm%speed-cppadcg%$$.
 Perhaps it is possible to make certain calculations; e.g.,
 the ODE solution an CppAD atomic function that is evaluated using
-CppADCodeGen code.
+CppADCodeGen or CppAD JIT.
 
 $head Bound Constraints$$
 $list number$$

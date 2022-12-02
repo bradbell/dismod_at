@@ -26,6 +26,7 @@ $spell
    lsoda
    dismodat
    ihme
+   scipy
 $$
 $navigate%
    Up%Location%
@@ -43,6 +44,18 @@ $navigate%
 $section Changes and Additions to Dismod_at During 2022$$
 
 $head mm-dd$$
+
+$subhead 12-02$$
+$list number$$
+There was a bug in the python average_integrand calculator when zero
+was in the $cref/age grid/average_integrand/grid/age/$$.
+To be specific, the scipy ode integrator chokes when the integration
+step size is zero.
+This has been fixed by using the initial conditions for this case.
+$lnext
+Add a $cref/parallel testing/wish_list/Parallel Testing/$$
+wish list item.
+$lend
 
 $subhead 11-27$$
 $list number$$

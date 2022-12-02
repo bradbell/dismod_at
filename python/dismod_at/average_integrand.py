@@ -147,6 +147,14 @@ def SC_fun(a, t, rate, abs_tol) :
    Cini = rate['pini'](0, t - a)
    Sini = 1.0 - Cini
    #
+   # Special case where scipy.integrate.ode chokes: a == 0.0
+   iota  =  rate['iota'](a, t)
+   rho   =   rate['rho'](a, t)
+   chi   =   rate['chi'](a, t)
+   omega = rate['omega'](a, t)
+   if abs( 10.0 * max(iota, rho, chi, omega) * a ) < abs_tol :
+      return [Sini, Cini]
+   #
    # SC_ode
    # 2022-08-26: Tried to add rtol (relative tolerance) to this integrator
    # call and testing with example/user/average_integrand.py indicates
