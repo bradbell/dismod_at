@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin data_model_ctor}
+{xrst_begin data_model_ctor dev}
 {xrst_spell
    bool
 }
@@ -455,7 +455,7 @@ avg_noise_obj_(
    }
 }
 /*
-{xrst_begin data_model_replace_like}
+{xrst_begin data_model_replace_like dev}
 
 Set Value Necessary for Likelihood (not for Average Integrand)
 ##############################################################
@@ -572,7 +572,7 @@ void data_model::replace_like(
 
 /*
 -----------------------------------------------------------------------------
-{xrst_begin data_model_average}
+{xrst_begin data_model_average dev}
 
 Data Model: Compute One Average Integrand
 #########################################
@@ -674,7 +674,7 @@ Float data_model::average(
 
 /*
 -----------------------------------------------------------------------------
-{xrst_begin data_model_like_one}
+{xrst_begin data_model_like_one dev}
 {xrst_spell
    subvectors
 }
@@ -905,7 +905,7 @@ residual_struct<Float> data_model::like_one(
 }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin data_model_like_all}
+{xrst_begin data_model_like_all dev}
 {xrst_spell
    bool
 }

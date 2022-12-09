@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin weight_info_xam.cpp}
+{xrst_begin weight_info_xam.cpp dev}
 
 C++ weight_info: Example and Test
 #################################

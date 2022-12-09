@@ -5,7 +5,7 @@
 # ifndef DISMOD_AT_BALANCE_PAIR_HPP
 # define DISMOD_AT_BALANCE_PAIR_HPP
 /*
-{xrst_begin balance_pair}
+{xrst_begin balance_pair dev}
 
 Balanced Sampling from Vector of Standard Pairs
 ###############################################

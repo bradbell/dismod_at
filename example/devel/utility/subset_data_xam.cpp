@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin subset_data_xam.cpp}
+{xrst_begin subset_data_xam.cpp dev}
 
 C++ subset_data: Example and Test
 #################################

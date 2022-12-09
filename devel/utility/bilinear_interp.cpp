@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin bilinear_interp}
+{xrst_begin bilinear_interp dev}
 {xrst_spell
    interp
    interpolant

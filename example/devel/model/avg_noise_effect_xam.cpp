@@ -4,7 +4,7 @@
 // ----------------------------------------------------------------------------
 
 /*
-{xrst_begin avg_noise_effect_xam.cpp}
+{xrst_begin avg_noise_effect_xam.cpp dev}
 
 C++ avg_noise_effect: Example and Test
 ######################################

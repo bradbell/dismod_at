@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin child_info_xam.cpp}
+{xrst_begin child_info_xam.cpp dev}
 
 C++ child_info: Example and Test
 ################################

@@ -9,7 +9,7 @@
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
 -- ---------------------------------------------------------------------------
-{xrst_begin data_depend}
+{xrst_begin data_depend dev}
 {xrst_spell
    sparsity
 }
@@ -126,7 +126,7 @@ CppAD::vector<bool> data_depend(
 }
 /*
 -- ---------------------------------------------------------------------------
-{xrst_begin prior_depend}
+{xrst_begin prior_depend dev}
 {xrst_spell
    sparsity
 }

@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin censor_var_limit}
+{xrst_begin censor_var_limit dev}
 
 Censor Variables to be Within Lower and Upper Limits
 ####################################################

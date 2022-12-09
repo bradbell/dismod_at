@@ -54,7 +54,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 // ---------------------------------------------------------------------------
 /*
 ------------------------------------------------------------------------------
-{xrst_begin smooth_info_ctor}
+{xrst_begin smooth_info_ctor dev}
 
 smooth_info: Constructor
 ########################
@@ -325,7 +325,7 @@ void smooth_info::operator=(const smooth_info& s_info)
 }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin smooth_info_age_and_time}
+{xrst_begin smooth_info_age_and_time dev}
 
 smooth_info: Age and Time Information
 #####################################
@@ -413,7 +413,7 @@ size_t smooth_info::time_id(size_t j) const
 {  return time_id_[j]; }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin smooth_info_prior}
+{xrst_begin smooth_info_prior dev}
 
 smooth_info: Prior Information
 ##############################
@@ -533,7 +533,7 @@ bool smooth_info::all_const_value(void) const
 // END_ALL_CONST_VALUE
 /*
 ------------------------------------------------------------------------------
-{xrst_begin smooth_info_mulstd}
+{xrst_begin smooth_info_mulstd dev}
 
 smooth_info: Standard Deviation Multipliers
 ###########################################
@@ -576,7 +576,7 @@ size_t smooth_info::mulstd_dtime(void) const
 {  return mulstd_dtime_; }
 /*
 -------------------------------------------------------------------------------
-{xrst_begin smooth_info_test_ctor}
+{xrst_begin smooth_info_test_ctor dev}
 
 smooth_info: Testing Constructor
 ################################

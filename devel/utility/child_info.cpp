@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin child_info}
+{xrst_begin child_info dev}
 
 Child Indices and Tables Indices
 ################################

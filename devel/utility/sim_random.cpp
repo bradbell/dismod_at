@@ -4,7 +4,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin sim_random}
+{xrst_begin sim_random dev}
 {xrst_spell
    enum
    gsl

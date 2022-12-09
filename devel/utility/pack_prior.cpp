@@ -7,7 +7,7 @@
 
 /*
 -------------------------------------------------------------------------------
-{xrst_begin pack_prior}
+{xrst_begin pack_prior dev}
 {xrst_spell
    bool
 }

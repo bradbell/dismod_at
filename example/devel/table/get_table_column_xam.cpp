@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin get_table_column_xam.cpp}
+{xrst_begin get_table_column_xam.cpp dev}
 {xrst_spell
    xam
 }

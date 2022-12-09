@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin get_smooth_grid}
+{xrst_begin get_smooth_grid dev}
 
 C++: Get the Smoothing Grid Information
 #######################################

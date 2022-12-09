@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin get_column_max}
+{xrst_begin get_column_max dev}
 {xrst_spell
    cmd
 }

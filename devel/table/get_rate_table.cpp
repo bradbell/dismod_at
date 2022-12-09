@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin get_rate_table}
+{xrst_begin get_rate_table dev}
 {xrst_spell
    enum
 }

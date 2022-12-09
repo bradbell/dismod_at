@@ -4,7 +4,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin cpp_create_table}
+{xrst_begin cpp_create_table dev}
 {xrst_spell
    bool
 }

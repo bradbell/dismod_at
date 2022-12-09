@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin get_prior_sim_table}
+{xrst_begin get_prior_sim_table dev}
 
 C++: Get the Prior Simulation Table
 ###################################

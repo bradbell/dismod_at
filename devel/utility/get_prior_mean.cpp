@@ -6,7 +6,7 @@
 # include <dismod_at/get_prior_mean.hpp>
 # include <dismod_at/null_int.hpp>
 /*
-{xrst_begin get_prior_mean}
+{xrst_begin get_prior_mean dev}
 
 Get Prior Mean For Each Variable
 ################################

@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin put_table_row_xam.cpp}
+{xrst_begin put_table_row_xam.cpp dev}
 
 C++ put_table_row: Example and Test
 ###################################

@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin n_random_const_xam.cpp}
+{xrst_begin n_random_const_xam.cpp dev}
 
 C++ n_random_const: Example and Test
 ####################################

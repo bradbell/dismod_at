@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin smooth_info_xam.cpp}
+{xrst_begin smooth_info_xam.cpp dev}
 
 C++ smooth_info: Example and Test
 #################################

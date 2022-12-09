@@ -4,7 +4,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin child_data_in_fit}
+{xrst_begin child_data_in_fit dev}
 
 For Each Child, Number of Data Points Included In Fit
 #####################################################

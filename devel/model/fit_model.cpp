@@ -19,7 +19,7 @@
 
 namespace dismod_at { // DISMOD_AT_BEGIN_NAMSPACE
 /*
-{xrst_begin fit_model_ctor}
+{xrst_begin fit_model_ctor dev}
 {xrst_spell
    enum
    stderr
@@ -331,7 +331,7 @@ data_object_   ( data_object )
 }
 /*
 -----------------------------------------------------------------------------
-{xrst_begin fit_model_run_fit}
+{xrst_begin fit_model_run_fit dev}
 {xrst_spell
    frac
 }
@@ -608,7 +608,7 @@ void fit_model::run_fit(
 }
 /*
 ---------------------------------------------------------------------------
-{xrst_begin fit_model_get_solution}
+{xrst_begin fit_model_get_solution dev}
 {xrst_spell
    lagrange
 }
@@ -711,7 +711,7 @@ void fit_model::get_solution(
 }
 /*
 ---------------------------------------------------------------------------
-{xrst_begin fit_model_random_obj_hes}
+{xrst_begin fit_model_random_obj_hes dev}
 {xrst_spell
    rcv
 }
@@ -806,7 +806,7 @@ CppAD::mixed::d_sparse_rcv fit_model::random_obj_hes(
 }
 /*
 ---------------------------------------------------------------------------
-{xrst_begin fit_model_sample_posterior}
+{xrst_begin fit_model_sample_posterior dev}
 {xrst_spell
    covariance
    uhat

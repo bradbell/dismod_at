@@ -5,7 +5,7 @@
 # ifndef DISMOD_AT_AVG_NOISE_EFFECT_HPP
 # define DISMOD_AT_AVG_NOISE_EFFECT_HPP
 /*
-{xrst_begin devel_avg_noise_effect}
+{xrst_begin devel_avg_noise_effect dev}
 
 Computing Average Noise Effect
 ##############################

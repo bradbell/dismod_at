@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin avg_yes_ode_xam.cpp}
+{xrst_begin avg_yes_ode_xam.cpp dev}
 
 C++ avg_yes_ode: Example and Test
 #################################

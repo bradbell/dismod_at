@@ -6,7 +6,7 @@
 # include <dismod_at/split_space.hpp>
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
-{xrst_begin split_space}
+{xrst_begin split_space dev}
 {xrst_spell
    delimiter
    substring

@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin eigen_ode2}
+{xrst_begin eigen_ode2 dev}
 {xrst_spell
    cc
    eigen

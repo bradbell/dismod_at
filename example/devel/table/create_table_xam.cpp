@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin create_table_xam.cpp}
+{xrst_begin create_table_xam.cpp dev}
 
 C++ create_table: Example and Test
 ##################################

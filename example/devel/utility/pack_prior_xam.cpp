@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin pack_prior_xam.cpp}
+{xrst_begin pack_prior_xam.cpp dev}
 
 C++ pack_prior: Example and Test
 ################################

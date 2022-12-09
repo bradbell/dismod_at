@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin blob_table_xam.cpp}
+{xrst_begin blob_table_xam.cpp dev}
 
 Writing and Reading Blobs: Example and Test
 ###########################################

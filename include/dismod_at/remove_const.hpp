@@ -5,7 +5,7 @@
 # ifndef DISMOD_AT_REMOVE_CONST_HPP
 # define DISMOD_AT_REMOVE_CONST_HPP
 /*
-{xrst_begin remove_const}
+{xrst_begin remove_const dev}
 
 Remove and Restore Components of a Vector that are Constant
 ###########################################################

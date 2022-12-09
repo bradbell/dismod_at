@@ -4,7 +4,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin manage_gsl_rng_xam.cpp}
+{xrst_begin manage_gsl_rng_xam.cpp dev}
 
 Manage GSL Random Number Generator: Example and Test
 ####################################################

@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin time_line_vec_xam.cpp}
+{xrst_begin time_line_vec_xam.cpp dev}
 
 C++ time_line_vec: Example and Test
 ###################################

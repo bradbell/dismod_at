@@ -11,7 +11,7 @@
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
-{xrst_begin age_avg_grid}
+{xrst_begin age_avg_grid dev}
 
 Split the Age Average Grid
 ##########################

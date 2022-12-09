@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin get_nslist_pair_xam.cpp}
+{xrst_begin get_nslist_pair_xam.cpp dev}
 
 C++ get_nslist_pair_table: Example and Test
 ###########################################

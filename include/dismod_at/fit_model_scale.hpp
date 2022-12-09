@@ -6,7 +6,7 @@
 # define DISMOD_AT_FIT_MODEL_SCALE_HPP
 
 /*
-{xrst_begin fit_model_scale}
+{xrst_begin fit_model_scale dev}
 {xrst_spell
    unscale
 }

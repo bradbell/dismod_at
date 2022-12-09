@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin fixed_effect_xam.cpp}
+{xrst_begin fixed_effect_xam.cpp dev}
 
 C++ fixed_effect: Example and Test
 ##################################

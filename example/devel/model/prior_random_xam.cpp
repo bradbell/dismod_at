@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin prior_random_xam.cpp}
+{xrst_begin prior_random_xam.cpp dev}
 
 C++ prior_random: Example and Test
 ##################################

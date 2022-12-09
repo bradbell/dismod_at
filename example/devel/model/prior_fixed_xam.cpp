@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin prior_fixed_xam.cpp}
+{xrst_begin prior_fixed_xam.cpp dev}
 
 C++ prior_fixed: Example and Test
 #################################

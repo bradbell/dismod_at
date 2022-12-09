@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin cohort_ode_xam.cpp}
+{xrst_begin cohort_ode_xam.cpp dev}
 
 C++ cohort_ode: Example and Test
 ################################

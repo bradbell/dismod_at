@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin like_one_xam.cpp}
+{xrst_begin like_one_xam.cpp dev}
 
 C++ like_one: Example and Test
 ##############################

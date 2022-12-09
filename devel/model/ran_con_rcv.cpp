@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin ran_con_rcv}
+{xrst_begin ran_con_rcv dev}
 {xrst_spell
    enum
    rcv

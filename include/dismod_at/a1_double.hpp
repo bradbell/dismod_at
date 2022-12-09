@@ -7,7 +7,7 @@
 # include <cppad/cppad.hpp>
 
 /*
-{xrst_begin a1_double}
+{xrst_begin a1_double dev}
 {xrst_spell
    hpp
 }

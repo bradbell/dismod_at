@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin trap_ode2_xam.cpp}
+{xrst_begin trap_ode2_xam.cpp dev}
 {xrst_spell
    trapezoidal
 }

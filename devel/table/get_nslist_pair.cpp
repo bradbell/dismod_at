@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin get_nslist_pair}
+{xrst_begin get_nslist_pair dev}
 
 C++: Get the List of Smoothing Table
 ####################################

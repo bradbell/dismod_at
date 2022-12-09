@@ -4,7 +4,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin fixed_effect}
+{xrst_begin fixed_effect dev}
 {xrst_spell
    inverses
 }

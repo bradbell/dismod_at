@@ -6,7 +6,7 @@
 # include <dismod_at/a1_double.hpp>
 
 /*
-{xrst_begin time_line_vec}
+{xrst_begin time_line_vec dev}
 
 Vector of Time Lines For Averaging a Function of Age and Time
 #############################################################

@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin avg_integrand_xam.cpp}
+{xrst_begin avg_integrand_xam.cpp dev}
 
 C++ avg_integrand: Example and Test
 ###################################

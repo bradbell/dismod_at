@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin check_pini_n_age_xam.cpp}
+{xrst_begin check_pini_n_age_xam.cpp dev}
 
 C++ check_pini_n_age: Example and Test
 ######################################

@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin check_table_id}
+{xrst_begin check_table_id dev}
 
 C++: Check That table_id Column Has Proper Values
 #################################################

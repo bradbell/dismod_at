@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin prior_model_ctor}
+{xrst_begin prior_model_ctor dev}
 
 Construct Fixed Negative Log-Likelihood Object
 ##############################################
@@ -154,7 +154,7 @@ residual_struct<Float> prior_model::log_prior(
    );
 }
 /*
-{xrst_begin replace_mean}
+{xrst_begin replace_mean dev}
 
 Replace Prior Means
 ###################
@@ -205,7 +205,7 @@ void prior_model::replace_mean(const CppAD::vector<double>& prior_mean)
 
 /*
 ------------------------------------------------------------------------------
-{xrst_begin prior_fixed_effect}
+{xrst_begin prior_fixed_effect dev}
 
 Evaluate Fixed Negative Log-Likelihood for the Fixed Effects
 ############################################################
@@ -391,7 +391,7 @@ prior_model::fixed(const CppAD::vector<Float>& pack_vec ) const
 }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin prior_random_effect}
+{xrst_begin prior_random_effect dev}
 
 Evaluate Fixed Negative Log-Likelihood for the Random Effects
 #############################################################

@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin check_child_nslist}
+{xrst_begin check_child_nslist dev}
 
 Check Assumptions About Lists of Child Node Smoothing Pairs
 ###########################################################

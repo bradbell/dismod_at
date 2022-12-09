@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin get_column_max_xam.cpp}
+{xrst_begin get_column_max_xam.cpp dev}
 
 C++ get_column_max: Example and Test
 ####################################

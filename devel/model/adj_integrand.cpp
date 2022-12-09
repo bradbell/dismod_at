@@ -13,7 +13,7 @@
 # include <dismod_at/get_subgroup_table.hpp>
 
 /*
-{xrst_begin adj_integrand}
+{xrst_begin adj_integrand dev}
 {xrst_spell
    adj
    adjint

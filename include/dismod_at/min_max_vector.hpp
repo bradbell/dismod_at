@@ -6,7 +6,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin min_max_vector}
+{xrst_begin min_max_vector dev}
 
 Compute Minimum or Maximum Element of a CppAD Vector
 ####################################################

@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin check_zero_sum}
+{xrst_begin check_zero_sum dev}
 
 Check Only One Smoothing for Each Rate in zero_sum_child_rate
 #############################################################

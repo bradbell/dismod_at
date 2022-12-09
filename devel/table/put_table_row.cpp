@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin put_table_row}
+{xrst_begin put_table_row dev}
 
 C++: Insert New Row at End of a Table
 #####################################

@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin check_rate_limit}
+{xrst_begin check_rate_limit dev}
 
 Check Lower and Upper Iota and Rho Limits
 #########################################

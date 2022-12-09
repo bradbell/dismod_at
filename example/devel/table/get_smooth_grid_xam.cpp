@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin get_smooth_grid_xam.cpp}
+{xrst_begin get_smooth_grid_xam.cpp dev}
 
 C++ get_smooth_grid: Example and Test
 #####################################

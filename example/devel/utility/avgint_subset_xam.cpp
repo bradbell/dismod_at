@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin avgint_subset_xam.cpp}
+{xrst_begin avgint_subset_xam.cpp dev}
 
 C++ avgint_subset: Example and Test
 ###################################

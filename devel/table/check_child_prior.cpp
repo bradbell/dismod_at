@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin check_child_prior}
+{xrst_begin check_child_prior dev}
 
 Check Priors in Child Smoothing
 ###############################

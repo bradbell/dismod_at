@@ -5,7 +5,7 @@
 # ifndef DISMOD_AT_AVG_INTEGRAND_HPP
 # define DISMOD_AT_AVG_INTEGRAND_HPP
 /*
-{xrst_begin devel_avg_integrand}
+{xrst_begin devel_avg_integrand dev}
 
 Computing Average Integrands
 ############################

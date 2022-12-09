@@ -11,7 +11,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 /*
 ------------------------------------------------------------------------------
-{xrst_begin avg_integrand_ctor}
+{xrst_begin avg_integrand_ctor dev}
 
 Constructing An Average Integrand Object
 ########################################
@@ -148,7 +148,7 @@ adjint_obj_(
 { }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin avg_integrand_rectangle}
+{xrst_begin avg_integrand_rectangle dev}
 
 Computing One Average Integrand
 ###############################
@@ -541,7 +541,7 @@ Float avg_integrand::rectangle(
 }
 /*
 -----------------------------------------------------------------------------
-{xrst_begin avg_integrand_add_cohort}
+{xrst_begin avg_integrand_add_cohort dev}
 {xrst_spell
    adj
 }

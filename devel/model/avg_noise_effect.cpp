@@ -11,7 +11,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 /*
 ------------------------------------------------------------------------------
-{xrst_begin avg_noise_effect_ctor}
+{xrst_begin avg_noise_effect_ctor dev}
 
 Constructing An Average Noise Effect Object
 ###########################################
@@ -130,7 +130,7 @@ a1_double_time_line_object_( age_avg_grid )
 { }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin avg_noise_effect_rectangle}
+{xrst_begin avg_noise_effect_rectangle dev}
 
 Computing One Average Integrand
 ###############################

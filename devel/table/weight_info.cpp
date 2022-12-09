@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin weight_info}
+{xrst_begin weight_info dev}
 
 Extract and Organize Information for One Weighting Function
 ###########################################################

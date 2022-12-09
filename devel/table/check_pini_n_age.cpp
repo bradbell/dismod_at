@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin check_pini_n_age}
+{xrst_begin check_pini_n_age dev}
 
 Check Initial Prevalence Grid Has One Age
 #########################################

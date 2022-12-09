@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin residual_density}
+{xrst_begin residual_density dev}
 {xrst_spell
    bool
    enum

@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin smooth_info}
+{xrst_begin smooth_info dev}
 
 smooth_info: The Smoothing Information Class
 ############################################

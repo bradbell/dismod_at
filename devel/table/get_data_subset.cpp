@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin get_data_subset}
+{xrst_begin get_data_subset dev}
 
 C++: Get the Data Subset Table
 ##############################

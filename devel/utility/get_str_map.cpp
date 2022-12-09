@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin get_str_map}
+{xrst_begin get_str_map dev}
 
 Get a Value from a Const String to String Map
 #############################################

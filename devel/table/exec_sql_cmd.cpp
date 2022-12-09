@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin exec_sql_cmd}
+{xrst_begin exec_sql_cmd dev}
 {xrst_spell
    cmd
    optionally

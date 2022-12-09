@@ -4,7 +4,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin subset_data}
+{xrst_begin subset_data dev}
 {xrst_spell
    subsampled
    subsamples

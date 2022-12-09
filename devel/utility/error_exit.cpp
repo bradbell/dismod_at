@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin error_exit}
+{xrst_begin error_exit dev}
 
 Printing and Logging Fatal Error Messages
 #########################################

@@ -4,7 +4,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin number_random_const}
+{xrst_begin number_random_const dev}
 
 Determine Number of Random Effects that are Constant
 ####################################################

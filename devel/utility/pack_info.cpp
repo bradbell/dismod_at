@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin pack_info_ctor}
+{xrst_begin pack_info_ctor dev}
 
 Variable Pack Info: Constructor
 ###############################
@@ -447,7 +447,7 @@ n_child_        ( child_id2node_id.size() )
 // use default copy constructor
 /*
 -------------------------------------------------------------------------------
-{xrst_begin pack_info_sizes}
+{xrst_begin pack_info_sizes dev}
 {xrst_spell
    subgroups
 }
@@ -591,7 +591,7 @@ size_t pack_info::first_subgroup_id(size_t group_id) const
 
 /*
 ------------------------------------------------------------------------------
-{xrst_begin pack_info_mulstd}
+{xrst_begin pack_info_mulstd dev}
 
 Variable Pack Info: Smoothing Standard Deviation Multipliers
 ############################################################
@@ -663,7 +663,7 @@ size_t pack_info::mulstd_offset(size_t smooth_id, size_t k) const
 }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin pack_info_node_rate}
+{xrst_begin pack_info_node_rate dev}
 {xrst_spell
    subvec
 }
@@ -769,7 +769,7 @@ pack_info::subvec_info pack_info::node_rate_value_info(size_t rate_id, size_t j)
 
 /*
 ------------------------------------------------------------------------------
-{xrst_begin pack_info_group_meas}
+{xrst_begin pack_info_group_meas dev}
 {xrst_spell
    subvec
 }
@@ -910,7 +910,7 @@ pack_info::group_meas_noise_info(size_t integrand_id, size_t j) const
 
 /*
 ------------------------------------------------------------------------------
-{xrst_begin pack_info_group_rate}
+{xrst_begin pack_info_group_rate dev}
 {xrst_spell
    subvec
 }
@@ -1025,7 +1025,7 @@ pack_info::group_rate_value_info(size_t rate_id, size_t j) const
 }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin pack_info_subgroup_rate}
+{xrst_begin pack_info_subgroup_rate dev}
 {xrst_spell
    subgroups
    subvec
@@ -1170,7 +1170,7 @@ pack_info::subvec_info pack_info::subgroup_rate_value_info(
 }
 /*
 ------------------------------------------------------------------------------
-{xrst_begin pack_info_subgroup_meas}
+{xrst_begin pack_info_subgroup_meas dev}
 {xrst_spell
    subgroups
    subvec

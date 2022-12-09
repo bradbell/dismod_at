@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin get_table_column}
+{xrst_begin get_table_column dev}
 
 C++: Get The Type and Values in a Table Column
 ##############################################
