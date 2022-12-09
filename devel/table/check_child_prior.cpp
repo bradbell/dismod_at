@@ -3,92 +3,87 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin check_child_prior$$
-$spell
-   sqlite
-   std
-   dage
-   dtime
-   const
-   CppAD
-   struct
-   nslist
-$$
+{xrst_begin check_child_prior}
 
-$section Check Priors in Child Smoothing$$
+Check Priors in Child Smoothing
+###############################
 
-$head syntax$$
-$codei%check_child_prior(
-   %db%, %rate_table%, %smooth_grid%, %nslist_pair%, %prior_table%
-)%$$
+syntax
+******
 
-$head Purpose$$
+| ``check_child_prior`` (
+| |tab| *db* , *rate_table* , *smooth_grid* , *nslist_pair* , *prior_table*
+| )
+
+Purpose
+*******
 Checks the
-$cref/child smoothing assumptions/rate_table/child_smooth_id/$$.
+:ref:`child smoothing assumptions<rate_table@child_smooth_id>` .
 
-$list number$$
-The $cref/density_id/prior_table/density_id/$$ cannot correspond to a
-$cref/laplace/density_table/density_name/laplace/$$ or
-$cref/log_laplace/density_table/density_name/log_laplace/$$ density.
-$lnext
-The $cref/lower/prior_table/lower/$$ limit must be minus infinity
-or equal to the upper limit and finite.
-$lnext
-The $cref/upper/prior_table/upper/$$ limit must be plus infinity
-or equal to the lower limit and finite.
-$lend
+#. The :ref:`prior_table@density_id` cannot correspond to a
+   :ref:`density_table@density_name@laplace` or
+   :ref:`density_table@density_name@log_laplace` density.
+#. The :ref:`prior_table@lower` limit must be minus infinity
+   or equal to the upper limit and finite.
+#. The :ref:`prior_table@upper` limit must be plus infinity
+   or equal to the lower limit and finite.
 
-$head db$$
+db
+**
 This argument has prototype
-$codei%
-   sqlite3* %db%
-%$$
-and is the database connection for $cref/logging/log_message/$$ errors.
 
-$head rate_table$$
+   ``sqlite3`` * *db*
+
+and is the database connection for :ref:`logging<log_message-name>` errors.
+
+rate_table
+**********
 This argument has prototype
-$codei%
-   const CppAD::vector<rate_struct>& %rate_table%
-%$$
+
+   ``const CppAD::vector<rate_struct>&`` *rate_table*
+
 and it is the
-$cref/rate_table/get_rate_table/rate_table/$$.
+:ref:`get_rate_table@rate_table` .
 For this table,
-only the $code child_smooth_id$$ field is used.
+only the ``child_smooth_id`` field is used.
 
-$head smooth_grid$$
+smooth_grid
+***********
 This argument has prototype
-$codei%
-   const CppAD::vector<smooth_grid_struct>& %smooth_grid%
-%$$
+
+   ``const CppAD::vector<smooth_grid_struct>&`` *smooth_grid*
+
 and it is the
-$cref/smooth_grid/get_smooth_grid/smooth_grid/$$.
+:ref:`get_smooth_grid@smooth_grid` .
 For this table, only the
-$code value_prior_id$$, $code dage_prior_id$$, and $code dtime_prior_id$$
+``value_prior_id`` , ``dage_prior_id`` , and ``dtime_prior_id``
 fields are used.
 
-$head nslist_pair$$
+nslist_pair
+***********
 This argument has prototype
-$codei%
-   const CppAD::vector<nslist_pair_struct>& %nslist_pair%
-%$$
-and it is the
-$cref/nslist_pair/get_nslist_pair/nslist_pair/$$.
 
-$head prior_table$$
-This argument has prototype
-$codei%
-   const CppAD::vector<prior_struct>& %prior_table%
-%$$
+   ``const CppAD::vector<nslist_pair_struct>&`` *nslist_pair*
+
 and it is the
-$cref/prior_table/get_prior_table/prior_table/$$.
+:ref:`get_nslist_pair@nslist_pair` .
+
+prior_table
+***********
+This argument has prototype
+
+   ``const CppAD::vector<prior_struct>&`` *prior_table*
+
+and it is the
+:ref:`get_prior_table@prior_table` .
 For this table,
 only the
-$code value_prior_id$$,
-$code dage_prior_id$$, and
-$code dtime_prior_id$$,
+``value_prior_id`` ,
+``dage_prior_id`` , and
+``dtime_prior_id`` ,
 field are used.
 
-$end
+{xrst_end check_child_prior}
 */
 # include <dismod_at/check_child_prior.hpp>
 # include <dismod_at/get_nslist_pair.hpp>

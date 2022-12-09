@@ -3,37 +3,39 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin connection_file$$ $newlinech #$$
-# $spell
-#  str
-#  sqlite
-#  dismod
-# $$
+# {xrst_begin connection_file}
+# {xrst_comment_ch #}
 #
-# $section Get File Name For a Database Connection$$
+# Get File Name For a Database Connection
+# #######################################
 #
-# $head Syntax$$
-# $icode%file_name% = dismod_at.connection_file_name(%connection%)
-# %$$
+# Syntax
+# ******
 #
-# $head Purpose$$
+#     *file_name* = ``dismod_at.connection_file_name`` ( *connection* )
+#
+# Purpose
+# *******
 # This function can be used for reporting errors that occur
 # when using a database connection.
 #
-# $head connection$$
-# The is a database connection returned by $cref create_connection$$.
+# connection
+# **********
+# The is a database connection returned by :ref:`create_connection-name` .
 #
-# $head file_name$$
-# The return value is a $code str$$ containing the name of the
+# file_name
+# *********
+# The return value is a ``str`` containing the name of the
 # file where the data base is stored.
-#
-# $children%example/user/connection_file.py
-# %$$
-# $head Example$$
-# The file $cref user_connection_file.py$$ contains an example and test of
+# {xrst_toc_hidden
+#    example/user/connection_file.py
+# }
+# Example
+# *******
+# The file :ref:`user_connection_file.py-name` contains an example and test of
 # this routine.
 #
-# $end
+# {xrst_end connection_file}
 # ---------------------------------------------------------------------------
 import sqlite3
 def connection_file(connection) :

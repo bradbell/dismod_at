@@ -20,194 +20,211 @@
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
 -------------------------------------------------------------------------------
-$begin sample_command$$
-$spell
-   hes
-   sim
-   avgint
-   dismod
-   var
-   arg
-$$
+{xrst_begin sample_command}
+{xrst_spell
+   covariance
+}
 
-$section The Sample Command$$
+The Sample Command
+##################
 
-$head Syntax$$
-$codei%dismod_at %database% sample %method% %variables% %number_sample%
-%$$
-$codei%dismod_at %database% sample %method% %variables% %number_sample% %simulate_index%
-%$$
+Syntax
+******
 
-$head database$$
+| ``dismod_at`` *database* ``sample`` *method* *variables* *number_sample*
+| ``dismod_at`` *database* ``sample`` *method* *variables* *number_sample* *simulate_index*
+
+database
+********
 Is an
-$href%http://www.sqlite.org/sqlite/%$$ database containing the
-$code dismod_at$$ $cref input$$ tables which are not modified.
+http://www.sqlite.org/sqlite/ database containing the
+``dismod_at`` :ref:`input-name` tables which are not modified.
 
-$head Purpose$$
-This command simulates samples of the $cref model_variables$$
+Purpose
+*******
+This command simulates samples of the :ref:`model_variables-name`
 from the posterior distribution; see
-$cref/simulation/posterior/Simulation/$$ for the posterior distribution.
+:ref:`posterior@Simulation` for the posterior distribution.
 
-$head method$$
-The sample command argument $icode method$$ must be
-$code simulate$$ or $code asymptotic$$; see discussion below:
+method
+******
+The sample command argument *method* must be
+``simulate`` or ``asymptotic`` ; see discussion below:
 
-$head variables$$
-The sample command argument $icode variables$$ must be
-$code fixed$$ or $code both$$.
+variables
+*********
+The sample command argument *variables* must be
+``fixed`` or ``both`` .
 This corresponds to the asymptotic statistics for
-$cref/fit fixed/fit_command/variables/fixed/$$ and
-$cref/fit both/fit_command/variables/both/$$ respectively.
+:ref:`fit fixed<fit_command@variables@fixed>` and
+:ref:`fit both<fit_command@variables@both>` respectively.
 
-$head number_sample$$
+number_sample
+*************
 Is the number of samples. Each sample contains a complete
 set of model variables.
-If $icode method$$ is $code simulate$$,
-$icode number_sample$$ must be equal to
-$cref/number_simulate/simulate_command/number_simulate/$$
+If *method* is ``simulate`` ,
+*number_sample* must be equal to
+:ref:`simulate_command@number_simulate`
 in the previous simulate command.
 
-$head simulate_index$$
-If this argument is present, $icode method$$ must be $code asymptotic$$
-and $icode simulate_index$$ must be the same as in the corresponding
-$cref/fit command/fit_command/simulate_index/$$.
+simulate_index
+**************
+If this argument is present, *method* must be ``asymptotic``
+and *simulate_index* must be the same as in the corresponding
+:ref:`fit command<fit_command@simulate_index>` .
 
-$head simulate$$
-A complete set of $cref model_variables$$,
-corresponding to each $cref/sample_index/sample_table/sample_index/$$,
+simulate
+********
+A complete set of :ref:`model_variables-name` ,
+corresponding to each :ref:`sample_table@sample_index` ,
 is written to the sample table.
 They correspond to fitting the data in the data_sim table with
-$cref/simulate_index/data_sim_table/simulate_index/$$ equal to
-$icode sample_index$$.
+:ref:`data_sim_table@simulate_index` equal to
+*sample_index* .
 The fixed effects correspond to the optimal fit of both the fixed and random
 effects with the prior for the fixed effects replaced by the corresponding
-values in the $cref prior_sim_table$$.
+values in the :ref:`prior_sim_table-name` .
 This value is used for the fixed effects and the value for the
 random effects is obtained by optimizing just the random
 effects with the prior for the random effects replaced by the corresponding
-values in the $cref prior_sim_table$$.
-This requires running $icode number_sample$$ fits of the model variables
+values in the :ref:`prior_sim_table-name` .
+This requires running *number_sample* fits of the model variables
 (fitting just the random effects is faster compared to fitting both).
-See $cref/simulation/posterior/Simulation/$$ in the discussion of the
+See :ref:`posterior@Simulation` in the discussion of the
 posterior distribution of maximum likelihood estimates.
 
-$head asymptotic$$
-If $icode method$$ is $code asymptotic$$,
-the $cref fit_var_table$$ is an additional input in this case
+asymptotic
+**********
+If *method* is ``asymptotic`` ,
+the :ref:`fit_var_table-name` is an additional input in this case
 and it assumed to correspond to a
-fit $cref/both/fit_command/variables/both/$$.
+fit :ref:`fit_command@variables@both` .
 If the previous fit did (did not) have a
-$cref/simulate_index/fit_command/simulate_index/$$ it
+:ref:`fit_command@simulate_index` it
 must (must not) be included in the sample_command.
 The asymptotic statistics of the model variables is used to generate
-$icode number_sample$$ samples of the model variables
-The samples with different values of $icode sample_index$$ are independent.
+*number_sample* samples of the model variables
+The samples with different values of *sample_index* are independent.
 All of the Laplace density terms are ignored by the asymptotic statistics.
 The constraints are also ignored, except the constraints were
 the lower and upper limits for a variable are equal.
 
-$subhead Fixed Effects Distribution$$
+Fixed Effects Distribution
+==========================
 The asymptotic distribution used to simulate the fixed effects is a normal
-with mean equal to the value of the fixed effects in the $cref fit_var_table$$
+with mean equal to the value of the fixed effects in the :ref:`fit_var_table-name`
 and covariance equal to the inverse of the
 Hessian of the fixed effect objective
-$cref/hes_fixed_table/sample_command/Output Tables/hes_fixed_table/$$.
+:ref:`sample_command@Output Tables@hes_fixed_table` .
 If a fixed effect is scaled
-(see $cref/scaling fixed effects/prior_table/eta/Scaling Fixed Effects/$$)
+(see :ref:`prior_table@eta@Scaling Fixed Effects` )
 the scaled version of the fixed effect has the asymptotic distribution.
 If the lower and upper limits are equal, the corresponding variable
 is simulated as having that constant value.
 
-$subhead Random Effects Distribution$$
+Random Effects Distribution
+===========================
 If the lower and upper limits for a random effect are equal,
 the random effect is simulated as having that constant value.
 If the lower and upper limits are not equal and
-$icode variables$$ is $code fixed$$,
+*variables* is ``fixed`` ,
 the random effect is simulated with value zero.
 Otherwise,
 the asymptotic distribution used to simulate a random effect is a normal
-with mean equal to the value of the random effect in the $cref fit_var_table$$
+with mean equal to the value of the random effect in the :ref:`fit_var_table-name`
 This is the optimal value given the fixed effects; see
-$cref/fit_var_table/sample_command/Extra Input Tables/fit_var_table/$$ below.
+:ref:`sample_command@Extra Input Tables@fit_var_table` below.
 The covariance of the random effects is equal to the inverse of the
 Hessian of the random effect objective
-$cref/hes_fixed_table/sample_command/Output Tables/hes_fixed_table/$$.
+:ref:`sample_command@Output Tables@hes_fixed_table` .
 
-$head Extra Input Tables$$
+Extra Input Tables
+******************
 
-$subhead data_sim_table$$
-If $icode method$$ is $code simulate$$,
-this command has the extra input $cref data_sim_table$$
-which was created by the previous $cref simulate_command$$.
+data_sim_table
+==============
+If *method* is ``simulate`` ,
+this command has the extra input :ref:`data_sim_table-name`
+which was created by the previous :ref:`simulate_command-name` .
 
-$subhead prior_sim_table$$
-If $icode method$$ is $code simulate$$,
-this command has the extra input $cref prior_sim_table$$
-which was created by the previous $cref simulate_command$$.
+prior_sim_table
+===============
+If *method* is ``simulate`` ,
+this command has the extra input :ref:`prior_sim_table-name`
+which was created by the previous :ref:`simulate_command-name` .
 
-$subhead fit_var_table$$
-If $icode method$$ is $code asymptotic$$,
-this command has the extra input $cref fit_var_table$$
+fit_var_table
+=============
+If *method* is ``asymptotic`` ,
+this command has the extra input :ref:`fit_var_table-name`
 which was created by a previous fit command which
-must have included $cref/both/fit_command/variables/both/$$
+must have included :ref:`fit_command@variables@both`
 fixed and random effects.
 
-$head Output Tables$$
+Output Tables
+*************
 
-$subhead sample_table$$
-A new $cref sample_table$$ is created each time this command is run.
+sample_table
+============
+A new :ref:`sample_table-name` is created each time this command is run.
 It contains samples of the model variables.
-Hence the number of rows in this table is $icode number_sample$$
-times the number of rows in the $cref var_table$$.
-If the $code asymptotic$$ command fails because the
+Hence the number of rows in this table is *number_sample*
+times the number of rows in the :ref:`var_table-name` .
+If the ``asymptotic`` command fails because the
 fixed effects information matrix is not positive definite,
 this command will terminate with an error and the sample table will not exist.
 The corresponding fixed effects information matrix will be in the
-$cref/hes_fixed_table/sample_command/Output Tables/hes_fixed_table/$$.
+:ref:`sample_command@Output Tables@hes_fixed_table` .
 
-$subhead No Sample Table$$
-In the special case where $icode method$$ is $code asymptotic$$
+No Sample Table
+===============
+In the special case where *method* is ``asymptotic``
 and the Hessian of the fixed objective is not positive definite,
 the sample table is not created; i.e.,
 there is be no sample table in the database after this command.
-In addition, if $icode variables$$ is $code both$$ and the Hessian
+In addition, if *variables* is ``both`` and the Hessian
 of the random effects objective is not positive definite,
 the sample table is not created.
 
-$subhead hes_fixed_table$$
-A new $cref hes_fixed_table$$ is created each time this command is run
-with $icode method$$ equal to $code asymptotic$$.
+hes_fixed_table
+===============
+A new :ref:`hes_fixed_table-name` is created each time this command is run
+with *method* equal to ``asymptotic`` .
 The Hessian of the fixed effects objective is written in this table.
-If $icode simulate_index$$ is present (is not present) the Hessian corresponds
-to the simulated measurements in the $cref data_sim_table$$
-(measurements in the $cref data_table$$).
+If *simulate_index* is present (is not present) the Hessian corresponds
+to the simulated measurements in the :ref:`data_sim_table-name`
+(measurements in the :ref:`data_table-name` ).
 
-$subhead hes_random_table$$
-A new $cref hes_random_table$$ is created each time this command is run
-with $icode method$$ equal to $code asymptotic$$ and
-$icode variables$$ equal to $code both$$.
+hes_random_table
+================
+A new :ref:`hes_random_table-name` is created each time this command is run
+with *method* equal to ``asymptotic`` and
+*variables* equal to ``both`` .
 The Hessian of the random effects objective is written in this table.
-If $icode simulate_index$$ is present (is not present) the Hessian corresponds
-to the simulated measurements in the $cref data_sim_table$$
-(measurements in the $cref data_table$$).
+If *simulate_index* is present (is not present) the Hessian corresponds
+to the simulated measurements in the :ref:`data_sim_table-name`
+(measurements in the :ref:`data_table-name` ).
 
-$head Bounds$$
-If you use the $code simulate$$ method,
+Bounds
+******
+If you use the ``simulate`` method,
 the samples are all within the specified bounds, including the bounds
 on the random effects specified by
-$cref/bound_random/option_table/Optimize Random Only/bound_random/$$.
-If you use the $code asymptotic$$ method,
+:ref:`option_table@Optimize Random Only@bound_random` .
+If you use the ``asymptotic`` method,
 the only bounds that are enforced are where the upper and lower limits
 are equal.
-
-$children%example/get_started/sample_command.py
-%$$
-$head Example$$
+{xrst_toc_hidden
+   example/get_started/sample_command.py
+}
+Example
+*******
 The files
-$cref sample_command.py$$, $cref user_sample_asy.py$$
+:ref:`sample_command.py-name` , :ref:`user_sample_asy.py-name`
 contain examples and tests using this command.
 
-$end
+{xrst_end sample_command}
 */
 // ----------------------------------------------------------------------------
 void sample_command(

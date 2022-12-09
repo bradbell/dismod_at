@@ -3,16 +3,17 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin smooth_info_xam.cpp$$
-$spell
-   xam
-$$
+{xrst_begin smooth_info_xam.cpp}
 
-$section C++ smooth_info: Example and Test$$
+C++ smooth_info: Example and Test
+#################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end smooth_info_xam.cpp}
 */
 // BEGIN C++
 # include <dismod_at/smooth_info.hpp>

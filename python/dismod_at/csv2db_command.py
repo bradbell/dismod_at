@@ -2,236 +2,271 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin csv2db_command$$ $newlinech #$$
-# $spell
-#  Csv
-#  Dismod
-#  str
-#  pini
-#  integrands
-#  Sincidence
-#  mtexcess
-#  mtother
-#  Tincidence
-#  mtspecific
-#  mtall
-#  mtstandard
-#  relrisk
-#  std
-#  mtwith
-#  dismodat.py
-#  std
-# $$
+# {xrst_begin csv2db_command}
+# {xrst_spell
+#     dt
+#     mtall
+#     mtexcess
+#     mtother
+#     mtspecific
+#     mtstandard
+#     mtwith
+#     relrisk
+#     tincidence
+# }
+# {xrst_comment_ch #}
 #
-# $section Conversion of a Csv File to a Dismod_at Database$$
+# Conversion of a Csv File to a Dismod_at Database
+# ################################################
 #
-# $head Deprecated$$
+# Deprecated
+# **********
 # This command was deprecated on 2021-12-05.
 #
-# $head Syntax$$
+# Syntax
+# ******
 #
-# $subhead As Program$$
-# $codei%dismodat.py %database% %csv2db% %configure_csv% %measure_csv%$$
+# As Program
+# ==========
+# ``dismodat.py`` *database* *csv2db* *configure_csv* *measure_csv*
 #
-# $subhead As Python Function$$
-# $codei%dismod_at.csv2db_command(%database%, %configure_csv%, %measure_csv%)%$$
+# As Python Function
+# ==================
+# ``dismod_at.csv2db_command`` ( *database* , *configure_csv* , *measure_csv* )
 #
-# $head See Also$$
-# $cref get_started$$
+# See Also
+# ********
+# :ref:`get_started-name`
 #
-# $head Example$$
+# Example
+# *******
 # This command has limited capability and is only meant as an example
 # to help one get started using dismod_at.
-# See $cref user_csv2db.py$$ for an example that uses this command.
+# See :ref:`user_csv2db.py-name` for an example that uses this command.
 #
-# $head mtall$$
-# The all cause mortality data $code mtall$$
-# in the $icode measure_csv$$ file has special meaning.
+# mtall
+# *****
+# The all cause mortality data ``mtall``
+# in the *measure_csv* file has special meaning.
 # We assume it has been converted to constraints on other cause
-# mortality; see $cref/mtother/csv2db_command/mtother/$$ below.
+# mortality; see :ref:`csv2db_command@mtother` below.
 # For this reason, it should not be included when fitting,
-# and is only in $icode measure_csv$$ as a check that the desired values
+# and is only in *measure_csv* as a check that the desired values
 # are satisfied (by checking residuals in a data fit).
-# For this reason, $cref/hold_out/csv2db_command/hold_out/$$ must be
-# one for all the $code mtall$$ data; i.e., it is not included during a fit.
+# For this reason, :ref:`csv2db_command@hold_out` must be
+# one for all the ``mtall`` data; i.e., it is not included during a fit.
 #
-# $head mtother$$
+# mtother
+# *******
 #
-# $subhead Constraint$$
-# The other cause mortality data $code mtother$$
-# in the $icode measure_csv$$ file has special meaning.
+# Constraint
+# ==========
+# The other cause mortality data ``mtother``
+# in the *measure_csv* file has special meaning.
 # It is intended to represent the all cause mortality data
 # as constraints on other cause mortality in the model.
-# To be specific, the $cref/meas_value/csv2db_command/meas_value/$$
-# is a constraint on $latex \omega$$ at the corresponding age-time pairs.
+# To be specific, the :ref:`csv2db_command@meas_value`
+# is a constraint on :math:`\omega` at the corresponding age-time pairs.
 #
-# $subhead Age-Time Pairs$$
-# Each row with $icode%integrand% = mtother%$$ must have
-# $icode%age_lower% == %age_upper%$$ and
-# $icode%time_lower% == %time_upper%$$.
+# Age-Time Pairs
+# ==============
+# Each row with *integrand* = ``mtother`` must have
+# *age_lower* == *age_upper* and
+# *time_lower* == *time_upper* .
 #
-# $subhead Rectangular Grid$$
-# The $code mtother$$ data must be specified on a rectangular grid; i.e.,
+# Rectangular Grid
+# ================
+# The ``mtother`` data must be specified on a rectangular grid; i.e.,
 # each age that appears, appears in one and only one row for every time
 # that appears.
 # This property can also be stated as
 # each time that appears, appears in one and only one row for every age
 # that appears.
 #
-# $subhead hold_out$$
-# The $cref/hold_out/csv2db_command/hold_out/$$ must be
-# one for all the $code mtother$$ data because
+# hold_out
+# ========
+# The :ref:`csv2db_command@hold_out` must be
+# one for all the ``mtother`` data because
 # it is a constraint, not data, during a fit.
 #
-# $subhead Rate Grid$$
+# Rate Grid
+# =========
 # All of the
-# $cref/non zero rates/csv2db_command/configure_csv/non_zero_rates/$$
-# use the age-time grid corresponding the $code mtother$$ data.
+# :ref:`non zero rates<csv2db_command@configure_csv@non_zero_rates>`
+# use the age-time grid corresponding the ``mtother`` data.
 # In other words, they are modeled as piecewise bilinear between the
-# age-time points at which $code mtother$$ is specified.
+# age-time points at which ``mtother`` is specified.
 #
-# $head Predictions$$
-# The $cref avgint_table$$ is set up so that
-# $cref/predictions/predict_command/$$ for the integrands
-# $cref/Sincidence/csv2db_command/integrand/Sincidence/$$,
-# $cref/remission/csv2db_command/integrand/remission/$$,
-# $cref/mtexcess/csv2db_command/integrand/mtexcess/$$,
+# Predictions
+# ***********
+# The :ref:`avgint_table-name` is set up so that
+# :ref:`predictions<predict_command-name>` for the integrands
+# :ref:`csv2db_command@integrand@Sincidence` ,
+# :ref:`csv2db_command@integrand@remission` ,
+# :ref:`csv2db_command@integrand@mtexcess` ,
 # corresponding to the value of the rates iota, rho, chi on the
-# $cref/rectangular grid/csv2db_command/mtother/Rectangular Grid/$$.
+# :ref:`csv2db_command@mtother@Rectangular Grid` .
 # Only the non-zero rates are included.
 # Predictions for
-# $cref/prevalence/csv2db_command/integrand/prevalence/$$ in the
+# :ref:`csv2db_command@integrand@prevalence` in the
 # rectangular grid are also included.
 #
-# $head database$$
+# database
+# ********
 # This argument
-# is an $code str$$ containing the name of the dismod_at database
+# is an ``str`` containing the name of the dismod_at database
 # file that is written by this command.
 #
-# $head configure_csv$$
+# configure_csv
+# *************
 # This argument
-# is an $code str$$ containing the configuration file name and must
-# end with the $code .csv$$ extension.
+# is an ``str`` containing the configuration file name and must
+# end with the ``.csv`` extension.
 # The first row contains the following column names
-# $code name$$, $code value$$.
-# Column names that begin with $code c_$$ are comments
-# and will not be used by future versions of $code csv2db$$.
+# ``name`` , ``value`` .
+# Column names that begin with ``c_`` are comments
+# and will not be used by future versions of ``csv2db`` .
 # The configuration options are documented by the corresponding
 # name below.
 #
-# $subhead non_zero_rates$$
-# The $icode value$$ in this row is a list rates that are non-zero
+# non_zero_rates
+# ==============
+# The *value* in this row is a list rates that are non-zero
 # in the model.
 # The possible rates are
-# $code pini$$, $code iota$$, $code rho$$, $code chi$$, $code omega$$.
+# ``pini`` , ``iota`` , ``rho`` , ``chi`` , ``omega`` .
 # The rates in the list are separated by a single space
-# and $code omega$$ must appear in the list.
+# and ``omega`` must appear in the list.
 # There is no default value for this value; i.e., it must appear.
 #
-# $head measure_csv$$
-# is an $code str$$ containing the data file name
-# and must end with the $code .csv$$ extension.
+# measure_csv
+# ***********
+# is an ``str`` containing the data file name
+# and must end with the ``.csv`` extension.
 # Each row of the data file corresponds to one data point.
 # The first row of the file contains the column names.
 # The other rows correspond to data points.
 # Each column of the necessary columns in the data file is documented
 # under its column name below.
-# Column names that begin with $code c_$$ are comments
-# and will not be used by future versions of $code csv2db$$.
+# Column names that begin with ``c_`` are comments
+# and will not be used by future versions of ``csv2db`` .
 #
-# $head integrand$$
-# This column of $icode measure_csv$$ contains
+# integrand
+# *********
+# This column of *measure_csv* contains
 # one of the valid integrands:
 #
-# $subhead Sincidence$$
+# Sincidence
+# ==========
 # The incidence rate relative to susceptible population:
-# $latex \iota $$.
+# :math:`\iota`.
 #
-# $subhead remission$$
+# remission
+# =========
 # The remission rate:
-# $latex \rho $$.
+# :math:`\rho`.
 #
-# $subhead mtexcess$$
+# mtexcess
+# ========
 # The excess mortality rate:
-# $latex \chi $$.
+# :math:`\chi`.
 #
-# $subhead mtother$$
+# mtother
+# =======
 # The other cause mortality rate:
-# $latex \omega $$.
+# :math:`\omega`.
 #
-# $subhead mtwith$$
+# mtwith
+# ======
 # The with condition mortality rate:
-# $latex \omega + \chi $$.
+# :math:`\omega + \chi`.
 #
-# $subhead susceptible$$
+# susceptible
+# ===========
 # The susceptible fraction of the population:
-# $latex S $$.
+# :math:`S`.
 #
-# $subhead withC$$
+# withC
+# =====
 # The with condition fraction of the population:
-# $latex C $$.
+# :math:`C`.
 #
-# $subhead prevalence$$
+# prevalence
+# ==========
 # The prevalence of the condition:
-# $latex P = C / [ S + C ] $$.
+# :math:`P = C / [ S + C ]`.
 #
-# $subhead Tincidence$$
+# Tincidence
+# ==========
 # The incidence rate relative to the total population:
-# $latex \iota [ 1 - P ] $$.
+# :math:`\iota [ 1 - P ]`.
 #
-# $subhead mtspecific$$
+# mtspecific
+# ==========
 # The cause specific mortality rate:
-# $latex \chi P $$.
+# :math:`\chi P`.
 #
-# $subhead mtall$$
+# mtall
+# =====
 # The all cause mortality rate:
-# $latex \omega + \chi P $$.
+# :math:`\omega + \chi P`.
 #
-# $subhead mtstandard$$
+# mtstandard
+# ==========
 # The standardized mortality ratio:
-# $latex [ \omega + \chi ] / [ \omega + \chi P ] $$.
+# :math:`[ \omega + \chi ] / [ \omega + \chi P ]`.
 #
-# $subhead relrisk$$
+# relrisk
+# =======
 # The relative risk:
-# $latex [ \omega + \chi ] / \omega $$.
+# :math:`[ \omega + \chi ] / \omega`.
 #
-# $head age_lower$$
-# This column of $icode measure_csv$$ contains
-# The initial age for averaging the integrand for this row; $latex b$$.
+# age_lower
+# *********
+# This column of *measure_csv* contains
+# The initial age for averaging the integrand for this row; :math:`b`.
 #
-# $head age_upper$$
-# This column of $icode measure_csv$$ contains
-# the final age for averaging the integrand for this row; $latex c$$.
+# age_upper
+# *********
+# This column of *measure_csv* contains
+# the final age for averaging the integrand for this row; :math:`c`.
 #
-# $head time_lower$$
-# This column of $icode measure_csv$$ contains
-# the initial time for averaging the integrand for this row; $latex r$$.
+# time_lower
+# **********
+# This column of *measure_csv* contains
+# the initial time for averaging the integrand for this row; :math:`r`.
 #
-# $head time_upper$$
-# This column of $icode measure_csv$$ contains
-# the final time for averaging the integrand for this row; $latex s$$.
+# time_upper
+# **********
+# This column of *measure_csv* contains
+# the final time for averaging the integrand for this row; :math:`s`.
 #
-# $head meas_value$$
-# This column of $icode measure_csv$$ contains
+# meas_value
+# **********
+# This column of *measure_csv* contains
 # the value of the average integrand plus measurement noise
-# $latex \[
+#
+# .. math::
+#
 #  e + \frac{1}{c-b} \frac{1}{s-r} \int_b^c \int_r^s I(a , t) \; da \; dt
-# \] $$
-# where $latex e$$ is the measurement noise,
-# $latex a$$ and $latex t$$ are the age and time integration variables,
-# and $latex I(a, t)$$ is the value of the integrand for this row.
 #
-# $head meas_std$$
-# This column of $icode measure_csv$$ contains
-# the standard deviation of the measurement noise $latex e$$.
+# where :math:`e` is the measurement noise,
+# :math:`a` and :math:`t` are the age and time integration variables,
+# and :math:`I(a, t)` is the value of the integrand for this row.
 #
-# $head hold_out$$
-# This column of $icode measure_csv$$ contains
+# meas_std
+# ********
+# This column of *measure_csv* contains
+# the standard deviation of the measurement noise :math:`e`.
+#
+# hold_out
+# ********
+# This column of *measure_csv* contains
 # either zero or one. If it is one, this row is included
 # dismod_at fits. Otherwise it is excluded.
 # In either case, the residuals are computed for this row.
 #
-# $end
+# {xrst_end csv2db_command}
 # -----------------------------------------------------------------------------
 def constant_weight_fun(a, t) :
    return 1.0

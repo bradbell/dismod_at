@@ -2,81 +2,80 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_fit_random.py$$ $newlinech #$$
-# $spell
-#  dismod
-#  exp
-#  init
-#  var
-# $$
+# {xrst_begin user_fit_random.py}
+# {xrst_spell
+#     exp
+# }
+# {xrst_comment_ch #}
 #
-# $section Fitting Just Random Effects$$
+# Fitting Just Random Effects
+# ###########################
 #
-# $head Purpose$$
+# Purpose
+# *******
 # This example demonstrates using the command
-# $codei%
-#  dismod_at %database% fit random
-# %$$
-# See the $cref/random/fit_command/variables/random/$$ option
+#
+#     ``dismod_at`` *database* ``fit random``
+#
+# See the :ref:`fit_command@variables@random` option
 # to fit the fit command.
 #
-# $head Discussion$$
+# Discussion
+# **********
 # The following describes the model and data for this example:
 #
-# $list number$$
-# The $cref age_table$$ has values
-# $code 0.0$$, $code 50.0$$, $code 100.0$$.
-# The $cref time_table$$ has values
-# $code 1995.0$$, $code 2005.0$$, $code 2015.0$$.
-# $lnext
-# The parent node is North America, the child nodes are
-# Canada and the United States.
-# $lnext
-# The only $cref model_variables$$ in this example are
-# $cref/iota/rate_table/rate_name/iota/$$ for the parent and the
-# corresponding random effects for two children.
-# These rates are modeled as constant with respect to age and
-# linear between time 1995 and 2015.
-# The true iota is
-# $table
-# 0.01             $pre  $$ $cnext North America $rnext
-# 0.01 * exp(+0.5) $pre  $$ $cnext United States $rnext
-# 0.01 * exp(-0.5) $pre  $$ $cnext Canada
-# $tend
-# Note that the random effect for the United States is +0.5
-# and for Canada it is -0.5.
-# $lnext
-# There are three measurements, one for each node.
-# All the measurements are at age 50 and time 2000
-# (there is no age or time interval for the data points).
-# The measurement value is exactly equal to the true value of $icode iota$$
-# for the corresponding node.
-# The measurement noise is modeled to have a 10 percent coefficient
-# of variation (even though there is no noise in the actual measurements).
-# $lnext
-# The prior for North America is a uniform with mean equal to the
-# true value for the United States.
-# The prior for Canada and the United States is a Gaussian with mean zero and
-# standard deviation 100.
-# The large standard deviation is so that it does not have much effect.
-# $lnext
-# The prior for the difference in $icode iota$$ between time 1995
-# and time 2015 for the children (parent) is a Gaussian (log Gaussian)
-# with mean zero and standard deviation 0.1.
-# $lnext
-# The init command is used to set the
-# $cref/start_var_table/init_command/start_var_table/$$ equal to the
-# prior mean.
-# The prior means for North America (the fixed effects) are not their
-# true values and the optimal values for the random effects
-# compensate for this.
-# $lend
+# #. The :ref:`age_table-name` has values
+#    ``0.0`` , ``50.0`` , ``100.0`` .
+#    The :ref:`time_table-name` has values
+#    ``1995.0`` , ``2005.0`` , ``2015.0`` .
+# #. The parent node is North America, the child nodes are
+#    Canada and the United States.
+# #. The only :ref:`model_variables-name` in this example are
+#    :ref:`rate_table@rate_name@iota` for the parent and the
+#    corresponding random effects for two children.
+#    These rates are modeled as constant with respect to age and
+#    linear between time 1995 and 2015.
+#    The true iota is
 #
+#    .. csv-table::
+#        :widths: auto
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
+#        0.01,North America
+#        0.01 * exp(+0.5),United States
+#        0.01 * exp(-0.5),Canada
 #
-# $end
+#    Note that the random effect for the United States is +0.5
+#    and for Canada it is -0.5.
+# #. There are three measurements, one for each node.
+#    All the measurements are at age 50 and time 2000
+#    (there is no age or time interval for the data points).
+#    The measurement value is exactly equal to the true value of *iota*
+#    for the corresponding node.
+#    The measurement noise is modeled to have a 10 percent coefficient
+#    of variation (even though there is no noise in the actual measurements).
+# #. The prior for North America is a uniform with mean equal to the
+#    true value for the United States.
+#    The prior for Canada and the United States is a Gaussian with mean zero and
+#    standard deviation 100.
+#    The large standard deviation is so that it does not have much effect.
+# #. The prior for the difference in *iota* between time 1995
+#    and time 2015 for the children (parent) is a Gaussian (log Gaussian)
+#    with mean zero and standard deviation 0.1.
+# #. The init command is used to set the
+#    :ref:`init_command@start_var_table` equal to the
+#    prior mean.
+#    The prior means for North America (the fixed effects) are not their
+#    true values and the optimal values for the random effects
+#    compensate for this.
+#
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_fit_random.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------

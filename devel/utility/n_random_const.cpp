@@ -4,48 +4,52 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin number_random_const$$
-$spell
-   const
-   vec
-   var
-$$
+{xrst_begin number_random_const}
 
-$section Determine Number of Random Effects that are Constant$$
+Determine Number of Random Effects that are Constant
+####################################################
 
-$head Syntax$$
-$icode%n_random_const% = number_random_const(
-   %bound_random%, %pack_object%, %var2prior%, %prior_table%
-)%$$
+Syntax
+******
 
-$head bound_random$$
+| *n_random_const* = ``number_random_const`` (
+| |tab| *bound_random* , *pack_object* , *var2prior* , *prior_table*
+| )
+
+bound_random
+************
 This is the value of the
-$cref/bound_random/option_table/Optimize Random Only/bound_random/$$
+:ref:`option_table@Optimize Random Only@bound_random`
 in the option table.
 
-$head pack_object$$
-This argument is the $cref pack_info$$ information corresponding to the
-$cref model_variables$$.
+pack_object
+***********
+This argument is the :ref:`pack_info-name` information corresponding to the
+:ref:`model_variables-name` .
 
-$head var2prior$$
-This argument is the $cref pack_prior$$ information corresponding to the
-$cref model_variables$$.
+var2prior
+*********
+This argument is the :ref:`pack_prior-name` information corresponding to the
+:ref:`model_variables-name` .
 
-$head prior_table$$
-This argument is the $cref/prior_table/get_prior_table/prior_table/$$.
+prior_table
+***********
+This argument is the :ref:`get_prior_table@prior_table` .
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN PROTOTYPE%// END PROTOTYPE%1%
-%$$
-
-$children%
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
+{xrst_toc_hidden
    example/devel/utility/n_random_const_xam.cpp
-%$$
-$head Example$$
-$cref n_random_const_xam.cpp$$
+}
+Example
+*******
+:ref:`n_random_const_xam.cpp-name`
 
-
-$end
+{xrst_end number_random_const}
 */
 # include <dismod_at/n_random_const.hpp>
 # include <dismod_at/random_effect.hpp>

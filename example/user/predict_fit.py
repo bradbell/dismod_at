@@ -2,95 +2,96 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_predict_fit.py$$ $newlinech #$$
-# $spell
-#  init
-#  var
-#  smoothings
-#  Sincidence
-#  Avgint
-# $$
+# {xrst_begin user_predict_fit.py}
+# {xrst_comment_ch #}
 #
-# $section Predict Average Integrand Using Results of a Fit$$
+# Predict Average Integrand Using Results of a Fit
+# ################################################
 #
-# $head Purpose$$
-# This examples used the $cref/fit both/fit_command/variables/both/$$ command
+# Purpose
+# *******
+# This examples used the :ref:`fit both<fit_command@variables@both>` command
 # to estimate the model variables.
-# It then uses the $cref/predict fit_var/predict_command/source/fit_var/$$
+# It then uses the :ref:`predict fit_var<predict_command@source@fit_var>`
 # command to compute the
-# $cref/susceptible/avg_integrand/Integrand, I_i(a,t)/susceptible/$$
-# population $latex S(a)$$ at age $latex a = 50$$.
+# :ref:`avg_integrand@Integrand, I_i(a,t)@susceptible`
+# population :math:`S(a)` at age :math:`a = 50`.
 #
-# $head Note Table$$
-# $pre
-#        north_america
-#         /          \
-#   united_states   canada
-# $$
+# Note Table
+# **********
+# ::
 #
-# $head Problem Parameters$$
+#           north_america
+#            /          \
+#      united_states   canada
+#
+# Problem Parameters
+# ******************
 # The following values are used to simulate the data and set the priors
 # for fitting the data:
-# $srcthisfile%
-#  0%# begin problem parameters%# end problem parameters%1
-# %$$
+# {xrst_literal
+#     begin problem parameters
+#     end problem parameters
+# }
 #
-# $head Age and Time Values$$
+# Age and Time Values
+# *******************
 # The age and time values do not affect the fitting for this problem
 # because all the functions are constant in age and time.
 # This follows from the fact that all of the smoothings have one age
 # and one time point.
 #
-# $head Rate Table$$
-# The $cref rate_table$$ only specifies that the only
-# $cref/rate/var_table/var_type/rate/$$ variables are
-# $icode iota$$ for the parent and children.
+# Rate Table
+# **********
+# The :ref:`rate_table-name` only specifies that the only
+# :ref:`var_table@var_type@rate` variables are
+# *iota* for the parent and children.
 # In addition, it specifies the smoothings for these rates
 # each of which has one grid point.
 #
-# $head Variables$$
+# Variables
+# *********
 # There are three model variables in this example:
-# $table
-# $icode iota_north_america$$
-#  $cnext The true value for
-#  $cref/iota(a,t)/math_ode/Incidence, iota(a, t)/$$ in north_america.
-# $rnext
-# $icode canada_effect$$
-#  $cnext The true model value for the canada
-#  $cref/child rate effect
-#     /model_variables
-#     /Random Effects, u
-#     /Child Rate Effects
-#  /$$ on iota.
-# $rnext
-# $icode united_states_effect$$
-#  $cnext The true model value for the united_states
-#  $cref/child rate effect
-#     /model_variables
-#     /Random Effects, u
-#     /Child Rate Effects
-#  /$$ on iota.
-# $tend
 #
-# $head Integrand Table$$
-# The $cref integrand_table$$ for this example includes
-# $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$ and
-# $cref/susceptible/avg_integrand/Integrand, I_i(a,t)/susceptible/$$.
+# .. list-table::
 #
-# $head Data Table$$
-# There are three measurements of $icode Sincidence$$
-# in the $cref data_table$$, one for each node.
+#     * - *iota_north_america*
+#       - The true value for
+#         :ref:`iota(a,t)<math_ode@Incidence, iota(a, t)>` in north_america.
+#     * - *canada_effect*
+#       - The true model value for the canada
+#         :ref:`child rate effect<model_variables@Random Effects, u@Child Rate Effects>` on iota.
+#     * - *united_states_effect*
+#       - The true model value for the united_states
+#         :ref:`child rate effect<model_variables@Random Effects, u@Child Rate Effects>` on iota.
+#
+# Integrand Table
+# ***************
+# The :ref:`integrand_table-name` for this example includes
+# :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` and
+# :ref:`avg_integrand@Integrand, I_i(a,t)@susceptible` .
+#
+# Data Table
+# **********
+# There are three measurements of *Sincidence*
+# in the :ref:`data_table-name` , one for each node.
 # No noise is added to the measurements, and the priors on
-# $icode iota$$ are uniform, so the fit should correspond to the
+# *iota* are uniform, so the fit should correspond to the
 # model values used to simulate the data.
 #
-# $head Avgint Table$$
+# Avgint Table
+# ************
 # There are three predictions of the susceptible population at
-# age 50 specified in the $cref avgint_table$$, one for each node.
+# age 50 specified in the :ref:`avgint_table-name` , one for each node.
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_predict_fit.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # begin problem parameters

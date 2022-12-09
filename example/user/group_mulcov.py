@@ -2,77 +2,78 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_group_mulcov.py$$ $newlinech #$$
-# $spell
-#  init
-#  covariates
-#  covariate
-#  integrands
-#  Sincidence
-#  mulcov
-# $$
+# {xrst_begin user_group_mulcov.py}
+# {xrst_comment_ch #}
 #
-# $section Using Group Covariate Multipliers$$
+# Using Group Covariate Multipliers
+# #################################
 #
-# $head See Also$$
-# $cref user_lasso_covariate.py$$.
+# See Also
+# ********
+# :ref:`user_lasso_covariate.py-name` .
 #
-# $head Purpose$$
+# Purpose
+# *******
 # This example demonstrates using
-# $cref/group covariate multipliers
-#  /model_variables
-#  /Fixed Effects, theta
-#  /Group Covariate Multipliers
-# /$$.
+# :ref:`model_variables@Fixed Effects, theta@Group Covariate Multipliers` .
 #
-# $head True Value of Variables$$
+# True Value of Variables
+# ***********************
 # The values of the unknown variables that is used to
 # simulate the data are
-# $srcthisfile%
-#  0%# BEGIN True values used to simulate data%# END True values used to simulate data%1
-# %$$
+# {xrst_literal
+#     BEGIN True values used to simulate data
+#     END True values used to simulate data
+# }
 #
-# $head Integrand$$
+# Integrand
+# *********
 # There are only two integrands in this example,
-# $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$ and
-# $cref/remission/avg_integrand/Integrand, I_i(a,t)/remission/$$.
+# :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` and
+# :ref:`avg_integrand@Integrand, I_i(a,t)@remission` .
 #
-# $head Node Tables$$
+# Node Tables
+# ***********
 # The node table for this example is
-# $pre
-#                world
-#               /     \
-#  north_america       south_america
-# $$
+# ::
 #
-# $head Subgroup Table$$
+#                   world
+#                  /     \
+#     north_america       south_america
+#
+# Subgroup Table
+# **************
 # For this example there are two groups, north_america and south_america,
 # and only one element in each group.
 # Thus we use the same name for the subgroup as for the group.
 #
-# $head Covariates$$
-# There are two covariates in this example, $icode income$$ and $icode sex$$.
+# Covariates
+# **********
+# There are two covariates in this example, *income* and *sex* .
 # Both these covariates are scaled so their lowest value is -0.5 and highest
 # value is +0.5.
 #
-# $head Covariate Multipliers$$
+# Covariate Multipliers
+# *********************
 # There are two covariate multipliers in this example.
-# The first multiples $icode income$$ and effects the Sincidence measurements,
+# The first multiples *income* and effects the Sincidence measurements,
 # but only in north_america.
-# The second multiples $icode sex$$ and effects the remission measurements,
+# The second multiples *sex* and effects the remission measurements,
 # but only in south_america.
 # Both are group covariate multipliers and hence fixed effects.
 #
-# $head Simulated Data$$
+# Simulated Data
+# **************
 # The data is simulated using the true value for the variables,
 # and the covariate effects mentioned above. No noise is added to the data,
 # but it is modeled as having a ten percent coefficient of variation.
 #
-# $head Rate Variables$$
+# Rate Variables
+# **************
 # The rate variables define the functions
-# $cref/iota/avg_integrand/Rate Functions/iota_i(a,t)/$$ and
-# $cref/rho/avg_integrand/Rate Functions/rho_i(a,t)/$$ using
-# $cref/bilinear interpolation/bilinear/$$ of a rectangular grid.
+# :ref:`iota<avg_integrand@Rate Functions@iota_i(a,t)>` and
+# :ref:`rho<avg_integrand@Rate Functions@rho_i(a,t)>` using
+# :ref:`bilinear interpolation<bilinear-name>` of a rectangular grid.
 # The grid's minimum age and time is (0, 1995). Its maximum age and time
 # is (100, 2015). Thus there are four iota variables and four rho variables.
 # The value prior for both these variables is uniform with lower (upper) limit
@@ -82,7 +83,8 @@
 # The difference priors for the rate variables are gaussian
 # with mean zero and standard deviation 0.01.
 #
-# $head Covariate Multipliers Variables$$
+# Covariate Multipliers Variables
+# *******************************
 # The covariate multiplier functions for this example are constant.
 # Hence there is one variable for each function.
 # These are group covariate multipliers so there is only one
@@ -97,10 +99,14 @@
 # multiplier divided by 3. This mean effects the starting and scaling
 # points during the optimization, but not the statistics (for a uniform).
 #
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_end user_group_mulcov.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # BEGIN True values used to simulate data

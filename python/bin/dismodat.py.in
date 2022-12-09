@@ -4,36 +4,38 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin dismodat.py$$ $newlinech #$$
-# $spell
-#  dismodat.py
-# $$
+# {xrst_begin dismodat.py}
+# {xrst_comment_ch #}
 #
-# $section Python Program Syntax$$
+# Python Program Syntax
+# #####################
 #
-# $head Syntax$$
+# Syntax
+# ******
 # dismodat.py database command ...
 #
-# $head Log Table$$
+# Log Table
+# *********
 #
-# $subhead Start$$
-# At the start, a $code dismodat.py$$
+# Start
+# =====
+# At the start, a ``dismodat.py``
 # command adds a
-# $cref/command/log_table/message_type/command/$$
+# :ref:`log_table@message_type@command`
 # log entry with
-# $cref/message/log_table/message/$$
+# :ref:`log_table@message`
 # equal to
-# $codei%
-#      begin %command% ...
-# %$$
 #
-# $subhead End$$
+#     ``begin`` *command*  ...
+#
+# End
+# ===
 # At the end,
-# a $code dismodat.py$$ command adds a command log entry with message equal to
-# $codei%
-#  end %command%
-# %$$
-# $end
+# a ``dismodat.py`` command adds a command log entry with message equal to
+#
+#     ``end`` *command*
+#
+# {xrst_end dismodat.py}
 # -----------------------------------------------------------------------------
 import sys
 import os

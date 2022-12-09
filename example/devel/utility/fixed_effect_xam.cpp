@@ -3,16 +3,17 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin fixed_effect_xam.cpp$$
-$spell
-   var
-$$
+{xrst_begin fixed_effect_xam.cpp}
 
-$section C++ fixed_effect: Example and Test$$
+C++ fixed_effect: Example and Test
+##################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end fixed_effect_xam.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

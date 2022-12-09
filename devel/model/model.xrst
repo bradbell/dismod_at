@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin devel_model}
+
+Dismod_at Developer Model Documentation
+#######################################
+
+Contents
+********
+{xrst_toc_table
+   devel/model/data_model.xrst
+   devel/model/prior_model.xrst
+   devel/model/fit_model.xrst
+   devel/model/depend.xrst
+   devel/model/adj_integrand.cpp
+   include/dismod_at/avg_integrand.hpp
+   include/dismod_at/avg_noise_effect.hpp
+   devel/model/ran_con_rcv.cpp
+}
+
+{xrst_end devel_model}

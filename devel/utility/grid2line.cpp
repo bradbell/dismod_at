@@ -3,86 +3,101 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin grid2line$$
-$spell
-$$
+{xrst_begin grid2line}
+{xrst_spell
+   interpolated
+}
 
-$section Interpolation from Smoothing Grid to a Line$$
+Interpolation from Smoothing Grid to a Line
+###########################################
 
-$head Syntax$$
-$icode%line_value% = grid2line(
-%line_age%, %line_time%, %age_table%, %time_table%, %g_info%, %grid_value%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN PROTOTYPE%// END PROTOTYPE%1
-%$$
+| *line_value* = ``grid2line`` (
+| *line_age* , *line_time* , *age_table* , *time_table* , *g_info* , *grid_value*
+| )
 
-$head n_line$$
-We use $icode n_line$$ to denote the number of
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
+
+n_line
+******
+We use *n_line* to denote the number of
 points in the line.
 
-$head Grid_info$$
-The type $icode Grid$$ must be $cref smooth_info$$
-or $cref weight_info$$.
+Grid_info
+*********
+The type *Grid* must be :ref:`smooth_info-name`
+or :ref:`weight_info-name` .
 
-$head Float$$
-The type $icode Float$$ must be $code double$$ or
-$cref a1_double$$.
+Float
+*****
+The type *Float* must be ``double`` or
+:ref:`a1_double-name` .
 
-$head line_age$$
-This vector has size $icode n_line$$ and contains the age value
+line_age
+********
+This vector has size *n_line* and contains the age value
 corresponding to each of the points in the line.
 It is faster if successive points have close values in age; e.g.,
-$codei%
-   %line_age%[%k%] <= %line_age%[%k%+1]
-%$$
 
-$head line_time$$
-This vector has size $icode n_line$$ and contains the time value
+   *line_age* [ *k* ] <= *line_age* [ *k* +1]
+
+line_time
+*********
+This vector has size *n_line* and contains the time value
 corresponding to each of the points in the line.
 It is faster if successive points have close values in time; e.g.,
-$codei%
-   %line_time%[%k%] <= %line_time%[%k%+1]
-%$$
 
-$head age_table$$
-This argument is the $cref age_table$$.
+   *line_time* [ *k* ] <= *line_time* [ *k* +1]
 
-$head time_table$$
-This argument is the $cref time_table$$.
+age_table
+*********
+This argument is the :ref:`age_table-name` .
 
-$head g_info$$
+time_table
+**********
+This argument is the :ref:`time_table-name` .
+
+g_info
+******
 This is the information for the grid that is being interpolated.
 
-$head grid_value$$
+grid_value
+**********
 Is the values corresponding to each of the grid points
-in $icode g_info$$.
-Let $icode n_age$$ and $icode n_time$$ be the number of age and
+in *g_info* .
+Let *n_age* and *n_time* be the number of age and
 time points in the grid.
-For $icode%i% = 0 , %...%. %n_age%-1%$$,
-For $icode%j% = 0 , %...%. %n_time%-1%$$,
-$codei%
-   %grid_value%[ %i% * %n_time% + %j% ]
-%$$
-is the value corresponding to the $th i$$ age and $th j$$ time
+For *i* = 0 , .... *n_age* ``-1`` ,
+For *j* = 0 , .... *n_time* ``-1`` ,
+
+   *grid_value* [ *i* * *n_time* + *j*  ]
+
+is the value corresponding to the *i*-th age and *j*-th time
 in the grid.
 
-$head line_value$$
-The return value $icode line_value$$ has size $icode n_line$$.
-For each $icode i$$,
-$icode%line_value%[%i%]%$$ is the
-$cref bilinear$$ interpolated value corresponding to
-age $icode%line_age%[%i%]%$$ and time $icode%line_time%[%i%]%$$.
-
-$children%example/devel/utility/grid2line_xam.cpp
-%$$
-$head Example$$
-The file $cref grid2line_xam.cpp$$ contains an example and test
+line_value
+**********
+The return value *line_value* has size *n_line* .
+For each *i* ,
+*line_value* [ *i* ] is the
+:ref:`bilinear-name` interpolated value corresponding to
+age *line_age* [ *i* ] and time *line_time* [ *i* ] .
+{xrst_toc_hidden
+   example/devel/utility/grid2line_xam.cpp
+}
+Example
+*******
+The file :ref:`grid2line_xam.cpp-name` contains an example and test
 of using this routine.
 
-$end
+{xrst_end grid2line}
 */
 # include <dismod_at/grid2line.hpp>
 # include <dismod_at/a1_double.hpp>

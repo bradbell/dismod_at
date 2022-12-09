@@ -7,27 +7,29 @@
 # include <cppad/cppad.hpp>
 
 /*
-$begin a1_double$$
-$spell
-   CppAD
-   namespace
-   dismod
-   typedef
+{xrst_begin a1_double}
+{xrst_spell
    hpp
-$$
+}
 
-$section Declare a1_double Type$$
+Declare a1_double Type
+######################
 
-$head Syntax$$
-$codei%# include <dismod_at/a1_double.hpp>%$$
+Syntax
+******
+# ``include <dismod_at/a1_double.hpp>``
 
-$head Source Code$$
-$srccode%cpp% */
+Source Code
+***********
+{xrst_spell_off}
+{xrst_code cpp} */
 namespace dismod_at {
    typedef CppAD::AD<double>  a1_double;
 }
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end a1_double}
 */
 
 # endif

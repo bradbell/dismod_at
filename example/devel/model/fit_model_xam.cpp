@@ -3,18 +3,17 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin fit_model_xam.cpp$$
-$spell
-   interp
-   xam
-$$
+{xrst_begin fit_model_xam.cpp}
 
-$section C++ fit_model: Example and Test$$
+C++ fit_model: Example and Test
+###############################
 
-$srcthisfile%0
-   %// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end fit_model_xam.cpp}
 */
 // BEGIN C++
 # include <limits>

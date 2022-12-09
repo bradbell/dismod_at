@@ -2,35 +2,41 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_warm_start.py$$ $newlinech #$$
-# $spell
-#  num_iter
-#  stderr
-#  py
-#  const
-#  Ipopt
-# $$
+# {xrst_begin user_warm_start.py}
+# {xrst_spell
+#     iter
+#     stderr
+# }
+# {xrst_comment_ch #}
 #
-# $section Continuing a Fit Using Ipopt Warm Start$$
+# Continuing a Fit Using Ipopt Warm Start
+# #######################################
 #
-# $head Option Table$$
+# Option Table
+# ************
 # In the option table defined below,
-# $icode%max_num_iter_fixed% = 5%$$.
+# *max_num_iter_fixed*  = 5 .
 # This fit will terminate when
 # the maximum number of iterations is reached.
 # The corresponding warning is suppressed by setting
-# $icode%warn_on_stderr% = false%$$.
+# *warn_on_stderr* = ``false`` .
 # The second fit will start where the first left off.
-# To see this, set $icode%print_level_fixed% = 5%$$ (in the option table) and
-# $cref/run this example/user_example/Run One Example/$$.
+# To see this, set *print_level_fixed*  = 5 (in the option table) and
+# :ref:`run this example<user_example@Run One Example>` .
 #
-# $head Fixed Trace Table$$
-# This example uses the $cref trace_fixed_table$$
+# Fixed Trace Table
+# *****************
+# This example uses the :ref:`trace_fixed_table-name`
 # to check the number of iterations used.
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_warm_start.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # values used to simulate data

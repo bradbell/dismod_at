@@ -2,15 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin nslist_table.py$$ $newlinech #$$
-# $spell
-#  nslist
-# $$
+# {xrst_begin nslist_table.py}
+# {xrst_comment_ch #}
 #
-# $section nslist_table: Example and Test$$
+# nslist_table: Example and Test
+# ##############################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end nslist_table.py}
 # BEGIN PYTHON
 def nslist_table() :
    import dismod_at

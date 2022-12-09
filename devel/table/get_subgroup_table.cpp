@@ -3,66 +3,70 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_subgroup_table$$
-$spell
-   sqlite
-   struct
-   std
-   subgroup
-$$
+{xrst_begin get_subgroup_table}
 
-$section C++: Get the Subgroup Table Information$$
+C++: Get the Subgroup Table Information
+#######################################
 
-$head Syntax$$
-$icode%subgroup_table% = get_subgroup_table(%db%)%$$
+Syntax
+******
+*subgroup_table* = ``get_subgroup_table`` ( *db* )
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_GET_SUBGROUP_TABLE%// END_GET_SUBGROUP_TABLE%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_GET_SUBGROUP_TABLE
+   // END_GET_SUBGROUP_TABLE
+}
 
-$head Purpose$$
-To read the $cref subgroup_table$$ and return it as a C++ data structure.
+Purpose
+*******
+To read the :ref:`subgroup_table-name` and return it as a C++ data structure.
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head subgroup_table$$
-For each $cref/subgroup_id/subgroup_table/subgroup_id/$$,
-$codei%
-   %subgroup_table%[%subgroup_id%]
-%$$
+subgroup_table
+**************
+For each :ref:`subgroup_table@subgroup_id` ,
+
+   *subgroup_table* [ *subgroup_id* ]
+
 is the information for the corresponding subgroup.
 
-$head subgroup_struct$$
+subgroup_struct
+***************
 This is a structure with the following fields
-$table
-Type $cnext Field $cnext Description
-$rnext
-$code std::string$$ $cnext
-   $code subgroup_name$$ $cnext
-   The $cref/subgroup_name/subgroup_table/subgroup_name/$$ for this subgroup
-$rnext
-$code int$$ $cnext
-   $code group_id$$ $cnext
-   The $cref/group_id/subgroup_table/group_id/$$ for this subgroup
-$rnext
-$code std::string$$ $cnext
-   $code group_name$$ $cnext
-   The $cref/group_name/subgroup_table/group_name/$$ for this subgroup
-$tend
 
-$children%example/devel/table/get_subgroup_table_xam.cpp
-%$$
-$head Example$$
-The file $cref get_subgroup_table_xam.cpp$$ contains an example that uses
+.. list-table::
+
+   * - Type
+     - Field
+     - Description
+   * - ``std::string``
+     - ``subgroup_name``
+     - The :ref:`subgroup_table@subgroup_name` for this subgroup
+   * - ``int``
+     - ``group_id``
+     - The :ref:`subgroup_table@group_id` for this subgroup
+   * - ``std::string``
+     - ``group_name``
+     - The :ref:`subgroup_table@group_name` for this subgroup
+
+{xrst_toc_hidden
+   example/devel/table/get_subgroup_table_xam.cpp
+}
+Example
+*******
+The file :ref:`get_subgroup_table_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_subgroup_table}
 -----------------------------------------------------------------------------
 */
 

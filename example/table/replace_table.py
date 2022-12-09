@@ -2,15 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin replace_table.py$$ $newlinech #$$
-# $spell
-#  unicode
-# $$
+# {xrst_begin replace_table.py}
+# {xrst_comment_ch #}
 #
-# $section replace_table: Example and Test$$
+# replace_table: Example and Test
+# ###############################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end replace_table.py}
 # BEGIN PYTHON
 def replace_table() :
    import dismod_at

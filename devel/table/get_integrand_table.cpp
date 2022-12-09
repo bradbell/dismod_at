@@ -3,117 +3,126 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_integrand_table$$
-$spell
-   Sincidence
-   Tincidence
-   struct
-   sqlite
+{xrst_begin get_integrand_table}
+{xrst_spell
    enum
-   cpp
+   mtall
    mtexcess
    mtother
-   mtwith
-   mtall
-   mtstandard
-   relrisk
    mtspecific
-   cv
-   mulcov
-   const
-   covariate
-   integrands
-$$
+   mtstandard
+   mtwith
+   relrisk
+   tincidence
+}
 
-$section C++: Get the Integrand Table Information$$
+C++: Get the Integrand Table Information
+########################################
 
-$head Syntax$$
-$icode%integrand_table% = get_integrand_table(
-   %db%, %mulcov_table%, %option_table%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
+| *integrand_table* = ``get_integrand_table`` (
+| |tab| *db* , *mulcov_table* , *option_table*
+| )
 
-$head Purpose$$
-To read the $cref integrand_table$$ and return it as a C++ data structure.
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
 
-$head db$$
-The argument $icode db$$ has prototype
+Purpose
+*******
+To read the :ref:`integrand_table-name` and return it as a C++ data structure.
+
+db
+**
+The argument *db* has prototype
 is an open connection to the database.
 
-$head mulcov_table$$
-is the $cref/mulcov_table/get_mulcov_table/$$
+mulcov_table
+************
+is the :ref:`mulcov_table<get_mulcov_table-name>`
 (used to check integrands that are covariate multipliers).
 
-$head option_table$$
-is the $cref/option_table/get_option_table/$$
-(used to determine if $cref/rate_case/option_table/rate_case/no_ode/$$
-is $code no_ode$$).
+option_table
+************
+is the :ref:`option_table<get_option_table-name>`
+(used to determine if :ref:`rate_case<option_table@rate_case@no_ode>`
+is ``no_ode`` ).
 
-$head integrand_table$$
-For each $cref/integrand_id/integrand_table/integrand_id/$$,
-$codei%
-   %integrand_table%[%integrand_id%]
-%$$
+integrand_table
+***************
+For each :ref:`integrand_table@integrand_id` ,
+
+   *integrand_table* [ *integrand_id* ]
+
 is the information for the corresponding integrand.
 
-$head integrand_struct$$
+integrand_struct
+****************
 This is a structure with the following fields
-$table
-Type $cnext Field $cnext Description
-$rnext
-$code integrand_enum$$ $cnext
-   $code integrand$$ $cnext
-   An enum type for this integrand; see below
-$rnext
-$code double$$ $cnext
-   $cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$ $cnext
-   minimum measurement coefficient of variation for this integrand
-$rnext
-$code int$$ $cnext
-   $cref/mulcov_id/mulcov_table/mulcov_id/$$ $cnext
-   covariate multiplier corresponding to this integrand
-   ($code DISMOD_AT_NULL_INT$$ if not a covariate multiplier).
-$tend
 
-$head integrand_enum$$
+.. list-table::
+
+   * - Type
+     - Field
+     - Description
+   * - ``integrand_enum``
+     - ``integrand``
+     - An enum type for this integrand; see below
+   * - ``double``
+     - :ref:`integrand_table@minimum_meas_cv`
+     - minimum measurement coefficient of variation for this integrand
+   * - ``int``
+     - :ref:`mulcov_table@mulcov_id`
+     - covariate multiplier corresponding to this integrand
+       (``DISMOD_AT_NULL_INT`` if not a covariate multiplier).
+
+integrand_enum
+**************
 This is an enum type with the following values:
-$table
-$icode integrand_enum$$  $pre  $$ $cnext $icode integrand_name$$ $rnext
-$code Sincidence_enum$$  $pre  $$ $cnext $code Sincidence$$      $rnext
-$code Tincidence_enum$$  $pre  $$ $cnext $code Tincidence$$      $rnext
-$code remission_enum$$   $pre  $$ $cnext $code remission$$       $rnext
-$code mtexcess_enum$$    $pre  $$ $cnext $code mtexcess$$        $rnext
-$code mtother_enum$$     $pre  $$ $cnext $code mtother$$         $rnext
-$code mtwith_enum$$      $pre  $$ $cnext $code mtwith$$          $rnext
-$code susceptible_enum$$ $pre  $$ $cnext $code susceptible$$     $rnext
-$code withC_enum$$       $pre  $$ $cnext $code withC$$           $rnext
-$code prevalence_enum$$  $pre  $$ $cnext $code prevalence$$      $rnext
-$code mtspecific_enum$$  $pre  $$ $cnext $code mtspecific$$      $rnext
-$code mtall_enum$$       $pre  $$ $cnext $code mtall$$           $rnext
-$code mtstandard_enum$$  $pre  $$ $cnext $code mtstandard$$      $rnext
-$code relrisk_enum$$     $pre  $$ $cnext $code relrisk$$         $rnext
-$code mulcov_enum$$      $pre  $$ $cnext $codei%mulcov_%mulcov_id%$$
-$tend
 
-$head integrand_enum2name$$
+.. csv-table::
+   :widths: auto
+
+   *integrand_enum*,*integrand_name*
+   ``Sincidence_enum``,``Sincidence``
+   ``Tincidence_enum``,``Tincidence``
+   ``remission_enum``,``remission``
+   ``mtexcess_enum``,``mtexcess``
+   ``mtother_enum``,``mtother``
+   ``mtwith_enum``,``mtwith``
+   ``susceptible_enum``,``susceptible``
+   ``withC_enum``,``withC``
+   ``prevalence_enum``,``prevalence``
+   ``mtspecific_enum``,``mtspecific``
+   ``mtall_enum``,``mtall``
+   ``mtstandard_enum``,``mtstandard``
+   ``relrisk_enum``,``relrisk``
+   ``mulcov_enum``,``mulcov_`` *mulcov_id*
+
+integrand_enum2name
+*******************
 This is a global variable.
-If $icode%integrand%$$, is an $code integrand_enum$$ value,
-$codei%integrand_enum2name[%integrand%]%$$ is the
-$icode integrand_name$$ corresponding to the enum value.
+If *integrand* , is an ``integrand_enum`` value,
+``integrand_enum2name`` [ *integrand* ] is the
+*integrand_name* corresponding to the enum value.
 The mulcov case is special because
-$codei%
-   integrand_enum2name[mulcov_enum] == "mulcov"
-%$$
 
-$children%example/devel/table/get_integrand_table_xam.cpp
-%$$
-$head Example$$
-The file $cref get_integrand_table_xam.cpp$$ contains an example that uses
+   ``integrand_enum2name`` [ ``mulcov_enum`` ] == ``"mulcov"``
+
+{xrst_toc_hidden
+   example/devel/table/get_integrand_table_xam.cpp
+}
+Example
+*******
+The file :ref:`get_integrand_table_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_integrand_table}
 -----------------------------------------------------------------------------
 */
 

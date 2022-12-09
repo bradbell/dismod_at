@@ -11,36 +11,36 @@
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
 -----------------------------------------------------------------------------
-$begin depend_command$$
-$spell
-   sim
-   dismod
-   var
-$$
+{xrst_begin depend_command}
 
-$section The Depend Command$$
+The Depend Command
+##################
 
-$head Syntax$$
-$codei%dismod_at %database% depend%$$
+Syntax
+******
+``dismod_at`` *database* ``depend``
 
-$head database$$
+database
+********
 Is an
-$href%http://www.sqlite.org/sqlite/%$$ database containing the
-$code dismod_at$$ $cref input$$ tables which are not modified.
+http://www.sqlite.org/sqlite/ database containing the
+``dismod_at`` :ref:`input-name` tables which are not modified.
 
-$head depend_var_table$$
-A new $cref depend_var_table$$ is created with the information
-that maps a $cref/var_id/var_table/var_id/$$
+depend_var_table
+****************
+A new :ref:`depend_var_table-name` is created with the information
+that maps a :ref:`var_table@var_id`
 to its meaning in terms of the
-$cref model_variables$$.
-
-$children%example/get_started/depend_command.py
-%$$
-$head Example$$
-The file $cref depend_command.py$$ contains an example and test
+:ref:`model_variables-name` .
+{xrst_toc_hidden
+   example/get_started/depend_command.py
+}
+Example
+*******
+The file :ref:`depend_command.py-name` contains an example and test
 using this command.
 
-$end
+{xrst_end depend_command}
 */
 void depend_command(
    sqlite3*                                      db               ,

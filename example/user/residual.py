@@ -2,124 +2,145 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_residual.py$$ $newlinech #$$
-# $spell
-#  mtother
-#  std
-#  cv
-#  covariate
-#  covariates
-#  var
-#  mulstd
-#  dage
-# $$
+# {xrst_begin user_residual.py}
+# {xrst_comment_ch #}
 #
-# $section Weighted Residuals$$
+# Weighted Residuals
+# ##################
 #
-# $head Example Parameters$$
+# Example Parameters
+# ******************
 # The following values are used to simulate the data and define the priors:
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 omega_true      = [ 0.01, 0.02 ]
 omega_mean      = 0.15
 minimum_meas_cv = 0.10
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head Model$$
+# Model
+# *****
 # The only non-zero model variable for this example is
-# other cause mortality, $latex \omega$$, for the parent area.
+# other cause mortality, :math:`\omega`, for the parent area.
 # The parent omega grid has two points,
 # one at age zero and the other at age 100.
-# The corresponding true values for $latex \omega$$ are
-# $code omega_true[0]$$ at age zero and $code omega_true[1]$$ at age 100.
+# The corresponding true values for :math:`\omega` are
+# ``omega_true[0]`` at age zero and ``omega_true[1]`` at age 100.
 #
-# $head Data$$
+# Data
+# ****
 # The integrand for this data is
-# $cref/mtother/avg_integrand/Integrand, I_i(a,t)/mtother/$$; i.e.,
-# a direct measurement of $latex \omega$$.
+# :ref:`avg_integrand@Integrand, I_i(a,t)@mtother` ; i.e.,
+# a direct measurement of :math:`\omega`.
 # Both ages are included in the data for this example.
-# Both the Gaussian and Log-Gaussian $cref/densities/density_table/$$
+# Both the Gaussian and Log-Gaussian :ref:`densities<density_table-name>`
 # are included.
 # In addition, both the case where the
-# $cref/meas_std/data_table/meas_std/$$ is above and below the bound specified
-# by $cref/minimum_meas_cv/integrand_table/minimum_meas_cv/$$ are included.
+# :ref:`data_table@meas_std` is above and below the bound specified
+# by :ref:`integrand_table@minimum_meas_cv` are included.
 #
-# $subhead Delta$$
+# Delta
+# =====
 # We use the notation
-# $cref/Delta/data_like/Notation/Minimum CV Standard Deviation, Delta_i/$$ for
+# :ref:`Delta<data_like@Notation@Minimum CV Standard Deviation, Delta_i>` for
 # the standard deviation adjusted by the minimum measurement cv.
 #
-# $subhead sigma$$
+# sigma
+# =====
 # We use the notation
-# $cref/sigma/data_like/Notation/Transformed Standard Deviation, sigma_i/$$ for
+# :ref:`sigma<data_like@Notation@Transformed Standard Deviation, sigma_i>` for
 # the transformed standard deviation.
 # There are no measurement noise covariate multipliers, so the
-# adjusted standard deviation is also equal to $latex \sigma$$.
+# adjusted standard deviation is also equal to :math:`\sigma`.
 #
-# $subhead Gaussian Residuals$$
-# In the Gaussian case, $latex \sigma = \Delta$$ and
-# $latex \[
+# Gaussian Residuals
+# ==================
+# In the Gaussian case, :math:`\sigma = \Delta` and
+#
+# .. math::
+#
 #  (y - \mu) / \sigma
-# \]$$,
-# where $latex y$$ is the measured value and $latex \mu$$ is the
+#
+# where :math:`y` is the measured value and :math:`\mu` is the
 # model value for the
-# $cref/average integrand/avg_integrand/Average Integrand, A_i/$$.
+# :ref:`average integrand<avg_integrand@Average Integrand, A_i>` .
 #
-# $subhead Log-Gaussian Residuals$$
-# $latex \[
+# Log-Gaussian Residuals
+# ======================
+#
+# .. math::
+#
 #  \sigma = \log ( y + \eta + \Delta ) - \log( y + \eta )
-# \] $$
-# where $latex y$$ is the measured value
-# and $latex \eta$$ is the offset in the log transform.
+#
+# where :math:`y` is the measured value
+# and :math:`\eta` is the offset in the log transform.
 # The residual is
-# $latex \[
+#
+# .. math::
+#
 #  \frac{ \log ( y + \eta ) - \log ( \mu + \eta ) } { \sigma }
-# \] $$
-# where $latex \mu$$ is the model value for the average integrand.
 #
-# $head Priors$$
+# where :math:`\mu` is the model value for the average integrand.
 #
-# $subhead Value Residual$$
-# There are two value residuals, one for $latex \omega$$ at age zero
+# Priors
+# ******
+#
+# Value Residual
+# ==============
+# There are two value residuals, one for :math:`\omega` at age zero
 # and the other at age 100.
 # The density used for the value residuals is Log-Gaussian.
-# The mean value used in the prior for the value residuals $latex \mu$$ is
-# $code omega_mean$$.
+# The mean value used in the prior for the value residuals :math:`\mu` is
+# ``omega_mean`` .
 # The standard deviation used for the value residuals in
-# $code omega_mean * 0.1$$
+# ``omega_mean * 0.1``
 # The log transformed standard deviation is
-# $latex \[
+#
+# .. math::
+#
 #  \sigma = \log ( \mu + \eta + \delta ) - \log( \mu + \eta )
-# \] $$
+#
 # The residual is
-# $latex \[
+#
+# .. math::
+#
 #  \frac{ \log ( y + \eta ) - \log ( \mu + \eta ) } { \sigma }
-# \] $$
-# where $latex y$$ is the $cref/fit_var_value/fit_var_table/fit_var_value/$$
+#
+# where :math:`y` is the :ref:`fit_var_table@fit_var_value`
 # for the model variable.
 #
-# $subhead Difference Residual$$
+# Difference Residual
+# ===================
 # There is one difference residuals for the difference of
-# $latex \omega$$ at age zero and age 100.
+# :math:`\omega` at age zero and age 100.
 # The density used for the value residuals is Log-Gaussian.
 # The mean value used in the prior for the difference residual
-# $latex \mu = 0$$.
-# The standard deviation used for the difference residual is $code 0.1$$.
-# (This corresponds to a coefficient of variation of $latex e^{0.1} - 1$$.
-# which is approximately equal to $code 0.1$$; i.e., 10 percent.)
+# :math:`\mu = 0`.
+# The standard deviation used for the difference residual is ``0.1`` .
+# (This corresponds to a coefficient of variation of :math:`e^{0.1} - 1`.
+# which is approximately equal to ``0.1`` ; i.e., 10 percent.)
 # The age difference smoothing multiplier prior id
-# $cref/mulstd_dage_prior_id/smooth_table/$$ for this example is null,
-# so $latex \delta$$ is equal to the standard deviation $code 0.1$$.
+# :ref:`mulstd_dage_prior_id<smooth_table-name>` for this example is null,
+# so :math:`\delta` is equal to the standard deviation ``0.1`` .
 # The residual is
-# $latex \[
+#
+# .. math::
+#
 #  \frac{ \log ( z + \eta ) - \log ( y + \eta ) - \mu } { \delta }
-# \] $$
-# where $latex y$$ ($latex z$$)
-# is the $cref/fit_var_value/fit_var_table/fit_var_value/$$
+#
+# where :math:`y` (:math:`z`)
+# is the :ref:`fit_var_table@fit_var_value`
 # at age zero (age 100).
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_residual.py}
 #
 # $end
 # ---------------------------------------------------------------------------

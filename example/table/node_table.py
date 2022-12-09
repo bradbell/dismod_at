@@ -2,12 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin node_table.py$$ $newlinech #$$
+# {xrst_begin node_table.py}
+# {xrst_comment_ch #}
 #
-# $section node_table: Example and Test$$
+# node_table: Example and Test
+# ############################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end node_table.py}
 # BEGIN PYTHON
 def node_table() :
    import dismod_at

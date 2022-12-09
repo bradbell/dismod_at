@@ -2,15 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin sample_command.py$$ $newlinech #$$
-# $spell
-#  dismod
-# $$
+# {xrst_begin sample_command.py}
+# {xrst_comment_ch #}
 #
-# $section sample Command: Example and Test$$
+# sample Command: Example and Test
+# ################################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end sample_command.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import sys

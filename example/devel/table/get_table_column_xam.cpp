@@ -3,16 +3,20 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_table_column_xam.cpp$$
-$spell
+{xrst_begin get_table_column_xam.cpp}
+{xrst_spell
    xam
-$$
+}
 
-$section C++ get_table_column_xam: Example and Test$$
+C++ get_table_column_xam: Example and Test
+##########################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end get_table_column_xam.cpp}
 */
 // BEGIN C++
 # include <dismod_at/get_table_column.hpp>

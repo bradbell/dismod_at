@@ -19,131 +19,147 @@
 
 namespace dismod_at { // DISMOD_AT_BEGIN_NAMSPACE
 /*
-$begin fit_model_ctor$$
-$spell
-   mulcov
-   var
-   vec
-   const
+{xrst_begin fit_model_ctor}
+{xrst_spell
    enum
    stderr
-   cppad
-   init
-$$
+}
 
-$section Fit Model Constructor$$
+Fit Model Constructor
+#####################
 
-$head Syntax$$
-$codei%fit_model %fit_object%(
-   %db%,
-   %simulate_index%,
-   %warn_on_stderr%,
-   %bound_random%,
-   %pack_object%,
-   %var2prior%,
-   %start_var%,
-   %scale_var%,
-   %prior_table%,
-   %data_object%,
-   %prior_object%,
-   %random_const%,
-   %quasi_fixed%,
-   %zero_sum_child_rate%,
-   %zero_sum_mulcov_group%,
-   %data_object%,
-   %trace_init%
-)
-%$$
+Syntax
+******
 
-$head fit_object$$
-The $code fit_model$$ object being constructed.
+| ``fit_model`` *fit_object* (
+| |tab| *db* ,
+| |tab| *simulate_index* ,
+| |tab| *warn_on_stderr* ,
+| |tab| *bound_random* ,
+| |tab| *pack_object* ,
+| |tab| *var2prior* ,
+| |tab| *start_var* ,
+| |tab| *scale_var* ,
+| |tab| *prior_table* ,
+| |tab| *data_object* ,
+| |tab| *prior_object* ,
+| |tab| *random_const* ,
+| |tab| *quasi_fixed* ,
+| |tab| *zero_sum_child_rate* ,
+| |tab| *zero_sum_mulcov_group* ,
+| |tab| *data_object* ,
+| |tab| *trace_init*
+| )
 
-$head db$$
+fit_object
+**********
+The ``fit_model`` object being constructed.
+
+db
+**
 This argument is the database connection for
-$cref/logging/log_message/$$ errors and warnings.
+:ref:`logging<log_message-name>` errors and warnings.
 
-$head simulate_index$$
-Is the $cref/simulate_index/data_sim_table/simulate_index/$$
+simulate_index
+**************
+Is the :ref:`data_sim_table@simulate_index`
 when simulated data.
-This index is $code -1$$ when we are fitting the
-$cref/meas_value/data_table/meas_value/$$ column in the data table.
+This index is ``-1`` when we are fitting the
+:ref:`data_table@meas_value` column in the data table.
 
-$head warn_on_stderr$$
+warn_on_stderr
+**************
 If true, warnings will be printed on stderr.
 (Error messages are always printed on stderr.)
 
-$head bound_random$$
+bound_random
+************
 This is the value of the
-$cref/bound_random/option_table/Optimize Random Only/bound_random/$$
+:ref:`option_table@Optimize Random Only@bound_random`
 in the option table.
 
-$head pack_object$$
-This argument is the $cref pack_info$$ information corresponding to the
-$cref model_variables$$.
+pack_object
+***********
+This argument is the :ref:`pack_info-name` information corresponding to the
+:ref:`model_variables-name` .
 
-$head pack_prior$$
-This argument is the $cref pack_prior$$ information corresponding to the
-$cref model_variables$$.
+pack_prior
+**********
+This argument is the :ref:`pack_prior-name` information corresponding to the
+:ref:`model_variables-name` .
 
-$head var2prior$$
-Mapping from $icode var_id$$ to prior information.
+var2prior
+*********
+Mapping from *var_id* to prior information.
 
-$head start_var$$
-This vector is the starting $cref model_variables$$ in the order
-specified by $cref pack_info$$.
+start_var
+*********
+This vector is the starting :ref:`model_variables-name` in the order
+specified by :ref:`pack_info-name` .
 These values get projected onto the [ lower , upper ] interval
 for each variable before being passed to cppad_mixed.
 
-$head scale_var$$
+scale_var
+*********
 The object and constraints are scaled using this value for the
-$cref model_variables$$.
+:ref:`model_variables-name` .
 
-$head prior_table$$
-This argument is the $cref/prior_table/get_prior_table/prior_table/$$.
+prior_table
+***********
+This argument is the :ref:`get_prior_table@prior_table` .
 
-$head prior_object$$
+prior_object
+************
 This object contains the model for the fixed negative log-likelihood;
-see $cref prior_model$$.
+see :ref:`prior_model-name` .
 
-$head remove_const$$
-This is a $cref remove_const$$ for removing the subset of the
+remove_const
+************
+This is a :ref:`remove_const-name` for removing the subset of the
 random effects vector that are constant.
 
-$head quasi_fixed$$
+quasi_fixed
+***********
 If this argument is true,
 a quasi-Newton method is used when optimizing the fixed effects.
 Otherwise a full Newton method is used; see
-$cref/quasi_fixed/option_table/Optimize Fixed Only/quasi_fixed/$$.
+:ref:`option_table@Optimize Fixed Only@quasi_fixed` .
 
-$head zero_sum_child_rate$$
-If this vector has size $code number_rate_enum$$.
-If $icode%zero_sum_child_rate%[%rate_id%]%$$ is true,
+zero_sum_child_rate
+*******************
+If this vector has size ``number_rate_enum`` .
+If *zero_sum_child_rate* [ *rate_id* ] is true,
 for each age, time, and rate,
 the sum of the random effects with respect the children
 is constrained to be zero.
 
-$head zero_sum_mulcov_group$$
+zero_sum_mulcov_group
+*********************
 If this vector has size equal to the number of groups in
-$cref subgroup_table$$.
-If $icode%zero_sum_mulcov_group%[%group_id%]%$$ is true,
-for each age, time, and $cref mulcov_table$$ row,
+:ref:`subgroup_table-name` .
+If *zero_sum_mulcov_group* [ *group_id* ] is true,
+for each age, time, and :ref:`mulcov_table-name` row,
 the sum of the random effects with respect to subgroup
 is constrained to be zero.
 
-$head data_object$$
+data_object
+***********
 This object contains the model for the data density;
-see $cref/data_model/devel_data_model/$$.
+see :ref:`data_model<devel_data_model-name>` .
 It is effectively const.
 
-$head trace_init$$
+trace_init
+**********
 If this argument is true,
 a trace of the initialization process is printed on standard output.
 This gives one an indication of progress for large problems where
 initialization takes a long time.
 This argument is optional and its default value is false.
 
-$head Prototype$$
-$srccode%cpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code cpp} */
 fit_model::fit_model(
    sqlite3*                              db                    ,
    int                                   simulate_index        ,
@@ -161,8 +177,10 @@ fit_model::fit_model(
    const CppAD::vector<bool>&            zero_sum_mulcov_group ,
    data_model&                           data_object           ,
    bool                                  trace_init            )
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end fit_model_ctor}
 */
 // base class constructor
 // (The value of bool_sparsity does not seem to affect speed test results.)
@@ -313,72 +331,72 @@ data_object_   ( data_object )
 }
 /*
 -----------------------------------------------------------------------------
-$begin fit_model_run_fit$$
-$spell
+{xrst_begin fit_model_run_fit}
+{xrst_spell
    frac
-   const
-   num
-   iter
-   ipopt
-   struct
-$$
+}
 
-$section Run optimization to determine the optimal fixed and random effects$$
+Run optimization to determine the optimal fixed and random effects
+##################################################################
 
-$head Syntax$$
-$icode%fit_object%.run_fit(%random_only%, %option_map%, %warm_start%)
-%$$
+Syntax
+******
 
-$head Scaling$$
+   *fit_object* . ``run_fit`` ( *random_only* , *option_map* , *warm_start* )
+
+Scaling
+*******
 During optimization the
-$cref/fixed effects/model_variables/Fixed Effects, theta/$$,
-that have $icode eta$$ not $code null$$ in their value prior, are scaled; see
-$cref/scaling/prior_table/eta/Scaling Fixed Effects/$$.
+:ref:`fixed effects<model_variables@Fixed Effects, theta>` ,
+that have *eta* not ``null`` in their value prior, are scaled; see
+:ref:`scaling<prior_table@eta@Scaling Fixed Effects>` .
 
-$head random_only$$
+random_only
+***********
 If this argument is true,
 the fixed effects are set to their starting value and only the
 random effects are optimized.
 Otherwise, both the fixed and random effects are optimized.
 
-$head option_map$$
+option_map
+**********
 This argument must have the following values:
-For $icode name$$ equal to
-$cref/derivative_test/option_table/Optimize Fixed and Random/derivative_test/$$,
-$cref/tolerance/option_table/Optimize Fixed and Random/tolerance/$$,
-$cref/max_num_iter/option_table/Optimize Fixed and Random/max_num_iter/$$,
-$cref/print_level/option_table/Optimize Fixed and Random/print_level/$$,
-$cref/accept_after_max_steps
-   /option_table
-   /Optimize Fixed and Random
-   /accept_after_max_steps
-/$$,
-and for $icode fit$$ equal to $code fixed$$ and $code random$$
-$codei%
-   %option_map%["%name%_%fit%"]
-%$$
-is the value in the $cref option_table$$ for the corresponding option.
+For *name* equal to
+:ref:`option_table@Optimize Fixed and Random@derivative_test` ,
+:ref:`option_table@Optimize Fixed and Random@tolerance` ,
+:ref:`option_table@Optimize Fixed and Random@max_num_iter` ,
+:ref:`option_table@Optimize Fixed and Random@print_level` ,
+:ref:`option_table@Optimize Fixed and Random@accept_after_max_steps` ,
+and for *fit* equal to ``fixed`` and ``random``
+
+   *option_map* [" *name* _ *fit* "]
+
+is the value in the :ref:`option_table-name` for the corresponding option.
 It must also have
-$codei%
-   %option_map%["bound_frac_fixed"]
-   %option_map%["limited_memory_max_history_fixed"]
-%$$
 
-$head warm_start$$
-If $icode%warm_start%.x_info.size()%$$ is non-zero,
+| |tab| *option_map* [ ``"bound_frac_fixed"`` ]
+| |tab| *option_map* [ ``"limited_memory_max_history_fixed"`` ]
+
+warm_start
+**********
+If *warm_start* . ``x_info.size`` () is non-zero,
 the ipopt warm start information is in this structure.
-In this case, $icode random_only$$ must be false.
-Note that the default constructor for $code warm_start_struct$$ sets
-$icode%warm_start%.x_info.size()%$$ to zero.
+In this case, *random_only* must be false.
+Note that the default constructor for ``warm_start_struct`` sets
+*warm_start* . ``x_info.size`` () to zero.
 
-$head Prototype$$
-$srccode%cpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code cpp} */
 void fit_model::run_fit(
    bool                                      random_only    ,
    const std::map<std::string, std::string>& option_map     ,
    const CppAD::mixed::warm_start_struct&    warm_start     )
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end fit_model_run_fit}
 */
 {  assert( warm_start.x_info.size() == 0 || ! random_only );
    //
@@ -590,37 +608,39 @@ $end
 }
 /*
 ---------------------------------------------------------------------------
-$begin fit_model_get_solution$$
-$spell
-   ipopt
-   dage
-   dtime
-   CppAD
-   var
-$$
+{xrst_begin fit_model_get_solution}
+{xrst_spell
+   lagrange
+}
 
-$section Get Solution Corresponding to Previous Fit$$
+Get Solution Corresponding to Previous Fit
+##########################################
 
-$head Syntax$$
-$codei%%fit_object%.get_solution(
-   %fit_var_value%,
-   %lagrange_value%,
-   %lagrange_dage%,
-   %lagrange_dtime%,
-   %warm_start%
-)%$$
+Syntax
+******
 
-$head fit_object$$
-see $cref/fit_object/fit_model_ctor/fit_object/$$.
+| *fit_object* . ``get_solution`` (
+| |tab| *fit_var_value* ,
+| |tab| *lagrange_value* ,
+| |tab| *lagrange_dage* ,
+| |tab| *lagrange_dtime* ,
+| |tab| *warm_start*
+| )
 
-$head fit_var_value$$
+fit_object
+**********
+see :ref:`fit_model_ctor@fit_object` .
+
+fit_var_value
+*************
 The size of this vector size is zero or
 equal to the number of model variables.
 The input value of its elements does not matter.
-Upon return it is the optimal $cref/variable values/model_variables/$$ in
-$cref pack_info$$ order.
+Upon return it is the optimal :ref:`variable values<model_variables-name>` in
+:ref:`pack_info-name` order.
 
-$head lagrange_value$$
+lagrange_value
+**************
 The size of this vector size is zero or
 equal to the number of model variables.
 The input value of its elements does not matter.
@@ -629,7 +649,8 @@ limits on the corresponding model variables.
 If there is no limit, or if a limit is not active, the corresponding
 element is zero.
 
-$head lagrange_dage$$
+lagrange_dage
+*************
 The size of this vector size is zero or
 equal to the number of model variables.
 The input value of its elements does not matter.
@@ -639,7 +660,8 @@ If a variable does not have a forward age difference,
 if there is no limit, or if a limit is not active, the corresponding
 element is zero.
 
-$head lagrange_dtime$$
+lagrange_dtime
+**************
 The size of this vector size is zero or
 equal to the number of model variables.
 The input value of its elements does not matter,
@@ -649,20 +671,24 @@ If a variable does not have a forward time difference,
 if there is no limit, or if a limit is not active, the corresponding
 element is zero.
 
-$head warm_start$$
+warm_start
+**********
 This is the ipopt warm start information.
 It can be used to continue the fit from where it left off; e.g.,
 it the maximum number of iterations was reached and one decides to
 continue the fit with more iterations.
-
-$children%example/devel/model/fit_model_xam.cpp
-%$$
-$head Example$$
-The file $cref fit_model_xam.cpp$$ contains an example and test
+{xrst_toc_hidden
+   example/devel/model/fit_model_xam.cpp
+}
+Example
+*******
+The file :ref:`fit_model_xam.cpp-name` contains an example and test
 of using this routine.
 
-$head Prototype$$
-$srccode%cpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code cpp} */
 void fit_model::get_solution(
    CppAD::vector<double>&           fit_var_value   ,
    CppAD::vector<double>&           lagrange_value  ,
@@ -670,8 +696,10 @@ void fit_model::get_solution(
    CppAD::vector<double>&           lagrange_dtime  ,
    CppAD::vector<trace_struct>&     trace_vec       ,
    CppAD::mixed::warm_start_struct& warm_start )
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end fit_model_get_solution}
 */
 {  fit_var_value  = solution_.fit_var_value;
    lagrange_value = solution_.lagrange_value;
@@ -683,50 +711,57 @@ $end
 }
 /*
 ---------------------------------------------------------------------------
-$begin fit_model_random_obj_hes$$
-$spell
-   hes
+{xrst_begin fit_model_random_obj_hes}
+{xrst_spell
    rcv
-   obj
-   vec
-$$
+}
 
-$section Compute Hessian Of Random Effects Objective$$
+Compute Hessian Of Random Effects Objective
+###########################################
 
-$head Syntax$$
-$icode%random_hes_rcv% = fit_object%.random_obj_hes(%pack_vec%)
-%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_RANDOM_OBJ_HES%// END_RANDOM_OBJ_HES%1%$$
+   ``random_hes_rcv`` = *fit_object* . ``random_obj_hes`` ( *pack_vec* )
 
-$head Constants$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_RANDOM_OBJ_HES
+   // END_RANDOM_OBJ_HES
+}
+
+Constants
+*********
 The model variables that have upper and lower limits equal
 are referred to as constants.
 
-$head pack_vec$$
+pack_vec
+********
 Is the value of the vector fixed effects,
-in $cref pack_info$$ order, at which we are computing the Hessian.
-The corresponding fixed effects are referred to as $latex \theta$$
-and the random effects are referred to as $latex u$$ below.
+in :ref:`pack_info-name` order, at which we are computing the Hessian.
+The corresponding fixed effects are referred to as :math:`\theta`
+and the random effects are referred to as :math:`u` below.
 
-$head random_hes_rcv$$
+random_hes_rcv
+**************
 is a sparse matrix representation of the
 Hessian of the random effects objective evaluated
-$latex ( \theta , u )$$.
+:math:`( \theta , u )`.
 The row and column indices in this matrix are relative to the
-$cref pack_info$$ vector.
+:ref:`pack_info-name` vector.
 Only the lower triangle is returned (column indices are less than or equal
 row indices) because the Hessian is symmetric.
 Note that the random effects objective does not have any
 Laplace density terms.
 
-$subhead Constraints$$
+Constraints
+===========
 The Hessians of random effects that have upper and lower limits equal
-are not included in $icode random_hes_rcv$$; i.e., they are zero in the
+are not included in *random_hes_rcv* ; i.e., they are zero in the
 sparse matrix representation.
 
-$end
+{xrst_end fit_model_random_obj_hes}
 */
 // BEGIN_RANDOM_OBJ_HES
 CppAD::mixed::d_sparse_rcv fit_model::random_obj_hes(
@@ -771,110 +806,122 @@ CppAD::mixed::d_sparse_rcv fit_model::random_obj_hes(
 }
 /*
 ---------------------------------------------------------------------------
-$begin fit_model_sample_posterior$$
-$spell
-   dage
-   dtime
-   var
-   hes
-   obj
+{xrst_begin fit_model_sample_posterior}
+{xrst_spell
+   covariance
    uhat
-$$
+}
 
-$section Sample From Posterior Distribution for a Fit$$
+Sample From Posterior Distribution for a Fit
+############################################
 
-$head Syntax$$
-$icode%fit_object%.sample_posterior(
-   %hes_fixed_obj_out%,
-   %hes_random_obj_out%,
-   %n_sample%,
-   %sample_out%,
-   %fit_var_value%,
-   %option_map%
-)%$$
+Syntax
+******
 
-$head Constants$$
+| *fit_object* . ``sample_posterior`` (
+| |tab| *hes_fixed_obj_out* ,
+| |tab| *hes_random_obj_out* ,
+| |tab| *n_sample* ,
+| |tab| *sample_out* ,
+| |tab| *fit_var_value* ,
+| |tab| *option_map*
+| )
+
+Constants
+*********
 The model variables that have upper and lower limits equal
 are referred to as constants.
 
-$head fit_var_value$$
+fit_var_value
+*************
 This vector has size equal to the number of model variables.
-It is the optimal $cref/variable values/model_variables/$$ in
-$cref pack_info$$ order.
+It is the optimal :ref:`variable values<model_variables-name>` in
+:ref:`pack_info-name` order.
 
-$subhead theta$$
-We use $latex \theta$$ to denote the fixed effects vector
-corresponding to the values in $icode fit_var_value$$.
+theta
+=====
+We use :math:`\theta` to denote the fixed effects vector
+corresponding to the values in *fit_var_value* .
 
-$subhead uhat$$
-We use $latex \hat{u}$$ to denote the random effects vector
-corresponding to the values in $icode fit_var_value$$.
-It is assumed that $latex \hat{u}$$ minimizes the random effects objective
-$latex f( \theta , \cdot )$$.
+uhat
+====
+We use :math:`\hat{u}` to denote the random effects vector
+corresponding to the values in *fit_var_value* .
+It is assumed that :math:`\hat{u}` minimizes the random effects objective
+:math:`f( \theta , \cdot )`.
 
-$head hes_fixed_obj_out$$
+hes_fixed_obj_out
+*****************
 The input value of this argument does not matter.
 Upon return it is a sparse matrix representation of the
-Hessian of the fixed effects objective evaluated at $latex \theta$$.
+Hessian of the fixed effects objective evaluated at :math:`\theta`.
 The row and column indices in this matrix are relative to the
-$cref pack_info$$ vector.
+:ref:`pack_info-name` vector.
 Only the lower triangle is returned (column indices are less than or equal
 row indices) because the Hessian is symmetric.
-Variables that are $cref/constant/fit_model_sample_posterior/Constants/$$
+Variables that are :ref:`constant<fit_model_sample_posterior@Constants>`
 are not included in the Hessian.
 The Laplace density terms in the likelihood function are not included
 because the Hessian is not defined at zero for an Laplace density.
 
-$head hes_random_obj_out$$
+hes_random_obj_out
+******************
 The input value of this argument does not matter.
 Upon return it is a sparse matrix representation of the
 Hessian of the random effects objective evaluated
-$latex ( \theta , \hat{u} )$$.
+:math:`( \theta , \hat{u} )`.
 The row and column indices in this matrix are relative to the
-$cref pack_info$$ vector.
+:ref:`pack_info-name` vector.
 Only the lower triangle is returned (column indices are less than or equal
 row indices) because the Hessian is symmetric.
 Note that the random effects objective does not have any
 Laplace density terms.
 
-$head n_sample$$
+n_sample
+********
 Is the number of independent samples to generate.
-Each sample contains the entire set of $cref model_variables$$.
+Each sample contains the entire set of :ref:`model_variables-name` .
 
-$head sample_out$$
+sample_out
+**********
 The input size value of this argument does not matter.
 If an error occurs (the samples cannot be calculated)
-$icode sample_out.size()$$ is zero upon return.
-Otherwise upon return $icode sample_out.size()$$ is
-equal to the number of samples $icode n_sample$$ times the number of
-$cref model_variables$$ $icode n_var$$.
-$icode%i% = 0 , %...% , %n_sample%-1%$$,
-$icode%j% = 0 , %...% , %n_var%-1%$$,
-$codei%
-   %sample_out%[ %i% * %n_sample% + %j% ]
-%$$
-is the $th j$$ component of the $th i$$ sample of the model variables.
-These samples are independent for different $icode i$$.
+*sample_out.size* () is zero upon return.
+Otherwise upon return *sample_out.size* () is
+equal to the number of samples *n_sample* times the number of
+:ref:`model_variables-name` *n_var* .
+*i* = 0 , ... , *n_sample* ``-1`` ,
+*j* = 0 , ... , *n_var* ``-1`` ,
 
-$subhead fixed effects$$
-The fixed effect samples are normal with mean $latex \theta$$ and covariance
-equal to the inverse of $icode hes_fixed_obj_out$$.
+   *sample_out* [ *i* * *n_sample* + *j*  ]
+
+is the *j*-th component of the *i*-th sample of the model variables.
+These samples are independent for different *i* .
+
+fixed effects
+=============
+The fixed effect samples are normal with mean :math:`\theta` and covariance
+equal to the inverse of *hes_fixed_obj_out* .
 If this Hessian is not positive definite,
-all of the samples are set to $code nan$$.
+all of the samples are set to ``nan`` .
 
-$subhead random_effects$$
-The random effect samples are normal with mean $latex \hat{u}$$ and covariance
-equal to the inverse of $icode hes_random_obj_out$$.
+random_effects
+==============
+The random effect samples are normal with mean :math:`\hat{u}` and covariance
+equal to the inverse of *hes_random_obj_out* .
 If this Hessian is not positive definite,
-all of the samples are set to $code nan$$.
+all of the samples are set to ``nan`` .
 
-$subhead Constraints$$
+Constraints
+===========
 The Hessians of the fixed and random effects objectives
 ignore all constraints except for constants
 (lower and upper limits equal).
 
-$head Prototype$$
-$srccode%cpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code cpp} */
 void fit_model::sample_posterior(
    CppAD::mixed::d_sparse_rcv&               hes_fixed_obj_out  ,
    CppAD::mixed::d_sparse_rcv&               hes_random_obj_out ,
@@ -882,8 +929,10 @@ void fit_model::sample_posterior(
    CppAD::vector<double>&                    sample_out         ,
    const CppAD::vector<double>&              fit_var_value      ,
    const std::map<std::string, std::string>& option_map         )
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end fit_model_sample_posterior}
 */
 {  double inf = std::numeric_limits<double>::infinity();
    //

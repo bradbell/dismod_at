@@ -2,82 +2,89 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_mulstd.py$$ $newlinech #$$
-# $spell
-#  init
-#  Sincidence
-#  cv
-# $$
+# {xrst_begin user_mulstd.py}
+# {xrst_comment_ch #}
 #
-# $section Estimating Smoothing Standard Deviation Multiplies$$
+# Estimating Smoothing Standard Deviation Multiplies
+# ##################################################
 #
-# $head Purpose$$
+# Purpose
+# *******
 # This example uses a smoothing standard deviation multiplier
-# $cref/lambda
-#  /model_variables
-#  /Fixed Effects, theta
-#  /Smoothing Standard Deviation Multipliers, lambda
-# /$$
+# :ref:`lambda<model_variables@Fixed Effects, theta@Smoothing Standard Deviation Multipliers, lambda>`
 # to determine the standard deviation of the random effects.
 #
-# $head Problem Parameters$$
+# Problem Parameters
+# ******************
 # The following values are used to simulate and model the data:
-# $srcthisfile%
-#  0%# begin problem parameters%# end problem parameters%1
-# %$$
+# {xrst_literal
+#     begin problem parameters
+#     end problem parameters
+# }
 #
-# $head Age and Time Values$$
+# Age and Time Values
+# *******************
 # The age and time values do not matter for this problem
 # because all the functions are constant in age and time.
 # This can be seen by the fact that all of the smoothing has one age
 # and one time point.
 #
-# $head Variables$$
+# Variables
+# *********
 #
-# $subhead Parent$$
+# Parent
+# ======
 # A constant value used to model
-# $cref/iota/avg_integrand/Rate Functions/iota_i(a,t)/$$
+# :ref:`iota<avg_integrand@Rate Functions@iota_i(a,t)>`
 # for the parent node.
 #
-# $subhead Children$$
+# Children
+# ========
 # A fixed value is used for each of the
-# $cref/child rate effects
-#  /model_variables
-#  /Random Effects, u
-#  /Child Rate Effects
-# /$$
+# :ref:`model_variables@Random Effects, u@Child Rate Effects`
 # so that this example passes its test without having a lot of children.
 # You could try increasing the number of children and simulating
 # the rate random effect for each child.
 #
-# $head Data Table$$
+# Data Table
+# **********
 # For this example, all the data is
-# $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$
+# :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence`
 # with a known standard deviation.
 #
-# $head Rate Table$$
-# The $cref rate_table$$ only specifies that $icode iota$$ for the parent
+# Rate Table
+# **********
+# The :ref:`rate_table-name` only specifies that *iota* for the parent
 # and children are non-zero.
 #
-# $head Prior Table$$
+# Prior Table
+# ***********
 #
-# $subhead Parent$$
-# The prior for the parent node $icode iota$$ is uniform with lower limit 1e-4,
+# Parent
+# ======
+# The prior for the parent node *iota* is uniform with lower limit 1e-4,
 # upper limit 1.0 and mean 0.1.
 # Note that the mean is not really the mean of this uniform distribution
 # and it is only used to get the initial starting and scaling point
-# for the optimization; see $cref init_command$$.
+# for the optimization; see :ref:`init_command-name` .
 #
-# $subhead Children$$
-# The prior for the child nodes $icode iota$$ is Gaussian
+# Children
+# ========
+# The prior for the child nodes *iota* is Gaussian
 # with mean zero and standard deviation one.
-# This is so that the actual standard deviation is $icode%lambda% * 1%$$
-# which is equal to $icode lambda$$.
+# This is so that the actual standard deviation is *lambda*  * 1
+# which is equal to *lambda* .
 #
-# $head Fitting$$
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Fitting
+# *******
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_mulstd.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------

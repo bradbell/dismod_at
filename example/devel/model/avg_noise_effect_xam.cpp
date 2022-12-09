@@ -4,19 +4,17 @@
 // ----------------------------------------------------------------------------
 
 /*
-$begin avg_noise_effect_xam.cpp$$
-$spell
-   std
-   xam
-$$
+{xrst_begin avg_noise_effect_xam.cpp}
 
-$section C++ avg_noise_effect: Example and Test$$
+C++ avg_noise_effect: Example and Test
+######################################
 
-$srcthisfile%
-   0%// BEGIN C++%// END C++%1
-%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end avg_noise_effect_xam.cpp}
 */
 // BEGIN C++
 # include <limits>

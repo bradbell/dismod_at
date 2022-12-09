@@ -2,38 +2,43 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_compress.py$$ $newlinech #$$
-# $spell
-#  Integrands
-#  Sincidence
-#  def
-# $$
+# {xrst_begin user_compress.py}
+# {xrst_comment_ch #}
 #
-# $section Using Data Interval Compression$$
+# Using Data Interval Compression
+# ###############################
 #
-# $head Purpose$$
+# Purpose
+# *******
 # This example shows how to use the
-# $cref/compression intervals/option_table/compress_interval/$$ option.
+# :ref:`compression intervals<option_table@compress_interval>` option.
 #
-# $head Integrands$$
-# For this example there are one integrand, $code Sincidence$$.
+# Integrands
+# **********
+# For this example there are one integrand, ``Sincidence`` .
 #
-# $head Nodes$$
-# There is only one node called $code world$$ for this example.
+# Nodes
+# *****
+# There is only one node called ``world`` for this example.
 # There are no random effects because there are no child nodes.
 #
-# $head True Iota$$
-# For this example, the true model incidence rate $icode iota$$ is
+# True Iota
+# *********
+# For this example, the true model incidence rate *iota* is
+# {xrst_code py}
 def iota_true(age) :
    return 0.01 * ( 1 + ((age - 50) / 50)**2 )
+# {xrst_code}
 #
-# $head Model$$
-# There is only one rate $icode iota$$ and it piecewise linear in age
+# Model
+# *****
+# There is only one rate *iota* and it piecewise linear in age
 # with knots at the age points 0, 50, and 100.
 #
-# $head Data$$
+# Data
+# ****
 # There is one data point measuring Sincidence
-# with the true value of $icode iota$$ at times 0.0, 50, 100.
+# with the true value of *iota* at times 0.0, 50, 100.
 # The corresponding age intervals are [0,0], [0,100], [100,100].
 # The age interval for the second measurement should be [50,50]
 # and using interval compression with make it so.
@@ -41,9 +46,14 @@ def iota_true(age) :
 # more accurate. Under normal circumstances, the answer less accurate
 # but faster to compute.
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_compress.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------

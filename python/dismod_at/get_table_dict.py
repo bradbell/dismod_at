@@ -3,54 +3,62 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin get_table_dict$$ $newlinech #$$
-# $spell
-#  dismod
-#  tbl
-#  str
-#  Sql
-# $$
+# {xrst_begin get_table_dict}
+# {xrst_spell
+#     sql
+#     tbl
+# }
+# {xrst_comment_ch #}
 #
-# $section Get All Data From a Table$$
+# Get All Data From a Table
+# #########################
 #
-# $head Syntax$$
-# $icode%table_dict% = dismod_at.get_table_dict(%connection%, %tbl_name%)%$$
+# Syntax
+# ******
+# *table_dict* = ``dismod_at.get_table_dict`` ( *connection* , *tbl_name* )
 #
-# $head connection$$
-# is a $cref/connection/create_connection/connection/$$ for this database.
+# connection
+# **********
+# is a :ref:`create_connection@connection` for this database.
 #
-# $head tbl_name$$
-# is a $code str$$ that specifies the name of the table.
-# We use the notation $icode n_row$$ for the number of rows in
+# tbl_name
+# ********
+# is a ``str`` that specifies the name of the table.
+# We use the notation *n_row* for the number of rows in
 # the table.
 #
-# $head table_dict$$
-# This is a list, with length $icode n_row$$, where each element
+# table_dict
+# **********
+# This is a list, with length *n_row* , where each element
 # of the list is a dictionary.
 # For each dictionaries, the set of keys is the column names in the table
-# (excluding the primary key $icode%tbl_name%_id%$$).
-# The value $icode%table_dict%[%i%][%col_name%]%$$ corresponds to
-# and the column with name $icode col_name$$ and primary key
-# $icode%tbl_name%_id = %i%$$.
+# (excluding the primary key *tbl_name* _ ``id`` ).
+# The value *table_dict* [ *i* ][ *col_name* ] corresponds to
+# and the column with name *col_name* and primary key
+# *tbl_name* _ ``id`` = *i* .
 # The python type corresponding to the values in the table are
 # as follows:
-# $table
-# Sql Table $pre  $$ $cnext  Python           $rnext
-# $code integer$$    $cnext  $code int$$      $rnext
-# $code real$$       $cnext  $code float$$    $rnext
-# $code text$$       $cnext  $code str$$      $rnext
-# $code null$$       $cnext  $code None$$
-# $tend
+#
+# .. csv-table::
+#     :widths: auto
+#
+#     Sql Table,Python
+#     ``integer``,``int``
+#     ``real``,``float``
+#     ``text``,``str``
+#     ``null``,``None``
+#
 # You can determine the type for all the columns in the table using
-# $cref get_name_type$$.
+# :ref:`get_name_type-name` .
+# {xrst_toc_hidden
+#    example/table/get_table_dict.py
+# }
+# Example
+# *******
+# The file :ref:`get_table_dict.py-name` is an example use of
+# ``get_table_dict`` .
 #
-# $children%example/table/get_table_dict.py
-# %$$
-# $head Example$$
-# The file $cref get_table_dict.py$$ is an example use of
-# $code get_table_dict$$.
-#
-# $end
+# {xrst_end get_table_dict}
 # ---------------------------------------------------------------------------
 def get_table_dict(connection, tbl_name) :
    import dismod_at

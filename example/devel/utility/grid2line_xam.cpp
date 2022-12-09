@@ -3,19 +3,17 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin grid2line_xam.cpp$$
-$spell
-   interp
-   xam
-$$
+{xrst_begin grid2line_xam.cpp}
 
-$section C++ grid2line: Example and Test$$
+C++ grid2line: Example and Test
+###############################
 
-$srcthisfile%
-   0%// BEGIN C++%// END C++%1
-%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end grid2line_xam.cpp}
 */
 // BEGIN C++
 # include <limits>

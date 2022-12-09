@@ -2,15 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin simulate_command.py$$ $newlinech #$$
-# $spell
-#  dismod
-# $$
+# {xrst_begin simulate_command.py}
+# {xrst_comment_ch #}
 #
-# $section simulate Command: Example and Test$$
+# simulate Command: Example and Test
+# ##################################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end simulate_command.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import sys

@@ -2,12 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin smooth_grid_table.py$$ $newlinech #$$
+# {xrst_begin smooth_grid_table.py}
+# {xrst_comment_ch #}
 #
-# $section smooth_grid_table: Example and Test$$
+# smooth_grid_table: Example and Test
+# ###################################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end smooth_grid_table.py}
 # BEGIN PYTHON
 def smooth_grid_table() :
    import dismod_at

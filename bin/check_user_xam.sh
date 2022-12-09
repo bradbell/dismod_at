@@ -26,10 +26,10 @@ do
       fi
    fi
    #
-   # user.omh
-   if ! grep "\$rref user_$name" example/user/user.omh > /dev/null
+   # user.xrst
+   if ! grep ":ref:.user_$name.py-title" example/user/user.xrst > /dev/null
    then
-      echo "\$rref user_$name.py\$ is not in example/user/user.omh"
+      echo ":ref:.user_$name.py-title. is not in example/user/user.xrst"
       exit 1
    fi
 done

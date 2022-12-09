@@ -12,67 +12,58 @@
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
 -----------------------------------------------------------------------------
-$begin old2new_command$$
-$spell
-   dismod
-   avgint
-   mulcov
-$$
+{xrst_begin old2new_command}
 
-$section Convert an Old Database to New Format$$
+Convert an Old Database to New Format
+#####################################
 
-$head Syntax$$
-$codei%dismod_at %database% old2new%$$
+Syntax
+******
+``dismod_at`` *database* ``old2new``
 
-$head Subgroup Table$$
-The $cref subgroup_table$$ was added to the database input tables on
-$cref/2019-11-22/whats_new_2019/mm-dd/11-22/$$.
+Subgroup Table
+**************
+The :ref:`subgroup_table-name` was added to the database input tables on
+:ref:`2019-11-22<whats_new_2019@mm-dd@11-22>` .
 If the original database does not contain a subgroup table,
 it is added with one row and the following values:
-$icode%
-   %subgroup_id% %subgroup_name% %group_id% %group_name%
-   %%          0 %%        world %%       0 %%     world
-%$$
 
-$head data Table$$
-If the original data base does not contain a subgroup table,
-the column $cref/subgroup_id/data_table/subgroup_id/$$ is added to the
-$cref data_table$$ with the value $icode%subgroup_id% = 0%$$ for every row.
+| |tab| ``subgroup_id`` ``subgroup_name`` ``group_id`` ``group_name``
+| |tab| 0 *world* 0 *world*
 
-$head avgint Table$$
+data Table
+**********
 If the original data base does not contain a subgroup table,
-the column $cref/subgroup_id/avgint_table/subgroup_id/$$ is added to the
-$cref avgint_table$$ with the value $icode%subgroup_id% = 0%$$ for every row.
+the column :ref:`data_table@subgroup_id` is added to the
+:ref:`data_table-name` with the value *subgroup_id*  = 0 for every row.
 
-$head mulcov Table$$
+avgint Table
+************
 If the original data base does not contain a subgroup table,
-the mulcov table column named $icode smooth_id$$ is changed to be named
-$cref/group_smooth_id/mulcov_table/group_smooth_id/$$.
+the column :ref:`avgint_table@subgroup_id` is added to the
+:ref:`avgint_table-name` with the value *subgroup_id*  = 0 for every row.
+
+mulcov Table
+************
+If the original data base does not contain a subgroup table,
+the mulcov table column named *smooth_id* is changed to be named
+:ref:`mulcov_table@group_smooth_id` .
 In addition, the columns
-$cref/group_id/mulcov_table/group_id/$$ and
-$cref/subgroup_smooth_id/mulcov_table/subgroup_smooth_id/$$
-are added to the $cref mulcov_table$$ with values
-$icode%group_id% = 0%$$, and $icode%subgroup_smooth_id% = null%$$
+:ref:`mulcov_table@group_id` and
+:ref:`mulcov_table@subgroup_smooth_id`
+are added to the :ref:`mulcov_table-name` with values
+*group_id*  = 0 , and *subgroup_smooth_id* = ``null``
 for every row.
 
-$head option Table$$
-The $code zero_sum_random$$ option name was changed to
-$cref/
-   zero_sum_child_rate/
-   option_table/
-   Zero Sum Constraints/
-   zero_sum_child_rate
-/$$ on
-$cref/2019-11-29/whats_new_2019/mm-dd/11-29/$$.
-If the option name $code zero_sum_random$$ is in the option table, it is
-changed to $cref/
-   zero_sum_child_rate/
-   option_table/
-   Zero Sum Constraints/
-   zero_sum_child_rate
-/$$.
+option Table
+************
+The ``zero_sum_random`` option name was changed to
+:ref:`option_table@Zero Sum Constraints@zero_sum_child_rate` on
+:ref:`2019-11-29<whats_new_2019@mm-dd@11-29>` .
+If the option name ``zero_sum_random`` is in the option table, it is
+changed to :ref:`option_table@Zero Sum Constraints@zero_sum_child_rate` .
 
-$end
+{xrst_end old2new_command}
 */
 
 // ----------------------------------------------------------------------------

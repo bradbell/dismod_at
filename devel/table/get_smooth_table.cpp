@@ -3,80 +3,81 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_smooth_table$$
-$spell
-   mulstd
-   dage
-   dtime
-   struct
-   sqlite
-   enum
-   cpp
-   std
-$$
+{xrst_begin get_smooth_table}
 
-$section C++: Get the Smoothing Table Information$$
+C++: Get the Smoothing Table Information
+########################################
 
-$head Syntax$$
-$icode%smooth_table% = get_smooth_table(%db%)%$$
+Syntax
+******
+*smooth_table* = ``get_smooth_table`` ( *db* )
 
-$head Purpose$$
-To read the $cref smooth_table$$ and return it as a C++ data structure.
+Purpose
+*******
+To read the :ref:`smooth_table-name` and return it as a C++ data structure.
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head smooth_table$$
-The return value $icode smooth_table$$ has prototype
-$codei%
-   CppAD::vector<smooth_struct>  %smooth_table%
-%$$
-For each $cref/smooth_id/smooth_table/smooth_id/$$,
-$codei%
-   %smooth_table%[%smooth_id%]
-%$$
+smooth_table
+************
+The return value *smooth_table* has prototype
+
+   ``CppAD::vector<smooth_struct>`` *smooth_table*
+
+For each :ref:`smooth_table@smooth_id` ,
+
+   *smooth_table* [ *smooth_id* ]
+
 is the information for the corresponding
-$cref/smooth_id/smooth_table/smooth_id/$$.
+:ref:`smooth_table@smooth_id` .
 
-$head smooth_struct$$
+smooth_struct
+*************
 This is a structure with the following fields
-$table
-Type $cnext Field $cnext Description
-$rnext
-$code std::string$$ $pre  $$ $cnext $code smooth_name$$ $cnext
-   The $cref/smooth_name/smooth_table/smooth_name/$$ for this smoothing.
-$rnext
-$code int$$ $cnext $code n_age$$ $cnext
-   The $cref/n_age/smooth_table/n_age/$$ for this smoothing.
-$rnext
-$code int$$ $cnext $code n_time$$ $cnext
-   The $cref/n_time/smooth_table/n_time/$$ for this smoothing.
-$rnext
-$code int$$ $cnext $code mulstd_value_prior_id$$ $cnext
-   The $cref/mulstd_value_prior_id/smooth_table/mulstd_value_prior_id/$$
-   for this smoothing.
-$rnext
-$code int$$ $cnext $code mulstd_dage_prior_id$$ $cnext
-   The $cref/mulstd_dage_prior_id/smooth_table/mulstd_dage_prior_id/$$
-   for this smoothing.
-$rnext
-$code int$$ $cnext $code mulstd_dtime_prior_id$$ $cnext
-   The $cref/mulstd_dtime_prior_id/smooth_table/mulstd_dtime_prior_id/$$
-   for this smoothing.
-$tend
-$comment
-   example/devel/table/get_smooth_grid_xam.cpp is included by smooth_grid.omh
-%$$
 
-$head Example$$
-The file $cref get_smooth_grid_xam.cpp$$ contains an example that uses
+.. list-table::
+
+   * - Type
+     - Field
+     - Description
+   * - ``std::string``
+     - ``smooth_name``
+     - The :ref:`smooth_table@smooth_name` for this smoothing.
+   * - ``int``
+     - ``n_age``
+     - The :ref:`smooth_table@n_age` for this smoothing.
+   * - ``int``
+     - ``n_time``
+     - The :ref:`smooth_table@n_time` for this smoothing.
+   * - ``int``
+     - ``mulstd_value_prior_id``
+     - The :ref:`smooth_table@mulstd_value_prior_id`
+       for this smoothing.
+   * - ``int``
+     - ``mulstd_dage_prior_id``
+     - The :ref:`smooth_table@mulstd_dage_prior_id`
+       for this smoothing.
+   * - ``int``
+     - ``mulstd_dtime_prior_id``
+     - The :ref:`smooth_table@mulstd_dtime_prior_id`
+       for this smoothing.
+
+{xrst_comment
+   example/devel/table/get_smooth_grid_xam.cpp is included by smooth_grid.omh
+%}
+
+Example
+*******
+The file :ref:`get_smooth_grid_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_smooth_table}
 -----------------------------------------------------------------------------
 */
 

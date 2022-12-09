@@ -3,97 +3,104 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_density_table$$
-$spell
-   sqlite
+{xrst_begin get_density_table}
+{xrst_spell
    enum
-   cpp
-   cen
    nonsmooth
-   const
-$$
+}
 
-$section C++: Get the Density Table Information$$
+C++: Get the Density Table Information
+######################################
 
-$head Syntax$$
-$icode%density_table% = get_density_table(%db%)
-%$$
-$icode%is_log% = log_density(%density%)
-%$$
-$icode%is_nonsmooth% = nonsmooth_density(%density%)
-%$$
-$icode%is_censored% = censored_density(%density%)
-%$$
+Syntax
+******
 
-$head Purpose$$
-To read the $cref density_table$$ and return it as a C++ data structure.
+| *density_table* = ``get_density_table`` ( *db* )
+| *is_log* = ``log_density`` ( *density* )
+| *is_nonsmooth* = ``nonsmooth_density`` ( *density* )
+| *is_censored* = ``censored_density`` ( *density* )
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+Purpose
+*******
+To read the :ref:`density_table-name` and return it as a C++ data structure.
+
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head density_table$$
-The return value $icode density_table$$ has prototype
-$codei%
-   CppAD::vector<density_enum>  %density_table%
-%$$
-For each $cref/density_id/density_table/density_id/$$,
-$codei%
-   %density_table%[%density_id%]
-%$$
+density_table
+*************
+The return value *density_table* has prototype
+
+   ``CppAD::vector<density_enum>`` *density_table*
+
+For each :ref:`density_table@density_id` ,
+
+   *density_table* [ *density_id* ]
+
 is the enum value for the corresponding
-$cref/density_name/density_table/density_name/$$.
+:ref:`density_table@density_name` .
 
-$head density_enum$$
+density_enum
+************
 This enum type has the following values:
-$align right$$
-$table
-$icode value$$                $pre  $$ $cnext $icode density_name$$     $rnext
-$code uniform_enum$$          $pre  $$ $cnext $code uniform$$           $rnext
-$code gaussian_enum$$         $pre  $$ $cnext $code gaussian$$          $rnext
-$code cen_gaussian_enum$$     $pre  $$ $cnext $code c_gaussian$$        $rnext
-$code log_gaussian_enum$$     $pre  $$ $cnext $code log_gaussian$$      $rnext
-$code cen_log_gaussian_enum$$ $pre  $$ $cnext $code cen_log_gaussian$$  $rnext
-$code laplace_enum$$          $pre  $$ $cnext $code laplace$$           $rnext
-$code cen_laplace_enum$$      $pre  $$ $cnext $code laplace$$           $rnext
-$code log_laplace_enum$$      $pre  $$ $cnext $code log_laplace$$       $rnext
-$code cen_log_laplace_enum$$  $pre  $$ $cnext $code cen_log_laplace$$   $rnext
-$code students_enum$$         $pre  $$ $cnext $code students$$          $rnext
-$code log_students_enum$$     $pre  $$ $cnext $code log_students$$
-$tend
-The number of these enum values is $code number_density_enum$$.
 
-$head log_density$$
-The return value $icode is_log$$ is true if the corresponding density is
-$cref/log scaled/density_table/Notation/Log Scaled/$$.
+.. csv-table::
+   :widths: auto
+   :align: right
+
+   *value*,*density_name*
+   ``uniform_enum``,``uniform``
+   ``gaussian_enum``,``gaussian``
+   ``cen_gaussian_enum``,``c_gaussian``
+   ``log_gaussian_enum``,``log_gaussian``
+   ``cen_log_gaussian_enum``,``cen_log_gaussian``
+   ``laplace_enum``,``laplace``
+   ``cen_laplace_enum``,``laplace``
+   ``log_laplace_enum``,``log_laplace``
+   ``cen_log_laplace_enum``,``cen_log_laplace``
+   ``students_enum``,``students``
+   ``log_students_enum``,``log_students``
+
+The number of these enum values is ``number_density_enum`` .
+
+log_density
+***********
+The return value *is_log* is true if the corresponding density is
+:ref:`density_table@Notation@Log Scaled` .
 It is false otherwise.
 
-$head nonsmooth_density$$
-The return value $icode is_nonsmooth$$ is true if the corresponding density is
-$cref/nonsmooth/density_table/Notation/Nonsmooth/$$.
+nonsmooth_density
+*****************
+The return value *is_nonsmooth* is true if the corresponding density is
+:ref:`density_table@Notation@Nonsmooth` .
 It is false otherwise.
 
-$head censored_density$$
-The return value $icode is_censored$$ is true if the corresponding density is
-$cref/censored/density_table/Notation/Censored/$$.
+censored_density
+****************
+The return value *is_censored* is true if the corresponding density is
+:ref:`density_table@Notation@Censored` .
 It is false otherwise.
 
-$head density_enum2name$$
+density_enum2name
+*****************
 This is a global variable.
-If $icode%density%$$, is an $code density_enum$$ value,
-$codei%density_enum2name[%density%]%$$ is a $code const char*[]$$
-representation of the $icode density_name$$ corresponding to the enum value.
-
-$children%example/devel/table/get_density_table_xam.cpp
-%$$
-$head Example$$
-The file $cref get_density_table_xam.cpp$$ contains an example that uses
+If *density* , is an ``density_enum`` value,
+``density_enum2name`` [ *density* ] is a ``const char*[]``
+representation of the *density_name* corresponding to the enum value.
+{xrst_toc_hidden
+   example/devel/table/get_density_table_xam.cpp
+}
+Example
+*******
+The file :ref:`get_density_table_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_density_table}
 -----------------------------------------------------------------------------
 */
 

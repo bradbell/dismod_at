@@ -2,36 +2,41 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin python$$ $newlinech #$$
+# {xrst_begin python}
+# {xrst_comment_ch #}
 #
-# $section Python Utilities$$
+# Python Utilities
+# ################
 #
-# $comment BEGIN_SORT_THIS_LINE_PLUS_2$$
-# $childtable%
-#  python/dismod_at/average_integrand.py%
-#  python/dismod_at/connection_file.py%
-#  python/dismod_at/create_connection.py%
-#  python/dismod_at/create_database.py%
-#  python/dismod_at/create_table.py%
-#  python/dismod_at/csv2db_command.py%
-#  python/dismod_at/db2csv_command.py%
-#  python/dismod_at/get_name_type.py%
-#  python/dismod_at/get_row_list.py%
-#  python/dismod_at/get_table_dict.py%
-#  python/dismod_at/metropolis.py%
-#  python/dismod_at/modify_command.py%
-#  python/dismod_at/perturb_command.py%
-#  python/dismod_at/plot_curve.py%
-#  python/dismod_at/plot_data_fit.py%
-#  python/dismod_at/plot_rate_fit.py%
-#  python/dismod_at/replace_table.py%
-#  python/dismod_at/sql_command.py%
-#  python/dismod_at/system_command_prc.py%
-#  python/dismod_at/unicode_tuple.py
-# %$$
-# $comment END_SORT_THIS_LINE_MINUS_2$$
+# {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 #
-# $end
+# Contents
+# ********
+# {xrst_toc_table
+#    python/dismod_at/average_integrand.py
+#    python/dismod_at/connection_file.py
+#    python/dismod_at/create_connection.py
+#    python/dismod_at/create_database.py
+#    python/dismod_at/create_table.py
+#    python/dismod_at/csv2db_command.py
+#    python/dismod_at/db2csv_command.py
+#    python/dismod_at/get_name_type.py
+#    python/dismod_at/get_row_list.py
+#    python/dismod_at/get_table_dict.py
+#    python/dismod_at/metropolis.py
+#    python/dismod_at/modify_command.py
+#    python/dismod_at/perturb_command.py
+#    python/dismod_at/plot_curve.py
+#    python/dismod_at/plot_data_fit.py
+#    python/dismod_at/plot_rate_fit.py
+#    python/dismod_at/replace_table.py
+#    python/dismod_at/sql_command.py
+#    python/dismod_at/system_command_prc.py
+#    python/dismod_at/unicode_tuple.py
+# }
+# {xrst_comment END_SORT_THIS_LINE_MINUS_2}
+#
+# {xrst_end python}
 # -----------------------------------------------------------------------------
 # BEGIN_SORT_THIS_LINE_PLUS_1
 from .average_integrand   import average_integrand

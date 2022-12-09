@@ -3,16 +3,17 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin age_avg_grid_xam.cpp$$
-$spell
-   xam
-$$
+{xrst_begin age_avg_grid_xam.cpp}
 
-$section C++ age_avg_grid: Example and Test$$
+C++ age_avg_grid: Example and Test
+##################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end age_avg_grid_xam.cpp}
 */
 // BEGIN C++
 # include <dismod_at/age_avg_grid.hpp>

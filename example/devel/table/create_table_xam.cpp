@@ -3,16 +3,17 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin create_table_xam.cpp$$
-$spell
-   xam
-$$
+{xrst_begin create_table_xam.cpp}
 
-$section C++ create_table: Example and Test$$
+C++ create_table: Example and Test
+##################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end create_table_xam.cpp}
 */
 // BEGIN C++
 # include <dismod_at/create_table.hpp>

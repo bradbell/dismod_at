@@ -3,20 +3,27 @@
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 """
-$begin user_system_command_prc.py$$
-$spell
+{xrst_begin user_system_command_prc.py}
+{xrst_spell
    prc
-$$
+}
 
-$section Example Using system_command_prc$$
+Example Using system_command_prc
+################################
 
-$head Discussion$$
+Discussion
+**********
 This example demonstrates some of the different argument cases for the
-$cref system_command_prc$$ function.
+:ref:`system_command_prc-name` function.
 
-$head Source Code$$
-$srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-$end
+Source Code
+***********
+{xrst_literal
+   # BEGIN PYTHON
+   # END PYTHON
+}
+
+{xrst_end user_system_command_prc.py}
 $end
 """
 # BEGIN PYTHON

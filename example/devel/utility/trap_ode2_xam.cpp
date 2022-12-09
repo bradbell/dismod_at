@@ -3,15 +3,20 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin trap_ode2_xam.cpp$$
-$spell
-   eigen
-$$
+{xrst_begin trap_ode2_xam.cpp}
+{xrst_spell
+   trapezoidal
+}
 
-$section Example and Test of Trapezoidal Method of Solving ODE$$
+Example and Test of Trapezoidal Method of Solving ODE
+#####################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end trap_ode2_xam.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

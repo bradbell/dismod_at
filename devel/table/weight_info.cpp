@@ -3,189 +3,190 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin weight_info$$
-$spell
-   const
-   CppAD
-   struct
-   w_info
-$$
+{xrst_begin weight_info}
 
-$section Extract and Organize Information for One Weighting Function$$
+Extract and Organize Information for One Weighting Function
+###########################################################
 
-$head Syntax$$
-$codei%weight_info %w_constant%()
-%$$
-$codei%weight_info %w_info%(
-   %age_table%, %time_table%, %weight_id%, %weight_table%, %weight_grid_table%
-)
-%$$
-$codei%weight_info %w_test%(
-   %age_table%, %time_table%, %age_id%, %time_id%, %weight%
-)
-%$$
-$icode%w_default% = %w_info%
-%$$
-$icode%n_age%     = %w_info%.age_size()
-%$$
-$icode%n_time%    = %w_info%.time_size()
-%$$
-$icode%a_id%      = %w_info%.age_id(%i%)
-%$$
-$icode%t_id%      = %w_info%.time_id(%j%)
-%$$
-$icode%w%         = %w_info%.weight(%i%, %j%)
-%$$
+Syntax
+******
 
-$head Purpose$$
+| ``weight_info`` *w_constant* ()
+| ``weight_info`` *w_info* (
+| |tab| *age_table* , *time_table* , *weight_id* , *weight_table* , *weight_grid_table*
+| )
+| ``weight_info`` *w_test* (
+| |tab| *age_table* , *time_table* , *age_id* , *time_id* , *weight*
+| )
+| *w_default* = *w_info*
+| *n_age* = *w_info* . ``age_size`` ()
+| *n_time* = *w_info* . ``time_size`` ()
+| *a_id* = *w_info* . ``age_id`` ( *i* )
+| *t_id* = *w_info* . ``time_id`` ( *j* )
+| *w* = *w_info* . ``weight`` ( *i* , *j* )
+
+Purpose
+*******
 Extracts the information for one weighting from
-the $cref weight_grid_table$$.
-In addition, this routine checks the $code weight_info$$ table
-$cref/rectangular grid/weight_grid_table/Rectangular Grid/$$ assumption.
+the :ref:`weight_grid_table-name` .
+In addition, this routine checks the ``weight_info`` table
+:ref:`weight_grid_table@Rectangular Grid` assumption.
 
-$head w_constant$$
+w_constant
+**********
 The default constructor creates a constant weighting.
-It is also used to create a $code weight_info$$ object that is later set equal
-to another $code weight_info$$ object.
+It is also used to create a ``weight_info`` object that is later set equal
+to another ``weight_info`` object.
 This is useful when creating vectors of such objects.
 
-$head w_info$$
+w_info
+******
 In all its uses, except during construction,
 this object has prototype
-$codei%
-   const weight_info %w_info%
-%$$
+
+   ``const weight_info`` *w_info*
+
 The mean of the corresponding constructor arguments are specified below:
 
-$head w_test$$
+w_test
+******
 This object is the result of the testing constructor and can be used
-the same as $icode w_info$$.
+the same as *w_info* .
 
-
-$head age_table$$
+age_table
+*********
 This argument has prototype
-$codei%
-   const CppAD::vector<double>& %age_table%
-%$$
-and is the $cref/age_table/get_age_table/$$.
 
-$head time_table$$
-This argument has prototype
-$codei%
-   const CppAD::vector<double>& %time_table%
-%$$
-and is the $cref/time_table/get_time_table/$$.
+   ``const CppAD::vector<double>&`` *age_table*
 
-$head weight_table$$
-This argument has prototype
-$codei%
-   const CppAD::vector<double>& %weight_table%
-%$$
-and is the $cref/weight_table/get_weight_table/$$.
+and is the :ref:`age_table<get_age_table-name>` .
 
-$head weight_grid_table$$
+time_table
+**********
 This argument has prototype
-$codei%
-   const CppAD::vector<weight_grid_struct>& %weight_grid_table%
-%$$
-an is the $cref weight_grid_table$$.
 
-$head age_id$$
+   ``const CppAD::vector<double>&`` *time_table*
+
+and is the :ref:`time_table<get_time_table-name>` .
+
+weight_table
+************
 This argument has prototype
-$codei%
-   const CppAD::vector<size_t>& %age_id%
-%$$
+
+   ``const CppAD::vector<double>&`` *weight_table*
+
+and is the :ref:`weight_table<get_weight_table-name>` .
+
+weight_grid_table
+*****************
+This argument has prototype
+
+   ``const CppAD::vector<weight_grid_struct>&`` *weight_grid_table*
+
+an is the :ref:`weight_grid_table-name` .
+
+age_id
+******
+This argument has prototype
+
+   ``const CppAD::vector<size_t>&`` *age_id*
+
 It specifies the age grid indices; i.e.
-$codei%
-   %w_info%.age_id(%i%) = %age_id%[%i%]
-%$$
 
-$head time_id$$
+   *w_info* . ``age_id`` ( *i* ) = *age_id* [ *i* ]
+
+time_id
+*******
 This argument has prototype
-$codei%
-   const CppAD::vector<size_t>& %time_id%
-%$$
+
+   ``const CppAD::vector<size_t>&`` *time_id*
+
 It specifies the time grid indices; i.e.
-$codei%
-   %w_info%.time_id(%i%) = %time_id%[%i%]
-%$$
 
-$head weight$$
+   *w_info* . ``time_id`` ( *i* ) = *time_id* [ *i* ]
+
+weight
+******
 This argument has prototype
-$codei%
-   const CppAD::vector<double>& %weight%
-%$$
-It specifies the weight grid values in row major order; i.e.
-$codei%
-   %w_info%.weight(%i%, %j%) = %time_id%[%i%*%n_time% + %j%]
-%$$
 
-$head n_age$$
+   ``const CppAD::vector<double>&`` *weight*
+
+It specifies the weight grid values in row major order; i.e.
+
+   *w_info* . ``weight`` ( *i* , *j* ) = *time_id* [ *i* * *n_time* + *j* ]
+
+n_age
+*****
 This result has prototype
-$codei%
-   size_t %n_age%
-%$$
+
+   ``size_t`` *n_age*
+
 and is the number of age values for this weighting.
 
-$head n_time$$
+n_time
+******
 This result has prototype
-$codei%
-   size_t %n_time%
-%$$
+
+   ``size_t`` *n_time*
+
 and is the number of time values for this weighting.
 
-$head i$$
-The argument $icode i$$ has prototype
-$codei%
-   size_t %i%
-%$$
-and is the age index; $icode%i% < %n_age%$$.
+i
+*
+The argument *i* has prototype
 
-$head j$$
-The argument $icode j$$ has prototype
-$codei%
-   size_t %j%
-%$$
-and is the time index; $icode%j% < %n_time%$$.
+   ``size_t`` *i*
 
-$head a_id$$
+and is the age index; *i* < *n_age* .
+
+j
+*
+The argument *j* has prototype
+
+   ``size_t`` *j*
+
+and is the time index; *j* < *n_time* .
+
+a_id
+****
 This return value has prototype
-$codei%
-   size_t %a_id%
-%$$
-and is the $th i$$ $cref/age_id/weight_grid_table/age_id/$$
-for this weighting and increases with $icode i$$; i.e.,
-for $icode%i% < %n_age%-2%$$
-$codei%
-   %w_info%.age_id(%i%) < %w_info%.age_id(%i%+1)
-%$$
 
-$head t_id$$
-This return value has prototype
-$codei%
-   size_t %t_id%
-%$$
-and is the $th j$$ $cref/time_id/weight_grid_table/time_id/$$
-for this weighting and increases with $icode j$$; i.e.,
-for $icode%j% < %n_time%-2%$$
-$codei%
-   %w_info%.time_id(%j%) < %w_info%.time_id(%j%+1)
-%$$
+   ``size_t`` *a_id*
 
-$head w$$
+and is the *i*-th :ref:`weight_grid_table@age_id`
+for this weighting and increases with *i* ; i.e.,
+for *i* < *n_age* ``-2``
+
+   *w_info* . ``age_id`` ( *i* ) < *w_info* . ``age_id`` ( *i* +1)
+
+t_id
+****
 This return value has prototype
-$codei%
-   double %w%
-%$$
+
+   ``size_t`` *t_id*
+
+and is the *j*-th :ref:`weight_grid_table@time_id`
+for this weighting and increases with *j* ; i.e.,
+for *j* < *n_time* ``-2``
+
+   *w_info* . ``time_id`` ( *j* ) < *w_info* . ``time_id`` ( *j* +1)
+
+w
+*
+This return value has prototype
+
+   ``double`` *w*
+
 and is the weighting for the corresponding age and time indices.
-
-$children%example/devel/table/weight_info_xam.cpp
-%$$
-$head Example$$
-The file $cref weight_info_xam.cpp$$ contains an example that uses
+{xrst_toc_hidden
+   example/devel/table/weight_info_xam.cpp
+}
+Example
+*******
+The file :ref:`weight_info_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end weight_info}
 */
 # include <dismod_at/weight_info.hpp>
 

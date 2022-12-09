@@ -2,64 +2,65 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_zsum_child_rate.py$$ $newlinech #$$
-# $spell
-#  init
-# $$
+# {xrst_begin user_zsum_child_rate.py}
+# {xrst_comment_ch #}
 #
-# $section Constrain Sum of Child Rate Effect to Zero$$
+# Constrain Sum of Child Rate Effect to Zero
+# ##########################################
 #
-# $head See Also$$
-# $cref user_zsum_mulcov_rate.py$$,
-# $cref user_zsum_mulcov_meas.py$$
+# See Also
+# ********
+# :ref:`user_zsum_mulcov_rate.py-name` ,
+# :ref:`user_zsum_mulcov_meas.py-name`
 #
-# $head Purpose$$
+# Purpose
+# *******
 # This example demonstrates using
-# The $cref/
-#  zero_sum_child_rate/
-#  option_table/
-#  Zero Sum Constraints/
-#  zero_sum_child_rate
-# /$$
+# The :ref:`option_table@Zero Sum Constraints@zero_sum_child_rate`
 # to improve the speed and accuracy of estimation of the fixed effects.
 #
-# $head Problem Parameters$$
-# $srcthisfile%
-#  0%# begin problem parameters%# end problem parameters%1
-# %$$
+# Problem Parameters
+# ******************
+# {xrst_literal
+#     begin problem parameters
+#     end problem parameters
+# }
 #
-# $head Data Simulation$$
+# Data Simulation
+# ***************
 #
-# $subhead north_america$$
-# The true rates for the parent region $code north_america$$
+# north_america
+# =============
+# The true rates for the parent region ``north_america``
 # (used for simulating data) are the
-# $icode iota_parent$$ and $icode rho_parent$$ problem parameters.
+# *iota_parent* and *rho_parent* problem parameters.
 #
-# $subhead canada$$
+# canada
+# ======
 # The true
-# $cref/child rate effect
-#  /model_variables
-#  /Random Effects, u
-#  /Child Rate Effects
-# /$$
-# for $code canada$$ is $icode rate_effect_child$$.
+# :ref:`child rate effect<model_variables@Random Effects, u@Child Rate Effects>`
+# for ``canada`` is *rate_effect_child* .
 #
-# $subhead united_states$$
+# united_states
+# =============
 # The true child rate effect
-# for the $code united_states$$ is $codei%-%rate_effect_child%$$.
+# for the ``united_states`` is ``-`` *rate_effect_child* .
 #
-# $subhead mexico$$
+# mexico
+# ======
 # No data is included for mexico, hence it is automatically constrained to have
 # zero child rate random effects.
 #
-# $head Nodes$$
+# Nodes
+# *****
 # There are just four nodes for this example,
-# The parent node, $code north_america$$, and the three child nodes
-# $code united_states$$, $code canada$$ and $code mexico$$.
+# The parent node, ``north_america`` , and the three child nodes
+# ``united_states`` , ``canada`` and ``mexico`` .
 #
-# $head Model Variables$$
-# The non-zero $cref model_variables$$ for this example are
-# $cref/iota/rate_table/rate_name/iota/$$ and $icode rho$$.
+# Model Variables
+# ***************
+# The non-zero :ref:`model_variables-name` for this example are
+# :ref:`rate_table@rate_name@iota` and *rho* .
 # Both the parent and child rates use a grid with one point in age
 # and two points in time. Thus there are six model variables for each rate,
 # two for the parent rates and four for the child rate effects.
@@ -67,9 +68,14 @@
 # in age and constant in time except between the two time grid points
 # where it is linear with respect to time.
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_zsum_child_rate.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------

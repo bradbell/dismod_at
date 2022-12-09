@@ -3,64 +3,68 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin exec_sql_cmd$$
-$spell
-   sql
-   dismod
+{xrst_begin exec_sql_cmd}
+{xrst_spell
    cmd
-   std
-   hpp
-   sqlite
-   sep
-$$
+   optionally
+   sql
+}
 
-$section C++: Execution of an SQL Command$$
+C++: Execution of an SQL Command
+################################
 
-$head Syntax$$
-$codei%exec_sql_cmd(%db%, %sql_cmd%)
-%$$
-$icode%result% = exec_sql_cmd(%db%, %sql_cmd%, %sep%)%$$
+Syntax
+******
 
-$head Purpose$$
+   ``exec_sql_cmd`` ( *db* , *sql_cmd* )
+
+*result* = ``exec_sql_cmd`` ( *db* , *sql_cmd* , *sep* )
+
+Purpose
+*******
 Executes an SQL command, check for an error,
 and optionally return result if no error occurs.
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+db
+**
+The argument *db* has prototype
 
-$head sql_cmd$$
+   ``sqlite3`` * *db*
+
+sql_cmd
+*******
 This argument has prototype
-$codei%
-   std::string& sql_cmd
-%$$
+
+   ``std::string& sql_cmd``
+
 It contains the command that is executed.
 
-$head sep$$
+sep
+***
 If this argument is present, it has prototype
-$codei%
-   char %sep%
-%$$
+
+   ``char`` *sep*
+
 and is the character is used to separate columns on the same line of the result
-($code '\n'$$ is used to separate lines of the result).
-It is assumed that $icode sep$$ and $code '\n'$$ do not occur
+(``'\n'`` is used to separate lines of the result).
+It is assumed that *sep* and ``'\n'`` do not occur
 in any of the result values.
 
-$head result$$
-If the $icode sep$$ argument is present,
+result
+******
+If the *sep* argument is present,
 the return value has prototype
-$codei%
-   std::string& result
-%$$
+
+   ``std::string& result``
+
 It contains the output corresponding to the command.
 
-$head Error$$
+Error
+*****
 If an error occurs, an error message is printed and this routine
 aborts; i.e., it does not return if an error occurs.
 
-$end
+{xrst_end exec_sql_cmd}
 -----------------------------------------------------------------------------
 */
 # include <cstdlib>

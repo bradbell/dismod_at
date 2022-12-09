@@ -2,61 +2,70 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_data_density.py$$ $newlinech #$$
-# $spell
-#  init
-#  Sincidence
-#  cv
-# $$
+# {xrst_begin user_data_density.py}
+# {xrst_spell
+#     nonzero
+# }
+# {xrst_comment_ch #}
 #
-# $section Fit With Outliers Using Data Density Command$$
+# Fit With Outliers Using Data Density Command
+# ############################################
 #
-# $head Purpose$$
+# Purpose
+# *******
 # This example first fits using a Gaussian data density.
 # It uses the first fit as a starting point for another fit
 # with a Student's-t data density.
-# The $cref data_density_command$$ is used to change the data density.
+# The :ref:`data_density_command-name` is used to change the data density.
 #
-# $head Problem Parameters$$
+# Problem Parameters
+# ******************
 # The following values are used to simulate and model the data:
-# $srcthisfile%
-#  0%# begin problem parameters%# end problem parameters%1
-# %$$
+# {xrst_literal
+#     begin problem parameters
+#     end problem parameters
+# }
 #
-# $head Age and Time Values$$
+# Age and Time Values
+# *******************
 # The age and time values do not matter for this problem
 # because all the functions are constant in age and time.
 # This can be seen by the fact that all of the smoothing has one age
 # and one time point.
 #
-# $head Variables$$
+# Variables
+# *********
 # The constant value used to model
-# $cref/iota/avg_integrand/Rate Functions/iota_i(a,t)/$$
+# :ref:`iota<avg_integrand@Rate Functions@iota_i(a,t)>`
 # for the parent node is only one model variable in this example.
 #
-# $head Data Table$$
+# Data Table
+# **********
 # For this example, all the data is
-# $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$.
-# The good data is Gaussian with mean $icode iota_true$$
-# and standard deviation $icode%meas_cv%*%iota_true%$$.
-# The outlier data has mean $codei%10*%iota_true%$$
-# and standard deviation $codei%2*%iota_true%$$.
+# :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` .
+# The good data is Gaussian with mean *iota_true*
+# and standard deviation *meas_cv* * *iota_true* .
+# The outlier data has mean 10* *iota_true*
+# and standard deviation 2* *iota_true* .
 #
-# $head Rate Table$$
-# The $cref rate_table$$ only specifies that $icode iota$$ for the parent
+# Rate Table
+# **********
+# The :ref:`rate_table-name` only specifies that *iota* for the parent
 # is the only nonzero rate for this example.
 # In addition, it specifies the smoothing for that rate which has only
 # one grid point. Hence there is only one model variable corresponding to
 # the rates.
 #
-# $head Prior Table$$
-# The prior for $icode iota$$ is uniform with lower limit 1e-4,
+# Prior Table
+# ***********
+# The prior for *iota* is uniform with lower limit 1e-4,
 # upper limit 1.0 and mean 0.1.
 # Note that the mean is not really the mean of this uniform distribution
 # and it is only used to get the initial starting and scaling point
-# for the optimization; see $cref init_command$$.
+# for the optimization; see :ref:`init_command-name` .
 #
-# $head Fitting$$
+# Fitting
+# *******
 # A first fit is done using a Gaussian density for the data.
 # This is used to get a better starting point for the optimization.
 # All the density values in the data table are changed to be Students-t
@@ -64,9 +73,14 @@
 # The results of the second fit are check for accuracy of the estimate
 # and for proper detection of the outliers.
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_data_density.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------

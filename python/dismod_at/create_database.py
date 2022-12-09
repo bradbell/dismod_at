@@ -2,400 +2,488 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin create_database$$ $newlinech #$$
-# $spell
-#  tuple
-#  const
-#  smoothings
-#  avgint
-#  num_iter
-#  Ipopt
-#  pini
-#  mulcov
-#  mulstd
-#  dage
-#  dtime
-#  len
-#  da
-#  dt
-#  dismod
-#  covariate
-#  std
-#  str
-#  bool
-#  nslist
-#  tuples
-#  cv
-#  covariates
-#  subsmooth
-# $$
+# {xrst_begin create_database}
+# {xrst_spell
+#     bool
+#     dt
+#     len
+#     subsmooth
+#     tuple
+# }
+# {xrst_comment_ch #}
 #
-# $section Create a Dismod_at Database$$
+# Create a Dismod_at Database
+# ###########################
 #
-# $head Syntax$$
-# $codei%create_database(
-#  %file_name%,
-#  %age_list%,
-#  %time_list%,
-#  %integrand_table%,
-#  %node_table%,
-#  %subgroup_table%,
-#  %weight_table%,
-#  %covariate_table%,
-#  %avgint_table%,
-#  %data_table%,
-#  %prior_table%,
-#  %smooth_table%,
-#  %nslist_table%,
-#  %rate_table%,
-#  %mulcov_table%,
-#  %option_table%
-# )%$$
+# Syntax
+# ******
 #
-# $head Purpose$$
-# This routine makes it easy to create a $code dismod_at$$ database
-# with all of its $cref input$$ tables.
+# | ``create_database`` (
+# | |tab| *file_name* ,
+# | |tab| *age_list* ,
+# | |tab| *time_list* ,
+# | |tab| *integrand_table* ,
+# | |tab| *node_table* ,
+# | |tab| *subgroup_table* ,
+# | |tab| *weight_table* ,
+# | |tab| *covariate_table* ,
+# | |tab| *avgint_table* ,
+# | |tab| *data_table* ,
+# | |tab| *prior_table* ,
+# | |tab| *smooth_table* ,
+# | |tab| *nslist_table* ,
+# | |tab| *rate_table* ,
+# | |tab| *mulcov_table* ,
+# | |tab| *option_table*
+# | )
+#
+# Purpose
+# *******
+# This routine makes it easy to create a ``dismod_at`` database
+# with all of its :ref:`input-name` tables.
 # This is only meant for small example and testing cases and is not efficient.
 #
-# $head Primary Key$$
+# Primary Key
+# ***********
 # For each of the lists above, the order of the
 # elements in the corresponding table is the same as the corresponding list.
-# For example, $icode%age_list%[%i%]%$$ corresponds to the $th i$$ row
-# of the $code age$$ table which has
-# $cref/primary key/database/Primary Key/$$ value $icode%age_id% = %i%$$.
+# For example, *age_list* [ *i* ] corresponds to the *i*-th row
+# of the ``age`` table which has
+# :ref:`database@Primary Key` value *age_id* = *i* .
 #
-# $head Name Column$$
-# The $cref/name columns/database/Name Column/$$ are created with th unique
+# Name Column
+# ***********
+# The :ref:`name columns<database@Name Column>` are created with th unique
 # constraint; i.e., it will be an error to have the same value appear
-# twice in a column $icode%table_name%_name%$$ in the table
-# $icode table_name$$.
+# twice in a column *table_name* _ ``name`` in the table
+# *table_name* .
 #
-# $head file_name$$
-# is as $code str$$ containing the name of the file where the data base
+# file_name
+# *********
+# is as ``str`` containing the name of the file where the data base
 # is stored.
 # If this file already exists, it is deleted and a database is created.
 #
-# $head age_list$$
-# is a $code list$$ of $code float$$ that
+# age_list
+# ********
+# is a ``list`` of ``float`` that
 # specify age values by indices.
 #
-# $head time_list$$
-# is a $code list$$ of $code float$$ that
+# time_list
+# *********
+# is a ``list`` of ``float`` that
 # specify time values by indices.
 #
-# $head integrand_table$$
-# This is a list of $code dict$$
-# that define the rows of the $cref integrand_table$$.
-# The dictionary $icode%integrand_table%[%i%]%$$ has the following:
-# $table
-# Key     $cnext Value Type    $pre  $$ $cnext Description       $rnext
-# name             $cnext str  $cnext name for the $th i$$ integrand  $rnext
-# minimum_meas_cv  $cnext str  $cnext minimum measurement cv for this integrand
-# $tend
-# The key $code minimum_meas_cv$$ is optional.
-# If it is not present, $code 0.0$$ is used for the corresponding value.
+# integrand_table
+# ***************
+# This is a list of ``dict``
+# that define the rows of the :ref:`integrand_table-name` .
+# The dictionary *integrand_table* [ *i* ] has the following:
 #
-# $head node_table$$
-# This is a list of $code dict$$
-# that define the rows of the $cref node_table$$.
-# The dictionary $icode%node_table%[%i%]%$$ has the following:
-# $table
-# Key     $cnext Value Type    $pre  $$ $cnext Description       $rnext
-# name    $cnext str           $cnext name for the $th i$$ node  $rnext
-# parent  $cnext str           $cnext name of parent of the $th i$$ node
-# $tend
+# .. csv-table::
+#     :widths: auto
+#
+#     Key,Value Type,Description
+#     name,str,name for the *i*-th integrand
+#     minimum_meas_cv,str,minimum measurement cv for this integrand
+#
+# The key ``minimum_meas_cv`` is optional.
+# If it is not present, ``0.0`` is used for the corresponding value.
+#
+# node_table
+# **********
+# This is a list of ``dict``
+# that define the rows of the :ref:`node_table-name` .
+# The dictionary *node_table* [ *i* ] has the following:
+#
+# .. csv-table::
+#     :widths: auto
+#
+#     Key,Value Type,Description
+#     name,str,name for the *i*-th node
+#     parent,str,name of parent of the *i*-th node
+#
 # Note that if the i-th node does not have a parent, the empty string
 # should be used for the parent of that node.
 #
-# $head subgroup_table$$
-# This is a list of $code dict$$
-# that define the rows of the $cref subgroup_table$$.
-# The dictionary $icode%node_table%[%i%]%$$ has the following:
-# $table
-# Key      $cnext Value Type    $pre  $$ $cnext Description           $rnext
-# subgroup $cnext str           $cnext name for the $th i$$ subgroup  $rnext
-# group    $cnext str           $cnext name of group that subgroup is in
-# $tend
+# subgroup_table
+# **************
+# This is a list of ``dict``
+# that define the rows of the :ref:`subgroup_table-name` .
+# The dictionary *node_table* [ *i* ] has the following:
 #
-# $subhead Backward Compatibility$$
+# .. csv-table::
+#     :widths: auto
+#
+#     Key,Value Type,Description
+#     subgroup,str,name for the *i*-th subgroup
+#     group,str,name of group that subgroup is in
+#
+# Backward Compatibility
+# ======================
 # To get backward compatibility to before the subgroup information was added,
-# add the following table to the $code create_database$$ call
-# (just after the $icode node_table$$):
-# $codei%
-#  %subgroup_table% = [ { 'subgroup':'world', 'group':'world' } ]
-# %$$
-# No other changes to the $code create_database$$ call should be necessary
+# add the following table to the ``create_database`` call
+# (just after the *node_table* ):
+#
+#     *subgroup_table* = [ { ``'subgroup'`` : ``'world'`` , ``'group'`` : ``'world'``  } ]
+#
+# No other changes to the ``create_database`` call should be necessary
 # (for backward compatibility).
 #
-# $head weight_table$$
-# This is a list of $code dict$$
-# that define the rows of the $cref weight_table$$ and
-# $cref weight_grid_table$$.
-# The dictionary $icode%weight_table%[%i%]%$$ has the following:
-# $table
-# Key     $cnext Value Type    $pre  $$ $cnext Description       $rnext
-# name    $cnext str           $cnext name of $th i$$ weighting  $rnext
-# age_id  $cnext list of int   $cnext indices for age grid       $rnext
-# time_id $cnext list of int   $cnext indices for time grid      $rnext
-# fun     $cnext function      $cnext $icode%w%=%fun%(%a%, %t%)%$$
-# $tend
-# The float $icode w$$ is the value of this weighting a the corresponding
-# float age $icode a$$ and float time $icode t$$.
-# Note that there is an $icode i$$, $icode j$$ such that
-# $icode%a% = %age_list%[%age_id%[%i%]]%$$ and
-# $icode%t% = %time_list%[%time_id%[%j%]]%$$.
+# weight_table
+# ************
+# This is a list of ``dict``
+# that define the rows of the :ref:`weight_table-name` and
+# :ref:`weight_grid_table-name` .
+# The dictionary *weight_table* [ *i* ] has the following:
 #
-# $head covariate_table$$
-# This is a list of $code dict$$
-# that define the rows of the $cref covariate_table$$.
-# The dictionary $icode%covariate_table%[%i%]%$$ has the following:
-# $table
-# Key       $cnext Value Type  $pre  $$ $cnext Description            $rnext
-# name      $cnext str         $cnext name for the $th i$$ covariate  $rnext
-# reference $cnext float       $cnext reference value for $th i$$ covariate
-# $rnext
-# max_difference $cnext float $cnext maximum difference for $th i$$ covariate
-# $tend
-# If $icode max_difference$$ is $code None$$, the corresponding table entry
+# .. list-table::
+#
+#     * - Key
+#       - Value Type
+#       - Description
+#     * - name
+#       - str
+#       - name of *i*-th weighting
+#     * - age_id
+#       - list of int
+#       - indices for age grid
+#     * - time_id
+#       - list of int
+#       - indices for time grid
+#     * - fun
+#       - function
+#       - *w* = *fun* ( *a* , *t* )
+#
+# The float *w* is the value of this weighting a the corresponding
+# float age *a* and float time *t* .
+# Note that there is an *i* , *j* such that
+# *a* = *age_list* [ *age_id* [ *i* ]] and
+# *t* = *time_list* [ *time_id* [ *j* ]] .
+#
+# covariate_table
+# ***************
+# This is a list of ``dict``
+# that define the rows of the :ref:`covariate_table-name` .
+# The dictionary *covariate_table* [ *i* ] has the following:
+#
+# .. csv-table::
+#     :widths: auto
+#
+#     Key,Value Type,Description
+#     name,str,name for the *i*-th covariate
+#     reference,float,reference value for *i*-th covariate
+#     max_difference,float,maximum difference for *i*-th covariate
+#
+# If *max_difference* is ``None`` , the corresponding table entry
 # is null and this corresponds to an infinite maximum difference.
-# If $icode max_difference$$ does not appear, null is written for the
+# If *max_difference* does not appear, null is written for the
 # corresponding covariate entry.
 #
-# $head avgint_table$$
-# This is a list of $code dict$$
-# that define the rows of the $cref avgint_table$$.
-# The dictionary $icode%avgint_table%[%i%]%$$ has the following:
-# $table
-# Key          $cnext Value Type  $pre  $$ $cnext Description        $rnext
-# integrand    $cnext str         $cnext integrand for $th i$$ data  $rnext
-# node         $cnext str         $cnext name of node in graph       $rnext
-# subgroup     $cnext str         $cnext name of subgroup            $rnext
-# weight       $cnext str         $cnext weighting function name     $rnext
-# age_lower    $cnext float       $cnext lower age limit             $rnext
-# age_upper    $cnext float       $cnext upper age limit             $rnext
-# time_lower   $cnext float       $cnext lower time limit            $rnext
-# time_lower   $cnext float       $cnext upper time limit            $rnext
-# $icode c_0$$ $cnext float       $cnext value of first covariate    $rnext
-# ...          $cnext ...         $cnext  ...                        $rnext
-# $icode c_J$$ $cnext float       $cnext value of last covariate
-# $tend
+# avgint_table
+# ************
+# This is a list of ``dict``
+# that define the rows of the :ref:`avgint_table-name` .
+# The dictionary *avgint_table* [ *i* ] has the following:
 #
-# $subhead subgroup$$
-# If the $code subgroup$$ key is not present, the first subgroup in
-# $cref/subgroup_table/create_database/subgroup_table/$$ is used
+# .. csv-table::
+#     :widths: auto
+#
+#     Key,Value Type,Description
+#     integrand,str,integrand for *i*-th data
+#     node,str,name of node in graph
+#     subgroup,str,name of subgroup
+#     weight,str,weighting function name
+#     age_lower,float,lower age limit
+#     age_upper,float,upper age limit
+#     time_lower,float,lower time limit
+#     time_lower,float,upper time limit
+#     *c_0*,float,value of first covariate
+#     ...,...,...
+#     *c_J*,float,value of last covariate
+#
+# subgroup
+# ========
+# If the ``subgroup`` key is not present, the first subgroup in
+# :ref:`create_database@subgroup_table` is used
 # and a warning is printed.
 #
-# $subhead weight$$
+# weight
+# ======
 # The weighting function name identifies an
-# entry in the $cref/weight_table/create_database/weight_table/$$
-# by its $icode name$$. If $icode weight$$ is the empty string,
+# entry in the :ref:`create_database@weight_table`
+# by its *name* . If *weight* is the empty string,
 # the constant weighting is used.
 #
-# $subhead covariates$$
-# Note that $icode%J% = len(%covariate_table%) - 1%$$ and for
-# $icode%j% = 0 , %...% , %J%$$,
-# $codei%
-#  %c_j% = %covariate_table%[%j%]['name']
-# %$$
-# We refer to the columns above as the required columns for
-# $icode avgint_table$$.
+# covariates
+# ==========
+# Note that *J* = ``len`` ( *covariate_table* ) ``- 1`` and for
+# *j* = 0 , ... , *J* ,
 #
-# $subhead avgint_extra_columns$$
-# If a $icode row$$ of $icode option_table$$ has $icode%row%['name']%$$
-# equal to $code 'avgint_extra_columns'$$, the corresponding
-# $icode%row%['value'].split()%$$ is the list of extra avgint table columns.
+#     *c_j* = *covariate_table* [ *j* ][ ``'name'`` ]
+#
+# We refer to the columns above as the required columns for
+# *avgint_table* .
+#
+# avgint_extra_columns
+# ====================
+# If a *row* of *option_table* has *row* [ ``'name'`` ]
+# equal to ``'avgint_extra_columns'`` , the corresponding
+# *row* [ ``'value'`` ]. ``split`` () is the list of extra avgint table columns.
 # Otherwise the list of extra avgint table columns is empty.
 #
-# $head data_table$$
-# This is a list of $code dict$$
-# that define the rows of the $cref data_table$$.
-# It has all the columns required for the $icode avgint_table$$.
-# In addition, the dictionary $icode%data_table%[%i%]%$$ has the following:
-# $table
-# Key          $cnext Value Type  $pre  $$ $cnext Description        $rnext
-# hold_out     $cnext bool        $cnext hold out flag               $rnext
-# density      $cnext str         $cnext
-# $cref/density_name/density_table/density_name/$$                   $rnext
-# meas_value   $cnext float       $cnext measured value              $rnext
-# meas_std     $cnext float       $cnext standard deviation          $rnext
-# eta          $cnext float       $cnext offset in log-transform     $rnext
-# nu           $cnext float       $cnext Student's-t degrees of freedom
-# $tend
+# data_table
+# **********
+# This is a list of ``dict``
+# that define the rows of the :ref:`data_table-name` .
+# It has all the columns required for the *avgint_table* .
+# In addition, the dictionary *data_table* [ *i* ] has the following:
 #
-# $subhead meas_std, eta, nu$$
-# The columns keys $code meas_std$$, $code eta$$, and $code nu$$
-# are optional. If they are not present, the value $code null$$ is used
+# .. csv-table::
+#     :widths: auto
+#
+#     Key,Value Type,Description
+#     hold_out,bool,hold out flag
+#     density,str,:ref:`density_table@density_name`
+#     meas_value,float,measured value
+#     meas_std,float,standard deviation
+#     eta,float,offset in log-transform
+#     nu,float,Student's-t degrees of freedom
+#
+# meas_std, eta, nu
+# =================
+# The columns keys ``meas_std`` , ``eta`` , and ``nu``
+# are optional. If they are not present, the value ``null`` is used
 # for the corresponding row of the data table.
 #
-# $subhead subgroup$$
-# if the $code subgroup$$ key is not present, the first subgroup in
-# $cref/subgroup_table/create_database/subgroup_table/$$ is used
+# subgroup
+# ========
+# if the ``subgroup`` key is not present, the first subgroup in
+# :ref:`create_database@subgroup_table` is used
 # and a warning is printed.
 #
-# $subhead data_extra_columns$$
-# If a $icode row$$ of $icode option_table$$ has $icode%row%['name']%$$
-# equal to $code 'data_extra_columns'$$, the corresponding
-# $icode%row%['value'].split()%$$ is the list of extra data table columns.
+# data_extra_columns
+# ==================
+# If a *row* of *option_table* has *row* [ ``'name'`` ]
+# equal to ``'data_extra_columns'`` , the corresponding
+# *row* [ ``'value'`` ]. ``split`` () is the list of extra data table columns.
 # Otherwise the list of extra data table columns is empty.
 #
-# $head prior_table$$
-# This is a list of $code dict$$
-# that define the rows of the $cref prior_table$$.
-# The dictionary $icode%prior_table%[%i%]%$$ has the following:
-# $table
-# Key     $cnext Value Type    $pre  $$ $cnext Description       $rnext
-# name    $cnext str           $cnext name of $th i$$ prior $rnext
-# lower   $cnext float         $cnext lower limit                $rnext
-# upper   $cnext float         $cnext upper limit                $rnext
-# std     $cnext float         $cnext standard deviation         $rnext
-# density      $cnext str         $cnext
-# $cref/density_name/density_table/density_name/$$               $rnext
-# eta     $cnext float         $cnext offset in log densities    $rnext
-# nu      $cnext float         $cnext degrees of freed in Student densities
-# $tend
+# prior_table
+# ***********
+# This is a list of ``dict``
+# that define the rows of the :ref:`prior_table-name` .
+# The dictionary *prior_table* [ *i* ] has the following:
+#
+# .. csv-table::
+#     :widths: auto
+#
+#     Key,Value Type,Description
+#     name,str,name of *i*-th prior
+#     lower,float,lower limit
+#     upper,float,upper limit
+#     std,float,standard deviation
+#     density,str,:ref:`density_table@density_name`
+#     eta,float,offset in log densities
+#     nu,float,degrees of freed in Student densities
+#
 # The columns keys
-# $code lower$$, $code upper$$, $code std$$, $code eta$$, and $code nu$$
-# are optional. If they are not present, the value $code null$$ is used
+# ``lower`` , ``upper`` , ``std`` , ``eta`` , and ``nu``
+# are optional. If they are not present, the value ``null`` is used
 # for the corresponding row of the prior table.
 #
-# $head smooth_table$$
-# This is a list of $code dict$$
-# that define the rows of the $cref smooth_table$$ and
-# $cref smooth_grid_table$$.
-# The dictionary $icode%smooth_table%[%i%]%$$ has the following keys:
+# smooth_table
+# ************
+# This is a list of ``dict``
+# that define the rows of the :ref:`smooth_table-name` and
+# :ref:`smooth_grid_table-name` .
+# The dictionary *smooth_table* [ *i* ] has the following keys:
 #
-# $subhead name$$
-# an $code str$$ specifying the name used to reference the $th i$$ smoothing.
+# name
+# ====
+# an ``str`` specifying the name used to reference the *i*-th smoothing.
 #
-# $subhead age_id$$
-# a list of $code int$$ specifying the age values for this smoothing
-# as indices in $cref/age_list/create_database/age_list/$$.
+# age_id
+# ======
+# a list of ``int`` specifying the age values for this smoothing
+# as indices in :ref:`create_database@age_list` .
 #
-# $subhead time_id$$
-# a list of $code int$$ specifying the time values for this smoothing
-# as indices in $cref/time_list/create_database/time_list/$$.
+# time_id
+# =======
+# a list of ``int`` specifying the time values for this smoothing
+# as indices in :ref:`create_database@time_list` .
 #
-# $subhead mulstd_value_prior_name$$
-# an $code str$$ specifying the prior used for the value multiplier
-# for the $th i$$ smoothing; see
-# $cref/mulstd_value_prior_id/smooth_table/mulstd_value_prior_id/$$
-# This key is optional and its default value is $code None$$ which corresponds
-# to $code null$$ in the database.
+# mulstd_value_prior_name
+# =======================
+# an ``str`` specifying the prior used for the value multiplier
+# for the *i*-th smoothing; see
+# :ref:`smooth_table@mulstd_value_prior_id`
+# This key is optional and its default value is ``None`` which corresponds
+# to ``null`` in the database.
 #
-# $subhead mulstd_dage_prior_name$$
-# an $code str$$ specifying the prior used for the age difference multiplier
-# for the $th i$$ smoothing; see
-# $cref/mulstd_dage_prior_id/smooth_table/mulstd_dage_prior_id/$$
-# This key is optional and its default value is $code None$$ which corresponds
-# to $code null$$ in the database.
+# mulstd_dage_prior_name
+# ======================
+# an ``str`` specifying the prior used for the age difference multiplier
+# for the *i*-th smoothing; see
+# :ref:`smooth_table@mulstd_dage_prior_id`
+# This key is optional and its default value is ``None`` which corresponds
+# to ``null`` in the database.
 #
-# $subhead mulstd_dtime_prior_name$$
-# an $code str$$ specifying the prior used for the time difference multiplier
-# for the $th i$$ smoothing; see
-# $cref/mulstd_dtime_prior_id/smooth_table/mulstd_dtime_prior_id/$$
-# This key is optional and its default value is $code None$$ which corresponds
-# to $code null$$ in the database.
+# mulstd_dtime_prior_name
+# =======================
+# an ``str`` specifying the prior used for the time difference multiplier
+# for the *i*-th smoothing; see
+# :ref:`smooth_table@mulstd_dtime_prior_id`
+# This key is optional and its default value is ``None`` which corresponds
+# to ``null`` in the database.
 #
-# $subhead fun$$
+# fun
+# ===
 # This is a function with the following syntax:
-# $codei%
-#  (%v%, %da%, %dt%) = %fun%(%a%, %t%)
-# %$$
-# The $code str$$ results $icode v$$, $icode da$$, and $icode dt$$
+#
+#     ( *v* , *da* , *dt* ) = *fun* ( *a* , *t* )
+#
+# The ``str`` results *v* , *da* , and *dt*
 # are the names for the value prior, age difference prior,
-# and time difference prior corresponding to the $th i$$ smoothing.
-# The value $icode da$$ is not used,
-# when age $icode%a% = %age_id%[-1]%$$.
-# The value $icode dt$$ is not used,
-# when time $icode%t% = %time_id%[-1]%$$.
-# Note that there is an $icode i$$, $icode j$$ such that
-# $icode%a% = %age_list%[%age_id%[%i%]]%$$ and
-# $icode%t% = %time_list%[%time_id%[%j%]]%$$.
+# and time difference prior corresponding to the *i*-th smoothing.
+# The value *da* is not used,
+# when age *a* = *age_id* [ ``-1`` ] .
+# The value *dt* is not used,
+# when time *t* = *time_id* [ ``-1`` ] .
+# Note that there is an *i* , *j* such that
+# *a* = *age_list* [ *age_id* [ *i* ]] and
+# *t* = *time_list* [ *time_id* [ *j* ]] .
 #
-# $subhead const_value$$
-# The $icode fun$$ return value $icode v$$ may be a $code float$$.
+# const_value
+# ===========
+# The *fun* return value *v* may be a ``float`` .
 # In this case, the value of the smoothing, at the corresponding age and time,
-# is constrained to be $icode v$$ using the
-# $cref/const_value/smooth_grid_table/const_value/$$ column in the
-# $code smooth_grid$$ table.
+# is constrained to be *v* using the
+# :ref:`smooth_grid_table@const_value` column in the
+# ``smooth_grid`` table.
 #
-# $head nslist_table$$
-# This is a $code dict$$ that specifies the
-# $cref nslist_table$$ and the $cref nslist_pair_table$$.
-# For each $cref/nslist_name/nslist_table/nslist_name/$$,
-# $codei%
-#  %nslist_table%[%nslist_name%] = [ (%node_name%, %smooth_name%), %...% ]
-# %$$
-# Note that each pair above is a python $code tuple$$:
-# $table
-# Variable    $cnext Value Type $pre  $$ $cnext Description              $rnext
-# nslist_name $cnext str $cnext name of one list of node,smoothing pairs $rnext
-# node_name   $cnext str $cnext name of the node for this pair           $rnext
-# smooth_name $cnext str $cnext name of the smoothing for this pair
-# $tend
+# nslist_table
+# ************
+# This is a ``dict`` that specifies the
+# :ref:`nslist_table-name` and the :ref:`nslist_pair_table-name` .
+# For each :ref:`nslist_table@nslist_name` ,
 #
-# $head rate_table$$
-# This is a list of $code dict$$
-# that define the rows of the $cref rate_table$$.
-# The dictionary $icode%rate_table%[%i%]%$$ has the following:
-# $table
-# Key           $cnext Value Type  $pre  $$ $cnext Description         $rnext
-# name          $cnext str     $cnext pini, iota, rho, chi, or omega   $rnext
-# parent_smooth $cnext str     $cnext parent smoothing                 $rnext
-# child_smooth  $cnext str     $cnext a single child smoothing         $rnext
-# child_nslist  $cnext str     $cnext list of child smoothings
-# $tend
-# The value $code None$$ is used to represent a $code null$$ value for
+#     *nslist_table* [ *nslist_name* ] = [ ( *node_name* , *smooth_name* ), ... ]
+#
+# Note that each pair above is a python ``tuple`` :
+#
+# .. list-table::
+#
+#     * - Variable
+#       - Value Type
+#       - Description
+#     * - nslist_name
+#       - str
+#       - name of one list of node,smoothing pairs
+#     * - node_name
+#       - str
+#       - name of the node for this pair
+#     * - smooth_name
+#       - str
+#       - name of the smoothing for this pair
+#
+# rate_table
+# **********
+# This is a list of ``dict``
+# that define the rows of the :ref:`rate_table-name` .
+# The dictionary *rate_table* [ *i* ] has the following:
+#
+# .. list-table::
+#
+#     * - Key
+#       - Value Type
+#       - Description
+#     * - name
+#       - str
+#       - pini, iota, rho, chi, or omega
+#     * - parent_smooth
+#       - str
+#       - parent smoothing
+#     * - child_smooth
+#       - str
+#       - a single child smoothing
+#     * - child_nslist
+#       - str
+#       - list of child smoothings
+#
+# The value ``None`` is used to represent a ``null`` value for
 # the parent and child smoothings.
 # If a key name does not appear, null is used for the corresponding value.
-# If a $icode name$$; e.g. $code rho$$, does not appear, the value
+# If a *name* ; e.g. ``rho`` , does not appear, the value
 # null is used for the parent and child smoothings for the corresponding rate.
 #
-# $head mulcov_table$$
-# This is a list of $code dict$$
-# that define the rows of the $cref mulcov_table$$.
-# The dictionary $icode%mulcov_table%[%i%]%$$ has the following:
-# $table
-# Key        $cnext Value Type  $pre  $$ $cnext Description       $rnext
-# covariate  $cnext str         $cnext is the covariate column    $rnext
-# type       $cnext str  $cnext
-# $code rate_value$$, $code meas_value$$, or $code meas_noise$$ $rnext
-# effected   $cnext str         $cnext integrand or rate affected $rnext
-# group      $cnext str         $cnext the group that is affected $rnext
-# smooth     $cnext str         $cnext smoothing at group level  $rnext
-# subsmooth $cnext str          $cnext smoothing at subgroup level
-# $tend
+# mulcov_table
+# ************
+# This is a list of ``dict``
+# that define the rows of the :ref:`mulcov_table-name` .
+# The dictionary *mulcov_table* [ *i* ] has the following:
 #
-# $subhead effected$$
-# If $icode type$$ is $code rate_value$$, $icode effected$$ is a rate.
+# .. list-table::
+#
+#     * - Key
+#       - Value Type
+#       - Description
+#     * - covariate
+#       - str
+#       - is the covariate column
+#     * - type
+#       - str
+#       - ``rate_value`` , ``meas_value`` , or ``meas_noise``
+#     * - effected
+#       - str
+#       - integrand or rate affected
+#     * - group
+#       - str
+#       - the group that is affected
+#     * - smooth
+#       - str
+#       - smoothing at group level
+#     * - subsmooth
+#       - str
+#       - smoothing at subgroup level
+#
+# effected
+# ========
+# If *type* is ``rate_value`` , *effected* is a rate.
 # Otherwise it is an integrand.
 #
-# $subhead group$$
-# If the $code group$$ key is not present, the first group in
-# $cref/subgroup_table/create_database/subgroup_table/$$ is used.
+# group
+# =====
+# If the ``group`` key is not present, the first group in
+# :ref:`create_database@subgroup_table` is used.
 #
-# $subhead subsmooth$$
-# If the $code subsmooth$$ key is not present, the value null is used for
+# subsmooth
+# =========
+# If the ``subsmooth`` key is not present, the value null is used for
 # the subgroup smoothing in the corresponding row and a warning is printed.
 #
-# $head option_table$$
-# This is a list of $code dict$$
+# option_table
+# ************
+# This is a list of ``dict``
 # that define the values
-# $cref/option_name/option_table/Table Format/option_name/$$,
-# $cref/option_value/option_table/Table Format/option_value/$$ in the option table.
-# The $th i$$ row of the table will have
-# $codei%
-#  %option_name%  = %option_table%[%i%]['name']
-#  %option_value% = %option_table%[%i%]['value']
-# %$$
+# :ref:`option_table@Table Format@option_name` ,
+# :ref:`option_table@Table Format@option_value` in the option table.
+# The *i*-th row of the table will have
 #
-# $childtable%example/table/create_database.py
-# %$$
-# $head Example$$
-# The file $cref create_database.py$$ contains
-# and example and test of $code create_database$$.
+# | |tab| *option_name* = *option_table* [ *i* ][ ``'name'`` ]
+# | |tab| *option_value* = *option_table* [ *i* ][ ``'value'`` ]
 #
-# $end
+# Contents
+# ********
+# {xrst_toc_table
+#    example/table/create_database.py
+# }
+# Example
+# *******
+# The file :ref:`create_database.py-name` contains
+# and example and test of ``create_database`` .
+#
+# {xrst_end create_database}
 def create_database(
    file_name,
    age_list,

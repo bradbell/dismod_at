@@ -3,19 +3,17 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin n_random_const_xam.cpp$$
-$spell
-   interp
-   xam
-   const
-$$
+{xrst_begin n_random_const_xam.cpp}
 
-$section C++ n_random_const: Example and Test$$
+C++ n_random_const: Example and Test
+####################################
 
-$srcthisfile%0
-   %// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end n_random_const_xam.cpp}
 */
 // BEGIN C++
 # include <limits>

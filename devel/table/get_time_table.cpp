@@ -3,48 +3,48 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_time_table$$
-$spell
-   sqlite
-   enum
-   cpp
-   std
-$$
+{xrst_begin get_time_table}
 
-$section C++: Get the Time Table Information$$
+C++: Get the Time Table Information
+###################################
 
-$head Syntax$$
-$icode%time_table% = get_time_table(%db%)%$$
+Syntax
+******
+*time_table* = ``get_time_table`` ( *db* )
 
-$head Purpose$$
-To read the $cref time_table$$ and return it as a C++ data structure.
+Purpose
+*******
+To read the :ref:`time_table-name` and return it as a C++ data structure.
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head time_table$$
-The return value $icode time_table$$ has prototype
-$codei%
-   CppAD::vector<double>  %time_table%
-%$$
-For each $cref/time_id/time_table/time_id/$$,
-$codei%
-   %time_table%[%time_id%]
-%$$
-is the time for the corresponding
-$cref/time/time_table/time/$$.
+time_table
+**********
+The return value *time_table* has prototype
 
-$children%example/devel/table/get_time_table_xam.cpp
-%$$
-$head Example$$
-The file $cref get_time_table_xam.cpp$$ contains an example that uses
+   ``CppAD::vector<double>`` *time_table*
+
+For each :ref:`time_table@time_id` ,
+
+   *time_table* [ *time_id* ]
+
+is the time for the corresponding
+:ref:`time_table@time` .
+{xrst_toc_hidden
+   example/devel/table/get_time_table_xam.cpp
+}
+Example
+*******
+The file :ref:`get_time_table_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_time_table}
 -----------------------------------------------------------------------------
 */
 # include <dismod_at/get_time_table.hpp>

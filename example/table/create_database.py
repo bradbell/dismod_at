@@ -2,12 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin create_database.py$$ $newlinech #$$
+# {xrst_begin create_database.py}
+# {xrst_comment_ch #}
 #
-# $section create_database: Example and Test$$
+# create_database: Example and Test
+# #################################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end create_database.py}
 # BEGIN PYTHON
 #
 def constant_weight_fun(a, t) :

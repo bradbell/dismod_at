@@ -2,72 +2,94 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_sum_residual.py$$ $newlinech #$$
-# $spell
-#  Sincidence
-# $$
+# {xrst_begin user_sum_residual.py}
+# {xrst_spell
+#     estimator
+# }
+# {xrst_comment_ch #}
 #
-# $section Sum of Residuals at Optimal Estimate$$
+# Sum of Residuals at Optimal Estimate
+# ####################################
 #
-# $head Problem$$
+# Problem
+# *******
 # For this case the only data is we a sequence of  positive measurements of
-# $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$
-# which we denote by $latex y_i1$$ for $latex i = 0 , \ldots , N-1$$.
-# We model $latex y_i$$ as independent and Gaussian with mean equal
-# to the true value of iota $latex \iota$$,
-# and standard deviation $latex \sigma_i$$.
-# The negative log likelihood, up to a constant w.r.t $latex \iota$$, is
-# $latex \[
+# :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence`
+# which we denote by :math:`y_i1` for :math:`i = 0 , \ldots , N-1`.
+# We model :math:`y_i` as independent and Gaussian with mean equal
+# to the true value of iota :math:`\iota`,
+# and standard deviation :math:`\sigma_i`.
+# The negative log likelihood, up to a constant w.r.t :math:`\iota`, is
+#
+# .. math::
+#
 #  f( \iota ) =
 #  \frac{1}{2} \sum_{i=0}^{N-1} \left( \frac{y_i - \iota}{\sigma_i} \right)^2
-# \] $$
 #
-# $head Optimal Solution$$
-# The optimal estimator for $latex \iota$$ satisfies the equation
-# $latex \[
+# Optimal Solution
+# ****************
+# The optimal estimator for :math:`\iota` satisfies the equation
+#
+# .. math::
+#
 #  0 = f'( \hat{\iota} ) =
 #     - \sum_{i=1}^{N-1} \frac{y_i - \hat{\iota} }{\sigma_i^2}
-# \] $$
 #
-# $head Weighted Residuals$$
-# We use the notation $latex r_i$$ for the weighted residuals
-# $latex \[
+# Weighted Residuals
+# ******************
+# We use the notation :math:`r_i` for the weighted residuals
+#
+# .. math::
+#
 #  r_i = \frac{y_i - \hat{\iota}}{\sigma_i}
-# \] $$
-# If $latex \hat{\iota}$$ were the true value for $latex \iota$$,
+#
+# If :math:`\hat{\iota}` were the true value for :math:`\iota`,
 # the weighted residuals would be mean zero and variance one.
-# But $latex \hat{\iota}$$ is instead the maximum likelihood estimator and
-# $latex \[
+# But :math:`\hat{\iota}` is instead the maximum likelihood estimator and
+#
+# .. math::
+#
 #  0 = \sum_{i=1}^{N-1} \frac{y_i - \hat{\iota} }{\sigma_i^2}
-# \] $$
-# $latex \[
+#
+# .. math::
+#
 #  0 = \sum_{i=1}^{N-1} \frac{r_i}{\sigma_i}
-# \] $$
-# Note that if $latex \sigma_i$$ were the same for all $latex i$$,
-# the sum of the weighted residuals $latex \sum_i r_i$$ would be zero.
 #
-# $head CV Standard Deviations$$
-# We consider the case were we a coefficient of variation $latex \lambda$$
-# is used to model the measurement noise; $latex \sigma_i = \lambda y_i$$.
+# Note that if :math:`\sigma_i` were the same for all :math:`i`,
+# the sum of the weighted residuals :math:`\sum_i r_i` would be zero.
+#
+# CV Standard Deviations
+# **********************
+# We consider the case were we a coefficient of variation :math:`\lambda`
+# is used to model the measurement noise; :math:`\sigma_i = \lambda y_i`.
 # In this case
-# $latex \[
+#
+# .. math::
+#
 #  0 = \sum_{i=1}^{N-1} \frac{r_i}{y_i}
-# \] $$
 #
-# $head Weighted Average of Weighted Residuals$$
-# We define the weight $latex w_i$$ by
-# $latex \[
+# Weighted Average of Weighted Residuals
+# **************************************
+# We define the weight :math:`w_i` by
+#
+# .. math::
+#
 #  w_i = \sigma_i^{-1} / \sum_{i=0}^{N-1} \sigma_i^{-1}
-# \] $$
+#
 # The corresponding weighted average of the weighted residuals is zero; i.e,
-# $latex \[
+#
+# .. math::
+#
 #  0 = \sum_{i=1}^{N-1} w_i r_i
-# \] $$
 #
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_end user_sum_residual.py}
 #
 # BEGIN PYTHON
 # ------------------------------------------------------------------------

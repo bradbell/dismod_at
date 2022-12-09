@@ -2,63 +2,74 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_hold_out_1.py$$ $newlinech #$$
-# $spell
-#  num_iter
-#  py
-#  Integrands
-#  Sincidence
-#  exp
-# $$
+# {xrst_begin user_hold_out_1.py}
+# {xrst_spell
+#     exp
+# }
+# {xrst_comment_ch #}
 #
-# $section Using hold_out in Data, Subset Data, and Option Tables$$
+# Using hold_out in Data, Subset Data, and Option Tables
+# ######################################################
 #
-# $head Purpose$$
+# Purpose
+# *******
 # This example shows how to use hold_out in the
-# $cref/data_table/data_table/hold_out/$$,
-# $cref/option_table/option_table/hold_out_integrand/$$, and
-# $cref hold_out_command$$.
+# :ref:`data_table<data_table@hold_out>` ,
+# :ref:`option_table<option_table@hold_out_integrand>` , and
+# :ref:`hold_out_command-name` .
 #
-# $head Integrands$$
+# Integrands
+# **********
 # For this example there are two integrand,
-# $code Sincidence$$ and $code prevalence$$.
+# ``Sincidence`` and ``prevalence`` .
 #
-# $head Nodes$$
+# Nodes
+# *****
 # The node table is set up so that there are lots of child nodes
 # (with no data. This makes sure that the data being fit gets
 # evenly distributed between the nodes that do have data and
-# reaches $cref/max_fit/hold_out_command/max_fit/$$.
+# reaches :ref:`hold_out_command@max_fit` .
 #
-# $head Data$$
+# Data
+# ****
 #
-# $subhead prevalence$$
+# prevalence
+# ==========
 # All of the prevalence data is zero, but it is held out using
-# $cref/hold_out_integrand/option_table/hold_out_integrand/$$.
+# :ref:`option_table@hold_out_integrand` .
 #
-# $subhead Sincidence$$
+# Sincidence
+# ==========
 # There are many incidence data points.
 # The first Sincidence data value is zero and it is held out using
-# the data table $cref/hold_out/data_table/hold_out/$$ equal to one.
+# the data table :ref:`data_table@hold_out` equal to one.
 # The other two Sincidence data are
 # the true value for incidence and have the data table hold_out
 # equal to zero.
-# The $cref hold_out_command$$ is used to randomly select one of these
+# The :ref:`hold_out_command-name` is used to randomly select one of these
 # two points to be held out.
 #
-# $head Model$$
-# There is only one rate $icode iota$$ and it is constant in age and time.
-# The corresponding model for the Sincidence data is $icode iota$$.
+# Model
+# *****
+# There is only one rate *iota* and it is constant in age and time.
+# The corresponding model for the Sincidence data is *iota* .
 # The corresponding mode for the prevalence data is
-# $codei%1 - exp( %iota% * %age%)%$$.
+# 1 ``- exp`` ( *iota* * *age* ) .
 #
-# $head Fit$$
+# Fit
+# ***
 # Because the zero prevalence data and zero incidence data is held out,
-# the fitting value for $icode iota$$ is very close to the true value
+# the fitting value for *iota* is very close to the true value
 # for incidence.
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_hold_out_1.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # values used to simulate data

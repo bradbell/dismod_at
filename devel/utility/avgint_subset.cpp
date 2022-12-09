@@ -4,154 +4,159 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin avgint_subset$$
-$spell
-   avgint
-   covariate
+{xrst_begin avgint_subset}
+{xrst_spell
+   subsampled
    subsamples
-   Subsampled
-   covariates
-   const
-   CppAD
-   struct
-   obj
-   cov
-$$
+}
 
-$section Create a Subsampled Version of Average Integrand Case Table$$
+Create a Subsampled Version of Average Integrand Case Table
+###########################################################
 
-$head Syntax$$
-$codei%avgint_subset(
-   %avgint_table%, %avgint_cov_value%, %covariate_table%, %child_info4avgint%,
-   %avgint_subset_obj, %avgint_subset_cov_value%
-)%$$
+Syntax
+******
 
-$head See Also$$
-$cref subset_data$$
+| ``avgint_subset`` (
+| |tab| *avgint_table* , *avgint_cov_value* , *covariate_table* , *child_info4avgint* ,
+| |tab| ``avgint_subset_obj`` , *avgint_subset_cov_value*
+| )
 
-$head Purpose$$
-This routine subsamples the $icode avgint_table$$, in the following way:
-$list number$$
-Only rows corresponding to the
-$cref/parent node/option_table/Parent Node/$$,
-or a descendant of the parent node, are included.
-$lnext
-Only rows for which the covariates satisfy the
-$cref/max_difference/covariate_table/max_difference/$$ criteria
-are included.
-$lnext
-The subsampled rows are the same as the corresponding original row
-except that for each covariate, its
-$cref/reference/covariate_table/reference/$$ value is subtracted
-from the value of the covariate in $icode avgint_table$$.
-$lend
+See Also
+********
+:ref:`subset_data-name`
 
-$head avgint_table$$
+Purpose
+*******
+This routine subsamples the *avgint_table* , in the following way:
+
+#. Only rows corresponding to the
+   :ref:`option_table@Parent Node` ,
+   or a descendant of the parent node, are included.
+#. Only rows for which the covariates satisfy the
+   :ref:`covariate_table@max_difference` criteria
+   are included.
+#. The subsampled rows are the same as the corresponding original row
+   except that for each covariate, its
+   :ref:`covariate_table@reference` value is subtracted
+   from the value of the covariate in *avgint_table* .
+
+avgint_table
+************
 This argument has prototype
-$codei%
-   const CppAD::vector<avgint_struct>& %avgint_table%
-%$$
-and is the $cref/avgint_table/get_avgint_table/avgint_table/$$.
 
-$head avgint_cov_value$$
+   ``const CppAD::vector<avgint_struct>&`` *avgint_table*
+
+and is the :ref:`get_avgint_table@avgint_table` .
+
+avgint_cov_value
+****************
 This argument has prototype
-$codei%
-   const CppAD::vector<double>& %avgint_cov_value%
-%$$
-and is the $cref/avgint_table/get_avgint_table/avgint_cov_value/$$
+
+   ``const CppAD::vector<double>&`` *avgint_cov_value*
+
+and is the :ref:`avgint_table<get_avgint_table@avgint_cov_value>`
 covariate values.
 
-$head covariate_table$$
+covariate_table
+***************
 This argument has prototype
-$codei%
-   const CppAD::vector<covariate_struct>& %covariate_table%
-%$$
-and is the $cref/covariate_table/get_covariate_table/covariate_table/$$.
 
-$head child_info4avgint$$
-This argument has prototype
-$codei%
-   const child_info& %child_info4avgint%
-%$$
+   ``const CppAD::vector<covariate_struct>&`` *covariate_table*
 
-$head avgint_subset_obj$$
+and is the :ref:`get_covariate_table@covariate_table` .
+
+child_info4avgint
+*****************
 This argument has prototype
-$codei%
-   CppAD::vector<avgint_subset_struct>& %avgint_subset_obj%
-%$$
+
+   ``const child_info&`` *child_info4avgint*
+
+avgint_subset_obj
+*****************
+This argument has prototype
+
+   ``CppAD::vector<avgint_subset_struct>&`` *avgint_subset_obj*
+
 Its input size is zero and upon return
-its size is the number of rows in $icode avgint_table$$ that satisfy
+its size is the number of rows in *avgint_table* that satisfy
 the purpose above.
 The structure has all the fields that are present in
-$cref/avgint_struct/get_avgint_table/avgint_struct/$$.
+:ref:`get_avgint_table@avgint_struct` .
 
-$subhead n_subset$$
-We use the notation $icode%n_subset% = %avgint_subset_obj%.size()%$$.
+n_subset
+========
+We use the notation *n_subset* = *avgint_subset_obj* . ``size`` () .
 
-$subhead subset_id$$
-We use the notation $icode subset_id$$ for an index between
-zero and $icode%n_subset%-1%$$,
+subset_id
+=========
+We use the notation *subset_id* for an index between
+zero and *n_subset* ``-1`` ,
 
-$subhead original_id$$
-There an extra field in $code avgint_struct$$ that has
-name $code original_id$$, type $code int$$.
+original_id
+===========
+There an extra field in ``avgint_struct`` that has
+name ``original_id`` , type ``int`` .
 The values in this field are equal to the
-$icode avgint_id$$ for the corresponding row of $cref avgint_table$$.
+*avgint_id* for the corresponding row of :ref:`avgint_table-name` .
 The value of
-$codei%
-   %avgint_subset_obj%[%subset_id%].original_id
-%$$
-increases with $icode subset_id$$;
-i.e., for each $icode subset_id$$ less than $icode%n_subset%-2%$$,
-$codei%
-   %avgint_subset_obj%[%subset_id%].original_id <
-      %avgint_subset_obj%[%subset_id%+1].original_id
-%$$
 
-$head avgint_subset_cov_value$$
+   *avgint_subset_obj* [ *subset_id* ]. ``original_id``
+
+increases with *subset_id* ;
+i.e., for each *subset_id* less than *n_subset* ``-2`` ,
+
+| |tab| *avgint_subset_obj* [ *subset_id* ]. ``original_id <``
+| |tab| |tab| *avgint_subset_obj* [ *subset_id* +1]. ``original_id``
+
+avgint_subset_cov_value
+***********************
 This argument has prototype
-$codei%
-   CppAD::vector<double>& %avgint_subset_cov_value%
-%$$
-Its input size is zero and upon return
-its size is $icode%n_subset% * %n_covariate%$$.
-For each $icode subset_id$$ and
-$cref/covariate_id/covariate_table/covariate_id/$$,
-$codei%
-%avgint_subset_cov_value%[%subset_id% * %n_covariate% + %covariate_id%]
-= %avgint_cov_value%[%original_id% * %n_covariate% + %covariate_id%]
-  - reference(%covariate_id%)
-%$$
-where
-$codei%
-   %original_id% = %avgint_subset_obj%[%subset_id%].original_id
-%$$
-and $codei%reference(%covariate_id%)%$$ is the
-$cref/reference/covariate_table/reference/$$ value for the
-corresponding $icode covariate_id$$.
-Note that if the
-$cref/max_difference/covariate_table/max_difference/$$
-value is $code null$$ in the covariate table,
-or the covariate value is $code null$$ in $cref avgint_table$$,
-$codei%
-%avgint_subset_cov_value%[%subset_id% * %n_covariate% + %covariate_id%] = 0
-%$$
-Also note that
-$codei%
-| %avgint_subset_cov_value%[%subset_id% * %n_covariate% + %covariate_id%] |
-<= max_difference(%covariate_id%)
-%$$
-where $codei%max_difference(%covariate_id%)%$$ is the
-maximum difference for the corresponding $icode covariate_id$$.
 
-$childtable%example/devel/utility/avgint_subset_xam.cpp
-%$$
-$head Example$$
-The file $cref avgint_subset_xam.cpp$$ contains
-and example and test of $code avgint_subset$$.
+   ``CppAD::vector<double>&`` *avgint_subset_cov_value*
+
+Its input size is zero and upon return
+its size is *n_subset* * *n_covariate* .
+For each *subset_id* and
+:ref:`covariate_table@covariate_id` ,
+
+| *avgint_subset_cov_value* [ *subset_id* * *n_covariate* + *covariate_id* ]
+| = *avgint_cov_value* [ *original_id* * *n_covariate* + *covariate_id* ]
+| |tab| ``- reference`` ( *covariate_id* )
+
+where
+
+   *original_id* = *avgint_subset_obj* [ *subset_id* ]. ``original_id``
+
+and ``reference`` ( *covariate_id* ) is the
+:ref:`covariate_table@reference` value for the
+corresponding *covariate_id* .
+Note that if the
+:ref:`covariate_table@max_difference`
+value is ``null`` in the covariate table,
+or the covariate value is ``null`` in :ref:`avgint_table-name` ,
+
+   *avgint_subset_cov_value* [ *subset_id* * *n_covariate* + *covariate_id* ] = 0
+
+Also note that
+
+| | *avgint_subset_cov_value* [ *subset_id* * *n_covariate* + *covariate_id* ] |
+| <= ``max_difference`` ( *covariate_id* )
+
+where ``max_difference`` ( *covariate_id* ) is the
+maximum difference for the corresponding *covariate_id* .
+
+Contents
+********
+{xrst_toc_table
+   example/devel/utility/avgint_subset_xam.cpp
+}
+Example
+*******
+The file :ref:`avgint_subset_xam.cpp-name` contains
+and example and test of ``avgint_subset`` .
 It returns true for success and false for failure.
 
-$end
+{xrst_end avgint_subset}
 */
 
 # include <cmath>

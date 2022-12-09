@@ -2,33 +2,30 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_fit_sim.py$$ $newlinech #$$
-# $spell
-#  init
-#  covariate
-#  mulcov
-#  exp
-# $$
+# {xrst_begin user_fit_sim.py}
+# {xrst_spell
+#     exp
+# }
+# {xrst_comment_ch #}
 #
-# $section Fitting Simulated Data Example$$
+# Fitting Simulated Data Example
+# ##############################
 #
-# $head Parent Iota$$
-# The value $icode iota_parent_true$$
-# is the simulated true rate for $icode iota$$
+# Parent Iota
+# ***********
+# The value *iota_parent_true*
+# is the simulated true rate for *iota*
 # for the parent.
 # A uniform prior is used for the parent rate with
-# $icode%iota_parent_true%/100%$$ as a lower limit,
-# and $code 1$$ as the upper limit.
+# *iota_parent_true* /100 as a lower limit,
+# and ``1`` as the upper limit.
 #
-# $head Child Iota$$
-# The $icode iota$$
-# $cref/child rate effects
-#  /model_variables
-#  /Random Effects, u
-#  /Child Rate Effects
-# /$$
+# Child Iota
+# **********
+# The *iota*
+# :ref:`model_variables@Random Effects, u@Child Rate Effects`
 # have a Gaussian prior with a mean zero and standard deviation 0.5.
-# Note that $code exp(0.5)$$ is approximately 1.6 so the confidence interval
+# Note that ``exp(0.5)`` is approximately 1.6 so the confidence interval
 # corresponding to +/- two standard deviations is approximately
 # [ 1.0 / 3.2 , 3.2 ].
 # There is only one grid point in the parent and child smoothing
@@ -36,30 +33,34 @@
 # In addition, the sum of the child rate effects is constrained to
 # be zero.
 #
-# $head Other Rates$$
+# Other Rates
+# ***********
 # For this example the other rates are all zero.
 # This is specified by setting the
-# $cref/parent_smooth_id/rate_table/parent_smooth_id/$$ and
-# $cref/child_smooth_id/rate_table/child_smooth_id/$$ to null
+# :ref:`rate_table@parent_smooth_id` and
+# :ref:`rate_table@child_smooth_id` to null
 # for the other rates.
 #
-# $head Covariate Multiplier$$
+# Covariate Multiplier
+# ********************
 # There is one covariate multiplier on income and it affects the
-# value of the rate $icode iota$$ for a particular data point.
+# value of the rate *iota* for a particular data point.
 # The income covariate has been normalized so it ranges between
 # zero and one.
 # The prior for this multiplier is an uniform on the interval
 # [-2, +2].
 # The true value for this multiplier, used to simulate data, is
-# called $icode mulcov_income_iota_true$$.
+# called *mulcov_income_iota_true* .
 # Note that there is only one grid point in the covariate multiplier,
 # hence it is constant in age and time.
 #
-# $head Data$$
+# Data
+# ****
 # All of the data is for the prevalence integrand and has a standard
 # deviation of 1e-3.
 #
-# $head Starting Point and Scaling$$
+# Starting Point and Scaling
+# **************************
 # The variable values used to simulate truth are also used as a
 # starting point and scaling point for optimizing the simulated data.
 # The optimal point is expected to be different due to the measurement
@@ -67,15 +68,21 @@
 # Start at the truth gives us the best chance that optimizing
 # the simulated data will not end up at some other location minimum.
 #
-# $head Simulated Priors$$
-# The $cref prior_sim_table$$ contains simulated values for the priors
+# Simulated Priors
+# ****************
+# The :ref:`prior_sim_table-name` contains simulated values for the priors
 # on the variables. This example checks that, for each simulation,
 # the sum of the random effects is zero (because the zero sum option
-# is chosen for $icode iota$$).
+# is chosen for *iota* ).
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_fit_sim.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # values used to simulate data

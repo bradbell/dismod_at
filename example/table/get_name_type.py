@@ -2,15 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin get_name_type.py$$ $newlinech #$$
-# $spell
-#  unicode
-# $$
+# {xrst_begin get_name_type.py}
+# {xrst_comment_ch #}
 #
-# $section get_name_type: Example and Test$$
+# get_name_type: Example and Test
+# ###############################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end get_name_type.py}
 # BEGIN PYTHON
 #
 def get_name_type() :

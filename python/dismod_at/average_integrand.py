@@ -3,78 +3,88 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-$begin average_integrand$$
-$spell
-   Dismod
-   sim
+{xrst_begin average_integrand}
+{xrst_spell
+   integrator
    integrators
-   std
-   pini
    tol
-   integrands
-$$
+   trapezoidal
+}
 
-$section Compute The Average Integrand$$
+Compute The Average Integrand
+#############################
 
-$head Syntax$$
-$icode%avg_integrand% = dismod_at.average_integrand(
-   %rate%, %integrand_name%, %grid%, %abs_tol%
-)%$$
+Syntax
+******
 
-$head Purpose$$
-The $cref predict_command$$ is a much faster way to calculate these values.
+| *avg_integrand* = ``dismod_at.average_integrand`` (
+| |tab| *rate* , *integrand_name* , *grid* , *abs_tol*
+| )
+
+Purpose
+*******
+The :ref:`predict_command-name` is a much faster way to calculate these values.
 This routine is easier to use and provides independent testing of the
 dismod_at integrators.
 
-$head rate$$
+rate
+****
 This is a dictionary and it's possible keys are the
-$cref/rate names/rate_table/rate_name/$$.
-If a $icode key$$ is a key in the dictionary,
-$codei%
-   %value% = %rate%[%key%](%age%, %time%)
-%$$
+:ref:`rate names<rate_table@rate_name>` .
+If a *key* is a key in the dictionary,
+
+   *value* = *rate* [ *key* ]( *age* , *time* )
+
 returns a float equal to the value of the specified rate
 at the specified age and time.
-Note that $icode age$$ will always be zero when evaluating
-$codei%
-   %value% = %rate%['pini'](%age%, %time%)
-%$$
+Note that *age* will always be zero when evaluating
+
+   *value* = *rate* [ ``'pini'`` ]( *age* , *time* )
+
 If a rate name is not in the dictionary, the corresponding rate is zero.
 
-$head integrand_name$$
+integrand_name
+**************
 This string is one of the
-$cref/integrand names/integrand_table/integrand_name/$$.
+:ref:`integrand names<integrand_table@integrand_name>` .
 
-$head grid$$
+grid
+****
 This argument defines the grid for trapezoidal integration.
 (The dismod_at integrands are often non-smooth and so a low order integration
 method is called for.)
-The $icode grid$$ is a dictionary with the following keys:
+The *grid* is a dictionary with the following keys:
 
-$subhead age$$
-$icode%grid%['age']%$$ is a list of floats containing the grid points
+age
+===
+*grid* [ ``'age'`` ] is a list of floats containing the grid points
 for the average w.r.t. age.
 These points are monotone increasing, the first (last) point is the
 lower (upper) age limit for the average
 
-$subhead time$$
-$icode%grid%['time']%$$ is a list of floats containing the grid points
+time
+====
+*grid* [ ``'time'`` ] is a list of floats containing the grid points
 for the average w.r.t. time.
 These points are monotone increasing, the first (last) point is the
 lower (upper) time limit for the average
 
-$head abs_tol$$
+abs_tol
+*******
 This float is an absolute error bound, that the integrator will achieve.
 
-$head avg_integrand$$
+avg_integrand
+*************
 This is the calculated value for the
-$cref/average integrand/avg_integrand/Average Integrand, A_i/$$.
+:ref:`average integrand<avg_integrand@Average Integrand, A_i>` .
+{xrst_toc_hidden
+   example/user/average_integrand.py
+}
+Example
+*******
+The file :ref:`user_average_integrand.py-name` contains an example and test of this routine.
 
-$children%example/user/average_integrand.py
-%$$
-$head Example$$
-The file $cref user_average_integrand.py$$ contains an example and test of this routine.
-$end
+{xrst_end average_integrand}
 ---------------------------------------------------------------------------
 """
 # trapezoidal_average_1d

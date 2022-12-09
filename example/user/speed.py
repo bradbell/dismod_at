@@ -2,114 +2,138 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_speed.py$$ $newlinech #$$
-# $spell
-#  py
-#  init
-#  mulcov
-#  covariate
-#  cv
-# $$
+# {xrst_begin user_speed.py}
+# {xrst_comment_ch #}
 #
-# $section A Simulate Data Speed Test$$
+# A Simulate Data Speed Test
+# ##########################
 #
-# $head Syntax$$
-# $icode%python3% example/user/speed.py \
-#  %random_seed% %n_children% %quasi_fixed% %ode_step_size%$$
+# Syntax
+# ******
 #
-# $head python3$$
-# This is the $cref/python3_executable/run_cmake.sh/python3_executable/$$
+# | *python3* ``example/user/speed.py`` \\
+# | |tab| *random_seed* *n_children* *quasi_fixed* *ode_step_size*
+#
+# python3
+# *******
+# This is the :ref:`run_cmake.sh@python3_executable`
 # on your system.
 #
-# $head random_seed$$
+# random_seed
+# ***********
 # is a non-negative integer specifying
-# the $cref/random_seed/option_table/random_seed/$$ used during the simulation.
+# the :ref:`option_table@random_seed` used during the simulation.
 #
-# $head n_children$$
+# n_children
+# **********
 # is a non-negative positive integer specifying the number of
-# $cref/children/option_table/Parent Node/Children/$$.
+# :ref:`option_table@Parent Node@Children` .
 #
-# $head quasi_fixed$$
-# This argument is $code true$$ or $code false$$ and specifies
-# $cref/quasi_fixed/option_table/Optimize Fixed Only/quasi_fixed/$$
+# quasi_fixed
+# ***********
+# This argument is ``true`` or ``false`` and specifies
+# :ref:`option_table@Optimize Fixed Only@quasi_fixed`
 # in the option table.
 #
-# $head ode_step_size$$
+# ode_step_size
+# *************
 # This argument is a floating point value and specifies the
-# $cref/
-#  ode_step_size/
-#  option_table/
-#  Age Average Grid/
-#  ode_step_size
-# /$$
+# :ref:`option_table@Age Average Grid@ode_step_size`
 # in the option table.
 # The total work for the test increases with proportional to the
 # square of this step size
 #
-# $head Fixed Effects$$
-# $srccode%py%
+# Fixed Effects
+# *************
+# {xrst_spell_off}
+# {xrst_code py}
 iota_parent_true          = 0.05
 rho_parent_true           = 0.2
 mulcov_income_iota_true   = 1.0
 mulcov_sex_rho_true       = -1.0
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $subhead iota_parent_true$$
-# the value of $cref/iota/rate_table/rate_name/iota/$$ corresponding
+# iota_parent_true
+# ================
+# the value of :ref:`rate_table@rate_name@iota` corresponding
 # to the parent node.
 #
-# $subhead rho_parent_true$$
-# the value of $cref/rho/rate_table/rate_name/rho/$$ corresponding
+# rho_parent_true
+# ===============
+# the value of :ref:`rate_table@rate_name@rho` corresponding
 # to the parent node.
 #
-# $head mulcov_income_iota_true$$
-# value of the multiplier for the income covariate that affects $icode iota$$.
+# mulcov_income_iota_true
+# ***********************
+# value of the multiplier for the income covariate that affects *iota* .
 #
-# $head mulcov_sex_rho_true$$
-# value of the multiplier for the sex covariate that affects $icode rho$$.
+# mulcov_sex_rho_true
+# *******************
+# value of the multiplier for the sex covariate that affects *rho* .
 #
-# $head eta$$
-# value of the offset $cref/eta/statistic/Notation/eta/$$ in the
+# eta
+# ***
+# value of the offset :ref:`statistic@Notation@eta` in the
 # log transformation:
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 eta = 1e-6
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head measure_cv$$
+# measure_cv
+# **********
 # the coefficient of variation for the simulated measurement noise.
-# If you use a larger $icode measure_cv$$ you will probably need
-# a larger number of data points; see $icode n_data$$ below.
-# $srccode%py%
+# If you use a larger *measure_cv* you will probably need
+# a larger number of data points; see *n_data* below.
+# {xrst_spell_off}
+# {xrst_code py}
 measure_cv = 0.05
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head n_data$$
+# n_data
+# ******
 # number of simulated data values.
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 n_data = 200
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head age_list$$
-# This following is both the $cref age_table$$ and the age
-# grid points for the parent rate smoothing of $icode iota$$ and $icode rho$$.
+# age_list
+# ********
+# This following is both the :ref:`age_table-name` and the age
+# grid points for the parent rate smoothing of *iota* and *rho* .
 # The child rate smoothing has a grid point at the minimum
 # and maximum age below.
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 age_list = [ 0.0, 5.0, 15.0, 35.0, 50.0, 75.0, 90.0, 100.0 ]
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head time_list$$
-# This following is both the $cref time_table$$ and the time
-# grid points for the parent rate smoothing of $icode iota$$ and $icode rho$$.
+# time_list
+# *********
+# This following is both the :ref:`time_table-name` and the time
+# grid points for the parent rate smoothing of *iota* and *rho* .
 # The child rate smoothing has a grid point at the minimum
 # and maximum time below.
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 time_list = [ 1990.0, 2000.0, 2010.0, 2020.0 ]
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_speed.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import sys

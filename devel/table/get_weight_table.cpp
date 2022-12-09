@@ -3,65 +3,68 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_weight_table$$
-$spell
-   struct
-   sqlite
-   enum
-   cpp
-   std
-$$
+{xrst_begin get_weight_table}
 
-$section C++: Get the Weight Table Information$$
+C++: Get the Weight Table Information
+#####################################
 
-$head Syntax$$
-$icode%weight_table% = get_weight_table(%db%)%$$
+Syntax
+******
+*weight_table* = ``get_weight_table`` ( *db* )
 
-$head Purpose$$
-To read the $cref weight_table$$ and return it as a C++ data structure.
+Purpose
+*******
+To read the :ref:`weight_table-name` and return it as a C++ data structure.
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head weight_table$$
-The return value $icode weight_table$$ has prototype
-$codei%
-   CppAD::vector<weight_struct>  %weight_table%
-%$$
-For each $cref/weight_id/weight_table/weight_id/$$,
-$codei%
-   %weight_table%[%weight_id%]
-%$$
+weight_table
+************
+The return value *weight_table* has prototype
+
+   ``CppAD::vector<weight_struct>`` *weight_table*
+
+For each :ref:`weight_table@weight_id` ,
+
+   *weight_table* [ *weight_id* ]
+
 is the information for the corresponding
-$cref/weight_id/weight_table/weight_id/$$.
+:ref:`weight_table@weight_id` .
 
-$head weight_struct$$
+weight_struct
+*************
 This is a structure with the following fields
-$table
-Type $cnext Field $cnext Description
-$rnext
-$code std::string$$ $cnext $code weight_name$$ $cnext
-   The $cref/weight_name/weight_table/weight_name/$$ for this weighting.
-$rnext
-$code int$$ $cnext $code n_age$$ $cnext
-   The $cref/n_age/weight_table/n_age/$$ for this weighting.
-$rnext
-$code int$$ $cnext $code n_time$$ $cnext
-   The $cref/n_time/weight_table/n_time/$$ for this weighting.
-$tend
 
-$comment
+.. list-table::
+
+   * - Type
+     - Field
+     - Description
+   * - ``std::string``
+     - ``weight_name``
+     - The :ref:`weight_table@weight_name` for this weighting.
+   * - ``int``
+     - ``n_age``
+     - The :ref:`weight_table@n_age` for this weighting.
+   * - ``int``
+     - ``n_time``
+     - The :ref:`weight_table@n_time` for this weighting.
+
+{xrst_comment
    example/devel/table/get_weight_grid_xam.cpp is included by weight_grid.omh
-%$$
-$head Example$$
-The file $cref get_weight_grid_xam.cpp$$ contains an example that uses
+%}
+Example
+*******
+The file :ref:`get_weight_grid_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_weight_table}
 -----------------------------------------------------------------------------
 */
 # include <dismod_at/get_weight_table.hpp>

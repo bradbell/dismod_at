@@ -12,8 +12,8 @@ image_link='https://bradbell.github.io/dismod_at'
 # List of files, besides CMakeLists.txt, that have have a copy of the
 # version number (can be empty).
 version_files='
-   doc.omh
-   dev.omh
+   doc.xrst
+   dev.xrst
    python/setup.cfg
 '
 #
@@ -30,6 +30,7 @@ ignore_files='
    python/README.md
    sphinx/preamble.rst
    sphinx/spelling
+   xrst.toml
 '
 # ----------------------------------------------------------------------------
 echo "copyright_owner=$copyright_owner"

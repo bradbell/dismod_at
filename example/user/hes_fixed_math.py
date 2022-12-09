@@ -2,38 +2,49 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_hes_fixed_math.py$$ $newlinech #$$
-# $spell
-#  cppad
-# $$
+# {xrst_begin user_hes_fixed_math.py}
+# {xrst_spell
+#     cc
+#     minimizer
+# }
+# {xrst_comment_ch #}
 #
-# $section Check the Hessian of the Fixed Effects Objective$$
+# Check the Hessian of the Fixed Effects Objective
+# ################################################
 #
-# $head Purpose$$
+# Purpose
+# *******
 # This is a detailed mathematical explanation of computing Hessian of the
 # fixed effects objective used by the
-# $cref/asymptotic/sample_command/asymptotic/$$ sampling method.
+# :ref:`sample_command@asymptotic` sampling method.
 #
-# $head Reference$$
+# Reference
+# *********
 # See the
-# $href%https://bradbell.github.io/cppad_mixed/doc/theory.htm%theory%$$
-# section of the $code cppad_mixed$$ documentation.
+# `theory <https://bradbell.github.io/cppad_mixed/doc/theory.htm>`_
+# section of the ``cppad_mixed`` documentation.
 #
-# $head Notation$$
-# $table
-# $latex \theta$$ $cnext model incidence for the parent region $rnext
-# $latex u_0$$    $cnext incidence random effect for first child    $rnext
-# $latex u_1$$    $cnext incidence random effect for second child   $rnext
-# $latex y_0$$    $cnext measured incidence for the first child $rnext
-# $latex y_1$$    $cnext measured incidence for the second child $rnext
-# $latex s$$      $cnext standard deviation for data and random effects $rnext
-# $tend
-# The only fixed effect in this model is $latex \theta$$
-# (sometimes written $icode theta$$) the incidence level for the world.
-# The random effects are $latex u_0$$ and $latex u_1$$.
+# Notation
+# ********
 #
-# $head Problem Parameters$$
-# $srccode%py%
+# .. csv-table::
+#     :widths: auto
+#
+#     :math:`\theta`,model incidence for the parent region
+#     :math:`u_0`,incidence random effect for first child
+#     :math:`u_1`,incidence random effect for second child
+#     :math:`y_0`,measured incidence for the first child
+#     :math:`y_1`,measured incidence for the second child
+#     :math:`s`,standard deviation for data and random effects
+#
+# The only fixed effect in this model is :math:`\theta`
+# (sometimes written *theta* ) the incidence level for the world.
+# The random effects are :math:`u_0` and :math:`u_1`.
+#
+# Problem Parameters
+# ******************
+# {xrst_spell_off}
+# {xrst_code py}
 import math
 import time
 theta_true     = 0.5
@@ -44,12 +55,16 @@ standard_dev   = theta_true # the standard deviation s
 random_seed    = int( time.time() )
 number_sample  = 1000
 eta_in_prior   = 1e-6 # if None, the fixed effects are not scaled
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head Random Likelihood$$
+# Random Likelihood
+# *****************
 # The negative log-likelihood for this example, ignoring the constant
 # of integration, is
-# $latex \[
+#
+# .. math::
+#
 #  f( \theta, u )
 #  = \frac{1}{2 s^2} \left(
 #     [ y_0 - \theta \exp( u_0 ) ]^2 +
@@ -57,20 +72,24 @@ eta_in_prior   = 1e-6 # if None, the fixed effects are not scaled
 #     u_0^2 +
 #     u_1^2
 #  \right)
-# \] $$
 #
-# $head Gradient w.r.t. Fixed Effects$$
-# $latex \[
+# Gradient w.r.t. Fixed Effects
+# *****************************
+#
+# .. math::
+#
 #  f_\theta ( \theta, u )
 #  =
 #  \frac{1}{s^2} [
 #     \theta \exp( 2 u_0 ) - y_0 \exp( u_0 ) +
 #     \theta \exp( 2 u_1 ) - y_1 \exp( u_1 )
 #  ]
-# \] $$
 #
-# $head Gradient w.r.t. Random Effects$$
-# $latex \[
+# Gradient w.r.t. Random Effects
+# ******************************
+#
+# .. math::
+#
 #  f_u ( \theta, u )
 #  =
 #  \frac{1}{s^2} \left(
@@ -80,17 +99,21 @@ eta_in_prior   = 1e-6 # if None, the fixed effects are not scaled
 #     \theta^2 \exp( 2 u_1 ) - y_1 \theta \exp( u_1 )  + u_1
 #  \end{array}
 #  \right)
-# \] $$
 #
-# $head Hessian w.r.t. Fixed Effects$$
-# $latex \[
+# Hessian w.r.t. Fixed Effects
+# ****************************
+#
+# .. math::
+#
 #  f_{\theta,\theta} ( \theta, u )
 #  =
 #  \frac{1}{s^2} [ \exp( 2 u_0 ) + \exp( 2 u_1 ) ]
-# \] $$
 #
-# $head Hessian w.r.t. Random Effects$$
-# $latex \[
+# Hessian w.r.t. Random Effects
+# *****************************
+#
+# .. math::
+#
 #  f_{u,u} ( \theta, u )
 #  =
 #  \frac{1}{s^2} \left(
@@ -100,10 +123,12 @@ eta_in_prior   = 1e-6 # if None, the fixed effects are not scaled
 #     0   & 2 \theta^2 \exp( 2 u_1 ) - y_1 \theta \exp( u_1 ) + 1
 #  \end{array}
 #  \right)
-# \] $$
 #
-# $head Hessian Cross Term$$
-# $latex \[
+# Hessian Cross Term
+# ******************
+#
+# .. math::
+#
 #  f_{u,\theta} ( \theta, u )
 #  =
 #  \frac{1}{s^2} \left(
@@ -113,27 +138,34 @@ eta_in_prior   = 1e-6 # if None, the fixed effects are not scaled
 #     2 \theta \exp( 2 u_1 ) - y_1 \exp( u_1 )
 #  \end{array}
 #  \right)
-# \] $$
 #
-# $head Optimal Random Effects$$
+# Optimal Random Effects
+# **********************
 #
-# $subhead Implicit Function Definition$$
-# The optimal random effects $latex \hat{u} ( \theta )$$
+# Implicit Function Definition
+# ============================
+# The optimal random effects :math:`\hat{u} ( \theta )`
 # solve the equation
-# $latex \[
-#  f_u [ \theta , \hat{u} ( \theta ) ] = 0
-# \] $$
 #
-# $subhead  Derivatives of Optimal Random Effects$$
+# .. math::
+#
+#  f_u [ \theta , \hat{u} ( \theta ) ] = 0
+#
+# Derivatives of Optimal Random Effects
+# =====================================
 # Using the implicit function theorem we have
-# $latex \[
+#
+# .. math::
+#
 #  \hat{u}^{(1)} ( \theta )= -
 #     f_{u,u} [ \theta , \hat{u} ( \theta) ]^{-1}
 #        f_{u,\theta} [ \theta , \hat{u} ( \theta) ]
-# \] $$
+#
 # Substituting in the formulas above for the Hessian terms on the
 # right hand side we obtain:
-# $latex \[
+#
+# .. math::
+#
 #  \hat{u}_i^{(1)} ( \theta ) = - \frac{
 #     2 \theta \exp[ 2 \hat{u}_i ( \theta) ] -
 #     y_i \exp[ \hat{u}_i ( \theta) ]
@@ -141,49 +173,61 @@ eta_in_prior   = 1e-6 # if None, the fixed effects are not scaled
 #     2 \theta^2 \exp[ 2 \hat{u}_i ( \theta) ] -
 #     y_i \theta \exp[ \hat{u}_i ( \theta) ] + 1
 #  }
-# \] $$
-# We can compute $latex \hat{u}_i ( \theta )$$ by optimizing the
-# random effects corresponding to the fixed effects being $latex \theta$$.
-# We define $latex g_i ( \theta )$$ by the equation
-# $latex \[
+#
+# We can compute :math:`\hat{u}_i ( \theta )` by optimizing the
+# random effects corresponding to the fixed effects being :math:`\theta`.
+# We define :math:`g_i ( \theta )` by the equation
+#
+# .. math::
+#
 #  g_i ( \theta ) = 2 \theta \exp[ 2 \hat{u}_i ( \theta) ]
 #              - y_i \exp[ \hat{u}_i ( \theta ) ]
-# \] $$
-# Give $latex \hat{u}_i ( \theta )$$ we can compute $latex g_i ( \theta )$$.
-# Given $latex g_i ( \theta )$$, we can compute
-# the derivative $latex \hat{u}_i^{(1)} ( \theta )$$ using
-# $latex \[
+#
+# Give :math:`\hat{u}_i ( \theta )` we can compute :math:`g_i ( \theta )`.
+# Given :math:`g_i ( \theta )`, we can compute
+# the derivative :math:`\hat{u}_i^{(1)} ( \theta )` using
+#
+# .. math::
+#
 #  \hat{u}_i^{(1)} ( \theta ) = -
 #     \frac{ g_i ( \theta ) }{ \theta g_i ( \theta ) + 1}
-# \] $$
-# Given $latex \hat{u}^{(1)} ( \theta )$$, we can compute
-# the derivative $latex g_i^{(1)} ( \theta )$$ using
-# $latex \[
+#
+# Given :math:`\hat{u}^{(1)} ( \theta )`, we can compute
+# the derivative :math:`g_i^{(1)} ( \theta )` using
+#
+# .. math::
+#
 #  g_i^{(1)} ( \theta ) =
 #  2 \exp[ 2 \hat{u}_i ( \theta) ]  +
 #  \left(
 #     4 \theta \exp [ 2 \hat{u}_i ( \theta ) ] -
 #     y_i \exp [ \hat{u}_i ( \theta ) ]
 #  \right) \hat{u}_i^{(1)} ( \theta )
-# \] $$
-# Given $latex g_i^{(1)} ( \theta )$$, we can compute
-# the second derivative $latex \hat{u}_i^{(2)} ( \theta )$$ using
-# $latex \[
+#
+# Given :math:`g_i^{(1)} ( \theta )`, we can compute
+# the second derivative :math:`\hat{u}_i^{(2)} ( \theta )` using
+#
+# .. math::
+#
 #  \hat{u}_i^{(2)} ( \theta ) =
 #  \frac{ g_i ( \theta ) [ g_i ( \theta ) + \theta g_i ^{(1)} ( \theta ) ] }
 #  { [ \theta g_i ( \theta ) + 1 ]^2 }
 #  -
 #  \frac{ g_i ^{(1)}( \theta ) }{ \theta g_i ( \theta ) + 1}
-# \] $$
-# $latex \[
+#
+# .. math::
+#
 #  \hat{u}_i^{(2)} ( \theta ) =
 #  \frac{ g_i ( \theta )^2 - g_i ^{(1)}( \theta )}
 #  { [ \theta g_i ( \theta ) + 1 ]^2 }
-# \] $$
-# Given $latex \hat{u}^{(2)} ( \theta )$$, we can compute
-# the second derivative $latex g_i^{(2)} ( \theta )$$ using
-# $latex \[
-#  \begin{array}{rcl}
+#
+# Given :math:`\hat{u}^{(2)} ( \theta )`, we can compute
+# the second derivative :math:`g_i^{(2)} ( \theta )` using
+#
+# .. math::
+#  :nowrap:
+#
+#  \begin{eqnarray}
 #  g_i^{(2)} ( \theta ) & = &
 #  8 \exp[ 2 \hat{u}_i ( \theta) ] \hat{u}_i^{(1)} ( \theta )
 #  \\ & + &
@@ -196,42 +240,55 @@ eta_in_prior   = 1e-6 # if None, the fixed effects are not scaled
 #     4 \theta \exp [ 2 \hat{u}_i ( \theta ) ] -
 #     y_i \exp [ \hat{u}_i ( \theta ) ]
 #  \right) \hat{u}_i^{(2)} ( \theta )
-#  \end{array}
-# \] $$
+#  \end{eqnarray}
 #
-# $head Laplace Approximation$$
+# Laplace Approximation
+# *********************
 # Up to a constant, the Laplace approximation (fixed effects objective),
 # as a function of the fixed effects, is:
-# $latex \[
+#
+# .. math::
+#
 #  L ( \theta ) = F( \theta ) + G( \theta )
-# \] $$
-# where $latex F( \theta )$$ and $latex G( \theta )$$ are defined by
-# $latex \[
+#
+# where :math:`F( \theta )` and :math:`G( \theta )` are defined by
+#
+# .. math::
+#
 #  F( \theta ) = f[ \theta , \hat{u} ( \theta ) ]
-# \] $$
-# $latex \[
+#
+# .. math::
+#
 #  G( \theta ) =\frac{1}{2} \log \det f_{u,u} [ \theta , \hat{u} ( \theta ) ]
-# \] $$
-# The derivative of $latex F( \theta )$$ is given by
-# $latex \[
+#
+# The derivative of :math:`F( \theta )` is given by
+#
+# .. math::
+#
 #  F^{(1)} ( \theta ) =
 #  f_\theta [ \theta , \hat{u} ( \theta ) ] +
 #  f_u [ \theta , \hat{u} ( \theta ) ]  \hat{u}^{(1)} ( \theta )
-# \] $$
-# It follows from the definition of $latex \hat{u} ( \theta )$$ that
-# $latex f_u [ \theta , \hat{u} ( \theta ) ] = 0$$ and
-# $latex \[
+#
+# It follows from the definition of :math:`\hat{u} ( \theta )` that
+# :math:`f_u [ \theta , \hat{u} ( \theta ) ] = 0` and
+#
+# .. math::
+#
 #  F^{(1)} ( \theta ) = f_\theta [ \theta , \hat{u} ( \theta ) ]
-# \] $$
+#
 # Taking the derivative of the equation above we obtain
-# $latex \[
+#
+# .. math::
+#
 #  F^{(2)} ( \theta ) =
 #  f_{\theta,\theta} [ \theta , \hat{u} ( \theta ) ] +
 #  f_{\theta,u} [ \theta , \hat{u} ( \theta ) ] \hat{u}^{(1)} ( \theta )
-# \] $$
-# Combining the definition of $latex G( \theta )$$, $latex g_i ( \theta )$$
-# and the formula for $latex f_{u,u} ( \theta , u )$$ we have
-# $latex \[
+#
+# Combining the definition of :math:`G( \theta )`, :math:`g_i ( \theta )`
+# and the formula for :math:`f_{u,u} ( \theta , u )` we have
+#
+# .. math::
+#
 #  G( \theta )
 #  =
 #  \frac{1}{2} \log \det \left(
@@ -241,72 +298,89 @@ eta_in_prior   = 1e-6 # if None, the fixed effects are not scaled
 #     0   & [ \theta g_1 ( \theta ) + 1 ] / s^2
 #  \end{array}
 #  \right)
-# \] $$
-# Defining $latex h_i ( \theta )$$ by
-# $latex \[
+#
+# Defining :math:`h_i ( \theta )` by
+#
+# .. math::
+#
 #  h_i ( \theta ) = \theta g_i ( \theta ) + 1
-# \]$$
+#
 # we obtain the representation
-# $latex \[
+#
+# .. math::
+#
 #  G ( \theta ) =
 #  + \frac{1}{2} \left(
 #  \log [ h_0 ( \theta ) ] + \log [ h_1 ( \theta ) ] - \log ( s^4 )
 #  \right)
-# \] $$
-# The first and second derivative of $latex h_i ( \theta )$$
-# and $latex G( \theta )$$ are given by
-# $latex \[
+#
+# The first and second derivative of :math:`h_i ( \theta )`
+# and :math:`G( \theta )` are given by
+#
+# .. math::
+#
 #  h_i^{(1)} ( \theta ) = g_i ( \theta ) + \theta g_i^{(1)} ( \theta )
-# \] $$
-# $latex \[
-# G^{(1)} ( \theta ) =
-#  \frac{1}{2} \left(
-#     \frac{ h_0^{(1)} ( \theta ) }{ h_0 ( \theta ) }
-#     +
-#     \frac{ h_1^{(1)} ( \theta ) }{ h_1 ( \theta ) }
-#  \right)
-# \] $$
-# $latex \[
+#
+# .. math::
+#
+#  G^{(1)} ( \theta ) =
+#   \frac{1}{2} \left(
+#      \frac{ h_0^{(1)} ( \theta ) }{ h_0 ( \theta ) }
+#      +
+#      \frac{ h_1^{(1)} ( \theta ) }{ h_1 ( \theta ) }
+#   \right)
+#
+# .. math::
+#
 #  h_i^{(2)} ( \theta ) = 2 g_i^{(1)} ( \theta ) + \theta g_i^{(2)} ( \theta )
-# \] $$
-# $latex \[
-# G^{(2)} ( \theta ) =
-#  \frac{1}{2} \left(
-#     \frac{ h_0 ( \theta ) h_0^{(2)} ( \theta ) - h_0^{(1)} ( \theta )^2 }
-#     { h_0 ( \theta )^2 }
-#     +
-#     \frac{ h_1 ( \theta ) h_1^{(2)} ( \theta ) - h_1^{(1)} ( \theta )^2 }
-#     { h_1 ( \theta )^2 }
-#  \right)
-# \] $$
 #
-# $head Asymptotic Statistics$$
+# .. math::
+#
+#  G^{(2)} ( \theta ) =
+#   \frac{1}{2} \left(
+#      \frac{ h_0 ( \theta ) h_0^{(2)} ( \theta ) - h_0^{(1)} ( \theta )^2 }
+#      { h_0 ( \theta )^2 }
+#      +
+#      \frac{ h_1 ( \theta ) h_1^{(2)} ( \theta ) - h_1^{(1)} ( \theta )^2 }
+#      { h_1 ( \theta )^2 }
+#   \right)
+#
+# Asymptotic Statistics
+# *********************
 # The asymptotic posterior distribution for the optimal estimate of
-# $latex \theta$$ give the data $latex y$$
+# :math:`\theta` give the data :math:`y`
 # is a normal with variance equal to the inverse of
-# $latex \[
-#  L^{(2)} ( \theta ) = F^{(2)} ( \theta ) + G^{(2)} ( \theta )
-# \] $$
 #
-# $head Scaling Fixed Effects$$
-# If $cref/eta/prior_table/eta/$$ is not null,
-# the Hessian is with respect to $latex \alpha = \log( \theta + \eta )$$.
+# .. math::
+#
+#  L^{(2)} ( \theta ) = F^{(2)} ( \theta ) + G^{(2)} ( \theta )
+#
+# Scaling Fixed Effects
+# *********************
+# If :ref:`prior_table@eta` is not null,
+# the Hessian is with respect to :math:`\alpha = \log( \theta + \eta )`.
 # Inverting this relation we define
-# $latex \theta ( \alpha ) = \exp( \alpha ) - \eta$$.
-# The fixed effects objective as a function of $latex \alpha$$ is
-# $latex \[
+# :math:`\theta ( \alpha ) = \exp( \alpha ) - \eta`.
+# The fixed effects objective as a function of :math:`\alpha` is
+#
+# .. math::
+#
 #  H( \alpha ) =
 #  L[ \theta ( \alpha ) ] =
 #  F[ \theta( \alpha ) ] + G[ \theta( \alpha ) ]
-# \] $$
+#
 # Taking the first and second derivatives, we have
-# $latex \[
+#
+# .. math::
+#
 #  H^{(1)}( \alpha ) =  \left(
 #     F^{(1)}[ \theta( \alpha ) ] + G^{(1)}[ \theta( \alpha ) ]
 #  \right) \exp( \alpha )
-# \] $$
-# $latex \[
-#  \begin{array}{rcl}
+#
+# .. math::
+#  :nowrap:
+#
+#  \begin{eqnarray}
 #  H^{(2)}( \alpha ) & = & \left(
 #     F^{(1)}[ \theta( \alpha ) ] + G^{(1)}[ \theta( \alpha ) ]
 #  \right) \exp( \alpha )
@@ -314,29 +388,37 @@ eta_in_prior   = 1e-6 # if None, the fixed effects are not scaled
 #  \left(
 #     F^{(2)}[ \theta( \alpha ) ] + G^{(2)}[ \theta( \alpha ) ]
 #  \right) \exp( 2 \alpha )
-#  \end{array}
-# \] $$
+#  \end{eqnarray}
 #
-# $subhead Optimal Fixed Effects$$
+# Optimal Fixed Effects
+# =====================
 # The first order necessary conditions for
-# $latex \hat{\alpha}$$
+# :math:`\hat{\alpha}`
 # to be a minimizer of the fixed effects object is
-# $latex H^{(1)} ( \hat{\alpha} ) = 0$$.
+# :math:`H^{(1)} ( \hat{\alpha} ) = 0`.
 # In this case we can simplify the Hessian scaling as follows:
-# $latex \[
-#  \begin{array}{rcl}
+#
+# .. math::
+#  :nowrap:
+#
+#  \begin{eqnarray}
 #  H^{(2)}( \hat{\alpha} ) & = & \left(
 #     F^{(2 }( \hat{\theta} ) + G^{(2)}( \hat{\theta} )
 #  \right) \exp( 2 \hat{\alpha} )
 #  \\ & = &
 #  L^{(2)} ( \hat{\theta} ) \exp( 2 \hat{\alpha} )
-#  \end{array}
-# \] $$
-# where $latex \hat{\theta} = \theta( \hat{\alpha} )$$.
+#  \end{eqnarray}
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# where :math:`\hat{\theta} = \theta( \hat{\alpha} )`.
+#
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_hes_fixed_math.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import numpy

@@ -2,70 +2,70 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_age_avg_split.py$$ $newlinech #$$
-# $spell
-#  init
-# $$
+# {xrst_begin user_age_avg_split.py}
+# {xrst_comment_ch #}
 #
-# $section Non-uniform Age Average Grid$$
+# Non-uniform Age Average Grid
+# ############################
 #
-# $head Purpose$$
+# Purpose
+# *******
 # This example demonstrate one reason for using the
-# $cref/
-#  age_avg_split/
-#  option_table/
-#  Age Average Grid/
-#  age_avg_split
-# /$$ option to create an
-# $cref/age average grid/age_avg_table/Age Average Grid/$$
+# :ref:`option_table@Age Average Grid@age_avg_split` option to create an
+# :ref:`age_avg_table@Age Average Grid`
 # that is not uniformly spaced.
 #
-# $head Variables$$
-# For this case there is only one rate $icode omega$$ for the parent node
-# and there are no other $cref model_variables$$.
+# Variables
+# *********
+# For this case there is only one rate *omega* for the parent node
+# and there are no other :ref:`model_variables-name` .
 #
-# $head Prior$$
-# The prior for $icode omega$$ is mean $code 0.1$$ and standard deviation
-# $code .01$$ for ages $code 0.0$$ and $code 0.9$$.
-# The prior for $icode omega$$ is mean $code 0.01$$ and standard deviation
-# $code 0.001$$ for ages $code 1.1$$ and $code 100.0$$.
+# Prior
+# *****
+# The prior for *omega* is mean ``0.1`` and standard deviation
+# ``.01`` for ages ``0.0`` and ``0.9`` .
+# The prior for *omega* is mean ``0.01`` and standard deviation
+# ``0.001`` for ages ``1.1`` and ``100.0`` .
 #
-# $head Data$$
+# Data
+# ****
 # There is no data for this model; i.e., the prior is the only
 # information available.
 #
-# $head Fit$$
-# A fit is done, and this should make $cref fit_var_table$$
+# Fit
+# ***
+# A fit is done, and this should make :ref:`fit_var_table-name`
 # equal to the mean of the prior.
 #
-# $head Predict$$
+# Predict
+# *******
 # A predict is done for other cause mortality for two cases.
-# The first case averages over the age interval $code [ 0.0, 0.9 ]$$.
-# The second case averages over the age interval $code [ 1.1, 100.0 ]$$.
+# The first case averages over the age interval ``[ 0.0, 0.9 ]`` .
+# The second case averages over the age interval ``[ 1.1, 100.0 ]`` .
 #
-# $head ode_step_size$$
-# The $cref/
-#  ode_step_size/
-#  option_table/
-#  Age Average Grid/
-#  ode_step_size
-# /$$ is
-# $code 50.0$$ for this example.
-# If there were no $icode age_avg_split$$, a linear approximation
+# ode_step_size
+# *************
+# The :ref:`option_table@Age Average Grid@ode_step_size` is
+# ``50.0`` for this example.
+# If there were no *age_avg_split* , a linear approximation
 # would be used from age 0.0 to age 50.
 #
-# $head age_avg_split$$
-# The age average grid is split at age $code 1.0$$; i.e.,
-# The age average grid points are $code 0.0$$, $code 1.0$$, $code 50.0$$, and
-# $code 100.0$$.
+# age_avg_split
+# *************
+# The age average grid is split at age ``1.0`` ; i.e.,
+# The age average grid points are ``0.0`` , ``1.0`` , ``50.0`` , and
+# ``100.0`` .
 # A piecewise linear function of age is used between these grid points.
 # (Note everything is constant w.r.t time for this case.)
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1
-# %$$
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
 #
-# $end
+# {xrst_end user_age_avg_split.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # true values used to simulate data

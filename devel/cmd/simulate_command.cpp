@@ -16,66 +16,65 @@
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
 -----------------------------------------------------------------------------
-$begin simulate_command$$
+{xrst_begin simulate_command}
 
-$section The Simulate Command$$
-$spell
-   sim
-   avgint
-   var
-   dismod
-   arg
-   std
-   covariates
-$$
+The Simulate Command
+####################
 
-$head Syntax$$
-$codei%dismod_at %database% simulate %number_simulate%$$
+Syntax
+******
+``dismod_at`` *database* ``simulate`` *number_simulate*
 
-$head database$$
+database
+********
 Is an
-$href%http://www.sqlite.org/sqlite/%$$ database containing the
-$code dismod_at$$ $cref input$$ tables which are not modified.
+http://www.sqlite.org/sqlite/ database containing the
+``dismod_at`` :ref:`input-name` tables which are not modified.
 
-$head number_simulate$$
+number_simulate
+***************
 Is the number of simulations. Each simulation contains a complete
 data set.
 
-$head meas_value$$
-The $cref/meas_value/data_table/meas_value/$$ in the data
+meas_value
+**********
+The :ref:`data_table@meas_value` in the data
 table is not used.
 
-$head truth_var_table$$
-The $cref truth_var_table$$ is an addition input table for this command.
+truth_var_table
+***************
+The :ref:`truth_var_table-name` is an addition input table for this command.
 It specifies the values for the
-$cref model_variables$$ used during the simulation.
+:ref:`model_variables-name` used during the simulation.
 This table can be create by the
-$cref/set_command/set_command/table_out/truth_var/$$,
+:ref:`set_command<set_command@table_out@truth_var>` ,
 or the user can create it directly with the aid of the
-$cref var_table$$ (created by the $cref init_command$$).
+:ref:`var_table-name` (created by the :ref:`init_command-name` ).
 
-$head data_sim_table$$
-A new $cref data_sim_table$$ is created by this command.
-It contains $icode number_simulate$$ values
-for each $cref/data_id/data_subset_table/data_id/$$ in the data_subset table.
-Hence the number of rows in $cref data_sim_table$$ is
-$icode number_simulate$$ times the number of rows in $cref data_subset_table$$.
+data_sim_table
+**************
+A new :ref:`data_sim_table-name` is created by this command.
+It contains *number_simulate* values
+for each :ref:`data_subset_table@data_id` in the data_subset table.
+Hence the number of rows in :ref:`data_sim_table-name` is
+*number_simulate* times the number of rows in :ref:`data_subset_table-name` .
 
-$head prior_sim_table$$
-A new $cref prior_sim_table$$ is created by this command.
-It contains $icode number_simulate$$ values
-for each $cref/var_id/var_table/var_id/$$ in the var table.
-Hence the number of rows in $cref data_sim_table$$ is
-$icode number_simulate$$ times the number of rows in $cref var_table$$.
-
-
-$children%example/get_started/simulate_command.py
-%$$
-$head Example$$
-The file $cref simulate_command.py$$ contains an example and test
+prior_sim_table
+***************
+A new :ref:`prior_sim_table-name` is created by this command.
+It contains *number_simulate* values
+for each :ref:`var_table@var_id` in the var table.
+Hence the number of rows in :ref:`data_sim_table-name` is
+*number_simulate* times the number of rows in :ref:`var_table-name` .
+{xrst_toc_hidden
+   example/get_started/simulate_command.py
+}
+Example
+*******
+The file :ref:`simulate_command.py-name` contains an example and test
 using this command.
 
-$end
+{xrst_end simulate_command}
 */
 void simulate_command(
    const std::string&                       number_simulate   ,

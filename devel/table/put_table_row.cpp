@@ -3,93 +3,97 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin put_table_row$$
-$spell
-   sqlite
-   const
-   std
-   CppAD
-   vec
-$$
+{xrst_begin put_table_row}
 
-$section C++: Insert New Row at End of a Table$$
+C++: Insert New Row at End of a Table
+#####################################
 
-$head Syntax$$
-$icode%table_name_id% = put_table_row(
-   %db%, %table_name%, %col_name_vec%, %row_val_vec%
-)%$$
-$codei%put_table_row(
-   %db%, %table_name%, %col_name_vec%, %row_val_vec%. %primary_key%
-)%$$
+Syntax
+******
 
-$head db$$
+| *table_name_id* = ``put_table_row`` (
+| |tab| *db* , *table_name* , *col_name_vec* , *row_val_vec*
+| ) ``put_table_row`` (
+| |tab| *db* , *table_name* , *col_name_vec* , *row_val_vec* . *primary_key*
+| )
+
+db
+**
 This argument has prototype
-$codei%
-   sqlite3* %db%
-%$$
+
+   ``sqlite3`` * *db*
+
 and is the database we are putting information into.
 
-$head table_name$$
+table_name
+**********
 This argument has prototype
-$codei%
-   const std::string& %table_name%
-%$$
+
+   ``const std::string&`` *table_name*
+
 and is the name of the table we are putting information into.
 
-$head col_name_vec$$
+col_name_vec
+************
 This argument has prototype
-$codei%
-   const CppAD::vector<std::string>& %col_name_vec%
-%$$
+
+   ``const CppAD::vector<std::string>&`` *col_name_vec*
+
 and is a vector of the names for the column names in this table.
 The size of this vector must be the number of columns in the table
 minus one and the primary key column is not included.
 
-$head row_val_vec$$
+row_val_vec
+***********
 This argument has prototype
-$codei%
-   const CppAD::vector<std::string>& %row_val_vec%
-%$$
+
+   ``const CppAD::vector<std::string>&`` *row_val_vec*
+
 and is a vector of the values we are inserting into the table.
 It must have the same size, and be in the same order,
-as $icode col_name_vec$$.
-There cannot be any single quote characters $code '$$
+as *col_name_vec* .
+There cannot be any single quote characters ``'``
 in any of the values.
 
-$subhead null$$
-The special value $code null$$ can be used for $code integer$$ and
-$code real$$ columns. If it is used for a $code text$$ column,
-it will be interpreted as the text $code 'null'$$ and not a missing value.
+null
+====
+The special value ``null`` can be used for ``integer`` and
+``real`` columns. If it is used for a ``text`` column,
+it will be interpreted as the text ``'null'`` and not a missing value.
 
-$head primary_key$$
+primary_key
+***********
 The primary key for this table name must have column name
-$icode%table_name%_id%$$.
+*table_name* _ ``id`` .
 This argument has prototype
-$codei%
-   const size_t& %primary_key%
-%$$.
+
+   ``const size_t&`` *primary_key*
+
+.
 If this argument is present, this value is used for the primary key.
 Otherwise, if the table is empty,
 the value zero is used for the primary key.
 Otherwise, the value is for the primary key is one greater than
 the current maximum value for the primary key column
-$icode%table_name%_id%$$.
+*table_name* _ ``id`` .
 
-$head table_name_id$$
+table_name_id
+*************
 If the return value is present, it has prototype
-$codei%
-   size_t %table_name_id%
-%$$
-It is the value of the primary key for this row;
-i.e, the value in the $icode%table_name%_id%$$ column for this row.
 
-$children%example/devel/table/put_table_row_xam.cpp
-%$$
-$head Example$$
-The file $cref put_table_row_xam.cpp$$ contains an example that uses
+   ``size_t`` *table_name_id*
+
+It is the value of the primary key for this row;
+i.e, the value in the *table_name* _ ``id`` column for this row.
+{xrst_toc_hidden
+   example/devel/table/put_table_row_xam.cpp
+}
+Example
+*******
+The file :ref:`put_table_row_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end put_table_row}
 ------------------------------------------------------------------------------
 */
 # include <dismod_at/put_table_row.hpp>

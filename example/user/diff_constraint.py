@@ -2,19 +2,20 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_diff_constraint.py$$ $newlinech #$$
-# $spell
-#  init
-#  avgint
-#  dage
-#  dtime
-# $$
+# {xrst_begin user_diff_constraint.py}
+# {xrst_comment_ch #}
 #
-# $section Fitting with Constraints on Differences in Age and Time$$
+# Fitting with Constraints on Differences in Age and Time
+# #######################################################
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_diff_constraint.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import sys

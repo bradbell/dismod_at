@@ -3,75 +3,83 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_db_input$$
-$spell
-   avgint
-   dage
-   struct
-   sqlite
-   enum
-   cpp
-   std
-$$
+{xrst_begin get_db_input}
+{xrst_spell
+   preform
+}
 
-$section C++: Get the Data Base Input Tables$$
+C++: Get the Data Base Input Tables
+###################################
 
-$head Syntax$$
-$codei%get_db_input(%db%, %db_input%)%$$
+Syntax
+******
+``get_db_input`` ( *db* , *db_input* )
 
-$head See Also$$
-See the $code smooth_info$$ constructor
-$cref/checks/smooth_info_ctor/Checks/$$.
+See Also
+********
+See the ``smooth_info`` constructor
+:ref:`smooth_info_ctor@Checks` .
 
-$head Purpose$$
+Purpose
+*******
 Read all the input tables and return them as a C++ data structure.
 In addition, preform the following checks:
 
-$subhead Primary Key$$
-Check that all occurrences of $icode%table_name%_id%$$ are with in
+Primary Key
+===========
+Check that all occurrences of *table_name* _ ``id`` are with in
 the limit for the corresponding table.
 Note that this only checks limits, and not positional dependent limits.
-For example, $code null$$ might appear anywhere in
-$cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$.
+For example, ``null`` might appear anywhere in
+:ref:`smooth_grid_table@dage_prior_id` .
 
-$subhead Initial Prevalence Grid$$
-See $cref check_pini_n_age$$.
+Initial Prevalence Grid
+=======================
+See :ref:`check_pini_n_age-name` .
 
-$subhead Check Rate Limits$$
-See $cref check_rate_limit$$.
+Check Rate Limits
+=================
+See :ref:`check_rate_limit-name` .
 
-$subhead Child Priors$$
-See $cref check_child_prior$$.
+Child Priors
+============
+See :ref:`check_child_prior-name` .
 
-$subhead Check Zero Sum Constraint$$
-See $cref check_zero_sum$$.
+Check Zero Sum Constraint
+=========================
+See :ref:`check_zero_sum-name` .
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head db_input$$
+db_input
+********
 The return value has prototype
-$codei%
-   db_input_struct& %db_input%
-%$$
-where $code db_input_struct$$ is defined by
-$srcfile%include/dismod_at/get_db_input.hpp%0%// BEGIN STRUCT%// END STRUCT%$$
-$pre
-$$
-Each $icode%name%_table%$$ above is defined by the corresponding
-$codei%get_%name%_table%$$ routine.
-For example, $codei%age_table%$$ is the return value of
-$cref get_age_table$$ routine.
-All of the tables must be empty when $code get_db_input$$ is called; i.e.,
+
+   ``db_input_struct&`` *db_input*
+
+where ``db_input_struct`` is defined by
+{xrst_literal
+   include/dismod_at/get_db_input.hpp
+   // BEGIN STRUCT
+   // END STRUCT
+}
+
+Each *name* _ ``table`` above is defined by the corresponding
+``get_`` *name* _ ``table`` routine.
+For example, ``age_table`` is the return value of
+:ref:`get_age_table-name` routine.
+All of the tables must be empty when ``get_db_input`` is called; i.e.,
 the size of the corresponding vector must be zero.
-Upon return, each table will have the corresponding database $icode db$$
+Upon return, each table will have the corresponding database *db*
 information.
 
-$end
+{xrst_end get_db_input}
 -----------------------------------------------------------------------------
 */
 # include <limits>

@@ -3,91 +3,92 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_smooth_grid$$
-$spell
-   sqlite
-   struct
-   cpp
-   std
-   dage
-   dtime
-   const
-$$
+{xrst_begin get_smooth_grid}
 
-$section C++: Get the Smoothing Grid Information$$
+C++: Get the Smoothing Grid Information
+#######################################
 
-$head Syntax$$
-$icode%smooth_grid% = get_smooth_grid(%db%)%$$
+Syntax
+******
+*smooth_grid* = ``get_smooth_grid`` ( *db* )
 
-$head Purpose$$
-To read the $cref smooth_grid_table$$ and return it as a C++ data structure.
+Purpose
+*******
+To read the :ref:`smooth_grid_table-name` and return it as a C++ data structure.
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head smooth_grid$$
-The return value $icode smooth_grid$$ has prototype
-$codei%
-   CppAD::vector<smooth_grid_struct>  %smooth_grid%
-%$$
-For each $cref/smooth_grid_id/smooth_grid_table/smooth_grid_id/$$,
-$codei%
-   %smooth_grid%[%smooth_grid_id%]
-%$$
+smooth_grid
+***********
+The return value *smooth_grid* has prototype
+
+   ``CppAD::vector<smooth_grid_struct>`` *smooth_grid*
+
+For each :ref:`smooth_grid_table@smooth_grid_id` ,
+
+   *smooth_grid* [ *smooth_grid_id* ]
+
 is the information for a specific smoothing and specific age and time.
 
-$head smooth_grid_struct$$
+smooth_grid_struct
+******************
 This is a structure with the following fields
-$table
-Type $cnext Field $cnext Description
-$rnext
-$code int$$ $cnext $code smooth_id$$   $pre  $$ $cnext
-   The $cref/smooth_id/smooth_grid_table/smooth_id/$$ for this smoothing.
-$rnext
-$code int$$ $cnext $code age_id$$      $pre  $$ $cnext
-   The $cref/age_id/smooth_grid_table/age_id/$$ for this grid point
-$rnext
-$code int$$ $cnext $code time_id$$      $pre  $$ $cnext
-   The $cref/time_id/smooth_grid_table/time_id/$$ for this grid point
-$rnext
-$code int$$ $cnext $code value_prior_id$$    $pre  $$ $cnext
-   The $cref/value_prior_id/smooth_grid_table/value_prior_id/$$
-   for this smoothing, age, and time.
-$rnext
-$code int$$ $cnext $code dage_prior_id$$    $pre  $$ $cnext
-   The $cref/dage_prior_id/smooth_grid_table/dage_prior_id/$$
-   for this smoothing, age, and time.
-$rnext
-$code int$$ $cnext $code dtime_prior_id$$    $pre  $$ $cnext
-   The $cref/dtime_prior_id/smooth_grid_table/dtime_prior_id/$$
-   for this smoothing, age, and time.
-$rnext
-$code int$$ $cnext $code value_prior_id$$    $pre  $$ $cnext
-   The $cref/const_value/smooth_grid_table/const_value/$$
-   for this smoothing, age, and time.
-$tend
 
-$head Check$$
-The values in the $code smooth_grid_table$$ are checked to make sure that
+.. list-table::
+
+   * - Type
+     - Field
+     - Description
+   * - ``int``
+     - ``smooth_id``
+     - The :ref:`smooth_grid_table@smooth_id` for this smoothing.
+   * - ``int``
+     - ``age_id``
+     - The :ref:`smooth_grid_table@age_id` for this grid point
+   * - ``int``
+     - ``time_id``
+     - The :ref:`smooth_grid_table@time_id` for this grid point
+   * - ``int``
+     - ``value_prior_id``
+     - The :ref:`smooth_grid_table@value_prior_id`
+       for this smoothing, age, and time.
+   * - ``int``
+     - ``dage_prior_id``
+     - The :ref:`smooth_grid_table@dage_prior_id`
+       for this smoothing, age, and time.
+   * - ``int``
+     - ``dtime_prior_id``
+     - The :ref:`smooth_grid_table@dtime_prior_id`
+       for this smoothing, age, and time.
+   * - ``int``
+     - ``value_prior_id``
+     - The :ref:`smooth_grid_table@const_value`
+       for this smoothing, age, and time.
+
+Check
+*****
+The values in the ``smooth_grid_table`` are checked to make sure that
 one of the following two cases holds:
-$list number$$
-$cref/const_value/smooth_grid_table/const_value/$$ is not $code null$$ and
-$cref/value_prior_id/smooth_grid_table/value_prior_id/$$ is $code null$$.
-$lnext
-$icode value_prior$$ is not $code null$$ and $icode const_value$$ is null.
-$lend
 
-$children%example/devel/table/get_smooth_grid_xam.cpp
-%$$
-$head Example$$
-The file $cref get_smooth_grid_xam.cpp$$ contains an example that uses
+#. :ref:`smooth_grid_table@const_value` is not ``null`` and
+   :ref:`smooth_grid_table@value_prior_id` is ``null`` .
+#. *value_prior* is not ``null`` and *const_value* is null.
+
+{xrst_toc_hidden
+   example/devel/table/get_smooth_grid_xam.cpp
+}
+Example
+*******
+The file :ref:`get_smooth_grid_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_smooth_grid}
 -----------------------------------------------------------------------------
 */
 

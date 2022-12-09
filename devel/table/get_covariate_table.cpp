@@ -3,66 +3,72 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_covariate_table$$
-$spell
-   sqlite
-   struct
-   cpp
-   std
-   covariate
-$$
+{xrst_begin get_covariate_table}
+{xrst_spell
+   covariate covariate
+}
 
-$section C++: Get the Covariate Table Information$$
+C++: Get the Covariate Table Information
+########################################
 
-$head Syntax$$
-$icode%covariate_table% = get_covariate_table(%db%)%$$
+Syntax
+******
+*covariate_table* = ``get_covariate_table`` ( *db* )
 
-$head Purpose$$
-To read the $cref covariate_table$$ and return it as a C++ data structure.
+Purpose
+*******
+To read the :ref:`covariate_table-name` and return it as a C++ data structure.
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head covariate_struct$$
+covariate_struct
+****************
 This is a structure with the following fields
-$table
-Type  $cnext Field $cnext Description
-$rnext
-$code std::string$$ $cnext $code covariate_name$$ $cnext
-   The $cref/covariate_name/covariate_table/covariate_name/$$
-   for this covariate
-$rnext
-$code double$$ $cnext $code reference$$  $cnext
-   The $cref/reference/covariate_table/reference/$$
-   value for this covariate
-$rnext
-$code double$$ $cnext $code max_difference$$  $cnext
-   The $cref/max_difference/covariate_table/max_difference/$$
-   value for this covariate
-$tend
 
-$head covariate_table$$
-The return value $icode covariate_table$$ has prototype
-$codei%
-   CppAD::vector<covariate_struct>  %covariate_table%
-%$$
-For each $cref/covariate_id/covariate_table/covariate_id/$$,
-$codei%
-   %covariate_table%[%covariate_id%]
-%$$
+.. list-table::
+
+   * - Type
+     - Field
+     - Description
+   * - ``std::string``
+     - ``covariate_name``
+     - The :ref:`covariate_table@covariate_name`
+       for this covariate
+   * - ``double``
+     - ``reference``
+     - The :ref:`covariate_table@reference`
+       value for this covariate
+   * - ``double``
+     - ``max_difference``
+     - The :ref:`covariate_table@max_difference`
+       value for this covariate
+
+covariate_table
+***************
+The return value *covariate_table* has prototype
+
+   ``CppAD::vector<covariate_struct>`` *covariate_table*
+
+For each :ref:`covariate_table@covariate_id` ,
+
+   *covariate_table* [ *covariate_id* ]
+
 is the information for the corresponding covariate.
-
-$children%example/devel/table/get_covariate_table_xam.cpp
-%$$
-$head Example$$
-The file $cref get_covariate_table_xam.cpp$$ contains an example that uses
+{xrst_toc_hidden
+   example/devel/table/get_covariate_table_xam.cpp
+}
+Example
+*******
+The file :ref:`get_covariate_table_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_covariate_table}
 -----------------------------------------------------------------------------
 */
 

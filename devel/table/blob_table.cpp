@@ -4,69 +4,74 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin blob_table$$
-$spell
+{xrst_begin blob_table}
+{xrst_spell
    sizeof
-   sqlite
-   const
-   std
-$$
+}
 
-$section Writing and Reading Blobs$$
+Writing and Reading Blobs
+#########################
 
-$head Syntax$$
-$codei%write_blob_table(%db%, %table_name%, %col_name%, %sizeof_data%, %data%)
-%$$
-$codei%read_blob_table(%db%, %table_name%, %col_name%, %sizeof_data%, %data%)
-%$$
+Syntax
+******
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+| ``write_blob_table`` ( *db* , *table_name* , *col_name* , *sizeof_data* , *data* )
+| ``read_blob_table`` ( *db* , *table_name* , *col_name* , *sizeof_data* , *data* )
+
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head table_name$$
+table_name
+**********
 This argument has prototype
-$codei%
-   const std::string& %table_name%
-%$$
+
+   ``const std::string&`` *table_name*
+
 and is the name of the table we are reading or writing.
 
-$head col_name$$
+col_name
+********
 This argument has prototype
-$codei%
-   const std::string& %col_name%
-%$$
+
+   ``const std::string&`` *col_name*
+
 and is the name of the column that we are reading or writing.
 
-$head sizeof_data$$
+sizeof_data
+***********
 This argument has prototype
-$codei%
-   size_t& %sizeof_data%
-%$$
+
+   ``size_t&`` *sizeof_data*
+
 This is the number of bytes of data that we are reading or writing.
-If this is a write (read) then $icode sizeof_data$$ is (is not) $code const$$.
-If this is read and the input value of $icode sizeof_data$$ is zero,
-$icode sizeof_data$$ is set to the number of bytes in the data.
-In this case, you should change $icode data$$ to point to the necessary space
-and then call read again without changing $icode sizeof_data$$.
+If this is a write (read) then *sizeof_data* is (is not) ``const`` .
+If this is read and the input value of *sizeof_data* is zero,
+*sizeof_data* is set to the number of bytes in the data.
+In this case, you should change *data* to point to the necessary space
+and then call read again without changing *sizeof_data* .
 
-$head data$$
+data
+****
 For the read operation, this argument has prototype
-$codei%
-   void* %data%
-%$$
-and is the data that is written or read from the table.
-If this is a write (read) then $icode data$$ is (is not) $code const$$.
 
-$children%example/devel/table/blob_table_xam.cpp
-%$$
-$head Example$$
-The file $cref blob_table_xam.cpp$$ is an example use of
+   ``void`` * *data*
+
+and is the data that is written or read from the table.
+If this is a write (read) then *data* is (is not) ``const`` .
+{xrst_toc_hidden
+   example/devel/table/blob_table_xam.cpp
+}
+Example
+*******
+The file :ref:`blob_table_xam.cpp-name` is an example use of
 the write and read operations above.
-$end
+
+{xrst_end blob_table}
 */
 
 # include <cstring>

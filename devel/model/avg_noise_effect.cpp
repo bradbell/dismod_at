@@ -11,97 +11,98 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 /*
 ------------------------------------------------------------------------------
-$begin avg_noise_effect_ctor$$
-$spell
-   std
-   avg_noise_obj
-   vec
-   const
-   CppAD
-   Integrands
-$$
+{xrst_begin avg_noise_effect_ctor}
 
-$section Constructing An Average Noise Effect Object$$
+Constructing An Average Noise Effect Object
+###########################################
 
-$head Syntax$$
-$codei%avg_noise_effect %avg_noise_obj%(
-   %ode_step_size%,
-   %age_avg_grid%,
-   %age_table%,
-   %time_table%,
-   %subgroup_table%,
-   %integrand_table%,
-   %w_info_vec%,
-   %s_info_vec%,
-   %pack_object%
-);
-%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_AVG_NOISE_EFFECT_PROTOTYPE%// END_AVG_NOISE_EFFECT_PROTOTYPE%1
-%$$
+| ``avg_noise_effect`` *avg_noise_obj* (
+| |tab| *ode_step_size* ,
+| |tab| *age_avg_grid* ,
+| |tab| *age_table* ,
+| |tab| *time_table* ,
+| |tab| *subgroup_table* ,
+| |tab| *integrand_table* ,
+| |tab| *w_info_vec* ,
+| |tab| *s_info_vec* ,
+| |tab| *pack_object*
+| );
 
-$head ode_step_size$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_AVG_NOISE_EFFECT_PROTOTYPE
+   // END_AVG_NOISE_EFFECT_PROTOTYPE
+}
+
+ode_step_size
+*************
 This is the value of
-$cref/
-   ode_step_size/
-   option_table/
-   Age Average Grid/
-   ode_step_size
-/$$ in the option table.
+:ref:`option_table@Age Average Grid@ode_step_size` in the option table.
 
-$head age_avg_grid$$
-This is the $cref age_avg_grid$$.
-A reference to $icode age_avg_grid$$ is used by $icode avg_noise_obj$$
-($icode age_avg_grid$$ must no be deleted for as long as
-$icode avg_noise_obj$$ is used).
+age_avg_grid
+************
+This is the :ref:`age_avg_grid-name` .
+A reference to *age_avg_grid* is used by *avg_noise_obj*
+( *age_avg_grid* must no be deleted for as long as
+*avg_noise_obj* is used).
 
-$head age_table$$
-This argument is the $cref age_table$$.
-A reference to $icode age_table$$ is used by $icode avg_noise_obj$$
-($icode age_table$$ must no be deleted for as long as
-$icode avg_noise_obj$$ is used).
+age_table
+*********
+This argument is the :ref:`age_table-name` .
+A reference to *age_table* is used by *avg_noise_obj*
+( *age_table* must no be deleted for as long as
+*avg_noise_obj* is used).
 
-$head time_table$$
-This argument is the $cref time_table$$.
-A reference to $icode time_table$$ is used by $icode avg_noise_obj$$.
+time_table
+**********
+This argument is the :ref:`time_table-name` .
+A reference to *time_table* is used by *avg_noise_obj* .
 
-$head subgroup_table$$
-This argument is the $cref subgroup_table$$.
-A reference to $icode subgroup_table$$ is used by $icode avg_noise_obj$$.
+subgroup_table
+**************
+This argument is the :ref:`subgroup_table-name` .
+A reference to *subgroup_table* is used by *avg_noise_obj* .
 
-$head integrand_table$$
-This argument is the $cref integrand_table$$.
-A reference to $icode integrand_table$$ is used by $icode avg_noise_obj$$.
+integrand_table
+***************
+This argument is the :ref:`integrand_table-name` .
+A reference to *integrand_table* is used by *avg_noise_obj* .
 
-$head w_info_vec$$
-For each $cref/weight_id/weight_table/weight_id/$$,
-$codei%
-   %w_info_vec%[ %weight_id% ]
-%$$
-is the corresponding $cref weight_info$$ information.
+w_info_vec
+**********
+For each :ref:`weight_table@weight_id` ,
+
+   *w_info_vec* [ *weight_id*  ]
+
+is the corresponding :ref:`weight_info-name` information.
 In addition, the constant weight is included at the end of the vector; i.e.,
-at index $icode%w_info_vec%.size()-1%$$.
+at index *w_info_vec* . ``size`` () ``-1`` .
 
-$head s_info_vec$$
-For each $cref/smooth_id/smooth_table/smooth_id/$$,
-$codei%
-   %s_info_vec%[ %smooth_id% ]
-%$$
-is the corresponding $cref smooth_info$$ information.
-None of the prior information in $icode s_info_vec$$ is used.
-A reference to $icode s_info_vec$$ is used by $icode avg_noise_obj$$.
+s_info_vec
+**********
+For each :ref:`smooth_table@smooth_id` ,
 
-$head pack_object$$
-This is the $cref pack_info$$ information corresponding to
-the $cref model_variables$$.
+   *s_info_vec* [ *smooth_id*  ]
 
-$head Example$$
-The file $cref avg_noise_effect_xam.cpp$$ contains an example and test
+is the corresponding :ref:`smooth_info-name` information.
+None of the prior information in *s_info_vec* is used.
+A reference to *s_info_vec* is used by *avg_noise_obj* .
+
+pack_object
+***********
+This is the :ref:`pack_info-name` information corresponding to
+the :ref:`model_variables-name` .
+
+Example
+*******
+The file :ref:`avg_noise_effect_xam.cpp-name` contains an example and test
 of using this routine.
 
-$end
+{xrst_end avg_noise_effect_ctor}
 */
 // BEGIN_AVG_NOISE_EFFECT_PROTOTYPE
 avg_noise_effect::avg_noise_effect(
@@ -129,83 +130,92 @@ a1_double_time_line_object_( age_avg_grid )
 { }
 /*
 ------------------------------------------------------------------------------
-$begin avg_noise_effect_rectangle$$
-$spell
-   avg_noise_obj
-   vec
-   const
-   CppAD
-   Integrands
-   covariates
-$$
+{xrst_begin avg_noise_effect_rectangle}
 
-$section Computing One Average Integrand$$
+Computing One Average Integrand
+###############################
 
-$head Syntax$$
-$icode%avg% = %avg_noise_obj%.rectangle(
-   %age_lower%,
-   %age_upper%,
-   %time_lower%,
-   %time_upper%,
-   %weight_id%,
-   %subgroup_id%,
-   %integrand_id%,
-   %x%,
-   %pack_vec%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_RECTANGLE_PROTOTYPE%// END_RECTANGLE_PROTOTYPE%1
-%$$
+| *avg* = *avg_noise_obj* . ``rectangle`` (
+| |tab| *age_lower* ,
+| |tab| *age_upper* ,
+| |tab| *time_lower* ,
+| |tab| *time_upper* ,
+| |tab| *weight_id* ,
+| |tab| *subgroup_id* ,
+| |tab| *integrand_id* ,
+| |tab| *x* ,
+| |tab| *pack_vec*
+| )
 
-$head age_lower$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_RECTANGLE_PROTOTYPE
+   // END_RECTANGLE_PROTOTYPE
+}
+
+age_lower
+*********
 the lower age in the rectangle.
 
-$head age_upper$$
-the upper age in the rectangle; $icode%age_lower% <= %age_upper%$$.
+age_upper
+*********
+the upper age in the rectangle; *age_lower* <= *age_upper* .
 
-$head time_lower$$
+time_lower
+**********
 the lower time in the rectangle.
 
-$head time_upper$$
-the upper time in the rectangle; $icode%time_lower% <= %time_upper%$$.
+time_upper
+**********
+the upper time in the rectangle; *time_lower* <= *time_upper* .
 
-$head weight_id$$
-This is the $cref/weight_id/weight_table/weight_id/$$
+weight_id
+*********
+This is the :ref:`weight_table@weight_id`
 in the weight table corresponding to this average integrand.
 
-$head subgroup_id$$
-This is the $cref/subgroup_id/subgroup_table/subgroup_id/$$
+subgroup_id
+***********
+This is the :ref:`subgroup_table@subgroup_id`
 in the subgroup table corresponding to this average integrand.
 
-$head integrand_id$$
-This is the $cref/integrand_id/integrand_table/integrand_id/$$
+integrand_id
+************
+This is the :ref:`integrand_table@integrand_id`
 in the integrand table corresponding to this average integrand.
 
-$head x$$
+x
+*
 This is the vector of covariates for this average.
 
-$head Float$$
-The type $icode Float$$ must be $code double$$ or
-$cref a1_double$$.
+Float
+*****
+The type *Float* must be ``double`` or
+:ref:`a1_double-name` .
 
-$head pack_vec$$
-is all the $cref model_variables$$ in the order
-specified by $icode pack_object$$.
+pack_vec
+********
+is all the :ref:`model_variables-name` in the order
+specified by *pack_object* .
 
-$head avg$$
-The return value $icode avg$$ is the average of the integrand
+avg
+***
+The return value *avg* is the average of the integrand
 using the specified weighting over the specified rectangle
+{xrst_toc_hidden
+   example/devel/model/avg_noise_effect_xam.cpp
+}
 
-$children%example/devel/model/avg_noise_effect_xam.cpp
-%$$
-
-$head Example$$
-The file $cref avg_noise_effect_xam.cpp$$ contains an example and test
+Example
+*******
+The file :ref:`avg_noise_effect_xam.cpp-name` contains an example and test
 of using this routine.
 
-$end
+{xrst_end avg_noise_effect_rectangle}
 */
 
 // BEGIN_RECTANGLE_PROTOTYPE

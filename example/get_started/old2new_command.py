@@ -2,15 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin old2new_command.py$$ $newlinech #$$
-# $spell
-#  var
-# $$
+# {xrst_begin old2new_command.py}
+# {xrst_comment_ch #}
 #
-# $section old2new Command: Example and Test$$
+# old2new Command: Example and Test
+# #################################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end old2new_command.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import sys

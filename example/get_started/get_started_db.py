@@ -2,88 +2,80 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin get_started_db.py$$ $newlinech #$$
-# $spell
-#  avgint
-#  dismod
-#  covariate
-#  mtother
-#  r_ik
-# $$
+# {xrst_begin get_started_db.py}
+# {xrst_comment_ch #}
 #
-# $section Create get_started Input Tables: Example and Test$$
+# Create get_started Input Tables: Example and Test
+# #################################################
 #
-# $head Syntax$$
-# $codei%get_started_db.get_started_db()%$$
+# Syntax
+# ******
+# ``get_started_db.get_started_db`` ()
 #
-# $head Discussion$$
-# The python command above creates the database $code get_started.db$$
+# Discussion
+# **********
+# The python command above creates the database ``get_started.db``
 # in the current working directory.
 # This is a very simple case where:
-# $list number$$
-# All of the rates are zero except for
-# $cref/omega/rate_table/rate_name/omega/$$.
-# $lnext
-# There is only one node corresponding to the world, and hence there are no
-# $cref/children/option_table/Parent Node/Children/$$ or
-# $cref/random effects/model_variables/Random Effects, u/$$.
-# $lnext
-# There is only one measurement and it is for the
-# $cref/integrand_name/integrand_table/integrand_name/$$
-# $cref/susceptible/avg_integrand/Integrand, I_i(a,t)/susceptible/$$
-# and at age 50 and year 2000.
-# $lnext
-# The data table has a
-# $cref/comment column/database/Comment Columns and Tables/$$
-# named $code c_data_info$$ that is used as a
-# $cref/
-#  data_extra_column/
-#  option_table/
-#  Extra Columns/
-#  data_extra_columns
-# /$$.
-# $lnext
-# There is one
-# $cref/covariate/covariate_table/$$ income and a corresponding
-# covariate multiplier on the
-# $cref/rate value/mulcov_table/mulcov_type/rate_value/$$ for
-# $cref/omega/avg_integrand/Rate Functions/omega_i(a,t)/$$.
-# $lnext
-# The model for other cause mortality
-# $cref/omega/rate_table/rate_name/omega/$$,
-# and the model for the rate covariate multiplier
-# $cref/alpha
-#  /avg_integrand
-#  /Rate Functions
-#  /Group Rate Covariate Multiplier, alpha_jk
-# /$$,
-# are constant in age and time.
-# $lend
+#
+# #. All of the rates are zero except for
+#    :ref:`rate_table@rate_name@omega` .
+# #. There is only one node corresponding to the world, and hence there are no
+#    :ref:`option_table@Parent Node@Children` or
+#    :ref:`random effects<model_variables@Random Effects, u>` .
+# #. There is only one measurement and it is for the
+#    :ref:`integrand_table@integrand_name`
+#    :ref:`avg_integrand@Integrand, I_i(a,t)@susceptible`
+#    and at age 50 and year 2000.
+# #. The data table has a
+#    :ref:`comment column<database@Comment Columns and Tables>`
+#    named ``c_data_info`` that is used as a
+#    :ref:`data_extra_column<option_table@Extra Columns@data_extra_columns>` .
+# #. There is one
+#    :ref:`covariate<covariate_table-name>` income and a corresponding
+#    covariate multiplier on the
+#    :ref:`rate value<mulcov_table@mulcov_type@rate_value>` for
+#    :ref:`omega<avg_integrand@Rate Functions@omega_i(a,t)>` .
+# #. The model for other cause mortality
+#    :ref:`rate_table@rate_name@omega` ,
+#    and the model for the rate covariate multiplier
+#    :ref:`alpha<avg_integrand@Rate Functions@Group Rate Covariate Multiplier, alpha_jk>` ,
+#    are constant in age and time.
+#
 # Because other cause mortality and the covariate multiplier are
 # constant in age and time,
 # the susceptible population satisfies the
-# following ODE in age $latex a$$:
-# $latex \[
+# following ODE in age :math:`a`:
+#
+# .. math::
+#
 #  S(0) = 1 \W{\R{and}} S'(a) = - \exp( \alpha x ) \omega S(a)
-# \] $$
-# where $latex \omega$$ is the other cause mortality rate
+#
+# where :math:`\omega` is the other cause mortality rate
 # before the covariate effect,
-# $latex x$$ is the value of the income for this measurement,
-# $latex \alpha$$ is the covariate multiplier, and
-# $latex \exp ( \alpha x ) \omega$$
+# :math:`x` is the value of the income for this measurement,
+# :math:`\alpha` is the covariate multiplier, and
+# :math:`\exp ( \alpha x ) \omega`
 # is the other cause mortality after the covariate effect;
-# see $cref/r_ik/avg_integrand/Rate Functions/Adjusted Rate, r_ik/$$.
+# see :ref:`r_ik<avg_integrand@Rate Functions@Adjusted Rate, r_ik>` .
 # The solution is
-# $latex \[
+#
+# .. math::
+#
 #  S(a) = \exp \left[ - \exp( \alpha x ) \omega \; a \right]
-# \]$$
 #
-# $head Reference$$
-# See $cref create_database$$.
+# Reference
+# *********
+# See :ref:`create_database-name` .
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end get_started_db.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ---------------------------------------------------------------------------

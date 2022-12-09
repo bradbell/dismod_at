@@ -3,54 +3,52 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin check_pini_n_age$$
-$spell
-   const
-   CppAD
-   struct
-   pini
-   sqlite
-$$
+{xrst_begin check_pini_n_age}
 
-$section Check Initial Prevalence Grid Has One Age$$
+Check Initial Prevalence Grid Has One Age
+#########################################
 
-$head syntax$$
-$codei%check_pini_n_age(%db%, %rate_table%, %smooth_table%)%$$
+syntax
+******
+``check_pini_n_age`` ( *db* , *rate_table* , *smooth_table* )
 
-$head db$$
+db
+**
 This argument has prototype
-$codei%
-   sqlite3* %db%
-%$$
-and is the database connection for $cref/logging/log_message/$$ errors.
 
-$head rate_table$$
+   ``sqlite3`` * *db*
+
+and is the database connection for :ref:`logging<log_message-name>` errors.
+
+rate_table
+**********
 This argument has prototype
-$codei%
-   const CppAD::vector<rate_struct>& %rate_table%
-%$$
+
+   ``const CppAD::vector<rate_struct>&`` *rate_table*
+
 and it is the
-$cref/rate_table/get_rate_table/rate_table/$$.
+:ref:`get_rate_table@rate_table` .
 For this table,
-only the fields $code parent_smooth_id$$ and $code child_smooth_id$$
+only the fields ``parent_smooth_id`` and ``child_smooth_id``
 are used.
 
-$head smooth_table$$
+smooth_table
+************
 This argument has prototype
-$codei%
-   const CppAD::vector<smooth_struct>& %smooth_table%
-%$$
+
+   ``const CppAD::vector<smooth_struct>&`` *smooth_table*
+
 and it is the
-$cref/smooth_table/get_smooth_table/smooth_table/$$.
-For this table, only the $code n_age$$ field is used.
-
-$children%
+:ref:`get_smooth_table@smooth_table` .
+For this table, only the ``n_age`` field is used.
+{xrst_toc_hidden
    example/devel/table/check_pini_n_age_xam.cpp
-%$$
-$head Example$$
-$cref check_pini_n_age_xam.cpp$$
+}
+Example
+*******
+:ref:`check_pini_n_age_xam.cpp-name`
 
-$end
+{xrst_end check_pini_n_age}
 */
 # include <dismod_at/get_rate_table.hpp>
 # include <dismod_at/get_smooth_table.hpp>

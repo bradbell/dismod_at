@@ -3,17 +3,17 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin like_one_xam.cpp$$
-$spell
-   interp
-   xam
-$$
+{xrst_begin like_one_xam.cpp}
 
-$section C++ like_one: Example and Test$$
+C++ like_one: Example and Test
+##############################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end like_one_xam.cpp}
 */
 // BEGIN C++
 # include <limits>

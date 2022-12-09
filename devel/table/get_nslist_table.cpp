@@ -3,49 +3,48 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_nslist_table$$
-$spell
-   sqlite
-   enum
-   cpp
-   std
-   nslist
-$$
+{xrst_begin get_nslist_table}
 
-$section C++: Get the nslist Table Information$$
+C++: Get the nslist Table Information
+#####################################
 
-$head Syntax$$
-$icode%nslist_table% = get_nslist_table(%db%)%$$
+Syntax
+******
+*nslist_table* = ``get_nslist_table`` ( *db* )
 
-$head Purpose$$
-To read the $cref nslist_table$$ and return it as a C++ data structure.
+Purpose
+*******
+To read the :ref:`nslist_table-name` and return it as a C++ data structure.
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head nslist_table$$
-The return value $icode nslist_table$$ has prototype
-$codei%
-   CppAD::vector<std::string>  %nslist_table%
-%$$
-For each $cref/nslist_id/nslist_table/nslist_id/$$,
-$codei%
-   %nslist_table%[%nslist_id%]
-%$$
-is the name for the corresponding
-$cref/nslist_id/nslist_pair_table/nslist_id/$$.
+nslist_table
+************
+The return value *nslist_table* has prototype
 
-$children%example/devel/table/get_nslist_table_xam.cpp
-%$$
-$head Example$$
-The file $cref get_nslist_table_xam.cpp$$ contains an example that uses
+   ``CppAD::vector<std::string>`` *nslist_table*
+
+For each :ref:`nslist_table@nslist_id` ,
+
+   *nslist_table* [ *nslist_id* ]
+
+is the name for the corresponding
+:ref:`nslist_pair_table@nslist_id` .
+{xrst_toc_hidden
+   example/devel/table/get_nslist_table_xam.cpp
+}
+Example
+*******
+The file :ref:`get_nslist_table_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_nslist_table}
 -----------------------------------------------------------------------------
 */
 

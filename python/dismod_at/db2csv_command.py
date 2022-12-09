@@ -2,618 +2,642 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin db2csv_command$$ $newlinech #$$
-# $spell
-#  hes
-#  ihme
-#  const
-#  ij
-#  Csv
-#  py
-#  dismod
-#  var
-#  covariate
-#  covariates
-#  res
-#  dage
-#  dtime
-#  std
-#  sim
-#  avgint
-#  dir
-#  dismodat
-#  mulcov
-#  cv
-#  stdcv
-#  cov_diff
-#  bnd
-# $$
+# {xrst_begin db2csv_command}
+# {xrst_spell
+#     dir
+#     ihme
+#     ij
+#     stdcv
+# }
+# {xrst_comment_ch #}
 #
-# $section Create Csv Files that Summarize The Database$$
+# Create Csv Files that Summarize The Database
+# ############################################
 #
-# $head Syntax$$
+# Syntax
+# ******
 #
-# $subhead As Program$$
-# $codei%dismodat.py %database% db2csv%$$
+# As Program
+# ==========
+# ``dismodat.py`` *database* ``db2csv``
 #
-# $subhead As Python Function$$
-# $codei%dismod_at.db2csv_command( %database% )%$$
+# As Python Function
+# ==================
+# ``dismod_at.db2csv_command`` ( *database*  )
 #
-# $head Convention$$
-# The $code null$$ value in the database corresponds
+# Convention
+# **********
+# The ``null`` value in the database corresponds
 # to an empty string in the csv files.
 #
-# $head database$$
+# database
+# ********
 # is the path from the currently directory to the database.
-# This must be a $cref/dismod_at/database/$$ and
-# the $cref init_command$$ must have been run on the database.
+# This must be a :ref:`dismod_at<database-name>` and
+# the :ref:`init_command-name` must have been run on the database.
 #
-# $head dir$$
-# We use the notation $icode dir$$ for the directory where $icode database$$
+# dir
+# ***
+# We use the notation *dir* for the directory where *database*
 # is located.
 #
-# $head fit_var, fit_data_subset$$
-# The $cref log_table$$ is used to determine if the previous
-# fit command had a $cref/simulate_index/fit_command/simulate_index/$$.
-# If so, the $cref fit_var_table$$ and $cref fit_data_subset_table$$
+# fit_var, fit_data_subset
+# ************************
+# The :ref:`log_table-name` is used to determine if the previous
+# fit command had a :ref:`fit_command@simulate_index` .
+# If so, the :ref:`fit_var_table-name` and :ref:`fit_data_subset_table-name`
 # corresponds to simulated data.
 # Otherwise, if they exist, the correspond to the measured data.
 #
-# $head simulate_index$$
+# simulate_index
+# **************
 # If the previous fit command had a
-# $cref/simulate_index/fit_command/simulate_index/$$
-# that value is used for $icode simulate_index$$ below.
-# Otherwise, zero is used for $icode simulate_index$$ below.
+# :ref:`fit_command@simulate_index`
+# that value is used for *simulate_index* below.
+# Otherwise, zero is used for *simulate_index* below.
 #
-# $head option.csv$$
-# The file $icode%dir%/option.csv%$$ is written by this command.
+# option.csv
+# **********
+# The file *dir* / ``option.csv`` is written by this command.
 # It is a CSV file with one row for each possible row in the
-# $cref option_table$$.
-# The columns in $code option.csv$$ are
-# $cref/option_name/option_table/Table Format/option_name/$$ and
-# $cref/option_value/option_table/Table Format/option_value/$$.
+# :ref:`option_table-name` .
+# The columns in ``option.csv`` are
+# :ref:`option_table@Table Format@option_name` and
+# :ref:`option_table@Table Format@option_value` .
 # If a row does not appear in the option table, the corresponding
-# default value is written to $code option.csv$$.
-# If the $cref/parent_node_id/option_table/Parent Node/parent_node_id/$$ appears
-# in the option table, the $icode parent_node_name$$ row of $code option.csv$$
+# default value is written to ``option.csv`` .
+# If the :ref:`option_table@Parent Node@parent_node_id` appears
+# in the option table, the *parent_node_name* row of ``option.csv``
 # is filled in with the corresponding node name.
 #
-# $head log.csv$$
-# The file $icode%dir%/log.csv%$$ is written by this command.
-# It is a CSV file with one row for each message in the $cref log_table$$.
+# log.csv
+# *******
+# The file *dir* / ``log.csv`` is written by this command.
+# It is a CSV file with one row for each message in the :ref:`log_table-name` .
 # The columns in this table are
-# $cref/message_type/log_table/message_type/$$,
-# $cref/table_name/log_table/table_name/$$,
-# $cref/row_id/log_table/row_id/$$,
-# $cref/unix_time/log_table/unix_time/$$, and
-# $cref/message/log_table/message/$$.
+# :ref:`log_table@message_type` ,
+# :ref:`log_table@table_name` ,
+# :ref:`log_table@row_id` ,
+# :ref:`log_table@unix_time` , and
+# :ref:`log_table@message` .
 #
-# $head age_avg.csv$$
-# The file $icode%dir%/age_avg.csv%$$ is written by this command.
+# age_avg.csv
+# ***********
+# The file *dir* / ``age_avg.csv`` is written by this command.
 # It is a CSV file with the contents of the age_avg table.
-# The only column in this table is $cref/age/age_avg_table/age/$$.
-# Note that a $cref set_command$$ may change the value of
-# $cref/
-#  ode_step_size/
-#  option_table/
-#  Age Average Grid/
-#  ode_step_size
-# /$$ or
-# $cref/
-#  age_avg_split/
-#  option_table/
-#  Age Average Grid/
-#  age_avg_split
-# /$$ but it will not
+# The only column in this table is :ref:`age_avg_table@age` .
+# Note that a :ref:`set_command-name` may change the value of
+# :ref:`option_table@Age Average Grid@ode_step_size` or
+# :ref:`option_table@Age Average Grid@age_avg_split` but it will not
 # write out the new age_avg table.
 #
-# $head hes_fixed.csv$$
-# If the $cref/asymptotic/sample_command/asymptotic/$$
+# hes_fixed.csv
+# *************
+# If the :ref:`sample_command@asymptotic`
 # sample command was executed,
-# the contents of the $cref hes_fixed_table$$ are written to
-# the CSV file $icode%dir%/hes_fixed.csv%$$.
+# the contents of the :ref:`hes_fixed_table-name` are written to
+# the CSV file *dir* / ``hes_fixed.csv`` .
 # The columns in this table are
-# $cref/row_var_id/hes_fixed_table/row_var_id/$$,
-# $cref/col_var_id/hes_fixed_table/col_var_id/$$,
-# $cref/hes_fixed_value/hes_fixed_table/hes_fixed_value/$$.
+# :ref:`hes_fixed_table@row_var_id` ,
+# :ref:`hes_fixed_table@col_var_id` ,
+# :ref:`hes_fixed_table@hes_fixed_value` .
 #
-# $head hes_random.csv$$
-# If a $cref/fit both/fit_command/variables/both/$$,
-# $cref/fit random/fit_command/variables/random/$$,
-# or $cref/sample asymptotic/sample_command/asymptotic/$$
+# hes_random.csv
+# **************
+# If a :ref:`fit both<fit_command@variables@both>` ,
+# :ref:`fit random<fit_command@variables@random>` ,
+# or :ref:`sample asymptotic<sample_command@asymptotic>`
 # command was executed,
-# the contents of the $cref hes_random_table$$ are written to
-# the CSV file $icode%dir%/hes_random.csv%$$.
+# the contents of the :ref:`hes_random_table-name` are written to
+# the CSV file *dir* / ``hes_random.csv`` .
 # The columns in this table are
-# $cref/row_var_id/hes_random_table/row_var_id/$$,
-# $cref/col_var_id/hes_random_table/col_var_id/$$,
-# $cref/hes_random_value/hes_random_table/hes_random_value/$$.
+# :ref:`hes_random_table@row_var_id` ,
+# :ref:`hes_random_table@col_var_id` ,
+# :ref:`hes_random_table@hes_random_value` .
 #
-# $head trace_fixed.csv$$
-# If the $cref/fit fixed/fit_command/variables/fixed/$$ or
-# $cref/fit both/fit_command/variables/both/$$ command has completed,
-# the contents of the $cref trace_fixed_table$$ are written to
-# the CSV file $icode%dir%/trace_fixed.csv%$$.
+# trace_fixed.csv
+# ***************
+# If the :ref:`fit fixed<fit_command@variables@fixed>` or
+# :ref:`fit both<fit_command@variables@both>` command has completed,
+# the contents of the :ref:`trace_fixed_table-name` are written to
+# the CSV file *dir* / ``trace_fixed.csv`` .
 # The columns in this table have the same name as in the corresponding table
 # with the exception that the column
-# $cref/regularization_size/trace_fixed_table/regularization_size/$$
-# is called $icode reg_size$$.
+# :ref:`trace_fixed_table@regularization_size`
+# is called *reg_size* .
 #
-# $head mixed_info.csv$$
-# If the $cref fit_command$$ completed
-# the contents of the $cref mixed_info_table$$ are written to
-# the CSV file $icode%dir%/mixed_info.csv%$$.
+# mixed_info.csv
+# **************
+# If the :ref:`fit_command-name` completed
+# the contents of the :ref:`mixed_info_table-name` are written to
+# the CSV file *dir* / ``mixed_info.csv`` .
 #
-# $comment ------------------------------------------------------------$$
-# $head variable.csv$$
-# $comment ------------------------------------------------------------$$
-# The file $icode%dir%/variable.csv%$$ is written by this command.
-# It is a CSV file with one row for each of the $cref model_variables$$
+# {xrst_comment -------------------------------------------------------}
+# variable.csv
+# ************
+# {xrst_comment -------------------------------------------------------}
+# The file *dir* / ``variable.csv`` is written by this command.
+# It is a CSV file with one row for each of the :ref:`model_variables-name`
 # and has the following columns:
 #
-# $subhead var_id$$
-# is the $cref/var_id/var_table/var_id/$$.
+# var_id
+# ======
+# is the :ref:`var_table@var_id` .
 #
-# $subhead var_type$$
-# is the $cref/var_type/var_table/var_type/$$.
+# var_type
+# ========
+# is the :ref:`var_table@var_type` .
 #
-# $subhead s_id$$
-# is the $cref/smooth_id/smooth_table/smooth_id/$$ for this variable.
+# s_id
+# ====
+# is the :ref:`smooth_table@smooth_id` for this variable.
 # If the variable is a
-# $cref/smoothing standard deviation multiplier
-#    /model_variables
-#    /Fixed Effects, theta
-#    /Smoothing Standard Deviation Multipliers, lambda
-#/$$
+# :ref:`smoothing standard deviation multiplier<model_variables@Fixed Effects, theta@Smoothing Standard Deviation Multipliers, lambda>`
 # this is the smoothing that this multiplier effects.
 # Otherwise, it is the smoothing where the prior for this variable
 # comes from.
 #
-# $subhead m_id$$
+# m_id
+# ====
 # If this variable is a covariate multiplier, this is the corresponding
-# $cref/mulcov_id/mulcov_table/mulcov_id/$$.
+# :ref:`mulcov_table@mulcov_id` .
 #
-# $subhead m_diff$$
+# m_diff
+# ======
 # If this variable is a covariate multiplier, this is the corresponding
-# $cref/max_cov_diff/bnd_mulcov_table/max_cov_diff/$$.
+# :ref:`bnd_mulcov_table@max_cov_diff` .
 #
-# $subhead bound$$
+# bound
+# =====
 # If the upper and lower value limits in the value prior for this variable
 # are not equal,
 # this is a bound for the absolute value of this variable; see
-# $cref/max_mulcov/bnd_mulcov_table/max_mulcov/$$ and
-# $cref/bound_random/option_table/Optimize Random Only/bound_random/$$.
+# :ref:`bnd_mulcov_table@max_mulcov` and
+# :ref:`option_table@Optimize Random Only@bound_random` .
 #
-# $subhead age$$
-# is the $cref/age/age_table/age/$$.
+# age
+# ===
+# is the :ref:`age_table@age` .
 #
-# $subhead time$$
-# is the $cref/time/time_table/time/$$.
+# time
+# ====
+# is the :ref:`time_table@time` .
 #
-# $subhead rate$$
-# is the $cref/rate_name/rate_table/rate_name/$$.
+# rate
+# ====
+# is the :ref:`rate_table@rate_name` .
 #
-# $subhead integrand$$
+# integrand
+# =========
 # is the
-# $cref/integrand_name/integrand_table/integrand_name/$$.
+# :ref:`integrand_table@integrand_name` .
 #
-# $subhead covariate$$
+# covariate
+# =========
 # is the
-# $cref/covariate_name/covariate_table/covariate_name/$$.
+# :ref:`covariate_table@covariate_name` .
 #
-# $subhead node$$
+# node
+# ====
 # is the
-# $cref/node_name/node_table/node_name/$$.
+# :ref:`node_table@node_name` .
 #
-# $subhead group$$
+# group
+# =====
 # This field is non-empty for
-# $cref/group covariate multipliers
-#  /model_variables
-#  /Fixed Effects, theta
-#  /Group Covariate Multipliers
-#/$$.
+# :ref:`model_variables@Fixed Effects, theta@Group Covariate Multipliers` .
 #
-# $subhead subgroup$$
+# subgroup
+# ========
 # This field is non-empty for
-# $cref/subgroup covariate multipliers
-#  /model_variables
-#  /Random Effects, u
-#  /Subgroup Covariate Multipliers
-#/$$.
+# :ref:`model_variables@Random Effects, u@Subgroup Covariate Multipliers` .
 #
-# $subhead fixed$$
-# is $code true$$ if this variable is a
-# $cref/fixed effect/model_variables/Fixed Effects, theta/$$,
-# otherwise it is $code false$$.
+# fixed
+# =====
+# is ``true`` if this variable is a
+# :ref:`fixed effect<model_variables@Fixed Effects, theta>` ,
+# otherwise it is ``false`` .
 #
-# $subhead depend$$
-# If the $cref depend_var_table$$ exists, this has one of the following:
-# $code none$$ if neither the data nor the prior depends on this variable,
-# $code data$$ if only the data depends on this variable,
-# $code prior$$ if only the prior depends on this variable,
-# $code both$$ if both the data and the prior depend on this variable.
+# depend
+# ======
+# If the :ref:`depend_var_table-name` exists, this has one of the following:
+# ``none`` if neither the data nor the prior depends on this variable,
+# ``data`` if only the data depends on this variable,
+# ``prior`` if only the prior depends on this variable,
+# ``both`` if both the data and the prior depend on this variable.
 #
-# $subhead fit_value$$
-# If the $cref fit_command$$ has been run, this is the
-# $cref/fit_var_value/fit_var_table/fit_var_value/$$.
+# fit_value
+# =========
+# If the :ref:`fit_command-name` has been run, this is the
+# :ref:`fit_var_table@fit_var_value` .
 #
-# $subhead start$$
+# start
+# =====
 # is the
-# $cref/start_var_value/start_var_table/start_var_value/$$
+# :ref:`start_var_table@start_var_value`
 # for this variable.
 #
-# $subhead scale$$
+# scale
+# =====
 # is the
-# $cref/scale_var_value/scale_var_table/scale_var_value/$$
+# :ref:`scale_var_table@scale_var_value`
 # for this variable.
 #
-# $subhead truth$$
+# truth
+# =====
 # If the truth_var table exists, this is the
-# $cref/truth_var_value/truth_var_table/truth_var_value/$$
+# :ref:`truth_var_table@truth_var_value`
 # for this variable.
 #
-# $subhead sam_avg$$
+# sam_avg
+# =======
 # If the sample table exists,
-# for each $cref/var_id/sample_table/var_id/$$
+# for each :ref:`sample_table@var_id`
 # this is the average with respect to
-# with respect to $cref/sample_index/sample_table/sample_index/$$
-# of the $cref/var_value/sample_table/var_value/$$ corresponding to
-# this $icode var_id$$.
+# with respect to :ref:`sample_table@sample_index`
+# of the :ref:`sample_table@var_value` corresponding to
+# this *var_id* .
 #
-# $subhead sam_std$$
+# sam_std
+# =======
 # If the sample table exists,
-# for each fixed $cref/var_id/sample_table/var_id/$$
+# for each fixed :ref:`sample_table@var_id`
 # this is the estimated standard deviation with respect to
-# with respect to $cref/sample_index/sample_table/sample_index/$$
-# of the # $cref/var_value/sample_table/var_value/$$ corresponding to
-# this $icode var_id$$.
-# If there is only one $icode sample_index$$ in the sample table,
+# with respect to :ref:`sample_table@sample_index`
+# of the # :ref:`sample_table@var_value` corresponding to
+# this *var_id* .
+# If there is only one *sample_index* in the sample table,
 # this column is empty because the standard deviation cannot be estimated
 # from one sample.
 #
-# $subhead res_value$$
-# If the $cref fit_command$$ has been run, this is the
-# $cref/residual_value/fit_var_table/residual_value/$$.
+# res_value
+# =========
+# If the :ref:`fit_command-name` has been run, this is the
+# :ref:`fit_var_table@residual_value` .
 #
-# $subhead res_dage$$
-# If the $cref fit_command$$ has been run, this is the
-# $cref/residual_dage/fit_var_table/residual_dage/$$; see
-# $cref/fit_var/db2csv_command/fit_var, fit_data_subset/$$ above.
+# res_dage
+# ========
+# If the :ref:`fit_command-name` has been run, this is the
+# :ref:`fit_var_table@residual_dage` ; see
+# :ref:`fit_var<db2csv_command@fit_var, fit_data_subset>` above.
 #
-# $subhead res_dtime$$
-# If the $cref fit_command$$ has been run, this is the
-# $cref/residual_dtime/fit_var_table/residual_dtime/$$; see
-# $cref/fit_var/db2csv_command/fit_var, fit_data_subset/$$ above.
+# res_dtime
+# =========
+# If the :ref:`fit_command-name` has been run, this is the
+# :ref:`fit_var_table@residual_dtime` ; see
+# :ref:`fit_var<db2csv_command@fit_var, fit_data_subset>` above.
 #
-# $subhead lag_value$$
-# If the $cref fit_command$$ has been run, this is the
-# $cref/lagrange_value/fit_var_table/lagrange_value/$$; see
-# $cref/fit_var/db2csv_command/fit_var, fit_data_subset/$$ above.
+# lag_value
+# =========
+# If the :ref:`fit_command-name` has been run, this is the
+# :ref:`fit_var_table@lagrange_value` ; see
+# :ref:`fit_var<db2csv_command@fit_var, fit_data_subset>` above.
 #
-# $subhead lag_dage$$
-# If the $cref fit_command$$ has been run, this is the
-# $cref/lagrange_dage/fit_var_table/lagrange_dage/$$; see
-# $cref/fit_var/db2csv_command/fit_var, fit_data_subset/$$ above.
+# lag_dage
+# ========
+# If the :ref:`fit_command-name` has been run, this is the
+# :ref:`fit_var_table@lagrange_dage` ; see
+# :ref:`fit_var<db2csv_command@fit_var, fit_data_subset>` above.
 #
-# $subhead lag_dtime$$
-# If the $cref fit_command$$ has been run, this is the
-# $cref/lagrange_dtime/fit_var_table/lagrange_dtime/$$; see
-# $cref/fit_var/db2csv_command/fit_var, fit_data_subset/$$ above.
+# lag_dtime
+# =========
+# If the :ref:`fit_command-name` has been run, this is the
+# :ref:`fit_var_table@lagrange_dtime` ; see
+# :ref:`fit_var<db2csv_command@fit_var, fit_data_subset>` above.
 #
-# $subhead sim_v, sim_a, sim_t$$
-# If the $cref simulate_command$$ has been run,
+# sim_v, sim_a, sim_t
+# ===================
+# If the :ref:`simulate_command-name` has been run,
 # these are the values of
-# $cref/prior_sim_value/prior_sim_table/prior_sim_value/$$,
-# $cref/prior_sim_dage/prior_sim_table/prior_sim_dage/$$, and
-# $cref/prior_sim_dtime/prior_sim_table/prior_sim_dtime/$$,
+# :ref:`prior_sim_table@prior_sim_value` ,
+# :ref:`prior_sim_table@prior_sim_dage` , and
+# :ref:`prior_sim_table@prior_sim_dtime` ,
 # for the
-# $cref/simulate_index/db2csv_command/simulate_index/$$.
+# :ref:`db2csv_command@simulate_index` .
 #
-# $subhead prior_info$$
+# prior_info
+# ==========
 # There is a column named
-# $codei%
-#  %field%_%character%
-# %$$
-# for $icode character$$ equal to $code v$$, $code a$$ and $code t$$
-# and for $icode field$$ equal to
-# $cref/mean/prior_table/mean/$$,
-# $cref/lower/prior_table/lower/$$,
-# $cref/upper/prior_table/upper/$$,
-# $cref/std/prior_table/std/$$,
-# $cref/eta/prior_table/eta/$$,
-# $cref/nu/prior_table/nu/$$ and
-# $cref/density/prior_table/density_id/$$.
-# $list number$$
-# The character $code v$$ denotes this is the prior information for a value,
-# $code a$$ the prior information for an age difference, and
-# $code t$$ the prior information for a time difference.
-# $lnext
-# The density has been mapped to the corresponding
-# $cref/density_name/density_table/density_name/$$.
-# $lnext
-# If the corresponding $cref/value_prior_id/smooth_grid_table/value_prior_id/$$
-# is $code null$$,
-# the $cref/const_value/smooth_grid_table/const_value/$$ prior is displayed.
-# $lnext
-# If is $code null$$, or has no affect, it is displayed as empty.
-# Note that the fields $icode eta_v$$ are always displayed for fixed
-# effects because they have a
-# $cref/scaling/prior_table/eta/Scaling Fixed Effects/$$ affect.
-# $lend
 #
-# $comment ------------------------------------------------------------$$
-# $head data.csv$$
-# $comment ------------------------------------------------------------$$
-# The file $icode%dir%/data.csv%$$ is written by this command.
-# It is a CSV file with one row for each row in the $cref data_subset_table$$
+#     *field* _ *character*
+#
+# for *character* equal to ``v`` , ``a`` and ``t``
+# and for *field* equal to
+# :ref:`prior_table@mean` ,
+# :ref:`prior_table@lower` ,
+# :ref:`prior_table@upper` ,
+# :ref:`prior_table@std` ,
+# :ref:`prior_table@eta` ,
+# :ref:`prior_table@nu` and
+# :ref:`density<prior_table@density_id>` .
+#
+# #. The character ``v`` denotes this is the prior information for a value,
+#    ``a`` the prior information for an age difference, and
+#    ``t`` the prior information for a time difference.
+# #. The density has been mapped to the corresponding
+#    :ref:`density_table@density_name` .
+# #. If the corresponding :ref:`smooth_grid_table@value_prior_id`
+#    is ``null`` ,
+#    the :ref:`smooth_grid_table@const_value` prior is displayed.
+# #. If is ``null`` , or has no affect, it is displayed as empty.
+#    Note that the fields *eta_v* are always displayed for fixed
+#    effects because they have a
+#    :ref:`scaling<prior_table@eta@Scaling Fixed Effects>` affect.
+#
+# {xrst_comment -------------------------------------------------------}
+# data.csv
+# ********
+# {xrst_comment -------------------------------------------------------}
+# The file *dir* / ``data.csv`` is written by this command.
+# It is a CSV file with one row for each row in the :ref:`data_subset_table-name`
 # and has the following columns:
 #
-# $subhead data_id$$
+# data_id
+# =======
 # is the data table
-# $cref/data_id/data_table/data_id/$$.
+# :ref:`data_table@data_id` .
 #
-# $subhead data_extra_columns$$
+# data_extra_columns
+# ==================
 # Each column specified by the
-# $cref/
-#  data_extra_columns/
-#  option_table/
-#  Extra Columns/
-#  data_extra_columns
-# /$$
-# option is included in the $code data.csv$$ file.
+# :ref:`option_table@Extra Columns@data_extra_columns`
+# option is included in the ``data.csv`` file.
 #
-# $subhead child$$
+# child
+# =====
 # If this data row is associated with a child,
 # this is the name of the child. Otherwise, this data is associated
-# with the $cref/parent node/option_table/Parent Node/$$.
+# with the :ref:`option_table@Parent Node` .
 #
-# $subhead node$$
+# node
+# ====
 # is the
-# $cref/node_name/node_table/node_name/$$ for this data row.
+# :ref:`node_table@node_name` for this data row.
 # This will correspond directly to the data table
-# $cref/node_id/data_table/node_id/$$.
+# :ref:`data_table@node_id` .
 #
-# $subhead group$$
-# is the $cref/group_name/subgroup_table/group_name/$$ corresponding
+# group
+# =====
+# is the :ref:`subgroup_table@group_name` corresponding
 # to the subgroup for this data row.
 #
-# $subhead subgroup$$
+# subgroup
+# ========
 # is the
-# $cref/subgroup_name/subgroup_table/subgroup_name/$$ for this data row.
+# :ref:`subgroup_table@subgroup_name` for this data row.
 # This will correspond directly to the data table
-# $cref/subgroup_id/data_table/subgroup_id/$$.
+# :ref:`data_table@subgroup_id` .
 #
-# $subhead integrand$$
+# integrand
+# =========
 # is the integrand table
-# $cref/integrand_name/integrand_table/integrand_name/$$.
+# :ref:`integrand_table@integrand_name` .
 #
-# $subhead weight$$
+# weight
+# ======
 # is the
-# $cref/weight_name/weight_table/weight_name/$$.
+# :ref:`weight_table@weight_name` .
 #
-# $subhead age_lo$$
+# age_lo
+# ======
 # is the lower age used in the fits; i.e., the data table
-# $cref/age_lower/data_table/age_lower/$$ modified by the
+# :ref:`data_table@age_lower` modified by the
 # age compression interval in the
-# $cref/compress_interval/option_table/compress_interval/$$ option.
+# :ref:`option_table@compress_interval` option.
 #
-# $subhead age_up$$
+# age_up
+# ======
 # is the upper age used in the fits; i.e., the data table
-# $cref/age_upper/data_table/age_upper/$$ modified by the
+# :ref:`data_table@age_upper` modified by the
 # age compression interval.
 #
-# $subhead time_lo$$
+# time_lo
+# =======
 # is the lower time used in the fits; i.e., the data table
-# $cref/time_lower/data_table/time_lower/$$ modified by the
+# :ref:`data_table@time_lower` modified by the
 # time compression interval.
 #
-# $subhead time_up$$
+# time_up
+# =======
 # is the upper time used in the fits; i.e., the data table
-# $cref/time_upper/data_table/time_upper/$$ modified by the
+# :ref:`data_table@time_upper` modified by the
 # time compression interval.
 #
-# $subhead d_out$$
+# d_out
+# =====
 # is the value of
-# $cref/hold_out/data_table/hold_out/$$ in the data table.
+# :ref:`data_table@hold_out` in the data table.
 #
-# $subhead s_out$$
+# s_out
+# =====
 # is the value of
-# $cref/hold_out/data_subset_table/hold_out/$$ in the
+# :ref:`data_subset_table@hold_out` in the
 # data_subset table.
 #
-# $subhead density$$
+# density
+# =======
 # is the
-# $cref/density_name/density_table/density_name/$$ for data_subset table
-# $cref/density_id/data_subset_table/density_id/$$ for this row.
+# :ref:`density_table@density_name` for data_subset table
+# :ref:`data_subset_table@density_id` for this row.
 #
-# $subhead eta$$
+# eta
+# ===
 # is the data_subset table
-# $cref/eta/data_subset_table/eta/$$ for this row.
+# :ref:`data_subset_table@eta` for this row.
 #
-# $subhead nu$$
+# nu
+# ==
 # is the data_subset table
-# $cref/nu/data_subset_table/nu/$$ for this row.
+# :ref:`data_subset_table@nu` for this row.
 #
-# $subhead meas_std$$
+# meas_std
+# ========
 # is the data table
-# $cref/meas_std/data_table/meas_std/$$.
+# :ref:`data_table@meas_std` .
 #
-# $subhead meas_stdcv$$
+# meas_stdcv
+# ==========
 # is the minimum cv standard deviation used to define the likelihood; see
-# $cref/Delta/data_like/Notation/Minimum CV Standard Deviation, Delta_i/$$.
+# :ref:`Delta<data_like@Notation@Minimum CV Standard Deviation, Delta_i>` .
 #
-# $subhead meas_delta$$
+# meas_delta
+# ==========
 # If the previous fit command had a
-# $cref/simulate_index/db2csv_command/simulate_index/$$,
+# :ref:`db2csv_command@simulate_index` ,
 # this column is empty.
-# We use $icode delta$$ to denote the
-# $cref/adjusted standard deviation
-#  /data_like
-#  /Adjusted Standard Deviation, delta_i(theta)
-# /$$ for this row.
+# We use *delta* to denote the
+# :ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>` for this row.
 # If the density for this row is
-# $cref/linear/density_table/Notation/Linear/$$
-# $codei%
-#  %meas_delta% = %delta%
-# %$$
+# :ref:`density_table@Notation@Linear`
+#
+#     *meas_delta* = *delta*
+#
 # Otherwise, the density is log scaled and
-# $codei%
-#  %delta% = log(%meas_value% + %eta% + %meas_delta%) - log(%meas_value% + %eta%)
-# %$$
-# The value $icode delta$$ is computed by dividing by the residual,
+#
+#     *delta* = ``log`` ( *meas_value* + *eta* + *meas_delta* ) ``- log`` ( *meas_value* + *eta* )
+#
+# The value *delta* is computed by dividing by the residual,
 # which is plus infinity and not valid when the residual is zero.
-# This value is reported as empty if the calculation for $icode meas_delta$$
-# is greater than the maximum python $code float$$ value.
+# This value is reported as empty if the calculation for *meas_delta*
+# is greater than the maximum python ``float`` value.
 #
-# $subhead meas_value$$
+# meas_value
+# ==========
 # is the data table
-# $cref/meas_value/data_table/meas_value/$$.
+# :ref:`data_table@meas_value` .
 #
-# $subhead avgint$$
-# If the $cref fit_command$$ has been run, this is the
-# $cref/avg_integrand/fit_data_subset_table/avg_integrand/$$ for this row.
+# avgint
+# ======
+# If the :ref:`fit_command-name` has been run, this is the
+# :ref:`fit_data_subset_table@avg_integrand` for this row.
 #
-# $subhead residual$$
-# If the $cref fit_command$$ has been run, this is the
-# $cref/weighted_residual/fit_data_subset_table/weighted_residual/$$
+# residual
+# ========
+# If the :ref:`fit_command-name` has been run, this is the
+# :ref:`fit_data_subset_table@weighted_residual`
 # for this row; see
-# $cref/fit_data_subset/db2csv_command/fit_var, fit_data_subset/$$
+# :ref:`fit_data_subset<db2csv_command@fit_var, fit_data_subset>`
 # above.
 #
-# $subhead sim_value$$
-# If the $cref simulate_command$$ has been run, this is the
-# $cref/data_sim_value/data_sim_table/data_sim_value/$$ for this
-# $cref/data_id/db2csv_command/data.csv/data_id/$$ and
-# $cref/simulate_index/fit_command/simulate_index/$$
+# sim_value
+# =========
+# If the :ref:`simulate_command-name` has been run, this is the
+# :ref:`data_sim_table@data_sim_value` for this
+# :ref:`db2csv_command@data.csv@data_id` and
+# :ref:`fit_command@simulate_index`
 # in the previous fit command.
-# If there is no $icode simulate_index$$
+# If there is no *simulate_index*
 # in the previous fit command, the
-# value zero is used for the $icode simulate_index$$.
+# value zero is used for the *simulate_index* .
 #
-# $subhead Covariates$$
-# For each covariate in the $cref covariate_table$$ there is a column with
-# the corresponding $icode covariate_name$$.
+# Covariates
+# ==========
+# For each covariate in the :ref:`covariate_table-name` there is a column with
+# the corresponding *covariate_name* .
 # For each covariate column and measurement row, the value in the
 # covariate column is covariate value for this measurement minus
 # the reference value for this covariate, i.e., the corresponding
 # covariate difference
-# $cref/x_ij
-#  /avg_integrand
-#  /Data or Avgint Table Notation
-#  /Covariate Difference, x_ij
-# /$$
+# :ref:`x_ij<avg_integrand@Data or Avgint Table Notation@Covariate Difference, x_ij>`
 # in the model for the average integrand.
 #
-# $comment ------------------------------------------------------------$$
-# $head predict.csv$$
-# $comment ------------------------------------------------------------$$
-# If the $cref predict_command$$ has was executed,
-# the CSV file $icode%dir%/predict.csv%$$ is written.
-# For each row of the $cref predict_table$$
-# there is a corresponding row in $code predict.csv$$.
+# {xrst_comment -------------------------------------------------------}
+# predict.csv
+# ***********
+# {xrst_comment -------------------------------------------------------}
+# If the :ref:`predict_command-name` has was executed,
+# the CSV file *dir* / ``predict.csv`` is written.
+# For each row of the :ref:`predict_table-name`
+# there is a corresponding row in ``predict.csv`` .
 #
-# $subhead avgint_id$$
+# avgint_id
+# =========
 # is the avgint table
-# $cref/avgint_id/avgint_table/avgint_id/$$.
+# :ref:`avgint_table@avgint_id` .
 #
-# $subhead avgint_extra_columns$$
+# avgint_extra_columns
+# ====================
 # Each column specified by the
-# $cref/
-#  avgint_extra_columns/
-#  option_table/
-#  Extra Columns/
-#  avgint_extra_columns
-# /$$
-# option is included in the $code predict.csv$$ file.
+# :ref:`option_table@Extra Columns@avgint_extra_columns`
+# option is included in the ``predict.csv`` file.
 #
-# $subhead s_index$$
+# s_index
+# =======
 # This identifies the set model variables corresponding to the
-# last $cref predict_command$$ executed.
+# last :ref:`predict_command-name` executed.
 # If the source for the predict command was
-# $cref/sample/predict_command/source/sample/$$,
+# :ref:`predict_command@source@sample` ,
 # the model variables correspond to the rows on the
-# sample table with the same $cref/sample_index/sample_table/sample_index/$$
-# equal to $icode s_index$$.
-# Otherwise, $icode s_index$$ is empty and
+# sample table with the same :ref:`sample_table@sample_index`
+# equal to *s_index* .
+# Otherwise, *s_index* is empty and
 # the model variables correspond to the
-# $cref/fit_var/predict_command/source/fit_var/$$ or
-# $cref/truth_var/predict_command/source/truth_var/$$ table
+# :ref:`predict_command@source@fit_var` or
+# :ref:`predict_command@source@truth_var` table
 # depending on the source for the last predict command executed.
 #
-# $subhead avgint$$
-# is the $cref/average integrand/avg_integrand/Average Integrand, A_i/$$
-# $latex A_i(u, \theta)$$. The model variables $latex (u, \theta)$$
-# correspond to the $icode s_index$$, and measurement subscript $latex i$$
-# denotes to the $cref avgint_table$$ information
-# for this row of $code predict.csv$$; i.e., $icode age_lo$$, $icode age_up$$,
+# avgint
+# ======
+# is the :ref:`average integrand<avg_integrand@Average Integrand, A_i>`
+# :math:`A_i(u, \theta)`. The model variables :math:`(u, \theta)`
+# correspond to the *s_index* , and measurement subscript :math:`i`
+# denotes to the :ref:`avgint_table-name` information
+# for this row of ``predict.csv`` ; i.e., *age_lo* , *age_up* ,
 # ...
 #
-# $subhead age_lo$$
+# age_lo
+# ======
 # is the avgint table
-# $cref/age_lower/avgint_table/age_lower/$$.
+# :ref:`avgint_table@age_lower` .
 #
-# $subhead age_up$$
+# age_up
+# ======
 # is the avgint table
-# $cref/age_upper/data_table/age_upper/$$.
+# :ref:`data_table@age_upper` .
 #
-# $subhead time_lo$$
+# time_lo
+# =======
 # is the avgint table
-# $cref/time_lower/data_table/time_lower/$$.
+# :ref:`data_table@time_lower` .
 #
-# $subhead time_up$$
+# time_up
+# =======
 # is the avgint table
-# $cref/time_upper/data_table/time_upper/$$.
+# :ref:`data_table@time_upper` .
 #
-# $subhead integrand$$
+# integrand
+# =========
 # is the avgint table
-# $cref/integrand_name/integrand_table/integrand_name/$$.
+# :ref:`integrand_table@integrand_name` .
 #
-# $subhead weight$$
+# weight
+# ======
 # is the
-# $cref/weight_name/weight_table/weight_name/$$ for this row.
+# :ref:`weight_table@weight_name` for this row.
 #
-# $subhead node$$
+# node
+# ====
 # is the
-# $cref/node_name/node_table/node_name/$$ for this row.
+# :ref:`node_table@node_name` for this row.
 #
-# $subhead group$$
-# is the $cref/group_name/subgroup_table/group_name/$$ corresponding
+# group
+# =====
+# is the :ref:`subgroup_table@group_name` corresponding
 # to the subgroup for this data row.
 #
-# $subhead subgroup$$
+# subgroup
+# ========
 # is the
-# $cref/subgroup_name/subgroup_table/subgroup_name/$$ for this data row.
+# :ref:`subgroup_table@subgroup_name` for this data row.
 # This will correspond directly to the avgint table
-# $cref/subgroup_id/avgint_table/subgroup_id/$$.
+# :ref:`avgint_table@subgroup_id` .
 #
-# $subhead Covariates$$
-# For each covariate in the $cref covariate_table$$ there is a column with
-# the corresponding $icode covariate_name$$.
+# Covariates
+# ==========
+# For each covariate in the :ref:`covariate_table-name` there is a column with
+# the corresponding *covariate_name* .
 # For each covariate column and measurement row, the value in the
-# covariate column is covariate value in the $cref avgint_table$$
+# covariate column is covariate value in the :ref:`avgint_table-name`
 # minus the reference value for this covariate. i.e., the corresponding
 # covariate difference
-# $cref/x_ij
-#  /avg_integrand
-#  /Data or Avgint Table Notation
-#  /Covariate Difference, x_ij
-# /$$
+# :ref:`x_ij<avg_integrand@Data or Avgint Table Notation@Covariate Difference, x_ij>`
 # in the model for the average integrand.
-# $comment ------------------------------------------------------------$$
-#
-# $children%
-#  example/get_started/db2csv_command.py
-#  %bin/ihme_db.sh
-# %$$
-# $head Example$$
-# The file $cref db2csv_command.py$$ contains an example and test
+# {xrst_comment -------------------------------------------------------}
+# {xrst_toc_hidden
+#    example/get_started/db2csv_command.py
+#    bin/ihme_db.sh
+# }
+# Example
+# *******
+# The file :ref:`db2csv_command.py-name` contains an example and test
 # using this command.
 #
-# $head ihme_db.sh$$
-# The script $cref ihme_db.sh$$ can be used to run $code db2csv$$ for a
+# ihme_db.sh
+# **********
+# The script :ref:`ihme_db.sh-name` can be used to run ``db2csv`` for a
 # dismod_at database on the IHME cluster.
 #
-# $end
+# {xrst_end db2csv_command}
 def db2csv_command(database_file_arg) :
    import os
    import csv

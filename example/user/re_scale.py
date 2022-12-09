@@ -2,19 +2,20 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_re_scale.py$$ $newlinech #$$
-# $spell
-#  init
-#  avgint
-#  dage
-#  dtime
-# $$
+# {xrst_begin user_re_scale.py}
+# {xrst_comment_ch #}
 #
-# $section Case Where Re-Scaling is Useful$$
+# Case Where Re-Scaling is Useful
+# ###############################
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_re_scale.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import sys

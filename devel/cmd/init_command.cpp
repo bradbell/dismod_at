@@ -13,101 +13,114 @@
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
 -----------------------------------------------------------------------------
-$begin init_command$$
-$spell
-   sim
-   avgint
-   init
-   var
-   dismod
+{xrst_begin init_command}
+{xrst_spell
    initializes
-   bnd_mulcov
-$$
+}
 
-$section The Initialize Command$$
+The Initialize Command
+######################
 
-$head Syntax$$
-$codei%dismod_at %database% init%$$
+Syntax
+******
+``dismod_at`` *database* ``init``
 
-$head Purpose$$
+Purpose
+*******
 This command initializes the data flow.
 To be specific, it begins by deleting any existing output tables,
 except for the log table,
 and then creates new versions of the following tables:
-$table
-$rref age_avg_table$$
-$rref bnd_mulcov_table$$
-$rref data_subset_table$$
-$rref start_var_table$$
-$rref scale_var_table$$
-$rref var_table$$
-$tend
 
-$head Deleted Tables$$
+.. csv-table::
+   :widths: auto
+
+   age_avg_table,:ref:`age_avg_table-title`
+   bnd_mulcov_table,:ref:`bnd_mulcov_table-title`
+   data_subset_table,:ref:`data_subset_table-title`
+   start_var_table,:ref:`start_var_table-title`
+   scale_var_table,:ref:`scale_var_table-title`
+   var_table,:ref:`var_table-title`
+
+Deleted Tables
+**************
 This routine begins by deleting any existing
-$cref/output tables/data_flow/Output Tables by Table Name/$$,
-except for the $cref log_table$$.
+:ref:`output tables<data_flow@Output Tables by Table Name>` ,
+except for the :ref:`log_table-name` .
 
-$head Changing Values$$
+Changing Values
+***************
 You must re-run this command when ever any of the
-$cref input$$ tables is changed.
+:ref:`input-name` tables is changed.
 The option table is an exception to this rule; see
-$cref/changing values/option_table/Changing Values/$$.
+:ref:`option_table@Changing Values` .
 
-$head database$$
+database
+********
 Is an
-$href%http://www.sqlite.org/sqlite/%$$ database containing the
-$code dismod_at$$ $cref input$$ tables which are not modified.
+http://www.sqlite.org/sqlite/ database containing the
+``dismod_at`` :ref:`input-name` tables which are not modified.
 
-$head age_avg_table$$
-A new $cref age_avg_table$$ is created when this command is run.
+age_avg_table
+*************
+A new :ref:`age_avg_table-name` is created when this command is run.
 In fact, this table is recreated when any command is run except for the
-python commands and the $cref set_command$$.
+python commands and the :ref:`set_command-name` .
 
-$head var_table$$
-A new $cref var_table$$ is created with the information
-that maps a $cref/var_id/var_table/var_id/$$
+var_table
+*********
+A new :ref:`var_table-name` is created with the information
+that maps a :ref:`var_table@var_id`
 to its meaning in terms of the
-$cref model_variables$$.
+:ref:`model_variables-name` .
 
-$head data_subset_table$$
-A new $cref data_subset_table$$ is created.
+data_subset_table
+*****************
+A new :ref:`data_subset_table-name` is created.
 This makes explicit exactly which rows of the data table are used.
 
-$subhead hold_out$$
+hold_out
+========
 This column is set to zero.
 
-$subhead density_id$$
+density_id
+==========
 This column is set to the corresponding
-$cref/density_id/data_table/density_id/$$ in the data table.
+:ref:`data_table@density_id` in the data table.
 
-$subhead eta$$
+eta
+===
 This column is set to the corresponding
-$cref/eta/data_table/eta/$$ in the data table.
+:ref:`data_table@eta` in the data table.
 
-$subhead nu$$
+nu
+==
 This column is set to the corresponding
-$cref/nu/data_table/nu/$$ in the data table.
+:ref:`data_table@nu` in the data table.
 
-$head start_var_table$$
-A new $cref start_var_table$$ is created using the
+start_var_table
+***************
+A new :ref:`start_var_table-name` is created using the
 means of the priors for the model variables.
 
-$head scale_var_table$$
-A new $cref scale_var_table$$ is created using the
+scale_var_table
+***************
+A new :ref:`scale_var_table-name` is created using the
 means of the priors for the model variables.
 
-$head bnd_mulcov_table$$
+bnd_mulcov_table
+****************
 A new bnd_mulcov table is created using null for
-$cref/max_mulcov/bnd_mulcov_table/max_mulcov/$$; i.e., plus infinity.
-
-$children%example/get_started/init_command.py
-%$$
-$head Example$$
-The file $cref init_command.py$$ contains an example and test
+:ref:`bnd_mulcov_table@max_mulcov` ; i.e., plus infinity.
+{xrst_toc_hidden
+   example/get_started/init_command.py
+}
+Example
+*******
+The file :ref:`init_command.py-name` contains an example and test
 using this command.
 
-$end
+{xrst_end init_command}
 */
 
 namespace { // BEGIN_EMPTY_NAMESPACE

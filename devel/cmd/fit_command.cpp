@@ -20,192 +20,194 @@
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
 -----------------------------------------------------------------------------
-$begin fit_command$$
-$spell
-   sim
-   nslist
-   avgint
-   var
-   arg
-   num_iter
-   dismod
-   py
-   std
-   Ipopt
-   cppad_mixed
-   hes
-$$
+{xrst_begin fit_command}
+{xrst_spell
+   apposed
+   iter
+}
 
-$section The Fit Command$$
+The Fit Command
+###############
 
-$head Syntax$$
-$codei%dismod_at %database% fit %variables%
-%$$
-$codei%dismod_at %database% fit %variables% %simulate_index%
-%$$
-$codei%dismod_at %database% fit %variables% warm_start
-%$$
-$codei%dismod_at %database% fit %variables% %simulate_index% warm_start
-%$$
+Syntax
+******
 
-$head database$$
+| ``dismod_at`` *database* ``fit`` *variables*
+| ``dismod_at`` *database* ``fit`` *variables* *simulate_index*
+| ``dismod_at`` *database* ``fit`` *variables* ``warm_start``
+| ``dismod_at`` *database* ``fit`` *variables* *simulate_index* ``warm_start``
+
+database
+********
 Is an
-$href%http://www.sqlite.org/sqlite/%$$ database containing the
-$code dismod_at$$ $cref input$$ tables which are not modified.
+http://www.sqlite.org/sqlite/ database containing the
+``dismod_at`` :ref:`input-name` tables which are not modified.
 
-$head variables$$
-This argument is $code fixed$$, $code random$$ or $code both$$.
-If it is $code fixed$$ ($code random$$)
+variables
+*********
+This argument is ``fixed`` , ``random`` or ``both`` .
+If it is ``fixed`` (``random`` )
 only the fixed effects (random effects) are optimized.
-If it is $code both$$, both the fixed and random effects
+If it is ``both`` , both the fixed and random effects
 are optimized.
 
-$subhead fixed$$
+fixed
+=====
 This option optimizes the fixed effects with the
 random effects corresponding to
-$cref/constant child value priors
-   /rate_table
-   /Child Value Priors
-   /Constant
-/$$
+:ref:`constant child value priors<rate_table@Child Value Priors@Constant>`
 at their constrained values and the other random effects
 constrained to be zero.
 (This is equivalent to fitting with
-$cref/bound_random/option_table/Optimize Random Only/bound_random/$$ equal to zero.)
+:ref:`option_table@Optimize Random Only@bound_random` equal to zero.)
 This is useful when one uses fitting with no random effects as
 a starting point for fitting with random effects; see
-$cref set_command$$,
-$cref start_var_table$$, and
-$cref/fit_fixed_both.py/user_fit_fixed_both.py/$$.
+:ref:`set_command-name` ,
+:ref:`start_var_table-name` , and
+:ref:`fit_fixed_both.py<user_fit_fixed_both.py-name>` .
 This enables one to see the different between the two
-fits in the $cref log_table$$
+fits in the :ref:`log_table-name`
 (as apposed to changing
-$cref/bound_random/option_table/Optimize Random Only/bound_random/$$
-in the $code option$$ table).
+:ref:`option_table@Optimize Random Only@bound_random`
+in the ``option`` table).
 
-$subhead random$$
+random
+======
 This optimizes the random effects with
 the fixed effects set to their starting values; see
-$cref start_var_table$$.
+:ref:`start_var_table-name` .
 
-$subhead both$$
+both
+====
 This option fits both the
-$cref/fixed/model_variables/Fixed Effects, theta/$$ and
-$cref/random/model_variables/Random Effects, u/$$ effects.
+:ref:`fixed<model_variables@Fixed Effects, theta>` and
+:ref:`random<model_variables@Random Effects, u>` effects.
 
-$head simulate_index$$
-If $icode simulate_index$$ is present, it must be less than
-$cref/number_simulate/simulate_command/number_simulate/$$.
+simulate_index
+**************
+If *simulate_index* is present, it must be less than
+:ref:`simulate_command@number_simulate` .
 
-$subhead data_sim_table$$
-If $icode simulate_index$$ is present, this is an extra input table.
-The $cref/data_sim_value/data_sim_table/data_sim_value/$$ entries,
-corresponding to $icode simulate_index$$,
+data_sim_table
+==============
+If *simulate_index* is present, this is an extra input table.
+The :ref:`data_sim_table@data_sim_value` entries,
+corresponding to *simulate_index* ,
 are used in place of the data table
-$cref/meas_value/data_table/meas_value/$$ entries.
+:ref:`data_table@meas_value` entries.
 All the rest of the data table values
-are the same as when $icode simulated_index$$ is not present; e.g.,
-$cref/meas_std/data_table/meas_std/$$ comes from the data table.
+are the same as when *simulated_index* is not present; e.g.,
+:ref:`data_table@meas_std` comes from the data table.
 
-$subhead prior_sim_table$$
-If $icode simulate_index$$ is present, this is an extra input table.
-The $cref/prior_sim_value/prior_sim_table/prior_sim_value/$$ entries,
-corresponding to $icode simulate_index$$,
+prior_sim_table
+===============
+If *simulate_index* is present, this is an extra input table.
+The :ref:`prior_sim_table@prior_sim_value` entries,
+corresponding to *simulate_index* ,
 are used in place of the prior table
-$cref/mean/prior_table/mean/$$ entries.
+:ref:`prior_table@mean` entries.
 All the rest of the prior table values
-are the same as when $icode simulated_index$$ is not present; e.g.,
-$cref/std/prior_table/std/$$ comes from the prior table.
+are the same as when *simulated_index* is not present; e.g.,
+:ref:`prior_table@std` comes from the prior table.
 
-$head warm_start$$
-If $code warm_start$$ is at the end of the command, the
-$cref/ipopt_info_table/fit_command/Output Tables/ipopt_info_table/$$
+warm_start
+**********
+If ``warm_start`` is at the end of the command, the
+:ref:`fit_command@Output Tables@ipopt_info_table`
 written by the previous fit,
 is used to start the optimization of the fixed effects
 where the previous fit left off.
 This is intended to be used in the following cases:
-$list number$$
-Termination of previous fit is due to reaching
-$cref/max_num_iter_fixed/option_table/Optimize Fixed and Random/max_num_iter/$$.
-$lnext
-The
-$cref/tolerance/option_table/Optimize Fixed and Random/tolerance/$$ for the
-fixed or random effects been changed.
-$lend
+
+#. Termination of previous fit is due to reaching
+   :ref:`max_num_iter_fixed<option_table@Optimize Fixed and Random@max_num_iter>` .
+#. The
+   :ref:`option_table@Optimize Fixed and Random@tolerance` for the
+   fixed or random effects been changed.
+
 Other options besides those listed above,
 should be the same as for the previous fit.
 
-$head data_subset_table$$
-Only the data table rows with $cref/data_id/data_table/data_id/$$
-that also appear in the $cref/data_subset table/data_subset_table/data_id/$$
+data_subset_table
+*****************
+Only the data table rows with :ref:`data_table@data_id`
+that also appear in the :ref:`data_subset table<data_subset_table@data_id>`
 are included in the fit and residuals.
 
-$head hold_out$$
-A data table $cref/meas_value/data_table/meas_value/$$
+hold_out
+********
+A data table :ref:`data_table@meas_value`
 is held out from the fit, but included in the residuals,
 if any of the following conditions hold:
-$list number$$
-The data table $cref/hold_out/data_table/hold_out/$$ is non-zero.
-$lnext
-The corresponding data_subset table
-$cref/hold_out/data_subset_table/hold_out/$$ is non-zero;
-see $cref hold_out_command$$.
-$lnext
-The data table $cref/integrand/data_table/integrand_id/$$
-corresponds to an $cref/integrand_name/integrand_table/integrand_name/$$
-that is in the option table
-$cref/hold_out_integrand/option_table/hold_out_integrand/$$ list
-$lend
+
+#. The data table :ref:`data_table@hold_out` is non-zero.
+#. The corresponding data_subset table
+   :ref:`data_subset_table@hold_out` is non-zero;
+   see :ref:`hold_out_command-name` .
+#. The data table :ref:`integrand<data_table@integrand_id>`
+   corresponds to an :ref:`integrand_table@integrand_name`
+   that is in the option table
+   :ref:`option_table@hold_out_integrand` list
+
 After the optimal variable values are found,
 the hold out residuals are computed so one can check the
 predictive validity for hold out data.
 The residuals for hold out data (other data) are computed once (many times)
 for each fit.
 
-$head Output Tables$$
+Output Tables
+*************
 
-$subhead fit_var_table$$
-A new $cref fit_var_table$$ is created each time this command is run.
+fit_var_table
+=============
+A new :ref:`fit_var_table-name` is created each time this command is run.
 It contains the results of the fit in its
-$cref/fit_var_value/fit_var_table/fit_var_value/$$ column.
+:ref:`fit_var_table@fit_var_value` column.
 
-$subhead fit_data_subset_table$$
-A new $cref fit_data_subset_table$$ is created each time this command is run.
+fit_data_subset_table
+=====================
+A new :ref:`fit_data_subset_table-name` is created each time this command is run.
 It is a comparison of the model and data corresponding to the fit results.
 
-$subhead trace_fixed$$
-A new $cref trace_fixed_table$$ is created each time a
-$code fit fixed$$ or $code fit both$$ command is run.
+trace_fixed
+===========
+A new :ref:`trace_fixed_table-name` is created each time a
+``fit fixed`` or ``fit both`` command is run.
 It contains a trace of the corresponding optimization.
 
-$subhead hes_random_table$$
-A new $cref hes_random_table$$ is created each time this command is run
-with $icode variables$$ equal to $code random$$ or $code both$$.
+hes_random_table
+================
+A new :ref:`hes_random_table-name` is created each time this command is run
+with *variables* equal to ``random`` or ``both`` .
 The Hessian of the random effects objective is written in this table.
-If $icode simulate_index$$ is present (is not present) the Hessian corresponds
-to the simulated measurements in the $cref data_sim_table$$
-(measurements in the $cref data_table$$).
+If *simulate_index* is present (is not present) the Hessian corresponds
+to the simulated measurements in the :ref:`data_sim_table-name`
+(measurements in the :ref:`data_table-name` ).
 
-$subhead mixed_info$$
-A new $cref mixed_info_table$$ table is created each time this command is run.
+mixed_info
+==========
+A new :ref:`mixed_info_table-name` table is created each time this command is run.
 
-$subhead ipopt_info_table$$
+ipopt_info_table
+================
 The fixed effect are optimized when
-$icode variables$$ is equal to $code both$$ or $code fixed$$.
-In the case a new $code ipopt_info$$ table, corresponding to the final
+*variables* is equal to ``both`` or ``fixed`` .
+In the case a new ``ipopt_info`` table, corresponding to the final
 fit for the fixed effects, is written to the ipopt_info table.
 The contents of this table are unspecified; i.e., not part of the
 dismod_at API and my change.
 
-$head Random Effects$$
+Random Effects
+**************
 A model has random effects if one of the
-$cref/child_smooth_id/rate_table/child_smooth_id/$$ or
-$cref/child_nslist_id/rate_table/child_nslist_id/$$ is not $code null$$.
+:ref:`rate_table@child_smooth_id` or
+:ref:`rate_table@child_nslist_id` is not ``null`` .
 In some cases it helps to
-first fit with $icode variables$$ equal to $code fixed$$
-and then fit with $icode variables$$ equal to $code both$$.
+first fit with *variables* equal to ``fixed``
+and then fit with *variables* equal to ``both`` .
 
-$head Convergence Problems$$
+Convergence Problems
+********************
 The derivative of the fixed effects objective,
 at the prior mean for the fixed effects,
 is used to scale the fixed effects objective.
@@ -219,22 +221,24 @@ for a fixed effect that does not change.
 If this does not work, the data will not determine that fixed effect
 and you may have to constrain it to have the value you want.
 
-$head Ipopt Options$$
-Some of the options in the $cref option_table$$ are for controlling
-$href%https://coin-or.github.io/Ipopt/OPTIONS.html%Ipopt%$$.
+Ipopt Options
+*************
+Some of the options in the :ref:`option_table-name` are for controlling
+`Ipopt <https://coin-or.github.io/Ipopt/OPTIONS.html>`_.
 You can override these options, or set other options, using a file called
-$code ipopt.opt$$ in the directory where a fit command is run.
-Doing so not supported because $code dismod_at$$
+``ipopt.opt`` in the directory where a fit command is run.
+Doing so not supported because ``dismod_at``
 expects certain options to be set a certain way.
 The set of such options that is not specified and may change with time.
-
-$children%example/get_started/fit_command.py
-%$$
-$head Example$$
-The file $cref fit_command.py$$ contains an example and test
+{xrst_toc_hidden
+   example/get_started/fit_command.py
+}
+Example
+*******
+The file :ref:`fit_command.py-name` contains an example and test
 using this command.
 
-$end
+{xrst_end fit_command}
 */
 
 // ----------------------------------------------------------------------------

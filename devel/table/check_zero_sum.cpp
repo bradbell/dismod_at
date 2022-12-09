@@ -3,65 +3,59 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin check_zero_sum$$
-$spell
-   const
-   CppAD
-   struct
-   pini
-   sqlite
-   nslist
-$$
+{xrst_begin check_zero_sum}
 
-$section Check Only One Smoothing for Each Rate in zero_sum_child_rate$$
+Check Only One Smoothing for Each Rate in zero_sum_child_rate
+#############################################################
 
-$head syntax$$
-$codei%check_zero_sum(
-   %db%, %rate_table%, %option_table%
-)%$$
+syntax
+******
 
-$head Purpose$$
-For each $icode rate_name$$ in
-$cref/
-   zero_sum_child_rate/
-   option_table/
-   Zero Sum Constraints/
-   zero_sum_child_rate
-/$$,
+| ``check_zero_sum`` (
+| |tab| *db* , *rate_table* , *option_table*
+| )
+
+Purpose
+*******
+For each *rate_name* in
+:ref:`option_table@Zero Sum Constraints@zero_sum_child_rate` ,
 the corresponding
-$cref/child_nslist_id/rate_table/child_nslist_id/$$ must be null.
+:ref:`rate_table@child_nslist_id` must be null.
 
-$head db$$
+db
+**
 This argument has prototype
-$codei%
-   sqlite3* %db%
-%$$
-and is the database connection for $cref/logging/log_message/$$ errors.
 
-$head rate_table$$
+   ``sqlite3`` * *db*
+
+and is the database connection for :ref:`logging<log_message-name>` errors.
+
+rate_table
+**********
 This argument has prototype
-$codei%
-   const CppAD::vector<rate_struct>& %rate_table%
-%$$
+
+   ``const CppAD::vector<rate_struct>&`` *rate_table*
+
 and it is the
-$cref/rate_table/get_rate_table/rate_table/$$.
+:ref:`get_rate_table@rate_table` .
 For this table,
-only the $icode child_nslist_id$$ column is used.
+only the *child_nslist_id* column is used.
 
-$head option_table$$
+option_table
+************
 This argument has prototype
-$codei%
-   const CppAD::vector<option_struct>& %option_table%
-%$$
+
+   ``const CppAD::vector<option_struct>&`` *option_table*
+
 and it is the
-$cref/option_table/get_option_table/option_table/$$.
+:ref:`get_option_table@option_table` .
 For this table, only the row  with
-$codei%
-   %option_name% = "zero_sum_child_rate"
-%$$
+
+   *option_name* = ``"zero_sum_child_rate"``
+
 is used.
 
-$end
+{xrst_end check_zero_sum}
 */
 # include <dismod_at/check_zero_sum.hpp>
 # include <dismod_at/error_exit.hpp>

@@ -1,0 +1,88 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin log_table}
+{xrst_spell
+   datetime
+   unix
+   unixepoch
+}
+
+The Log Table
+#############
+
+Discussion
+**********
+Note that time below is for the GMT Time Zone.
+
+log_id
+******
+This column has type ``integer`` and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+message_type
+************
+This column has type ``text`` and is one of the following values:
+``command`` , ``error`` , ``warning`` .
+
+command
+=======
+
+#. The start of every command is logged with ``begin`` ,
+   followed by white space,
+   followed by the name of the command.
+   If optional arguments follow the command name,
+   they are included after the command name and are separated by spaces.
+#. The end of every command is logged with the name of the command followed by
+   ``end`` .
+   If ``end`` does not appear after the command starts,
+   the command failed to finish.
+
+random_seed
+===========
+If the option table version of :ref:`option_table@random_seed`
+is zero, the value of *unix_time* in the log message with
+*message_type* = ``'command'`` and with
+*message* = ' ``begin`` *command* '
+is used as the random seed during the specified *command* .
+
+error
+=====
+This is a fatal error.
+The message was added to the log table
+and then the program exited.
+
+warning
+=======
+This is a warning.
+The message was added to the log file and then program execution
+continued as if nothing was wrong.
+
+table_name
+**********
+This column has type ``text`` .
+If it is not ``null`` , *message* must be ``error``
+and it is the :ref:`input-name` table in which the error occurred.
+
+row_id
+******
+This column has type ``integer`` .
+If it is not ``null`` , *table_name* is not
+``null`` and *row_id* is the primary key value in
+the specified table where the error occurred.
+
+unix_time
+*********
+This column has type ``integer`` and is
+the return value of the C++ function ``std::time`` ; i.e.,
+the number of seconds since January 1, 1970.
+You can convert it to GMT with the SQL command
+
+   ``select datetime`` ( ``unix_time`` , ``'unixepoch'`` ) ``from log`` ;
+
+message
+*******
+This column has type ``text`` and is the message.
+
+{xrst_end log_table}

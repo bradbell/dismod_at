@@ -3,95 +3,100 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_prior_table$$
-$spell
-   sqlite
-   struct
-   cpp
-   std
-$$
+{xrst_begin get_prior_table}
 
-$section C++: Get the Prior Table Information$$
+C++: Get the Prior Table Information
+####################################
 
-$head Syntax$$
-$icode%prior_table% = get_prior_table(%db%, %density_table%)%$$
+Syntax
+******
+*prior_table* = ``get_prior_table`` ( *db* , *density_table* )
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_GET_PRIOR_TABLE%// END_GET_PRIOR_TABLE%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_GET_PRIOR_TABLE
+   // END_GET_PRIOR_TABLE
+}
 
-$head Purpose$$
-To read the $cref prior_table$$ and return it as a C++ data structure.
+Purpose
+*******
+To read the :ref:`prior_table-name` and return it as a C++ data structure.
 
-$head db$$
-The argument $icode db$$
+db
+**
+The argument *db*
 is an open connection to the database.
 
-$head prior_table$$
-For each $cref/prior_id/prior_table/prior_id/$$,
-$codei%
-   %prior_table%[%prior_id%]
-%$$
+prior_table
+***********
+For each :ref:`prior_table@prior_id` ,
+
+   *prior_table* [ *prior_id* ]
+
 is the information for the corresponding prior.
 
-$head density_table$$
-The $cref density_table$$ is used to check for errors in the prior table;
+density_table
+*************
+The :ref:`density_table-name` is used to check for errors in the prior table;
 e.g., the standard deviation for a prior must be positive unless the
 density is uniform.
 
-$head prior_struct$$
+prior_struct
+************
 This is a structure with the following fields
-$table
-Type $cnext Field $cnext Description
-$rnext
-$code std::string$$ $cnext $code prior_name$$   $cnext
-   The $cref/prior_name/prior_table/prior_name/$$ for this prior
-$rnext
-$code int$$ $cnext $code density_id$$  $cnext
-   The $cref/density_id/prior_table/density_id/$$ for this prior
-$rnext
-$code double$$ $cnext $code lower$$ $cnext
-   The $cref/lower/prior_table/lower/$$ limit for this prior
-$rnext
-$code double$$ $cnext $code upper$$         $cnext
-   The $cref/upper/prior_table/upper/$$ limit for this prior
-$rnext
-$code double$$ $cnext $code mean$$          $cnext
-   The $cref/mean/prior_table/mean/$$ for this prior
-$rnext
-$code double$$ $cnext $code std$$           $cnext
-   The $cref/std/prior_table/std/$$ for this prior
-$rnext
-$code double$$ $cnext $code eta$$           $cnext
-   The $cref/eta/prior_table/eta/$$ for this prior
-$rnext
-$code double$$ $cnext $code nu$$            $cnext
-   The $cref/nu/prior_table/nu/$$ for this prior
-$tend
 
-$head Checks$$
-The values in the $cref prior_table$$ are checked to make sure that:
-$list number$$
-The limits and mean satisfy $icode%lower% <= %mean% <= %upper%$$.
-$lnext
-The standard deviation $icode%std% > 0%$$
-(except for the uniform density case).
-$lnext
-In the log density cases $icode eta$$ is not null
-and $icode%eta% > 0%$$.
-$lnext
-In the Student density cases $icode nu$$ is not null
-and $icode%nu% > 2%$$.
-$lend
+.. list-table::
 
-$children%example/devel/table/get_prior_table_xam.cpp
-%$$
-$head Example$$
-The file $cref get_prior_table_xam.cpp$$ contains an example that uses
+   * - Type
+     - Field
+     - Description
+   * - ``std::string``
+     - ``prior_name``
+     - The :ref:`prior_table@prior_name` for this prior
+   * - ``int``
+     - ``density_id``
+     - The :ref:`prior_table@density_id` for this prior
+   * - ``double``
+     - ``lower``
+     - The :ref:`prior_table@lower` limit for this prior
+   * - ``double``
+     - ``upper``
+     - The :ref:`prior_table@upper` limit for this prior
+   * - ``double``
+     - ``mean``
+     - The :ref:`prior_table@mean` for this prior
+   * - ``double``
+     - ``std``
+     - The :ref:`prior_table@std` for this prior
+   * - ``double``
+     - ``eta``
+     - The :ref:`prior_table@eta` for this prior
+   * - ``double``
+     - ``nu``
+     - The :ref:`prior_table@nu` for this prior
+
+Checks
+******
+The values in the :ref:`prior_table-name` are checked to make sure that:
+
+#. The limits and mean satisfy *lower* <= *mean* <= *upper* .
+#. The standard deviation *std*  > 0
+   (except for the uniform density case).
+#. In the log density cases *eta* is not null
+   and *eta*  > 0 .
+#. In the Student density cases *nu* is not null
+   and *nu*  > 2 .
+
+{xrst_toc_hidden
+   example/devel/table/get_prior_table_xam.cpp
+}
+Example
+*******
+The file :ref:`get_prior_table_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_prior_table}
 -----------------------------------------------------------------------------
 */
 # include <cmath>

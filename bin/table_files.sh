@@ -37,7 +37,7 @@ then
    done
 fi
 cat << EOF
-omh/table/${name}_table.omh$wlt                   user doc for $name table
+xrst/table/${name}_table.omh$wlt                   user doc for $name table
 include/dismod_at/get_${name}_table.hpp$wlt       C++ struct for $name table
 devel/table/get_${name}_table.cpp$wlt             read $name table in C++
 python/dismod_at/create_database.py$wgt           create all tables

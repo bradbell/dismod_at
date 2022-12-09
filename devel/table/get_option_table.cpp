@@ -3,68 +3,75 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_option_table$$
-$spell
-   sqlite
-   struct
-   cpp
-   std
-$$
+{xrst_begin get_option_table}
+{xrst_spell
+   option option
+}
 
-$section C++: Get the Option Table Information$$
+C++: Get the Option Table Information
+#####################################
 
-$head Syntax$$
-$icode%option_table% = get_option_table(%db%)%$$
+Syntax
+******
+*option_table* = ``get_option_table`` ( *db* )
 
-$head Purpose$$
-To read the $cref option_table$$ and return it as a C++ data structure.
+Purpose
+*******
+To read the :ref:`option_table-name` and return it as a C++ data structure.
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head option_struct$$
+option_struct
+*************
 This is a structure with the following fields
-$table
-Type $cnext Field $cnext Description
-$rnext
-$code std::string$$ $cnext $code option_name$$  $cnext
-   The $cref/name/option_table/Table Format/option_name/$$
-   for this option
-$rnext
-$code std::string$$ $cnext $code option_value$$  $cnext
-   The $cref/value/option_table/Table Format/option_value/$$
-   for this option
-$rnext
-$tend
 
-$head option_table$$
-The return value $icode option_table$$ has prototype
-$codei%
-   CppAD::vector<option_struct>  %option_table%
-%$$
-For $icode%i% = 0 , %...%, %n_option%$$,
-$codei%
-   %option_table%[%i%]
-%$$
+.. list-table::
+
+   * - Type
+     - Field
+     - Description
+   * - ``std::string``
+     - ``option_name``
+     - The :ref:`name<option_table@Table Format@option_name>`
+       for this option
+   * - ``std::string``
+     - ``option_value``
+     - The :ref:`value<option_table@Table Format@option_value>`
+       for this option
+
+option_table
+************
+The return value *option_table* has prototype
+
+   ``CppAD::vector<option_struct>`` *option_table*
+
+For *i* = 0 , ..., *n_option* ,
+
+   *option_table* [ *i* ]
+
 is the information for the one option.
 
-$head Special Note$$
-This table is special because the index $icode i$$
-is not the same as $icode option_id$$ in the $cref option_table$$.
+Special Note
+************
+This table is special because the index *i*
+is not the same as *option_id* in the :ref:`option_table-name` .
 This is because all the options have default values that are used when
 an option does not appear in the actual table.
-
-$children%example/devel/table/get_option_table_xam.cpp
-%$$
-$head Example$$
-The file $cref get_option_table_xam.cpp$$ contains an example that uses
+{xrst_toc_hidden
+   example/devel/table/get_option_table_xam.cpp
+}
+Example
+*******
+The file :ref:`get_option_table_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_option_table}
 -----------------------------------------------------------------------------
 */
 

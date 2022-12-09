@@ -3,203 +3,215 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin data_model_ctor$$
-$spell
-   var
+{xrst_begin data_model_ctor}
+{xrst_spell
    bool
-   avgint
-   logden
-   std
-   vec
-   const
-   enum
-   struct
-   Cpp
-   obj
-   covariate
-   covariates
-   cov
-   cv
-   eigen
-   sim_stdcv
-$$
+}
 
-$section Data Model: Constructor$$
+Data Model: Constructor
+#######################
 
-$head Syntax$$
-$codei%data_model %data_object%(
-   %fit_simulated_data%,
-   %meas_noise_effect%,
-   %rate_case%,
-   %bound_random%,
-   %n_covariate%,
-   %ode_step_size%,
-   %age_avg_grid%,
-   %age_table%,
-   %time_table%,
-   %subgroup_table%,
-   %integrand_table%,
-   %prior_table%,
-   %subset_object%,
-   %subset_cov_value%,
-   %w_info_vec%,
-   %s_info_vec%,
-   %pack_object%,
-   %child_info4data%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_DATA_MODEL_PROTOTYPE%// END_DATA_MODEL_PROTOTYPE%1
-%$$
+| ``data_model`` *data_object* (
+| |tab| *fit_simulated_data* ,
+| |tab| *meas_noise_effect* ,
+| |tab| *rate_case* ,
+| |tab| *bound_random* ,
+| |tab| *n_covariate* ,
+| |tab| *ode_step_size* ,
+| |tab| *age_avg_grid* ,
+| |tab| *age_table* ,
+| |tab| *time_table* ,
+| |tab| *subgroup_table* ,
+| |tab| *integrand_table* ,
+| |tab| *prior_table* ,
+| |tab| *subset_object* ,
+| |tab| *subset_cov_value* ,
+| |tab| *w_info_vec* ,
+| |tab| *s_info_vec* ,
+| |tab| *pack_object* ,
+| |tab| *child_info4data*
+| )
 
-$head data_object$$
-This is the $code data_model$$ object being constructed.
+Prototype
+*********
+{xrst_literal
+   // BEGIN_DATA_MODEL_PROTOTYPE
+   // END_DATA_MODEL_PROTOTYPE
+}
 
-$head fit_simulated_data$$
+data_object
+***********
+This is the ``data_model`` object being constructed.
+
+fit_simulated_data
+******************
 If this is true, we are fitting simulated data that comes from the
-$cref data_sim_table$$.
+:ref:`data_sim_table-name` .
 
-$head meas_noise_effect$$
+meas_noise_effect
+*****************
 This is the value of
-$cref/meas_noise_effect/option_table/meas_noise_effect/$$ in the option table.
+:ref:`option_table@meas_noise_effect` in the option table.
 
-$head rate_case$$
+rate_case
+*********
 This is the value of
-$cref/rate_case/option_table/rate_case/$$ in the option table.
+:ref:`option_table@rate_case` in the option table.
 
-$head bound_random$$
+bound_random
+************
 This is the
-$cref/bound_random/option_table/Optimize Random Only/bound_random/$$.
+:ref:`option_table@Optimize Random Only@bound_random` .
 
-$head n_covariate$$
+n_covariate
+***********
 This is the number of covariates; i.e., number or rows in
-$cref covariate_table$$.
+:ref:`covariate_table-name` .
 
-$head ode_step_size$$
-This is the $cref/
-   ode_step_size/
-   option_table/
-   Age Average Grid/
-   ode_step_size
-/$$.
+ode_step_size
+*************
+This is the :ref:`option_table@Age Average Grid@ode_step_size` .
 
-$head age_avg_grid$$
-This is the $cref/age average grid/age_avg_table/Age Average Grid/$$.
+age_avg_grid
+************
+This is the :ref:`age_avg_table@Age Average Grid` .
 
-$head age_table$$
-This is the $cref/age_table/get_age_table/age_table/$$.
+age_table
+*********
+This is the :ref:`get_age_table@age_table` .
 
-$head time_table$$
-This is the $cref/time_table/get_time_table/time_table/$$.
+time_table
+**********
+This is the :ref:`get_time_table@time_table` .
 
-$head subgroup_table$$
-This is the $cref/subgroup_table/get_subgroup_table/subgroup_table/$$.
+subgroup_table
+**************
+This is the :ref:`get_subgroup_table@subgroup_table` .
 
-$head integrand_table$$
-This is the $cref/integrand_table/get_integrand_table/integrand_table/$$.
+integrand_table
+***************
+This is the :ref:`get_integrand_table@integrand_table` .
 
-$head subset_object$$
+subset_object
+*************
 This is the sub-sampled version of the data or avgint table; see
-$cref/subset_data_obj/subset_data/subset_data_obj/$$,
-$cref/avgint_subset_obj/avgint_subset/avgint_subset_obj/$$.
+:ref:`subset_data@subset_data_obj` ,
+:ref:`avgint_subset@avgint_subset_obj` .
 
-$head subset_cov_value$$
+subset_cov_value
+****************
 This is the sub-sampled version of the covariates; see
-$cref/subset_data_cov_value/subset_data/subset_data_cov_value/$$,
-$cref/avgint_subset_cov_value/avgint_subset/avgint_subset_cov_value/$$.
-A reference to $icode subset_cov_value$$ is used by $icode data_object$$
-(so $icode age_table$$ cannot be deleted for as long as
-$icode data_object$$ is used).
+:ref:`subset_data@subset_data_cov_value` ,
+:ref:`avgint_subset@avgint_subset_cov_value` .
+A reference to *subset_cov_value* is used by *data_object*
+(so *age_table* cannot be deleted for as long as
+*data_object* is used).
 
-$head w_info_vec$$
-For each $cref/weight_id/weight_table/weight_id/$$,
-$codei%
-   %w_info_vec%[ %weight_id% ]
-%$$
-is the corresponding $cref weight_info$$ information.
+w_info_vec
+**********
+For each :ref:`weight_table@weight_id` ,
+
+   *w_info_vec* [ *weight_id*  ]
+
+is the corresponding :ref:`weight_info-name` information.
 In addition, the constant weight is included at the end of the vector; i.e.,
-at index $icode%w_info_vec%.size()-1%$$.
+at index *w_info_vec* . ``size`` () ``-1`` .
 
-$head s_info_vec$$
-For each $cref/smooth_id/smooth_table/smooth_id/$$,
-$codei%
-   %s_info_vec%[ %smooth_id% ]
-%$$
-is the corresponding $cref smooth_info$$ information.
-For each $icode%s_info_vec%[%smooth_id%]%$$ object,
+s_info_vec
+**********
+For each :ref:`smooth_table@smooth_id` ,
+
+   *s_info_vec* [ *smooth_id*  ]
+
+is the corresponding :ref:`smooth_info-name` information.
+For each *s_info_vec* [ *smooth_id* ] object,
 only the following functions are used:
-$code age_size$$, $code time_size$$, $code age_id$$, $code time_id$$.
+``age_size`` , ``time_size`` , ``age_id`` , ``time_id`` .
 
-$head pack_object$$
-This is the $cref pack_info$$ information corresponding to
-the $cref model_variables$$.
-A reference to $icode pack_object$$ is used by $icode data_object$$.
+pack_object
+***********
+This is the :ref:`pack_info-name` information corresponding to
+the :ref:`model_variables-name` .
+A reference to *pack_object* is used by *data_object* .
 
-$head child_info4data$$
-This is the $cref child_info$$ information corresponding to
+child_info4data
+***************
+This is the :ref:`child_info-name` information corresponding to
 parent node, node table, and data table.
 
-$head data_object.n_covariate_$$
-set to $icode n_covariate$$.
+data_object.n_covariate\_
+*************************
+set to *n_covariate* .
 
-$head data_object.ode_step_size_$$
-set to $icode ode_step_size$$.
+data_object.ode_step_size\_
+***************************
+set to *ode_step_size* .
 
-$head data_object.pack_object_$$
-set to $icode pack_object$$.
+data_object.pack_object\_
+*************************
+set to *pack_object* .
 
-$head data_object.minimum_meas_cv_$$
-Set to a vector with the same size as $icode integrand_table$$ and
-$codei%
-   %minimum_meas_cv_[%integrand_id%] =
-      %integrand_table%[%integrand_id%].minimum_meas_cv
-%$$
+data_object.minimum_meas_cv\_
+*****************************
+Set to a vector with the same size as *integrand_table* and
 
-$head replace_like_called_$$
+| |tab| ``minimum_meas_cv_`` [ *integrand_id* ] =
+| |tab| |tab| ``integrand_table`` [ ``integrand_id`` ]. *minimum_meas_cv*
+
+replace_like_called\_
+*********************
 initialize as false.
 
-$head n_child_$$
+n_child\_
+*********
 set to number of children.
 
-$head subset_data_obj_$$
-for each $icode subset_id$$, set $codei%subset_data_obj_[%subset_id%]%$$
+subset_data_obj\_
+*****************
+for each *subset_id* , set ``subset_data_obj_`` [ *subset_id* ]
 fields that are command both data_subset and avgint_subset.
 
-$head data_info_$$
-for each $icode subset_id$$, set
-$codei%data_info_[%subset_id%]%$$
+data_info\_
+***********
+for each *subset_id* , set
+``data_info_`` [ *subset_id* ]
 is extra information for each data point.
 Each of the fields in
-$codei%data_info_[%subset_id%]%$$
+``data_info_`` [ *subset_id* ]
 is described below:
 
-$subhead density$$
+density
+=======
 Is the
-$cref/density_enum/get_density_table/density_enum/$$ corresponding
-to the $icode subset_id$$.
+:ref:`get_density_table@density_enum` corresponding
+to the *subset_id* .
 
-$subhead child$$
-This $code size_t$$ value is the
-$cref/child/child_info/table_id2child/child/$$ index corresponding
-to this $icode subset_id$$.
-Note that if it is equal to $code n_child_$$,
+child
+=====
+This ``size_t`` value is the
+:ref:`child_info@table_id2child@child` index corresponding
+to this *subset_id* .
+Note that if it is equal to ``n_child_`` ,
 this data point corresponds to th parent node.
 
-$subhead depend_on_ran_var$$
-This $code bool$$ value is true (false) if the data point corresponding to
-$icode subset_id$$ depends (does not depend) on a random effect
+depend_on_ran_var
+=================
+This ``bool`` value is true (false) if the data point corresponding to
+*subset_id* depends (does not depend) on a random effect
 that is a variable; i.e., not constrained to be a constant.
 
-
-$head avgint_obj_$$
-The $code avg_integrand$$ $cref/constructor/avg_integrand_ctor/$$
+avgint_obj\_
+************
+The ``avg_integrand`` :ref:`constructor<avg_integrand_ctor-name>`
 is used to create this argument.
 The arguments to this constructor are a subset of the
-arguments to the $code data_model$$ constructor and are passed through
-(with the same name) to the $code avg_integrand$$ constructor.
+arguments to the ``data_model`` constructor and are passed through
+(with the same name) to the ``avg_integrand`` constructor.
 
-$end
+{xrst_end data_model_ctor}
 -----------------------------------------------------------------------------
 */
 # include <cppad/mixed/exception.hpp>
@@ -443,81 +455,79 @@ avg_noise_obj_(
    }
 }
 /*
-$begin data_model_replace_like$$
-$spell
-   avgint
-   const
-   CppAD
-   struct
-   std
-   obj
-   cv
-   sim_stdcv
-$$
+{xrst_begin data_model_replace_like}
 
-$section Set Value Necessary for Likelihood (not for Average Integrand)$$
+Set Value Necessary for Likelihood (not for Average Integrand)
+##############################################################
 
-$head Syntax$$
-$icode%data_object%.replace_like(%subset_data_obj%)%$$
+Syntax
+******
+*data_object* . ``replace_like`` ( *subset_data_obj* )
 
-$head Purpose$$
+Purpose
+*******
 The values
-$cref/density_id/data_table/density_id/$$,
-$cref/hold_out/data_table/hold_out/$$,
-$cref/meas_value/data_table/meas_value/$$,
-$cref/meas_std/data_table/meas_std/$$,
-$cref/eta/data_table/eta/$$,
-$cref/nu/data_table/nu/$$,
+:ref:`data_table@density_id` ,
+:ref:`data_table@hold_out` ,
+:ref:`data_table@meas_value` ,
+:ref:`data_table@meas_std` ,
+:ref:`data_table@eta` ,
+:ref:`data_table@nu` ,
 are not necessary to calculate the average integrand.
 However, the are necessary to use the functions
-$cref/data_object.like_one/data_model_like_one/$$ and
-$cref/data_object.like_all/data_model_like_all/$$.
-If the $cref/data_sim_value/data_sim_table/data_sim_value/$$
-values in $icode subset_data_obj$$ are not nan, these
+:ref:`data_object.like_one<data_model_like_one-name>` and
+:ref:`data_object.like_all<data_model_like_all-name>` .
+If the :ref:`data_sim_table@data_sim_value`
+values in *subset_data_obj* are not nan, these
 are simulated values used in calculating the likelihood.
 
-$head data_object$$
+data_object
+***********
 This object has prototype
-$codei%
-   data_model %data_object%
-%$$
-see $cref/data_object constructor/data_model_ctor/data_object/$$.
 
-$subhead subset_object$$
-We use $icode subset_object$$
-for the $cref/subset_object/data_model_ctor/$$ in the $icode data_object$$
+   ``data_model`` *data_object*
+
+see :ref:`data_object constructor<data_model_ctor@data_object>` .
+
+subset_object
+=============
+We use *subset_object*
+for the :ref:`subset_object<data_model_ctor-name>` in the *data_object*
 constructor.
 
-$subhead n_subset$$
+n_subset
+========
 We use the notation
-$codei%
-   %n_subset% = %subset_object%.size()
-%$$
 
-$subhead subset_id$$
-This an index between zero and $icode%n_subset% - 1%$$.
+   *n_subset* = *subset_object* . ``size`` ()
+
+subset_id
+=========
+This an index between zero and *n_subset* ``- 1`` .
 It is used to refer to the corresponding element of
-$icode subset_object$$.
+*subset_object* .
 
-$head subset_data_obj$$
+subset_data_obj
+***************
 This argument has prototype
-$codei%
-   const CppAD::vector<subset_data_struct>& %subset_data_obj%
-%$$
-and has size $icode n_subset$$.
-For each $icode subset_id$$,
-and for $icode%field% = density_id%,% hold_out%,% meas_value%,% meas_std%$$,
-$icode%subset_data_obj%[%subset_id%].%field%$$,
-is used as a replacement for
-$icode%subset_object[%subset_id%]%.%field%$$.
 
-$head Laplace Density$$
+   ``const CppAD::vector<subset_data_struct>&`` *subset_data_obj*
+
+and has size *n_subset* .
+For each *subset_id* ,
+and for *field* = ``density_id`` , ``hold_out`` , ``meas_value`` , ``meas_std`` ,
+*subset_data_obj* [ *subset_id* ]. *field* ,
+is used as a replacement for
+*subset_object* [ ``subset_id`` ]. *field* .
+
+Laplace Density
+***************
 The Laplace density is only allowed if the model for the
-$cref avg_integrand$$ does not depend on the value of the random effects.
+:ref:`avg_integrand-name` does not depend on the value of the random effects.
 If this assumption is violated, an error messages is generated and the
 program exits.
 
-$end
+{xrst_end data_model_replace_like}
 */
 void data_model::replace_like(
       const CppAD::vector<subset_data_struct>&  subset_data_obj )
@@ -562,64 +572,67 @@ void data_model::replace_like(
 
 /*
 -----------------------------------------------------------------------------
-$begin data_model_average$$
+{xrst_begin data_model_average}
 
-$spell
-   vec
-   const
-   CppAD
-$$
-$section Data Model: Compute One Average Integrand$$
+Data Model: Compute One Average Integrand
+#########################################
 
-$head Syntax$$
-$icode%avg% = %data_object%.average(%subset_id%, %pack_vec%)%$$
+Syntax
+******
+*avg* = *data_object* . ``average`` ( *subset_id* , *pack_vec* )
 
-$head data_object$$
+data_object
+***********
 This object has prototype
-$codei%
-   data_model %data_object%
-%$$
-see $cref/data_object constructor/data_model_ctor/data_object/$$.
-The object $icode data_object$$ is effectively const.
 
-$head Float$$
-The type $icode Float$$ must be $code double$$ or
-$cref a1_double$$.
+   ``data_model`` *data_object*
 
-$head subset_id$$
+see :ref:`data_object constructor<data_model_ctor@data_object>` .
+The object *data_object* is effectively const.
+
+Float
+*****
+The type *Float* must be ``double`` or
+:ref:`a1_double-name` .
+
+subset_id
+*********
 This argument has prototype
-$codei%
-   size_t %subset_id%
-%$$
-and is the $cref/subset_id/subset_data/subset_data_obj/subset_id/$$
+
+   ``size_t`` *subset_id*
+
+and is the :ref:`subset_data@subset_data_obj@subset_id`
 we are computing the average integrand for.
 
-$head pack_vec$$
+pack_vec
+********
 This argument has prototype
-$codei%
-   const CppAD::vector<%Float%>& %pack_vec%
-%$$
-and is all the $cref model_variables$$ in the order
-specified by $cref pack_info$$.
 
-$head avg$$
+   ``const CppAD::vector<`` *Float* >& *pack_vec*
+
+and is all the :ref:`model_variables-name` in the order
+specified by :ref:`pack_info-name` .
+
+avg
+***
 The return value has prototype
-$codei%
-   %Float% avg
-%$$
-This is the
-$cref/average integrand/avg_integrand/Average Integrand, A_i/$$
-for the specified data point.
 
-$children%example/devel/model/avg_no_ode_xam.cpp
-   %example/devel/model/avg_yes_ode_xam.cpp
-%$$
-$head Example$$
+   *Float* ``avg``
+
+This is the
+:ref:`average integrand<avg_integrand@Average Integrand, A_i>`
+for the specified data point.
+{xrst_toc_hidden
+   example/devel/model/avg_no_ode_xam.cpp
+   example/devel/model/avg_yes_ode_xam.cpp
+}
+Example
+*******
 The files
-$cref avg_no_ode_xam.cpp$$ and $cref avg_yes_ode_xam.cpp$$
+:ref:`avg_no_ode_xam.cpp-name` and :ref:`avg_yes_ode_xam.cpp-name`
 contain examples using this routine.
 
-$end
+{xrst_end data_model_average}
 */
 template <class Float>
 Float data_model::average(
@@ -661,132 +674,126 @@ Float data_model::average(
 
 /*
 -----------------------------------------------------------------------------
-$begin data_model_like_one$$
-
-$spell
-   sim_stdcv
-   avgint
-   Sincidence
-   Tincidence
-   struct
-   logden
-   fabs
-   logden
-   std
-   Integrands
-   wres
-   var
-   vec
-   const
-   CppAD
+{xrst_begin data_model_like_one}
+{xrst_spell
    subvectors
-   mtspecific
-   mtall
-   mtstandard
-   mtexcess
-   mtwith
-   mtother
-   relrisk
-   xam
-$$
-$section One Weighted Residual and Log-Likelihood for any Integrands$$
+}
 
-$head Syntax$$
-$icode%residual% = %data_object%.like_one(
-   %subset_id%, %pack_vec%, %avg%, %delta_out%
-)%$$
+One Weighted Residual and Log-Likelihood for any Integrands
+###########################################################
 
-$head Requirement$$
-One must call $cref/replace_like/data_model_replace_like/$$
+Syntax
+******
+
+| *residual* = *data_object* . ``like_one`` (
+| |tab| *subset_id* , *pack_vec* , *avg* , *delta_out*
+| )
+
+Requirement
+***********
+One must call :ref:`replace_like<data_model_replace_like-name>`
 before calling this function.
 
-$head Log-likelihood$$
-We use $cref/y_i/data_like/Notation/y_i/$$ to denote the
-$cref/meas_value/data_table/meas_value/$$ corresponding
-to this $cref/subset_id/subset_data/subset_data_obj/subset_id/$$.
-The log-likelihood computed by $code like_one$$ is the mapping
-$latex \[
-   \ell (u, \theta) = C + \log [ \B{p} ( y_i | u , \theta ) ]
-\] $$
-where $latex u$$ are the random effects,
-$latex \theta$$ are the fixed effects, and
-$latex C$$ is a constant that does
-not depend on $latex ( u , \theta )$$.
+Log-likelihood
+**************
+We use :ref:`data_like@Notation@y_i` to denote the
+:ref:`data_table@meas_value` corresponding
+to this :ref:`subset_data@subset_data_obj@subset_id` .
+The log-likelihood computed by ``like_one`` is the mapping
 
-$head data_object$$
+.. math::
+
+   \ell (u, \theta) = C + \log [ \B{p} ( y_i | u , \theta ) ]
+
+where :math:`u` are the random effects,
+:math:`\theta` are the fixed effects, and
+:math:`C` is a constant that does
+not depend on :math:`( u , \theta )`.
+
+data_object
+***********
 This object has prototype
-$codei%
-   data_model %data_object%
-%$$
-see $cref/data_object constructor/data_model_ctor/data_object/$$.
+
+   ``data_model`` *data_object*
+
+see :ref:`data_object constructor<data_model_ctor@data_object>` .
 It is effectively const
 (some internal arrays are used for temporary work space and kept between
 calls to avoid re-allocating memory).
 
-$subhead fit_simulated_data$$
-If $cref/fit_simulated_data/data_model_ctor/fit_simulated_data/$$ is true,
-we are fitting simulated data $icode data_sim_value$$,
-otherwise we are fitting the actual data $icode meas_value$$.
+fit_simulated_data
+==================
+If :ref:`data_model_ctor@fit_simulated_data` is true,
+we are fitting simulated data *data_sim_value* ,
+otherwise we are fitting the actual data *meas_value* .
 
-$head Float$$
-The type $icode Float$$ must be $code double$$ or
-$cref a1_double$$.
+Float
+*****
+The type *Float* must be ``double`` or
+:ref:`a1_double-name` .
 
-$head subset_id$$
+subset_id
+*********
 This argument has prototype
-$codei%
-   size_t %subset_id%
-%$$
-and is the $cref/subset_id/subset_data/subset_data_obj/subset_id/$$
+
+   ``size_t`` *subset_id*
+
+and is the :ref:`subset_data@subset_data_obj@subset_id`
 we are computing the weighted residual and log-likelihood for.
 
-$head pack_vec$$
+pack_vec
+********
 This argument has prototype
-$codei%
-   const CppAD::vector<%Float%>& %pack_vec%
-%$$
-and is all the $cref model_variables$$ in the order
-specified by $cref pack_info$$; i.e.,
-$latex (u , \theta)$$.
-Only the $cref pack_info_group_meas$$ subvectors of $icode pack_vec$$ are used
-by $code like_one$$ (note that other components of $latex (u, \theta )$$
-are used to compute $icode avg$$ documented below).
 
-$head avg$$
+   ``const CppAD::vector<`` *Float* >& *pack_vec*
+
+and is all the :ref:`model_variables-name` in the order
+specified by :ref:`pack_info-name` ; i.e.,
+:math:`(u , \theta)`.
+Only the :ref:`pack_info_group_meas-name` subvectors of *pack_vec* are used
+by ``like_one`` (note that other components of :math:`(u, \theta )`
+are used to compute *avg* documented below).
+
+avg
+***
 This argument has prototype
-$codei%
-   const %Float%& %avg%
-%$$
+
+   ``const`` *Float* & *avg*
+
 and is the
-$cref/average integrand/avg_integrand/Average Integrand, A_i/$$,
-$latex A_i ( u , \theta )$$, for the specified data point.
-This can be calculated using $cref data_model_average$$.
+:ref:`average integrand<avg_integrand@Average Integrand, A_i>` ,
+:math:`A_i ( u , \theta )`, for the specified data point.
+This can be calculated using :ref:`data_model_average-name` .
 
-$head delta_out$$
-The input value of $icode delta_out$$ does not matter.
+delta_out
+*********
+The input value of *delta_out* does not matter.
 Upon return it is the adjusted standard deviation
-$cref/delta/data_like/Adjusted Standard Deviation, delta_i(theta)/$$
+:ref:`delta<data_like@Adjusted Standard Deviation, delta_i(theta)>`
 for this data point.
 
-$head residual$$
+residual
+********
 The return value has prototype
-$codei%
-   residual_struct<%Float%> %residual%
-%$$
-see $cref/residual_struct/residual_density/residual/residual_struct/$$.
+
+   ``residual_struct<`` *Float* > *residual*
+
+see :ref:`residual_density@residual@residual_struct` .
 It contains the weighted residual and the corresponding log-density.
 
-$subhead index$$
-Note that the $cref/index/residual_density/index/$$ field is set to
-the value $icode subset_id$$.
-
-$children%example/devel/model/like_one_xam.cpp
-%$$
-$head Example$$
-The file $cref like_one_xam.cpp$$ contains an example and test
+index
+=====
+Note that the :ref:`residual_density@index` field is set to
+the value *subset_id* .
+{xrst_toc_hidden
+   example/devel/model/like_one_xam.cpp
+}
+Example
+*******
+The file :ref:`like_one_xam.cpp-name` contains an example and test
 of using this routine.
 
-$end
+{xrst_end data_model_like_one}
 */
 template <class Float>
 residual_struct<Float> data_model::like_one(
@@ -898,110 +905,118 @@ residual_struct<Float> data_model::like_one(
 }
 /*
 -------------------------------------------------------------------------------
-$begin data_model_like_all$$
-$spell
-   avgint
+{xrst_begin data_model_like_all}
+{xrst_spell
    bool
-   enum
-   vec
-   CppAD
-   const
-   struct
-$$
+}
 
-$section All the Weighted Residuals and Log-Likelihoods$$
+All the Weighted Residuals and Log-Likelihoods
+##############################################
 
-$head Syntax$$
-$icode%residual_vec% = %data_object%.like_all(
-   %hold_out%, %random_depend%, %pack_vec%
-)%$$
+Syntax
+******
 
-$head Requirement$$
-One must call $cref/replace_like/data_model_replace_like/$$
+| *residual_vec* = *data_object* . ``like_all`` (
+| |tab| *hold_out* , *random_depend* , *pack_vec*
+| )
+
+Requirement
+***********
+One must call :ref:`replace_like<data_model_replace_like-name>`
 before calling this function.
 
-$head data_object$$
+data_object
+***********
 This object has prototype
-$codei%
-   data_model %data_object%
-%$$
-see $cref/data_object constructor/data_model_ctor/data_object/$$.
+
+   ``data_model`` *data_object*
+
+see :ref:`data_object constructor<data_model_ctor@data_object>` .
 It is effectively const
 (some internal arrays are used for temporary work space and kept between
 calls to avoid re-allocating memory).
 
-$head Float$$
-The type $icode Float$$ must be $code double$$ or
-$cref a1_double$$.
+Float
+*****
+The type *Float* must be ``double`` or
+:ref:`a1_double-name` .
 
-$head hold_out$$
+hold_out
+********
 This argument has prototype
-$codei%
-   bool %hold_out%
-%$$
+
+   ``bool`` *hold_out*
+
 If it is true, the flagged data will be held out,
 otherwise it will not.
 
-$head random_depend$$
-This argument has prototype $codei%
-   bool %random_depend%
-%$$
+random_depend
+*************
+This argument has prototype
+
+   ``bool`` *random_depend*
+
 If it is true (false), only residuals that depend on the random effects
 that have non-equal (equal) bounds, are included.
 
-$head pack_vec$$
+pack_vec
+********
 This argument has prototype
-$codei%
-   const CppAD::vector<%Float%>& %pack_vec%
-%$$
-and is all the $cref model_variables$$ in the order
-specified by $cref pack_info$$; i.e., $latex (u , \theta)$$.
-If $icode random_depend$$ is false,
-only the components of $icode u$$ that have equal lower and upper
+
+   ``const CppAD::vector<`` *Float* >& *pack_vec*
+
+and is all the :ref:`model_variables-name` in the order
+specified by :ref:`pack_info-name` ; i.e., :math:`(u , \theta)`.
+If *random_depend* is false,
+only the components of *u* that have equal lower and upper
 bounds are defined (the other components are unspecified).
 
-$head residual_vec$$
+residual_vec
+************
 The return value has prototype
-$codei%
-   CppAD::vector< residual_struct<%Float%> > %residual_vec%
-%$$
 
-$subhead index$$
-For each element of $icode residual_vec$$,
-the residual $cref/index/residual_density/index/$$
-is set to the $cref/data_subset_id/data_subset_table/data_subset_id/$$
+   ``CppAD::vector< residual_struct<`` *Float* > > *residual_vec*
+
+index
+=====
+For each element of *residual_vec* ,
+the residual :ref:`residual_density@index`
+is set to the :ref:`data_subset_table@data_subset_id`
 for the corresponding residual.
 
-$subhead Include Hold Outs$$
-If $icode hold_out$$ is false,
-the size of $icode residual$$ is equal the number of subset data values
-$cref/n_subset/subset_data/subset_data_obj/n_subset/$$.
+Include Hold Outs
+=================
+If *hold_out* is false,
+the size of *residual* is equal the number of subset data values
+:ref:`subset_data@subset_data_obj@n_subset` .
 The order of the residuals is the same as in
-$cref/subset_object/data_model_ctor/subset_object/$$ in the
-$icode data_object$$ constructor.
+:ref:`data_model_ctor@subset_object` in the
+*data_object* constructor.
 
-$subhead No Hold Outs$$
-If $icode hold_out$$ is true,
-the size of $icode residual$$ is equal the number of subset data values
-$cref/n_subset/subset_data/subset_data_obj/n_subset/$$,
+No Hold Outs
+============
+If *hold_out* is true,
+the size of *residual* is equal the number of subset data values
+:ref:`subset_data@subset_data_obj@n_subset` ,
 minus the number for which
-$cref/hold_out/data_table/hold_out/$$ is one.
+:ref:`data_table@hold_out` is one.
 The order of the residuals is not specified in this case.
 
-$head Log Density$$
+Log Density
+***********
 The log of the density
-$latex \B{p}( y | u , \theta )$$,
+:math:`\B{p}( y | u , \theta )`,
 for the data that is included,
 is the sum of the log of the densities corresponding to all the
-$cref/residuals/residual_density/$$ in $icode residual_vec$$.
-
-$children%
+:ref:`residuals<residual_density-name>` in *residual_vec* .
+{xrst_toc_hidden
    example/devel/model/like_all_xam.cpp
-%$$
-$head Example$$
-$cref like_all_xam.cpp$$
+}
+Example
+*******
+:ref:`like_all_xam.cpp-name`
 
-$end
+{xrst_end data_model_like_all}
 */
 template <class Float>
 CppAD::vector< residual_struct<Float> > data_model::like_all(

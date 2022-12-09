@@ -3,86 +3,102 @@
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 '''
-$begin plot_curve$$
-$spell
+{xrst_begin plot_curve}
+{xrst_spell
    pdf
-   std
-   str
-$$
+}
 
-$section Plot Log-Scaled Values With Respect To Age and Time$$
+Plot Log-Scaled Values With Respect To Age and Time
+###################################################
 
-$head Syntax$$
-$srcthisfile%0%# BEGIN syntax%# END syntax%1%$$
+Syntax
+******
+{xrst_literal
+   # BEGIN syntax
+   # END syntax
+}
 
-$head pdf_file$$
-This argument can't be $code None$$.
-It is a $code str$$ containing the location where the
+pdf_file
+********
+This argument can't be ``None`` .
+It is a ``str`` containing the location where the
 pdf file containing the plot will be placed.
 
-$head plot_title$$
-This argument can be $code None$$.
-It is a $code str$$ title printed at the top of every plot.
+plot_title
+**********
+This argument can be ``None`` .
+It is a ``str`` title printed at the top of every plot.
 
-$head plot_limit$$
-This argument can't be $code None$$.
-It is a $code dict$$ with the following keys:
+plot_limit
+**********
+This argument can't be ``None`` .
+It is a ``dict`` with the following keys:
 
-$subhead age_min$$
-is a $code float$$ containing the minimum age in the plot region.
+age_min
+=======
+is a ``float`` containing the minimum age in the plot region.
 
-$subhead age_max$$
-is a $code float$$ containing the maximum age in the plot region.
+age_max
+=======
+is a ``float`` containing the maximum age in the plot region.
 
-$subhead time_min$$
-is a $code float$$ containing the minimum time in the plot region.
+time_min
+========
+is a ``float`` containing the minimum time in the plot region.
 
-$subhead time_max$$
-is a $code float$$ containing the maximum time in the plot region.
+time_max
+========
+is a ``float`` containing the maximum time in the plot region.
 
-$head plot_data$$
-This argument can't be $code None$$.
-It is a $code dict$$ where each element is a $code list$$.
-The key for the dictionary is the name of the value $icode z$$ being plotted.
-For each $icode z_name$$ is in $icode plot_data$$,
-$codei%
-   %z_list% = %plot_data%[%z_name%]
-%$$
-is a $code list$$.
-Each element of this list is a $code dict$$ with the following keys:
-$code 'age'$$, $code 'time'$$, $code 'value'$$.
-In addition, it may also contain the key $code 'std'$$.
+plot_data
+*********
+This argument can't be ``None`` .
+It is a ``dict`` where each element is a ``list`` .
+The key for the dictionary is the name of the value *z* being plotted.
+For each *z_name* is in *plot_data* ,
 
-$subhead age$$
-For each $icode row$$ in $icode z_list$$, $icode%row%['age']%$$
-is the age corresponding to this value of $icode z$$.
+   *z_list* = *plot_data* [ *z_name* ]
 
-$subhead time$$
-For each $icode row$$ in $icode z_list$$, $icode%row%['time']%$$
-is the time corresponding to this value of $icode z$$.
-For each age value in a $icode z_list$$,
+is a ``list`` .
+Each element of this list is a ``dict`` with the following keys:
+``'age'`` , ``'time'`` , ``'value'`` .
+In addition, it may also contain the key ``'std'`` .
+
+age
+===
+For each *row* in *z_list* , *row* [ ``'age'`` ]
+is the age corresponding to this value of *z* .
+
+time
+====
+For each *row* in *z_list* , *row* [ ``'time'`` ]
+is the time corresponding to this value of *z* .
+For each age value in a *z_list* ,
 the set of time value must be the same; i.e.,
 the set of age an time values form a rectangular grid.
 
-$subhead value$$
-For each $icode row$$ in $icode z_list$$, $icode%row%['value']%$$
-is the value of $icode z$$.
+value
+=====
+For each *row* in *z_list* , *row* [ ``'value'`` ]
+is the value of *z* .
 All of these values must be non-negative and they must
 not all be zero.
 
-$subhead std$$
-For each $icode row$$ in $icode z_list$$, $icode%row%['std']%$$
-is the standard deviation corresponding to this value of $icode z$$.
-This key is optional. It appears for one element of a $icode z_list$$,
-it must appear for all the elements of the $icode z_list$$.
-This can change between different $icode z_name$$ values.
+std
+===
+For each *row* in *z_list* , *row* [ ``'std'`` ]
+is the standard deviation corresponding to this value of *z* .
+This key is optional. It appears for one element of a *z_list* ,
+it must appear for all the elements of the *z_list* .
+This can change between different *z_name* values.
 Furthermore, it this appears, it will be plotted and it must not be all zero
-(for one $icode z_list$$).
+(for one *z_list* ).
 
-$head Example$$
-See $cref user_plot_curve.py$$
+Example
+*******
+See :ref:`user_plot_curve.py-name`
 
-$end
+{xrst_end plot_curve}
 '''
 # ----------------------------------------------------------------------------
 import numpy

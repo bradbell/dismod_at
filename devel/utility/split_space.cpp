@@ -6,43 +6,53 @@
 # include <dismod_at/split_space.hpp>
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
-$begin split_space$$
-$spell
-   Substrings
-   vec
-   str
-$$
+{xrst_begin split_space}
+{xrst_spell
+   delimiter
+   substring
+   substrings
+}
 
-$section Split String Into Substrings With Spaces as Delimiter$$
+Split String Into Substrings With Spaces as Delimiter
+#####################################################
 
-$head Syntax$$
-$codei%vec% = split_space(%str%)%$$
+Syntax
+******
+``vec`` = *split_space* ( ``str`` )
 
-$head str$$
+str
+***
 This is the string that we are splitting.
 Each substring is non-empty with by one or more spaces between them.
 
-$head vec$$
+vec
+***
 This is the resulting vector of non-empty substrings.
-If all the characters in $icode str$$ are spaces,
+If all the characters in *str* are spaces,
 the resulting vector with have size zero.
 
-$head empty$$
-If $icode str$$ only contains spaces,
+empty
+*****
+If *str* only contains spaces,
 the return vector is empty; i.e.
-$icode%vec%.size() == 0%$$.
-
-$children%example/devel/utility/split_space_xam.cpp
-%$$
-$head Example$$
-The file $cref split_space_xam.cpp$$ contains an example and test
+*vec* . ``size`` () == 0 .
+{xrst_toc_hidden
+   example/devel/utility/split_space_xam.cpp
+}
+Example
+*******
+The file :ref:`split_space_xam.cpp-name` contains an example and test
 of using this routine.
 
-$head Prototype$$
-$srccode%cpp% */
+Prototype
+*********
+{xrst_spell_off}
+{xrst_code cpp} */
 CppAD::vector<std::string> split_space(const std::string& str)
-/* %$$
-$end
+/* {xrst_code}
+{xrst_spell_on}
+
+{xrst_end split_space}
 */
 {  CppAD::vector<std::string> result;
    size_t start = 0;

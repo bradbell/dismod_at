@@ -3,268 +3,283 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin dock_dismod_at.sh$$ $newlinech #$$
-# $spell
-#  dismod
-#  busybox
-#  rmi
-#  Dockerfile
-#  dismodat.py
-#  rm
-#  ps
-#   podman
-# $$
+# {xrst_begin dock_dismod_at.sh}
+# {xrst_spell
+#     busybox
+#     dockerfile
+#     get get
+#     podman
+#     ps
+#     rm
+#     rmi
+# }
+# {xrst_comment_ch #}
 #
-# $section Install and Run dismod_at in a Docker Image$$
+# Install and Run dismod_at in a Docker Image
+# ###########################################
 #
-# $head Syntax$$
-# $codei%./dock_dismod_at.sh image base
-# %$$
-# $codei%./dock_dismod_at.sh image mixed
-# %$$
-# $codei%./dock_dismod_at.sh image dismod_at
-# %$$
-# $codei%./dock_dismod_at.sh image at_cascade
-# %$$
-# $codei%./dock_dismod_at.sh %build_type% %database% %command% %...%
-# %$$
+# Syntax
+# ******
 #
-# $head OCI$$
+# | ./ ``dock_dismod_at.sh image base``
+# | ./ ``dock_dismod_at.sh image mixed``
+# | ./ ``dock_dismod_at.sh image dismod_at``
+# | ./ ``dock_dismod_at.sh image at_cascade``
+# | ./ ``dock_dismod_at.sh`` *build_type* *database* *command*  ...
+#
+# OCI
+# ***
 # Both docker and podman create Open Container Initiative
-# $href%https://opencontainers.org/%OCI%$$ images and containers.
+# `OCI <https://opencontainers.org/>`_ images and containers.
 #
-# $subhead driver$$
-# The $icode driver$$ program, determined by this setting, can be either
+# driver
+# ======
+# The *driver* program, determined by this setting, can be either
 # docker or podman:
-# $srccode%sh%
+# {xrst_spell_off}
+# {xrst_code sh}
    driver='podman'
-# %$$
-# Below we referee to the value of this shell variable as $icode driver$$.
+# {xrst_code}
+# {xrst_spell_on}
+# Below we referee to the value of this shell variable as *driver* .
 #
-# $head Logging Output$$
+# Logging Output
+# **************
 # You can save the output of any of the commands above by redirecting
 # standard output and standard error to a file.
 # For example,
-# $codei%
-#  ./dock_dismod_at.sh image base >& %log_file%
-# %$$
-# will redirect standard output and standard error to $icode log_file$$.
+#
+#     ./ ``dock_dismod_at.sh image base >&`` *log_file*
+#
+# will redirect standard output and standard error to *log_file* .
 # If you do this, you will not see the progress during execution.
 # If also want to monitor the progress, in another window use
-# $codei%
-#  tail -f %log_file%
-# %$$
-# This $code tail$$ command will not terminate until you enter
+#
+#     ``tail -f`` *log_file*
+#
+# This ``tail`` command will not terminate until you enter
 # control-C in the window where it is running.
 #
-# $head Purpose$$
+# Purpose
+# *******
 # This bash script will create or run a dismod_at OCI image
 # and can be run from any directory.
 # Using this script is an  alternative to going through the steps required to
-# $cref/install_dismod_at/install_unix/$$.
+# :ref:`install_dismod_at<install_unix-name>` .
 # You can use the following link to get a get a copy of the dismod_at.sh
-# $href%https://raw.githubusercontent.com/bradbell/dismod_at/master/bin/dock_dismod_at.sh
-#  %bash script
-# %$$
+# `bash script <https://raw.githubusercontent.com/bradbell/dismod_at/master/bin/dock_dismod_at.sh>`_
 # If you understand docker, this script also serves as an example
 # install of dismod_at.
 #
-# $head Requirements$$
-# You must have a copy of $href%https://docs.docker.com/%docker%$$, or
-# $href%https://podman.io%podman%$$
+# Requirements
+# ************
+# You must have a copy of `docker <https://docs.docker.com/>`_, or
+# `podman <https://podman.io>`_
 # installed on your system.
 # You can test this on your system by trying to execute the following command:
-# $codei%
-#  %driver% run busybox echo 'Hello World'
-# %$$
 #
-# $head Building Images$$
+#     *driver* ``run busybox echo`` ``'Hello World'``
+#
+# Building Images
+# ***************
 # The image commands will not execute if the corresponding OCI image
 # already exists.
 # You must remove containers that use an image and then remove the image,
 # before you can execute the image command successfully.
 #
-# $subhead dismod_at_version$$
+# dismod_at_version
+# =================
 # This script will build the following version of dismod_at image:
-# $srccode%sh%
+# {xrst_spell_off}
+# {xrst_code sh}
    dismod_at_version='20220826'
    dismod_at_hash='bcf01e4dbdf528c2672ca05758493b0fc66ebcfd'
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $subhead at_cascade_version$$
+# at_cascade_version
+# ==================
 # This script can build the following version of the optional at_cascade image:
-# $srccode%sh%
+# {xrst_spell_off}
+# {xrst_code sh}
    at_cascade_version='2022.10.14'
    at_cascade_hash='4fdc5002864a1a86bcbe0e819af0191c987d95d4'
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-#
-# $subhead dismod_at.base$$
-# The $code image base$$ syntax creates a new OCI image with the name
-# $code dismod_at.base$$.
-# The $cref/whats_new/whats_new_2019/$$ instructions will tell you if
+# dismod_at.base
+# ==============
+# The ``image base`` syntax creates a new OCI image with the name
+# ``dismod_at.base`` .
+# The :ref:`whats_new<whats_new_2019-name>` instructions will tell you if
 # you need to re-execute this command.
 #
-# $subhead dismod_at.mixed$$
-# The $code image mixed$$ syntax creates a new OCI image with the name
-# $code dismod_at.mixed$$.
-# The $code dismod_at.base$$ image must exist before the
-# $code dismod_at.mixed$$ image can be created.
-# The $cref/whats_new/whats_new_2019/$$ instructions will tell you if
+# dismod_at.mixed
+# ===============
+# The ``image mixed`` syntax creates a new OCI image with the name
+# ``dismod_at.mixed`` .
+# The ``dismod_at.base`` image must exist before the
+# ``dismod_at.mixed`` image can be created.
+# The :ref:`whats_new<whats_new_2019-name>` instructions will tell you if
 # you need to re-execute this command.
 #
-# $subhead dismod_at.image$$
-# The $code image dismod_at$$ syntax creates a new OCI image with the name
-# $code dismod_at.image$$.
-# The $code dismod_at.mixed$$ image must exist before the
-# $code dismod_at.image$$ image can be created.
+# dismod_at.image
+# ===============
+# The ``image dismod_at`` syntax creates a new OCI image with the name
+# ``dismod_at.image`` .
+# The ``dismod_at.mixed`` image must exist before the
+# ``dismod_at.image`` image can be created.
 #
-# $subhead at_cascade.image$$
-# The $code image at_cascade$$ syntax creates a new OCI image with the name
-# $code at_cascade.image$$.
-# The $code dismod_at.image$$ image must exist before the
-# $code at_cascade.image$$ image can be created.
-# The $href%
-#   https://bradbell.github.io/at_cascade/doc/rst/at_cascade.html%
-#   at_cascade
-# %$$ package is an optional add-on to the dismod_at program.
+# at_cascade.image
+# ================
+# The ``image at_cascade`` syntax creates a new OCI image with the name
+# ``at_cascade.image`` .
+# The ``dismod_at.image`` image must exist before the
+# ``at_cascade.image`` image can be created.
+# The `at_cascade <https://bradbell.github.io/at_cascade/doc/rst/at_cascade.html>`_ package is an optional add-on to the dismod_at program.
 #
-# $subhead Removing Containers$$
+# Removing Containers
+# ===================
 # If an existing container uses an image that is being created,
-# you will be prompted with the corresponding $icode container_id$$.
+# you will be prompted with the corresponding *container_id* .
 # The command
-# $codei%
-#  %driver% rm %container_id%
-# %$$
+#
+#     *driver* ``rm`` *container_id*
+#
 # will remove the container.
 # If the container is still running, you will need to use
-# $codei%
-#  %driver% rm --force %container_id%
-# %$$
 #
-# $subhead Removing Images$$
+#     *driver* ``rm --force`` *container_id*
+#
+# Removing Images
+# ===============
 # You can remove an old image using the command
-# $codei%
-#  %driver% rmi %name%
-# %$$
-# For example, $icode name$$ could be
-# $code dismod_at.base$$,
-# $code dismod_at.mixed$$, or
-# $code dismod_at.image$$.
-# You can keep the old image, under a different name, using the commands
-# $codei%
-#  %driver% tag %name% %different_name%
-#  %driver% rmi %name%
-# %$$
 #
-# $subhead Dockerfile$$
-# The $code build$$ syntax will create the file
-# $href%https://docs.docker.com/glossary/?term=Dockerfile%Dockerfile%$$
+#     *driver* ``rmi`` *name*
+#
+# For example, *name* could be
+# ``dismod_at.base`` ,
+# ``dismod_at.mixed`` , or
+# ``dismod_at.image`` .
+# You can keep the old image, under a different name, using the commands
+#
+# | |tab| *driver* ``tag`` *name* *different_name*
+# | |tab| *driver* ``rmi`` *name*
+#
+# Dockerfile
+# ==========
+# The ``build`` syntax will create the file
+# `Dockerfile <https://docs.docker.com/glossary/?term=Dockerfile>`_
 # in the current working directory.
 # If such a file already exists, it will need to be moved or deleted.
 #
-# $subhead Errors$$
-# $list number$$
-# If you get the error message
-# $codei%
-#   Unable to fetch some archives, maybe run apt-get update %...%
-# %$$
-# There may be an old OCI image result for $code apt-get update$$
-# that is out of date.
-# You can list the images using the command $code OCI images$$.
-# Try removing an old image that corresponds to a previous
-# $code apt-get update$$ and then re-run the
-# $code dock_dismod_at.sh build$$ command.
+# Errors
+# ======
 #
-# $lnext
-# If you get the error message
-# $codei%
-#   Release file for %package% is not valid yet %...%
-# %$$
-# You system clock may be out of date (reporting an old day or time).
-# Try fixing the system clock.
+# #. If you get the error message
 #
-# $lend
+#        ``Unable to fetch some archives`` , ``maybe run apt-get update`` ...
 #
-# $head Run New Container$$
-# Once $code dismod_at.image$$ has been created, you use the
-# $icode build_type$$ syntax to run dismod_at in a container.
+#    There may be an old OCI image result for ``apt-get update``
+#    that is out of date.
+#    You can list the images using the command ``OCI images`` .
+#    Try removing an old image that corresponds to a previous
+#    ``apt-get update`` and then re-run the
+#    ``dock_dismod_at.sh build`` command.
 #
-# $subhead Removing Containers$$
-# The dismod_at container for a particular $icode user$$ will be named
-# $codei%dismod_at.%user%$$.
+# #. If you get the error message
+#
+#        ``Release file for`` *package* ``is not valid yet`` ...
+#
+#    You system clock may be out of date (reporting an old day or time).
+#    Try fixing the system clock.
+#
+# Run New Container
+# *****************
+# Once ``dismod_at.image`` has been created, you use the
+# *build_type* syntax to run dismod_at in a container.
+#
+# Removing Containers
+# ===================
+# The dismod_at container for a particular *user* will be named
+# ``dismod_at.`` *user* .
 # If such a container already exists,
-# you will be prompted with the corresponding $icode container_id$$.
+# you will be prompted with the corresponding *container_id* .
 # The command
-# $codei%
-#  %driver% rm %container_id%
-# %$$
+#
+#     *driver* ``rm`` *container_id*
+#
 # will remove the container.
 # If the container is still running, you will need to use
-# $codei%
-#  %driver% rm --force %container_id%
-# %$$
 #
-# $subhead build_type$$
-# The $icode build_type$$ syntax will run the correspond
-# $cref command$$ in the OCI image.
-# The argument $icode build_type$$ must be either $code debug$$ or
-# $code release$$.
-# The $code release$$ version should be much faster.
-# The $code debug$$ version will do more extensive error checking.
+#     *driver* ``rm --force`` *container_id*
 #
-# $subhead database$$
-# The second argument $icode database$$ must be a dismod_at database
+# build_type
+# ==========
+# The *build_type* syntax will run the correspond
+# :ref:`command-name` in the OCI image.
+# The argument *build_type* must be either ``debug`` or
+# ``release`` .
+# The ``release`` version should be much faster.
+# The ``debug`` version will do more extensive error checking.
+#
+# database
+# ========
+# The second argument *database* must be a dismod_at database
 # in the current working directory.
 # This the first argument to the corresponding dismod_at command.
 #
-# $subhead command$$
-# The third argument $icode command$$ must be one of the dismod_at commands.
+# command
+# =======
+# The third argument *command* must be one of the dismod_at commands.
 # This is the second argument in the corresponding dismod_at command.
-# The rest of the arguments $icode ...$$ are
-# the same as the corresponding arguments for the $cref command$$.
+# The rest of the arguments ... are
+# the same as the corresponding arguments for the :ref:`command-name` .
 #
-# $subhead Other Arguments$$
-# The other arguments to $code dock_dismod_at.sh$$ are the same as in the
-# syntax for the $cref command$$,
-# except that $code dismod_at$$ or $code dismodat.py$$
-# have been replaced by $codei%dock_dismod_at.sh %build_type%$$.
+# Other Arguments
+# ===============
+# The other arguments to ``dock_dismod_at.sh`` are the same as in the
+# syntax for the :ref:`command-name` ,
+# except that ``dismod_at`` or ``dismodat.py``
+# have been replaced by ``dock_dismod_at.sh`` *build_type* .
 #
-# $head Debugging$$
+# Debugging
+# *********
 # Some times an error occurs during the running of a container
 # and you would like to go inside the container and execute commands.
 # The following instructions are useful for this:
 #
-# $subhead Determine Container Id$$
-# $codei%
-#  %driver% ps -a
-# %$$
-# If $icode driver$$ is podman, the following might work better
-# $codei%
-#  podman ps --all --storage
-# %$$
+# Determine Container Id
+# ======================
 #
-# $subhead Start Container$$
-# If a container status is $code Exited$$, you can start it using:
-# $codei%
-#  %driver% start %container_id
-# %$$
+#     *driver* ``ps -a``
 #
-# $subhead Run Container$$
-# If a container status is $code Up$$, you can run it using:
-# $codei%
-#  %driver% exec -it %container_id% bash
-# %$$
-# You will be in the container until you $code exit$$
-# the $code bash$$ shell that is run by the command above.
+# If *driver* is podman, the following might work better
 #
-# $subhead Stop Container$$
-# If a container status is $code Up$$, you can stop it using:
-# $codei%
-#  %driver% stop %container_id
-# %$$
+#     ``podman ps --all --storage``
 #
-# $end
+# Start Container
+# ===============
+# If a container status is ``Exited`` , you can start it using:
+#
+#     ``driver`` *start* ``container_id``
+#
+# Run Container
+# =============
+# If a container status is ``Up`` , you can run it using:
+#
+#     *driver* ``exec -it`` *container_id* ``bash``
+#
+# You will be in the container until you ``exit``
+# the ``bash`` shell that is run by the command above.
+#
+# Stop Container
+# ==============
+# If a container status is ``Up`` , you can stop it using:
+#
+#     ``driver`` *stop* ``container_id``
+#
+# {xrst_end dock_dismod_at.sh}
 # ---------------------------------------------------------------------------
 if [ "$1" == 'image' ]
 then

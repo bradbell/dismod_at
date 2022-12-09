@@ -54,89 +54,101 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 // ---------------------------------------------------------------------------
 /*
 ------------------------------------------------------------------------------
-$begin smooth_info_ctor$$
+{xrst_begin smooth_info_ctor}
 
-$section smooth_info: Constructor$$
+smooth_info: Constructor
+########################
 
-$head Syntax$$
-$codei%smooth_info %s_info%(
-   %smooth_id%,
-   %age_table%,
-   %time_table%,
-   %prior_table%,
-   %smooth_table%,
-   %smooth_grid_table%
-)%$$
-$codei%smooth_info %s_default%()
-%$$
-$icode%s_target% = %s_source%
-%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_NORMAL_CTOR%// END_NORMAL_CTOR%1
-%$$
-$srcthisfile%
-   0%// BEGIN_DEFAULT_CTOR%// END_DEFAULT_CTOR%1
-%$$
-$srcthisfile%
-   0%// BEGIN_ASSIGNMENT_CTOR%// END_ASSIGNMENT_CTOR%1
-%$$
+| ``smooth_info`` *s_info* (
+| |tab| *smooth_id* ,
+| |tab| *age_table* ,
+| |tab| *time_table* ,
+| |tab| *prior_table* ,
+| |tab| *smooth_table* ,
+| |tab| *smooth_grid_table*
+| ) ``smooth_info`` *s_default* ()
+| *s_target* = *s_source*
 
-$comment OMhelp is soaking up to much line spacing before next heading$$
-$pre
+Prototype
+*********
+{xrst_literal
+   // BEGIN_NORMAL_CTOR
+   // END_NORMAL_CTOR
+}
+{xrst_literal
+   // BEGIN_DEFAULT_CTOR
+   // END_DEFAULT_CTOR
+}
+{xrst_literal
+   // BEGIN_ASSIGNMENT_CTOR
+   // END_ASSIGNMENT_CTOR
+}
 
-$$
+{xrst_comment OMhelp is soaking up to much line spacing before next heading}
 
-$head Checks$$
+Checks
+******
 
-$subhead Rectangular Grid$$
-Checks the $code smooth_grid$$ table
-$cref/rectangular grid/smooth_grid_table/Rectangular Grid/$$ assumption.
+Rectangular Grid
+================
+Checks the ``smooth_grid`` table
+:ref:`smooth_grid_table@Rectangular Grid` assumption.
 
-$subhead n_age, n_time$$
-For each $cref/smooth_id/smooth_table/smooth_id/$$,
-check that the $cref smooth_table$$ values
-$cref/n_age/smooth_table/n_age/$$ and
-$cref/n_time/smooth_table/n_time/$$ are the number if age values
+n_age, n_time
+=============
+For each :ref:`smooth_table@smooth_id` ,
+check that the :ref:`smooth_table-name` values
+:ref:`smooth_table@n_age` and
+:ref:`smooth_table@n_time` are the number if age values
 and number of time values in the corresponding rectangular grid in
-$cref smooth_grid_table$$.
+:ref:`smooth_grid_table-name` .
 
-$head smooth_id$$
-Is the $cref/smooth_id/smooth_table/smooth_id/$$ for this smoothing.
+smooth_id
+*********
+Is the :ref:`smooth_table@smooth_id` for this smoothing.
 
-$head age_table$$
-is the $cref/age_table/get_age_table/age_table/$$
-returned by $code get_age_table$$.
+age_table
+*********
+is the :ref:`get_age_table@age_table`
+returned by ``get_age_table`` .
 
-$head time_table$$
-is the $cref/time_table/get_time_table/time_table/$$
-returned by $code get_time_table$$.
+time_table
+**********
+is the :ref:`get_time_table@time_table`
+returned by ``get_time_table`` .
 
-$head prior_table$$
-is the $cref/prior_table/get_prior_table/prior_table/$$
-returned by $code get_prior_table$$.
+prior_table
+***********
+is the :ref:`get_prior_table@prior_table`
+returned by ``get_prior_table`` .
 
-$head smooth_table$$
-is the $cref/smooth_table/get_smooth_table/smooth_table/$$
-returned by $code get_smooth_table$$.
+smooth_table
+************
+is the :ref:`get_smooth_table@smooth_table`
+returned by ``get_smooth_table`` .
 
-$head smooth_grid_table$$
-is the $cref/smooth_grid/get_smooth_grid/smooth_grid/$$
-returned by $code get_smooth_grid_table$$.
+smooth_grid_table
+*****************
+is the :ref:`get_smooth_grid@smooth_grid`
+returned by ``get_smooth_grid_table`` .
 
-$head s_default$$
+s_default
+*********
 This is the result of the default constructor.
-It can be creates an empty $code smooth_info$$ object
+It can be creates an empty ``smooth_info`` object
 (no age or time points)
-that can later be set equal to another $code smooth_info$$ object.
+that can later be set equal to another ``smooth_info`` object.
 This is useful when creating vectors of such objects.
 
-$head s_target$$
+s_target
+********
 The assignment sets the target smoothing information object
 to be a copy of the source object.
 
-$end
+{xrst_end smooth_info_ctor}
 */
 // BEGIN_NORMAL_CTOR
 smooth_info::smooth_info(
@@ -313,82 +325,82 @@ void smooth_info::operator=(const smooth_info& s_info)
 }
 /*
 ------------------------------------------------------------------------------
-$begin smooth_info_age_and_time$$
-$spell
-   const
-$$
+{xrst_begin smooth_info_age_and_time}
 
-$section smooth_info: Age and Time Information$$
+smooth_info: Age and Time Information
+#####################################
 
-$head Syntax$$
-$icode%n_age%     = %s_info%.age_size()
-%$$
-$icode%n_time%    = %s_info%.time_size()
-%$$
-$icode%a_id%      = %s_info%.age_id(%i%)
-%$$
-$icode%t_id%      = %s_info%.time_id(%j%)
-%$$
+Syntax
+******
 
-$head s_info$$
+| *n_age* = *s_info* . ``age_size`` ()
+| *n_time* = *s_info* . ``time_size`` ()
+| *a_id* = *s_info* . ``age_id`` ( *i* )
+| *t_id* = *s_info* . ``time_id`` ( *j* )
+
+s_info
+******
 this object has prototype
-$codei%
-   const smooth_info %s_info%
-%$$
 
-$head n_age$$
+   ``const smooth_info`` *s_info*
+
+n_age
+*****
 This result has prototype
-$codei%
-   size_t %n_age%
-%$$
+
+   ``size_t`` *n_age*
+
 and is the number of age values for this smoothing.
 
-$head n_time$$
+n_time
+******
 This result has prototype
-$codei%
-   size_t %n_time%
-%$$
+
+   ``size_t`` *n_time*
+
 and is the number of time values for this smoothing.
 
-$head i$$
-The argument $icode i$$ has prototype
-$codei%
-   size_t %i%
-%$$
-and is the age index; $icode%i% < %n_age%$$.
+i
+*
+The argument *i* has prototype
 
-$head j$$
-The argument $icode j$$ has prototype
-$codei%
-   size_t %j%
-%$$
-and is the time index; $icode%j% < %n_time%$$.
+   ``size_t`` *i*
 
-$head a_id$$
+and is the age index; *i* < *n_age* .
+
+j
+*
+The argument *j* has prototype
+
+   ``size_t`` *j*
+
+and is the time index; *j* < *n_time* .
+
+a_id
+****
 This return value has prototype
-$codei%
-   size_t %a_id%
-%$$
-and is the $th i$$ $cref/age_id/smooth_grid_table/age_id/$$
-for this smoothing and increases with $icode i$$; i.e.,
-for $icode%i% < %n_age%-2%$$
-$codei%
-   %s_info%.age_id(%i%) < %s_info%.age_id(%i%+1)
-%$$
 
-$head t_id$$
+   ``size_t`` *a_id*
+
+and is the *i*-th :ref:`smooth_grid_table@age_id`
+for this smoothing and increases with *i* ; i.e.,
+for *i* < *n_age* ``-2``
+
+   *s_info* . ``age_id`` ( *i* ) < *s_info* . ``age_id`` ( *i* +1)
+
+t_id
+****
 This return value has prototype
-$codei%
-   size_t %t_id%
-%$$
-and is the $th j$$ $cref/time_id/smooth_grid_table/time_id/$$
-for this smoothing and increases with $icode j$$; i.e.,
-for $icode%j% < %n_time%-2%$$
-$codei%
-   %s_info%.time_id(%j%) < %s_info%.time_id(%j%+1)
-%$$
 
-$end
+   ``size_t`` *t_id*
+
+and is the *j*-th :ref:`smooth_grid_table@time_id`
+for this smoothing and increases with *j* ; i.e.,
+for *j* < *n_time* ``-2``
+
+   *s_info* . ``time_id`` ( *j* ) < *s_info* . ``time_id`` ( *j* +1)
+
+{xrst_end smooth_info_age_and_time}
 */
 size_t smooth_info::age_size(void) const
 {  return age_id_.size(); }
@@ -401,85 +413,91 @@ size_t smooth_info::time_id(size_t j) const
 {  return time_id_[j]; }
 /*
 -------------------------------------------------------------------------------
-$begin smooth_info_prior$$
-$spell
-   dage
-   dtime
-   const
-$$
+{xrst_begin smooth_info_prior}
 
-$section smooth_info: Prior Information$$
+smooth_info: Prior Information
+##############################
 
-$head Syntax$$
-$icode%const_value%     = %s_info%.const_value(%i%, %j%)
-%$$
-$icode%value_prior_id%  = %s_info%.value_prior_id(%i%, %j%)
-%$$
-$icode%dage_prior_id%  = %s_info%.dage_prior_id(%i%, %j%)
-%$$
-$icode%dtime_prior_id%  = %s_info%.dtime_prior_id(%i%, %j%)
-%$$
-$icode%all_const_value% = %s_info%.all_const_value()
-%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_CONST_VALUE%// END_CONST_VALUE%1
-%$$
-$srcthisfile%
-   0%// BEGIN_VALUE_PRIOR_ID%// END_VALUE_PRIOR_ID%1
-%$$
-$srcthisfile%
-   0%// BEGIN_DAGE_PRIOR_ID%// END_DAGE_PRIOR_ID%1
-%$$
-$srcthisfile%
-   0%// BEGIN_DTIME_PRIOR_ID%// END_DTIME_PRIOR_ID%1
-%$$
-$srcthisfile%
-   0%// BEGIN_ALL_CONST_VALUE%// END_ALL_CONST_VALUE%1
-%$$
+| *const_value* = *s_info* . ``const_value`` ( *i* , *j* )
+| *value_prior_id* = *s_info* . ``value_prior_id`` ( *i* , *j* )
+| *dage_prior_id* = *s_info* . ``dage_prior_id`` ( *i* , *j* )
+| *dtime_prior_id* = *s_info* . ``dtime_prior_id`` ( *i* , *j* )
+| *all_const_value* = *s_info* . ``all_const_value`` ()
 
-$head i$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_CONST_VALUE
+   // END_CONST_VALUE
+}
+{xrst_literal
+   // BEGIN_VALUE_PRIOR_ID
+   // END_VALUE_PRIOR_ID
+}
+{xrst_literal
+   // BEGIN_DAGE_PRIOR_ID
+   // END_DAGE_PRIOR_ID
+}
+{xrst_literal
+   // BEGIN_DTIME_PRIOR_ID
+   // END_DTIME_PRIOR_ID
+}
+{xrst_literal
+   // BEGIN_ALL_CONST_VALUE
+   // END_ALL_CONST_VALUE
+}
+
+i
+*
 is the index in the smooth grid of an age point;
-$icode%i% < %s_info%.age_size()%$$.
+*i* < *s_info* . ``age_size`` () .
 
-$head j$$
+j
+*
 is the index in the smooth grid of a time point;
-$icode%j% < %s_info%.time_size()%$$.
+*j* < *s_info* . ``time_size`` () .
 
-$head const_value$$
-is the $cref/const_value/smooth_grid_table/const_value/$$
-corresponding to this $icode i$$, $icode j$$.
+const_value
+***********
+is the :ref:`smooth_grid_table@const_value`
+corresponding to this *i* , *j* .
 
-$head value_prior_id$$
-is the $cref/prior_id/prior_table/prior_id/$$
+value_prior_id
+**************
+is the :ref:`prior_table@prior_id`
 for the value prior for this smoothing.
-Either $icode const_value$$ is null (nan)
-or $icode value_prior_id$$ is null
+Either *const_value* is null (nan)
+or *value_prior_id* is null
 but not both.
 
-$head dage_prior_id$$
-is the $cref/prior_id/prior_table/prior_id/$$
+dage_prior_id
+*************
+is the :ref:`prior_table@prior_id`
 for the dage prior for this smoothing
-corresponding to this $icode i$$, $icode j$$.
-If $icode%i% == %s_info%.age_size()-1%$$ then
-$icode dage_prior_id$$ is $code DISMOD_AT_NULL_SIDE_T$$
+corresponding to this *i* , *j* .
+If *i* == *s_info* . ``age_size`` () ``-1`` then
+*dage_prior_id* is ``DISMOD_AT_NULL_SIDE_T``
 (this may not be true in for the corresponding smooth_grid table values).
 
-$head dtime_prior_id$$
-is the $cref/prior_id/prior_table/prior_id/$$
+dtime_prior_id
+**************
+is the :ref:`prior_table@prior_id`
 for the dtime prior for this smoothing
-corresponding to this $icode i$$, $icode j$$.
-If $icode%j% == %s_info%.time_size()-1%$$ then
-$icode dtime_prior_id$$ is $code DISMOD_AT_NULL_SIDE_T$$
+corresponding to this *i* , *j* .
+If *j* == *s_info* . ``time_size`` () ``-1`` then
+*dtime_prior_id* is ``DISMOD_AT_NULL_SIDE_T``
 (this may not be true in for the corresponding smooth_grid table values).
 
-$head all_const_value$$
-is true if all the value priors are equivalent to a $icode const_value$$; i.e.,
-$icode const_value$$ is not null or the upper and lower limit for
-$icode value_prior_id$$ are equal.
+all_const_value
+***************
+is true if all the value priors are equivalent to a *const_value* ; i.e.,
+*const_value* is not null or the upper and lower limit for
+*value_prior_id* are equal.
 
-$end
+{xrst_end smooth_info_prior}
 */
 // BEGIN_CONST_VALUE
 double smooth_info::const_value(size_t i, size_t j) const
@@ -515,43 +533,40 @@ bool smooth_info::all_const_value(void) const
 // END_ALL_CONST_VALUE
 /*
 ------------------------------------------------------------------------------
-$begin smooth_info_mulstd$$
-$spell
-   mulstd
-   dage
-   dtime
-   const
-$$
+{xrst_begin smooth_info_mulstd}
 
-$section smooth_info: Standard Deviation Multipliers$$
+smooth_info: Standard Deviation Multipliers
+###########################################
 
-$head Syntax$$
-$icode%mulstd_value_prior_id% = %s_info%.mulstd_value()
-%$$
-$icode%mulstd_dage_prior_id% = %s_info%.mulstd_dage()
-%$$
-$icode%mulstd_dtime_prior_id% = %s_info%.mulstd_dtime()
-%$$
+Syntax
+******
 
-$head s_info$$
+| *mulstd_value_prior_id* = *s_info* . ``mulstd_value`` ()
+| *mulstd_dage_prior_id* = *s_info* . ``mulstd_dage`` ()
+| *mulstd_dtime_prior_id* = *s_info* . ``mulstd_dtime`` ()
+
+s_info
+******
 this object has prototype
-$codei%
-   const smooth_info %s_info%
-%$$
 
-$head mulstd_value_prior_id$$
-is the $cref/mulstd_value_prior_id/smooth_table/mulstd_value_prior_id/$$
+   ``const smooth_info`` *s_info*
+
+mulstd_value_prior_id
+*********************
+is the :ref:`smooth_table@mulstd_value_prior_id`
 for this smoothing.
 
-$head mulstd_dage_prior_id$$
-is the $cref/mulstd_dage_prior_id/smooth_table/mulstd_dage_prior_id/$$
+mulstd_dage_prior_id
+********************
+is the :ref:`smooth_table@mulstd_dage_prior_id`
 for this smoothing.
 
-$head mulstd_dtime_prior_id$$
-is the $cref/mulstd_dtime_prior_id/smooth_table/mulstd_dtime_prior_id/$$
+mulstd_dtime_prior_id
+*********************
+is the :ref:`smooth_table@mulstd_dtime_prior_id`
 for this smoothing.
 
-$end
+{xrst_end smooth_info_mulstd}
 */
 size_t smooth_info::mulstd_value(void) const
 {  return mulstd_value_; }
@@ -561,81 +576,82 @@ size_t smooth_info::mulstd_dtime(void) const
 {  return mulstd_dtime_; }
 /*
 -------------------------------------------------------------------------------
-$begin smooth_info_test_ctor$$
-$spell
-   dage
-   dtime
-   mulstd
-$$
+{xrst_begin smooth_info_test_ctor}
 
-$section smooth_info: Testing Constructor$$
-$spell
-   const
-$$
+smooth_info: Testing Constructor
+################################
 
-$head Syntax$$
-$codei%smooth_info %s_test%(
-   %age_table%,
-   %time_table%,
-   %age_id%,
-   %time_id%,
-   %value_prior_id%,
-   %dage_prior_id%,
-   %dtime_prior_id%,
-   %const_value%,
-   %mulstd_value_prior_id%,
-   %mulstd_dage_prior_id%,
-   %mulstd_dtime_prior_id%
-)
-%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_TEST_CTOR%// END_TEST_CTOR%1
-%$$
+| ``smooth_info`` *s_test* (
+| |tab| *age_table* ,
+| |tab| *time_table* ,
+| |tab| *age_id* ,
+| |tab| *time_id* ,
+| |tab| *value_prior_id* ,
+| |tab| *dage_prior_id* ,
+| |tab| *dtime_prior_id* ,
+| |tab| *const_value* ,
+| |tab| *mulstd_value_prior_id* ,
+| |tab| *mulstd_dage_prior_id* ,
+| |tab| *mulstd_dtime_prior_id*
+| )
 
-$head age_table$$
-and is the $cref/age_table/get_age_table/$$.
+Prototype
+*********
+{xrst_literal
+   // BEGIN_TEST_CTOR
+   // END_TEST_CTOR
+}
 
-$head time_table$$
-and is the $cref/time_table/get_time_table/$$.
+age_table
+*********
+and is the :ref:`age_table<get_age_table-name>` .
 
-$head age_id$$
+time_table
+**********
+and is the :ref:`time_table<get_time_table-name>` .
+
+age_id
+******
 This specifies the age grid indices; i.e.
-$codei%
-   %s_info%.age_id(%i%) = %age_id%[%i%]
-%$$
 
-$head time_id$$
+   *s_info* . ``age_id`` ( *i* ) = *age_id* [ *i* ]
+
+time_id
+*******
 This specifies the time grid indices; i.e.
-$codei%
-   %s_info%.time_id(%j%) = %time_id%[%j%]
-%$$
 
-$head type_prior_id$$
-For $icode type$$ equal to
-$code const$$, $code value$$, $code dage$$, $code dtime$$:
-$codei%
-   %s_info%.%type%_prior_id(%i%, %j%) = %type_id%[ %i% * %n_time% + %j%]
-%$$
-where $icode%n_time% = %s_info%.time_size()%$$.
+   *s_info* . ``time_id`` ( *j* ) = *time_id* [ *j* ]
 
-$head %mulstd_prior_id$$
-For $icode mulstd_prior_id$$ equal to
-$code mulstd_value_prior_id$$,
-$code mulstd_dage_prior_id$$,
-$code mulstd_dtime_prior_id$$:
-$codei%
-   %s_info%.%mulstd_prior_id%() = %mulstd_prior_id%
-%$$
+type_prior_id
+*************
+For *type* equal to
+``const`` , ``value`` , ``dage`` , ``dtime`` :
 
-$children%example/devel/table/smooth_info_xam.cpp
-%$$
-$head Example$$
-The file $cref smooth_info_xam.cpp$$ contains an example that uses
+   *s_info* . *type* _ ``prior_id`` ( *i* , *j* ) = *type_id* [ *i* * *n_time* + *j* ]
+
+where *n_time* = *s_info* . ``time_size`` () .
+
+%mulstd_prior_id
+****************
+For *mulstd_prior_id* equal to
+``mulstd_value_prior_id`` ,
+``mulstd_dage_prior_id`` ,
+``mulstd_dtime_prior_id`` :
+
+   *s_info* . *mulstd_prior_id* () = *mulstd_prior_id*
+
+{xrst_toc_hidden
+   example/devel/table/smooth_info_xam.cpp
+}
+Example
+*******
+The file :ref:`smooth_info_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end smooth_info_test_ctor}
 */
 
 // BEGIN_TEST_CTOR

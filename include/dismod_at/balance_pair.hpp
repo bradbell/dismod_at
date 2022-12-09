@@ -5,23 +5,27 @@
 # ifndef DISMOD_AT_BALANCE_PAIR_HPP
 # define DISMOD_AT_BALANCE_PAIR_HPP
 /*
-$begin balance_pair$$
-$spell
-   vec
-   dismod
-$$
+{xrst_begin balance_pair}
 
-$section Balanced Sampling from Vector of Standard Pairs$$
+Balanced Sampling from Vector of Standard Pairs
+###############################################
 
-$head Syntax$$
-$icode%sample_vec% = dismod_at::balance_pair(
-   %n_sample%, %pair_vec%, %second_1%, %second_2%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
+| *sample_vec* = ``dismod_at::balance_pair`` (
+| |tab| *n_sample* , *pair_vec* , *second_1* , *second_2*
+| )
 
-$head Balancing$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+Balancing
+*********
 This routine samples randomly from a set of pairs with the following
 extra condition:
 For each chosen pair, if there is another pair
@@ -30,30 +34,35 @@ such another pair is also chosen.
 If there is more that one such pair, one is chosen at random.
 The samples with opposite second value will be sequential.
 
-$head n_sample$$
+n_sample
+********
 Is the number of pairs to choose. It is possible that one extra pair
 is chosen to meet the balancing condition above.
 
-$head pair_vec$$
+pair_vec
+********
 is the vector of pairs to choose from.
 
-$head second_1$$
+second_1
+********
 Is the smaller of the two opposite second values in a pair.
 
-$head second_2$$
+second_2
+********
 Is the larger of the two opposite second values in a pair.
 
-$head sample_vec$$
-is the set of indices in $icode pair_vec$$ corresponding to the
+sample_vec
+**********
+is the set of indices in *pair_vec* corresponding to the
 chosen set of pairs.
-
-$children%
+{xrst_toc_hidden
    example/devel/utility/balance_pair_xam.cpp
-%$$
-$head Example$$
-$cref balance_pair_xam.cpp$$
+}
+Example
+*******
+:ref:`balance_pair_xam.cpp-name`
 
-$end
+{xrst_end balance_pair}
 */
 # include <gsl/gsl_randist.h>
 # include <cppad/utility/vector.hpp>

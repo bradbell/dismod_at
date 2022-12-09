@@ -4,175 +4,181 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin subset_data$$
-$spell
-   integrand
-   avgint
-   covariate
+{xrst_begin subset_data}
+{xrst_spell
+   subsampled
    subsamples
-   Subsampled
-   covariates
-   const
-   CppAD
-   struct
-   obj
-   cov
-   sim
-$$
+}
 
-$section Create a Subsampled Version of Data Table$$
+Create a Subsampled Version of Data Table
+#########################################
 
-$head See Also$$
-$cref avgint_subset$$.
+See Also
+********
+:ref:`avgint_subset-name` .
 
-$head Syntax$$
-$codei%subset_data(
-   %option_map%, %data_table%, %integrand_table%,
-   %data_table%, %data_cov_value%, %covariate_table%, %child_info4data%,
-   %subset_data_obj%, %subset_data_cov_value%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
+| ``subset_data`` (
+| |tab| *option_map* , *data_table* , *integrand_table* ,
+| |tab| *data_table* , *data_cov_value* , *covariate_table* , *child_info4data* ,
+| |tab| *subset_data_obj* , *subset_data_cov_value*
+| )
 
-$head Purpose$$
-This routine subsamples the $icode data_table$$, in the following way:
-$list number$$
-Only rows corresponding to the
-$cref/parent node/option_table/Parent Node/$$,
-or a descendant of the parent node, are included.
-$lnext
-Only rows for which the covariates satisfy the
-$cref/max_difference/covariate_table/max_difference/$$ criteria
-are included.
-$lnext
-For each covariate, its
-$cref/reference/covariate_table/reference/$$ value is subtracted
-from the value of the covariate in $icode data_table$$.
-$lnext
-For each integrand in the
-$cref/hold_out_integrand/option_table/hold_out_integrand/$$ list,
-the hold is set to one, no matter what
-$cref/hold_out/data_table/hold_out/$$ is in the data table.
-$lnext
-$cref/
-   compression intervals/
-   option_table/
-   compress_interval
-/$$
-are enforced.
-$lnext
-All of the
-$cref/child data/data_table/node_id/Child Data/$$
-is checked to make sure that it does not use a
-$cref/laplace/density_table/density_name/laplace/$$ or
-$cref/log_laplace/density_table/density_name/log_laplace/$$ density.
-$lend
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
 
-$head option_map$$
+Purpose
+*******
+This routine subsamples the *data_table* , in the following way:
+
+#. Only rows corresponding to the
+   :ref:`option_table@Parent Node` ,
+   or a descendant of the parent node, are included.
+#. Only rows for which the covariates satisfy the
+   :ref:`covariate_table@max_difference` criteria
+   are included.
+#. For each covariate, its
+   :ref:`covariate_table@reference` value is subtracted
+   from the value of the covariate in *data_table* .
+#. For each integrand in the
+   :ref:`option_table@hold_out_integrand` list,
+   the hold is set to one, no matter what
+   :ref:`data_table@hold_out` is in the data table.
+#. :ref:`compression intervals<option_table@compress_interval>`
+   are enforced.
+#. All of the
+   :ref:`data_table@node_id@Child Data`
+   is checked to make sure that it does not use a
+   :ref:`density_table@density_name@laplace` or
+   :ref:`density_table@density_name@log_laplace` density.
+
+option_map
+**********
 This contains the following keys:
 
-$subhead hold_out_integrand$$
-If this key is present in $icode option_map$$, it is the
-$cref/hold_out_integrand/option_table/hold_out_integrand/$$.
+hold_out_integrand
+==================
+If this key is present in *option_map* , it is the
+:ref:`option_table@hold_out_integrand` .
 If it is not present, the empty string is used.
 
-$head data_subset_table$$
-is the $cref/data_subset_table/get_data_subset/data_subset_table/$$.
+data_subset_table
+*****************
+is the :ref:`get_data_subset@data_subset_table` .
 
-$head integrand_table$$
-is the $cref/integrand_table/get_integrand_table/integrand_table/$$.
+integrand_table
+***************
+is the :ref:`get_integrand_table@integrand_table` .
 
-$head data_table$$
-is the $cref/data_table/get_data_table/data_table/$$.
+data_table
+**********
+is the :ref:`get_data_table@data_table` .
 
-$head data_cov_value$$
-is the $cref/data_table/get_data_table/data_cov_value/$$
+data_cov_value
+**************
+is the :ref:`data_table<get_data_table@data_cov_value>`
 covariate values.
 
-$head covariate_table$$
-is the $cref/covariate_table/get_covariate_table/covariate_table/$$.
+covariate_table
+***************
+is the :ref:`get_covariate_table@covariate_table` .
 
-$head child_info4data$$
-is a $cref child_info$$ object created using the data table.
+child_info4data
+***************
+is a :ref:`child_info-name` object created using the data table.
 
-$head subset_data_obj$$
+subset_data_obj
+***************
 The input size is zero and upon return
-its size is the number of rows in $icode data_table$$ that satisfy
+its size is the number of rows in *data_table* that satisfy
 the purpose above.
 The structure has all the fields that are present in
-$cref/data_struct/get_data_table/data_table/data_struct/$$.
+:ref:`get_data_table@data_table@data_struct` .
 
-$subhead n_subset$$
-We use the notation $icode%n_subset% = %subset_data_obj%.size()%$$.
+n_subset
+========
+We use the notation *n_subset* = *subset_data_obj* . ``size`` () .
 
-$subhead subset_id$$
-We use the notation $icode subset_id$$ for an index between
-zero and $icode%n_subset%-1%$$,
+subset_id
+=========
+We use the notation *subset_id* for an index between
+zero and *n_subset* ``-1`` ,
 
-$subhead original_id$$
-There an extra field in $code subset_data_struct$$ that has
-name $code original_id$$, type $code int$$.
+original_id
+===========
+There an extra field in ``subset_data_struct`` that has
+name ``original_id`` , type ``int`` .
 The values in this field are equal to the
-$icode original_id$$ for the corresponding row of $cref data_table$$.
+*original_id* for the corresponding row of :ref:`data_table-name` .
 The value of
-$codei%
-   %subset_data_obj%[%subset_id%].original_id
-%$$
-increases with $icode subset_id$$;
-i.e., for each $icode subset_id$$ less than $icode%n_subset%-2%$$,
-$codei%
-   %subset_data_obj%[%subset_id%].original_id <
-      %subset_data_obj%[%subset_id%+1].original_id
-%$$
 
-$subhead data_sim_value$$
-There an extra field in $code subset_data_struct$$ that has
-name $code data_sim_value$$, type $code double$$.
-All of these values are set to $code nan$$ by this routine.
+   *subset_data_obj* [ *subset_id* ]. ``original_id``
+
+increases with *subset_id* ;
+i.e., for each *subset_id* less than *n_subset* ``-2`` ,
+
+| |tab| *subset_data_obj* [ *subset_id* ]. ``original_id <``
+| |tab| |tab| *subset_data_obj* [ *subset_id* +1]. ``original_id``
+
+data_sim_value
+==============
+There an extra field in ``subset_data_struct`` that has
+name ``data_sim_value`` , type ``double`` .
+All of these values are set to ``nan`` by this routine.
 These values get replaced by simulated measurement values
 when we are fitting simulated data.
 
-$head subset_data_cov_value$$
+subset_data_cov_value
+*********************
 The input size is zero and upon return
-its size is $icode%n_subset% * %n_covariate%$$.
-For each $icode subset_id$$ and
-$cref/covariate_id/covariate_table/covariate_id/$$,
-$codei%
-%subset_data_cov_value%[%subset_id% * %n_covariate% + %covariate_id%]
-= %data_cov_value%[%original_id% * %n_covariate% + %covariate_id%]
-  - reference(%covariate_id%)
-%$$
-where
-$codei%
-   %original_id% = %subset_data_obj%[%subset_id%].original_id
-%$$
-and $codei%reference(%covariate_id%)%$$ is the
-$cref/reference/covariate_table/reference/$$ value for the
-corresponding $icode covariate_id$$.
-Note that if the
-$cref/max_difference/covariate_table/max_difference/$$
-value is $code null$$ in the covariate table,
-or the covariate value is $code null$$ in $cref data_table$$,
-$codei%
-%subset_data_cov_value%[%subset_id% * %n_covariate% + %covariate_id%] = 0
-%$$
-Also note that
-$codei%
-| %subset_data_cov_value%[%subset_id% * %n_covariate% + %covariate_id%] |
-<= max_difference(%covariate_id%)
-%$$
-where $codei%max_difference(%covariate_id%)%$$ is the
-maximum difference for the corresponding $icode covariate_id$$.
+its size is *n_subset* * *n_covariate* .
+For each *subset_id* and
+:ref:`covariate_table@covariate_id` ,
 
-$childtable%example/devel/utility/subset_data_xam.cpp
-%$$
-$head Example$$
-The file $cref subset_data_xam.cpp$$ contains
-and example and test of $code data_subset$$.
+| *subset_data_cov_value* [ *subset_id* * *n_covariate* + *covariate_id* ]
+| = *data_cov_value* [ *original_id* * *n_covariate* + *covariate_id* ]
+| |tab| ``- reference`` ( *covariate_id* )
+
+where
+
+   *original_id* = *subset_data_obj* [ *subset_id* ]. ``original_id``
+
+and ``reference`` ( *covariate_id* ) is the
+:ref:`covariate_table@reference` value for the
+corresponding *covariate_id* .
+Note that if the
+:ref:`covariate_table@max_difference`
+value is ``null`` in the covariate table,
+or the covariate value is ``null`` in :ref:`data_table-name` ,
+
+   *subset_data_cov_value* [ *subset_id* * *n_covariate* + *covariate_id* ] = 0
+
+Also note that
+
+| | *subset_data_cov_value* [ *subset_id* * *n_covariate* + *covariate_id* ] |
+| <= ``max_difference`` ( *covariate_id* )
+
+where ``max_difference`` ( *covariate_id* ) is the
+maximum difference for the corresponding *covariate_id* .
+
+Contents
+********
+{xrst_toc_table
+   example/devel/utility/subset_data_xam.cpp
+}
+Example
+*******
+The file :ref:`subset_data_xam.cpp-name` contains
+and example and test of ``data_subset`` .
 It returns true for success and false for failure.
 
-$end
+{xrst_end subset_data}
 */
 
 # include <cmath>

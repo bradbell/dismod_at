@@ -3,19 +3,17 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin pack_prior_xam.cpp$$
-$spell
-   interp
-   xam
-   var
-$$
+{xrst_begin pack_prior_xam.cpp}
 
-$section C++ pack_prior: Example and Test$$
+C++ pack_prior: Example and Test
+################################
 
-$srcthisfile%0
-   %// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end pack_prior_xam.cpp}
 */
 // BEGIN C++
 # include <limits>

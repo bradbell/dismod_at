@@ -4,132 +4,134 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin sim_random$$
-$spell
-   Dismod
-   sim
-   mu
+{xrst_begin sim_random}
+{xrst_spell
    enum
-   gsl_rng
-   bool
-   cen
-$$
+   gsl
+   rng
+}
 
-$section Simulate a Dismod_at Random Distribution$$
+Simulate a Dismod_at Random Distribution
+########################################
 
-$head Syntax$$
-$icode%z% = sim_random(
-   %density%, %mu%, %delta%, %eta%, %nu%)%$$
+Syntax
+******
 
-$head manage_gsl_rng$$
-The routine $cref manage_gsl_rng$$ sets up and controls the underlying
+| *z* = ``sim_random`` (
+| |tab| ``density`` , ``mu`` , ``delta`` , ``eta`` , ``nu`` )
+
+manage_gsl_rng
+**************
+The routine :ref:`manage_gsl_rng-name` sets up and controls the underlying
 simulated random number generator.
 
-$head density$$
+density
+*******
 This argument has prototype
-$codei%
-   density_enum %density%
-%$$
-It specifies the $cref/density/get_density_table/density_enum/$$
+
+   ``density_enum`` *density*
+
+It specifies the :ref:`density<get_density_table@density_enum>`
 for the distribution that we are simulating.
 The following table specifies the meaning of this choice:
-$table
-$code uniform_enum$$ $pre $$ $cnext
-not allowed
-$rnext
-$code gaussian_enum$$ $pre  $$ $cnext
-$cref/Gaussian/statistic/Log-Density Function, D/Gaussian/$$
-$rnext
-$code cen_gaussian_enum$$ $pre  $$ $cnext
-$cref/Censored Gaussian/statistic/Log-Density Function, D/Censored Gaussian/$$
-$rnext
-$code log_gaussian_enum$$ $pre  $$ $cnext
-$cref/Log-Gaussian/statistic/Log-Density Function, D/Log-Gaussian/$$
-$rnext
-$code laplace_enum$$ $pre  $$ $cnext
-$cref/Laplace/statistic/Log-Density Function, D/Laplace/$$
-$rnext
-$code cen_laplace_enum$$ $pre  $$ $cnext
-$cref/Censored Laplace/statistic/Log-Density Function, D/Censored Laplace/$$
-$rnext
-$code log_laplace_enum$$ $pre  $$ $cnext
-$cref/Log-Laplace/statistic/Log-Density Function, D/Log-Laplace/$$
-$rnext
-$code students_enum$$ $pre  $$ $cnext
-$cref/Student's-t/statistic/Log-Density Function, D/Student's-t/$$
-$rnext
-$code log_students_enum$$ $pre  $$ $cnext
-$cref/Log-Student's-t/statistic/Log-Density Function, D/Log-Student's-t/$$
-$tend
 
-$head mu$$
+.. list-table::
+
+   * - ``uniform_enum``
+     - not allowed
+   * - ``gaussian_enum``
+     - :ref:`statistic@Log-Density Function, D@Gaussian`
+   * - ``cen_gaussian_enum``
+     - :ref:`statistic@Log-Density Function, D@Censored Gaussian`
+   * - ``log_gaussian_enum``
+     - :ref:`statistic@Log-Density Function, D@Log-Gaussian`
+   * - ``laplace_enum``
+     - :ref:`statistic@Log-Density Function, D@Laplace`
+   * - ``cen_laplace_enum``
+     - :ref:`statistic@Log-Density Function, D@Censored Laplace`
+   * - ``log_laplace_enum``
+     - :ref:`statistic@Log-Density Function, D@Log-Laplace`
+   * - ``students_enum``
+     - :ref:`statistic@Log-Density Function, D@Student's-t`
+   * - ``log_students_enum``
+     - :ref:`statistic@Log-Density Function, D@Log-Student's-t`
+
+mu
+**
 This argument has prototype
-$codei%
-   double %mu%
-%$$
-In the case were $icode density$$ is
-$cref/linear/density_table/Notation/Linear/$$,
+
+   ``double`` *mu*
+
+In the case were *density* is
+:ref:`density_table@Notation@Linear` ,
 it is the mean for the distribution that we are simulating
 (before possible censoring).
-Otherwise $codei%log( %mu% + %eta% )%$$ is the mean of the
+Otherwise ``log`` ( *mu* + *eta*  ) is the mean of the
 log of the data we are simulating.
 
-$head delta$$
+delta
+*****
 This argument has prototype
-$codei%
-   double %delta%
-%$$
-It is assumed $icode delta$$ is greater than zero and not infinity.
 
-$subhead Linear$$
-In the case were $icode density$$ is linear,
-$icode delta$$
-it is the standard deviation for $icode%z% - %mu%$$
+   ``double`` *delta*
+
+It is assumed *delta* is greater than zero and not infinity.
+
+Linear
+======
+In the case were *density* is linear,
+*delta*
+it is the standard deviation for *z* ``-`` *mu*
 (before possible censoring).
 
-$subhead Log$$
+Log
+===
 If the density is
-$cref/log scaled/density_table/Notation/Log Scaled/$$,
-$icode delta$$ is the standard deviation for
-$codei%
-   log( %z% + %eta% ) - log( %mu% + %eta% )
-%$$
+:ref:`density_table@Notation@Log Scaled` ,
+*delta* is the standard deviation for
 
-$head eta$$
+   ``log`` ( *z* + *eta* ) ``- log`` ( *mu* + *eta*  )
+
+eta
+***
 This argument has prototype
-$codei%
-   double %eta%
-%$$
-In the case were $icode density$$ is
-$code log_gaussian_enum$$, $code log_laplace_enum$$
-or $code log_students_enum$$,
+
+   ``double`` *eta*
+
+In the case were *density* is
+``log_gaussian_enum`` , ``log_laplace_enum``
+or ``log_students_enum`` ,
 this is the offset in the log transformation for the distribution.
-In this case, it is assumed that $icode%mu% + %eta% > 0%$$.
-Otherwise, $icode eta$$ is not used.
+In this case, it is assumed that *mu* + *eta*  > 0 .
+Otherwise, *eta* is not used.
 
-$head nu$$
+nu
+**
 This argument has prototype
-$codei%
-   double %nu%
-%$$
-In the case were $icode density$$ is
-$code students_enum$$ or $code log_students_enum$$, it is
+
+   ``double`` *nu*
+
+In the case were *density* is
+``students_enum`` or ``log_students_enum`` , it is
 the degrees of freedom in the Student's-t distribution.
 Otherwise it is not used.
 
-$head z$$
+z
+*
 The return value has prototype
-$codei%
-   double %z%
-%$$
+
+   ``double`` *z*
+
 It simulates a sample from the specified distribution that is independent
 for the any previous return values.
+{xrst_toc_hidden
+   example/devel/utility/sim_random_xam.cpp
+}
+Example
+*******
+The file :ref:`sim_random_xam.cpp-name` is an example and test of this simulation.
 
-$children%example/devel/utility/sim_random_xam.cpp
-%$$
-$head Example$$
-The file $cref sim_random_xam.cpp$$ is an example and test of this simulation.
-$end
+{xrst_end sim_random}
 ------------------------------------------------------------------------------
 */
 

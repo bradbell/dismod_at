@@ -3,65 +3,74 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin get_row_list$$ $newlinech #$$
-# $spell
-#  Sql
-#  dismod
-#  str
-#  tbl
-# $$
+# {xrst_begin get_row_list}
+# {xrst_spell
+#     sql
+#     tbl
+# }
+# {xrst_comment_ch #}
 #
-# $section Get Data From a Table$$
+# Get Data From a Table
+# #####################
 #
-# $head Syntax$$
-# $icode%row_list% = dismod_at.get_row_list(%$$
-# $icode%connection%, %tbl_name%, %col_name%)%$$
+# Syntax
+# ******
+# *row_list* = ``dismod_at.get_row_list`` (
+# *connection* , *tbl_name* , *col_name* )
 #
-# $head connection$$
-# is a $cref/connection/create_connection/connection/$$ for this database.
+# connection
+# **********
+# is a :ref:`create_connection@connection` for this database.
 #
-# $head table_name$$
-# is a $code str$$ that specifies the name of the table.
-# We use the notation $icode n_row$$ for the number of rows in
+# table_name
+# **********
+# is a ``str`` that specifies the name of the table.
+# We use the notation *n_row* for the number of rows in
 # the table.
 #
-# $head col_name$$
+# col_name
+# ********
 # is a list of strings containing the names of the columns that we are
 # retrieving data from.
-# We use the notation $icode n_col$$ for the number of columns in
-# $icode col_name$$.
+# We use the notation *n_col* for the number of columns in
+# *col_name* .
 # You can determine the name of all the columns in the table using
-# $cref get_name_type$$.
+# :ref:`get_name_type-name` .
 #
-# $head row_list$$
-# This is a list, with length $icode n_row$$,
+# row_list
+# ********
+# This is a list, with length *n_row* ,
 # where each element of the list is a list.
-# In addition, for each $icode i$$, $icode%row_list%[%i%]%$$ is a list
-# with length $icode n_col$$.
-# The value $icode%row_list%[%i%][%j%]%$$ corresponds to
-# primary key $icode%tbl_name%_id = %i%$$,
-# and column $icode%col_name%[%j%]%$$.
+# In addition, for each *i* , *row_list* [ *i* ] is a list
+# with length *n_col* .
+# The value *row_list* [ *i* ][ *j* ] corresponds to
+# primary key *tbl_name* _ ``id`` = *i* ,
+# and column *col_name* [ *j* ] .
 # The python type corresponding to the values in the table are
 # as follows:
-# $table
-# Sql Table $pre  $$ $cnext  Python           $rnext
-# $code integer$$    $cnext  $code int$$      $rnext
-# $code real$$       $cnext  $code float$$    $rnext
-# $code text$$       $cnext  $code str$$      $rnext
-# $code null$$       $cnext  $code None$$
-# $tend
+#
+# .. csv-table::
+#     :widths: auto
+#
+#     Sql Table,Python
+#     ``integer``,``int``
+#     ``real``,``float``
+#     ``text``,``str``
+#     ``null``,``None``
+#
 # You can determine the type for all the columns in the table using
-# $cref get_name_type$$.
-# Note that the type $code integer primary key$$ corresponds to
-# $code integer$$ above.
+# :ref:`get_name_type-name` .
+# Note that the type ``integer primary key`` corresponds to
+# ``integer`` above.
+# {xrst_toc_hidden
+#    example/table/get_row_list.py
+# }
+# Example
+# *******
+# The file :ref:`get_row_list.py-name` is an example use of
+# ``get_row_list`` .
 #
-# $children%example/table/get_row_list.py
-# %$$
-# $head Example$$
-# The file $cref get_row_list.py$$ is an example use of
-# $code get_row_list$$.
-#
-# $end
+# {xrst_end get_row_list}
 # ---------------------------------------------------------------------------
 def get_row_list(connection, tbl_name, col_name) :
    import collections

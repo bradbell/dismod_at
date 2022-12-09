@@ -2,125 +2,127 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_data_sim.py$$ $newlinech #$$
-# $spell
-#  init
-#  covariate
-#  Sincidence
-#  std
-#  sim
-#  cv
-# $$
+# {xrst_begin user_data_sim.py}
+# {xrst_comment_ch #}
 #
-# $section Explanation of Simulated Data Table, data_sim$$
+# Explanation of Simulated Data Table, data_sim
+# #############################################
 #
-# $head See Also$$
-# $cref user_sim_log.py$$
+# See Also
+# ********
+# :ref:`user_sim_log.py-name`
 #
-# $head Purpose$$
-# This example explains the $cref data_sim_table$$ by showing that the
-# $cref/Adjusted standard deviation
-#  /data_like
-#  /Adjusted Standard Deviation, delta_i(theta)
-# /$$
+# Purpose
+# *******
+# This example explains the :ref:`data_sim_table-name` by showing that the
+# :ref:`Adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>`
 # for the simulated data is the same as for the original data.
 #
-# $head Random Effects$$
+# Random Effects
+# **************
 # There are no random effects in this example.
 #
-# $head Priors$$
+# Priors
+# ******
 # The priors do not matter for this example except for the fact that
-# the $cref truth_var_table$$ values for the $cref model_variables$$
+# the :ref:`truth_var_table-name` values for the :ref:`model_variables-name`
 # must satisfy the lower and upper limits in the corresponding priors.
 #
-# $head Iota$$
-# The value $icode iota_true$$
+# Iota
+# ****
+# The value *iota_true*
 # is the simulated true rate for iota.
-# There is only one grid point (one $cref/model_variable/model_variables/$$)
-# corresponding to $icode iota$$, hence it is constant in age and time.
+# There is only one grid point (one :ref:`model_variable<model_variables-name>` )
+# corresponding to *iota* , hence it is constant in age and time.
 #
-# $head Other Rates$$
+# Other Rates
+# ***********
 # For this example the other rates are all zero.
 # This is specified by setting the
-# $cref/parent_smooth_id/rate_table/parent_smooth_id/$$ and
-# $cref/child_smooth_id/rate_table/child_smooth_id/$$ to null
+# :ref:`rate_table@parent_smooth_id` and
+# :ref:`rate_table@child_smooth_id` to null
 # for the other rates.
 #
-# $head Covariate Multiplier$$
-# There is one covariate multiplier on the covariate column $code one$$
-# and the rate $code iota$$.
+# Covariate Multiplier
+# ********************
+# There is one covariate multiplier on the covariate column ``one``
+# and the rate ``iota`` .
 # This is a measurement noise covariate multiplier
-# $cref/gamma/data_like/Measurement Noise Covariates/gamma_j (a, t)/$$.
+# :ref:`gamma<data_like@Measurement Noise Covariates@gamma_j (a, t)>` .
 # The true value for this multiplier, used to simulate data, is returned by
-# $codei%gamma_true(%meas_noise_effect%)%$$.
+# ``gamma_true`` ( *meas_noise_effect* ) .
 # There is only one grid point in the covariate multiplier,
 # hence it is constant in age and time.  It follows that
-# $cref/average noise effect
-#  /data_like
-#  /Measurement Noise Covariates
-#  /Average Noise Effect, E_i(theta)
-# /$$
-# $latex E_i ( \theta )$$ is constant and equal to $icode gamma_true$$.
+# :ref:`average noise effect<data_like@Measurement Noise Covariates@Average Noise Effect, E_i(theta)>`
+# :math:`E_i ( \theta )` is constant and equal to *gamma_true* .
 #
-# $head Data$$
-# There are $icode n_data$$ measurements of Sincidence and each has a standard
-# deviation $icode meas_std$$ (before adding the covariate effect).
-# The $cref/meas_value/data_table/meas_value/$$ do not affect (do affect)
-# the values in $cref data_sim_table$$ when the
-# $cref/density/data_table/density_id/$$ is
-# $cref/linear/density_table/Notation/Linear/$$
-# ($cref/log scaled/density_table/Notation/Log Scaled/$$).
+# Data
+# ****
+# There are *n_data* measurements of Sincidence and each has a standard
+# deviation *meas_std* (before adding the covariate effect).
+# The :ref:`data_table@meas_value` do not affect (do affect)
+# the values in :ref:`data_sim_table-name` when the
+# :ref:`density<data_table@density_id>` is
+# :ref:`density_table@Notation@Linear`
+# (:ref:`density_table@Notation@Log Scaled` ).
 #
-# $head Data Subset$$
+# Data Subset
+# ***********
 # Data is only simulated for
-# $cref/data_id/data_subset_table/data_id/$$
+# :ref:`data_subset_table@data_id`
 # values that appear in the data_subset table.
 # For this case, this includes all the
-# $cref/data_id/data_table/data_id/$$ values in the data table.
+# :ref:`data_table@data_id` values in the data table.
 #
-# $head meas_noise_effect$$
-# see $cref/meas_noise_effect/option_table/meas_noise_effect/$$.
+# meas_noise_effect
+# *****************
+# see :ref:`option_table@meas_noise_effect` .
 #
-# $head Notation Before Simulation$$
+# Notation Before Simulation
+# **************************
 # The following values do not depend on the simulated data:
 #
-# $subhead y$$
+# y
+# =
 # This is the measured value; see
-# $cref/y/data_sim_table/Method/y/$$.
+# :ref:`data_sim_table@Method@y` .
 #
-# $subhead Capital Delta$$
-# This is the minimum cv standard deviation corresponding to $latex y$$; see
-# $cref/Delta
-#  /data_like
-#  /Notation
-#  /Minimum CV Standard Deviation, Delta_i
-# /$$.
+# Capital Delta
+# =============
+# This is the minimum cv standard deviation corresponding to :math:`y`; see
+# :ref:`Delta<data_like@Notation@Minimum CV Standard Deviation, Delta_i>` .
 #
-# $subhead sigma$$
-# This is the transformed standard deviation corresponding to $latex y$$; see
-# $cref/sigma
-#  /data_like
-#  /Notation
-#  /Transformed Standard Deviation, sigma_i
-# /$$.
+# sigma
+# =====
+# This is the transformed standard deviation corresponding to :math:`y`; see
+# :ref:`sigma<data_like@Notation@Transformed Standard Deviation, sigma_i>` .
 #
-# $subhead E$$
-# This is the average noise effect corresponding to $latex y$$; see
-# $cref/E/data_sim_table/Method/Capital E/$$.
+# E
+# =
+# This is the average noise effect corresponding to :math:`y`; see
+# :ref:`E<data_sim_table@Method@Capital E>` .
 #
-# $subhead delta$$
-# This is the adjusted standard deviation corresponding to $latex y$$; see
-# $cref/delta/data_sim_table/Method/delta/$$.
+# delta
+# =====
+# This is the adjusted standard deviation corresponding to :math:`y`; see
+# :ref:`data_sim_table@Method@delta` .
 #
-# $head Simulation Notation$$
+# Simulation Notation
+# *******************
 #
-# $subhead z$$
+# z
+# =
 # This is the simulated measurement value, before censoring,
-# in the data_sim table; see $cref/z/data_sim_table/Method/z/$$.
+# in the data_sim table; see :ref:`data_sim_table@Method@z` .
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_data_sim.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # You can changed the values below and rerun this program

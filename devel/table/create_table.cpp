@@ -4,108 +4,117 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin cpp_create_table$$
-$spell
-   sqlite
-   const
-   std
-   CppAD
+{xrst_begin cpp_create_table}
+{xrst_spell
    bool
-   dismod_at
-$$
+}
 
-$section Use C++ to Create a Database Table$$
+Use C++ to Create a Database Table
+##################################
 
-$head Syntax$$
-$codei%dismod_at.create_table(
-   %db%, %table_name%, %col_name%, %col_type%, %col_unique%, %row_value%
-)%$$
+Syntax
+******
 
-$head Purpose$$
+| ``dismod_at.create_table`` (
+| |tab| *db* , *table_name* , *col_name* , *col_type* , *col_unique* , *row_value*
+| )
+
+Purpose
+*******
 Create a table and place data in the table.
 
-$head db$$
+db
+**
 This argument has prototype
-$codei%
-   sqlite3* %db%
-%$$
+
+   ``sqlite3`` * *db*
+
 and is the database we are placing the table into.
 
-$head table_name$$
+table_name
+**********
 This argument has prototype
-$codei%
-   const std::string& %table_name%
-%$$
+
+   ``const std::string&`` *table_name*
+
 and is the name of the table we are putting information into.
 
-$head col_name$$
+col_name
+********
 This argument has prototype
-$codei%
-   const CppAD::vector<std::string>& %col_name%
-%$$
+
+   ``const CppAD::vector<std::string>&`` *col_name*
+
 and is a vector of the names for the column names in this table.
 The size of this vector must greater than zero
 and is number of columns in the table
 minus one (the primary key column is not included).
 The primary key first is the first column,
-and then the order of the other columns in the same order as $icode col_name$$.
+and then the order of the other columns in the same order as *col_name* .
 
-$head col_type$$
+col_type
+********
 This argument has prototype
-$codei%
-   const CppAD::vector<std::string>& %col_type%
-%$$
-It has the same size and order as $icode col_name$$ and specifies
+
+   ``const CppAD::vector<std::string>&`` *col_type*
+
+It has the same size and order as *col_name* and specifies
 the type for the corresponding columns.
-The valid types are $code text$$, $code integer$$, and $code real$$.
+The valid types are ``text`` , ``integer`` , and ``real`` .
 
-$head col_unique$$
+col_unique
+**********
 This argument has prototype
-$codei%
-   const CppAD::vector<bool>& %col_unique%
-%$$
-It has the same size and order as $icode col_name$$ and specifies
+
+   ``const CppAD::vector<bool>&`` *col_unique*
+
+It has the same size and order as *col_name* and specifies
 if the corresponding columns have a
-$code unique$$ constraint (no repeated values).
+``unique`` constraint (no repeated values).
 
-$head row_value$$
+row_value
+*********
 This argument has prototype
-$codei%
-   const CppAD::vector<std::string>& %row_value%
-%$$
-We use $icode n_row$$ for the number of rows in the table.
-The size of $icode row_value$$ is $icode%n_row% * %col_name.size()%$$.
-For $icode%i% = 0 , %...%, %n_row%-1%$$,
-$icode%j% = 0 , %...%, %col_name.size()%-1%$$,
-$codei%
-   %row_value%[ i * %col_name%.size() + %j% ]
-%$$
-is the value placed in the $th i$$ row and column with name
-$icode%col_name%[%j%%$$.
 
-$subhead single quote$$
+   ``const CppAD::vector<std::string>&`` *row_value*
+
+We use *n_row* for the number of rows in the table.
+The size of *row_value* is *n_row* * *col_name.size* () .
+For *i* = 0 , ..., *n_row* ``-1`` ,
+*j* = 0 , ..., *col_name.size* () ``-1`` ,
+
+   *row_value* [ ``i`` * *col_name* . ``size`` () + *j*  ]
+
+is the value placed in the *i*-th row and column with name
+*col_name* [ *j* .
+
+single quote
+============
 The single quote character cannot appear in any of the values.
-If the column has type $code text$$, its values get surrounded by
-the single quote character $code '$$.
+If the column has type ``text`` , its values get surrounded by
+the single quote character ``'`` .
 
-$subhead null$$
+null
+====
 Note that the special case where the value is the empty string,
-and the type is $code integer$$ or $code real$$, the $code null$$
+and the type is ``integer`` or ``real`` , the ``null``
 value is placed at the corresponding location in the table.
 
-$head table_name_id$$
-A column with name $icode%table_name%_id%$$ and type
-$code integer primary key$$ is included as the first column in the table.
+table_name_id
+*************
+A column with name *table_name* _ ``id`` and type
+``integer primary key`` is included as the first column in the table.
 Its values start with zero (for the first row) and
 increment by one for each row.
+{xrst_toc_hidden
+   example/devel/table/create_table_xam.cpp
+}
+Example
+*******
+The file :ref:`create_table_xam.cpp-name` is an example use of
+``cpp_create_table`` .
 
-$children%example/devel/table/create_table_xam.cpp
-%$$
-$head Example$$
-The file $cref create_table_xam.cpp$$ is an example use of
-$code cpp_create_table$$.
-
-$end
+{xrst_end cpp_create_table}
 ---------------------------------------------------------------------------
 */
 # include <dismod_at/create_table.hpp>

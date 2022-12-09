@@ -3,210 +3,217 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin residual_density$$
-$spell
-   mu
-   enum
-   const
-   struct
-   wres
-   logden
-   fabs
+{xrst_begin residual_density}
+{xrst_spell
    bool
-   var
-   diff
-   CppAD
-$$
+   enum
+   fabs
+   logden
+   wres
+}
 
-$section Compute Weighted Residual and Log-Density$$
+Compute Weighted Residual and Log-Density
+#########################################
 
-$head Syntax$$
-$icode%residual% = residual_density(
-   %z%, %y%, %mu%, %delta%, %d_id%, %d_eta%, %d_nu%, %index%, %diff%, %prior%
-)%$$
+Syntax
+******
 
-$head Float$$
-The type $icode Float$$ must be $code double$$ or
-$cref a1_double$$.
+| *residual* = ``residual_density`` (
+| |tab| *z* , *y* , *mu* , *delta* , *d_id* , *d_eta* , *d_nu* , *index* , *diff* , *prior*
+| )
 
-$head z$$
+Float
+*****
+The type *Float* must be ``double`` or
+:ref:`a1_double-name` .
+
+z
+*
 This argument has prototype
-$codei%
-   const %Float%& z
-%$$
-$list number$$
-If $icode diff$$ is true, $icode z$$ is not nan and $icode prior$$ is true.
-In this case $icode z$$ specifies the first random variable in the difference.
-$lnext
-If $icode diff$$ is false and $icode z$$ is not nan,
-$icode prior$$ must be false and
-$icode z$$ is a simulated value for the measurement $icode y$$.
-$lnext
-If $icode diff$$ is false and $icode z$$ is nan,
-the likelihood is for the single random variable $icode y$$.
-$lend
 
-$head y$$
+   ``const`` *Float* & ``z``
+
+#. If *diff* is true, *z* is not nan and *prior* is true.
+   In this case *z* specifies the first random variable in the difference.
+#. If *diff* is false and *z* is not nan,
+   *prior* must be false and
+   *z* is a simulated value for the measurement *y* .
+#. If *diff* is false and *z* is nan,
+   the likelihood is for the single random variable *y* .
+
+y
+*
 This argument has prototype
-$codei%
-   const %Float%& y
-%$$
-If $icode diff$$ is true,
-$icode y$$ specifies the second random variable in the difference.
-If $icode diff$$ is false and $icode z$$ is nan,
-$icode y$$ is used both for measurement value
+
+   ``const`` *Float* & ``y``
+
+If *diff* is true,
+*y* specifies the second random variable in the difference.
+If *diff* is false and *z* is nan,
+*y* is used both for measurement value
 and for calculating log-density standard deviations.
-If $icode diff$$ is false and $icode z$$ is not nan,
-$icode y$$ is only used for calculating log-density standard deviations.
+If *diff* is false and *z* is not nan,
+*y* is only used for calculating log-density standard deviations.
 
-$head mu$$
+mu
+**
 This argument has prototype
-$codei%
-   const %Float%& mu
-%$$
-If $icode diff$$ is true, it is the central value for the difference.
-Otherwise, it is the central value for $icode y$$.
 
-$head delta$$
+   ``const`` *Float* & ``mu``
+
+If *diff* is true, it is the central value for the difference.
+Otherwise, it is the central value for *y* .
+
+delta
+*****
 This argument has prototype
-$codei%
-   const %Float%& delta
-%$$
+
+   ``const`` *Float* & ``delta``
+
 It is either the standard deviation.
 For log data densities it is in log space.
 For all other cases (linear data densities or priors) it is in the
-same space as $icode y$$.
+same space as *y* .
 
-$head d_id$$
+d_id
+****
 This argument has prototype
-$codei%
-   density_enum %d_id%
-%$$
-If $icode prior$$ is true, this refers to the
-$cref/density_id/prior_table/density_id/$$ in a prior table.
+
+   ``density_enum`` *d_id*
+
+If *prior* is true, this refers to the
+:ref:`prior_table@density_id` in a prior table.
 Otherwise, it refers to the
-$cref/density_id/data_table/density_id/$$ in a data table.
+:ref:`data_table@density_id` in a data table.
 
-$head d_eta$$
-If the density is $cref/log scaled/density_table/Notation/Log Scaled/$$,
-$icode eta$$ specifies the offset in the log transformation.
+d_eta
+*****
+If the density is :ref:`density_table@Notation@Log Scaled` ,
+*eta* specifies the offset in the log transformation.
 Otherwise it is not used.
 
-$head d_nu$$
-If the density $icode d_id$$ corresponds to
-$code students$$ or $code log_students$$,
-$icode nu$$ specifies the degrees of freedom in the Students-t distribution.
+d_nu
+****
+If the density *d_id* corresponds to
+``students`` or ``log_students`` ,
+*nu* specifies the degrees of freedom in the Students-t distribution.
 Otherwise it is not used.
 
-$head index$$
+index
+*****
 This argument has prototype
-$codei%
-   size_t %index%
-%$$
+
+   ``size_t`` *index*
+
 and is an identifying index for the residual.
 For example, when computing the prior residuals it could be
-$code 3$$ times $cref/var_id/var_table/var_id/$$
+``3`` times :ref:`var_table@var_id`
 plus zero for value priors,
 plus one for age difference prior, and
 plus two for time difference prior.
 
-$head diff$$
+diff
+****
 This argument has prototype
-$codei%
-   bool %diff%
-%$$
-If $icode diff$$ is true,
-this calculation is for the difference of the
-random variables $latex z$$ and $latex y$$.
-Otherwise it is just for the random variable $latex y$$.
 
-$head prior$$
-If $icode prior$$ is true,
+   ``bool`` *diff*
+
+If *diff* is true,
+this calculation is for the difference of the
+random variables :math:`z` and :math:`y`.
+Otherwise it is just for the random variable :math:`y`.
+
+prior
+*****
+If *prior* is true,
 this a prior density.
 Otherwise, it is a data density.
-If it is a data density, $icode diff$$ must be false.
+If it is a data density, *diff* must be false.
 
-$head residual$$
+residual
+********
 The return value has prototype
-$codei%
-   residual_struct<%Float%> %residual%
-%$$
 
-$subhead residual_struct$$
+   ``residual_struct<`` *Float* > *residual*
+
+residual_struct
+===============
 This structure has the following fields:
-$table
-Type $cnext Field $cnext Description $rnext
-$icode Float$$ $cnext
-   $code wres$$ $cnext
-   $cref/weighted residual/statistic/Weighted Residual Function, R/$$
-$rnext
-$icode Float$$ $cnext
-   $code logden_smooth$$ $cnext
-   this smooth term is in
-   $cref/log-density/statistic/Log-Density Function, D/$$
-$rnext
-$icode Float$$ $cnext
-   $code logden_sub_abs$$ $cnext
-   absolute value of this smooth term is in log-density
-$rnext
-$code density_enum$$ $cnext
-   $code density$$ $cnext
-   type of density function; see
-   $cref/density_enum/get_density_table/density_enum/$$
-$rnext
-$code size_t$$ $cnext
-   $code index$$ $cnext
-   identifier for this residual; see
-   $cref/index/residual_density/index/$$ above.
-$tend
 
-$subhead wres$$
-If $icode diff$$ is false, $icode wres$$ is the value of
-$latex \[
+.. list-table::
+
+   * - Type
+     - Field
+     - Description
+   * - *Float*
+     - ``wres``
+     - :ref:`weighted residual<statistic@Weighted Residual Function, R>`
+   * - *Float*
+     - ``logden_smooth``
+     - this smooth term is in
+       :ref:`log-density<statistic@Log-Density Function, D>`
+   * - *Float*
+     - ``logden_sub_abs``
+     - absolute value of this smooth term is in log-density
+   * - ``density_enum``
+     - ``density``
+     - type of density function; see
+       :ref:`get_density_table@density_enum`
+   * - ``size_t``
+     - ``index``
+     - identifier for this residual; see
+       :ref:`residual_density@index` above.
+
+wres
+====
+If *diff* is false, *wres* is the value of
+
+.. math::
+
    R(y, \mu, \delta, d)
-\]$$
-see $cref/weighted residual function
-   /statistic
-   /Weighted Residual Function, R
-/$$.
-If $icode diff$$ is true, $icode wres$$ is the value of
-$latex \[
-   R(z, y, \mu, \delta, d)
-\]$$
 
-$subhead Log Density$$
-If $icode diff$$ is false, the log-density function
-$latex \[
+see :ref:`weighted residual function<statistic@Weighted Residual Function, R>` .
+If *diff* is true, *wres* is the value of
+
+.. math::
+
+   R(z, y, \mu, \delta, d)
+
+Log Density
+===========
+If *diff* is false, the log-density function
+
+.. math::
+
    D(y, \mu, \delta, d)
-\]$$
+
 is equal to
-$codei%
-   %logden_smooth% - fabs(%logden_sub_abs)%)
-%$$
-see $cref/log-density function
-   /statistic
-   /Log-Density Function, D
-/$$.
-If $icode diff$$ is true, the log-density function
-$latex \[
+
+   *logden_smooth* ``- fabs`` ( *logden_sub_abs* ))
+
+see :ref:`log-density function<statistic@Log-Density Function, D>` .
+If *diff* is true, the log-density function
+
+.. math::
+
    D(z, y, \mu, \delta, d)
-\]$$
+
 is equal to
-$codei%
-   %logden_smooth% - fabs(%logden_sub_abs)%)
-%$$
-Both $icode logden_smooth$$ and $icode logden_sub_abs$$
-are smooth functions of $latex \mu$$ and $latex \delta$$.
+
+   *logden_smooth* ``- fabs`` ( *logden_sub_abs* ))
+
+Both *logden_smooth* and *logden_sub_abs*
+are smooth functions of :math:`\mu` and :math:`\delta`.
 This expresses the log-density
 in terms of smooth functions (for optimization purposes).
 
-$subhead Absolute Value Terms$$
-If $icode logden_sub_abs$$ is a CppAD constant,
+Absolute Value Terms
+====================
+If *logden_sub_abs* is a CppAD constant,
 (not a dynamic parameter or variable),
 there is no absolute value term for this residual.
 
-
-$end
+{xrst_end residual_density}
 */
 # include <cppad/cppad.hpp>
 # include <dismod_at/residual_density.hpp>

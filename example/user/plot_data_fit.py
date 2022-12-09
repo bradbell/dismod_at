@@ -2,26 +2,24 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_plot_data_fit.py$$ $newlinech #$$
-# $spell
-#  Integrands
-#  Sincidence
-#  mtexcess
-#  cv
-# $$
+# {xrst_begin user_plot_data_fit.py}
+# {xrst_comment_ch #}
 #
-# $section Example Plotting The Data and Its Fit$$
+# Example Plotting The Data and Its Fit
+# #####################################
 #
-# $head Nodes$$
+# Nodes
+# *****
 # There are four nodes in this example.
 # The world node has one child, north_america.
 # The north_america node has two children, united_states and canada.
-# The $cref/parent_node/option_table/Parent Node/$$ is canada which
+# The :ref:`parent_node<option_table@Parent Node>` is canada which
 # does not have any children.
 #
-# $head Rates$$
-# There is a parent smoothing the $icode iota$$, $icode rho$$
-# and $icode chi$$ rates.
+# Rates
+# *****
+# There is a parent smoothing the *iota* , *rho*
+# and *chi* rates.
 # This smoothing has one grid point; i.e., the rates are constant
 # in age and time.
 # There is no child node smoothing so there are no random effects
@@ -34,69 +32,93 @@
 # There are no difference priors because the smoothing
 # has only one grid point.
 #
-# $head Integrands$$
+# Integrands
+# **********
 # The integrands for this example are
-# $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$,
-# $cref/remission/avg_integrand/Integrand, I_i(a,t)/remission/$$,
-# $cref/mtexcess/avg_integrand/Integrand, I_i(a,t)/mtexcess/$$, and
-# $cref/prevalence/avg_integrand/Integrand, I_i(a,t)/prevalence/$$.
+# :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` ,
+# :ref:`avg_integrand@Integrand, I_i(a,t)@remission` ,
+# :ref:`avg_integrand@Integrand, I_i(a,t)@mtexcess` , and
+# :ref:`avg_integrand@Integrand, I_i(a,t)@prevalence` .
 # The first three integrands are direct measurements of the following rates:
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 integrand2rate = {
    'Sincidence':  'iota'   ,
    'remission':   'rho'    ,
    'mtexcess':    'chi'    ,
 }
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 # Prevalence is in the integrand table, but it has no simulated data.
 # This shows what happens when there is no data for one of the
-# integrands in the $cref/integrand_list/plot_data_fit/integrand_list/$$.
+# integrands in the :ref:`plot_data_fit@integrand_list` .
 #
-# $head Data$$
+# Data
+# ****
 # All of the data corresponds to canada.
 #
-# $subhead n_data$$
-# There are $icode n_data$$ data points for each of the integrands where
-# $srccode%py%
+# n_data
+# ======
+# There are *n_data* data points for each of the integrands where
+# {xrst_spell_off}
+# {xrst_code py}
 n_data  = 100
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $subhead max_plot$$
+# max_plot
+# ========
 # This is the maximum number of data points to plot per integrand.
 # The points are chosen randomly, but there order is preserved.
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 max_plot = int( n_data / 2 )
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $subhead Measurement Noise$$
+# Measurement Noise
+# =================
 # The data is simulated a Gaussian with mean equal to the
-# corresponding $icode rate_true$$ :
-# $srccode%py%
+# corresponding *rate_true* :
+# {xrst_spell_off}
+# {xrst_code py}
 rate_true = {
    'iota'  : 1e-2 ,
    'rho'   : 1e-3 ,
    'chi'   : 1e-4 ,
 }
-# %$$
-# and with coefficient of variation $icode meas_cv$$ :
-# $srccode%py%
+# {xrst_code}
+# {xrst_spell_on}
+# and with coefficient of variation *meas_cv* :
+# {xrst_spell_off}
+# {xrst_code py}
 meas_cv = 0.2
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $subhead hold_out$$
+# hold_out
+# ========
 # There is also one outlier for each integrand
 # (that is not simulated with the Gaussian noise described above).
 # The outlier is placed in the middle of the data set for each integrand.
-# The $cref/hold_out/data_table/hold_out/$$ for the outliers is set to one
+# The :ref:`data_table@hold_out` for the outliers is set to one
 # (it is zero for all the other data).
 #
-# $head Call to plot_data_fit$$
-# $srcthisfile%0%# BEGIN call plot_data_fit%# END call plot_data_fit%1%$$
+# Call to plot_data_fit
+# *********************
+# {xrst_literal
+#     BEGIN call plot_data_fit
+#     END call plot_data_fit
+# }
 #
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_end user_plot_data_fit.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import time

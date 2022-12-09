@@ -13,164 +13,181 @@
 # include <dismod_at/get_subgroup_table.hpp>
 
 /*
-$begin adj_integrand$$
-$spell
-   adjint_obj
-   vec
-   const
-   CppAD
-$$
+{xrst_begin adj_integrand}
+{xrst_spell
+   adj
+   adjint
+}
 
-$section Compute Adjusted Integrand On a Line$$
+Compute Adjusted Integrand On a Line
+####################################
 
-$head Syntax$$
-$codei%adj_integrand %adjint_obj%(
-   %rate_case%,
-   %age_table%,
-   %time_table%,
-   %subgroup_table%,
-   %integrand_table%,
-   %s_info_vec%,
-   %pack_object%
-);
-%$$
-$icode%adj_line% = %adjint_obj%.line(
-   %line_age%,
-   %line_time%,
-   %integrand_id%,
-   %n_child%,
-   %child%,
-   %subgroup_id%,
-   %x%,
-   %pack_vec%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_ADJ_INTEGRAND_PROTOTYPE%// END_ADJ_INTEGRAND_PROTOTYPE%1
-%$$
-$srcthisfile%
-   0%// BEGIN_LINE_PROTOTYPE%// END_LINE_PROTOTYPE%1
-%$$
+| ``adj_integrand`` *adjint_obj* (
+| |tab| *rate_case* ,
+| |tab| *age_table* ,
+| |tab| *time_table* ,
+| |tab| *subgroup_table* ,
+| |tab| *integrand_table* ,
+| |tab| *s_info_vec* ,
+| |tab| *pack_object*
+| );
+| *adj_line* = *adjint_obj* . ``line`` (
+| |tab| *line_age* ,
+| |tab| *line_time* ,
+| |tab| *integrand_id* ,
+| |tab| *n_child* ,
+| |tab| *child* ,
+| |tab| *subgroup_id* ,
+| |tab| *x* ,
+| |tab| *pack_vec*
+| )
 
-$head rate_case$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_ADJ_INTEGRAND_PROTOTYPE
+   // END_ADJ_INTEGRAND_PROTOTYPE
+}
+{xrst_literal
+   // BEGIN_LINE_PROTOTYPE
+   // END_LINE_PROTOTYPE
+}
+
+rate_case
+*********
 This is the value of
-$cref/rate_case/option_table/rate_case/$$ in the option table.
+:ref:`option_table@rate_case` in the option table.
 
-$head age_table$$
-This argument is the $cref age_table$$.
-A reference to $icode age_table$$ is used by $icode adjint_obj$$
-($icode age_table$$ must no be deleted for as long as
-$icode adjint_obj$$ is used).
+age_table
+*********
+This argument is the :ref:`age_table-name` .
+A reference to *age_table* is used by *adjint_obj*
+( *age_table* must no be deleted for as long as
+*adjint_obj* is used).
 
-$head time_table$$
-This argument is the $cref time_table$$.
-A reference to $icode time_table$$ is used by $icode adjint_obj$$.
+time_table
+**********
+This argument is the :ref:`time_table-name` .
+A reference to *time_table* is used by *adjint_obj* .
 
-$head subgroup_table$$
-This argument is the $cref subgroup_table$$.
-A reference to $icode subgroup_table$$ is used by $icode adjint_obj$$.
+subgroup_table
+**************
+This argument is the :ref:`subgroup_table-name` .
+A reference to *subgroup_table* is used by *adjint_obj* .
 
-$head integrand_table$$
-This argument is the $cref integrand_table$$.
-A reference to $icode integrand_table$$ is used by $icode adjint_obj$$.
+integrand_table
+***************
+This argument is the :ref:`integrand_table-name` .
+A reference to *integrand_table* is used by *adjint_obj* .
 
-$head s_info_vec$$
-For each $cref/smooth_id/smooth_table/smooth_id/$$,
-$codei%
-   %s_info_vec%[ %smooth_id% ]
-%$$
-is the corresponding $cref smooth_info$$ information.
-None of the prior information in $icode s_info_vec$$ is used.
-A reference to $icode s_info_vec$$ is used by $icode adjint_obj$$.
+s_info_vec
+**********
+For each :ref:`smooth_table@smooth_id` ,
 
-$head pack_object$$
-This is the $cref pack_info$$ information corresponding to
-the $cref model_variables$$.
+   *s_info_vec* [ *smooth_id*  ]
 
-$head line_age$$
+is the corresponding :ref:`smooth_info-name` information.
+None of the prior information in *s_info_vec* is used.
+A reference to *s_info_vec* is used by *adjint_obj* .
+
+pack_object
+***********
+This is the :ref:`pack_info-name` information corresponding to
+the :ref:`model_variables-name` .
+
+line_age
+********
 This vector is the age points at which the adjusted integrand is computed.
 It is faster if successive points have close values in age; e.g.,
-$codei%
-   %line_age%[%k%] <= %line_age%[%k%+1]
-%$$
 
-$subhead n_line$$
-We use the notation $icode%n_line% = %line_age%.size()%$$ for the number
+   *line_age* [ *k* ] <= *line_age* [ *k* +1]
+
+n_line
+======
+We use the notation *n_line* = *line_age* . ``size`` () for the number
 points at which the approximate solution is returned.
 
-$head line_time$$
-This vector has size $icode n_line$$ and is
+line_time
+*********
+This vector has size *n_line* and is
 the time points at which the adjusted integrand is computed.
 It is faster if successive points have close values in time; e.g.,
-$codei%
-   %line_time%[%k%] >= %line_time%[%k%+1]
-%$$
 
-$subhead ODE$$
-In the case where the integrand (specified by $icode integrand_id$$)
+   *line_time* [ *k* ] >= *line_time* [ *k* +1]
+
+ODE
+===
+In the case where the integrand (specified by *integrand_id* )
 requires solving the
-$cref/ODE/integrand_table/integrand_name/ODE/$$,
+:ref:`integrand_table@integrand_name@ODE` ,
 the line must be a cohort; i.e., it must satisfy the following properties:
-$list number$$
-The first line age must be the minimum value in the age table; i.e.,
-$codei%
-   %line_age%[0]% = min_%i% %table_age%[%i%]
-%$$
-$lnext
-The line ages must be monotone increasing; i.e.,
-for $icode%k% = 1 , %...%, %n_line%-1%$$
-$codei%
-   %line_age%[%k%-1] < %line_age%[%k%]
-%$$
-$lnext
-The difference between the line ages and times is constant; i.e.,
-for $icode%k% = 1 , %...%, %n_line%-1%$$
-$codei%
-   %line_time%[%k%] - %line_age%[%k%] == %line_time%[0] - %line_age%[0]
-%$$
-$lend
-In this case
-$icode cohort_age$$ and $icode cohort_time$$ are better names for the
-arguments $icode line_age$$ and $icode line_time$$.
 
-$head integrand_id$$
-This is the $cref/integrand_id/integrand_table/integrand_id/$$
+#. The first line age must be the minimum value in the age table; i.e.,
+
+      ``line_age`` [0] = ``min_`` *i* *table_age* [ *i* ]
+
+#. The line ages must be monotone increasing; i.e.,
+   for *k* = 1 , ..., *n_line* ``-1``
+
+      *line_age* [ *k* ``-1`` ] < *line_age* [ *k* ]
+
+#. The difference between the line ages and times is constant; i.e.,
+   for *k* = 1 , ..., *n_line* ``-1``
+
+      *line_time* [ *k* ] ``-`` *line_age* [ *k* ] == *line_time* [0] ``-`` *line_age* [0]
+
+In this case
+*cohort_age* and *cohort_time* are better names for the
+arguments *line_age* and *line_time* .
+
+integrand_id
+************
+This is the :ref:`integrand_table@integrand_id`
 in the integrand table.
 
-$head n_child_$$
-set to number of $cref/children/option_table/Parent Node/Children/$$.
+n_child\_
+*********
+set to number of :ref:`option_table@Parent Node@Children` .
 
-$head child$$
-Is the $cref/child/child_info/table_id2child/child/$$ corresponding
+child
+*****
+Is the :ref:`child_info@table_id2child@child` corresponding
 to this adjustment of the integrand.
 
-$head subgroup_id$$
-is the $cref/subgroup_id/avgint_table/subgroup_id/$$ corresponding
+subgroup_id
+***********
+is the :ref:`avgint_table@subgroup_id` corresponding
 to this adjustment of the integrand.
 
-$head pack_vec$$
-is all the $cref model_variables$$ in the order
-specified by $icode pack_object$$.
+pack_vec
+********
+is all the :ref:`model_variables-name` in the order
+specified by *pack_object* .
 
-$subhead Float$$
-The type $icode Float$$ must be $code double$$ or
-$cref a1_double$$.
+Float
+=====
+The type *Float* must be ``double`` or
+:ref:`a1_double-name` .
 
-$head adj_line$$
-The return value is a vector with size $icode n_line$$
-and $icode%adj_line%[%i%]%$$ is the
-$cref/adjusted integrand/avg_integrand/Adjusted Integrand/$$
-at age $icode%line_age%[%i%]%$$
-and time $icode%line_time%[%i%]%$$.
-
-$children%example/devel/model/adj_integrand_xam.cpp
-%$$
-$head Example$$
-The file $cref adj_integrand_xam.cpp$$ contains an example and test
+adj_line
+********
+The return value is a vector with size *n_line*
+and *adj_line* [ *i* ] is the
+:ref:`avg_integrand@Adjusted Integrand`
+at age *line_age* [ *i* ]
+and time *line_time* [ *i* ] .
+{xrst_toc_hidden
+   example/devel/model/adj_integrand_xam.cpp
+}
+Example
+*******
+The file :ref:`adj_integrand_xam.cpp-name` contains an example and test
 of using this routine.
 
-$end
+{xrst_end adj_integrand}
 */
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE

@@ -6,36 +6,41 @@
 # include <dismod_at/get_prior_mean.hpp>
 # include <dismod_at/null_int.hpp>
 /*
-$begin get_prior_mean$$
-$spell
-   var
-$$
+{xrst_begin get_prior_mean}
 
-$section Get Prior Mean For Each Variable$$
+Get Prior Mean For Each Variable
+################################
 
-$head Syntax$$
-$icode%prior_mean% = get_prior_mean(
-   %prior_table%, %pack_prior%, %var2prior%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN PROTOTYPE%// END PROTOTYPE%1
-%$$
+| *prior_mean* = ``get_prior_mean`` (
+| |tab| *prior_table* , *pack_prior* , *var2prior*
+| )
 
-$head prior_table$$
-Is the $cref/prior_table/get_prior_table/prior_table/$$.
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
 
-$head var2prior$$
+prior_table
+***********
+Is the :ref:`get_prior_table@prior_table` .
+
+var2prior
+*********
 Is the prior information as a mapping from variable index to
 prior table index.
 
-$head prior_mean$$
-The return value $icode prior_main$$
+prior_mean
+**********
+The return value *prior_main*
 is the prior mean for each variable by
-$cref/var_id/var_table/var_id/$$.
+:ref:`var_table@var_id` .
 
-$end
+{xrst_end get_prior_mean}
 */
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 

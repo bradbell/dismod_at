@@ -3,75 +3,76 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_prior_sim_table$$
-$spell
-   sim
-   sqlite
-   CppAD
-   struct
-   std
-   var
-   dage
-   dtime
-$$
+{xrst_begin get_prior_sim_table}
 
-$section C++: Get the Prior Simulation Table$$
+C++: Get the Prior Simulation Table
+###################################
 
-$head Syntax$$
-$icode%prior_sim_table% = get_prior_sim_table(%db%)%$$
+Syntax
+******
+*prior_sim_table* = ``get_prior_sim_table`` ( *db* )
 
-$head Purpose$$
-To read the $cref prior_sim_table$$ and return it as a C++ data structure.
+Purpose
+*******
+To read the :ref:`prior_sim_table-name` and return it as a C++ data structure.
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head prior_sim_table$$
-The return value $icode prior_sim_table$$ has prototype
-$codei%
-   CppAD::vector<prior_sim_struct>  %prior_sim_table%
-%$$
-For each $cref/prior_sim_id/prior_sim_table/prior_sim_id/$$,
-$codei%
-   %prior_sim_table%[%prior_sim_id%]
-%$$
+prior_sim_table
+***************
+The return value *prior_sim_table* has prototype
+
+   ``CppAD::vector<prior_sim_struct>`` *prior_sim_table*
+
+For each :ref:`prior_sim_table@prior_sim_id` ,
+
+   *prior_sim_table* [ *prior_sim_id* ]
+
 is the information for the corresponding
-$cref/prior_sim_id/prior_sim_table/prior_sim_id/$$.
+:ref:`prior_sim_table@prior_sim_id` .
 
-$head prior_sim_struct$$
+prior_sim_struct
+****************
 This is a structure with the following fields
-$table
-Type $cnext Field $cnext Description
-$rnext
-$code int$$ $cnext $code simulate_index$$ $cnext
-   The $cref/simulate_index/prior_sim_table/simulate_index/$$
-   for this prior simulation.
-$rnext
-$code int$$ $cnext $code var_id$$ $cnext
-   The value $cref/var_id/var_table/var_id/$$
-   identifies the variable for this prior simulation.
-$rnext
-$code double$$ $cnext $code prior_sim_value$$ $cnext
-   This is the variable value for this prior simulation.
-$rnext
-$code double$$ $cnext $code prior_sim_dage$$ $cnext
-   This is the age difference value for this variables prior simulation.
-$rnext
-$code double$$ $cnext $code prior_sim_dtime$$ $cnext
-   This is the time difference value for this variables prior simulation.
-$tend
 
-$children%example/devel/table/get_prior_sim_table_xam.cpp
-%$$
-$head Example$$
-The file $cref get_prior_sim_table_xam.cpp$$ contains an example
+.. list-table::
+
+   * - Type
+     - Field
+     - Description
+   * - ``int``
+     - ``simulate_index``
+     - The :ref:`prior_sim_table@simulate_index`
+       for this prior simulation.
+   * - ``int``
+     - ``var_id``
+     - The value :ref:`var_table@var_id`
+       identifies the variable for this prior simulation.
+   * - ``double``
+     - ``prior_sim_value``
+     - This is the variable value for this prior simulation.
+   * - ``double``
+     - ``prior_sim_dage``
+     - This is the age difference value for this variables prior simulation.
+   * - ``double``
+     - ``prior_sim_dtime``
+     - This is the time difference value for this variables prior simulation.
+
+{xrst_toc_hidden
+   example/devel/table/get_prior_sim_table_xam.cpp
+}
+Example
+*******
+The file :ref:`get_prior_sim_table_xam.cpp-name` contains an example
 and test of this function.
 
-$end
+{xrst_end get_prior_sim_table}
 -----------------------------------------------------------------------------
 */
 

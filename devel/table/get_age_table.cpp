@@ -3,48 +3,48 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_age_table$$
-$spell
-   sqlite
-   enum
-   cpp
-   std
-$$
+{xrst_begin get_age_table}
 
-$section C++: Get the Age Table Information$$
+C++: Get the Age Table Information
+##################################
 
-$head Syntax$$
-$icode%age_table% = get_age_table(%db%)%$$
+Syntax
+******
+*age_table* = ``get_age_table`` ( *db* )
 
-$head Purpose$$
-To read the $cref age_table$$ and return it as a C++ data structure.
+Purpose
+*******
+To read the :ref:`age_table-name` and return it as a C++ data structure.
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head age_table$$
-The return value $icode age_table$$ has prototype
-$codei%
-   CppAD::vector<double>  %age_table%
-%$$
-For each $cref/age_id/age_table/age_id/$$,
-$codei%
-   %age_table%[%age_id%]
-%$$
-is the age for the corresponding
-$cref/age/age_table/age/$$.
+age_table
+*********
+The return value *age_table* has prototype
 
-$children%example/devel/table/get_age_table_xam.cpp
-%$$
-$head Example$$
-The file $cref get_age_table_xam.cpp$$ contains an example that uses
+   ``CppAD::vector<double>`` *age_table*
+
+For each :ref:`age_table@age_id` ,
+
+   *age_table* [ *age_id* ]
+
+is the age for the corresponding
+:ref:`age_table@age` .
+{xrst_toc_hidden
+   example/devel/table/get_age_table_xam.cpp
+}
+Example
+*******
+The file :ref:`get_age_table_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_age_table}
 -----------------------------------------------------------------------------
 */
 

@@ -1,0 +1,520 @@
+$Id:$
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin whats_new_2020}
+{xrst_spell
+   checkpointing
+   cholmod
+   chron
+   coinbrew
+   covariance
+   dd
+   dependencies
+   devel
+   eigen
+   factorization
+   ldlt
+   mm
+   modversion
+   nulls
+   optimizer
+   pc
+   simplification
+   statics
+}
+
+Changes and Additions to Dismod_at During 2020
+##############################################
+
+mm-dd
+*****
+
+12-30
+=====
+The
+:ref:`prior_sim_table-name` ,
+:ref:`hes_fixed_table-name` ,
+and :ref:`hes_random_table-name`
+:ref:`output tables<data_flow@Output Tables by Table Name>`
+were not being dropped (if they existed) during the :ref:`init_command-name` .
+This has been fixed.
+
+12-29
+=====
+Fix a problem when creating both debug and release builds.
+(This was not a problem before 12-22 when build/external moved to external).
+
+12-26
+=====
+
+#. Change ``bin/db_simplify.py`` from a Chron's Disease to a Diabetes case.
+#. Add a log density item and a
+   :ref:`wish_list@Speed` item to the wish list.
+   Remove the checkpointing item
+   ,and change the conditional item heading to
+   :ref:`wish_list@ODE Solution@rate_case` .
+
+12-22
+=====
+Advance to cppad_mixed-20201222.
+This improves the error messaging during the install of
+:ref:`cppad_mixed.sh<install_unix@Special Requirements@cppad_mixed>` .
+In addition, this new version avoids ipopt creating of the file
+``debug.out`` (when :ref:`run_cmake.sh@build_type` is debug).
+
+12-17
+=====
+
+#. The example :ref:`user_sum_residual.py-name` discusses why the sum
+   of the weighted residuals is not expected to be zero.
+#. Under the heading
+   :ref:`install_unix@Paths@PKG_CONFIG_PATH`
+   the command option ``--version`` was corrected to ``--modversion`` .
+#. The scripts ``bin/csv_summary.py`` and ``bin/db_simplify.py``
+   were added. These are undocumented and untested and only meant as examples
+   to help diagnose problems.
+
+11-24
+=====
+Advance :ref:`dock_dismod_at.sh-name` version 20201122.
+This should speed up the build process.
+It requires one to re-build dismod_at.mixed and dismod_at.image.
+
+11-22
+=====
+Advance to cppad_mixed-20201124.
+This speeds up the build process when multiple processors are available.
+It also fixes a problem in ``cppad_mixed.pc`` and thereby removes the need
+to specify a prefix for each of the
+:ref:`install_unix@Special Requirements` .
+
+11-23
+=====
+
+#. Advance to cppad_mixed and :ref:`dock_dismod_at.sh-name` version 20201122.
+   This simplifies the build process because the script for building
+   and installing cppad_mixed, and its dependencies, come from cppad_mixed.
+   In addition, it speed up the build process when multiple processors
+   are available.
+#. **API change** for :ref:`dock_dismod_at.sh-name` .
+   To be specific, there are now three dismod_at docker images:
+   :ref:`dock_dismod_at.sh@Building Images@dismod_at.base` ,
+   :ref:`dock_dismod_at.sh@Building Images@dismod_at.mixed` ,
+   :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+   You must rebuild all of these images.
+
+10-10
+=====
+Improve the wording in the documentation of
+:ref:`prior_table@std` in the prior table.
+
+08-31
+=====
+Advance to cppad_mixed and :ref:`dock_dismod_at.sh-name` version 20200831.
+This fixes a bug in the calculation of the first derivative of
+the fixed effects objective.
+This bug only occurred when ``ldlt_cholmod`` was ``yes`` in
+``bin/install_cppad_mixed.sh`` and
+the factorization of the random effects Hessian had a permutation
+that did not act as its own inverse.
+To use the new dock_dismod_at.sh you will have to build a new
+:ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+
+08-23
+=====
+
+#. Fix location of upstream source in
+   ``bin/install_eigen`` .
+#. Patch Ipopt's source file ``IpIpoptApplication.cpp`` ; see
+   `ipopt issue 393 <https://github.com/coin-or/Ipopt/issues/393>`_.
+
+08-20
+=====
+Change ``bin/install_ipopt.sh`` to directly download and configure the
+necessary third party software (not use coinbrew).
+
+08-16
+=====
+Improve the debug :ref:`run_cmake.sh@build_type`
+so that ipopt and all its libraries also get built for debugging.
+
+07-02
+=====
+
+#. Fix a problem with the change on the previous day (see 07-01 below).
+   To be specific, the tables for the Hessian with respect to the fixed
+   and random effect were not being created in some error cases that
+   should create them (to help diagnose the problem).
+   This required advancing to cppad_mixed-20200702.
+#. Advance the dock_dismod_at.sh
+   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+   to 20200702.
+   This will require building a new
+   :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+
+07-01
+=====
+Dismod_at will exit with an error when the
+:ref:`sample_command@Output Tables@sample_table`
+is not created by the
+:ref:`sample asymptotic<sample_command@asymptotic>` command.
+If this is because the fixed effects information matrix is not
+positive definite,
+the :ref:`hes_fixed_table-name` will contain the information matrix
+
+06-30
+=====
+Advance to cppad_mixed-20200630.
+This fixes a problem where the :ref:`sample_table-name` was invalid after the
+:ref:`sample asymptotic<sample_command@asymptotic>` command
+when an information matrix that is not positive definite.
+Now, in addition to the warning about the information matrix,
+the sample table does not exist after the command when this happens.
+
+06-24
+=====
+Advance to the dock_dismod_at.sh
+:ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+to 20200620
+This will require building a new
+:ref:`dock_dismod_at.sh@Building Images@dismod_at.base`
+and then
+:ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+
+06-20
+=====
+The :ref:`sample_command@variables` argument was added
+to the sample command.
+This enables one to get statistics for fitting just the fixed effects.
+It is not backward compatible because you will have to include the
+*variables* argument in your sample commands.
+To get the old behavior, set *variables* to ``both`` .
+
+06-08
+=====
+Advance to ipopt-3.13.2, cppad-20200606, cppad_mixed-20200608.
+
+05-30
+=====
+Advance to ``cppad_mixed-20200530``
+(more work on the adaptive derivative checker).
+
+05-29
+=====
+
+#. A check was added for the case where there are more constraints on the random
+   effects than there are random effects.
+#. Add the :ref:`user_subgroup_mulcov.py-name` example.
+   This combines fixed and random effects for both parent/child and
+   group/subgroup and for the same rate.
+#. The standard deviation was removed from the prior for some
+   uniform priors in :ref:`user_bilevel_random.py-name`
+   (it was not being used).
+#. Advance to ``cppad_mixed-20200529`` .
+   This adds a missing error report when the Hessian w.r.t. the random
+   effects is not positive definite at the starting variable values and
+   :ref:`option_table@Optimize Fixed Only@quasi_fixed` is false.
+
+05-27
+=====
+Advance to ``cppad_mixed-20200527`` .
+This should improve the output generated by the
+:ref:`option_table@Optimize Fixed and Random@derivative_test`
+``trace-adaptive`` option.
+
+05-21
+=====
+The :ref:`user_covid_19.py-name` example was added.
+
+05-15
+=====
+Add another restriction on the :ref:`subgroup_table@group_name` .
+To be specific, the only case were a group name can also be a subgroup name
+is when the group has only one subgroup and the same name is used for both.
+In addition, more subgroup table error checking (that used to be only
+in the debug version) is done in the release version of dismod_at.
+
+03-28
+=====
+
+#. Add simplification to the scaling of the asymptotic statistics
+   in the case were we have
+   :ref:`user_hes_fixed_math.py@Scaling Fixed Effects@Optimal Fixed Effects` .
+#. Advance to ``cppad_mixed-20200328`` .
+   This a bug in the release version during
+   :ref:`sample_command@asymptotic` sampling
+   when there are no random effects.
+
+03-27
+=====
+
+#. Add the :ref:`user_one_function.py-name` which demonstrates how to
+   fit an arbitrary function and ignore the dismod_at
+   :ref:`differential equation<avg_integrand@Ordinary Differential Equation>` .
+#. Add the :ref:`option_table@rate_case@no_ode` option
+   to the rate case in the option table.
+   This was necessary to simplify the one function example mentioned above.
+#. The :ref:`prior_table@std@Log Scaling` discussion
+   for standard deviations in the prior table was edited to make it clearer
+   that difference standard deviations are not transformed.
+#. The discussion of log transformed standard deviations *sigma*
+   was edited to make it clearer why it is different for data
+   than it is for priors.
+#. Remove incorrect sentence about the simulated random effects depending
+   on the simulated fixed effects in the
+   :ref:`sample_command@asymptotic` method.
+
+03-26
+=====
+The ``user_posterior.py`` example was moved to
+:ref:`user_sample_asy_sim.py-name` and it was extended to include the
+asymptotic sampling method.
+
+03-25
+=====
+
+#. Advance to ``cppad_mixed-20200325`` .
+   This fixed an assert in the debug version during
+   :ref:`sample_command@asymptotic` sampling
+   when there are no random effects.
+#. If during asymptotic sampling the Hessian of the fixed or random
+   effects object is not positive definite, print a warning and do not
+   create a sample table (instead of filling the sample table with nulls);
+   see :ref:`sample_command@Output Tables@No Sample Table` .
+   This fixed a bug where the :ref:`db2csv_command-name` tried to average null values.
+#. The sample command asymptotic method uses a normal distribution,
+   but the scaled fixed effects variables are normal in the scaled space; see
+   :ref:`sample_command@asymptotic@Fixed Effects Distribution`
+#. Add a test of
+   :ref:`user_hes_fixed_math.py@Scaling Fixed Effects`
+   to the ``hes_fixed_math.py`` example.
+#. Advance to the dock_dismod_at.sh
+   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+   to 20200325.
+   This will require building a new
+   :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+
+03-24
+=====
+
+#. The Hessian tables are now guaranteed to be in row major order; see
+   representation for the
+   :ref:`hes_fixed<hes_fixed_table@Representation>` and
+   :ref:`hes_random<hes_random_table@Representation>` tables.
+#. The values in :ref:`hes_fixed_table-name` are now in scaled space; see
+   :ref:`prior_table@eta@Scaling Fixed Effects` .
+#. Create separate tables, in the data flow section, for the
+   :ref:`data_flow@Command Output Tables` and
+   :ref:`data_flow@Command Extra Input Tables` .
+#. Add the :ref:`db2csv_command@hes_fixed.csv` and
+   :ref:`db2csv_command@hes_random.csv` output files
+   to the db2csv command.
+#. Check the ``hes_random.csv`` file at the end of the
+   :ref:`user_hes_random.py-name` example.
+
+03-23
+=====
+
+#. Update to using version cppad_mixed-20200319.
+   This enables computation of the Hessian of the random effects objective.
+#. Add the :ref:`hes_random_table-name` as an output during an
+   :ref:`sample_command@asymptotic` sample command.
+   Add the :ref:`user_hes_random.py-name` example use of the hes_random table.
+
+03-22
+=====
+
+#. Add the :ref:`hes_fixed table<sample_command@Output Tables@hes_fixed_table>`
+   as an extra output when computing asymptotic samples.
+#. The ``user_asymptotic_math.py`` example
+   was renamed to :ref:`user_hes_fixed_math.py-name` because it checks
+   the :ref:`hes_fixed_table-name` .
+#. Add a connecting sentence about computation before the equations
+   for the derivatives of
+   :math:`\hat{u}_i ( \theta )` and :math:`g_i ( \theta )`.
+#. The asymptotic sampling of the random effects was changed to use the
+   a fixed Hessian w.r.t the random effects for all the samples.
+   Trying to optimize the random effects given the simulated fixed effects,
+   without changing the data, often fails and does not make sense.
+
+03-21
+=====
+Add the :ref:`user_hes_fixed_math.py-name` example.
+
+03-19
+=====
+Update to using version cppad_mixed-20200319.
+This fixes some asserts during the
+:ref:`sample_command@asymptotic` sampling method
+in the debug build.
+
+03-18
+=====
+
+#. Advance the dock_dismod_at.sh
+   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+   to 20200318.
+   This will require building a new
+   :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+#. Add the :ref:`sample_command@simulate_index` argument
+   to the asymptotic version of the sample command.
+   This fixed a bug where the asymptotic statistics for a fit using
+   simulated data was using
+   :ref:`data_table@meas_value`
+   when it should have been using
+   :ref:`data_sim_table@data_sim_value` .
+#. Fix a bug in the sampling of the random effect using the
+   :ref:`sample_command@asymptotic` method.
+#. The :ref:`user_speed.py-name` example was improved.
+   More documentation was added,
+   it has a realistic parent and child grids, and
+   it works with both quasi-Newton and Newton method,
+   and it includes an example / test of the asymptotic statistics.
+
+03-15
+=====
+
+#. Advance the dock_dismod_at.sh
+   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+   to 20200315.
+   This will require building a new
+   :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+#. The sample command
+   :ref:`sample_command@asymptotic` method
+   was changed to ignore all the constraints except for
+   :ref:`model_variables-name` that have their upper and lower limits equal.
+   This should speed up the computation of the asymptotic statics.
+   It also provides a way to approximation the Hessian of the fixed effect
+   objective (as the inverse of the sample covariance).
+   Note that the simulated samples may be outside the bounds for the
+   corresponding variables;
+   see :ref:`sample_command@Bounds` .
+   Also note that the :ref:`predict_command-name` censors the samples
+   to be within their limits before computing its predictions.
+#. Some minor corrections were made to the discussion of the
+   :ref:`user_sample_asy.py-name` example; e.g.
+   :math:`\iota_c` and :math:`\iota_m` where changed to :math:`\iota_n`.
+   In addition, the
+   :ref:`user_sample_asy.py@Problem Parameters`
+   were include in the documentation.
+
+03-09
+=====
+
+#. There was a bug in the smoothing when there was a
+   upper or lower bound in the prior for
+   :ref:`dage<smooth_grid_table@dage_prior_id>` or
+   :ref:`dtime<smooth_grid_table@dtime_prior_id>` prior
+   for a fixed effect that was scaled; see
+   :ref:`prior_table@eta@Scaling Fixed Effects` .
+   This has been fixed.
+#. Advance the dock_dismod_at.sh
+   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+   to 20200309.
+   This will require building a new
+   :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+
+03-06
+=====
+The ``jump_at_age.py`` example has been improved
+to include more discussion and the flexibility to change its
+:ref:`user_jump_at_age.py@Parameters` .
+
+02-29
+=====
+
+#. Add the :ref:`user_residual.py-name` example.
+#. If the user specified the
+   :ref:`option_table@Parent Node@parent_node_id`
+   in the option table, the corresponding parent node name is placed in the
+   :ref:`db2csv_command@option.csv` .
+
+02-28
+=====
+Fix the formula for the age smoothing :ref:`smooth_dage@A^s` ,
+and the time smoothing :ref:`smooth_dtime@T^s` .
+To be specific, the forward index comes before the current index; e.g.,
+:math:`D(v_{i,j}, v_{i+1,j} \ldots )` was replaced by
+:math:`D(v_{i+1,j}, v_{i,j} \ldots )`.
+
+02-26
+=====
+
+#. Add an :ref:`wish_list@Immunity` wish list item.
+#. Discuss the difference between the weighted residual in the log scaled
+   :ref:`statistic@Weighted Residual Function, R@Value`
+   and the log scaled
+   :ref:`statistic@Weighted Residual Function, R@Difference`
+   cases.
+#. Discuss the difference in the definition of the
+   :math:`\sigma` in the data versus prior cases.
+
+02-20
+=====
+Advance the dock_dismod_at.sh
+:ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+to 20200218.
+This will require building a new
+:ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+
+02-18
+=====
+The ``dismod_at`` program would crash if the
+*subgroup_id* in the
+:ref:`data_table<data_table@subgroup_id>` or
+:ref:`avgint_table<avgint_table@subgroup_id>` as null.
+This has been fixed by detecting this case and printing an error message.
+
+02-14
+=====
+The description of the :ref:`data_table@hold_out` data
+has been improved.
+
+02-13
+=====
+
+#. The :ref:`age_table@age_id` and :ref:`time_table@time_id`
+   values in the :ref:`smooth_grid_table-name` and :ref:`weight_grid_table-name` were
+   not being checked for validity.
+   This has been changed so that the user gets an informative error message
+   when they are outside the valid limits.
+#. Advance the dock_dismod_at.sh
+   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+   to 20200213.
+   This will require building a new
+   :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+
+01-31
+=====
+A :ref:`wish_list@Simulating Priors` entry
+was added to the wish list.
+
+01-16
+=====
+Add an optimizer warm start
+wish list item.
+
+01-08
+=====
+
+#. Add documentation for the arguments
+   :ref:`dock_dismod_at.sh@Run New Container@database` and
+   :ref:`dock_dismod_at.sh@Run New Container@command` under
+   running a new container.
+#. Advance the dock_dismod_at.sh
+   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+   to 2020010.
+   of ``dock_dismod_at.sh`` .
+   This will require building a new
+   :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+
+01-07
+=====
+Fix the following compile error when ``NDEBUG`` is not defined:
+
+| |tab| .../ ``devel/table/get_subgroup_table.cpp:128:31: error:``
+| |tab| ``'subgroup_id'`` ``was not declared in this scope``
+
+{xrst_end whats_new_2020}

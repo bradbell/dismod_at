@@ -1,0 +1,69 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin age_avg_table}
+
+The Age Average Table
+#####################
+
+Age Average Grid
+****************
+We use
+:ref:`age_table@age@age_min` ,
+:ref:`age_table@age@age_max` ,
+to denote the minimum and maximum ages in the age table.
+We use :ref:`option_table@Age Average Grid@ode_step_size`
+to denote its value in the option table.
+Let *N*  >= 1 be the minimum integer such that
+
+   *s* = ( *age_max* ``-`` *age_min* ) / *N* <= *ode_step_size*
+
+Define the set of age points
+:math:`a_i = i * s` for :math:`i = 0, \ldots , N`, and define the set
+
+.. math::
+
+   S = \{ a_0, a_1 , \ldots , a_N \}
+
+Note that :math:`a_0` is *age_min*
+and :math:`a_N` is *age_max* .
+The age average grid is the union of the set :math:`S`
+and the set of age points in
+:ref:`option_table@Age Average Grid@age_avg_split` .
+This grid is used both for
+:ref:`approximating averages<numeric_average-name>`
+and for approximation the solution of the dismod_at
+:ref:`avg_integrand@Ordinary Differential Equation` .
+If :ref:`option_table@Age Average Grid@age_avg_split` is the empty set,
+the age average grid is the set :math:`S`.
+
+Creation
+********
+This table changes each time the
+:ref:`option_table@Age Average Grid@ode_step_size` or the
+:ref:`option_table@Age Average Grid@age_avg_split` changes.
+These value can change without having to re-execute the
+:ref:`init_command-name` .
+For this reason, this table is re-written for each command
+with the exception of the following:
+:ref:`set<set_command-name>` ,
+:ref:`db2csv<db2csv_command-name>` ,
+:ref:`csv2db<csv2db_command-name>` ,
+and
+:ref:`modify<modify_command-name>` .
+
+age_avg_id
+**********
+This column has type ``integer`` and is the primary key for
+the this table.
+Its initial value is zero, and it increments by one for each row.
+
+age
+***
+This column has type ``real`` and is a monotone
+increasing values in the age average grid.
+The values are unique; i.e.,
+none of the values are repeated.
+
+{xrst_end age_avg_table}

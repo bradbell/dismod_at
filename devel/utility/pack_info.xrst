@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin pack_info}
+{xrst_spell
+   devel
+}
+
+Devel Packing Variables into a Single Vector
+############################################
+
+Contents
+********
+{xrst_toc_table
+   devel/utility/pack_info.cpp
+   example/devel/utility/pack_info_xam.cpp
+}
+Example
+*******
+The file :ref:`pack_info_xam.cpp-name` contains
+and example and test of ``pack_info`` .
+It returns true for success and false for failure.
+
+{xrst_end pack_info}

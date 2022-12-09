@@ -2,90 +2,107 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin modify_command$$ $newlinech #$$
-# $spell
-#  Sqlite
-#  dismod
-#  dismodat.py
-#  arg
-#  exp
-# $$
-# $section Modify a Column of an Sqlite Database$$
+# {xrst_begin modify_command}
+# {xrst_spell
+#     arg
+#     exp
+# }
+# {xrst_comment_ch #}
 #
-# $head Deprecated$$
+# Modify a Column of an Sqlite Database
+# #####################################
+#
+# Deprecated
+# **********
 # This command was deprecated on 2021-12-05.
 #
-# $head Syntax$$
+# Syntax
+# ******
 #
-# $subhead As Program$$
-# $codei%dismodat.py %database% modify \
-#  %table_name% %column_name% %row_expression% %value_expression% \
-#  %statement_one% %statement_two% %...%
-# %$$
+# As Program
+# ==========
 #
-# $subhead As Python Function$$
-# $codei%dismod_at.modify_command(%database%, %arg_list%)%$$
+# | ``dismodat.py`` *database* ``modify`` \\
+# | |tab| *table_name* *column_name* *row_expression* *value_expression*  \\
+# | |tab| *statement_one* *statement_two*  ...
 #
-# $head See Also$$
-# It is simpler to use the $cref set_command$$ when it is
+# As Python Function
+# ==================
+# ``dismod_at.modify_command`` ( *database* , *arg_list* )
+#
+# See Also
+# ********
+# It is simpler to use the :ref:`set_command-name` when it is
 # it is capable of making a change.
 #
-# $head Warning$$
+# Warning
+# *******
 # You can change any value in the database using the modify command.
-# It is suggested that you re-run the $cref init_command$$,
+# It is suggested that you re-run the :ref:`init_command-name` ,
 # unless you are certain that the set of
-# $cref model_variables$$ was not affected by this change.
+# :ref:`model_variables-name` was not affected by this change.
 #
-# $head arg_list$$
+# arg_list
+# ********
 # This is a list of strings containing the arguments in the
 # program syntax. To be specific,
-# $icode%arg_list%[0]%$$ is $icode table_name$$,
-# $icode%arg_list%[1]%$$ is $icode column_name$$,
+# *arg_list* [0] is *table_name* ,
+# *arg_list* [1] is *column_name* ,
 # e.t.c.
 #
-# $head database$$
+# database
+# ********
 # Is the file name corresponding to the Sqlite database.
 #
-# $head table_name$$
+# table_name
+# **********
 # Is the name of the table in the database that is modified.
 #
-# $head column_name$$
+# column_name
+# ***********
 # Is the name of the column in the table that is modified.
 #
-# $head row_expression$$
+# row_expression
+# **************
 # This is a python expression that evaluates to
-# $code True$$ or $code False$$.
-# Only rows where the expression is $code True$$ are modified.
+# ``True`` or ``False`` .
+# Only rows where the expression is ``True`` are modified.
 #
-# $head value_expression$$
+# value_expression
+# ****************
 # This is a python expression that specifies the value to be placed in the
-# specified column when the row expression is $code True$$.
+# specified column when the row expression is ``True`` .
 #
-# $head Expressions$$
+# Expressions
+# ***********
 # For each row, an expression can reference the value in a column using
 # the corresponding column name. In other words, for each column, a variable
 # with the column name is set to the value in that column.
 #
-# $head statements$$
+# statements
+# **********
 # There may be zero or more python statements at the end of the
 # command line. Each one is executed before the expressions are evaluated.
 # For example, one of the statements might be
-# $codep
-#  from math import exp
-# $$
-# This would make the function $codei%exp(%x%)%$$ available for use
-# in $icode row_expression$$ and $icode value_expression$$.
+# ::
 #
-# $head Log Table$$
-# See $cref/dismodat.py/dismodat.py/Log Table/$$.
+#     from math import exp
 #
-# $children%example/get_started/modify_command.py
-# %$$
-# $head Example$$
-# The file $cref modify_command.py$$ contains an example and test
+# This would make the function ``exp`` ( *x* ) available for use
+# in *row_expression* and *value_expression* .
+#
+# Log Table
+# *********
+# See :ref:`dismodat.py<dismodat.py@Log Table>` .
+# {xrst_toc_hidden
+#    example/get_started/modify_command.py
+# }
+# Example
+# *******
+# The file :ref:`modify_command.py-name` contains an example and test
 # using this command.
 #
-# $end
+# {xrst_end modify_command}
 def modify_command(database, arg_list) :
    import re
    import os

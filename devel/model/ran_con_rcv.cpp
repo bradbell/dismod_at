@@ -3,50 +3,60 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin ran_con_rcv$$
-$spell
-   mulcov
-   rcv
+{xrst_begin ran_con_rcv}
+{xrst_spell
    enum
-$$
+   rcv
+}
 
-$section Matrix Representation of Random Constraints$$
+Matrix Representation of Random Constraints
+###########################################
 
-$head Syntax$$
-$icode%A_rcv% = ran_con_rcv(
-%bound_random%, %zero_sum_child_rate%, %zero_sum_mulcov_group%, %pack_object%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_RAN_CON_RCV%// END_RAN_CON_RCV%1
-%$$
+| *A_rcv* = ``ran_con_rcv`` (
+| *bound_random* , *zero_sum_child_rate* , *zero_sum_mulcov_group* , *pack_object*
+| )
 
-$head bound_random$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_RAN_CON_RCV
+   // END_RAN_CON_RCV
+}
+
+bound_random
+************
 This is the value of the
-$cref/bound_random/option_table/Optimize Random Only/bound_random/$$
+:ref:`option_table@Optimize Random Only@bound_random`
 in the option table.
 
-$head zero_sum_child_rate$$
-If this vector has size $code number_rate_enum$$.
-If $icode%zero_sum_child_rate%[%rate_id%]%$$ is true,
+zero_sum_child_rate
+*******************
+If this vector has size ``number_rate_enum`` .
+If *zero_sum_child_rate* [ *rate_id* ] is true,
 for each age, time, and rate,
 the sum of the random effects with respect the children
 is constrained to be zero.
 
-$head zero_sum_mulcov_group$$
+zero_sum_mulcov_group
+*********************
 If this vector has size equal to the number of groups in
-$cref subgroup_table$$.
-If $icode%zero_sum_mulcov_group%[%group_id%]%$$ is true,
-for each age, time, and $cref mulcov_table$$ row,
+:ref:`subgroup_table-name` .
+If *zero_sum_mulcov_group* [ *group_id* ] is true,
+for each age, time, and :ref:`mulcov_table-name` row,
 the sum of the random effects with respect to subgroup
 is constrained to be zero.
 
-$head pack_object$$
-This argument is the $cref pack_info$$ information corresponding to the
-$cref model_variables$$.
+pack_object
+***********
+This argument is the :ref:`pack_info-name` information corresponding to the
+:ref:`model_variables-name` .
 
-$head A_rcv$$
-The return value $icode A_rcv$$ is a sparse matrix representation of
+A_rcv
+*****
+The return value *A_rcv* is a sparse matrix representation of
 the constraints on the random effects.
 To be specific, for rate that has random effects,
 and each grid point in the smoothing for those random effects,
@@ -55,7 +65,7 @@ grid point and rate.
 The columns of the matrix are zero except for those corresponding to the
 grid point which are one.
 
-$end
+{xrst_end ran_con_rcv}
 */
 
 # include <dismod_at/ran_con_rcv.hpp>

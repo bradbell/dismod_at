@@ -3,71 +3,82 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_data_subset$$
-$spell
-   sqlite
-   struct
-$$
+{xrst_begin get_data_subset}
 
-$section C++: Get the Data Subset Table$$
+C++: Get the Data Subset Table
+##############################
 
-$head Syntax$$
-$icode%data_subset_table% = get_data_subset(%db%)%$$
+Syntax
+******
+*data_subset_table* = ``get_data_subset`` ( *db* )
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
 
-$head Purpose$$
-To read the $cref data_subset_table$$ and return it as a C++ data structure.
+Purpose
+*******
+To read the :ref:`data_subset_table-name` and return it as a C++ data structure.
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head data_subset_table$$
-For each $cref/data_subset_id/data_subset_table/data_subset_id/$$,
-$codei%
-   %data_subset_table%[%data_subset_id%]
-%$$
+data_subset_table
+*****************
+For each :ref:`data_subset_table@data_subset_id` ,
+
+   *data_subset_table* [ *data_subset_id* ]
+
 is the information for the corresponding
-$icode data_subset_id$$.
+*data_subset_id* .
 
-$head data_subset_struct$$
+data_subset_struct
+******************
 This is a structure with the following fields
-$table
-Type $cnext Field $cnext Description
-$rnext
-$code int$$ $cnext $code data_id$$ $cnext
-   The $cref/data_id/data_subset_table/data_id/$$
-   for this measurement.
-$rnext
-$code int$$ $cnext $code hold_out$$ $cnext
-   The $cref/hold_out/data_subset_table/hold_out/$$
-   for this measurement.
-$rnext
-$code int$$ $cnext $code density_id$$ $cnext
-   The $cref/density_id/data_subset_table/density_id/$$
-   for this measurement.
-$rnext
-$code int$$ $cnext $code eta$$ $cnext
-   The $cref/eta/data_subset_table/eta/$$
-   for this measurement.
-$rnext
-$code int$$ $cnext $code nu$$ $cnext
-   The $cref/nu/data_subset_table/nu/$$
-   for this measurement.
-$tend
 
-$children%example/devel/table/get_data_subset_xam.cpp
-%$$
-$head Example$$
-The file $cref get_data_subset_xam.cpp$$ contains an example
+.. list-table::
+
+   * - Type
+     - Field
+     - Description
+   * - ``int``
+     - ``data_id``
+     - The :ref:`data_subset_table@data_id`
+       for this measurement.
+   * - ``int``
+     - ``hold_out``
+     - The :ref:`data_subset_table@hold_out`
+       for this measurement.
+   * - ``int``
+     - ``density_id``
+     - The :ref:`data_subset_table@density_id`
+       for this measurement.
+   * - ``int``
+     - ``eta``
+     - The :ref:`data_subset_table@eta`
+       for this measurement.
+   * - ``int``
+     - ``nu``
+     - The :ref:`data_subset_table@nu`
+       for this measurement.
+
+{xrst_toc_hidden
+   example/devel/table/get_data_subset_xam.cpp
+}
+Example
+*******
+The file :ref:`get_data_subset_xam.cpp-name` contains an example
 and test of this function.
 
-$end
+{xrst_end get_data_subset}
 -----------------------------------------------------------------------------
 */
 

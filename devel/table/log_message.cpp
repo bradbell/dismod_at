@@ -3,97 +3,105 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin log_message$$
-$spell
-   sqlite
-   const
-   std
+{xrst_begin log_message}
+{xrst_spell
    ostream
-$$
+   unix
+}
 
-$section Put a Message in the Log Table$$
+Put a Message in the Log Table
+##############################
 
-$head Syntax$$
-$icode%unix_time% = log_message(%db%, %os%, %message_type%, %message%)
-%$$
-$icode%unix_time% = log_message(
-   %db%, %os%, %message_type%, %message%, %table_name%, %row_id%
-)%$$
+Syntax
+******
 
-$head db$$
+| *unix_time* = ``log_message`` ( *db* , *os* , *message_type* , *message* )
+| *unix_time* = ``log_message`` (
+| |tab| *db* , *os* , *message_type* , *message* , *table_name* , *row_id*
+| )
+
+db
+**
 This argument has prototype
-$codei%
-   sqlite3* %db%
-%$$
+
+   ``sqlite3`` * *db*
+
 and is the database connection.
 
-$head os$$
+os
+**
 This argument has prototype
-$codei%
-   std::ostream* %os%
-%$$
+
+   ``std::ostream`` * *os*
+
 If it is not null and
-$icode message_type$$ is $code error$$ or $code warning$$,
+*message_type* is ``error`` or ``warning`` ,
 the message is also written to the output stream
 with a new line added at the end
 (as well as being logged in the database).
 
-$head message_type$$
+message_type
+************
 This argument has prototype
-$codei%
-   const std::string& %message_type%
-%$$
+
+   ``const std::string&`` *message_type*
+
 and must be one of the following:
-$code command$$,
-$code error$$,
-$code warning$$,
-$code value$$.
+``command`` ,
+``error`` ,
+``warning`` ,
+``value`` .
 This value gets written in the
-$cref/message_type/log_table/message_type/$$ column of the log table.
+:ref:`log_table@message_type` column of the log table.
 
-$head message$$
+message
+*******
 This argument has prototype
-$codei%
-   const std::string& %message%
-%$$
-This value gets written in the
-$cref/message/log_table/message/$$ column of the log table.
 
-$head table_name$$
+   ``const std::string&`` *message*
+
+This value gets written in the
+:ref:`log_table@message` column of the log table.
+
+table_name
+**********
 This argument has prototype
-$codei%
-   const std::string& %table_name%
-%$$
-This value gets written in the
-$cref/table_name/log_table/table_name/$$ column of the log table.
-If $icode table_name$$ it is not present or empty, null is used.
 
-$head row_id$$
+   ``const std::string&`` *table_name*
+
+This value gets written in the
+:ref:`log_table@table_name` column of the log table.
+If *table_name* it is not present or empty, null is used.
+
+row_id
+******
 This argument has prototype
-$codei%
-   const size_t& %row_id%
-%$$
-This value gets written in the
-$cref/row_id/log_table/row_id/$$ column of the log table.
-Note that the value $code DISMOD_AT_NULL_SIZE_T$$
-gets converted to a $code null$$.
-If $icode row_id$$ is not present, $code null$$ is used.
-If $icode row_id$$ is present and not $code DISMOD_AT_NULL_SIZE_T$$,
-$icode table_name$$ must not be empty.
 
-$head unix_time$$
+   ``const size_t&`` *row_id*
+
+This value gets written in the
+:ref:`log_table@row_id` column of the log table.
+Note that the value ``DISMOD_AT_NULL_SIZE_T``
+gets converted to a ``null`` .
+If *row_id* is not present, ``null`` is used.
+If *row_id* is present and not ``DISMOD_AT_NULL_SIZE_T`` ,
+*table_name* must not be empty.
+
+unix_time
+*********
 The return value has prototype
-$codei%
-   std::time_t %unix_time%
-%$$
+
+   ``std::time_t`` *unix_time*
+
 It is the value written in the log table for
-$cref/unix_time/log_table/unix_time/$$.
+:ref:`log_table@unix_time` .
 
-$head Example$$
-Check the $code log$$ table in the database after any
-$cref command$$.
+Example
+*******
+Check the ``log`` table in the database after any
+:ref:`command-name` .
 
-$end
+{xrst_end log_message}
 -----------------------------------------------------------------------------
 */
 # include <cstdlib>

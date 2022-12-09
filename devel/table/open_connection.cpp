@@ -3,50 +3,52 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin open_connection$$
-$spell
-   sqlite
-   const
-   std
+{xrst_begin open_connection}
+{xrst_spell
    bool
-$$
+}
 
-$section Open An Sqlite3 Database Connection$$
+Open An Sqlite3 Database Connection
+###################################
 
-$head Syntax$$
-$icode%db% = open_connection(%file_name%, %new_file%)
-%$$
+Syntax
+******
 
-$head file_name$$
+   *db* = ``open_connection`` ( *file_name* , *new_file* )
+
+file_name
+*********
 This argument has prototype
-$codei%
-   const std::string& %file_name%
-%$$
+
+   ``const std::string&`` *file_name*
+
 It is the name of the file where the data base is
 (or will be) stored.
 
-$head new_file$$
+new_file
+********
 This argument has prototype
-$codei%
-   bool %new_file%
-%$$
+
+   ``bool`` *new_file*
+
 If it is true, and a database with the same name already exists,
 the existing database is deleted before creating the connection.
 
-$head db$$
+db
+**
 The return value has prototype
-$codei%
-   sqlite3* %db%
-%$$
+
+   ``sqlite3`` * *db*
+
 and is the database connection.
 
-$head close$$
-When you are done with $icode db$$, you must call
-$codei%
-   sqlite3_close(%db%)
-%$$
+close
+*****
+When you are done with *db* , you must call
 
-$end
+   ``sqlite3_close`` ( *db* )
+
+{xrst_end open_connection}
 -----------------------------------------------------------------------------
 */
 # include <cstdlib>

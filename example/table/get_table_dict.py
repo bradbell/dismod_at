@@ -2,15 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin get_table_dict.py$$ $newlinech #$$
-# $spell
-#  covariate
-# $$
+# {xrst_begin get_table_dict.py}
+# {xrst_comment_ch #}
 #
-# $section get_table_dict: Example and Test$$
+# get_table_dict: Example and Test
+# ################################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end get_table_dict.py}
 # BEGIN PYTHON
 def get_table_dict() :
    import dismod_at

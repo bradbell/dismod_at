@@ -3,19 +3,17 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin avgint_subset_xam.cpp$$
-$spell
-   avgint
-   avg
-   xam
-$$
+{xrst_begin avgint_subset_xam.cpp}
 
-$section C++ avgint_subset: Example and Test$$
+C++ avgint_subset: Example and Test
+###################################
 
-$srcthisfile%
-   0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end avgint_subset_xam.cpp}
 */
 // BEGIN C++
 # include <limits>

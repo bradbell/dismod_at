@@ -7,189 +7,185 @@
 
 /*
 -------------------------------------------------------------------------------
-$begin pack_prior$$
-$spell
-   var
-   vec
-   struct
-   const
-   dage
-   dtime
+{xrst_begin pack_prior}
+{xrst_spell
    bool
-   bnd_mulcov
-   covariate
-$$
+}
 
-$section Priors in Variable ID Order$$
+Priors in Variable ID Order
+###########################
 
-$head Syntax$$
-$codei%pack_prior %var2prior%(
-   %bound_random%, %prior_table%, %pack_object%, %s_info_vec%
-)
-%$$
-$icode%size%           = %var2prior%.size()
-%$$
-$icode%const_value%    = %var2prior%.const_value(%var_id%)
-%$$
-$icode%value_prior_id% = %var2prior%.value_prior_id(%var_id%)
-%$$
-$icode%dage_prior_id%  = %var2prior%.dage_prior_id(%var_id%)
-%$$
-$icode%dtime_prior_id% = %var2prior%.dtime_prior_id(%var_id%)
-%$$
-$icode%dage_var_id%    = %var2prior%.dage_next(%var_id%)
-%$$
-$icode%dtime_var_id%   = %var2prior%.dtime_next(%var_id%)
-%$$
-$icode%fixed_effect%   = %var2prior%.fixed_effect(%var_id%)
-%$$
-$icode%max_abs%        = %var2prior%.max_abs(%var_id%)
-%$$
-$icode%var2prior%.set_bnd_mulcov(%bnd_mulcov_table%)
-%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN CTOR_PROTOTYPE%// END CTOR_PROTOTYPE%1%
-%$$
+| ``pack_prior`` *var2prior* (
+| |tab| *bound_random* , *prior_table* , *pack_object* , *s_info_vec*
+| )
+| *size* = *var2prior* . ``size`` ()
+| *const_value* = *var2prior* . ``const_value`` ( *var_id* )
+| *value_prior_id* = *var2prior* . ``value_prior_id`` ( *var_id* )
+| *dage_prior_id* = *var2prior* . ``dage_prior_id`` ( *var_id* )
+| *dtime_prior_id* = *var2prior* . ``dtime_prior_id`` ( *var_id* )
+| *dage_var_id* = *var2prior* . ``dage_next`` ( *var_id* )
+| *dtime_var_id* = *var2prior* . ``dtime_next`` ( *var_id* )
+| *fixed_effect* = *var2prior* . ``fixed_effect`` ( *var_id* )
+| *max_abs* = *var2prior* . ``max_abs`` ( *var_id* )
+| *var2prior* . ``set_bnd_mulcov`` ( *bnd_mulcov_table* )
 
-$head Notation$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN CTOR_PROTOTYPE
+   // END CTOR_PROTOTYPE
+}
 
-$subhead var_id$$
+Notation
+********
+
+var_id
+======
 The variable names that end in
-$cref/var_id/var_table/var_id/$$
-have type $code size_t$$ and are an index in the variable table.
+:ref:`var_table@var_id`
+have type ``size_t`` and are an index in the variable table.
 
-$subhead prior_id$$
+prior_id
+========
 The variable names that end in
-$cref/prior_id/prior_table/prior_id/$$
-have type $code size_t$$ and are an index in the prior table.
+:ref:`prior_table@prior_id`
+have type ``size_t`` and are an index in the prior table.
 
-$head bound_random$$
+bound_random
+************
 This is a bound for the absolute value of the random effects
 (which can be infinity).
 This bound does not apply for random effects that have equal upper and
 lower limits.
 
-$head prior_table$$
+prior_table
+***********
 is the in memory representation of the
-$cref/prior_table/get_prior_table/prior_table/$$.
+:ref:`get_prior_table@prior_table` .
 
-$head pack_object$$
-is the $cref pack_info$$ information corresponding to
-the $cref model_variables$$.
+pack_object
+***********
+is the :ref:`pack_info-name` information corresponding to
+the :ref:`model_variables-name` .
 
-$head s_info_vec$$
-For each $cref/smooth_id/smooth_table/smooth_id/$$,
-$codei%
-   %s_info_vec%[ %smooth_id% ]
-%$$
-is the corresponding $cref smooth_info$$ information.
+s_info_vec
+**********
+For each :ref:`smooth_table@smooth_id` ,
 
-$head var2prior$$
+   *s_info_vec* [ *smooth_id*  ]
+
+is the corresponding :ref:`smooth_info-name` information.
+
+var2prior
+*********
 an object that reports that prior information as a function of
-$cref/var_id/var_table/var_id/$$.
+:ref:`var_table@var_id` .
 
-$head size$$
+size
+****
 This is the number of variables in the model; i.e.,
-it is equal to $icode%pack_object%.size()%$$.
+it is equal to *pack_object* . ``size`` () .
 
-$head const_value$$
-For each $icode var_id$$,
-if $icode const_value$$ is not nan (not null)
-$icode const_value$$ is the value at this variable is constrained to.
+const_value
+***********
+For each *var_id* ,
+if *const_value* is not nan (not null)
+*const_value* is the value at this variable is constrained to.
 
-$head smooth_id$$
-This return value has type $code size_t$$.
-If $icode smooth_id$$ is null, this variables is a
-$cref/smoothing standard deviation multiplier
-   /model_variables
-   /Fixed Effects, theta
-   /Smoothing Standard Deviation Multipliers, lambda
-/$$.
+smooth_id
+*********
+This return value has type ``size_t`` .
+If *smooth_id* is null, this variables is a
+:ref:`smoothing standard deviation multiplier<model_variables@Fixed Effects, theta@Smoothing Standard Deviation Multipliers, lambda>` .
 In this case there is no standard deviation multiplier for the
 value prior for this variables and the difference priors are null.
 Otherwise, this is the smoothing used for this variable and the
 offset for the corresponding standard deviation multipliers can be computed
-using $cref pack_info_mulstd$$.
+using :ref:`pack_info_mulstd-name` .
 
-$head value_prior_id$$
-If $icode const_value$$ is null,
-$icode value_prior_id$$ must be null and identifies the prior for
+value_prior_id
+**************
+If *const_value* is null,
+*value_prior_id* must be null and identifies the prior for
 the value of this variable.
 The null prior for this case corresponds to a uniform
 between minus and plus infinity.
 
-$head dage_prior_id$$
-If $icode dage_var_id$$ is not null,
-$icode dage_prior_id$$ identifies the prior for
+dage_prior_id
+*************
+If *dage_var_id* is not null,
+*dage_prior_id* identifies the prior for
 the difference between the variable with index
-$icode var_id$$ and the variable with index $icode dage_var_id$$.
+*var_id* and the variable with index *dage_var_id* .
 The null prior for this case corresponds to a uniform
 between minus and plus infinity.
 
-$head dtime_prior_id$$
-If $icode dtime_var_id$$ is not null,
-$icode dtime_prior_id$$ identifies the prior for
+dtime_prior_id
+**************
+If *dtime_var_id* is not null,
+*dtime_prior_id* identifies the prior for
 the difference between the variable with index
-$icode var_id$$ and the variable with index $icode dtime_var_id$$.
+*var_id* and the variable with index *dtime_var_id* .
 The null prior for this case corresponds to a uniform
 between minus and plus infinity.
 
-$head dage_var_id$$
-If $icode dage_prior_id$$ is not null, this is the
+dage_var_id
+***********
+If *dage_prior_id* is not null, this is the
 next variable in the age difference.
-If $icode var_id$$ corresponds to the maximum age in the grid,
-$icode dage_var_id$$ is null.
+If *var_id* corresponds to the maximum age in the grid,
+*dage_var_id* is null.
 
-$head dtime_var_id$$
-If $icode dtime_prior_id$$ is not null, this is the
+dtime_var_id
+************
+If *dtime_prior_id* is not null, this is the
 next variable in the time difference.
-If $icode var_id$$ corresponds to the maximum time in the grid,
-$icode dtime_var_id$$ is null.
+If *var_id* corresponds to the maximum time in the grid,
+*dtime_var_id* is null.
 
-$head fixed_effect$$
-This $code bool$$ is true (false) if the variable with index
-$icode var_id$$ is a
-$cref/fixed effect/model_variables/Fixed Effects, theta/$$
+fixed_effect
+************
+This ``bool`` is true (false) if the variable with index
+*var_id* is a
+:ref:`fixed effect<model_variables@Fixed Effects, theta>`
 (random effect).
 
-$head set_bnd_mulcov$$
+set_bnd_mulcov
+**************
 This member function sets the maximum upper and minimum lower
-limit for the covariate multipliers; i.e., $icode max_abs$$
+limit for the covariate multipliers; i.e., *max_abs*
 for covariate multipliers.
 If a covariate multiplier is a random effects,
-this overrides the $icode bound_random$$ setting.
+this overrides the *bound_random* setting.
 
-$head bnd_mulcov_table$$
-See$cref/bnd_mulcov_table/get_bnd_mulcov_table/bnd_mulcov_table/$$.
+bnd_mulcov_table
+****************
+See:ref:`get_bnd_mulcov_table@bnd_mulcov_table` .
 
-$head max_abs$$
+max_abs
+*******
 Is the maximum absolute value for this variable.
-$list number$$
-This constraint is in addition to the upper and lower limits
-in the prior for the variables.
-$lnext
-The initial $icode var2prior$$ corresponds to this maximum being
-$icode bound_random$$ for random effects and infinity for fixed effects.
-$lnext
-If there was a previous call to $code set_bnd_mulcov$$,
-it specified $icode max_abs$$ for fixed effect covariate multipliers; i.e.,
-$cref/
-   group covariate multipliers/
-   model_variables/
-   Fixed Effects, theta/
-   Group Covariate Multipliers
-/$$.
-$lend
 
-$children%
+#. This constraint is in addition to the upper and lower limits
+   in the prior for the variables.
+#. The initial *var2prior* corresponds to this maximum being
+   *bound_random* for random effects and infinity for fixed effects.
+#. If there was a previous call to ``set_bnd_mulcov`` ,
+   it specified *max_abs* for fixed effect covariate multipliers; i.e.,
+   :ref:`model_variables@Fixed Effects, theta@Group Covariate Multipliers` .
+
+{xrst_toc_hidden
    example/devel/utility/pack_prior_xam.cpp
-%$$
-$head Example$$
-The file $cref pack_prior_xam.cpp$$
+}
+Example
+*******
+The file :ref:`pack_prior_xam.cpp-name`
 contains an example and test that uses this routine.
 
-$end
+{xrst_end pack_prior}
 -------------------------------------------------------------------------------
 */
 namespace dismod_at {

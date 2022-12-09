@@ -3,16 +3,17 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin weight_info_xam.cpp$$
-$spell
-   xam
-$$
+{xrst_begin weight_info_xam.cpp}
 
-$section C++ weight_info: Example and Test$$
+C++ weight_info: Example and Test
+#################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end weight_info_xam.cpp}
 */
 // BEGIN C++
 # include <dismod_at/get_age_table.hpp>

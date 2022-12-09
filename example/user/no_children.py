@@ -2,39 +2,38 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_no_children.py$$ $newlinech #$$
-# $spell
-#  Integrands
-#  Sincidence
-#  mtexcess
-#  mtother
-#  pini
-# $$
+# {xrst_begin user_no_children.py}
+# {xrst_comment_ch #}
 #
-# $section Case with no Children; i.e., no Random Effects$$
+# Case with no Children; i.e., no Random Effects
+# ##############################################
 #
-# $head Integrands$$
+# Integrands
+# **********
 # There is an integrand that directly measures each of the model rates; i.e.,
-# $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$,
-# $cref/remission/avg_integrand/Integrand, I_i(a,t)/remission/$$,
-# $cref/mtexcess/avg_integrand/Integrand, I_i(a,t)/mtexcess/$$, and
-# $cref/mtother/avg_integrand/Integrand, I_i(a,t)/mtother/$$.
+# :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` ,
+# :ref:`avg_integrand@Integrand, I_i(a,t)@remission` ,
+# :ref:`avg_integrand@Integrand, I_i(a,t)@mtexcess` , and
+# :ref:`avg_integrand@Integrand, I_i(a,t)@mtother` .
 # In addition the integrand prevalence is included, but is data values
 # are for age zero which corresponds to the
-# $cref/pini/rate_table/rate_name/pini/$$ rate.
+# :ref:`rate_table@rate_name@pini` rate.
 #
-# $head Nodes$$
+# Nodes
+# *****
 # There are four nodes in this example.
 # The world node has one child, north_america.
 # The north_america node has two children, united_states and canada.
-# The $cref/parent_node/option_table/Parent Node/$$ is canada which
+# The :ref:`parent_node<option_table@Parent Node>` is canada which
 # does not have any children.
 #
-# $head Data$$
+# Data
+# ****
 # All of the data corresponds to canada.
 # There is one data point for each integrand and it is the true value
 # for the corresponding rate; i.e., there is no noise in this data.
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 integrand2rate = {
    'prevalence':  'pini'   ,
    'Sincidence':  'iota'   ,
@@ -50,13 +49,16 @@ rate_true = {
    'omega' : 5e-2 ,
 }
 # The data is modeled as if it had noise.
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $subhead Outlier$$
+# Outlier
+# =======
 # There is also one outlier at the end of the data table with
-# $cref/hold_out/data_table/hold_out/$$ equal to one.
+# :ref:`data_table@hold_out` equal to one.
 #
-# $head Smoothing$$
+# Smoothing
+# *********
 # There is a smoothing the for each of the possible rates for the
 # parent node canada.
 # There is no child node smoothing.
@@ -66,10 +68,14 @@ rate_true = {
 # The time difference prior for this smoothing is
 # gaussian with mean zero and standard deviation 1e-2.
 #
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_end user_no_children.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import sys

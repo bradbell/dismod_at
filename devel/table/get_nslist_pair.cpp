@@ -3,65 +3,67 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_nslist_pair$$
-$spell
-   nslist
-   sqlite
-   struct
-   cpp
-   std
-   smoothings
-$$
+{xrst_begin get_nslist_pair}
 
-$section C++: Get the List of Smoothing Table$$
+C++: Get the List of Smoothing Table
+####################################
 
-$head Syntax$$
-$icode%nslist_pair% = get_nslist_pair_table(%db%)%$$
+Syntax
+******
+*nslist_pair* = ``get_nslist_pair_table`` ( *db* )
 
-$head Purpose$$
-To read the $cref nslist_pair_table$$ and return it as a C++ data structure.
+Purpose
+*******
+To read the :ref:`nslist_pair_table-name` and return it as a C++ data structure.
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head nslist_pair$$
-The return value $icode nslist_pair$$ has prototype
-$codei%
-   CppAD::vector<nslist_pair_struct> %nslist_pair%
-%$$
-For each $cref/nslist_pair_id/nslist_pair_table/nslist_pair_id/$$,
-$codei%
-   %nslist_pair_table%[%nslist_pair_id%]
-%$$
+nslist_pair
+***********
+The return value *nslist_pair* has prototype
+
+   ``CppAD::vector<nslist_pair_struct>`` *nslist_pair*
+
+For each :ref:`nslist_pair_table@nslist_pair_id` ,
+
+   *nslist_pair_table* [ *nslist_pair_id* ]
+
 is the information for one entry in one smoothing list.
 
-$head nslist_pair_struct$$
+nslist_pair_struct
+******************
 This is a structure with the following fields
-$table
-$code int$$ $cnext $code density_id$$  $cnext
-   $cref/nslist_id/nslist_pair_table/nslist_id/$$
-   identifies this list of smoothings.
-$rnext
-$code int$$ $cnext $code node_id$$ $cnext
-   $cref/node_id/node_table/node_id/$$ is the node that this smoothing
-   (in this list) applies to.
-$rnext
-$code int$$ $cnext $code smooth_id$$ $cnext
-   $cref/smooth_id/smooth_table/smooth_id/$$ is the smoothing
-   that is applied to this node (for this list).
-$tend
 
-$children%example/devel/table/get_nslist_pair_xam.cpp
-%$$
-$head Example$$
-The file $cref get_nslist_pair_xam.cpp$$ contains an example that uses
+.. list-table::
+
+   * - ``int``
+     - ``density_id``
+     - :ref:`nslist_pair_table@nslist_id`
+       identifies this list of smoothings.
+   * - ``int``
+     - ``node_id``
+     - :ref:`node_table@node_id` is the node that this smoothing
+       (in this list) applies to.
+   * - ``int``
+     - ``smooth_id``
+     - :ref:`smooth_table@smooth_id` is the smoothing
+       that is applied to this node (for this list).
+
+{xrst_toc_hidden
+   example/devel/table/get_nslist_pair_xam.cpp
+}
+Example
+*******
+The file :ref:`get_nslist_pair_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_nslist_pair}
 -----------------------------------------------------------------------------
 */
 # include <cmath>

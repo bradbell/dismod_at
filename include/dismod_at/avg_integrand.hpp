@@ -5,17 +5,18 @@
 # ifndef DISMOD_AT_AVG_INTEGRAND_HPP
 # define DISMOD_AT_AVG_INTEGRAND_HPP
 /*
-$begin devel_avg_integrand$$
-$spell
-   Integrands
-$$
+{xrst_begin devel_avg_integrand}
 
-$section Computing Average Integrands$$
+Computing Average Integrands
+############################
 
-$childtable%devel/model/avg_integrand.cpp
-%$$
+Contents
+********
+{xrst_toc_table
+   devel/model/avg_integrand.cpp
+}
 
-$end
+{xrst_end devel_avg_integrand}
 */
 
 # include <cppad/utility/vector.hpp>

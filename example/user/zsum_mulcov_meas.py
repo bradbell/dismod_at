@@ -2,66 +2,60 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_zsum_mulcov_meas.py$$ $newlinech #$$
-# $spell
-#  init
-#  mulcov
-#  covariate
-#  cv
-# $$
+# {xrst_begin user_zsum_mulcov_meas.py}
+# {xrst_comment_ch #}
 #
-# $section Constrain Sum of Subgroup Measurement Covariate Multipliers to Zero$$
+# Constrain Sum of Subgroup Measurement Covariate Multipliers to Zero
+# ###################################################################
 #
-# $head See Also$$
-# $cref user_zsum_child_rate.py$$,
-# $cref user_zsum_mulcov_rate.py$$
+# See Also
+# ********
+# :ref:`user_zsum_child_rate.py-name` ,
+# :ref:`user_zsum_mulcov_rate.py-name`
 #
-# $head Purpose$$
+# Purpose
+# *******
 # This example demonstrates using
-# The $cref/
-#  zero_sum_mulcov_group/
-#  option_table/
-#  Zero Sum Constraints/
-#  zero_sum_mulcov_group
-# /$$
+# The :ref:`option_table@Zero Sum Constraints@zero_sum_mulcov_group`
 # to improve the speed and accuracy of estimation of the fixed effects.
 #
-# $head Problem Parameters$$
-# $srcthisfile%
-#  0%# begin problem parameters%# end problem parameters%1
-# %$$
-# Note that the measurement coefficient of variation $icode measurement_cv$$
+# Problem Parameters
+# ******************
+# {xrst_literal
+#     begin problem parameters
+#     end problem parameters
+# }
+# Note that the measurement coefficient of variation *measurement_cv*
 # is very small so that a small number of data points can be used.
 # You should be able to increase the coefficient of variation by a factor,
 # so long as you increase the number of data points by the factor squared.
 #
-# $head Data Simulation$$
-# The true rate for the parent region $code north_america$$,
+# Data Simulation
+# ***************
+# The true rate for the parent region ``north_america`` ,
 # used for simulating data, are
-# $icode iota_parent$$ and $icode rho_parent$$ problem parameters.
+# *iota_parent* and *rho_parent* problem parameters.
 # The
-# $cref/subgroup covariate multipliers
-#  /model_variables
-#  /Random Effects, u
-#  /Subgroup Covariate Multipliers
-# /$$
-# for $code canada$$ is $icode subgroup_mulcov$$
-# and for the $code united_states$$ is $codei%-%subgroup_mulcov%$$.
+# :ref:`model_variables@Random Effects, u@Subgroup Covariate Multipliers`
+# for ``canada`` is *subgroup_mulcov*
+# and for the ``united_states`` is ``-`` *subgroup_mulcov* .
 # These multipliers effect the rates (not the measurements).
 #
-# $head Nodes$$
+# Nodes
+# *****
 # There are just three nodes for this example,
-# The parent node, $code north_america$$, and the two child nodes
-# $code united_states$$ and $code canada$$.
+# The parent node, ``north_america`` , and the two child nodes
+# ``united_states`` and ``canada`` .
 # The child rate effects are constrained to be zero
 # to simplify the example.
 #
-# $head Model Variables$$
+# Model Variables
+# ***************
 # The non-zero fixed effects for this example are
-# $cref/iota/rate_table/rate_name/iota/$$ and $icode rho$$
-# for the parent node $code north_america$$.
+# :ref:`rate_table@rate_name@iota` and *rho*
+# for the parent node ``north_america`` .
 # The non-zero random effects are the subgroup measurement covariate multipliers
-# for the $code united_states$$ and $code canada$$.
+# for the ``united_states`` and ``canada`` .
 # The parent rates and subgroup covariate multipliers use a grid with
 # one point in age and two points in time. Thus there are six model variables
 # for each rate, two for the parent rates and four for the
@@ -70,9 +64,14 @@
 # in age and constant in time except between the two time grid points
 # where it is linear.
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_zsum_mulcov_meas.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------

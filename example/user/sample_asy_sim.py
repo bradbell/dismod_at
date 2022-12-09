@@ -2,91 +2,96 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_sample_asy_sim.py$$ $newlinech #$$
-# $spell
-#  init
-#  dismod
-#  var
-#  exp
-# $$
+# {xrst_begin user_sample_asy_sim.py}
+# {xrst_spell
+#     cc
+#     estimator
+# }
+# {xrst_comment_ch #}
 #
-# $section Sampling From The Asymptotic Distribution for a Simulated Data Fit$$
+# Sampling From The Asymptotic Distribution for a Simulated Data Fit
+# ##################################################################
 #
-# $head Purpose$$
+# Purpose
+# *******
 # This example demonstrates using the commands
-# $codei%
-#  dismod_at %database% set truth_var prior_mean
-#  dismod_at %database% simulate %number_sample%
-#  dismod_at %database% sample simulate %number_sample%
-#  dismod_at %database% sample asymptotic both %number_sample%
-# %$$
+#
+# | |tab| ``dismod_at`` *database* ``set truth_var prior_mean``
+# | |tab| ``dismod_at`` *database* ``simulate`` *number_sample*
+# | |tab| ``dismod_at`` *database* ``sample simulate`` *number_sample*
+# | |tab| ``dismod_at`` *database* ``sample asymptotic both`` *number_sample*
+#
 # To obtain the specified number of samples from the posterior distribution;
-# see $cref/simulation/posterior/Simulation/$$.
+# see :ref:`posterior@Simulation` .
 # This is very simple case because it has only one rate, no random effects,
 # and no data.
 #
-# $head Discussion$$
-# We use $latex \bar{\omega}$$ to denote the prior mean for omega.
+# Discussion
+# **********
+# We use :math:`\bar{\omega}` to denote the prior mean for omega.
 # The following describes the model and data for this example:
 #
-# $list number$$
-# The $cref age_table$$ has values
-# $code 0.0$$, $code 100.0$$.
-# The $cref time_table$$ has values
-# $code 1995.0$$, $code 2015.0$$.
-# $lnext
-# The only node is the world.
-# $lnext
-# The only $cref model_variables$$ in this example are
-# $cref/omega/rate_table/rate_name/omega/$$ for the world.
-# This rate is modeled as constant with respect to age and
-# linear between time 1995 and 2015.
-# $lnext
-# There are no measurements for this example.
-# $lnext
-# The prior for the world omega is a gaussian with mean $latex \bar{\omega}$$
-# and standard deviation $latex \bar{\omega}$$.
-# $lnext
-# The prior for the difference in omega between time 1995
-# and time 2015 is a Gaussian
-# with mean zero and standard deviation $latex \bar{\omega}$$.
-# $lend
+# #. The :ref:`age_table-name` has values
+#    ``0.0`` , ``100.0`` .
+#    The :ref:`time_table-name` has values
+#    ``1995.0`` , ``2015.0`` .
+# #. The only node is the world.
+# #. The only :ref:`model_variables-name` in this example are
+#    :ref:`rate_table@rate_name@omega` for the world.
+#    This rate is modeled as constant with respect to age and
+#    linear between time 1995 and 2015.
+# #. There are no measurements for this example.
+# #. The prior for the world omega is a gaussian with mean :math:`\bar{\omega}`
+#    and standard deviation :math:`\bar{\omega}`.
+# #. The prior for the difference in omega between time 1995
+#    and time 2015 is a Gaussian
+#    with mean zero and standard deviation :math:`\bar{\omega}`.
 #
-# $head Posterior Variance$$
-# We use $latex \omega_0$$ and $latex \omega_1$$ for the value
+# Posterior Variance
+# ******************
+# We use :math:`\omega_0` and :math:`\omega_1` for the value
 # of omega at times 1995 and 2015 respectively.
-# Dropping terms that are constant with respect to $latex \omega$$
-# the negative log likelihood $latex \ell ( \omega )$$ for this case is
+# Dropping terms that are constant with respect to :math:`\omega`
+# the negative log likelihood :math:`\ell ( \omega )` for this case is
 # given by
-# $latex \[
-# \ell ( \omega )
-# = \frac{1}{2} \bar{\omega}^{-2} \left[
-#     ( \omega_0 - \bar{\omega} )^2
-#     + ( \omega_1 - \omega_0 )^2
-#     + ( \omega_1 - \bar{\omega} )^2
-# \right]
-# \] $$
+#
+# .. math::
+#
+#  \ell ( \omega )
+#  = \frac{1}{2} \bar{\omega}^{-2} \left[
+#      ( \omega_0 - \bar{\omega} )^2
+#      + ( \omega_1 - \omega_0 )^2
+#      + ( \omega_1 - \bar{\omega} )^2
+#  \right]
+#
 # The Hessian of this function is given by
-# $latex \[
-# \ell^{(2)} ( \omega ) = \bar{\omega}^{-2}
-# \left( \begin{array}{cc}
-#  2 & -1 \\
-#  -1 & 2
-# \end{array} \right)
-# \] $$
+#
+# .. math::
+#
+#  \ell^{(2)} ( \omega ) = \bar{\omega}^{-2}
+#  \left( \begin{array}{cc}
+#   2 & -1 \\
+#   -1 & 2
+#  \end{array} \right)
+#
 # It follows that the variance of the maximum likelihood estimator is
-# $latex \[
-#  [ \ell^{(2)} ( \omega ) ]^{-1} = \bar{\omega}^2
-# \left( \begin{array}{cc}
-#  2/3 &  1/3 \\
-#  1/3 &  2/3
-# \end{array} \right)
-# \] $$
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
+# .. math::
 #
-# $end
+#   [ \ell^{(2)} ( \omega ) ]^{-1} = \bar{\omega}^2
+#  \left( \begin{array}{cc}
+#   2/3 &  1/3 \\
+#   1/3 &  2/3
+#  \end{array} \right)
+#
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_sample_asy_sim.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------

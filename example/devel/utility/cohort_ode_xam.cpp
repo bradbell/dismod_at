@@ -3,17 +3,17 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin cohort_ode_xam.cpp$$
-$spell
-   interp
-   xam
-$$
+{xrst_begin cohort_ode_xam.cpp}
 
-$section C++ cohort_ode: Example and Test$$
+C++ cohort_ode: Example and Test
+################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end cohort_ode_xam.cpp}
 */
 // BEGIN C++
 # include <limits>

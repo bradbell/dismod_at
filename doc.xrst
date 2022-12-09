@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin dismod_at}
+{xrst_spell
+   github
+}
+{xrst_comment User documentation for dismod_at}
+
+dismod_at-20221202: User Documentation and API
+##############################################
+
+Purpose
+*******
+Estimating disease rates as functions of age and time.
+
+Links
+*****
+`github <https://github.com/bradbell/dismod_at>`_
+
+Contents
+********
+{xrst_toc_table
+   xrst/math/abstract.xrst
+   xrst/install/install.xrst
+   example/get_started/get_started.xrst
+   example/user/user.xrst
+   xrst/table/database.xrst
+   xrst/model/model.xrst
+   devel/cmd/command.xrst
+   python/dismod_at/__init__.py
+   xrst/release_notes.xrst
+   xrst/wish_list.xrst
+}
+
+{xrst_end dismod_at}

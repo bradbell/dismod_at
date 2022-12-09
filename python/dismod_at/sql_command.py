@@ -3,30 +3,34 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin sql_command$$ $newlinech #$$
-# $spell
-#  sql
-#  str
-#  dismod
-# $$
+# {xrst_begin sql_command}
+# {xrst_spell
+#     sql
+# }
+# {xrst_comment_ch #}
 #
-# $section Execute an SQL command$$
+# Execute an SQL command
+# ######################
 #
-# $head Syntax$$
-# $icode%result% = dismod_at.sql_command(%connection%, %command%)
-# %$$
+# Syntax
+# ******
 #
-# $head connection$$
-# is a $cref/connection/create_connection/connection/$$ for an
+#     *result* = ``dismod_at.sql_command`` ( *connection* , *command* )
+#
+# connection
+# **********
+# is a :ref:`create_connection@connection` for an
 # sql_lite database.
 #
-# $head command$$
-# is a $code str$$ containing the command that is executed.
+# command
+# *******
+# is a ``str`` containing the command that is executed.
 #
-# $head result$$
+# result
+# ******
 # Is a list corresponding to the rows returned by the command.
 #
-# $end
+# {xrst_end sql_command}
 # ---------------------------------------------------------------------------
 def sql_command(connection, command) :
    cursor = connection.cursor()

@@ -2,15 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin get_row_list.py$$ $newlinech #$$
-# $spell
-#  covariate
-# $$
+# {xrst_begin get_row_list.py}
+# {xrst_comment_ch #}
 #
-# $section get_row_list: Example and Test$$
+# get_row_list: Example and Test
+# ##############################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end get_row_list.py}
 # BEGIN PYTHON
 def get_row_list() :
    import dismod_at

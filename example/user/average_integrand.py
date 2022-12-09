@@ -3,65 +3,75 @@
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 """
-$begin user_average_integrand.py$$
-$spell
-   init
-   covariate
-   std
-   sim
-   cv
-   dismod
+{xrst_begin user_average_integrand.py}
+{xrst_spell
    integrators
-$$
+}
 
-$section Using the Python average_integrand Utility$$
+Using the Python average_integrand Utility
+##########################################
 
-$head See Also$$
-$cref user_data_sim.py$$
+See Also
+********
+:ref:`user_data_sim.py-name`
 
-$head Random Effects$$
+Random Effects
+**************
 There are no random effects in this example.
 
-$head Priors$$
+Priors
+******
 The priors do not matter for this example except for the fact that
-the $cref truth_var_table$$ values for the $cref model_variables$$
+the :ref:`truth_var_table-name` values for the :ref:`model_variables-name`
 must satisfy the lower and upper limits in the corresponding priors.
 
-$head Simulation$$
-The simulation value for $icode iota$$ is bilinear function with
+Simulation
+**********
+The simulation value for *iota* is bilinear function with
 the following values:
-$table
-iota $cnext age   $cnext time $rnext
-0.01  $cnext   0  $cnext 2000 $rnext
-0.02  $cnext  100 $cnext 2000 $rnext
-0.03  $cnext    0 $cnext 2020 $rnext
-0.04  $cnext  100 $cnext 2020 $rnext
-$tend
+
+.. csv-table::
+   :widths: auto
+
+   iota,age,time
+   0.01,0,2000
+   0.02,100,2000
+   0.03,0,2020
+   0.04,100,2020
+
 All the other rates are zero for this simulation.
 
-$head Model$$
+Model
+*****
 The only non-zero rate in this model is the parent iota.
 The (age, time) grid for the iota model are
 (0,2000), (100,2000), (0, 2020), (100, 2020).
 This, if there is no noise in the measurements, the model should
 fit the data perfectly.
 
-$head Data$$
-There are $icode n_data$$ measurements of prevalence and
+Data
+****
+There are *n_data* measurements of prevalence and
 each at a randomly selected age between 0 and 100 and random time
 between 2000 and 2020.
 There is no measurement noise in the simulated data, but it is modeled
 as having measurement noise.
 
-$head ode_step_size$$
+ode_step_size
+*************
 This example uses a very small
-$cref/ode_step_size/option_table/Age Average Grid/ode_step_size/$$
-to test that both the dismod_at and $cref average_integrand$$ integrators are
+:ref:`option_table@Age Average Grid@ode_step_size`
+to test that both the dismod_at and :ref:`average_integrand-name` integrators are
 working properly.
 
-$head Source Code$$
-$srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-$end
+Source Code
+***********
+{xrst_literal
+   # BEGIN PYTHON
+   # END PYTHON
+}
+
+{xrst_end user_average_integrand.py}
 ---------------------------------------------------------------------------
 """
 # BEGIN PYTHON

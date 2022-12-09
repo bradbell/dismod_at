@@ -2,107 +2,125 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_one_function.py$$ $newlinech #$$
-# $spell
-#  covariates
-#  covariate
-#  mulcov
-#  cv
-#  std
-# $$
+# {xrst_begin user_one_function.py}
+# {xrst_spell
+#     ds
+# }
+# {xrst_comment_ch #}
 #
-# $section Fitting One Function of Two Variables$$
+# Fitting One Function of Two Variables
+# #####################################
 #
-# $head Purpose$$
+# Purpose
+# *******
 # This example shows how to fit one function of two variables given
 # direct measurements of the function.
 # For our example, we are give measurements of prevalence,
 # as a function of age and time, and fit a function to the measurements.
 #
-# $head rho$$
-# We use $icode rho$$
+# rho
+# ***
+# We use *rho*
 # as a surrogate for prevalence because our model for prevalence
-# does not use $icode rho$$ (we could have used any other rate
+# does not use *rho* (we could have used any other rate
 # and its corresponding integrand).
 #
-#
-# $head Random Effects$$
-# To keep this example simple, there is only one node $code world$$
-# in the $cref node_table$$, and the
-# $cref/subgroup_smooth_id/mulcov_table/subgroup_smooth_id/$$
+# Random Effects
+# **************
+# To keep this example simple, there is only one node ``world``
+# in the :ref:`node_table-name` , and the
+# :ref:`mulcov_table@subgroup_smooth_id`
 # is null in the mulcov_table.
 # Hence, there are not random effects in this example.
 #
-# $head Covariates$$
+# Covariates
+# **********
 # Income is the only covariate for this example and it has been normalized
 # to be between zero and one.  The income reference value corresponds to
 # no effect. The income multiplier is the true value used to simulate the
 # data.
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 income_reference   =   0.5
 income_multiplier  = - 0.2
 income_mulcov_type = "meas_value"
-# %$$
-# The $icode income_mulcov_type$$ can be either $code "meas_value"$$ or
-# $code "rate_value"$$.
+# {xrst_code}
+# {xrst_spell_on}
+# The *income_mulcov_type* can be either ``"meas_value"`` or
+# ``"rate_value"`` .
 # It should not make a difference in the results which
-# $cref/mulcov_type/mulcov_table/mulcov_type/$$ is used because
+# :ref:`mulcov_table@mulcov_type` is used because
 # there is only one rate (one function) being fit, and the
-# $cref/ode/integrand_table/integrand_name/ODE/$$ is not needed to compute
+# :ref:`integrand_table@integrand_name@ODE` is not needed to compute
 # the integrand.
-# You can test this by changing $icode income_mulcov_type$$ to
-# $code "rate_value"$$
-# and uses the same $cref/random_seed/user_one_function.py/random_seed/$$.
+# You can test this by changing *income_mulcov_type* to
+# ``"rate_value"``
+# and uses the same :ref:`user_one_function.py@random_seed` .
 #
-# $head Simulated Data$$
+# Simulated Data
+# **************
 #
-# $subhead Data Density$$
-# A direct measurement of $icode rho$$
+# Data Density
+# ============
+# A direct measurement of *rho*
 # (which we are using to represent prevalence) corresponds to the
-# $cref/remission integrand/avg_integrand/Integrand, I_i(a,t)/remission/$$.
-# We use a $cref/log_gaussian/density_table/density_name/log_gaussian/$$
+# :ref:`remission integrand<avg_integrand@Integrand, I_i(a,t)@remission>` .
+# We use a :ref:`density_table@density_name@log_gaussian`
 # model with the following parameters:
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 prevalence_sigma  = 0.1
 prevalence_eta    = 1e-6
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $subhead True Prevalence$$
+# True Prevalence
+# ===============
 # For simulating our prevalence data we consider the case where
-# all the rates are constant and $icode rho$$, $icode chi$$ are zero; i.e.,
+# all the rates are constant and *rho* , *chi* are zero; i.e.,
 # the differential equation is
-# $latex \[
-#  \begin{array}{rcl}
+#
+# .. math::
+#  :nowrap:
+#
+#  \begin{eqnarray}
 #  S'(a) = -( \iota + \omega ) S(a)
 #  \\
 #  C'(a) = + \iota S(a) - \omega C(a)
-#  \end{array}
-# \] $$
-# where $latex S(0) = 1$$ and $latex C(0) = 0$$.
+#  \end{eqnarray}
+#
+# where :math:`S(0) = 1` and :math:`C(0) = 0`.
 # It follows that
-# $latex \[
+#
+# .. math::
+#
 #  S(a) = \exp[ - ( \iota + \omega ) a ]
-# \] $$
-# $latex \[
+#
+# .. math::
+#
 #  C(a)
 #  = \int_0^a \exp[ \omega (s - a) ] \iota S(s) ds
-# \] $$
-# You can check the formula for $latex C(a)$$ as follows:
-# differentiating w.r.t. $latex a$$ inside the integral yields
-# $latex - \omega C(a)$$ and differentiating the upper limit
-# w.r.t. $latex a$$ yields $latex \iota S(a)$$.
-# It follows that
-# $latex \[
-#  C(a) = \iota \int_0^a \exp[ \omega (s - a) - ( \iota + \omega) s ] ds
-# \] $$
-# $latex \[
-#  C(a) = \iota \exp( - \omega a) \int_0^a \exp( - \iota s ) ds
-# \] $$
-# $latex \[
-#  C(a) = \exp( - \omega a) - \exp[ - ( \iota + \omega) a ]
-# \] $$
 #
-# $srccode%py%
+# You can check the formula for :math:`C(a)` as follows:
+# differentiating w.r.t. :math:`a` inside the integral yields
+# :math:`- \omega C(a)` and differentiating the upper limit
+# w.r.t. :math:`a` yields :math:`\iota S(a)`.
+# It follows that
+#
+# .. math::
+#
+#  C(a) = \iota \int_0^a \exp[ \omega (s - a) - ( \iota + \omega) s ] ds
+#
+# .. math::
+#
+#  C(a) = \iota \exp( - \omega a) \int_0^a \exp( - \iota s ) ds
+#
+# .. math::
+#
+#  C(a) = \exp( - \omega a) - \exp[ - ( \iota + \omega) a ]
+#
+# {xrst_spell_off}
+# {xrst_code py}
 def Prevalence(age) :
    # rho and chi are zero for this simulation of prevalence data
    iota      = 1e-4 # incidence used to simulate prevalence data
@@ -112,53 +130,65 @@ def Prevalence(age) :
    S         = exp_sum
    C         = exp_omega - exp_sum
    return C / (S + C)
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head Computing Delta$$
+# Computing Delta
+# ***************
 # Once we have simulated a measurement value,
-# we can solve for $latex \Delta$$ are follows; see
-# $cref/sigma
-#  /data_like
-#  /Notation
-#  /Transformed Standard Deviation, sigma_i
-# /$$:
-# $latex \[
-#  \sigma = \log( y + \eta + \Delta ) - \log(y + \eta )
-# \] $$
-# $latex \[
-#  \exp ( \sigma ) = \frac{ y + \eta + \Delta }{ y + \eta }
-# \] $$
-# $latex \[
-#  \exp ( \sigma ) ( y + \eta ) = y + \eta + \Delta
-# \] $$
-# $latex \[
-#  \Delta = [ \exp ( \sigma ) - 1 ] ( y + \eta )
-# \] $$
-# For this case there are no measurement noise covariates so
-# $latex \sigma$$ is the standard deviation for the simulated data.
-# Furthermore, the
-# $cref/minimum_meas_cv/option_table/minimum_meas_cv/$$ is zero,
-# so $latex \Delta$$ is the $icode meas_std$$.
+# we can solve for :math:`\Delta` are follows; see
+# :ref:`sigma<data_like@Notation@Transformed Standard Deviation, sigma_i>` :
 #
-# $head Prevalence Prior$$
+# .. math::
+#
+#  \sigma = \log( y + \eta + \Delta ) - \log(y + \eta )
+#
+# .. math::
+#
+#  \exp ( \sigma ) = \frac{ y + \eta + \Delta }{ y + \eta }
+#
+# .. math::
+#
+#  \exp ( \sigma ) ( y + \eta ) = y + \eta + \Delta
+#
+# .. math::
+#
+#  \Delta = [ \exp ( \sigma ) - 1 ] ( y + \eta )
+#
+# For this case there are no measurement noise covariates so
+# :math:`\sigma` is the standard deviation for the simulated data.
+# Furthermore, the
+# :ref:`option_table@minimum_meas_cv` is zero,
+# so :math:`\Delta` is the *meas_std* .
+#
+# Prevalence Prior
+# ****************
 # Prevalence must always be between zero and one so this limits are used
 # in the prior for prevalence.
 # Some functions might allow for negative values and the lower limit
 # for the rate would be negative in that case.
 #
-# $head random_seed$$
+# random_seed
+# ***********
 # We use the clock to choose a seed for the random number generator.
 # If an error occurs, the seed will be printed so that the error can be
 # reproduced. You can also use a fixed value for the random seed to see
 # how changing other parameters changes the results.
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 import time
 random_seed = int( time.time() )
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_one_function.py}
 #
 # $end
 # ------------------------------------------------------------------------

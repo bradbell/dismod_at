@@ -2,12 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin density_table.py$$ $newlinech #$$
+# {xrst_begin density_table.py}
+# {xrst_comment_ch #}
 #
-# $section density_table: Example and Test$$
+# density_table: Example and Test
+# ###############################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end density_table.py}
 # BEGIN PYTHON
 def density_table() :
    import dismod_at

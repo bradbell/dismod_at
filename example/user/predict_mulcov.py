@@ -2,81 +2,90 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_predict_mulcov.py$$ $newlinech #$$
-# $spell
-#  init
-#  var
-#  Sincidence
-#  Avgint
-#  Covariate
-#  Mulcov
-# $$
+# {xrst_begin user_predict_mulcov.py}
+# {xrst_comment_ch #}
 #
-# $section Predict Covariate Multiplier Values$$
+# Predict Covariate Multiplier Values
+# ###################################
 #
-# $head Purpose$$
+# Purpose
+# *******
 # This examples demonstrates covariate multiplier predictions.
 #
-# $head Problem Parameters$$
+# Problem Parameters
+# ******************
 # The following values are used to simulate the data and set the priors
 # for fitting the data:
-# $srcthisfile%
-#  0%# begin problem parameters%# end problem parameters%1
-# %$$
+# {xrst_literal
+#     begin problem parameters
+#     end problem parameters
+# }
 #
-# $head Age and Time Values$$
-# The reference value for $icode iota$$ is constant
+# Age and Time Values
+# *******************
+# The reference value for *iota* is constant
 # in age and time, but the value of the covariate multiplier that
 # affects iota changes with age and time.
 #
-# $head Rate Table$$
-# The $cref rate_table$$ specifies that the only
-# $cref/rate/var_table/var_type/rate/$$ variable is
-# $icode iota$$ for north_america.
+# Rate Table
+# **********
+# The :ref:`rate_table-name` specifies that the only
+# :ref:`var_table@var_type@rate` variable is
+# *iota* for north_america.
 # In addition, it specifies the smoothing for this rate
 # has one grid point.
 #
-# $head Mulcov Table$$
-# The $cref mulcov_table$$ specifies that
-# the covariate $icode alpha$$ is a bilinear function of age and time.
-# In fact, it is equal to the function $code alpha_true$$ defined
+# Mulcov Table
+# ************
+# The :ref:`mulcov_table-name` specifies that
+# the covariate *alpha* is a bilinear function of age and time.
+# In fact, it is equal to the function ``alpha_true`` defined
 # as one of the problem parameters.
 #
-# $head Variables$$
+# Variables
+# *********
 # There are five model variables in this example:
-# $table
-# $icode iota_reference$$
-#  $cnext There is one variable corresponding to the reference value for
-#  $cref/iota(a,t)/math_ode/Incidence, iota(a, t)/$$ in north_america.
-# $rnext
-# $icode alpha$$
-#  $cnext There are four variables corresponding to the
-#  $cref/rate_value/mulcov_table/mulcov_type/rate_value/$$
-#  covariate multiplier that affect $icode iota$$.
-# $tend
 #
-# $head Integrand Table$$
-# The $cref integrand_table$$ for this example includes
-# $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$ and
-# $cref/mulcov/avg_integrand/Integrand, I_i(a,t)/mulcov/$$.
-# The $code mulcov_0$$ integrand corresponds the value of $icode alpha$$.
+# .. list-table::
 #
-# $head Data Table$$
-# There are four measurements of $icode Sincidence$$
-# in the $cref data_table$$, one for (age, time) pair corresponding
-# to an $icode alpha$$ model variable.
+#     * - *iota_reference*
+#       - There is one variable corresponding to the reference value for
+#         :ref:`iota(a,t)<math_ode@Incidence, iota(a, t)>` in north_america.
+#     * - *alpha*
+#       - There are four variables corresponding to the
+#         :ref:`mulcov_table@mulcov_type@rate_value`
+#         covariate multiplier that affect *iota* .
+#
+# Integrand Table
+# ***************
+# The :ref:`integrand_table-name` for this example includes
+# :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` and
+# :ref:`avg_integrand@Integrand, I_i(a,t)@mulcov` .
+# The ``mulcov_0`` integrand corresponds the value of *alpha* .
+#
+# Data Table
+# **********
+# There are four measurements of *Sincidence*
+# in the :ref:`data_table-name` , one for (age, time) pair corresponding
+# to an *alpha* model variable.
 # No noise is added to the measurements, and the prior on
-# $icode iota$$ constrains it to the $icode iota_reference$$.
+# *iota* constrains it to the *iota_reference* .
 #
-# $head Avgint Table$$
-# There are four predictions of $icode alpha$$ requested by the
-# $cref avgint_table$$, one for each $icode alpha$$ model variable.
+# Avgint Table
+# ************
+# There are four predictions of *alpha* requested by the
+# :ref:`avgint_table-name` , one for each *alpha* model variable.
 # The predictions are compared with the truth to see that the
 # fit is prefect (there is no noise in the data).
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_predict_mulcov.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # begin problem parameters

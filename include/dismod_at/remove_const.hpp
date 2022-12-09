@@ -5,97 +5,96 @@
 # ifndef DISMOD_AT_REMOVE_CONST_HPP
 # define DISMOD_AT_REMOVE_CONST_HPP
 /*
-$begin remove_const$$
-$spell
-   obj
-   const
-   var
-$$
+{xrst_begin remove_const}
 
-$section Remove and Restore Components of a Vector that are Constant$$
+Remove and Restore Components of a Vector that are Constant
+###########################################################
 
-$head Syntax$$
-$codei%remove_const %remove_obj%(%lower_bound%, %upper_bound%)
-%$$
-$icode%n_both%     = %remove_obj%.both()
-%$$
-$icode%n_const%    = %remove_obj%.n_const()
-%$$
-$icode%n_var%      = %remove_obj%.n_var()
-%$$
-$icode%lower%      = %remove_obj%.lower()
-%$$
-$icode%upper%      = %remove_obj%.upper()
-%$$
-$icode%var%        = %remove_obj%.remove(%both%)
-%$$
-$icode%both%       = %remove_obj%.restore(%var%)
-%$$
-$icode%var_index%  = %remove_obj%.both2var_index(%var%)
-%$$
-$icode%both_index% = %remove_obj%.var2both_index(%var%)
-%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+| ``remove_const`` *remove_obj* ( *lower_bound* , *upper_bound* )
+| *n_both* = *remove_obj* . ``both`` ()
+| *n_const* = *remove_obj* . ``n_const`` ()
+| *n_var* = *remove_obj* . ``n_var`` ()
+| *lower* = *remove_obj* . ``lower`` ()
+| *upper* = *remove_obj* . ``upper`` ()
+| *var* = *remove_obj* . ``remove`` ( *both* )
+| *both* = *remove_obj* . ``restore`` ( *var* )
+| *var_index* = *remove_obj* . ``both2var_index`` ( *var* )
+| *both_index* = *remove_obj* . ``var2both_index`` ( *var* )
 
-$head lower_bound$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+lower_bound
+***********
 This is the lower bounds for the components of a the vector.
 
-$head upper_bound$$
+upper_bound
+***********
 This is the upper bounds for the components of a the vector
-(it must have the same size as $icode lower_bound$$).
+(it must have the same size as *lower_bound* ).
 
-$head n_both$$
+n_both
+******
 is the size of in the bound vectors
 
-$head n_const$$
-is the number of components of $icode lower_bound$$
-that are equal to the corresponding component of $icode upper_bound$$
+n_const
+*******
+is the number of components of *lower_bound*
+that are equal to the corresponding component of *upper_bound*
 
-$head n_var$$
-is the number of components of $icode lower_bound$$
-that are not equal to the corresponding component of $icode upper_bound$$
+n_var
+*****
+is the number of components of *lower_bound*
+that are not equal to the corresponding component of *upper_bound*
 
-$head lower$$
-is a $code const$$ reference to a copy of $icode lower_bound$$
+lower
+*****
+is a ``const`` reference to a copy of *lower_bound*
 
-$head upper$$
-is a $code const$$ reference to a copy of $icode upper_bound$$
+upper
+*****
+is a ``const`` reference to a copy of *upper_bound*
 
-$head both$$
-is a vector with size $icode n_both$$.
+both
+****
+is a vector with size *n_both* .
 
-$head var$$
-is a vector with size $icode n_var$$
-that only contains the values in $icode both$$ for which
+var
+***
+is a vector with size *n_var*
+that only contains the values in *both* for which
 the lower and upper bound are not equal.
-The order of the elements in $icode var$$ is the same as their
-order in $icode both$$.
+The order of the elements in *var* is the same as their
+order in *both* .
 
-$head both_index$$
-This has size $icode n_var$$ and is a mapping from the index in $icode var$$
-to the corresponding index in $icode both$$.
-It is monotone increasing; i.e., for $icode%i_var% < %n_var% - 1%$$,
-$codei%
-   %both_index%[%i_var%] < %both_index%[%i_var% + 1]
-%$$
+both_index
+**********
+This has size *n_var* and is a mapping from the index in *var*
+to the corresponding index in *both* .
+It is monotone increasing; i.e., for *i_var* < *n_var* ``- 1`` ,
 
-$head var_index$$
-This has size $icode n_both$$. If
-$codei%
-   %lower_bound%[%i_both%] == %upper_bound%[%i_both%]
-%$$
-$codei%%var_index%[%i_both%]%$$ is equal to $icode n_both$$. Otherwise
-it is a mapping from the index in $icode both$$
-to the corresponding index in $icode var$$; i.e.,
-$codei%
-   %both_index%[ %var_index%[ %i_both% ] ] == %i_both%
-%$$
+   *both_index* [ *i_var* ] < *both_index* [ *i_var*  + 1]
 
-$end
+var_index
+*********
+This has size *n_both* . If
+
+   *lower_bound* [ *i_both* ] == *upper_bound* [ *i_both* ]
+
+*var_index* [ *i_both* ] is equal to *n_both* . Otherwise
+it is a mapping from the index in *both*
+to the corresponding index in *var* ; i.e.,
+
+   *both_index* [ *var_index* [ *i_both* ] ] == *i_both*
+
+{xrst_end remove_const}
 */
 # include <cppad/utility/vector.hpp>
 namespace dismod_at {

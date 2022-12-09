@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin nslist_table}
+
+The Node Smoothing List Table
+#############################
+
+Discussion
+**********
+This table uses
+:ref:`nslist_pair_table@nslist_id` to attach
+a name to each list in the ``nslist_pair`` table.
+
+nslist_id
+*********
+This column has type ``integer`` and is the primary key for
+the this table.
+Its initial value is zero, and it increments by one for each row.
+
+nslist_name
+***********
+This column has type ``text`` and has a different value for every row;
+i.e., the names are unique and can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
+{xrst_toc_hidden
+   example/table/nslist_table.py
+}
+Example
+*******
+The file :ref:`nslist_table.py-name`
+contains an example ``nslist`` table.
+
+{xrst_end nslist_table}

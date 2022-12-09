@@ -2,12 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin integrand_table.py$$ $newlinech #$$
+# {xrst_begin integrand_table.py}
+# {xrst_comment_ch #}
 #
-# $section integrand_table: Example and Test$$
+# integrand_table: Example and Test
+# #################################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end integrand_table.py}
 # BEGIN PYTHON
 def integrand_table() :
    import dismod_at

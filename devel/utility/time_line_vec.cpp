@@ -6,202 +6,215 @@
 # include <dismod_at/a1_double.hpp>
 
 /*
-$begin time_line_vec$$
-$spell
-   vec
-   struct
-   diff
-$$
+{xrst_begin time_line_vec}
 
-$section Vector of Time Lines For Averaging a Function of Age and Time$$
+Vector of Time Lines For Averaging a Function of Age and Time
+#############################################################
 
-$head Syntax$$
-$icode%near% = time_line_vec<%Float%>::near_equal(double %x%, double %y%)
-%$$
-$codei%time_line_vec %vec%(%age_grid%)
-%$$
-$icode%vec%.specialize(
-   %age_lower%, %age_upper%, %time_lower%, %time_upper%
-)
-%$$
-$icode%extend_grid% = %vec%.extend_grid()
-%$$
-$icode%sub_lower% = %vec%.sub_lower()
-%$$
-$icode%sub_upper% = %vec%.sub_upper()
-%$$
-$icode%vec%.add_point(%age_index%, %point%)
-%$$
-$icode%time_line% = %vec%.time_line(%age_index%)
-%$$
-$icode%time_diff% = %vec%.max_time_diff(%age_index%, %time_index%)
-%$$
-$icode%avg% = %vec%.age_time_avg()
-%$$
+Syntax
+******
 
-$head Float$$
-The type $icode Float$$ is $code double$$ or $cref a1_double$$.
+| *near* = ``time_line_vec<`` *Float* >:: ``near_equal`` ( ``double`` *x* , ``double`` *y* )
+| ``time_line_vec`` *vec* ( *age_grid* )
+| *vec* . ``specialize`` (
+| |tab| *age_lower* , *age_upper* , *time_lower* , *time_upper*
+| )
+| *extend_grid* = *vec* . ``extend_grid`` ()
+| *sub_lower* = *vec* . ``sub_lower`` ()
+| *sub_upper* = *vec* . ``sub_upper`` ()
+| *vec* . ``add_point`` ( *age_index* , *point* )
+| *time_line* = *vec* . ``time_line`` ( *age_index* )
+| *time_diff* = *vec* . ``max_time_diff`` ( *age_index* , *time_index* )
+| *avg* = *vec* . ``age_time_avg`` ()
 
-$head time_point$$
-This structure is defined in the $codei%time_line_vec<%Float%>%$$ class
+Float
+*****
+The type *Float* is ``double`` or :ref:`a1_double-name` .
+
+time_point
+**********
+This structure is defined in the ``time_line_vec<`` *Float* > class
 as follows:
-$codei%
-   struct time_point {double time; double weight; Float value; };
-%$$
 
-$head near_equal$$
-Checks if $icode x$$ and $icode y$$ are nearly equal
+   ``struct time_point`` { ``double time`` ; ``double weight`` ; ``Float value`` ; };
+
+near_equal
+**********
+Checks if *x* and *y* are nearly equal
 to multiple of numerical precision that is greater than 10
 and less than 100.
-The return value $icode near$$ is true, if the values are nearly equal
+The return value *near* is true, if the values are nearly equal
 and false otherwise.
 
-$head time_line_vec$$
-This constructs the object $icode vec$$ for managing vectors of time lines.
+time_line_vec
+*************
+This constructs the object *vec* for managing vectors of time lines.
 
-$head age_grid$$
+age_grid
+********
 This vector specifies the grid for averaging w.r.t. age.
 This vector is monotone increasing; i.e.,
-$codei%
-   %age_grid%[%j%] < %age_grid%[%j%+1]
-%$$
 
-$head specialize$$
+   *age_grid* [ *j* ] < *age_grid* [ *j* +1]
+
+specialize
+**********
 This creates an extended age grid for averaging between
 the specified lower and upper ages and times where
-$codei%
-   %age_lower%  <= %age_upper%
-   %time_lower% <= %time_upper%
-%$$
+
+| |tab| *age_lower* <= *age_upper*
+| |tab| *time_lower* <= *time_upper*
+
 There is a time line for each sub grid point
 and it is initialized as empty.
 
-$head extend_grid$$
+extend_grid
+***********
 This return value is an extended age grid and is monotone increasing.
-It include all the points in the original $icode age_grid$$
-and the values $icode age_lower$$ and $icode age_upper$$.
+It include all the points in the original *age_grid*
+and the values *age_lower* and *age_upper* .
 
-$head sub_lower$$
-This return value is the index in $icode extend_grid$$
+sub_lower
+*********
+This return value is the index in *extend_grid*
 where the sub grid starts;
-$codei%
-   true == near_equal( %age_lower%, %extend_grid%[ %sub_lower% ] )
-%$$
 
-$head sub_upper$$
-This return value is the index in $icode extend_grid$$
+   ``true`` == ``near_equal`` ( *age_lower* , *extend_grid* [ *sub_lower*  ] )
+
+sub_upper
+*********
+This return value is the index in *extend_grid*
 where the sub grid ends;
-$codei%
-   true == near_equal( %age_upper%, %extend_grid%[ %sub_upper% ] )
-%$$
 
-$head age_index$$
+   ``true`` == ``near_equal`` ( *age_upper* , *extend_grid* [ *sub_upper*  ] )
+
+age_index
+*********
 This is the index, for the time line, in the extended age grid
-$codei%
-   %sub_lower% <= %age_index% <= %sub_upper%
-%$$.
 
-$head add_point$$
+   *sub_lower* <= *age_index* <= *sub_upper*
+
+.
+
+add_point
+*********
 This adds a time point to the specified time line.
 
-$subhead point$$
+point
+=====
 This is the time point that is added to the time line.
-The value $icode%point%.value%$$ ($icode%point%.weight%$$)
+The value *point* . ``value`` ( *point* . ``weight`` )
 is the value of the function (weighting)
-that we are sampling at age $icode%extend_grid[%age_index%]%$$
-and time $icode%point.time%$$.
+that we are sampling at age *extend_grid* [ ``age_index`` ]
+and time *point.time* .
 The time must satisfy
-$codei%
-   %time_lower% <= %point%.time <= %time_upper%
-%$$
-In addition, two calls to $code add_point$$ cannot have the
-same $icode age_index$$ and $icode%point%.time%$$.
 
-$head time_line$$
+   *time_lower* <= *point* . ``time <`` = *time_upper*
+
+In addition, two calls to ``add_point`` cannot have the
+same *age_index* and *point* . ``time`` .
+
+time_line
+*********
 This vector contains the points in the time line
-that corresponds to the specified $icode age_index$$.
+that corresponds to the specified *age_index* .
 The vector monotone non-decreasing in time; i.e.,
-$codei%
-   %time_line%[%i%].time <= %time_line%[%i%+1].time
-%$$
 
-$head max_time_diff$$
+   *time_line* [ *i* ]. ``time <`` = *time_line* [ *i* +1]. ``time``
+
+max_time_diff
+*************
 This function find the maximum value for
-$codei%
-   %max_time_diff% = %time_line%[%time_index% + 1] - %time_line%[%time_index%]
-%$$
 
-$subhead age_index$$
+   *max_time_diff* = *time_line* [ *time_index* + 1] ``-`` *time_line* [ *time_index* ]
+
+age_index
+=========
 The input value of this argument does not matter.
 Upon return, it is the age index for the maximum time difference.
 
-$subhead time_index$$
+time_index
+==========
 The input value of this argument does not matter.
 Upon return, it is the time index for the maximum time difference.
 
-$subhead max_diff$$
-It the return value $icode%time_diff% > 0%$$,
-it is the maximum time difference for the time lines in $icode vec$$.
-In addition, $icode%time_index% > 0%$$ and
-$codei%
-   %max_time_diff% = %time_line%[%time_index%] - %time_line%[%time_index% - 1]
-%$$
-where $icode time_line$$ corresponds to $icode age_index$$.
+max_diff
+========
+It the return value *time_diff*  > 0 ,
+it is the maximum time difference for the time lines in *vec* .
+In addition, *time_index*  > 0 and
 
-$head age_time_avg$$
+   *max_time_diff* = *time_line* [ *time_index* ] ``-`` *time_line* [ *time_index* ``- 1`` ]
+
+where *time_line* corresponds to *age_index* .
+
+age_time_avg
+************
 This uses the
-$cref numeric_average$$ method to approximate the average
+:ref:`numeric_average-name` method to approximate the average
 of the weighted sampled function
 with respect to the specified age and time limits.
 Each time line corresponding to
-$codei%
-   %sub_lower% <= %age_index% <= %sub_upper%
-%$$.
+
+   *sub_lower* <= *age_index* <= *sub_upper*
+
+.
 must have a point with time nearly equal to
-$icode time_lower$$ and a point with time nearly equal to $icode time_upper$$.
+*time_lower* and a point with time nearly equal to *time_upper* .
 If the upper and lower time limits are nearly equal,
-only one call to $code add_point$$ for each time line is necessary.
-
-
-$children%example/devel/utility/time_line_vec_xam.cpp
-%$$
-$head Example$$
-The file $cref time_line_vec_xam.cpp$$ contains an example and test
+only one call to ``add_point`` for each time line is necessary.
+{xrst_toc_hidden
+   example/devel/utility/time_line_vec_xam.cpp
+}
+Example
+*******
+The file :ref:`time_line_vec_xam.cpp-name` contains an example and test
 of using this routine.
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_NEAR_EQUAL_PROTOTYPE%// END_NEAR_EQUAL_PROTOTYPE%1
-%$$
-$srcthisfile%
-   0%// BEGIN_TIME_LINE_VEC_PROTOTYPE%// END_TIME_LINE_VEC_PROTOTYPE%1
-%$$
-$srcthisfile%
-   0%// BEGIN_SPECIALIZE_PROTOTYPE%// END_SPECIALIZE_PROTOTYPE%1
-%$$
-$srcthisfile%
-   0%// BEGIN_ADD_POINT_PROTOTYPE%// END_ADD_POINT_PROTOTYPE%1
-%$$
-$srcthisfile%
-   0%// BEGIN_EXTEND_GRID_PROTOTYPE%// END_EXTEND_GRID_PROTOTYPE%1
-%$$
-$srcthisfile%
-   0%// BEGIN_SUB_LOWER_PROTOTYPE%// END_SUB_LOWER_PROTOTYPE%1
-%$$
-$srcthisfile%
-   0%// BEGIN_SUB_UPPER_PROTOTYPE%// END_SUB_UPPER_PROTOTYPE%1
-%$$
-$srcthisfile%
-   0%// BEGIN_TIME_LINE_PROTOTYPE%// END_TIME_LINE_PROTOTYPE%1
-%$$
-$srcthisfile%
-   0%// BEGIN_MAX_TIME_DIFF_PROTOTYPE%// END_MAX_TIME_DIFF_PROTOTYPE%1
-%$$
-$srcthisfile%
-   0%// BEGIN_AGE_TIME_AVG_PROTOTYPE%// END_AGE_TIME_AVG_PROTOTYPE%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_NEAR_EQUAL_PROTOTYPE
+   // END_NEAR_EQUAL_PROTOTYPE
+}
+{xrst_literal
+   // BEGIN_TIME_LINE_VEC_PROTOTYPE
+   // END_TIME_LINE_VEC_PROTOTYPE
+}
+{xrst_literal
+   // BEGIN_SPECIALIZE_PROTOTYPE
+   // END_SPECIALIZE_PROTOTYPE
+}
+{xrst_literal
+   // BEGIN_ADD_POINT_PROTOTYPE
+   // END_ADD_POINT_PROTOTYPE
+}
+{xrst_literal
+   // BEGIN_EXTEND_GRID_PROTOTYPE
+   // END_EXTEND_GRID_PROTOTYPE
+}
+{xrst_literal
+   // BEGIN_SUB_LOWER_PROTOTYPE
+   // END_SUB_LOWER_PROTOTYPE
+}
+{xrst_literal
+   // BEGIN_SUB_UPPER_PROTOTYPE
+   // END_SUB_UPPER_PROTOTYPE
+}
+{xrst_literal
+   // BEGIN_TIME_LINE_PROTOTYPE
+   // END_TIME_LINE_PROTOTYPE
+}
+{xrst_literal
+   // BEGIN_MAX_TIME_DIFF_PROTOTYPE
+   // END_MAX_TIME_DIFF_PROTOTYPE
+}
+{xrst_literal
+   // BEGIN_AGE_TIME_AVG_PROTOTYPE
+   // END_AGE_TIME_AVG_PROTOTYPE
+}
 
-$end
+{xrst_end time_line_vec}
 */
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE

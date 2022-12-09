@@ -15,75 +15,79 @@
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
 -------------------------------------------------------------------------------
-$begin predict_command$$
-$spell
-   sim
-   avgint
-   dismod
-   var
-   arg
-$$
+{xrst_begin predict_command}
+{xrst_spell
+   withing
+}
 
-$section The Predict Command$$
+The Predict Command
+###################
 
-$head Syntax$$
-$codei%dismod_at %database% predict %source%$$
+Syntax
+******
+``dismod_at`` *database* ``predict`` *source*
 
-$head database$$
+database
+********
 Is an
-$href%http://www.sqlite.org/sqlite/%$$ database containing the
-$code dismod_at$$ $cref input$$ tables which are not modified.
+http://www.sqlite.org/sqlite/ database containing the
+``dismod_at`` :ref:`input-name` tables which are not modified.
 
-$head source$$
+source
+******
 This argument specifies where model variable values to use
 for the predictions. The possible values are listed below:
 
-$subhead sample$$
-If $icode source$$ is $code sample$$,
-the values in the $cref sample_table$$ are used for the predictions.
+sample
+======
+If *source* is ``sample`` ,
+the values in the :ref:`sample_table-name` are used for the predictions.
 In this case there are
-$cref/number_simulate/simulate_command/number_simulate/$$ sets
+:ref:`simulate_command@number_simulate` sets
 of model variables that predictions are computed for.
 If the samples were simulated using the
-$cref/asymptotic/sample_command/asymptotic/$$ method,
+:ref:`sample_command@asymptotic` method,
 they may not be withing the lower and upper limits for the
 corresponding variables.
 The variables are censored to be within their limits before
 the predictions are computed.
 
-
-$subhead fit_var$$
-If $icode source$$ is $code fit_var$$,
-the values in the $cref fit_var_table$$ are used for the predictions.
+fit_var
+=======
+If *source* is ``fit_var`` ,
+the values in the :ref:`fit_var_table-name` are used for the predictions.
 In this case there is only one set of model variables that the
 predictions are computed for and
-$cref/sample_index/predict_table/sample_index/$$ is always zero.
+:ref:`predict_table@sample_index` is always zero.
 
-$subhead truth_var$$
-If $icode source$$ is $code truth_var$$,
-the values in the $cref truth_var_table$$ are used for the predictions.
+truth_var
+=========
+If *source* is ``truth_var`` ,
+the values in the :ref:`truth_var_table-name` are used for the predictions.
 In this case there is only one set of model variables that the
 predictions are computed for and
-$cref/sample_index/predict_table/sample_index/$$ is always zero.
+:ref:`predict_table@sample_index` is always zero.
 
-$head predict_table$$
-A new $cref predict_table$$ is created each time this command is run.
+predict_table
+*************
+A new :ref:`predict_table-name` is created each time this command is run.
 It contains the
-$cref/average integrand/avg_integrand/Average Integrand, A_i/$$
+:ref:`average integrand<avg_integrand@Average Integrand, A_i>`
 values for set of model variables
 and each
-$cref/avgint_id/predict_table/avgint_id/$$
+:ref:`predict_table@avgint_id`
 in the
-$cref/avgint subset/predict_table/Avgint Subset/$$.
-
-$children%example/get_started/predict_command.py
-%$$
-$head Example$$
-The files $cref predict_command.py$$ and
-$cref user_predict_fit.py$$ contain examples and tests
+:ref:`predict_table@Avgint Subset` .
+{xrst_toc_hidden
+   example/get_started/predict_command.py
+}
+Example
+*******
+The files :ref:`predict_command.py-name` and
+:ref:`user_predict_fit.py-name` contain examples and tests
 using this command.
 
-$end
+{xrst_end predict_command}
 */
 
 // ----------------------------------------------------------------------------

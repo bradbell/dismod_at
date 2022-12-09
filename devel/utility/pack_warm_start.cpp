@@ -3,32 +3,38 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin pack_warm_start$$
-$spell
-   vec
-   cppad
-$$
-$section Packing and Unpacking Warm Start Information in a Vector$$
+{xrst_begin pack_warm_start}
+Packing and Unpacking Warm Start Information in a Vector
+########################################################
 
-$head Syntax$$
-$icode%vec%        = pack_warm_start(%warm_start%)
-%$$
-$icode%warm_start% = unpack_warm_start(%vec%)
-%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_PACK%// END_PACK%1%$$
-$srcthisfile%0%// BEGIN_UNPACK%// END_UNPACK%1%$$
+| *vec* = ``pack_warm_start`` ( *warm_start* )
+| *warm_start* = ``unpack_warm_start`` ( *vec* )
 
-$head vec$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PACK
+   // END_PACK
+}
+{xrst_literal
+   // BEGIN_UNPACK
+   // END_UNPACK
+}
+
+vec
+***
 This is a single vector that contains a copy of the
 warm start information.
 
-$head warm_start$$
+warm_start
+**********
 This is a structure, holding the warm start information
-in the form expected by $code cppad_mixed$$.
+in the form expected by ``cppad_mixed`` .
 
-$end
+{xrst_end pack_warm_start}
 */
 # include <dismod_at/pack_warm_start.hpp>
 

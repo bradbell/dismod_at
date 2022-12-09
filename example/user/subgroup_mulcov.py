@@ -2,107 +2,109 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_subgroup_mulcov.py$$ $newlinech #$$
-# $spell
-#  covariate
-#  covariates
-#  subgraph
-#  Mulcov
-#  var
-# $$
+# {xrst_begin user_subgroup_mulcov.py}
+# {xrst_spell
+#     subgroups
+# }
+# {xrst_comment_ch #}
 #
-# $section Example Fitting With Subgroup Covariate Multipliers $$
+# Example Fitting With Subgroup Covariate Multipliers
+# ###################################################
 #
-# $head Node Table$$
+# Node Table
+# **********
 # The following is a diagram of the node tree for this example:
-# $pre
-#       p1
-#      /  \
-#     c1  c2
-# $$
+# ::
 #
-# $head Subgroup Table$$
+#          p1
+#         /  \
+#        c1  c2
+#
+# Subgroup Table
+# **************
 # The following is a diagram of the subgroup tree for this example:
-# $pre
-#         p1
-#        /  \
-#      g1   none
-#     /  \    \
-#    s1   s2  none
-# $$
+# ::
 #
-# $head Model Variables$$
+#            p1
+#           /  \
+#         g1   none
+#        /  \    \
+#       s1   s2  none
 #
-# $subhead Parent Rates$$
+# Model Variables
+# ***************
+#
+# Parent Rates
+# ============
 # There is an iota
-# $cref/parent rate/model_variables/Fixed Effects, theta/Parent Rates/$$
+# :ref:`parent rate<model_variables@Fixed Effects, theta@Parent Rates>`
 # corresponding to node p1.
 # This variable has a uniform prior.
 #
-# $subhead Group Covariate Multiplier$$
+# Group Covariate Multiplier
+# ==========================
 # There is a
-# $cref/
-#  group covariate multiplier/
-#  model_variables/
-#  Fixed Effects, theta/
-#  Group Covariate Multipliers
-# /$$
+# :ref:`group covariate multiplier<model_variables@Fixed Effects, theta@Group Covariate Multipliers>`
 # that affects all the data in group g1.
 # This variable has a uniform prior.
 #
-# $subhead Child Rate Effects$$
+# Child Rate Effects
+# ==================
 # There are two
-# $cref/child rate effects
-#  /model_variables
-#  /Random Effects, u
-#  /Child Rate Effects
-# /$$
+# :ref:`model_variables@Random Effects, u@Child Rate Effects`
 # one for the data corresponding to child c1,
 # the other for child c2.
 # These variables have gaussian priors with mean zero and standard deviation
 # 100 times the absolute true child rate effect.
 #
-# $subhead Subgroup Covariate Multiplier$$
+# Subgroup Covariate Multiplier
+# =============================
 # There are two
-# $cref/
-#  subgroup covariate multipliers/
-#  model_variables/
-#  Random Effects, u/
-#  Subgroup Covariate Multipliers
-# /$$
+# :ref:`model_variables@Random Effects, u@Subgroup Covariate Multipliers`
 # one for the data corresponding to subgroup s1,
 # the other for subgroup s2.
 # These variables have gaussian priors with mean zero and standard deviation
 # 100 times the absolute true subgroup effect.
 #
-# $head Rate Table$$
+# Rate Table
+# **********
 # There is one entry in the rate table that
 # specifies the iota smoothing for the parent node p1.
 # There is another entry that specifies the iota smoothing
 # for the child nodes c1, c2.
 #
-# $head Mulcov Table$$
+# Mulcov Table
+# ************
 # There is one entry in the mulcov table for group g1 and
 # the two subgroups s1, s1 (that make up g1).
 # The group smoothing is used for the fixed effect corresponding to g1
 # and the subgroup smoothing is used for the s1, s2 random effects.
 #
-# $head Data Table$$
+# Data Table
+# **********
 # Each child (c1, c2) and each subgroup (s1, s2, none)
 # have a corresponding data point that is simulated without any noise.
 #
-# $head Problem Parameters$$
-# $srccode%py%
+# Problem Parameters
+# ******************
+# {xrst_spell_off}
+# {xrst_code py}
 iota_parent_true      = 0.01 # value corresponding to parent with no effects
 group_effect_true     = 0.3  # value corresponding to group g1
 child_effect_true     = 0.2  # absolute value of child random effects
 subgroup_effect_true  = 0.1  # absoulte value of subgroup random effects
 meas_cv               = 0.1  # coefficient of variation for each data point
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_subgroup_mulcov.py}
 #
 # $end
 # ----------------------------------------------------------------------------

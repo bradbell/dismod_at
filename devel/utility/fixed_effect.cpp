@@ -4,121 +4,126 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin fixed_effect$$
-$spell
-   vec
-   CppAD
-   var
-   cpp
-   const
-$$
+{xrst_begin fixed_effect}
+{xrst_spell
+   inverses
+}
 
-$section Setting and Getting the Fixed Effect Vector$$
+Setting and Getting the Fixed Effect Vector
+###########################################
 
-$head Syntax$$
-$icode%n_fixed% = number_fixed(%pack_object%)
-%$$
-$icode%pack_index% = fixed2var_id(%pack_object%)
-%$$
-$codei%pack_fixed(%pack_object%, %pack_vec%, %fixed_vec%)
-%$$
-$codei%unpack_fixed(%pack_object%, %pack_vec%, %fixed_vec%)
-%$$
+Syntax
+******
 
-$head Float$$
-The type $icode Float$$ must be $code double$$ or
-$cref a1_double$$.
+| *n_fixed* = ``number_fixed`` ( *pack_object* )
+| *pack_index* = ``fixed2var_id`` ( *pack_object* )
+| ``pack_fixed`` ( *pack_object* , *pack_vec* , *fixed_vec* )
+| ``unpack_fixed`` ( *pack_object* , *pack_vec* , *fixed_vec* )
 
-$head Order of Fixed Effects$$
+Float
+*****
+The type *Float* must be ``double`` or
+:ref:`a1_double-name` .
+
+Order of Fixed Effects
+**********************
 The order of the fixed effects is unspecified, except for the
-fact that $code pack_fixed$$ and $code unpack_fixed$$
+fact that ``pack_fixed`` and ``unpack_fixed``
 are inverses of each other; i.e., if you pack the fixed effects using a
-$icode fixed_vec$$, and then do a unpack, you will get that
-$icode fixed_vec$$ back.
+*fixed_vec* , and then do a unpack, you will get that
+*fixed_vec* back.
 
-$head pack_object$$
+pack_object
+***********
 This argument has prototype
-$codei%
-   const pack_info& %pack_object%
-%$$
-It is the $cref pack_info$$ information corresponding
-to the $cref model_variables$$.
 
-$head n_fixed$$
+   ``const pack_info&`` *pack_object*
+
+It is the :ref:`pack_info-name` information corresponding
+to the :ref:`model_variables-name` .
+
+n_fixed
+*******
 This return value has prototype
-$codei%
-   size_t %n_fixed%
-%$$
+
+   ``size_t`` *n_fixed*
+
 It is the number of
-$cref/fixed effects/model_variables/Fixed Effects, theta/$$ in the model.
+:ref:`fixed effects<model_variables@Fixed Effects, theta>` in the model.
 
-$head pack_index$$
+pack_index
+**********
 This return value has prototype
-$codei%
-   CppAD::vector<size_t> %pack_index%
-%$$
-It size is equal to $icode n_fixed$$; i.e., the number of
-$cref/fixed effects/model_variables/Fixed Effects, theta/$$ in the model.
+
+   ``CppAD::vector<size_t>`` *pack_index*
+
+It size is equal to *n_fixed* ; i.e., the number of
+:ref:`fixed effects<model_variables@Fixed Effects, theta>` in the model.
 For each fixed effect index
-$icode%j%  = 0%,..., n_fixed%-1%$$,
-the value $icode%pack_index%[%j%]%$$ is the corresponding
+*j* = 0,..., *n_fixed* ``-1`` ,
+the value *pack_index* [ *j* ] is the corresponding
 index in a packed vector (with both fixed and random effects).
 
-$head unpack_fixed$$
-This functions copies information from $icode pack_vec$$
-to $icode fixed_vec$$.
+unpack_fixed
+************
+This functions copies information from *pack_vec*
+to *fixed_vec* .
 
-$subhead pack_vec$$
+pack_vec
+========
 This argument has prototype
-$codei%
-   const CppAD::vector<%Float%>& %pack_vec%
-%$$
-and its size is $icode%pack_object%.size()%$$.
-It specifies the value for all the $cref model_variables$$
-in $cref pack_info$$ format.
 
-$subhead fixed_vec$$
+   ``const CppAD::vector<`` *Float* >& *pack_vec*
+
+and its size is *pack_object* . ``size`` () .
+It specifies the value for all the :ref:`model_variables-name`
+in :ref:`pack_info-name` format.
+
+fixed_vec
+=========
 This argument has prototype
-$codei%
-   CppAD::vector<%Float%>& %fixed_vec%
-%$$
-and its size is $icode n_fixed$$.
-It is a copy of the fixed effects in $icode pack_vec$$
+
+   ``CppAD::vector<`` *Float* >& *fixed_vec*
+
+and its size is *n_fixed* .
+It is a copy of the fixed effects in *pack_vec*
 as one contiguous vector in an unspecified order.
 
+pack_fixed
+**********
+This functions copies information from *fixed_vec*
+to *pack_vec* .
 
-$head pack_fixed$$
-This functions copies information from $icode fixed_vec$$
-to $icode pack_vec$$.
-
-$subhead pack_vec$$
+pack_vec
+========
 This argument has prototype
-$codei%
-   CppAD::vector<%Float%>& %pack_vec%
-%$$
-and its size is $icode%pack_object%.size()%$$.
-It specifies the value for all the $cref model_variables$$
-in $cref pack_info$$ format.
+
+   ``CppAD::vector<`` *Float* >& *pack_vec*
+
+and its size is *pack_object* . ``size`` () .
+It specifies the value for all the :ref:`model_variables-name`
+in :ref:`pack_info-name` format.
 The input value of its fixed effects does not matter.  Upon return,
-the fixed effects correspond to the values in $icode fixed_vec$$.
+the fixed effects correspond to the values in *fixed_vec* .
 
-$subhead fixed_vec$$
+fixed_vec
+=========
 This argument has prototype
-$codei%
-   const CppAD::vector<%Float%>& %fixed_vec%
-%$$
-and its size is $icode n_fixed$$.
+
+   ``const CppAD::vector<`` *Float* >& *fixed_vec*
+
+and its size is *n_fixed* .
 It contains the fixed effects
 as one contiguous vector in an unspecified order.
-
-$children%
+{xrst_toc_hidden
    example/devel/utility/fixed_effect_xam.cpp
-%$$
-$head Example$$
-The file $cref fixed_effect_xam.cpp$$
+}
+Example
+*******
+The file :ref:`fixed_effect_xam.cpp-name`
 contains an example and test that uses this routine.
 
-$end
+{xrst_end fixed_effect}
 */
 
 # include <dismod_at/pack_info.hpp>

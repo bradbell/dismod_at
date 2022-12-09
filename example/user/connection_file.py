@@ -3,16 +3,19 @@
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 """
-$begin user_connection_file.py$$
-$spell
-   prc
-$$
+{xrst_begin user_connection_file.py}
 
-$section Example Using connection_file$$
+Example Using connection_file
+#############################
 
-$head Source Code$$
-$srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-$end
+Source Code
+***********
+{xrst_literal
+   # BEGIN PYTHON
+   # END PYTHON
+}
+
+{xrst_end user_connection_file.py}
 $end
 """
 # BEGIN PYTHON

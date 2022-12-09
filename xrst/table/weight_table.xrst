@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin weight_table}
+
+The Weight Table
+################
+
+weight_id
+*********
+This column has type ``integer`` and is the primary key for
+the this table.
+Its initial value is zero, and it increments by one for each row.
+
+weight_name
+***********
+This column has type ``text`` and has a different value for every row;
+i.e., the names are unique and can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
+
+n_age
+*****
+This column has type ``integer`` and is the number of age values
+in this smoothing grid. It must be greater than zero.
+
+n_time
+******
+This column has type ``integer`` and is the number of _time values
+in this smoothing grid. It must be greater than zero.
+
+{xrst_comment
+   example/table/weight_grid_table.py is included by weight_grid_table.omh
+%}
+Example
+*******
+The file :ref:`weight_grid_table.py-name`
+contains an example ``weight`` table.
+
+{xrst_end weight_table}

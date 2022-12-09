@@ -2,166 +2,205 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_covid_19.py$$ $newlinech #$$
-# $spell
-#  Covid
-#  csv
-#  dismod
-#  covariates
-#  covariate
-# $$
+# {xrst_begin user_covid_19.py}
+# {xrst_spell
+#     covid
+#     dt
+#     rcll
+# }
+# {xrst_comment_ch #}
 #
-# $section Model The Covid-19 Epidemic$$
+# Model The Covid-19 Epidemic
+# ###########################
 #
-# $head Goal$$
+# Goal
+# ****
 # Use previous cumulative death data for a location to predict future
 # cumulative deaths.
 #
-# $head Data File$$
+# Data File
+# *********
 # The cumulative death data is the most reliable data available for the
 # Covid-19 epidemic. It is also the statistic we are most interested in predicting.
 # Our example data has the following columns:
-# $table
-# $icode day$$      $cnext day that this row of data corresponds to             $rnext
-# $icode death$$    $cnext cumulative covid_19 death as fraction of population  $rnext
-# $icode mobility$$ $cnext mobility shifted and scaled to be in [-1, 0.]        $rnext
-# $icode testing$$  $cnext testing shifted and scaled to be in [0., 1]
-# $tend
+#
+# .. list-table::
+#
+#     * - *day*
+#       - day that this row of data corresponds to
+#     * - *death*
+#       - cumulative covid_19 death as fraction of population
+#     * - *mobility*
+#       - mobility shifted and scaled to be in [-1, 0.]
+#     * - *testing*
+#       - testing shifted and scaled to be in [0., 1]
+#
 # We assume that difference in the cumulative death data are independent; i.e.,
 # the amount added to the cumulative death is the actual measurement recorded
 # at the end of a time interval.
 # For the purpose of this example, we mimic a csv file with a string that
 # has this information.
 #
-# $head SIR Model$$
+# SIR Model
+# *********
 #
-# $subhead ODE$$
-# We use $latex Q$$ in place of $latex S$$ in the SIR Model
-# to avoid confusion with the dismod meaning of $latex S$$.
+# ODE
+# ===
+# We use :math:`Q` in place of :math:`S` in the SIR Model
+# to avoid confusion with the dismod meaning of :math:`S`.
 # The SIR Model for an epidemic is the following differential equations:
-# $latex \[
-# \begin{array}{rcll}
-#  \dot{Q} & = & - \beta Q I \\
-#  \dot{I} & = & + \beta Q I & - ( \gamma + \chi ) I \\
-#  \dot{R} & = & + \gamma I
-# \end{array}
-# \] $$
-# $table
-# $latex Q(t)$$       $cnext susceptible fraction of the population   $rnext
-# $latex I(t)$$       $cnext infectious fraction of the population    $rnext
-# $latex R(t)$$       $cnext recovered fraction of the population     $rnext
-# $latex \beta(t)$$   $cnext infectious rate                          $rnext
-# $latex \gamma(t)$$  $cnext recovery rate                            $rnext
-# $latex \chi(t)$$    $cnext excess mortality rate (for this disease)
-# $tend
 #
-# $subhead Data Model$$
+# .. math::
+#
+#  \begin{array}{rcll}
+#   \dot{Q} & = & - \beta Q I \\
+#   \dot{I} & = & + \beta Q I & - ( \gamma + \chi ) I \\
+#   \dot{R} & = & + \gamma I
+#  \end{array}
+#
+# .. csv-table::
+#     :widths: auto
+#
+#     :math:`Q(t)`,susceptible fraction of the population
+#     :math:`I(t)`,infectious fraction of the population
+#     :math:`R(t)`,recovered fraction of the population
+#     :math:`\beta(t)`,infectious rate
+#     :math:`\gamma(t)`,recovery rate
+#     :math:`\chi(t)`,excess mortality rate (for this disease)
+#
+# Data Model
+# ==========
 # The model for a measurement of the i-th difference in cumulative death is
-# $latex \[
-#  d_i = e_i + \int_{a(i)}^{b(i)} \chi(t) I (t) dt
-# \] $$
-# $table
-# $latex d_i$$ $cnext the i-th difference in cumulative death            $rnext
-# $latex e_i$$ $cnext noise in the i-th difference in cumulative death   $rnext
-# $latex a_i$$ $cnext start time for i-th difference in cumulative death $rnext
-# $latex b_i$$ $cnext end time for i-th difference in cumulative death
-# $tend
 #
-# $subhead Discussion$$
+# .. math::
+#
+#  d_i = e_i + \int_{a(i)}^{b(i)} \chi(t) I (t) dt
+#
+# .. csv-table::
+#     :widths: auto
+#
+#     :math:`d_i`,the i-th difference in cumulative death
+#     :math:`e_i`,noise in the i-th difference in cumulative death
+#     :math:`a_i`,start time for i-th difference in cumulative death
+#     :math:`b_i`,end time for i-th difference in cumulative death
+#
+# Discussion
+# ==========
 # The model does not include births and deaths due to other causes, but this
 # would introduce even more unknowns.
 # Another problem with the model above is that it is not identifiable given just
 # measurements of cumulative death; i.e., there are two many unknown functions.
 # One approach to this problem is to assume we know
-# the rates $latex \gamma(t)$$, $latex \chi(t)$$ and
-# only estimate $latex \beta(t)$$ and the initial conditions
-# $latex Q(0)$$, $latex I(0)$$, $latex R(0)$$.
+# the rates :math:`\gamma(t)`, :math:`\chi(t)` and
+# only estimate :math:`\beta(t)` and the initial conditions
+# :math:`Q(0)`, :math:`I(0)`, :math:`R(0)`.
 # Another problem is that deaths are often under reported; e.g., they might only
 # be the deaths in the hospitals or for people who have been confirmed to have the
 # disease.
 #
-# $head Dismod Model$$
+# Dismod Model
+# ************
 # The Dismod model for an epidemic is the following ODE:
-# $latex \[
-# \begin{array}{rcll}
-#  \dot{S} & = & - \iota S & + \rho            C    \\
-#  \dot{C} & = & + \iota S & - ( \rho + \chi ) C
-# \end{array}
-# \] $$
+#
+# .. math::
+#
+#  \begin{array}{rcll}
+#   \dot{S} & = & - \iota S & + \rho            C    \\
+#   \dot{C} & = & + \iota S & - ( \rho + \chi ) C
+#  \end{array}
+#
 # together with the following cumulative death model
-# $latex \[
+#
+# .. math::
+#
 #  d_i = e_i + \int_{a(i)}^{b(i)} \chi(t) \frac{C(t)}{S(t) + C(t)} dt
-# \] $$
-# Remission $latex \rho$$ is $latex \gamma$$ in the SIR model.
-# Prevalence $latex C(t) / [ S(t) + C(t) ]$$
-# is to $latex I(t)$$ in the SIR model.
-# Susceptible $latex S(t)$$ is $latex Q(t) + R(t)$$ in the SIR model.
+#
+# Remission :math:`\rho` is :math:`\gamma` in the SIR model.
+# Prevalence :math:`C(t) / [ S(t) + C(t) ]`
+# is to :math:`I(t)` in the SIR model.
+# Susceptible :math:`S(t)` is :math:`Q(t) + R(t)` in the SIR model.
 # Not all the members of S are susceptible to the disease; i.e., the members of R.
-# It would be nice to complete the $cref/immunity/wish_list/Immunity/$$
+# It would be nice to complete the :ref:`wish_list@Immunity`
 # wish list item so this would not be necessary.
-# However, because of under reporting of deaths, $latex Q(t)$$ in the SIR model
+# However, because of under reporting of deaths, :math:`Q(t)` in the SIR model
 # also has members that are not susceptible to the disease.
 #
-# $head Data$$
+# Data
+# ****
 # For this example, we get the cumulative death data and covariates from a
 # text string version of a CSV file with the following columns:
-# $table
-# $icode day$$       $cnext days since the first cumulative death value $rnext
-# $icode death$$     $cnext cumulative death value for this day         $rnext
-# $icode mobility$$  $cnext a social mobility covariate                 $rnext
-# $icode testing$$   $cnext level of testing for the disease covariate
-# $tend
-# The $icode mobility$$ covariate has been shifted and scaled to be in the
+#
+# .. csv-table::
+#     :widths: auto
+#
+#     *day*,days since the first cumulative death value
+#     *death*,cumulative death value for this day
+#     *mobility*,a social mobility covariate
+#     *testing*,level of testing for the disease covariate
+#
+# The *mobility* covariate has been shifted and scaled to be in the
 # interval [-1, 0] with zero corresponding to normal mobility.
-# The $icode testing$$ covariate has been scaled to the interval [0, 1]
+# The *testing* covariate has been scaled to the interval [0, 1]
 # with zero corresponding to no testing.
 #
-# $head Model Variables$$
+# Model Variables
+# ***************
 # There is only one location for this example, so there are no random effects.
 # If you had data from multiple locations you could use random effects to improve
 # the estimation.
 #
-# $subhead Rates$$
-# The prior for the value of $latex \iota(t)$$ is uniform with
+# Rates
+# =====
+# The prior for the value of :math:`\iota(t)` is uniform with
 # lower limit 1e-6, upper limit 1.0, and mean 1e-3.
 # The mean is only used as a starting point and scaling point for the optimization.
-# The prior for the forward difference of $latex \iota(t)$$ between grid points is
+# The prior for the forward difference of :math:`\iota(t)` between grid points is
 # log Gaussian with mean zero, standard deviation 0.1 and the offset in the
 # log transformation is 1e-5. The corresponds to a difference of 10 percent between
 # days being a weighted residual of one.
 # The other rates are modeled as the following known constants:
-# $latex \rho = 0.1$$ and $latex \chi = 0.01$$.
+# :math:`\rho = 0.1` and :math:`\chi = 0.01`.
 #
-# $subhead Covariates$$
+# Covariates
+# ==========
 # There are two covariate multipliers for this example, one for mobility
-# and the other for testing. These affect the rate $latex \iota(t)$$.
+# and the other for testing. These affect the rate :math:`\iota(t)`.
 # They are both have one grid point (are constant in time) and
 # have a uniform prior with lower limit -1, upper limit +1, and mean zero.
 # It appears that the bounds on the covariate multipliers are active at the
 # solution; i.e., more effect would improve the objective; see the file
-# $cref/variable.csv/db2csv_command/variable.csv/$$ generated by the
-# $code db2csv$$ command after the fit was done.
+# :ref:`db2csv_command@variable.csv` generated by the
+# ``db2csv`` command after the fit was done.
 #
-# $head Predictions$$
+# Predictions
+# ***********
 # To do predictions for the next week, we could fit a function to the previous
-# weeks baseline value of $latex \iota(t)$$ (value without the covariates effects).
-# This gives us a prediction for the baseline value of $latex \iota(t)$$
+# weeks baseline value of :math:`\iota(t)` (value without the covariates effects).
+# This gives us a prediction for the baseline value of :math:`\iota(t)`
 # for the next week. We would then include some assumed covariate values for the next
 # and predict the differences in cumulative death for each day during the next week.
-# The subtitle point here is that the prior for $latex \iota(t)$$ is a constant,
-# but the posterior is not. Actually $latex \beta(t)$$ in the SIR model
-# is more likely to be constant and it might be better to fit the $latex \beta(t)$$
-# that corresponds to the previous fit for $latex I(t) = C(t) / [ S(t) + C(t) ]$$.
+# The subtitle point here is that the prior for :math:`\iota(t)` is a constant,
+# but the posterior is not. Actually :math:`\beta(t)` in the SIR model
+# is more likely to be constant and it might be better to fit the :math:`\beta(t)`
+# that corresponds to the previous fit for :math:`I(t) = C(t) / [ S(t) + C(t) ]`.
 #
-# $head Display Fit$$
+# Display Fit
+# ***********
 # If this variable is true, some of the fit results will be printed and plotted:
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 display_fit = True
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_covid_19.py}
 #
 # $end
 # -----------------------------------------------------------------------------

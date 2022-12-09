@@ -2,59 +2,68 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin perturb_command$$ $newlinech #$$
-# $spell
-#  dismodat
-#  py
-#  dismod
-#  var
-#  tbl
-# $$
+# {xrst_begin perturb_command}
+# {xrst_spell
+#     perturb
+#     perturbing
+#     tbl
+# }
+# {xrst_comment_ch #}
 #
-# $section Perturb Command: Random Change to Start or Scale Tables$$
+# Perturb Command: Random Change to Start or Scale Tables
+# #######################################################
 #
-# $head Syntax$$
+# Syntax
+# ******
 #
-# $subhead As Program$$
-# $codei%dismodat.py %database% perturb %tbl_name% %sigma%$$
+# As Program
+# ==========
+# ``dismodat.py`` *database* ``perturb`` *tbl_name* *sigma*
 #
-# $subhead As Python Function$$
-# $codei%dismod_at.perturb_command(%database%, %tbl_name%, %sigma%)%$$
+# As Python Function
+# ==================
+# ``dismod_at.perturb_command`` ( *database* , *tbl_name* , *sigma* )
 #
-# $head database$$
+# database
+# ********
 # is the path from the currently directory to the database.
-# This must be a $cref/dismod_at/database/$$ and
-# the $cref init_command$$ must have been run on the database.
+# This must be a :ref:`dismod_at<database-name>` and
+# the :ref:`init_command-name` must have been run on the database.
 #
-# $head tbl_name$$
+# tbl_name
+# ********
 # This is the name of an input table that we are perturbing.
 # This must be one of the following choices:
 #
-# $subhead scale_var$$
-# In this case the $cref scale_var_table$$ is perturbed.
+# scale_var
+# =========
+# In this case the :ref:`scale_var_table-name` is perturbed.
 # This can be useful when one starts near the solution where the
 # derivative of the objective may be small.
 #
-# $subhead start_var$$
-# In this case the $cref start_var_table$$ is perturbed.
+# start_var
+# =========
+# In this case the :ref:`start_var_table-name` is perturbed.
 # This can be useful when one wants to see if the starting point
 # has an effect on the solution.
 #
-# $head sigma$$
-# We use $icode multiplier$$ for a randomly chose multiplier,
+# sigma
+# *****
+# We use *multiplier* for a randomly chose multiplier,
 # that is different for each table entry, and that has a log with
-# mean zero and standard deviation $icode sigma$$.
+# mean zero and standard deviation *sigma* .
 # The value chosen for each table entry is its original value
 # times the multiplier.
 # If this value is below (above) the lower (upper) limit
 # for the table entry the lower (upper) limit is chosen.
 #
-# $subhead Random Seed$$
-# If the $cref/random_seed/option_table/random_seed/$$ is non-zero,
+# Random Seed
+# ===========
+# If the :ref:`option_table@random_seed` is non-zero,
 # it is used to seed the random number generator that is used.
 # Otherwise, the system clock is used to seed the random number generator.
 #
-# $end
+# {xrst_end perturb_command}
 # -----------------------------------------------------------------------------
 import dismod_at
 import random

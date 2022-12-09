@@ -1,0 +1,61 @@
+$Id:$
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin get_started}
+
+Dismod_at Getting Started Examples / Tests
+##########################################
+
+See Also
+********
+:ref:`csv2db_command-name`
+{xrst_toc_hidden
+   example/get_started/get_started_db.py
+}
+
+Database
+********
+:ref:`get_started_db.py-name`
+
+Run One Example
+***************
+If you have
+:ref:`built dismod_at<install_unix@dismod_at@Build>` and
+are in the directory
+:ref:`dismod_at.git<install_unix@Download dismod_at.git>` ,
+you can run one of these examples with the command
+
+   *python3_executable* ``example/get_started/`` *name*
+
+where :ref:`run_cmake.sh@python3_executable`
+is the python3 program and *name* is the name of the example.
+The name of the example
+includes the ``.py`` extension at the end.
+
+get_started.db
+**************
+Each of these examples uses the database
+
+   ``build/example/get_started/get_started.db``
+
+which is created by :ref:`get_started_db.py-name` and
+can be inspected using any sqlite viewer; e.g.,
+http://sqlitebrowser.org/.
+
+Commands
+********
+
+.. csv-table::
+   :widths: auto
+
+   init_command.py,:ref:`init_command.py-title`
+   set_command.py,:ref:`set_command.py-title`
+   fit_command.py,:ref:`fit_command.py-title`
+   simulate_command.py,:ref:`simulate_command.py-title`
+   sample_command.py,:ref:`sample_command.py-title`
+   predict_command.py,:ref:`predict_command.py-title`
+   db2csv_command.py,:ref:`db2csv_command.py-title`
+
+{xrst_end get_started}

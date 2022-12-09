@@ -2,16 +2,20 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_metropolis.py$$ $newlinech #$$
-# $spell
-#  init
-# $$
+# {xrst_begin user_metropolis.py}
+# {xrst_comment_ch #}
 #
-# $section Predict Average Integrand Using Results of a Fit$$
+# Predict Average Integrand Using Results of a Fit
+# ################################################
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_metropolis.py}
 # ---------------------------------------------------------------------------
 iota_north_america = 1e-2
 # ---------------------------------------------------------------------------

@@ -2,107 +2,118 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_bilevel_random.py$$ $newlinech #$$
-# $spell
-#  covariate
-#  covariates
-#  subgraph
-#  Mulcov
-#  var
-# $$
+# {xrst_begin user_bilevel_random.py}
+# {xrst_spell
+#     subgraph
+# }
+# {xrst_comment_ch #}
 #
-# $section Example Fitting With Two Levels of Random Effects$$
+# Example Fitting With Two Levels of Random Effects
+# #################################################
 #
-# $head Node Table$$
+# Node Table
+# **********
 # The following is a diagram of the node tree for this example:
-# $pre
-#                n1
-#          /-----/\-----\
-#        n11            n12
-#      /     \        /     \
-#    n111   n112    n121   n122
-# $$
-# We refer to $icode n1$$ as the root node and
-# $icode n111, n112, n121, n122$$ as the leaf nodes.
+# ::
 #
-# $head Problem Parameters$$
+#                   n1
+#             /-----/\-----\
+#           n11            n12
+#         /     \        /     \
+#       n111   n112    n121   n122
+#
+# We refer to *n1* as the root node and
+# *n111* , *n112* , *n121* , *n122* as the leaf nodes.
+#
+# Problem Parameters
+# ******************
 # The following parameters, used in this example, can be changed:
-# $srcthisfile%
-#   0%# begin problem parameters%# end problem parameters%1
-# %$$
+# {xrst_literal
+#     begin problem parameters
+#     end problem parameters
+# }
 #
-# $head Model Variables$$
+# Model Variables
+# ***************
 #
-# $head n1$$
+# n1
+# **
 # The values of iota at node n1 at age 0 and age 100 are fixed effects.
 #
-# $head n11, n12$$
+# n11, n12
+# ********
 # There is a
-# $cref/child rate effect
-#  /model_variables
-#  /Random Effects, u
-#  /Child Rate Effects
-# /$$
+# :ref:`child rate effect<model_variables@Random Effects, u@Child Rate Effects>`
 # for nodes n11 and node n12.
 # This adjusts the value at node n1 to its value for n11 and n12.
 #
-# $head n111, n112, n121, 122$$
+# n111, n112, n121, 122
+# *********************
 # There is a
-# $cref/subgroup covariate multiplier
-#  /model_variables
-#  /Random Effects, u
-#  /Subgroup Covariate Multipliers
-# /$$
+# :ref:`subgroup covariate multiplier<model_variables@Random Effects, u@Subgroup Covariate Multipliers>`
 # for nodes n111, n112, n121, and n122.
 # The effect (multiplier times covariate) for the target
 # nodes n111 and n112 adjusts the value at node n11 to the target node.
 # The effect for the target
 # nodes n121 and n122 adjusts the value at node n12 to the target node.
 #
-# $head Subgroup Table$$
+# Subgroup Table
+# **************
 # The subgroup table is used for the second level of random effects and
 # contains the following subgraph of the node graph:
-# $pre
-#        n11            n12
-#      /     \        /     \
-#    n111   n112    n121   n122
-# $$
-# In addition, a special subgroup called $code none$$ is
+# ::
+#
+#           n11            n12
+#         /     \        /     \
+#       n111   n112    n121   n122
+#
+# In addition, a special subgroup called ``none`` is
 # used for data points that correspond to nodes n1, n11, and n12; i.e.,
 # the parent node and the nodes at the first level.
 #
-# $head Mulcov Table$$
+# Mulcov Table
+# ************
 # There are two entries in the mulcov table.
 # The first (second) entry is for group n11 (n12) and corresponds to the
 # subgroup covariate multipliers for n111, n112 (n121, n122).
 #
-# $head Data Table$$
+# Data Table
+# **********
 # If there was only data for the leaf nodes,
 # (n111, n112, n121, n122) there would be an ambiguity in the solution.
 # For example, we could shift the estimates for n111 and n112 by
-# $latex + \Delta$$ and the estimate for n11 by $latex - \Delta$$
+# :math:`+ \Delta` and the estimate for n11 by :math:`- \Delta`
 # and get the same fit to the data and prior
 # (because we are using a uniform of the priors).
 # For this reason, we have included data for n11, n12, and n1.
 # If you like, you can think of this data as prior information.
 #
-# $head Procedure$$
+# Procedure
+# *********
 #
-# $subhead Fit Both$$
+# Fit Both
+# ========
 # Create the database, initialize it, and fit both fixed and random effects.
 #
-# $subhead Compare Fit and Truth$$
+# Compare Fit and Truth
+# =====================
 # check the fit results and create the truth_var table.
 #
-# $subhead Sample Posterior and Check Coverage$$
+# Sample Posterior and Check Coverage
+# ===================================
 # Sample from the posterior distribution and check for coverage.
 # Note that using two levels of random effects (instead of one)
 # should give a better value of the uncertainty of the model variables
 # (when there are two levels of random effects).
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_bilevel_random.py}
 #
 # $end
 # ----------------------------------------------------------------------------

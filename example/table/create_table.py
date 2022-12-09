@@ -2,15 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin create_table.py$$ $newlinech #$$
-# $spell
-#  unicode
-# $$
+# {xrst_begin create_table.py}
+# {xrst_comment_ch #}
 #
-# $section create_table and Unicode: Example and Test$$
+# create_table and Unicode: Example and Test
+# ##########################################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end create_table.py}
 # BEGIN PYTHON
 def create_table() :
    import dismod_at

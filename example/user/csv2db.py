@@ -2,91 +2,107 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_csv2db.py$$ $newlinech #$$
-# $spell
-#  csv
-#  integrands
-#  mtexcess
-#  mtall
-#  dismodat.py
-#  std
-# $$
-# $section csv2db_command: Example and Test$$
+# {xrst_begin user_csv2db.py}
+# {xrst_spell
+#     mtall
+# }
+# {xrst_comment_ch #}
 #
-# $head Using This Example$$
-# See $cref/run one example/user_example/Run One Example/$$ for instructions
+# csv2db_command: Example and Test
+# ################################
+#
+# Using This Example
+# ******************
+# See :ref:`user_example@Run One Example` for instructions
 # on running just this example.
 # After doing that, one can run the command
-# $codep
-#  python/bin/dismodat.py build/example/user/example.db
-# $$
+# ::
+#
+#     python/bin/dismodat.py build/example/user/example.db
+#
 # To generate the csv files corresponding to the example database.
-# One can then inspect the csv files in the $code build/example/user$$
+# One can then inspect the csv files in the ``build/example/user``
 # to see all the relevant information.
 #
-# $head Discussion$$
+# Discussion
+# **********
 # The following describes the mode and data for this example:
 #
-# $head rate_true$$
+# rate_true
+# *********
 # The true value for the rates, used to simulate the data,
 # are constant w.r.t age and time and are given by:
-# $srcthisfile%0%# BEGIN RATE_TRUE%# END RATE_TRUE%1%$$
+# {xrst_literal
+#     BEGIN RATE_TRUE
+#     END RATE_TRUE
+# }
 #
-# $head P$$
-# The notation $latex P$$ is used for prevalence.
-# The initial prevalence at age zero is zero; i.e. $latex P(0) = 0$$.
-# We use $latex S(a)$$ ($latex C(a)$$) for the susceptible
+# P
+# *
+# The notation :math:`P` is used for prevalence.
+# The initial prevalence at age zero is zero; i.e. :math:`P(0) = 0`.
+# We use :math:`S(a)` (:math:`C(a)`) for the susceptible
 # (with condition) fraction of the initial population.
-# The true prevalence $latex P(a) = C(a) / [S(a) + C(a)]$$
+# The true prevalence :math:`P(a) = C(a) / [S(a) + C(a)]`
 # is solved for using the ODE:
-# $latex \[
-#  \begin{array}{rcl}
+#
+# .. math::
+#  :nowrap:
+#
+#  \begin{eqnarray}
 #  S(0)    & = & 1 \\
 #  C(0)    & = & 0 \\
 #  S'(a)   & = & - \iota S(a) + \rho C(a)  - \omega S(a) \\
 #  C'(a)   & = & + \iota S(a) - \rho C(a)  - \omega C(a) - \chi C(a)
-#  \end{array}
-# \] $$
+#  \end{eqnarray}
 #
-# $head Rate Grids$$
+# Rate Grids
+# **********
 # The value of omega is modeled as know and equal to the
 # value of
-# $cref/mtall/csv2db_command/integrand/mtall/$$
+# :ref:`csv2db_command@integrand@mtall`
 # corresponding to the age-time intervals:
-# $srcthisfile%
-#  0%# BEGIN INTERVALS%# END INTERVALS%1
-# %$$
+# {xrst_literal
+#     BEGIN INTERVALS
+#     END INTERVALS
+# }
 # The non-zero rates (iota, rho, chi) are modeled as unknown and piecewise
 # bilinear with the same grid points.
 #
-# $head Data$$
+# Data
+# ****
 # The Data is simulated,
 # without any noise, for the following integrands:
-# $cref/remission/csv2db_command/integrand/remission/$$,
-# $cref/mtexcess/csv2db_command/integrand/mtexcess/$$,
-# $cref/prevalence/csv2db_command/integrand/prevalence/$$.
+# :ref:`csv2db_command@integrand@remission` ,
+# :ref:`csv2db_command@integrand@mtexcess` ,
+# :ref:`csv2db_command@integrand@prevalence` .
 # Note that the model for the noise in the measurement
-# $cref/meas_std/csv2db_command/meas_std/$$
+# :ref:`csv2db_command@meas_std`
 # is a 10 percent coefficient of variation.
 # See the file
-# $cref/data.csv/db2csv_command/data.csv/$$ output by the
+# :ref:`db2csv_command@data.csv` output by the
 # db2csv command.
 #
-# $head Predictions$$
-# The $cref/predictions/csv2db_command/Predictions/$$ are in the file
-# $cref/predict.csv/db2csv_command/predict.csv/$$ output by the
+# Predictions
+# ***********
+# The :ref:`csv2db_command@Predictions` are in the file
+# :ref:`db2csv_command@predict.csv` output by the
 # db2csv command.
 #
-# $head mtall$$
+# mtall
+# *****
 # The omega constraints correspond to
-# $cref/mtall/csv2db_command/integrand/mtall/$$ data.
+# :ref:`csv2db_command@integrand@mtall` data.
 # As a check, we include the mtall data with hold_out equal to one.
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1
-# %$$
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
 #
-# $end
+# {xrst_end user_csv2db.py}
 # -----------------------------------------------------------------------------
 # BEGIN PYTHON
 import sys

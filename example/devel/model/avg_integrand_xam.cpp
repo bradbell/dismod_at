@@ -3,19 +3,17 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin avg_integrand_xam.cpp$$
-$spell
-   interp
-   xam
-$$
+{xrst_begin avg_integrand_xam.cpp}
 
-$section C++ avg_integrand: Example and Test$$
+C++ avg_integrand: Example and Test
+###################################
 
-$srcthisfile%
-   0%// BEGIN C++%// END C++%1
-%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end avg_integrand_xam.cpp}
 */
 // BEGIN C++
 # include <dismod_at/avg_integrand.hpp>

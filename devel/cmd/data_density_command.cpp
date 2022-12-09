@@ -15,90 +15,96 @@
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
 -----------------------------------------------------------------------------
-$begin data_density_command$$
-$spell
-   sim
-   dismod
-   var
-   py
-$$
+{xrst_begin data_density_command}
 
-$section Data Density Command: Change the Density for an Integrand$$
+Data Density Command: Change the Density for an Integrand
+#########################################################
 
-$head Syntax$$
-$codei%dismod_at %database% data_density
-%$$
-$codei%dismod_at %database% data_density %integrand_name% %density_name% %eta_factor% %nu%
-%$$
+Syntax
+******
 
-$head Purpose$$
+| ``dismod_at`` *database* ``data_density``
+| ``dismod_at`` *database* ``data_density`` *integrand_name* *density_name* *eta_factor* *nu*
+
+Purpose
+*******
 This command is used to change the density used for an integrand
 during subsequent fits..
 
-$head database$$
+database
+********
 Is an
-$href%http://www.sqlite.org/sqlite/%$$ database containing the
-$code dismod_at$$ $cref input$$ tables which are not modified.
+http://www.sqlite.org/sqlite/ database containing the
+``dismod_at`` :ref:`input-name` tables which are not modified.
 If this is the only argument, all the data densities are set back to the
-values specified by the $cref data_table$$.
+values specified by the :ref:`data_table-name` .
 
-$head integrand_name$$
+integrand_name
+**************
 This is the
-$cref/integrand/integrand_table/integrand_name/$$ that we setting
+:ref:`integrand<integrand_table@integrand_name>` that we setting
 the density for.
 
-$head density_name$$
-This is the $cref/density_name/density_table/density_name/$$
+density_name
+************
+This is the :ref:`density_table@density_name`
 that we are using for the new density.
 
-$head eta_factor$$
+eta_factor
+**********
 This specifies the value of
-$cref/eta/statistic/Notation/eta/$$ used with this density setting.
+:ref:`statistic@Notation@eta` used with this density setting.
 This value is not used when the density is
-$cref/linear/density_table/Notation/Linear/$$
-(You can use the text $code null$$ in this case).
+:ref:`density_table@Notation@Linear`
+(You can use the text ``null`` in this case).
 If the density is
-$cref/log scaled/density_table/Notation/Log Scaled/$$,
-the value of $icode eta$$ used with this density is
-$codei%
-   %eta% = %eta_factor% * median( %meas_value% )
-%$$
-Here $codei%median(%meas_value%)%$$ is the median of the
-$cref/meas_value/data_table/meas_value/$$ in the data table.
+:ref:`density_table@Notation@Log Scaled` ,
+the value of *eta* used with this density is
 
-$head nu$$
+   *eta* = *eta_factor* * ``median`` ( *meas_value*  )
+
+Here ``median`` ( *meas_value* ) is the median of the
+:ref:`data_table@meas_value` in the data table.
+
+nu
+**
 This specifies the value of
-$cref/nu/statistic/Notation/nu/$$ used with this density setting.
+:ref:`statistic@Notation@nu` used with this density setting.
 This value is only used when the density is
-$code students$$ or $code log_students$$.
-(You can use text $code null$$ is when it is not used.)
+``students`` or ``log_students`` .
+(You can use text ``null`` is when it is not used.)
 
-$head data_subset_table$$
-Only rows of the $cref data_subset_table$$ that correspond to this integrand
+data_subset_table
+*****************
+Only rows of the :ref:`data_subset_table-name` that correspond to this integrand
 are modified.
 
-$subhead density_id$$
-The subset table $cref/density_id/data_subset_table/density_id/$$
-for this integrand is changed to this $icode density$$.
+density_id
+==========
+The subset table :ref:`data_subset_table@density_id`
+for this integrand is changed to this *density* .
 
-$subhead eta$$
+eta
+===
 If the density is
-$cref/log scaled/density_table/Notation/Log Scaled/$$,
-the subset table $cref/eta/data_subset_table/eta/$$
+:ref:`density_table@Notation@Log Scaled` ,
+the subset table :ref:`data_subset_table@eta`
 is set to the value defined above.
 Otherwise, it is set to null.
 
-$subhead nu$$
-If the density is $code students$$ or $code log_students$$,
-the subset table $cref/nu/data_subset_table/nu/$$
+nu
+==
+If the density is ``students`` or ``log_students`` ,
+the subset table :ref:`data_subset_table@nu`
 is set to the value specified above.
 Otherwise, it is set to null.
 
-$head Example$$
-The file $cref user_data_density.py$$ contains an example and test
+Example
+*******
+The file :ref:`user_data_density.py-name` contains an example and test
 using this command.
 
-$end
+{xrst_end data_density_command}
 */
 void data_density_command(
    sqlite3*                                      db                ,

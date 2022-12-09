@@ -2,15 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin covariate_table.py$$ $newlinech #$$
-# $spell
-#  covariate
-# $$
+# {xrst_begin covariate_table.py}
+# {xrst_comment_ch #}
 #
-# $section covariate_table: Example and Test$$
+# covariate_table: Example and Test
+# #################################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end covariate_table.py}
 # BEGIN PYTHON
 def covariate_table() :
    import dismod_at

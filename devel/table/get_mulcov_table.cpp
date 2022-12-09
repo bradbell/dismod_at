@@ -3,92 +3,97 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_mulcov_table$$
-$spell
-   mulcov
-   sqlite
-   struct
-   cpp
-   std
-   covariate
+{xrst_begin get_mulcov_table}
+{xrst_spell
    enum
-$$
+}
 
-$section C++: Get the Covariate Multiplier Table Information$$
+C++: Get the Covariate Multiplier Table Information
+###################################################
 
-$head Syntax$$
-$icode%mulcov_table% = get_mulcov_table(%db%)%$$
+Syntax
+******
+*mulcov_table* = ``get_mulcov_table`` ( *db* )
 
-$head Purpose$$
-To read the $cref mulcov_table$$ and return it as a C++ data structure.
+Purpose
+*******
+To read the :ref:`mulcov_table-name` and return it as a C++ data structure.
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head mulcov_struct$$
+mulcov_struct
+*************
 This is a structure with the following fields
-$table
-Type $cnext Field $cnext Description
-$rnext
-$code mulcov_type_enum$$ $pre  $$ $cnext $code mulcov_type$$   $pre  $$ $cnext
-   See the description of $code mulcov_type$$ below.
-$rnext
-$code int$$ $cnext $code rate_id$$     $pre  $$ $cnext
-   The $cref/rate_id/mulcov_table/rate_id/$$
-   for this multiplier
-$rnext
-$code int$$ $cnext $code integrand_id$$     $pre  $$ $cnext
-   The $cref/integrand_id/mulcov_table/integrand_id/$$
-   for this multiplier
-$rnext
-$code int$$ $cnext $code covariate_id$$     $pre  $$ $cnext
-   The $cref/covariate_id/mulcov_table/covariate_id/$$
-   for this multiplier
-$rnext
-$code int$$ $cnext $code group_id$$     $pre  $$ $cnext
-   The $cref/group_id/mulcov_table/group_id/$$
-   for this multiplier
-$rnext
-$code int$$ $cnext $code group_smooth_id$$     $pre  $$ $cnext
-   The $cref/group_smooth_id/mulcov_table/group_smooth_id/$$
-   for this multiplier
-$rnext
-$code int$$ $cnext $code subgroup_smooth_id$$     $pre  $$ $cnext
-   The $cref/subgroup_smooth_id/mulcov_table/subgroup_smooth_id/$$
-   for this multiplier
-$tend
 
-$subhead mulcov_type_enum$$
-The $code mulcov_type_enum$$ possible values are
-$code rate_value_enum$$,
-$code meas_value_enum$$, and
-$code meas_noise_enum$$.
+.. list-table::
+
+   * - Type
+     - Field
+     - Description
+   * - ``mulcov_type_enum``
+     - ``mulcov_type``
+     - See the description of ``mulcov_type`` below.
+   * - ``int``
+     - ``rate_id``
+     - The :ref:`mulcov_table@rate_id`
+       for this multiplier
+   * - ``int``
+     - ``integrand_id``
+     - The :ref:`mulcov_table@integrand_id`
+       for this multiplier
+   * - ``int``
+     - ``covariate_id``
+     - The :ref:`mulcov_table@covariate_id`
+       for this multiplier
+   * - ``int``
+     - ``group_id``
+     - The :ref:`mulcov_table@group_id`
+       for this multiplier
+   * - ``int``
+     - ``group_smooth_id``
+     - The :ref:`mulcov_table@group_smooth_id`
+       for this multiplier
+   * - ``int``
+     - ``subgroup_smooth_id``
+     - The :ref:`mulcov_table@subgroup_smooth_id`
+       for this multiplier
+
+mulcov_type_enum
+================
+The ``mulcov_type_enum`` possible values are
+``rate_value_enum`` ,
+``meas_value_enum`` , and
+``meas_noise_enum`` .
 These correspond to the values in the
-$cref/mulcov_type/mulcov_table/mulcov_type/$$ column of the
-$code mulcov_type$$ table.
+:ref:`mulcov_table@mulcov_type` column of the
+``mulcov_type`` table.
 
-$head mulcov_table$$
-The return value $icode mulcov_table$$ has prototype
-$codei%
-   CppAD::vector<mulcov_struct>  %mulcov_table%
-%$$
-For each $cref/mulcov_id/mulcov_table/mulcov_id/$$,
-$codei%
-   %mulcov_table%[%mulcov_id%]
-%$$
+mulcov_table
+************
+The return value *mulcov_table* has prototype
+
+   ``CppAD::vector<mulcov_struct>`` *mulcov_table*
+
+For each :ref:`mulcov_table@mulcov_id` ,
+
+   *mulcov_table* [ *mulcov_id* ]
+
 is the information for the corresponding multiplier.
-
-$children%example/devel/table/get_mulcov_table_xam.cpp
-%$$
-$head Example$$
-The file $cref get_mulcov_table_xam.cpp$$ contains an example that uses
+{xrst_toc_hidden
+   example/devel/table/get_mulcov_table_xam.cpp
+}
+Example
+*******
+The file :ref:`get_mulcov_table_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_mulcov_table}
 -----------------------------------------------------------------------------
 */
 

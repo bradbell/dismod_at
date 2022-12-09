@@ -3,91 +3,100 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_rate_table$$
-$spell
-   struct
-   sqlite
+{xrst_begin get_rate_table}
+{xrst_spell
    enum
-   cpp
-   pini
-   nslist
-   std
-$$
+}
 
-$section C++: Get the Rate Table Information$$
+C++: Get the Rate Table Information
+###################################
 
-$head Syntax$$
-$icode%rate_table% = get_rate_table(%db%)
-%$$
-$icode%rate_name% = get_rate_name(%rate_id%)%$$
+Syntax
+******
 
-$head get_rate_table$$
-Reads the $cref rate_table$$ and return it as a C++ data structure.
+   *rate_table* = ``get_rate_table`` ( *db* )
 
-$head get_rate_name$$
+*rate_name* = ``get_rate_name`` ( *rate_id* )
+
+get_rate_table
+**************
+Reads the :ref:`rate_table-name` and return it as a C++ data structure.
+
+get_rate_name
+*************
 Sets
-$cref/rate_name/rate_table/rate_name/$$
-to a $code std::string$$ that corresponds to
-$cref/rate_id/rate_table/rate_id/$$.
+:ref:`rate_table@rate_name`
+to a ``std::string`` that corresponds to
+:ref:`rate_table@rate_id` .
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head rate_struct$$
+rate_struct
+***********
 This is a structure with the following fields
-$table
-Type $cnext Field $cnext Description
-$rnext
-$code rate_enum$$ $cnext $code rate$$  $cnext
-   enum corresponding to $cref/rate_name/rate_table/rate_name/$$
-$rnext
-$code int$$ $cnext $code parent_smooth_id$$  $cnext
-   The $cref/parent_smooth_id/rate_table/parent_smooth_id/$$
-$rnext
-$code int$$ $cnext $code child_smooth_id$$  $cnext
-   The $cref/child_smooth_id/rate_table/child_smooth_id/$$
-$rnext
-$code int$$ $cnext $code child_nslist_id$$  $cnext
-   The $cref/child_nslist_id/rate_table/child_nslist_id/$$
-$tend
 
-$head rate_table$$
-The return value $icode rate_table$$ has prototype
-$codei%
-   CppAD::vector<rate_struct>  %rate_table%
-%$$
-For each $cref/rate_id/rate_table/rate_id/$$,
-$codei%
-   %rate_table%[%rate_id%]
-%$$
+.. list-table::
+
+   * - Type
+     - Field
+     - Description
+   * - ``rate_enum``
+     - ``rate``
+     - enum corresponding to :ref:`rate_table@rate_name`
+   * - ``int``
+     - ``parent_smooth_id``
+     - The :ref:`rate_table@parent_smooth_id`
+   * - ``int``
+     - ``child_smooth_id``
+     - The :ref:`rate_table@child_smooth_id`
+   * - ``int``
+     - ``child_nslist_id``
+     - The :ref:`rate_table@child_nslist_id`
+
+rate_table
+**********
+The return value *rate_table* has prototype
+
+   ``CppAD::vector<rate_struct>`` *rate_table*
+
+For each :ref:`rate_table@rate_id` ,
+
+   *rate_table* [ *rate_id* ]
+
 is the information value for the corresponding
-$cref/rate_id/rate_table/rate_id/$$.
+:ref:`rate_table@rate_id` .
 
-$head rate_enum$$
-The $icode rate_table$$ can also be addressed
-using the $code rate_enum$$ values as follows:
-$table
-$icode rate_id$$    $pre  $$ $cnext $icode rate_name$$     $rnext
-$code pini_enum$$   $pre  $$ $cnext $code pini$$           $rnext
-$code iota_enum$$   $pre  $$ $cnext $code iota$$           $rnext
-$code rho_enum$$    $pre  $$ $cnext $code rho$$            $rnext
-$code chi_enum$$    $pre  $$ $cnext $code chi$$            $rnext
-$code omega_enum$$  $pre  $$ $cnext $code omega$$
-$tend
-The number of these enum values is $code number_rate_enum$$.
+rate_enum
+*********
+The *rate_table* can also be addressed
+using the ``rate_enum`` values as follows:
 
+.. csv-table::
+   :widths: auto
 
-$children%example/devel/table/get_rate_table_xam.cpp
-%$$
-$head Example$$
-The file $cref get_rate_table_xam.cpp$$ contains an example that uses
+   *rate_id*,*rate_name*
+   ``pini_enum``,``pini``
+   ``iota_enum``,``iota``
+   ``rho_enum``,``rho``
+   ``chi_enum``,``chi``
+   ``omega_enum``,``omega``
+
+The number of these enum values is ``number_rate_enum`` .
+{xrst_toc_hidden
+   example/devel/table/get_rate_table_xam.cpp
+}
+Example
+*******
+The file :ref:`get_rate_table_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_rate_table}
 -----------------------------------------------------------------------------
 */
 

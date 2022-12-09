@@ -3,103 +3,105 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_table_column$$
-$spell
-   sqlite
-   const
-   std
-   CppAD
-   dismod
-   hpp
-$$
+{xrst_begin get_table_column}
 
-$section C++: Get The Type and Values in a Table Column$$
+C++: Get The Type and Values in a Table Column
+##############################################
 
-$head Syntax$$
-$icode%column_type% = get_table_column_type(%db%, %table_name%, %column_name%)
-%$$
-$codei%get_table_column(%db%, %table_name%, %column_name%, %result%)
-%$$
+Syntax
+******
 
-$head db$$
+| *column_type* = ``get_table_column_type`` ( *db* , *table_name* , *column_name* )
+| ``get_table_column`` ( *db* , *table_name* , *column_name* , *result* )
+
+db
+**
 This argument has prototype
-$codei%
-   sqlite3* %db%
-%$$
+
+   ``sqlite3`` * *db*
+
 and is the database we are getting information from.
 
-$head table_name$$
+table_name
+**********
 This argument has prototype
-$codei%
-   const std::string& %table_name%
-%$$
+
+   ``const std::string&`` *table_name*
+
 and is the name of the table we are getting information from.
 
-$head column_name$$
+column_name
+***********
 This argument has prototype
-$codei%
-   const std::string& %column_name%
-%$$
+
+   ``const std::string&`` *column_name*
+
 and is the name of the column we are getting information from.
 
-$head column_type$$
+column_type
+***********
 This return value has prototype
-$codei%
-   std::string %column_type%
-%$$
-If there is no column named $icode column_name$$ in the table
-named $icode table_name$$, $icode column_type$$ is the empty string.
-Otherwise its value is either $code text$$, $code integer$$, or $code real$$
+
+   ``std::string`` *column_type*
+
+If there is no column named *column_name* in the table
+named *table_name* , *column_type* is the empty string.
+Otherwise its value is either ``text`` , ``integer`` , or ``real``
 depending on the type of the column in the database.
 
-$head result$$
+result
+******
 The input size of this vector must be zero.
 Upon return it contains the values in the specified column.
-The results are ordered using the $cref/primary key/database/Primary Key/$$
+The results are ordered using the :ref:`database@Primary Key`
 for this table.
 
-$subhead text$$
-If the column has type $code text$$, this argument has
+text
+====
+If the column has type ``text`` , this argument has
 prototype
-$codei%
-   CppAD::vector<std::string>& %result%
-%$$
-If a text value is $code null$$,
+
+   ``CppAD::vector<std::string>&`` *result*
+
+If a text value is ``null`` ,
 it is returned as the empty string.
 It is an error for any of the text values
 in the database to be the empty string.
 
-$subhead integer$$
-If the column has type $code integer$$, this argument has
+integer
+=======
+If the column has type ``integer`` , this argument has
 prototype
-$codei%
-   CppAD::vector<int>& %result%
-%$$
-If an integer value is $code null$$,
-it is returned as the $code int$$ value
-$codei%
-   std::limits<int>::min()
-%$$
+
+   ``CppAD::vector<int>&`` *result*
+
+If an integer value is ``null`` ,
+it is returned as the ``int`` value
+
+   ``std::limits<int>::min`` ()
+
 It is an error for any of the integer values in the database to
 have this value.
 
-$subhead real$$
-If the column has type $code real$$, this argument has
+real
+====
+If the column has type ``real`` , this argument has
 prototype
-$codei%
-   CppAD::vector<double>& %result%
-%$$
-If a real value is $code null$$, it is returned as the $code double$$
-value $code nan$$.
-Note that it is not possible for a database value to be $code nan$$.
 
-$children%example/devel/table/get_table_column_xam.cpp
-%$$
-$head Example$$
-The file $cref get_table_column_xam.cpp$$ contains an example that uses
+   ``CppAD::vector<double>&`` *result*
+
+If a real value is ``null`` , it is returned as the ``double``
+value ``nan`` .
+Note that it is not possible for a database value to be ``nan`` .
+{xrst_toc_hidden
+   example/devel/table/get_table_column_xam.cpp
+}
+Example
+*******
+The file :ref:`get_table_column_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_table_column}
 ------------------------------------------------------------------------------
 */
 # include <limits>

@@ -3,31 +3,35 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin example_devel.cpp$$
-$spell
-   devel
-   cpp
+{xrst_begin example_devel.cpp}
+{xrst_spell
+   cd
    cmake
-$$
+   devel
+}
 
-$section Run C++ Examples$$
+Run C++ Examples
+################
 
-$head Syntax$$
-$code example/devel/example_devel$$
+Syntax
+******
+``example/devel/example_devel``
 
-$head Purpose$$
+Purpose
+*******
 This runs all the C++ examples and prints out their correctness
 test results together with a summary result at the end.
 
-$head Steps$$
-$codep
+Steps
+*****
+::
+
    bin/run_cmake.sh
    cd build
    make example_devel
    example/devel/example_devel
-$$
 
-$end
+{xrst_end example_devel.cpp}
 -----------------------------------------------------------------------------
 */
 # include <iostream>

@@ -1,0 +1,147 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin smooth_grid_table}
+
+The Smooth Grid Table
+#####################
+
+Purpose
+*******
+Each row of the ``smooth_grid`` table specifies an
+age, time, value prior, age difference prior, and time difference prior
+for a single :ref:`model_variable<model_variables-name>` .
+(The difference priors represent the smoothing in a mathematical sense.)
+A set of rows with the same *smooth_id* ,
+defines a statistical prior for a function of age and time.
+
+smooth_grid_id
+**************
+This column has type ``integer`` and is the primary key for
+the ``smooth_grid`` table.
+Its initial value is zero, and it increments by one for each row.
+
+smooth_id
+*********
+This column has type ``integer`` and is the primary key for
+the :ref:`smooth_table-name` .
+Each *smooth_id* value corresponds to a different
+statistical prior for a function of age and time.
+
+null
+====
+If *smooth_id* is null, the corresponding row of the
+smooth grid table is not used.
+This can be useful for deleting a row or column corresponding to a
+*smooth_id* .
+
+age_id
+******
+This column has type ``integer`` and is a
+:ref:`age_table@age_id` in the age table.
+The *age_id* value corresponds to a specific age.
+
+time_id
+*******
+This column has type ``integer`` and is a
+:ref:`time_table@time_id` in the time table.
+Each *time_id* value corresponds to a specific time.
+
+value_prior_id
+**************
+This column has type ``integer`` and is the
+:ref:`prior_table@prior_id` for the function's values
+at the corresponding age and time.
+
+null
+====
+If *value_prior_id* is null,
+:ref:`smooth_grid_table@const_value`
+must not be null and is used for the value prior
+at the corresponding age and time.
+
+dage_prior_id
+*************
+This column has type ``integer`` and is the
+:ref:`prior_table@prior_id` for the function's
+forward difference w.r.t age
+at the corresponding age and time; see age difference function
+:ref:`smooth_dage@A^s` .
+The corresponding
+:ref:`prior_table@density_id`
+cannot specify a
+:ref:`censored density<density_table@Notation@Censored>` .
+
+Maximum Age
+===========
+For each time grid point in the smoothing,
+the *dage_prior_id* at the maximum age is not used.
+
+null
+====
+If *dage_prior_id* is null, the corresponding prior is
+a uniform from minus to plus infinity.
+
+dtime_prior_id
+**************
+This column has type ``integer`` and is the
+:ref:`prior_table@prior_id` for the function's
+forward difference w.r.t time
+at the corresponding age and time; see time difference function
+:ref:`smooth_dtime@T^s` .
+The corresponding
+:ref:`prior_table@density_id`
+cannot specify a
+:ref:`censored density<density_table@Notation@Censored>` .
+
+Maximum Age
+===========
+For each age grid point in the smoothing,
+the *dtime_prior_id* at the maximum time is not used.
+
+null
+====
+If *dtime_prior_id* is null, the corresponding prior is
+a uniform from minus to plus infinity.
+
+const_value
+***********
+This column has type ``real``
+and specifies a specific value for a function using this smoothing
+at this age and time (when it is not null).
+This case is equivalent to
+:ref:`prior_table@lower` ,
+:ref:`prior_table@upper` , and
+:ref:`prior_table@mean` , equal to *const_value*
+and
+:ref:`density<prior_table@density_id>` is ``uniform`` .
+
+null
+====
+If *const_value* is null,
+:ref:`value_prior_id<smooth_grid_table-name>` must not be null.
+If *const_value* is not null,
+*value_prior_id* must be null.
+
+Rectangular Grid
+****************
+For each fixed value of *smooth_id*
+the set of *age_id* , *time_id* pairs is rectangular.
+In other words,
+if an *age_id* value appears,
+it appears once with each *time_id*
+that appears with this *smooth_id* .
+This also means,
+if a *time_id* value appears,
+it appears once with each *age_id*
+that appears with this *smooth_id* .
+{xrst_toc_hidden
+   example/table/smooth_grid_table.py
+}
+Example
+*******
+The file :ref:`smooth_grid_table.py-name`
+contains an example ``smooth`` table.
+
+{xrst_end smooth_grid_table}

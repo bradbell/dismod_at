@@ -1,0 +1,86 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin smooth_dtime}
+{xrst_spell
+   ij
+}
+
+Prior Density Function for Smoothing Time Difference
+####################################################
+
+s
+*
+We are given a smoothing, :math:`s`.
+
+I
+*
+We use :math:`I` to denote
+:ref:`smooth_table@n_age` the number of age points in the smoothing.
+
+J
+*
+We use :math:`J` to denote
+:ref:`smooth_table@n_time` the number of time points in the smoothing.
+
+lambda
+******
+We use :math:`\lambda` to denote the
+:ref:`smooth_table@mulstd_dtime_prior_id` multiplier
+for the smoothing.
+
+prior_ij
+********
+For :math:`i = 0, \ldots , I-1`, :math:`j = 0, \ldots , J-2`
+we use *prior_ij* to denote the
+:ref:`dtime_prior<smooth_grid_table@dtime_prior_id>`
+corresponding to age index
+:math:`i` and time index :math:`j` in the smoothing.
+
+d_ij
+****
+We use :math:`d_{i,j}` to denote the
+:ref:`density<prior_table@density_id>` in *prior_ij* .
+In an abuse of notation, we include the value of
+:ref:`prior_table@eta` and
+:ref:`prior_table@nu` and in :math:`d_{i,j}`; see
+:ref:`statistic@Notation@d` .
+
+sigma_ij
+********
+We use :math:`\sigma_{i,j}` to denote the
+:ref:`prior_table@std` in *prior_ij* .
+
+mu_ij
+*****
+We use :math:`\mu_{i,j}` to denote the
+:ref:`prior_table@mean` in *prior_ij* .
+
+v_ij
+****
+We use :math:`v_{i,j}` for the value of the model variable
+corresponding to the *i*-th age point and *j*-th time point
+in the smoothing.
+We include the index :math:`J-1` in this notation, but not the
+other notation above.
+
+T^s
+***
+The time difference density :math:`T^s (s, v)` is defined by
+
+.. math::
+
+   \log T^s (s, v, \theta )
+   =
+   \sum_{i=0}^{I-1} \sum_{j=0}^{J-2} D \left(
+      v_{i,j+1} \W{,} v_{i,j} \W{,}
+      \mu_{i,j} \W{,} \lambda \sigma_{i,j}  \W{,} d_{i,j}
+   \right)
+
+where :math:`D` is the
+:ref:`log-density function<statistic@Log-Density Function, D>` .
+Note that we include :math:`\theta` as an argument because
+:math:`\lambda` is a component of :math:`\theta`.
+
+{xrst_end smooth_dtime}

@@ -1,0 +1,44 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin start_var_table}
+
+Starting Values Used During a Fit
+#################################
+
+Discussion
+**********
+The start_var table contains one value for each of the
+:ref:`model_variables-name` .
+The :ref:`init_command<init_command@start_var_table>`
+creates a start_var table
+using the mean of the priors for the model variables values.
+The :ref:`set_command<set_command@table_out@start_var>`
+can also be used to create a start_var table.
+This table may also be created directly by the user
+(with the aid of the :ref:`var_table-name` ).
+
+start_var_id
+************
+This column has type ``integer`` and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+The *start_var_id* column is also a foreign key for the
+:ref:`var_table-name` ; i.e.,
+
+   *var_id* = *start_var_id*
+
+In addition, the size of both tables is the same.
+
+start_var_value
+***************
+The column has type ``real`` and is
+the value of the :ref:`model_variables-name`
+where the optimization procedure is started during the
+:ref:`fit_command-name` .
+
+Example
+*******
+See the :ref:`init_command.py-name` example and test.
+
+{xrst_end start_var_table}

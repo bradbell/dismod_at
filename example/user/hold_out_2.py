@@ -2,43 +2,50 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_hold_out_2.py$$ $newlinech #$$
-# $spell
-#  Integrands
-#  Sincidence
-#  covariate
-#  covariates
-# $$
+# {xrst_begin user_hold_out_2.py}
+# {xrst_comment_ch #}
 #
-# $section hold_out Command: Balancing Sex Covariate Values$$
+# hold_out Command: Balancing Sex Covariate Values
+# ################################################
 #
-# $head Purpose$$
+# Purpose
+# *******
 # This example shows how to balance
-# $cref/covariates/hold_out_command/Balancing/Covariates/$$
+# :ref:`hold_out_command@Balancing@Covariates`
 # using the hold_out command.
 #
-# $head Integrands$$
-# For this example there is only one integrand, $code Sincidence$$.
+# Integrands
+# **********
+# For this example there is only one integrand, ``Sincidence`` .
 #
-# $head Nodes$$
-# There are Three nodes, $code europe$$, $code germany$$ and $code italy$$.
+# Nodes
+# *****
+# There are Three nodes, ``europe`` , ``germany`` and ``italy`` .
 #
-# $head alpha_true$$
+# alpha_true
+# **********
 # True value of the covariate multiplier used to simulate data:
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 alpha_true  = 0.3
-# %$$
-# This multiplies the sex covariate and affects $icode iota$$.
+# {xrst_code}
+# {xrst_spell_on}
+# This multiplies the sex covariate and affects *iota* .
 #
-# $head iota_avg$$
-# Average value of $icode iota$$.
-# $srccode%py%
+# iota_avg
+# ********
+# Average value of *iota* .
+# {xrst_spell_off}
+# {xrst_code py}
 iota_avg    = 0.01
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head True Iota$$
+# True Iota
+# *********
 # True value for iota used to simulate the data:
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 import math
 def iota_true(node, sex) :
    effect  = alpha_true * sex
@@ -47,37 +54,48 @@ def iota_true(node, sex) :
    elif node == 'italy' :
       iota    = 0.8 * iota_avg * math.exp( effect )
    return iota
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head Parent Node$$
+# Parent Node
+# ***********
 # For this example the parent node is europe and we are only fitting
 # fixed effects, so the variation between germany and italy is noise in
 # the model.
 #
-# $head Data$$
+# Data
+# ****
 # For each node, the data comes in pairs with both sexes represented equally.
 # The problem with the data is that we are only fitting fixed effects.
 # Thus the variation in the node for each data point is a confounding
 # covariate when we sub-sample without balancing the sex covariate.
 #
-# $head Model$$
-# There is only one rate $icode iota$$ and it is constant as a function
+# Model
+# *****
+# There is only one rate *iota* and it is constant as a function
 # of age and time. In addition, there is one covariate multiplier
 # for income.
 #
-# $head fitting$$
+# fitting
+# *******
 # For this example we are only fitting the fixed effects,
 # so the variation between germany and italy is a confounding covariate.
 #
-# $head hold_out$$
+# hold_out
+# ********
 # This example uses the version of the hold_out command that includes
-# $cref/balancing covariates/hold_out_command/Balancing/Covariates/$$.
+# :ref:`balancing covariates<hold_out_command@Balancing@Covariates>` .
 # Note that balancing the sex covariate leads to much more accurate
-# estimates of the covariate multiplier $icode alpha$$.
+# estimates of the covariate multiplier *alpha* .
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_hold_out_2.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------

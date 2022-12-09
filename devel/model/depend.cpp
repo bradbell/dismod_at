@@ -9,36 +9,43 @@
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
 -- ---------------------------------------------------------------------------
-$begin data_depend$$
-$spell
-   vec
-   const
-$$
+{xrst_begin data_depend}
+{xrst_spell
+   sparsity
+}
 
-$section Which Variables The Data Model Depends On$$
+Which Variables The Data Model Depends On
+#########################################
 
-$head Syntax$$
-$icode%depend% = data_depend(%pack_vec%, %data_object%)%$$
+Syntax
+******
+*depend* = ``data_depend`` ( *pack_vec* , *data_object* )
 
-$head Prototype$$
-$srcthisfile%0
-   %// BEGIN DATA_DEPEND PROTOTYPE%// END DATA_DEPEND PROTOTYPE%
-1%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN DATA_DEPEND PROTOTYPE
+   // END DATA_DEPEND PROTOTYPE
+}
 
-$head pack_vec$$
-This can be any value for the $cref model_variables$$
+pack_vec
+********
+This can be any value for the :ref:`model_variables-name`
 at which one can evaluate the likelihood for the data.
 
-$head data_object$$
+data_object
+***********
 This object contains and evaluates the likelihood for the data.
 It is effectively const.
 
-$head depend$$
-The return value $icode depend$$ has the same size as $icode pack_vec$$
+depend
+******
+The return value *depend* has the same size as *pack_vec*
 and is a sparsity pattern for the data likelihood as a function of
 the model variables; i.e., if it is false, the derivatives of the
 data likelihood w.r.t. the corresponding model variable is always zero.
-$end
+
+{xrst_end data_depend}
 */
 // BEGIN DATA_DEPEND PROTOTYPE
 CppAD::vector<bool> data_depend(
@@ -119,34 +126,42 @@ CppAD::vector<bool> data_depend(
 }
 /*
 -- ---------------------------------------------------------------------------
-$begin prior_depend$$
-$spell
-   vec
-$$
+{xrst_begin prior_depend}
+{xrst_spell
+   sparsity
+}
 
-$section Which Variables The Prior Depends On$$
+Which Variables The Prior Depends On
+####################################
 
-$head Syntax$$
-$icode%depend% = prior_depend(%pack_vec%, %prior_object%)%$$
+Syntax
+******
+*depend* = ``prior_depend`` ( *pack_vec* , *prior_object* )
 
-$head Prototype$$
-$srcthisfile%0
-   %// BEGIN PRIOR_DEPEND PROTOTYPE%// END PRIOR_DEPEND PROTOTYPE%
-1%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN PRIOR_DEPEND PROTOTYPE
+   // END PRIOR_DEPEND PROTOTYPE
+}
 
-$head pack_vec$$
-This can be any value for the $cref model_variables$$
+pack_vec
+********
+This can be any value for the :ref:`model_variables-name`
 at which one can evaluate the likelihood for the prior.
 
-$head prior_object$$
+prior_object
+************
 This object contains and evaluates the prior.
 
-$head depend$$
-The return value $icode depend$$ has the same size as $icode pack_vec$$
+depend
+******
+The return value *depend* has the same size as *pack_vec*
 and is a sparsity pattern for the prior as a function of
 the model variables; i.e., if it is false, the derivatives of the
 prior w.r.t. the corresponding model variable is always zero.
-$end
+
+{xrst_end prior_depend}
 */
 // BEGIN PRIOR_DEPEND PROTOTYPE
 CppAD::vector<bool> prior_depend(

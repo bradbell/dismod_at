@@ -11,49 +11,49 @@
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
-$begin age_avg_grid$$
+{xrst_begin age_avg_grid}
 
-$section Split the Age Average Grid$$
+Split the Age Average Grid
+##########################
 
-$head Syntax$$
-$icode%age_grid% = age_avg_grid(
-   %ode_step_size%, %age_avg_split%, %age_table%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+| *age_grid* = ``age_avg_grid`` (
+| |tab| *ode_step_size* , *age_avg_split* , *age_table*
+| )
 
-$head ode_step_size$$
-is the $cref/
-   ode_step_size/
-   option_table/
-   Age Average Grid/
-   ode_step_size
-/$$.
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
 
-$head age_avg_split$$
-is the $cref/
-   age_avg_split/
-   option_table/
-   Age Average Grid/
-   age_avg_split
-/$$.
+ode_step_size
+*************
+is the :ref:`option_table@Age Average Grid@ode_step_size` .
 
-$head age_table$$
-is the $cref age_table$$.
+age_avg_split
+*************
+is the :ref:`option_table@Age Average Grid@age_avg_split` .
 
-$head age_grid$$
-is the $cref/age average grid/age_avg_table/Age Average Grid/$$.
+age_table
+*********
+is the :ref:`age_table-name` .
 
-$children%example/devel/utility/age_avg_grid_xam.cpp
-%$$
-$head Example$$
-The file $cref age_avg_grid_xam.cpp$$ contains an example and test
+age_grid
+********
+is the :ref:`age_avg_table@Age Average Grid` .
+{xrst_toc_hidden
+   example/devel/utility/age_avg_grid_xam.cpp
+}
+Example
+*******
+The file :ref:`age_avg_grid_xam.cpp-name` contains an example and test
 of using this routine.
 
-$end
+{xrst_end age_avg_grid}
 */
 // BEGIN_PROTOTYPE
 CppAD::vector<double> age_avg_grid(

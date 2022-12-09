@@ -3,16 +3,23 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $OMhelpKeyCharacter=&
-# &begin example_install.sh&& &newlinech #&&
 #
-# &section An Example Installation&&
+# {xrst_begin example_install.sh}
+# {xrst_comment_ch #}
 #
-# &head Syntax&&
-# &code bin/example_install.sh&&
+# An Example Installation
+# #######################
 #
-# &srcthisfile%0%# BEGIN BASH%# END BASH%1%&&
-# &end
+# Syntax
+# ******
+# ``bin/example_install.sh``
+#
+# {xrst_literal
+#     BEGIN BASH
+#     END BASH
+# }
+#
+# {xrst_end example_install.sh}
 # ----------------------------------------------------------------------------
 # BEGIN BASH
 #

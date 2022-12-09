@@ -3,15 +3,20 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin eigen_ode2_xam.cpp$$
-$spell
-   eigen
-$$
+{xrst_begin eigen_ode2_xam.cpp}
+{xrst_spell
+   eigenvector
+}
 
-$section Example and Test of Eigenvector Method of Solving ODE$$
+Example and Test of Eigenvector Method of Solving ODE
+#####################################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
-$end
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
+
+{xrst_end eigen_ode2_xam.cpp}
 */
 // BEGIN C++
 # include <cppad/cppad.hpp>

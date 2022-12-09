@@ -1,0 +1,49 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin nslist_pair_table}
+
+Lists of Node Smoothing Pairs
+#############################
+
+Discussion
+**********
+This table can be used to specify a lists of nodes with
+corresponding smoothings.
+
+nslist_pair_id
+**************
+This column has type ``integer`` and is the primary key for
+the ``nslist_pair`` table.
+Its initial value is zero, and it increments by one for each row.
+
+nslist_id
+*********
+This column has type integer and is used to identify an individual lists
+in this table.
+This column has type ``integer`` and is the primary key for
+the :ref:`nslist_table-name` .
+Each *nslist_id* value corresponds to a different list of
+( *node_id* , *smooth_id* ) pairs.
+
+node_id
+*******
+This column has type ``integer`` and is a
+:ref:`node_table@node_id` in the ``node`` table.
+It specifies which node this smoothing should be applied to.
+
+smooth_id
+*********
+This column has type ``integer`` and is a
+:ref:`smooth_table@smooth_id` .
+It specifies which smoothing to apply at this node.
+{xrst_toc_hidden
+   example/table/nslist_pair_table.py
+}
+Example
+*******
+The file :ref:`nslist_pair_table.py-name`
+contains an example ``nslist_pair`` table.
+
+{xrst_end nslist_pair_table}

@@ -3,261 +3,310 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin eigen_ode2$$
-$spell
-   tf
+{xrst_begin eigen_ode2}
+{xrst_spell
+   cc
    eigen
-   const
-   yi
+   eigenvalue
+   eigenvector
+   tf
    yf
-   cpp
-$$
+   yi
+}
 
-$section Eigen Vector Solution of ODE with Two Components$$
+Eigen Vector Solution of ODE with Two Components
+################################################
 
-$head Syntax$$
-$icode%yf% = eigen_ode2(%case_number%, %b%, %yi%, %tf%)
-%$$
+Syntax
+******
 
-$head Purpose$$
-Given $latex y( 0 ) \in \B{R}^2$$,
-$latex B \in \B{R}^{2 \times 2}$$,
-and $latex t_f \in \B{R}_+$$,
-this routine uses the eigen vectors of $latex B$$ to solve for
-$latex y( t_f )$$ where
-$latex \[
+   *yf* = ``eigen_ode2`` ( *case_number* , *b* , *yi* , *tf* )
+
+Purpose
+*******
+Given :math:`y( 0 ) \in \B{R}^2`,
+:math:`B \in \B{R}^{2 \times 2}`,
+and :math:`t_f \in \B{R}_+`,
+this routine uses the eigen vectors of :math:`B` to solve for
+:math:`y( t_f )` where
+
+.. math::
+
    y' (t) = B y(t)
-\]$$
+
 Furthermore, the operation sequence only depends on the value of
-$icode case_number$$ and not on the value of the particular $icode b$$
+*case_number* and not on the value of the particular *b*
 for which this function is recorded.
 
-$head Float$$
-The type $icode Float$$ must be $code double$$ or
-$cref a1_double$$.
+Float
+*****
+The type *Float* must be ``double`` or
+:ref:`a1_double-name` .
 
-
-$head b$$
+b
+*
 This argument has prototype
-$codei%
-   const CppAD::vector<%Float%>& %b%
-%$$
+
+   ``const CppAD::vector<`` *Float* >& *b*
+
 and size four.
-It specifies the matrix $latex B$$
+It specifies the matrix :math:`B`
 in row-major order; i.e.,
-$latex \[
-B
-=
-\left( \begin{array}{cc}
-   B_{0,0}  & B_{0,1} \\
-   B_{1,0}  & B_{1,1}
-\end{array} \right)
-=
-\left( \begin{array}{cc}
-   b_0  & b_1 \\
-   b_2  & b_3
-\end{array} \right)
-\] $$
 
-$head Assumption$$
+.. math::
+
+   B
+   =
+   \left( \begin{array}{cc}
+      B_{0,0}  & B_{0,1} \\
+      B_{1,0}  & B_{1,1}
+   \end{array} \right)
+   =
+   \left( \begin{array}{cc}
+      b_0  & b_1 \\
+      b_2  & b_3
+   \end{array} \right)
+
+Assumption
+**********
 We restrict our attention to the case where the off-diagonal elements
-of $latex  B$$ have the same sign; i.e.
-$latex \[
+of :math:`B` have the same sign; i.e.
+
+.. math::
+
    B_{0,1} B_{1,0} = b_1 b_2 \geq 0
-\] $$
 
-$head yi$$
+yi
+**
 This argument has prototype
-$codei%
-   const CppAD::vector<%Float%>& %yi%
-%$$
+
+   ``const CppAD::vector<`` *Float* >& *yi*
+
 and size two.
-It specifies the vector $latex y( 0 )$$, to be specific,
-$pre
-   $$ $latex y_0 ( 0 ) =$$ $icode%yi%[0]%$$
-$pre
-   $$ $latex y_1 ( 0 ) =$$ $icode%yi%[1]%$$.
+It specifies the vector :math:`y( 0 )`, to be specific,
 
-$head tf$$
+|tab| :math:`y_0 ( 0 ) =` *yi* [0]
+
+|tab| :math:`y_1 ( 0 ) =` *yi* [1] .
+
+tf
+**
 This argument has prototype
-$codei%
-   const %Float%& %tf%
-%$$
-It specifies the final time; i.e. $latex t_f$$.
 
-$head yf$$
+   ``const`` *Float* & *tf*
+
+It specifies the final time; i.e. :math:`t_f`.
+
+yf
+**
 The return value has prototype
-$codei%
-   CppAD::vector<%Float%>& %yf%
-%$$
+
+   ``CppAD::vector<`` *Float* >& *yf*
+
 and size two and contains the solution of the ODE; i.e.,
-$codei%
-   %yf%[0]%$$ $latex = y_0 ( t_f )$$
-$codei%
-   %yf%[1]%$$ $latex = y_1 ( t_f )$$.
 
-$head case_number$$
+   ``yf`` [0]
+
+:math:`= y_0 ( t_f )`
+
+   ``yf`` [1]
+
+:math:`= y_1 ( t_f )`.
+
+case_number
+***********
 This argument has prototype
-$codei%
-   size_t %case_number%
-%$$
 
-$subhead One$$
-The case where $latex b_1 = 0$$ and $latex b_2 = 0$$ we denote by
-$codei%
-   %case_number% == 1
-%$$
+   ``size_t`` *case_number*
+
+One
+===
+The case where :math:`b_1 = 0` and :math:`b_2 = 0` we denote by
+
+   *case_number*  == 1
+
 In this case we return the solution
-$latex \[
-\begin{array}{rcl}
-   y_0 ( t_f ) & = & y_0 (0) \exp( b_0 t )
-   \\
-   y_1 ( t_f ) & = & y_1 (0) \exp( b_3 t )
-\end{array}
-\]$$
 
-$subhead Two$$
-The case where $latex b_1 \neq 0$$ and $latex b_2 = 0$$.
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      y_0 ( t_f ) & = & y_0 (0) \exp( b_0 t )
+      \\
+      y_1 ( t_f ) & = & y_1 (0) \exp( b_3 t )
+   \end{eqnarray}
+
+Two
+===
+The case where :math:`b_1 \neq 0` and :math:`b_2 = 0`.
 We denote by
-$codei%
-   %case_number% == 2
-%$$
+
+   *case_number*  == 2
+
 In this case, we switch the order of the rows and columns in
-$latex B$$ and $icode yi$$,
+:math:`B` and *yi* ,
 compute the solution using
-$cref/case three/eigen_ode2/Method/Case Three/$$
+:ref:`eigen_ode2@Method@Case Three`
 and then switch the order of the result.
 
-$subhead Three$$
-The case where $latex b_1 = 0$$, $latex b_2 \neq 0$$.
+Three
+=====
+The case where :math:`b_1 = 0`, :math:`b_2 \neq 0`.
 We denote this case by
-$codei%
-   %case_number% == 3
-%$$
-In this case, we compute the solution use the method for
-$cref/case three/eigen_ode2/Method/Case Three/$$ below.
 
-$subhead Four$$
-The case where $latex b_1 \neq 0 $$ and $latex b_2 \neq 0$$.
-$codei%
-   %case_number% == 4
-%$$
-In this case, we compute the solution use the method for
-$cref/case four/eigen_ode2/Method/Case Four/$$ below.
+   *case_number*  == 3
 
-$head Method$$
+In this case, we compute the solution use the method for
+:ref:`eigen_ode2@Method@Case Three` below.
+
+Four
+====
+The case where :math:`b_1 \neq 0` and :math:`b_2 \neq 0`.
+
+   *case_number*  == 4
+
+In this case, we compute the solution use the method for
+:ref:`eigen_ode2@Method@Case Four` below.
+
+Method
+******
 The solution for case one is presented above.
 The solution for case two is to convert it to case three.
 
-$subhead Case Three$$
-For this case $latex b_1 = 0$$ and $latex b_2 \neq 0$$.
+Case Three
+==========
+For this case :math:`b_1 = 0` and :math:`b_2 \neq 0`.
 It follows that
-$latex \[
-\begin{array}{rcl}
-y_0 ( t )   & = & y_0 ( 0 ) \exp ( b_0 t )
-\\
-y_1 ' ( t ) & = & b_3 y_1 (t) + b_2 y_0 ( t )
-\\
-y_1 (t)     & = & y_1 ( 0 ) \exp ( b_3 t ) +
-   \int_0^t \exp [ b_3 ( t - s ) ] b_2 y_0 (s) \B{d} s
-\\
-y_1 (t)     & = & y_1 ( 0 ) \exp ( b_3 t ) +
-   b_2 y_0 ( 0 ) \int_0^t \exp [ b_3 ( t - s ) + b_0 s  ] \B{d} s
-\\
-y_1 (t)     & = & y_1 ( 0 ) \exp ( b_3 t ) +
-   b_2 y_0 ( 0 ) \exp ( b_3 t ) \int_0^t \exp [ ( b_0 - b_3 ) s ] \B{d} s
-\end{array}
-\] $$
 
-$subhead Case Four$$
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   y_0 ( t )   & = & y_0 ( 0 ) \exp ( b_0 t )
+   \\
+   y_1 ' ( t ) & = & b_3 y_1 (t) + b_2 y_0 ( t )
+   \\
+   y_1 (t)     & = & y_1 ( 0 ) \exp ( b_3 t ) +
+      \int_0^t \exp [ b_3 ( t - s ) ] b_2 y_0 (s) \B{d} s
+   \\
+   y_1 (t)     & = & y_1 ( 0 ) \exp ( b_3 t ) +
+      b_2 y_0 ( 0 ) \int_0^t \exp [ b_3 ( t - s ) + b_0 s  ] \B{d} s
+   \\
+   y_1 (t)     & = & y_1 ( 0 ) \exp ( b_3 t ) +
+      b_2 y_0 ( 0 ) \exp ( b_3 t ) \int_0^t \exp [ ( b_0 - b_3 ) s ] \B{d} s
+   \end{eqnarray}
+
+Case Four
+=========
 In this case
-$latex \[
-   (b_0 - b_3)^2 + b_1 b_2 > 0
-\] $$
-A value $latex \lambda$$
-is an eigen value of $latex B$$ if and only if:
-$latex \[
-\begin{array}{rcl}
-0 & = & ( b_0 - \lambda ) ( b_3 - \lambda )  - b_1 b_2
-\\
-0 & = & \lambda^2 - (b_0 + b_3) \lambda + b_0 b_3 - b_1 b_2
-\\
-\lambda & = &  \frac{
-   (b_0 + b_3) \pm \sqrt{ (b_0 + b_3)^2 - 4 b_0 b_3 + 4 b_1 b_2 }
-}{2}
-\\
-\lambda & = &  \frac{
-   (b_0 + b_3) \pm \sqrt{ (b_0 - b_3)^2 + 4 b_1 b_2 }
-}{2}
-\end{array}
-\] $$
-We can express an arbitrary left eigenvector of $latex B$$
-as $latex (1, u)$$ where $latex u \in \B{R}$$,
-$latex \[
-\begin{array}{rcl}
-   \lambda & = & b_0  + b_2 u
-   \\
-   \lambda u & = & b_1  + b_3 u
-\end{array}
-\] $$
-and $latex \lambda$$ is an eigenvalue of $latex B$$.
-Using the first equation to solve for $latex u$$, we have
-$latex \[
-\lambda \; [ 1 \; , \; ( \lambda - b_0 ) / b_2  ]
-=
-[ 1 \; , \; ( \lambda - b_0 ) / b_2  ] \; B
-\] $$
-where
-$latex \[
-\lambda =  \frac{
-   (b_0 + b_3) \pm \sqrt{ (b_0 - b_3)^2 + 4 b_1 b_2 }
-}{2}
-\] $$
-Define $latex \lambda_+$$ and $latex \lambda_-$$ as corresponding
-to the plus and minus the square root above and note
-$latex \lambda_+ \neq \lambda_-$$ because $latex b_1 b_2 > 0$$.
-We also define
-$latex \[
-\begin{array}{rcl}
-   u_\pm & = & ( \lambda_\pm - b_0 ) / b_2
-   \\
-   z_\pm (t) & = & y_0 (t) + u_\pm y_1 (t)
-\end{array}
-\] $$
-It follows that
-$latex \[
-\begin{array}{rcl}
-z_\pm (t) & = &  (1, u_\pm ) y(t)
-\\
-z_\pm ' (t)
-& = &  (1, u_\pm ) y'(t) =  (1, u_\pm ) B y (t) = \lambda_\pm z(t)
-\\
-z_\pm (t) & = & z_\pm (0) \exp( \lambda_\pm t )
-\end{array}
-\] $$
-Which enables us to compute $latex z_\pm (t)$$.
-Furthermore
-$latex \[
-\begin{array}{rcl}
-y_1 (t) & = & [ z_+ (t) - z_- (t) ] / ( u_+ - u_- )
-\\
-& = & [ z_+ (t) - z_- (t) ] b_2 / ( \lambda_+ - \lambda_- )
-\\
-& = & [ z_+ (t) - z_- (t) ] b_2 / \sqrt{ (b_0 - b_3)^2 + 4 b_1 b_2 }
-\\
-y_0(t) & = & z_+ (t) - u_+ y_1 (t)
-\end{array}
-\] $$
 
-$children%
+.. math::
+
+   (b_0 - b_3)^2 + b_1 b_2 > 0
+
+A value :math:`\lambda`
+is an eigen value of :math:`B` if and only if:
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   0 & = & ( b_0 - \lambda ) ( b_3 - \lambda )  - b_1 b_2
+   \\
+   0 & = & \lambda^2 - (b_0 + b_3) \lambda + b_0 b_3 - b_1 b_2
+   \\
+   \lambda & = &  \frac{
+      (b_0 + b_3) \pm \sqrt{ (b_0 + b_3)^2 - 4 b_0 b_3 + 4 b_1 b_2 }
+   }{2}
+   \\
+   \lambda & = &  \frac{
+      (b_0 + b_3) \pm \sqrt{ (b_0 - b_3)^2 + 4 b_1 b_2 }
+   }{2}
+   \end{eqnarray}
+
+We can express an arbitrary left eigenvector of :math:`B`
+as :math:`(1, u)` where :math:`u \in \B{R}`,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      \lambda & = & b_0  + b_2 u
+      \\
+      \lambda u & = & b_1  + b_3 u
+   \end{eqnarray}
+
+and :math:`\lambda` is an eigenvalue of :math:`B`.
+Using the first equation to solve for :math:`u`, we have
+
+.. math::
+
+   \lambda \; [ 1 \; , \; ( \lambda - b_0 ) / b_2  ]
+   =
+   [ 1 \; , \; ( \lambda - b_0 ) / b_2  ] \; B
+
+where
+
+.. math::
+
+   \lambda =  \frac{
+      (b_0 + b_3) \pm \sqrt{ (b_0 - b_3)^2 + 4 b_1 b_2 }
+   }{2}
+
+Define :math:`\lambda_+` and :math:`\lambda_-` as corresponding
+to the plus and minus the square root above and note
+:math:`\lambda_+ \neq \lambda_-` because :math:`b_1 b_2 > 0`.
+We also define
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+      u_\pm & = & ( \lambda_\pm - b_0 ) / b_2
+      \\
+      z_\pm (t) & = & y_0 (t) + u_\pm y_1 (t)
+   \end{eqnarray}
+
+It follows that
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   z_\pm (t) & = &  (1, u_\pm ) y(t)
+   \\
+   z_\pm ' (t)
+   & = &  (1, u_\pm ) y'(t) =  (1, u_\pm ) B y (t) = \lambda_\pm z(t)
+   \\
+   z_\pm (t) & = & z_\pm (0) \exp( \lambda_\pm t )
+   \end{eqnarray}
+
+Which enables us to compute :math:`z_\pm (t)`.
+Furthermore
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   y_1 (t) & = & [ z_+ (t) - z_- (t) ] / ( u_+ - u_- )
+   \\
+   & = & [ z_+ (t) - z_- (t) ] b_2 / ( \lambda_+ - \lambda_- )
+   \\
+   & = & [ z_+ (t) - z_- (t) ] b_2 / \sqrt{ (b_0 - b_3)^2 + 4 b_1 b_2 }
+   \\
+   y_0(t) & = & z_+ (t) - u_+ y_1 (t)
+   \end{eqnarray}
+
+{xrst_toc_hidden
    example/devel/utility/eigen_ode2_xam.cpp
-%$$
-$head Example$$
-The file $cref eigen_ode2_xam.cpp$$ contains
-and example and test of $code eigen_ode2$$.
+}
+Example
+*******
+The file :ref:`eigen_ode2_xam.cpp-name` contains
+and example and test of ``eigen_ode2`` .
 It returns true for success and false for failure.
 
-$end
+{xrst_end eigen_ode2}
 ---------------------------------------------------------------------------
 */
 # include <cppad/cppad.hpp>

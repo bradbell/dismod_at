@@ -3,66 +3,69 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_column_max$$
-$spell
-   max
-   str
-   sqlite
-   const
-   std
+{xrst_begin get_column_max}
+{xrst_spell
    cmd
-$$
+}
 
-$section C++: Get The Maximum Values in a Table Column$$
+C++: Get The Maximum Values in a Table Column
+#############################################
 
-$head Syntax$$
-$icode%max_str% = get_column_max(%db%, %select_cmd%, %column_name%)%$$
+Syntax
+******
+*max_str* = ``get_column_max`` ( *db* , *select_cmd* , *column_name* )
 
-$head db$$
+db
+**
 This argument has prototype
-$codei%
-   sqlite3* %db%
-%$$
+
+   ``sqlite3`` * *db*
+
 and is the database we are getting information from.
 
-$head select_cmd$$
+select_cmd
+**********
 This argument has prototype
-$codei%
-   const std::string& %select_cmd%
-%$$
-and is a SQL select command that results in a table,
-that has a column named $icode column_name$$.
-For example, if you want to take the maximum over all the rows
-in table $icode table_name$$,
-you could use the following for $icode select_cmd$$:
-$codei%
-   select * from %table_name%
-%$$.
 
-$head column_name$$
+   ``const std::string&`` *select_cmd*
+
+and is a SQL select command that results in a table,
+that has a column named *column_name* .
+For example, if you want to take the maximum over all the rows
+in table *table_name* ,
+you could use the following for *select_cmd* :
+
+   ``select`` * ``from`` *table_name*
+
+.
+
+column_name
+***********
 This argument has prototype
-$codei%
-   const std::string& %column_name%
-%$$
+
+   ``const std::string&`` *column_name*
+
 and is the name of the column we are getting information from.
 
-$head max_str$$
+max_str
+*******
 The return value has prototype
-$codei%
-   std::string %max_str%
-%$$
+
+   ``std::string`` *max_str*
+
 and is the maximum value in the column.
 If the table is empty,
-or if all the values in the column are $code null$$,
-the return value of $icode max_str$$ is the empty string.
-
-$children%example/devel/table/get_column_max_xam.cpp
-%$$
-$head Example$$
-The file $cref get_column_max_xam.cpp$$ contains an example that uses
+or if all the values in the column are ``null`` ,
+the return value of *max_str* is the empty string.
+{xrst_toc_hidden
+   example/devel/table/get_column_max_xam.cpp
+}
+Example
+*******
+The file :ref:`get_column_max_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_column_max}
 ------------------------------------------------------------------------------
 */
 # include <iostream>

@@ -3,173 +3,179 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_data_table$$
-$spell
-   const
-   covariate
-   covariates
-   sqlite
-   struct
-   cpp
-   std
-   data
-   cov
-$$
+{xrst_begin get_data_table}
 
-$section C++: Get the Data Table Information$$
+C++: Get the Data Table Information
+###################################
 
-$head Syntax$$
-$codei%get_data_table(
-   %db%, %n_covariate%, %age_min%, %age_max%, %time_min%, %time_max%,
-   %data_table%, %data_cov_value%
-)%$$
+Syntax
+******
 
-$head Purpose$$
-To read the $cref data_table$$ and return it as a C++ data structure.
+| ``get_data_table`` (
+| |tab| *db* , *n_covariate* , *age_min* , *age_max* , *time_min* , *time_max* ,
+| |tab| *data_table* , *data_cov_value*
+| )
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+Purpose
+*******
+To read the :ref:`data_table-name` and return it as a C++ data structure.
+
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head n_covariate$$
+n_covariate
+***********
 This argument has prototype
-$codei%
-   size_t %n_covariate%
-%$$
-and is the size of the $cref/covariate_table/get_covariate_table/$$.
 
-$head age_min$$
-This argument has prototype
-$codei%
-   double %age_min%
-%$$
-and is the minimum value in the $cref age_table$$.
-If an $cref/age_lower/data_table/age_lower/$$ value is less than
-$icode age_min$$, an error is reported.
+   ``size_t`` *n_covariate*
 
-$head age_max$$
+and is the size of the :ref:`covariate_table<get_covariate_table-name>` .
+
+age_min
+*******
 This argument has prototype
-$codei%
-   double %age_max%
-%$$
-and is the maximum value in the $cref age_table$$.
-If an $cref/age_upper/data_table/age_upper/$$ value is greater than
-$icode age_max$$, an error is reported.
+
+   ``double`` *age_min*
+
+and is the minimum value in the :ref:`age_table-name` .
+If an :ref:`data_table@age_lower` value is less than
+*age_min* , an error is reported.
+
+age_max
+*******
+This argument has prototype
+
+   ``double`` *age_max*
+
+and is the maximum value in the :ref:`age_table-name` .
+If an :ref:`data_table@age_upper` value is greater than
+*age_max* , an error is reported.
 The condition
-$codei%
-   %age_lower% <= %age_upper%
-%$$
+
+   *age_lower* <= *age_upper*
+
 is also checked.
 
-$head time_min$$
+time_min
+********
 This argument has prototype
-$codei%
-   double %time_min%
-%$$
-and is the minimum value in the $cref time_table$$.
-If an $cref/time_lower/data_table/time_lower/$$ value is less than
-$icode time_min$$, an error is reported.
 
-$head time_max$$
+   ``double`` *time_min*
+
+and is the minimum value in the :ref:`time_table-name` .
+If an :ref:`data_table@time_lower` value is less than
+*time_min* , an error is reported.
+
+time_max
+********
 This argument has prototype
-$codei%
-   double %time_max%
-%$$
-and is the maximum value in the $cref time_table$$.
-If an $cref/time_upper/data_table/time_upper/$$ value is greater than
-$icode time_max$$, an error is reported.
+
+   ``double`` *time_max*
+
+and is the maximum value in the :ref:`time_table-name` .
+If an :ref:`data_table@time_upper` value is greater than
+*time_max* , an error is reported.
 The condition
-$codei%
-   %time_lower% <= %time_upper%
-%$$
+
+   *time_lower* <= *time_upper*
+
 is also checked.
 
-$head data_table$$
+data_table
+**********
 This argument has prototype
-$codei%
-   CppAD::vector<data_struct>&  %data_table%
-%$$
+
+   ``CppAD::vector<data_struct>&`` *data_table*
+
 On input its size is zero and upon return it has one element for
 each row in the data table.
-For each $cref/data_id/data_table/data_id/$$,
-$codei%
-   %data_table%[%data_id%]
-%$$
-is the $code data_struct$$ information for the corresponding data.
+For each :ref:`data_table@data_id` ,
 
-$subhead data_struct$$
+   *data_table* [ *data_id* ]
+
+is the ``data_struct`` information for the corresponding data.
+
+data_struct
+===========
 This is a structure with the following fields
-$table
-Type  $cnext Field $cnext Description
-$rnext
-$code int$$ $cnext $code integrand_id$$ $cnext
-   The $cref/integrand_id/data_table/integrand_id/$$ for this measurement
-$rnext
-$code int$$ $cnext $code density_id$$ $cnext
-   The $cref/density_id/data_table/density_id/$$ for this measurement
-$rnext
-$code int$$ $cnext $code node_id$$ $cnext
-   The $cref/node_id/data_table/node_id/$$ for this measurement
-$rnext
-$code int$$ $cnext $code subgroup_id$$ $cnext
-   The $cref/subgroup_id/data_table/subgroup_id/$$ for this measurement
-$rnext
-$code int$$ $cnext $code weight_id$$ $cnext
-   The $cref/weight_id/data_table/weight_id/$$ for this measurement
-$rnext
-$code int$$ $cnext $code hold_out$$ $cnext
-   The $cref/hold_out/data_table/hold_out/$$ for this measurement
-$rnext
-$code double$$ $cnext $code meas_value$$ $cnext
-   The $cref/meas_value/data_table/meas_value/$$ for this measurement
-$rnext
-$code double$$ $cnext $code meas_std$$ $cnext
-   The $cref/meas_std/data_table/meas_std/$$ for this measurement
-$rnext
-$code double$$ $cnext $code eta$$ $cnext
-   The $cref/eta/data_table/eta/$$ for this measurement
-$rnext
-$code double$$ $cnext $code nu$$ $cnext
-   The $cref/nu/data_table/nu/$$ for this measurement
-$rnext
-$code double$$ $cnext $code age_lower$$ $cnext
-   The $cref/age_lower/data_table/age_lower/$$ for this measurement
-$rnext
-$code double$$ $cnext $code age_upper$$ $cnext
-   The $cref/age_upper/data_table/age_upper/$$ for this measurement
-$rnext
-$code double$$ $cnext $code time_lower$$ $cnext
-   The $cref/time_lower/data_table/time_lower/$$ for this measurement
-$rnext
-$code double$$ $cnext $code time_upper$$ $cnext
-   The $cref/time_upper/data_table/time_upper/$$ for this measurement
-$tend
 
-$head data_cov_value$$
+.. list-table::
+
+   * - Type
+     - Field
+     - Description
+   * - ``int``
+     - ``integrand_id``
+     - The :ref:`data_table@integrand_id` for this measurement
+   * - ``int``
+     - ``density_id``
+     - The :ref:`data_table@density_id` for this measurement
+   * - ``int``
+     - ``node_id``
+     - The :ref:`data_table@node_id` for this measurement
+   * - ``int``
+     - ``subgroup_id``
+     - The :ref:`data_table@subgroup_id` for this measurement
+   * - ``int``
+     - ``weight_id``
+     - The :ref:`data_table@weight_id` for this measurement
+   * - ``int``
+     - ``hold_out``
+     - The :ref:`data_table@hold_out` for this measurement
+   * - ``double``
+     - ``meas_value``
+     - The :ref:`data_table@meas_value` for this measurement
+   * - ``double``
+     - ``meas_std``
+     - The :ref:`data_table@meas_std` for this measurement
+   * - ``double``
+     - ``eta``
+     - The :ref:`data_table@eta` for this measurement
+   * - ``double``
+     - ``nu``
+     - The :ref:`data_table@nu` for this measurement
+   * - ``double``
+     - ``age_lower``
+     - The :ref:`data_table@age_lower` for this measurement
+   * - ``double``
+     - ``age_upper``
+     - The :ref:`data_table@age_upper` for this measurement
+   * - ``double``
+     - ``time_lower``
+     - The :ref:`data_table@time_lower` for this measurement
+   * - ``double``
+     - ``time_upper``
+     - The :ref:`data_table@time_upper` for this measurement
+
+data_cov_value
+**************
 This argument has prototype
-$codei%
-   CppAD::vector<double>&  %data_cov_value%
-%$$
+
+   ``CppAD::vector<double>&`` *data_cov_value*
+
 On input its size is zero.
 Upon return, its size is the number of data points times
 the number of covariates.
 For each
-$cref/covariate_id/covariate_table/covariate_id/$$ and $icode data_id$$ pair
-$codei%
-   data_cov_value[%data_id% * %n_covariate% + %covariate_id%]
-%$$
-is the corresponding covariate value.
+:ref:`covariate_table@covariate_id` and *data_id* pair
 
-$children%example/devel/table/get_data_table_xam.cpp
-%$$
-$head Example$$
-The file $cref get_data_table_xam.cpp$$ contains an example that uses
+   ``data_cov_value`` [ *data_id* * *n_covariate* + *covariate_id* ]
+
+is the corresponding covariate value.
+{xrst_toc_hidden
+   example/devel/table/get_data_table_xam.cpp
+}
+Example
+*******
+The file :ref:`get_data_table_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_data_table}
 -----------------------------------------------------------------------------
 */
 # include <cmath>

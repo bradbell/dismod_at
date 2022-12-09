@@ -2,12 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin age_table.py$$ $newlinech #$$
+# {xrst_begin age_table.py}
+# {xrst_comment_ch #}
 #
-# $section age_table: Example and Test$$
+# age_table: Example and Test
+# ###########################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end age_table.py}
 # BEGIN PYTHON
 def age_table() :
    import dismod_at

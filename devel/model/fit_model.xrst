@@ -1,0 +1,18 @@
+$Id:$
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin fit_model}
+
+Object that Fits Fixed and Random Effects Model to Data
+#######################################################
+
+Contents
+********
+{xrst_toc_table
+   devel/model/fit_model.cpp
+   include/dismod_at/fit_model_scale.hpp
+}
+
+{xrst_end fit_model}

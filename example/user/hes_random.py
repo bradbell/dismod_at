@@ -2,38 +2,48 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_hes_random.py$$ $newlinech #$$
-# $spell
-#  cppad
-# $$
+# {xrst_begin user_hes_random.py}
+# {xrst_spell
+#     cc
+# }
+# {xrst_comment_ch #}
 #
-# $section Check the Hessian of the Random Effects Objective$$
+# Check the Hessian of the Random Effects Objective
+# #################################################
 #
-# $head Purpose$$
+# Purpose
+# *******
 # This example checks the computation of the Hessian of the
 # random effects objective used by the
-# $cref/asymptotic/sample_command/asymptotic/$$ sampling method.
+# :ref:`sample_command@asymptotic` sampling method.
 #
-# $head Reference$$
+# Reference
+# *********
 # See the
-# $href%https://bradbell.github.io/cppad_mixed/doc/theory.htm%theory%$$
-# section of the $code cppad_mixed$$ documentation.
+# `theory <https://bradbell.github.io/cppad_mixed/doc/theory.htm>`_
+# section of the ``cppad_mixed`` documentation.
 #
-# $head Notation$$
-# $table
-# $latex \theta$$ $cnext model incidence for the parent region $rnext
-# $latex u_0$$    $cnext incidence random effect for first child    $rnext
-# $latex u_1$$    $cnext incidence random effect for second child   $rnext
-# $latex y_0$$    $cnext measured incidence for the first child $rnext
-# $latex y_1$$    $cnext measured incidence for the second child $rnext
-# $latex s$$      $cnext standard deviation for data and random effects $rnext
-# $tend
-# The only fixed effect in this model is $latex \theta$$
-# (sometimes written $icode theta$$) the incidence level for the world.
-# The random effects are $latex u_0$$ and $latex u_1$$.
+# Notation
+# ********
 #
-# $head Problem Parameters$$
-# $srccode%py%
+# .. csv-table::
+#     :widths: auto
+#
+#     :math:`\theta`,model incidence for the parent region
+#     :math:`u_0`,incidence random effect for first child
+#     :math:`u_1`,incidence random effect for second child
+#     :math:`y_0`,measured incidence for the first child
+#     :math:`y_1`,measured incidence for the second child
+#     :math:`s`,standard deviation for data and random effects
+#
+# The only fixed effect in this model is :math:`\theta`
+# (sometimes written *theta* ) the incidence level for the world.
+# The random effects are :math:`u_0` and :math:`u_1`.
+#
+# Problem Parameters
+# ******************
+# {xrst_spell_off}
+# {xrst_code py}
 import csv
 import math
 import time
@@ -44,12 +54,16 @@ y_1            = theta_true * math.exp( u_true[1] )
 standard_dev   = theta_true / 10.0 # the standard deviation s
 random_seed    = int( time.time() )
 number_sample  = 4000
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head Random Likelihood$$
+# Random Likelihood
+# *****************
 # The negative log-likelihood for this example, ignoring the constant
 # of integration, is
-# $latex \[
+#
+# .. math::
+#
 #  f( \theta, u )
 #  = \frac{1}{2 s^2} \left(
 #     [ y_0 - \theta \exp( u_0 ) ]^2 +
@@ -57,10 +71,12 @@ number_sample  = 4000
 #     u_0^2 +
 #     u_1^2
 #  \right)
-# \] $$
 #
-# $head Gradient w.r.t. Random Effects$$
-# $latex \[
+# Gradient w.r.t. Random Effects
+# ******************************
+#
+# .. math::
+#
 #  f_u ( \theta, u )
 #  =
 #  \frac{1}{s^2} \left(
@@ -70,10 +86,12 @@ number_sample  = 4000
 #     \theta^2 \exp( 2 u_1 ) - y_1 \theta \exp( u_1 )  + u_1
 #  \end{array}
 #  \right)
-# \] $$
 #
-# $head Hessian w.r.t. Random Effects$$
-# $latex \[
+# Hessian w.r.t. Random Effects
+# *****************************
+#
+# .. math::
+#
 #  f_{u,u} ( \theta, u )
 #  =
 #  \frac{1}{s^2} \left(
@@ -83,18 +101,23 @@ number_sample  = 4000
 #     0   & 2 \theta^2 \exp( 2 u_1 ) - y_1 \theta \exp( u_1 ) + 1
 #  \end{array}
 #  \right)
-# \] $$
 #
-# $head Asymptotic Statistics$$
+# Asymptotic Statistics
+# *********************
 # The asymptotic posterior distribution for random effects is normal
-# with mean $latex \hat{u} ( \theta )$$
-# and variance $latex f_{u,u} [ \theta , \hat{u} ( \theta ) ]^{-1}$$
-# where $latex \hat{u} ( \theta )$$ minimizes the random effects objective
-# $latex f( \theta , \cdot )$$.
+# with mean :math:`\hat{u} ( \theta )`
+# and variance :math:`f_{u,u} [ \theta , \hat{u} ( \theta ) ]^{-1}`
+# where :math:`\hat{u} ( \theta )` minimizes the random effects objective
+# :math:`f( \theta , \cdot )`.
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_hes_random.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import numpy

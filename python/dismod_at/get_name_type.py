@@ -3,50 +3,57 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin get_name_type$$ $newlinech #$$
-# $spell
-#  dismod
-#  str
-#  tbl
-# $$
+# {xrst_begin get_name_type}
+# {xrst_spell
+#     tbl
+# }
+# {xrst_comment_ch #}
 #
-# $section Get Column Names and Types in a Table$$
+# Get Column Names and Types in a Table
+# #####################################
 #
-# $head Syntax$$
-# $codei%(%col_name%, %col_type%)%$$
-# $codei% = dismod_at.get_name_type(%connection%, %tbl_name%)
-# %$$
+# Syntax
+# ******
+# ( *col_name* , *col_type* )
 #
-# $head connection$$
-# is a $cref/connection/create_connection/connection/$$ for this database.
+#     = ``dismod_at.get_name_type`` ( *connection* , *tbl_name* )
 #
-# $head table_name$$
-# is a $code str$$ that specifies the name of the table.
+# connection
+# **********
+# is a :ref:`create_connection@connection` for this database.
 #
-# $head col_name$$
+# table_name
+# **********
+# is a ``str`` that specifies the name of the table.
+#
+# col_name
+# ********
 # is a list of strings containing the column names in the same order as they
 # appear in the table.
 #
-# $head col_type$$
+# col_type
+# ********
 # is a list of strings containing the column types in the same order as
 # the columns appear in the table.
 # The possible values for the column types are
-# $code integer$$, $code real$$, $code text$$, or
-# $code integer primary key$$.
+# ``integer`` , ``real`` , ``text`` , or
+# ``integer primary key`` .
 # Note that the types in the database are converted to lower case before
-# being returned in $icode col_type$$.
+# being returned in *col_type* .
 #
-# $head Primary Key$$
+# Primary Key
+# ***********
 # This routine assumes the primary key is an integer,  corresponds
-# to the first column, and has name $icode%tbl_name%_id%$$.
+# to the first column, and has name *tbl_name* _ ``id`` .
+# {xrst_toc_hidden
+#    example/table/get_name_type.py
+# }
+# Example
+# *******
+# The file :ref:`get_name_type.py-name` is an example use of
+# ``get_name_type`` .
 #
-# $children%example/table/get_name_type.py
-# %$$
-# $head Example$$
-# The file $cref get_name_type.py$$ is an example use of
-# $code get_name_type$$.
-#
-# $end
+# {xrst_end get_name_type}
 # ---------------------------------------------------------------------------
 import dismod_at
 def get_name_type(connection, tbl_name) :

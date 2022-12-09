@@ -3,17 +3,20 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin bilinear_interp_xam.cpp$$
-$spell
+{xrst_begin bilinear_interp_xam.cpp}
+{xrst_spell
    interp
-   xam
-$$
+}
 
-$section C++ bilinear_interp: Example and Test$$
+C++ bilinear_interp: Example and Test
+#####################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end bilinear_interp_xam.cpp}
 */
 // BEGIN C++
 # include <limits>

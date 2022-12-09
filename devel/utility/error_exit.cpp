@@ -3,75 +3,76 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin error_exit$$
-$spell
-   sqlite
-   const
-   std
-$$
+{xrst_begin error_exit}
 
-$section Printing and Logging Fatal Error Messages$$
+Printing and Logging Fatal Error Messages
+#########################################
 
-$head Syntax$$
-$codei%error_exit(%db%)
-%$$
-$codei%error_exit(%message%)
-%$$
-$codei%error_exit(%message%, %table_name%)
-%$$
-$codei%error_exit(%message%, %table_name%, %row_id%)%$$
+Syntax
+******
 
-$head db$$
+| ``error_exit`` ( *db* )
+| ``error_exit`` ( *message* )
+| ``error_exit`` ( *message* , *table_name* )
+
+``error_exit`` ( *message* , *table_name* , *row_id* )
+
+db
+**
 This argument has prototype
-$codei%
-   sqlite3* %db%
-%$$
 
-$head message$$
+   ``sqlite3`` * *db*
+
+message
+*******
 This argument has prototype
-$codei%
-   const std::string& %message%
-%$$
+
+   ``const std::string&`` *message*
+
 This value gets written to
 standard error (and an end of line is printed after it).
 
-$subhead null$$
-If the previous $icode db$$ was a the null pointer
-(or there was no previous $icode db$$), an assert is generated.
+null
+====
+If the previous *db* was a the null pointer
+(or there was no previous *db* ), an assert is generated.
 It is not the null pointer,
-the value $icode message$$ is also written to the
-$cref/message/log_table/message/$$ column of the log table
+the value *message* is also written to the
+:ref:`log_table@message` column of the log table
 and to standard error.
 
-$head table_name$$
+table_name
+**********
 This argument has prototype
-$codei%
-   const std::string& %table_name%
-%$$
-If $icode db$$ is not the null pointer, this value gets written in the
-$cref/table_name/log_table/table_name/$$ column of the log table.
-If $icode table_name$$ it is not present, the empty string is used.
-If $icode table_name$$ is not empty, it is also written
+
+   ``const std::string&`` *table_name*
+
+If *db* is not the null pointer, this value gets written in the
+:ref:`log_table@table_name` column of the log table.
+If *table_name* it is not present, the empty string is used.
+If *table_name* is not empty, it is also written
 (with a label) to standard error.
 
-$head row_id$$
+row_id
+******
 This argument has prototype
-$codei%
-   const size_t& %row_id%
-%$$
-If $icode db$$ is not the null pointer, this value gets written in the
-$cref/row_id/log_table/row_id/$$ column of the log table.
-Note that the value $code DISMOD_AT_NULL_SIZE_T$$
-gets converted to a $code null$$.
-If $icode row_id$$ is not present, $code null$$ is used.
-If $icode row_id$$ is present and not $code DISMOD_AT_NULL_SIZE_T$$,
-$icode table_name$$ must not be empty.
-In this case, $icode row_id$$ is also written (with a label) to standard error.
 
-$head assert$$
+   ``const size_t&`` *row_id*
+
+If *db* is not the null pointer, this value gets written in the
+:ref:`log_table@row_id` column of the log table.
+Note that the value ``DISMOD_AT_NULL_SIZE_T``
+gets converted to a ``null`` .
+If *row_id* is not present, ``null`` is used.
+If *row_id* is present and not ``DISMOD_AT_NULL_SIZE_T`` ,
+*table_name* must not be empty.
+In this case, *row_id* is also written (with a label) to standard error.
+
+assert
+******
 An assertion is generated before exiting, incase we are running in debug mode.
 
-$end
+{xrst_end error_exit}
 -----------------------------------------------------------------------------
 */
 # include <cstdlib>

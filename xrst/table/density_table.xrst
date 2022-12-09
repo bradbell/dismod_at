@@ -1,0 +1,121 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin density_table}
+{xrst_spell
+   nonsmooth
+}
+
+The Density Table
+#################
+
+Discussion
+**********
+The ``density`` table is used to identify densities.
+It has the following columns:
+
+density_id
+**********
+This column has type ``integer``
+and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+density_name
+************
+This column has type ``text`` .
+This column is unique; i.e., each name can only appear ones in this table.
+All of the *density_id* values that appear in the
+:ref:`prior<prior_table@density_id>` and
+:ref:`data<data_table@density_id>` tables
+must appear in the density table.
+Below is a list of the possible density names
+with a link to the corresponding meaning:
+
+uniform
+=======
+:ref:`statistic@Log-Density Function, D@Uniform`
+
+gaussian
+========
+:ref:`statistic@Log-Density Function, D@Gaussian`
+
+cen_gaussian
+============
+:ref:`statistic@Log-Density Function, D@Censored Gaussian`
+
+log_gaussian
+============
+:ref:`statistic@Log-Density Function, D@Log-Gaussian`
+
+cen_log_gaussian
+================
+:ref:`statistic@Log-Density Function, D@Censored Log-Gaussian`
+
+laplace
+=======
+:ref:`statistic@Log-Density Function, D@Laplace`
+
+cen_laplace
+===========
+:ref:`statistic@Log-Density Function, D@Censored Laplace`
+
+log_laplace
+===========
+:ref:`statistic@Log-Density Function, D@Log-Laplace`
+
+cen_log_laplace
+===============
+:ref:`statistic@Log-Density Function, D@Censored Log-Laplace`
+
+students
+========
+:ref:`statistic@Log-Density Function, D@Student's-t`
+
+log_students
+============
+:ref:`statistic@Log-Density Function, D@Log-Student's-t`
+
+Notation
+********
+
+Linear
+======
+We refer to the following densities as linear:
+``gaussian`` ,
+``cen_gaussian`` ,
+``laplace`` ,
+``cen_laplace`` ,
+``students`` .
+
+Censored
+========
+We refer to the following densities as censored:
+``cen_gaussian`` ,
+``cen_log_gaussian`` ,
+``cen_laplace`` ,
+``cen_log_laplace`` .
+
+Log Scaled
+==========
+We refer to the following densities as log scaled:
+``log_gaussian`` ,
+``cen_log_laplace`` ,
+``log_laplace`` ,
+``log_students`` .
+
+Nonsmooth
+=========
+We refer to the following densities as nonsmooth:
+``laplace`` ,
+``cen_laplace`` ,
+``log_laplace`` .
+{xrst_toc_hidden
+   example/table/density_table.py
+}
+Example
+*******
+The file :ref:`density_table.py-name`
+contains an example ``density`` table.
+
+{xrst_end density_table}

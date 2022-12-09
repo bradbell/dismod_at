@@ -3,59 +3,68 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_bnd_mulcov_table$$
-$spell
-   sqlite
-   struct
-   bnd_mulcov
-   cov_diff
-$$
+{xrst_begin get_bnd_mulcov_table}
 
-$section C++: Get the Data Subset Table$$
+C++: Get the Data Subset Table
+##############################
 
-$head Syntax$$
-$icode%bnd_mulcov_table_table% = get_bnd_mulcov_table(%db%)%$$
+Syntax
+******
+*bnd_mulcov_table_table* = ``get_bnd_mulcov_table`` ( *db* )
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
 
-$head Purpose$$
-To read the $cref bnd_mulcov_table$$ and return it as a C++ data structure.
+Purpose
+*******
+To read the :ref:`bnd_mulcov_table-name` and return it as a C++ data structure.
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head bnd_mulcov_table$$
-For each $cref/bnd_mulcov_id/bnd_mulcov_table/bnd_mulcov_id/$$,
-$codei%
-   %bnd_mulcov_table%[%bnd_mulcov_id%]
-%$$
+bnd_mulcov_table
+****************
+For each :ref:`bnd_mulcov_table@bnd_mulcov_id` ,
+
+   *bnd_mulcov_table* [ *bnd_mulcov_id* ]
+
 is the information for the corresponding
-$icode bnd_mulcov_id$$.
+*bnd_mulcov_id* .
 
-$head bnd_mulcov_struct$$
+bnd_mulcov_struct
+*****************
 This is a structure with the following fields
-$table
-Type $cnext Field $cnext Description
-$rnext
-$code double$$ $cnext $code max_cov_diff$$ $cnext
-   The $cref/max_cov_diff/bnd_mulcov_table/max_cov_diff/$$
-$rnext
-$code double$$ $cnext $code max_mulcov$$ $cnext
-   The $cref/max_mulcov/bnd_mulcov_table/max_mulcov/$$
-$tend
 
-$children%example/devel/table/get_bnd_mulcov_table_xam.cpp
-%$$
-$head Example$$
-The file $cref get_bnd_mulcov_table_xam.cpp$$ contains an example
+.. list-table::
+
+   * - Type
+     - Field
+     - Description
+   * - ``double``
+     - ``max_cov_diff``
+     - The :ref:`bnd_mulcov_table@max_cov_diff`
+   * - ``double``
+     - ``max_mulcov``
+     - The :ref:`bnd_mulcov_table@max_mulcov`
+
+{xrst_toc_hidden
+   example/devel/table/get_bnd_mulcov_table_xam.cpp
+}
+Example
+*******
+The file :ref:`get_bnd_mulcov_table_xam.cpp-name` contains an example
 and test of this function.
 
-$end
+{xrst_end get_bnd_mulcov_table}
 -----------------------------------------------------------------------------
 */
 

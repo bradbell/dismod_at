@@ -1,0 +1,18 @@
+$Id:$
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin random_number}
+
+Pseudo Random Number Generation
+###############################
+
+Contents
+********
+{xrst_toc_table
+   devel/utility/manage_gsl_rng.xrst
+   devel/utility/sim_random.cpp
+}
+
+{xrst_end random_number}

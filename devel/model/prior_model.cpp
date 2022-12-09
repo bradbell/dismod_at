@@ -3,75 +3,73 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin prior_model_ctor$$
-$spell
-   pack_vec
-   CppAD
-   const
-   subvectors
-   std
-   struct
-   fabs
-   var
-$$
+{xrst_begin prior_model_ctor}
 
-$section Construct Fixed Negative Log-Likelihood Object$$
+Construct Fixed Negative Log-Likelihood Object
+##############################################
 
-$head Syntax$$
-$codei%prior_model %prior_object%(
-   %pack_object%, %var2prior%, %age_table%, %time_table%, %prior_table%
-)%$$
+Syntax
+******
 
-$head prior_object$$
+| ``prior_model`` *prior_object* (
+| |tab| *pack_object* , *var2prior* , *age_table* , *time_table* , *prior_table*
+| )
+
+prior_object
+************
 This object has prototype
-$codei%
-   prior_model %prior_object%
-%$$
 
-$head pack_object$$
-This argument has prototype
-$codei%
-   const pack_info& %pack_object%
-%$$
-and is the $cref pack_info$$ information corresponding to the
-$cref model_variables$$.
+   ``prior_model`` *prior_object*
 
-$head var2prior$$
+pack_object
+***********
 This argument has prototype
-$codei%
-   const pack_prior& %var2prior%
-%$$
-and is the $cref pack_prior$$ information corresponding to the
-$cref model_variables$$.
 
-$head age_table$$
-This argument has prototype
-$codei%
-   const CppAD::vector<double>&  %age_table%
-%$$
-and is the $cref/age_table/get_age_table/age_table/$$.
+   ``const pack_info&`` *pack_object*
 
-$head time_table$$
-This argument has prototype
-$codei%
-   const CppAD::vector<double>&  %time_table%
-%$$
-and is the $cref/time_table/get_time_table/time_table/$$.
+and is the :ref:`pack_info-name` information corresponding to the
+:ref:`model_variables-name` .
 
-$head prior_table$$
+var2prior
+*********
 This argument has prototype
-$codei%
-   const CppAD::vector<prior_struct>&  %prior_table%
-%$$
-and is the $cref/prior_table/get_prior_table/prior_table/$$.
+
+   ``const pack_prior&`` *var2prior*
+
+and is the :ref:`pack_prior-name` information corresponding to the
+:ref:`model_variables-name` .
+
+age_table
+*********
+This argument has prototype
+
+   ``const CppAD::vector<double>&`` *age_table*
+
+and is the :ref:`get_age_table@age_table` .
+
+time_table
+**********
+This argument has prototype
+
+   ``const CppAD::vector<double>&`` *time_table*
+
+and is the :ref:`get_time_table@time_table` .
+
+prior_table
+***********
+This argument has prototype
+
+   ``const CppAD::vector<prior_struct>&`` *prior_table*
+
+and is the :ref:`get_prior_table@prior_table` .
 Only to following fields are used
-$cref/density_id/prior_table/density_id/$$,
-$cref/mean/prior_table/mean/$$,
-$cref/std/prior_table/std/$$,
-$cref/eta/prior_table/eta/$$,
-$cref/nu/prior_table/nu/$$.
+:ref:`prior_table@density_id` ,
+:ref:`prior_table@mean` ,
+:ref:`prior_table@std` ,
+:ref:`prior_table@eta` ,
+:ref:`prior_table@nu` .
 
-$end
+{xrst_end prior_model_ctor}
 */
 
 # include <utility>
@@ -156,49 +154,48 @@ residual_struct<Float> prior_model::log_prior(
    );
 }
 /*
-$begin replace_mean$$
-$spell
-   const
-   var
-   dage
-   dtime
-$$
+{xrst_begin replace_mean}
 
-$section Replace Prior Means$$
+Replace Prior Means
+###################
 
-$head Syntax$$
-$icode%prior_object%.replace_mean(%prior_mean%)%$$.
+Syntax
+******
+*prior_object* . ``replace_mean`` ( *prior_mean* ) .
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_REPLACE_MEAN_PROTOTYPE%// END_REPLACE_MEAN_PROTOTYPE%1
-%$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_REPLACE_MEAN_PROTOTYPE
+   // END_REPLACE_MEAN_PROTOTYPE
+}
 
-$head Purpose$$
-By default, the $cref/mean/prior_table/mean/$$ values in the prior table
+Purpose
+*******
+By default, the :ref:`prior_table@mean` values in the prior table
 are used when computing the prior for the
-$cref/fixed/prior_fixed_effect/$$ and $cref/random/prior_random_effect/$$.
+:ref:`fixed<prior_fixed_effect-name>` and :ref:`random<prior_random_effect-name>` .
 This routine can be used to replace these means
-(which is useful for posterior $cref/simulation/posterior/Simulation/$$).
+(which is useful for posterior :ref:`posterior@Simulation` ).
 
 This object has prototype
-$codei%
-   const prior_model %prior_object%
-%$$
 
-$head prior_mean$$
-This vector has size $icode%n_var%*3%$$ where $icode n_var$$
-is the number of variables in the $cref var_table$$.
-For $icode var_id$$ equal zero to $icode%n_var%-1%$$,
-$codei%
-   %prior_mean%[ 3 * %var_id% + %k% ]
-%$$
+   ``const prior_model`` *prior_object*
+
+prior_mean
+**********
+This vector has size *n_var* * 3 where *n_var*
+is the number of variables in the :ref:`var_table-name` .
+For *var_id* equal zero to *n_var* ``-1`` ,
+
+   *prior_mean* [ 3 * *var_id* + *k*  ]
+
 replace the mean in the
-$cref/value prior/pack_prior/value_prior_id/$$ ($icode%k%=0%$$),
-$cref/dage prior/pack_prior/dage_prior_id/$$ ($icode%k%=1%$$),
-$cref/dtime prior/pack_prior/dtime_prior_id/$$ ($icode%k%=2%$$).
+:ref:`value prior<pack_prior@value_prior_id>` ( *k* =0 ),
+:ref:`dage prior<pack_prior@dage_prior_id>` ( *k* =1 ),
+:ref:`dtime prior<pack_prior@dtime_prior_id>` ( *k* =2 ).
 
-$end
+{xrst_end replace_mean}
 */
 // BEGIN_REPLACE_MEAN_PROTOTYPE
 void prior_model::replace_mean(const CppAD::vector<double>& prior_mean)
@@ -208,71 +205,72 @@ void prior_model::replace_mean(const CppAD::vector<double>& prior_mean)
 
 /*
 ------------------------------------------------------------------------------
-$begin prior_fixed_effect$$
-$spell
-   vec
-   Cpp
-   struct
-   const
-   var
-$$
+{xrst_begin prior_fixed_effect}
 
-$section Evaluate Fixed Negative Log-Likelihood for the Fixed Effects$$
+Evaluate Fixed Negative Log-Likelihood for the Fixed Effects
+############################################################
 
-$head Syntax$$
-$icode%residual_vec% = %prior_object%.fixed(%pack_vec%)%$$
+Syntax
+******
+*residual_vec* = *prior_object* . ``fixed`` ( *pack_vec* )
 
-$head Float$$
-The type $icode Float$$ must be $code double$$ or
-$cref a1_double$$.
+Float
+*****
+The type *Float* must be ``double`` or
+:ref:`a1_double-name` .
 
-$head prior_object$$
+prior_object
+************
 This object has prototype
-$codei%
-   const prior_model %prior_object%
-%$$
-see $cref/prior_object constructor/prior_model_ctor/prior_object/$$.
 
-$head pack_vec$$
+   ``const prior_model`` *prior_object*
+
+see :ref:`prior_object constructor<prior_model_ctor@prior_object>` .
+
+pack_vec
+********
 This vector has prototype
-$codei%
-   const CppAD::vector<%Float%>& %pack_vec%
-%$$
-and is all the $cref model_variables$$ in the order
-specified by $cref pack_info$$.
 
-$head residual_vec$$
+   ``const CppAD::vector<`` *Float* >& *pack_vec*
+
+and is all the :ref:`model_variables-name` in the order
+specified by :ref:`pack_info-name` .
+
+residual_vec
+************
 The return value has prototype
-$codei%
-   CppAD::vector< residual_struct<%Float%> > %residual_vec%
-%$$
-The size of $icode residual$$ is not equal to the number of fixed effects
+
+   ``CppAD::vector< residual_struct<`` *Float* > > *residual_vec*
+
+The size of *residual* is not equal to the number of fixed effects
 because there are priors on smoothing differences as well as values.
 The order of the residuals is unspecified.
 
-$subhead index$$
-The $cref/index/residual_density/index/$$ for each residual is
-$codei%3 * %var_id% + %k%$$ where
-$cref/var_id/var_table/var_id/$$ is the variable index,
-$icode%k% = 0%$$ for value priors,
-$icode%k% = 1%$$ for age difference priors, and
-$icode%k% = 2%$$ for time difference priors.
+index
+=====
+The :ref:`residual_density@index` for each residual is
+3 * *var_id* + *k* where
+:ref:`var_table@var_id` is the variable index,
+*k*  = 0 for value priors,
+*k*  = 1 for age difference priors, and
+*k*  = 2 for time difference priors.
 
-$head p(theta)$$
+p(theta)
+********
 The log of the fixed negative log-likelihood for the
-$cref/fixed effects/model_variables/Fixed Effects, theta/$$,
-$latex \log \; \B{p}( \theta )$$,
+:ref:`fixed effects<model_variables@Fixed Effects, theta>` ,
+:math:`\log \; \B{p}( \theta )`,
 is the sum of all the log densities corresponding to the
-$cref/residuals/residual_density/$$.
-
-
-$children%example/devel/model/prior_fixed_xam.cpp
-%$$
-$head Example$$
-The file $cref prior_fixed_xam.cpp$$ contains an example and test
+:ref:`residuals<residual_density-name>` .
+{xrst_toc_hidden
+   example/devel/model/prior_fixed_xam.cpp
+}
+Example
+*******
+The file :ref:`prior_fixed_xam.cpp-name` contains an example and test
 of using this routine.
 
-$end
+{xrst_end prior_fixed_effect}
 */
 template <class Float>
 CppAD::vector< residual_struct<Float> >
@@ -393,72 +391,73 @@ prior_model::fixed(const CppAD::vector<Float>& pack_vec ) const
 }
 /*
 ------------------------------------------------------------------------------
-$begin prior_random_effect$$
-$spell
-   vec
-   Cpp
-   struct
-   const
-   var
-$$
+{xrst_begin prior_random_effect}
 
-$section Evaluate Fixed Negative Log-Likelihood for the Random Effects$$
+Evaluate Fixed Negative Log-Likelihood for the Random Effects
+#############################################################
 
-$head Syntax$$
-$icode%residual_vec% = %prior_object%.random(%pack_vec%)%$$
+Syntax
+******
+*residual_vec* = *prior_object* . ``random`` ( *pack_vec* )
 
-$head Float$$
-The type $icode Float$$ must be $code double$$ or
-$cref a1_double$$.
+Float
+*****
+The type *Float* must be ``double`` or
+:ref:`a1_double-name` .
 
-$head prior_object$$
+prior_object
+************
 This object has prototype
-$codei%
-   const prior_model %prior_object%
-%$$
-see $cref/prior_object constructor/prior_model_ctor/prior_object/$$.
 
-$head pack_vec$$
+   ``const prior_model`` *prior_object*
+
+see :ref:`prior_object constructor<prior_model_ctor@prior_object>` .
+
+pack_vec
+********
 This vector has prototype
-$codei%
-   const CppAD::vector<%Float%>& %pack_vec%
-%$$
-and is all the $cref model_variables$$ in the order
-specified by $cref pack_info$$.
 
-$head residual_vec$$
+   ``const CppAD::vector<`` *Float* >& *pack_vec*
+
+and is all the :ref:`model_variables-name` in the order
+specified by :ref:`pack_info-name` .
+
+residual_vec
+************
 The return value has prototype
-$codei%
-   CppAD::vector< residual_struct<%Float%> > %residual_vec%
-%$$
-The size of $icode residual$$ is not equal to the number of random effects
+
+   ``CppAD::vector< residual_struct<`` *Float* > > *residual_vec*
+
+The size of *residual* is not equal to the number of random effects
 because there are priors on smoothing differences as well as values.
 The order of the residuals is unspecified (at this time).
 
-$subhead index$$
-The $cref/index/residual_density/index/$$ for each residual is
-$codei%3 * %var_id% + %k%$$ where
-$cref/var_id/var_table/var_id/$$ is the variable index,
-$icode%k% = 0%$$ for value priors,
-$icode%k% = 1%$$ for age difference priors, and
-$icode%k% = 2%$$ for time difference priors.
+index
+=====
+The :ref:`residual_density@index` for each residual is
+3 * *var_id* + *k* where
+:ref:`var_table@var_id` is the variable index,
+*k*  = 0 for value priors,
+*k*  = 1 for age difference priors, and
+*k*  = 2 for time difference priors.
 
-$head p(u|theta)$$
+p(u|theta)
+**********
 The log of the fixed negative log-likelihood for the
-and $cref/random effects/model_variables/Random Effects, u/$$
+and :ref:`random effects<model_variables@Random Effects, u>`
 given the fixed effects,
-$latex \log \; \B{p}( u | \theta )$$,
+:math:`\log \; \B{p}( u | \theta )`,
 is the sum of the all the log densities corresponding to the
-$cref/residuals/residual_density/$$.
-
-
-$children%example/devel/model/prior_random_xam.cpp
-%$$
-$head Example$$
-The file $cref prior_random_xam.cpp$$ contains an example and test
+:ref:`residuals<residual_density-name>` .
+{xrst_toc_hidden
+   example/devel/model/prior_random_xam.cpp
+}
+Example
+*******
+The file :ref:`prior_random_xam.cpp-name` contains an example and test
 of using this routine.
 
-$end
+{xrst_end prior_random_effect}
 */
 template <class Float>
 CppAD::vector< residual_struct<Float> >

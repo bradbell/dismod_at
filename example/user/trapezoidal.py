@@ -3,21 +3,24 @@
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 """
-$begin user_trapezoidal.py$$
-$spell
-   Integrands
+{xrst_begin user_trapezoidal.py}
+{xrst_spell
    mtexcess
    mtother
-$$
+   trapezoidal
+}
 
-$section Using the Trapezoidal ODE Solver$$
+Using the Trapezoidal ODE Solver
+################################
 
-$head Rates$$
+Rates
+*****
 The non-zero rates in this example are iota, rho, chi, and omega.
 They are all constant in age and time because they each have one smoothing
 grid point.
 
-$head Integrands$$
+Integrands
+**********
 The integrands for this example are prevalence, remission, mtexcess,
 and mtother.
 Modeling the prevalence integrand requires solving the ODE.
@@ -26,21 +29,24 @@ To be specific, remission measures rho,
 mtexcess measures chi, and
 mtother measures omega.
 
-$head Data$$
+Data
+****
 For each of the integrands there is one data point are
 age 50 and time 2000.
 No noise is added to the data but it is modeled as if it
 had a 10 percent coefficient of variation.
 
-$head Random Effects$$
+Random Effects
+**************
 There are no random effects in this example.
 
-$head rate_case$$
-The rate case for this example is $code trapezoidal$$.
+rate_case
+*********
+The rate case for this example is ``trapezoidal`` .
 This case has does not require any of the rates to be positive,
 so we use a lower limit of one for all the rates.
 
-$end
+{xrst_end user_trapezoidal.py}
 ---------------------------------------------------------------------------
 """
 # BEGIN PYTHON

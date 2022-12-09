@@ -6,47 +6,47 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin min_max_vector$$
-$spell
-   CppAD
-   vec
-   const
-$$
+{xrst_begin min_max_vector}
 
-$section Compute Minimum or Maximum Element of a CppAD Vector$$.
+Compute Minimum or Maximum Element of a CppAD Vector
+####################################################
 
-$head Syntax$$
-$codei%min% = min_vector(%vec%)
-%$$
-$codei%max% = max_vector(%vec%)
-%$$
+Syntax
+******
 
-$head Scalar$$
+| *min* = ``min_vector`` ( *vec* )
+| ``max`` = *max_vector* ( ``vec`` )
+
+Scalar
+******
 is the type of element in the vector.
 
-$head vec$$
+vec
+***
 This argument has prototype
-$codei%
-   const CppAD:vector<%Scalar%>& %vec%
-%$$
+
+   ``const CppAD:vector<`` *Scalar* >& *vec*
+
 It is the vector we are computing the minimum or maximum
 value of.
 
-$head min$$
+min
+***
 This return value has prototype
-$codei%
-   %Scalar% %min%
-%$$
+
+   *Scalar* *min*
+
 and is the minimum value in the vector.
 
-$head max$$
+max
+***
 This return value has prototype
-$codei%
-   %Scalar% %max%
-%$$
+
+   *Scalar* *max*
+
 and is the maximum value in the vector.
 
-$end
+{xrst_end min_max_vector}
 */
 # include <cppad/utility/vector.hpp>
 namespace dismod_at {

@@ -3,18 +3,17 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin subset_data_xam.cpp$$
-$spell
-   data
-   xam
-$$
+{xrst_begin subset_data_xam.cpp}
 
-$section C++ subset_data: Example and Test$$
+C++ subset_data: Example and Test
+#################################
 
-$srcthisfile%
-   0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end subset_data_xam.cpp}
 */
 // BEGIN C++
 # include <limits>

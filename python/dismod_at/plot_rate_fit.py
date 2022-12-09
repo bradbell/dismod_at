@@ -3,49 +3,54 @@
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 '''
-$begin plot_rate_fit$$
-$spell
+{xrst_begin plot_rate_fit}
+{xrst_spell
    pdf
-   std
-   dismod
-   str
-$$
+}
 
-$section Plot The Rates for a Fit$$
+Plot The Rates for a Fit
+########################
 
-$head Syntax$$
-$icode%plot_set% = plot_rate_fit(
-   %database%, %pdf_file%, %plot_title%, %rate_set%
-)
-%$$
+Syntax
+******
 
-$head database$$
-This $code str$$ is the file name for
+| *plot_set* = ``plot_rate_fit`` (
+| |tab| *database* , *pdf_file* , *plot_title* , *rate_set*
+| )
+
+database
+********
+This ``str`` is the file name for
 an existing dismod_at database that contains the results of a
-$cref/fit/fit_command/$$.
-If there is a $cref sample_table$$ it is assumed
-it was created using a $cref sample_command$$ after the $cref fit_command$$.
+:ref:`fit<fit_command-name>` .
+If there is a :ref:`sample_table-name` it is assumed
+it was created using a :ref:`sample_command-name` after the :ref:`fit_command-name` .
 
-$head pdf_file$$
+pdf_file
+********
 Is the location where the pdf file containing the plot will be placed.
 
-$head plot_title$$
-This $code str$$ is a title printed at the top of every plot.
+plot_title
+**********
+This ``str`` is a title printed at the top of every plot.
 
-$head rate_set$$
-Each element of this $code set$$ an $code str$$ containing a
-$cref/rate_name/rate_table/rate_name/$$
+rate_set
+********
+Each element of this ``set`` an ``str`` containing a
+:ref:`rate_table@rate_name`
 that we are plotting the fit for.
 
-$head plot_set$$
-Each element of this $code set$$ is a $code str$$ containing
-the name of a rate (in $icode rate_set$$) that was plotted.
+plot_set
+********
+Each element of this ``set`` is a ``str`` containing
+the name of a rate (in *rate_set* ) that was plotted.
 If a rate was not plotted, it is constrained to be zero by the rate table.
 
-$head Example$$
-$cref user_plot_rate_fit.py$$.
+Example
+*******
+:ref:`user_plot_rate_fit.py-name` .
 
-$end
+{xrst_end plot_rate_fit}
 '''
 # ----------------------------------------------------------------------------
 import sys

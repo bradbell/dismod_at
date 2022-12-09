@@ -2,31 +2,36 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_continue_fit.py$$ $newlinech #$$
-# $spell
-#  init
-#  num_iter
-#  stderr
-#  py
-#  const
-# $$
+# {xrst_begin user_continue_fit.py}
+# {xrst_spell
+#     iter
+#     stderr
+# }
+# {xrst_comment_ch #}
 #
-# $section Continuing a Fit From Where it Left Off$$
+# Continuing a Fit From Where it Left Off
+# #######################################
 #
-# $head Option Table$$
+# Option Table
+# ************
 # In the option table defined below,
-# $icode%max_num_iter_fixed% = 5%$$.
+# *max_num_iter_fixed*  = 5 .
 # This fit will terminate when
 # the maximum number of iterations is reached.
 # The corresponding warning is suppressed by setting
-# $icode%warn_on_stderr% = false%$$.
+# *warn_on_stderr* = ``false`` .
 # The second fit will start where the first left off.
-# To see this, set $icode%print_level_fixed% = 5%$$ (in the option table) and
-# $cref/run this example/user_example/Run One Example/$$.
+# To see this, set *print_level_fixed*  = 5 (in the option table) and
+# :ref:`run this example<user_example@Run One Example>` .
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_continue_fit.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # values used to simulate data

@@ -1,0 +1,90 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin mixed_info_table}
+{xrst_spell
+   nnz
+   nr
+}
+
+The CppAD Mixed Information Table
+#################################
+
+Discussion
+**********
+A new version of this table is created each time a :ref:`fit_command-name` is run.
+The table contains information about the size of certain
+:ref:`install_unix@Special Requirements@cppad_mixed` objects.
+It is useful for seeing how the problem setup affects the
+size (and hence time) of the problem.
+For example, how different the size is when one uses
+a :ref:`hold_out_command-name` to sub-sample the data.
+
+Format
+******
+Each row of this table has the following information:
+
+mixed_info_id
+=============
+This column
+has type ``integer`` and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+mixed_name
+==========
+This column
+has type ``text`` and has a different value for every row;
+i.e., the names are unique and can act as substitutes for the primary key.
+Some of the possible values for *mixed_name* are listed below.
+There may be other (unspecified) rows in this table.
+
+mixed_value
+===========
+This column has type ``text`` and is
+the value for the corresponding name.
+
+n_fixed
+*******
+If *mixed_name* is ``n_fixed`` ,
+*mixed_value* is the number of fixed effects.
+
+n_random
+********
+If *mixed_name* is ``n_random`` ,
+*mixed_value* is the number of fixed effects.
+
+quasi_fixed
+***********
+If *mixed_name* is ``quasi_fixed`` ,
+*mixed_value* is one (zero) if we are a using a quasi-Newton (Newton)
+method for optimizing the fixed effects.
+
+A_nr
+****
+If *mixed_name* is ``A_nr`` ,
+*mixed_value* is the number of rows in the
+liner constraint matrix A
+(the matrix has *n_fixed* columns).
+
+A_nnz
+*****
+If *mixed_name* is ``A_nnz`` ,
+*mixed_value* is the number of non-zeros in the
+liner constraint matrix A.
+
+ran_like_fun.size_var
+*********************
+If *mixed_name* is ``ran_like_fun.size_var`` ,
+*mixed_value* is the number of variables in the
+algorithm that maps the fixed and random effects to the part of
+the likelihood that depends on the random effects.
+
+fix_like_fun.size_var
+*********************
+If *mixed_name* is ``fix_like_fun.size_var`` ,
+*mixed_value* is the number of variables in the
+algorithm that maps the fixed effects to the part of
+the likelihood that does not depend on the random effects.
+
+{xrst_end mixed_info_table}

@@ -3,156 +3,162 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_avgint_table$$
-$spell
-   avgint
-   const
-   covariate
-   covariates
-   sqlite
-   struct
-   cpp
-   std
-   cov
-$$
+{xrst_begin get_avgint_table}
 
-$section C++: Get the Average Integrand Case Table$$
+C++: Get the Average Integrand Case Table
+#########################################
 
-$head Syntax$$
-$codei%get_avgint_table(
-   %db%, %n_covariate%, %age_min%, %age_max%, %time_min%, %time_max%,
-   %avgint_table%, %avgint_cov_value%
-%)%$$
+Syntax
+******
 
-$head Purpose$$
-To read the $cref avgint_table$$ and return it as a C++ data structure.
+| ``get_avgint_table`` (
+| |tab| *db* , *n_covariate* , *age_min* , *age_max* , *time_min* , *time_max* ,
+| |tab| *avgint_table* , *avgint_cov_value*
+| )
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+Purpose
+*******
+To read the :ref:`avgint_table-name` and return it as a C++ data structure.
+
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head n_covariate$$
+n_covariate
+***********
 This argument has prototype
-$codei%
-   size_t n_covariate
-%$$
-and is the size of the $cref/covariate_table/get_covariate_table/$$.
 
-$head age_min$$
-This argument has prototype
-$codei%
-   double %age_min%
-%$$
-and is the minimum value in the $cref age_table$$.
-If an $cref/age_lower/data_table/age_lower/$$ value is less than
-$icode age_min$$, an error is reported.
+   ``size_t n_covariate``
 
-$head age_max$$
+and is the size of the :ref:`covariate_table<get_covariate_table-name>` .
+
+age_min
+*******
 This argument has prototype
-$codei%
-   double %age_max%
-%$$
-and is the maximum value in the $cref age_table$$.
-If an $cref/age_upper/data_table/age_upper/$$ value is greater than
-$icode age_max$$, an error is reported.
+
+   ``double`` *age_min*
+
+and is the minimum value in the :ref:`age_table-name` .
+If an :ref:`data_table@age_lower` value is less than
+*age_min* , an error is reported.
+
+age_max
+*******
+This argument has prototype
+
+   ``double`` *age_max*
+
+and is the maximum value in the :ref:`age_table-name` .
+If an :ref:`data_table@age_upper` value is greater than
+*age_max* , an error is reported.
 The condition
-$icode%
-   %age_lower% <= %age_upper%
-%$$
+
+   ``age_lower`` <= ``age_upper``
+
 is also checked.
 
-$head time_min$$
+time_min
+********
 This argument has prototype
-$codei%
-   double %time_min%
-%$$
-and is the minimum value in the $cref time_table$$.
-If an $cref/time_lower/data_table/time_lower/$$ value is less than
-$icode time_min$$, an error is reported.
 
-$head time_max$$
+   ``double`` *time_min*
+
+and is the minimum value in the :ref:`time_table-name` .
+If an :ref:`data_table@time_lower` value is less than
+*time_min* , an error is reported.
+
+time_max
+********
 This argument has prototype
-$codei%
-   double %time_max%
-%$$
-and is the maximum value in the $cref time_table$$.
-If an $cref/time_upper/data_table/time_upper/$$ value is greater than
-$icode time_max$$, an error is reported.
+
+   ``double`` *time_max*
+
+and is the maximum value in the :ref:`time_table-name` .
+If an :ref:`data_table@time_upper` value is greater than
+*time_max* , an error is reported.
 The condition
-$icode%
-   %time_lower% <= %time_upper%
-%$$
+
+   ``time_lower`` <= ``time_upper``
+
 is also checked.
 
-$head avgint_table$$
+avgint_table
+************
 This argument has prototype
-$codei%
-   CppAD::vector<avgint_struct>&  %avgint_table%
-%$$
+
+   ``CppAD::vector<avgint_struct>&`` *avgint_table*
+
 On input its size is zero and upon return it has one element for
 each row in the avgint table.
-For each $cref/avgint_id/avgint_table/avgint_id/$$,
-$codei%
-   %avgint_table%[%avgint_id%]
-%$$
+For each :ref:`avgint_table@avgint_id` ,
+
+   *avgint_table* [ *avgint_id* ]
+
 is the information for the corresponding row.
 
-$head avgint_struct$$
+avgint_struct
+*************
 This is a structure with the following fields
-$table
-Type  $cnext Field $cnext Description
-$rnext
-$code int$$ $cnext $code integrand_id$$ $cnext
-   The $cref/integrand_id/avgint_table/integrand_id/$$ for this measurement
-$rnext
-$code int$$ $cnext $code node_id$$ $cnext
-   The $cref/node_id/avgint_table/node_id/$$ for this measurement
-$rnext
-$code int$$ $cnext $code subgroup_id$$ $cnext
-   The $cref/subgroup_id/avgint_table/subgroup_id/$$ for this measurement
-$rnext
-$code int$$ $cnext $code weight_id$$ $cnext
-   The $cref/weight_id/avgint_table/weight_id/$$ for this measurement
-$rnext
-$code double$$ $cnext $code age_lower$$ $cnext
-   The $cref/age_lower/avgint_table/age_lower/$$ for this measurement
-$rnext
-$code double$$ $cnext $code age_upper$$ $cnext
-   The $cref/age_upper/avgint_table/age_upper/$$ for this measurement
-$rnext
-$code double$$ $cnext $code time_lower$$ $cnext
-   The $cref/time_lower/avgint_table/time_lower/$$ for this measurement
-$rnext
-$code double$$ $cnext $code time_upper$$ $cnext
-   The $cref/time_upper/avgint_table/time_upper/$$ for this measurement
-$tend
 
-$head avgint_cov_value$$
+.. list-table::
+
+   * - Type
+     - Field
+     - Description
+   * - ``int``
+     - ``integrand_id``
+     - The :ref:`avgint_table@integrand_id` for this measurement
+   * - ``int``
+     - ``node_id``
+     - The :ref:`avgint_table@node_id` for this measurement
+   * - ``int``
+     - ``subgroup_id``
+     - The :ref:`avgint_table@subgroup_id` for this measurement
+   * - ``int``
+     - ``weight_id``
+     - The :ref:`avgint_table@weight_id` for this measurement
+   * - ``double``
+     - ``age_lower``
+     - The :ref:`avgint_table@age_lower` for this measurement
+   * - ``double``
+     - ``age_upper``
+     - The :ref:`avgint_table@age_upper` for this measurement
+   * - ``double``
+     - ``time_lower``
+     - The :ref:`avgint_table@time_lower` for this measurement
+   * - ``double``
+     - ``time_upper``
+     - The :ref:`avgint_table@time_upper` for this measurement
+
+avgint_cov_value
+****************
 This argument has prototype
-$codei%
-   CppAD::vector<double>&  %avgint_cov_value%
-%$$
+
+   ``CppAD::vector<double>&`` *avgint_cov_value*
+
 On input its size is zero.
 Upon return, its size is the number of rows in the avgint table times
 the number of covariates.
 For each
-$cref/covariate_id/covariate_table/covariate_id/$$ and
-$icode avgint_id$$ pair
-$codei%
-   avgint_cov_value[%avgint_id% * %n_covariate% + %covariate_id%]
-%$$
-is the corresponding covariate value.
+:ref:`covariate_table@covariate_id` and
+*avgint_id* pair
 
-$children%example/devel/table/get_avgint_table_xam.cpp
-%$$
-$head Example$$
-The file $cref get_avgint_table_xam.cpp$$ contains an example that uses
+   ``avgint_cov_value`` [ *avgint_id* * *n_covariate* + *covariate_id* ]
+
+is the corresponding covariate value.
+{xrst_toc_hidden
+   example/devel/table/get_avgint_table_xam.cpp
+}
+Example
+*******
+The file :ref:`get_avgint_table_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_avgint_table}
 -----------------------------------------------------------------------------
 */
 # include <dismod_at/get_avgint_table.hpp>

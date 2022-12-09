@@ -2,73 +2,80 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_censor.py$$ $newlinech #$$
-# $spell
-#  init
-#  avgint
-#  Covariates
-#  covariate
-#  smoothings
-#  mulcov
-#  exp
-#  Sincidence
-#  std
-#  cen
-# $$
+# {xrst_begin user_censor.py}
+# {xrst_spell
+#     nonzero
+# }
+# {xrst_comment_ch #}
 #
-# $section Fitting Data That Has Negative Values Censored$$
+# Fitting Data That Has Negative Values Censored
+# ##############################################
 #
-# $head Purpose$$
+# Purpose
+# *******
 # This example uses the
-# $cref/cen_gaussian/density_table/density_name/cen_gaussian/$$
+# :ref:`density_table@density_name@cen_gaussian`
 # density to represent data that is has its negative value replaced by zero.
 #
-# $head Problem Parameters$$
+# Problem Parameters
+# ******************
 # The following values are used to simulate the data and set the priors
 # for fitting the data:
-# $srcthisfile%
-#  0%# begin problem parameters%# end problem parameters%1
-# %$$
+# {xrst_literal
+#     begin problem parameters
+#     end problem parameters
+# }
 #
-# $head Age and Time Values$$
+# Age and Time Values
+# *******************
 # The age and time values do not matter for this problem
 # because all the functions are constant in age and time.
 # This can be seen by the fact that all of the smoothings have one age
 # and one time point.
 #
-# $head Variables$$
-# There is one model variable for this example $icode iota_true$$
-# $cref/iota/avg_integrand/Rate Functions/iota_i(a,t)/$$
+# Variables
+# *********
+# There is one model variable for this example *iota_true*
+# :ref:`iota<avg_integrand@Rate Functions@iota_i(a,t)>`
 # the true value used to simulate the data.
 #
-# $head Rate Table$$
-# The $cref rate_table$$ only specifies that $icode iota$$ for the parent
+# Rate Table
+# **********
+# The :ref:`rate_table-name` only specifies that *iota* for the parent
 # is the only nonzero rate for this example.
 # In addition, it specifies the smoothing for that rate which has only
 # one grid point. Hence there is only one model variable corresponding to
 # the rates.
 #
-# $head Data Table$$
+# Data Table
+# **********
 # For this example, all the data is
-# $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$,
-# with a Gaussian density, with mean $icode iota_true$$
-# and standard deviation $codei%2*%iota_true%$$.
+# :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` ,
+# with a Gaussian density, with mean *iota_true*
+# and standard deviation 2* *iota_true* .
 # The data is then censored, to be specific,
 # values below zero are replaced by the value zero.
 #
-# $head Prior Table$$
-# There is one prior in the $cref prior_table$$ for the only
+# Prior Table
+# ***********
+# There is one prior in the :ref:`prior_table-name` for the only
 # model variable.
 #
-# $head Discussion$$
+# Discussion
+# **********
 # This fits two data sets.
-# The first is simulated using python and put in the $cref data_table$$.
-# The second is simulated using the $cref simulate_command$$
-# and put in the $cref data_sim_table$$.
+# The first is simulated using python and put in the :ref:`data_table-name` .
+# The second is simulated using the :ref:`simulate_command-name`
+# and put in the :ref:`data_sim_table-name` .
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_censor.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # begin problem parameters

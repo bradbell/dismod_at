@@ -2,17 +2,20 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_const_random.py$$ $newlinech #$$
-# $spell
-#  init
-#  const
-# $$
+# {xrst_begin user_const_random.py}
+# {xrst_comment_ch #}
 #
-# $section Fitting With Non-Zero Constant Random Effects in Smoothing Grid$$
+# Fitting With Non-Zero Constant Random Effects in Smoothing Grid
+# ###############################################################
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_const_random.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # Values used to simulate data, child values are in log space; e.g.,

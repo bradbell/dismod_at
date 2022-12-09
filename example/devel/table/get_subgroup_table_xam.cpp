@@ -3,18 +3,17 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_subgroup_table_xam.cpp$$
-$spell
-   xam
-$$
+{xrst_begin get_subgroup_table_xam.cpp}
 
-$section C++ get_subgroup_table: Example and Test$$
+C++ get_subgroup_table: Example and Test
+########################################
 
-$srcthisfile%
-   0%// BEGIN C++%// END C++%1
-%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end get_subgroup_table_xam.cpp}
 */
 // BEGIN C++
 # include <dismod_at/get_subgroup_table.hpp>

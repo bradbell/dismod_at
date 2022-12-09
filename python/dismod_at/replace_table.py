@@ -3,44 +3,50 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin replace_table$$ $newlinech #$$
-# $spell
-#  dismod
-#  str
-#  tbl
-# $$
+# {xrst_begin replace_table}
+# {xrst_spell
+#     tbl
+# }
+# {xrst_comment_ch #}
 #
-# $section Replace A a Table$$
+# Replace A a Table
+# #################
 #
-# $head Syntax$$
-# $codei%dismod_at.replace_table(%connection%, %tbl_name%, %table_dict%)
-# %$$
+# Syntax
+# ******
 #
-# $head connection$$
-# is a $cref/connection/create_connection/connection/$$ for this database.
+#     ``dismod_at.replace_table`` ( *connection* , *tbl_name* , *table_dict* )
 #
-# $head table_name$$
-# is a $code str$$ that specifies the name of a table that already in the
+# connection
+# **********
+# is a :ref:`create_connection@connection` for this database.
+#
+# table_name
+# **********
+# is a ``str`` that specifies the name of a table that already in the
 # database.
 #
-# $head table_dict$$
-# is a $code list$$ with each element of the list is a dictionary.
+# table_dict
+# **********
+# is a ``list`` with each element of the list is a dictionary.
 # Each dictionary contains a key for every column name in the original table.
 # The columns in the original table are written to the new table with the
 # same order and types as in the original table. Only the values are replaced
-# using the values in $icode table_dict$$.
+# using the values in *table_dict* .
 #
-# $head Primary Key$$
+# Primary Key
+# ***********
 # This routine assumes the primary key is an integer,  corresponds
-# to the first column, and has name $icode%tbl_name%_id%$$.
+# to the first column, and has name *tbl_name* _ ``id`` .
+# {xrst_toc_hidden
+#    example/table/replace_table.py
+# }
+# Example
+# *******
+# The file :ref:`replace_table.py-name` is an example use of
+# ``replace_table`` .
 #
-# $children%example/table/replace_table.py
-# %$$
-# $head Example$$
-# The file $cref replace_table.py$$ is an example use of
-# $code replace_table$$.
-#
-# $end
+# {xrst_end replace_table}
 # ---------------------------------------------------------------------------
 def replace_table(connection, tbl_name, table_dict) :
    import dismod_at

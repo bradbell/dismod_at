@@ -1,0 +1,182 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin model_variables}
+{xrst_spell
+   unadjusted
+}
+
+The Model Variables
+###################
+
+Introduction
+************
+Model variables are scalar values, not functions,
+that are inputs to the model,
+and are the possibly unknown.
+They are often referred to as model parameters in the statistical literature.
+Each variable has a statistical prior on its value; i.e.,
+a corresponding :ref:`prior_table@prior_id` .
+If the corresponding lower and upper limits are equal,
+or it is specified to have a constant value in the :ref:`smooth_grid_table-name` ,
+the variable is known.
+Variables that are used to define a function of age and time
+have priors on their forward difference in age and time.
+Each row of the
+:ref:`db2csv_command@variable.csv` file
+corresponds to a single variable.
+
+Prior for a Variable
+********************
+There are two types of variables:
+
+Standard Deviation Multipliers
+==============================
+The first type are the standard deviation multipliers for a smoothing.
+The prior for these variables are specified directly; see
+:ref:`lambda<model_variables@Fixed Effects, theta@Smoothing Standard Deviation Multipliers, lambda>` below.
+
+Functions of Age and Time
+=========================
+The second type of variables represents a functions of age and time by
+specifying its value at one (age, time) point in a smoothing.
+:ref:`bilinear-name` interpolation
+is used to define the function for all values of age and time.
+The :ref:`smooth_table@smooth_id` for one of these variables
+specifies its prior as follows:
+
+.. list-table::
+
+   * - :ref:`smooth_table@n_age`
+     - number of age points used to represent the function
+   * - :ref:`smooth_table@n_time`
+     - number of time points used to represent the function
+   * - :ref:`smooth_grid_table@age_id`
+     - identifies age value for a variable
+   * - :ref:`smooth_grid_table@time_id`
+     - identifies time value for a variable
+   * - :ref:`smooth_grid_table@const_value`
+     - null or a value that a variable is constrained to
+   * - :ref:`smooth_grid_table@value_prior_id`
+     - value prior for a variable
+   * - :ref:`smooth_grid_table@dage_prior_id`
+     - difference prior for a variable (and next variable) in age direction
+   * - :ref:`smooth_grid_table@dtime_prior_id`
+     - difference prior for a variable (and next variable) in time direction
+
+The number of variables (number of grid points)
+corresponding to a smoothing is *n_age* * *n_time* .
+The age and time difference priors specify the smoothing in a mathematical
+sense.
+
+Children
+********
+The parent node is specified in the
+:ref:`option table<option_table@Parent Node>` .
+The :ref:`node_table@parent@Children`
+corresponding to the parent node.
+(The children is a set of nodes not a set of variables.)
+
+Fixed Effects, theta
+********************
+We use :math:`\theta` to denote the vector of fixed effects; i.e.,
+all of the variables except for the random effects.
+Below is a list of the types fixed effects:
+
+Smoothing Standard Deviation Multipliers, lambda
+================================================
+These variables do not represent a function of age and time.
+For each :math:`i =` :ref:`smooth_table@smooth_id` ,
+there are three smoothing standard deviation multiplier variables:
+:math:`\lambda_i^v`, :math:`\lambda_i^a` and :math:`\lambda_i^t`.
+The corresponding priors as specified by
+:ref:`smooth_table@mulstd_value_prior_id` ,
+:ref:`smooth_table@mulstd_dage_prior_id` , and
+:ref:`smooth_table@mulstd_dtime_prior_id` .
+
+Parent Rates
+============
+For each :ref:`rate<rate_table@rate_name>`
+(``pini`` , ``iota`` , ``rho`` , ``chi`` , and ``omega`` )
+there is a function (set of variables)
+corresponding to the parent value for the rate.
+The smoothing for each of these functions is specified by the corresponding
+:ref:`rate_table@parent_smooth_id` .
+The smoothing determines the number of variables in the
+set as well as the corresponding age and time values;
+see the unadjusted rates
+:ref:`q_k<avg_integrand@Rate Functions@Parent Rate, q_k>`
+in the average integrand model.
+
+Group Covariate Multipliers
+===========================
+For each :ref:`mulcov_table@mulcov_id`
+there is a corresponding function (set of variables) specified by the
+:ref:`mulcov_table@group_smooth_id` .
+These variables are fixed effects.
+For more clarification, see the discussion for
+:ref:`mulcov_table@mulcov_type` .
+
+Random Effects, u
+*****************
+we use :math:`u` to denote the vector of random effects; i.e.,
+all of the variables except for the fixed effects.
+There are two types of random effects:
+
+Child Rate Effects
+==================
+For each :ref:`rate<rate_table@rate_name>`
+(``pini`` , ``iota`` , ``rho`` , ``chi`` , and ``omega`` )
+there is a
+function (set of variables)
+corresponding to the child random effects for the rate.
+The smoothing can be the same for all the children
+(see :ref:`rate_table@child_smooth_id` )
+or it can have a different value for each child
+(see :ref:`rate_table@child_nslist_id` ).
+If :ref:`u_ik<avg_integrand@Rate Functions@Child Rate Effect, u_ik>`
+is a random effect for a rate and child,
+the rate for the child is :math:`\exp( u_{i,k} )`
+times the rate for the parent;
+see the adjusted rates
+:ref:`r_ik<avg_integrand@Rate Functions@Adjusted Rate, r_ik>`
+in the average integrand model.
+
+Subgroup Covariate Multipliers
+==============================
+For each :ref:`mulcov_table@mulcov_id`
+there is a corresponding smoothing specified by the mulcov table
+:ref:`mulcov_table@group_smooth_id` .
+For each :ref:`subgroup_table@subgroup_id`
+that corresponds to this
+:ref:`subgroup_table@group_id` in the subgroup table,
+there is a corresponding function (set of variables) specified by the
+:ref:`mulcov_table@subgroup_smooth_id` .
+These variables are random effects.
+
+Age and Time Variation
+**********************
+
+Smoothing Standard Deviation Multiplier
+=======================================
+Each smoothing standard deviation multiplier :math:`\lambda`
+is scalar fixed effect (not a function)
+and has a prior specified above.
+
+Initial Prevalence
+==================
+Initial prevalence is a function of time
+but must be constant with respect to age.
+Hence a smoothing corresponding to initial prevalence
+must have only one age point.
+This holds for the parent initial prevalence function
+and each child initial prevalence effect function.
+
+Other Cases
+===========
+All the other variable are members of a set that represents
+a function of age and time using a smoothing with an arbitrary
+number of age and time points.
+
+{xrst_end model_variables}

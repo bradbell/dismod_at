@@ -2,67 +2,80 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_ill_condition.py$$ $newlinech #$$
-# $spell
-#  std
-# $$
+# {xrst_begin user_ill_condition.py}
+# {xrst_comment_ch #}
 #
-# $section An Ill Conditioned Example Where Re-Scaling is Helpful$$
+# An Ill Conditioned Example Where Re-Scaling is Helpful
+# ######################################################
 #
-# $head Notation$$
-# $table
-# $latex \bar{\chi}$$
-#  $cnext measured value for excess mortality at age zero $rnext
-# $latex \sigma$$     $cnext std for the measurement noise $rnext
-# $latex \delta$$     $cnext std for age difference for $latex \chi$$ $rnext
-# $latex \chi_0$$     $cnext estimate for $latex \chi$$ at age zero $rnext
-# $latex \chi_1$$     $cnext estimate for $latex \chi$$ at age 100  $rnext
-# $tend
+# Notation
+# ********
 #
-# $head Objective$$
+# .. csv-table::
+#     :widths: auto
+#
+#     :math:`\bar{\chi}`,measured value for excess mortality at age zero
+#     :math:`\sigma`,std for the measurement noise
+#     :math:`\delta`,std for age difference for :math:`\chi`
+#     :math:`\chi_0`,estimate for :math:`\chi` at age zero
+#     :math:`\chi_1`,estimate for :math:`\chi` at age 100
+#
+# Objective
+# *********
 # For this case the negative log likelihood is, not counting terms
-# that are constant w.r.t $latex ( \chi_0, \chi_1 )$$,
-# $latex \[
+# that are constant w.r.t :math:`( \chi_0, \chi_1 )`,
+#
+# .. math::
+#
 #  f( \chi_0 , \chi_1 )
 #  =
 #  \frac{1}{2} \left( \frac{\chi_0 - \bar{\chi}}{\sigma} \right)^2
 #  +
 #  \frac{1}{2} \left( \frac{\chi_1 - \chi_0}{\delta} \right)^2
-# \] $$
 #
-# $head Derivative$$
-# The partial of the objective w.r.t. $latex \chi_0$$ is
-# $latex \[
+# Derivative
+# **********
+# The partial of the objective w.r.t. :math:`\chi_0` is
+#
+# .. math::
+#
 #  \partial_0 f ( \chi_0 , \chi_1 )
 #  =
 #  \frac{\chi_0 - \bar{\chi}}{ \sigma^2 }
 #  -
 #  \frac{\chi_1 - \chi_0}{\delta^2}
-# \] $$
-# The partial of the objective w.r.t. $latex \chi_1$$ is
-# $latex \[
+#
+# The partial of the objective w.r.t. :math:`\chi_1` is
+#
+# .. math::
+#
 #  \partial_1 f ( \chi_0 , \chi_1 )
 #  =
 #  \frac{\chi_1 - \chi_0}{\delta^2}
-# \] $$
 #
-#
-# $head Ill-Conditioning$$
-# If $latex \sigma$$ is much smaller than $latex \delta$$,
+# Ill-Conditioning
+# ****************
+# If :math:`\sigma` is much smaller than :math:`\delta`,
 # then the optimization problem will weight the measurement equation
-# $latex \chi_0 - \bar{\chi} = 0$$ much more than the difference equation
-# $latex \chi_1 - \chi_0 = 0$$.
-# If $latex \sigma$$ is much larger than $latex \delta$$,
+# :math:`\chi_0 - \bar{\chi} = 0` much more than the difference equation
+# :math:`\chi_1 - \chi_0 = 0`.
+# If :math:`\sigma` is much larger than :math:`\delta`,
 # then the optimization problem will weight the difference equation
 # much more than the measurement equation.
 #
-# $head Scaling$$
+# Scaling
+# *******
 # Note that the initial scaling, in the example below, uses the
-# mean values for $latex \chi_0$$, $latex \chi_1$$ which are zero.
+# mean values for :math:`\chi_0`, :math:`\chi_1` which are zero.
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_ill_condition.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # You can changed the values below and rerun this program

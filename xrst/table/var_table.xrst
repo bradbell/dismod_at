@@ -1,0 +1,198 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin var_table}
+
+Identifying Model Variables
+###########################
+
+Discussion
+**********
+The ``variable`` table maps the *var_id*
+to information that specifies exactly which
+:ref:`model_variable<model_variables-name>` it corresponds to.
+You can use this information to interpret a :ref:`fit_var_table-name`
+created by the :ref:`fit_command-name` ,
+or to create a :ref:`truth_var_table-name`
+for use as input to the :ref:`simulate_command-name` .
+
+var_id
+******
+This column has type ``integer`` and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+var_type
+********
+The column has type ``text`` and has one of the following possible values:
+
+mulstd_value
+============
+This variable multiplies the standard deviation in the
+:ref:`mulstd_value_prior<smooth_table@mulstd_value_prior_id>`
+for the corresponding *smooth_id* ; see
+:ref:`smoothing standard deviation multiplier<model_variables@Fixed Effects, theta@Smoothing Standard Deviation Multipliers, lambda>` .
+
+mulstd_dage
+===========
+This variable multiplies the standard deviation in the
+:ref:`mulstd_dage_prior<smooth_table@mulstd_dage_prior_id>`
+for the corresponding *smooth_id* ; see
+:ref:`smoothing standard deviation multiplier<model_variables@Fixed Effects, theta@Smoothing Standard Deviation Multipliers, lambda>` .
+
+mulstd_dtime
+============
+This variable multiplies the standard deviation in the
+:ref:`mulstd_dtime_prior<smooth_table@mulstd_dtime_prior_id>`
+for the corresponding *smooth_id* ; see
+:ref:`smoothing standard deviation multiplier<model_variables@Fixed Effects, theta@Smoothing Standard Deviation Multipliers, lambda>` .
+
+rate
+====
+This variable is rate for the corresponding
+*age_id* , *time_id* ,
+*node_id* , and *rate_id* .
+If the *node_id* is the
+:ref:`parent_node_id<option_table@Parent Node>` , it is a
+:ref:`fixed effect<model_variables@Fixed Effects, theta@Parent Rates>` .
+Otherwise, it is a
+:ref:`random effect<model_variables@Random Effects, u@Child Rate Effects>` .
+
+mulcov_rate_value
+=================
+This variable corresponds to a
+:ref:`group<model_variables@Fixed Effects, theta@Group Covariate Multipliers>`
+or
+:ref:`subgroup<model_variables@Random Effects, u@Subgroup Covariate Multipliers>`
+covariate multiplier that affects the rate for the corresponding
+*age_id* , *time_id* ,
+*rate_id* , and *covariate_id* .
+
+mulcov_meas_value
+=================
+This variable corresponds to a group or subgroup covariate multiplier
+that affects the measurement value for the corresponding
+*age_id* , *time_id* ,
+*integrand_id* , and *covariate_id* .
+
+mulcov_meas_noise
+=================
+This variable corresponds to a group covariate multiplier
+that affects the measurement value
+*age_id* , *time_id* ,
+*integrand_id* , and *covariate_id* .
+There are no subgroup covariate multipliers of this type.
+
+smooth_id
+*********
+If *var_type* is
+``mulstd_value`` , ``mulstd_dage`` or ``mulstd_dtime`` ,
+this is the :ref:`smooth_table@smooth_id` for the
+smoothing that this variable multiplies.
+Otherwise, the specified smoothing is used for the priors
+for this variable.
+To be specific,
+the corresponding priors can be found by matching
+*smooth_id* , *age_id* , and *time_id* in the
+:ref:`smooth_grid_table-name` .
+
+age_id
+******
+If *var_type* is
+``mulstd_value`` , ``mulstd_dage`` , ``mulstd_dtime`` ,
+this column is ``null`` .
+Otherwise this is the :ref:`age_table@age_id` that identifies
+the age for the corresponding variable.
+
+time_id
+*******
+If *var_type* is
+``mulstd_value`` , ``mulstd_dage`` , ``mulstd_dtime`` ,
+this column is ``null`` .
+Otherwise this is the :ref:`time_table@time_id` that identifies
+the time for the corresponding variable.
+Otherwise, this column is ``null`` .
+
+node_id
+*******
+If *var_type* is ``rate`` ,
+this is the :ref:`node_table@node_id` that the rate is for.
+Otherwise, this column is ``null`` .
+
+rate_id
+*******
+If *var_type* is ``rate`` or ``mulcov_rate_value`` ,
+this is the :ref:`rate_table@rate_id` for the specific rate.
+Otherwise, this column is ``null`` .
+
+integrand_id
+************
+If *var_type* is
+``mulcov_meas_value`` or ``mulcov_meas_noise`` ,
+this is the :ref:`integrand_table@integrand_id`
+that this variable applies to.
+Otherwise, this column is ``null`` .
+
+covariate_id
+************
+If *var_type* is
+``mulcov_rate_value`` , ``mulcov_meas_value``
+or ``mulcov_meas_noise`` ,
+this is the :ref:`covariate_table@covariate_id`
+that this variable applies to.
+Otherwise, this column is ``null`` .
+
+mulcov_id
+*********
+If *var_type* is
+``mulcov_rate_value`` , ``mulcov_meas_value``
+or ``mulcov_meas_noise`` ,
+this is the :ref:`mulcov_table@mulcov_id`
+that this variable applies to.
+Otherwise, this column is ``null`` .
+
+group_id
+********
+
+mulcov_meas_noise
+=================
+If *var_type* is ``mulcov_meas_noise`` ,
+*group_id* is the mulcov table
+:ref:`mulcov_table@group_id`
+that this fixed effect variable applies to.
+
+mulcov_rate_value, mulcov_meas_value
+====================================
+If *var_type* is ``mulcov_rate_value`` or ``mulcov_meas_value`` .
+In this case either *group_id* or *subgroup_id*
+(but not both) is not null.
+If *group_id* is not null,
+it is the mulcov table
+:ref:`mulcov_table@group_id`
+that this fixed effect applies to.
+
+Otherwise
+=========
+*group_id* must be null.
+
+subgroup_id
+***********
+
+mulcov_rate_value, mulcov_meas_value
+====================================
+If *var_type* is ``mulcov_rate_value`` or ``mulcov_meas_value`` .
+In this case either *group_id* or *subgroup_id*
+(but not both) is not null.
+If *subgroup_id* is not null,
+it is the :ref:`subgroup_table@subgroup_id`
+that this random effect applies to.
+
+Otherwise
+=========
+*subgroup_id* must be null.
+
+Example
+*******
+See the :ref:`init_command.py-name` example and test.
+
+{xrst_end var_table}

@@ -2,16 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin modify_command.py$$ $newlinech #$$
-# $spell
-#  init
-#  dismod
-# $$
+# {xrst_begin modify_command.py}
+# {xrst_comment_ch #}
 #
-# $section modify Command: Example and Test$$
+# modify Command: Example and Test
+# ################################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end modify_command.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import sys

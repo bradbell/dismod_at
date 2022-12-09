@@ -3,65 +3,69 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_weight_grid$$
-$spell
-   sqlite
-   struct
-   cpp
-   std
-$$
+{xrst_begin get_weight_grid}
 
-$section C++: Get the Weight Grid Information$$
+C++: Get the Weight Grid Information
+####################################
 
-$head Syntax$$
-$icode%weight_grid% = get_weight_grid(%db%)%$$
+Syntax
+******
+*weight_grid* = ``get_weight_grid`` ( *db* )
 
-$head Purpose$$
-To read the $cref weight_grid_table$$ and return it as a C++ data structure.
+Purpose
+*******
+To read the :ref:`weight_grid_table-name` and return it as a C++ data structure.
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head weight_grid_struct$$
+weight_grid_struct
+******************
 This is a structure with the following fields
-$table
-Type $cnext Field $cnext Description
-$rnext
-$code int$$ $cnext $code weight_id$$   $pre  $$ $cnext
-   The $cref/weight_id/weight_grid_table/weight_id/$$ for this weighting.
-$rnext
-$code int$$ $cnext $code age_id$$      $pre  $$ $cnext
-   The $cref/age_id/weight_grid_table/age_id/$$ for this weight value
-$rnext
-$code int$$ $cnext $code time_id$$      $pre  $$ $cnext
-   The $cref/time_id/weight_grid_table/time_id/$$ for this weight value
-$rnext
-$code double$$ $cnext $code weight$$    $pre  $$ $cnext
-   The $cref/weight/weight_grid_table/weight/$$ value
-$tend
 
-$head weight_grid$$
-The return value $icode weight_grid$$ has prototype
-$codei%
-   CppAD::vector<weight_grid_struct>  %weight_grid%
-%$$
-For each $cref/weight_grid_id/weight_grid_table/weight_grid_id/$$,
-$codei%
-   %weight_grid%[%weight_grid_id%]
-%$$
+.. list-table::
+
+   * - Type
+     - Field
+     - Description
+   * - ``int``
+     - ``weight_id``
+     - The :ref:`weight_grid_table@weight_id` for this weighting.
+   * - ``int``
+     - ``age_id``
+     - The :ref:`weight_grid_table@age_id` for this weight value
+   * - ``int``
+     - ``time_id``
+     - The :ref:`weight_grid_table@time_id` for this weight value
+   * - ``double``
+     - ``weight``
+     - The :ref:`weight_grid_table@weight` value
+
+weight_grid
+***********
+The return value *weight_grid* has prototype
+
+   ``CppAD::vector<weight_grid_struct>`` *weight_grid*
+
+For each :ref:`weight_grid_table@weight_grid_id` ,
+
+   *weight_grid* [ *weight_grid_id* ]
+
 is the information for a specific weighting and specific age and time.
-
-$children%example/devel/table/get_weight_grid_xam.cpp
-%$$
-$head Example$$
-The file $cref get_weight_grid_xam.cpp$$ contains an example that uses
+{xrst_toc_hidden
+   example/devel/table/get_weight_grid_xam.cpp
+}
+Example
+*******
+The file :ref:`get_weight_grid_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_weight_grid}
 -----------------------------------------------------------------------------
 */
 

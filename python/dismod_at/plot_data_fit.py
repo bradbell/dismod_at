@@ -3,95 +3,107 @@
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 '''
-$begin plot_data_fit$$
-$spell
+{xrst_begin plot_data_fit}
+{xrst_spell
    pdf
-   std
-   dismod
-   str
-   mulcov
-   integrands
-$$
+}
 
-$section Plot The Data Fit By Integrand$$
+Plot The Data Fit By Integrand
+##############################
 
-$head Syntax$$
-$srcthisfile%0%# BEGIN syntax%# END syntax%1%$$
+Syntax
+******
+{xrst_literal
+   # BEGIN syntax
+   # END syntax
+}
 
-$head database$$
-This $code str$$ is the file name for
+database
+********
+This ``str`` is the file name for
 an existing dismod_at database that contains the results of a
-$cref fit_command$$.
-This argument can't be $code None$$.
+:ref:`fit_command-name` .
+This argument can't be ``None`` .
 
-$head pdf_file$$
-This $code str$$
+pdf_file
+********
+This ``str``
 is the location where the pdf file containing the plot will be placed.
-This argument can't be $code None$$.
+This argument can't be ``None`` .
 
-$head plot_title$$
-This $code str$$ is extra text printed at the beginning of the
+plot_title
+**********
+This ``str`` is extra text printed at the beginning of the
 title for each plot.
-If this argument is $code None$$, there is no extra text.
+If this argument is ``None`` , there is no extra text.
 
-$head max_plot$$
-This is a $code int$$ specifying the maximum number of points
+max_plot
+********
+This is a ``int`` specifying the maximum number of points
 to plot per integrand.
 If this argument is less that the number of values for an integrand,
 the values are randomly sub-sampled keeping the same order.
 The x-axis (data index) is the original index value before sub-sampling.
-If this argument is $code None$$ no sub-sampling is done.
+If this argument is ``None`` no sub-sampling is done.
 
-$head integrand_list$$
-Each element of this $code list$$ is a $code str$$ containing an
-$cref/integrand_name/integrand_table/integrand_name/$$
+integrand_list
+**************
+Each element of this ``list`` is a ``str`` containing an
+:ref:`integrand_table@integrand_name`
 that we are plotting the fit for.
-If this argument is $code None$$ all of the integrands,
-except those with names that begin with $code mulcov_$$,
+If this argument is ``None`` all of the integrands,
+except those with names that begin with ``mulcov_`` ,
 are included.
 
-$head n_fit_dict$$
+n_fit_dict
+**********
 This is a dictionary with keys that are the integrand names
-in $icode integrand_list$$.
-(If $icode integrand_list$$ is $code None$$, the keys are all the
-integrand names that do not begin with $code mulcov_$$.)
-The value $icode%n_fit_dict%[%key%]%$$ is the number of rows
-in the $cref data_subset_table$$ that correspond to this integrand and
+in *integrand_list* .
+(If *integrand_list* is ``None`` , the keys are all the
+integrand names that do not begin with ``mulcov_`` .)
+The value *n_fit_dict* [ *key* ] is the number of rows
+in the :ref:`data_subset_table-name` that correspond to this integrand and
 are not held out in the data table (see below).
 If this is less than 2, the corresponding integrand is not plotted.
 
-$head Plot Legend$$
+Plot Legend
+***********
 
-$subhead Data Table Hold Out$$
+Data Table Hold Out
+===================
 We use data table hold out to refer to values that have
-$icode hold_out$$ equal to one in the data table.
+*hold_out* equal to one in the data table.
 This does not include hold outs created by the hold out command
 or hold outs created by the hold option.
 The data table hold out values are not included during the automatic
 choice of the plotting limits.
 
-$subhead Point Symbol$$
+Point Symbol
+============
 Values that are within the automatically chosen plotting limits
-are plotted using the point character $code .$$ .
+are plotted using the point character ``.`` .
 
-$subhead Plus Symbol$$
+Plus Symbol
+===========
 Values that are outside the automatically chosen plotting limits
-are plotted using the point plus character $code +$$.
+are plotted using the point plus character ``+`` .
 
-$subhead Green$$
+Green
+=====
 Values that correspond to data that is held out in the data table
 are plotted using the color green.
 
-$subhead Red and Black$$
+Red and Black
+=============
 Values that correspond to data that is not held out in the data table,
 and is not within (is within) the automatically chosen limits,
 are plotted using the color red (black).
 
+Example
+*******
+:ref:`user_plot_data_fit.py-name` .
 
-$head Example$$
-$cref user_plot_data_fit.py$$.
-
-$end
+{xrst_end plot_data_fit}
 '''
 # ----------------------------------------------------------------------------
 import random

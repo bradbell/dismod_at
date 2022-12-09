@@ -2,19 +2,23 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin set_command.py$$ $newlinech #$$
-# $spell
-#  var
-# $$
+# {xrst_begin set_command.py}
+# {xrst_comment_ch #}
 #
-# $section set Command: Example and Test$$
+# set Command: Example and Test
+# #############################
 #
-# $head truth_var Table$$
-# The $cref set_command$$ in this example creates a
+# truth_var Table
+# ***************
+# The :ref:`set_command-name` in this example creates a
 # truth_var table.
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end set_command.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import sys

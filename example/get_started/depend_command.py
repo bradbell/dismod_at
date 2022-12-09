@@ -2,15 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin depend_command.py$$ $newlinech #$$
-# $spell
-#  dismod
-# $$
+# {xrst_begin depend_command.py}
+# {xrst_comment_ch #}
 #
-# $section depend Command: Example and Test$$
+# depend Command: Example and Test
+# ################################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end depend_command.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import sys

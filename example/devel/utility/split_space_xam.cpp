@@ -3,16 +3,17 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin split_space_xam.cpp$$
-$spell
-   xam
-$$
+{xrst_begin split_space_xam.cpp}
 
-$section C++ split_space: Example and Test$$
+C++ split_space: Example and Test
+#################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end split_space_xam.cpp}
 */
 // BEGIN C++
 # include <dismod_at/split_space.hpp>

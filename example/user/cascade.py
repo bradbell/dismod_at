@@ -2,185 +2,195 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_cascade.py$$ $newlinech #$$
-# $spell
-#  covariate
-#  covariates
-#  cv
-#  da
-#  Sincidence
-#  misspecification
-#  init
-# $$
+# {xrst_begin user_cascade.py}
+# {xrst_spell
+#     misspecification
+# }
+# {xrst_comment_ch #}
 #
-# $section Generating Priors For Next Level Down Node Tree$$
+# Generating Priors For Next Level Down Node Tree
+# ###############################################
 #
-# $head Node Table$$
+# Node Table
+# **********
 # The following is a diagram of the node tree for this example:
-# $pre
-#                n1
-#          /-----/\-----\
-#        n11            n12
-#      /     \        /     \
-#    n111   n112    n121   n122
-# $$
-# We refer to $icode n1$$ as the root node and
-# $icode n111, n112, n121, n122$$ as the leaf nodes.
+# ::
 #
-# $head Problem$$
-# Given the information for a fit with $icode n1$$ as the parent,
-# with corresponding data $icode y1$$,
-# pass down summary information for a fit with $icode n11$$ as the parent
-# with corresponding data $icode y11$$.
+#                   n1
+#             /-----/\-----\
+#           n11            n12
+#         /     \        /     \
+#       n111   n112    n121   n122
 #
-# $head Procedure$$
+# We refer to *n1* as the root node and
+# *n111* , *n112* , *n121* , *n122* as the leaf nodes.
 #
-# $subhead Step 1: Create Database$$
-# This first database $code fit_n1.db$$
-# is for fitting with $icode n1$$ as the parent and predicting
-# for $icode n11$$.
+# Problem
+# *******
+# Given the information for a fit with *n1* as the parent,
+# with corresponding data *y1* ,
+# pass down summary information for a fit with *n11* as the parent
+# with corresponding data *y11* .
 #
-# $subhead Step 2: Fit With n1 As Parent$$
-# Use $cref/fit both/fit_command/variables/both/$$
-# to fit with $icode n1$$ as the parent to obtain
-# $icode e1$$ the corresponding estimate for the $cref model_variables$$.
-# This is done using database $code fit_n1.db$$
+# Procedure
+# *********
 #
-# $subhead Step 3: Simulate Data$$
-# Set the $cref truth_var_table$$ equal to the estimate $icode e1$$
-# and then use the $cref simulate_command$$ to simulate $icode N$$ data sets.
-# This is done using database $code fit_n1.db$$
+# Step 1: Create Database
+# =======================
+# This first database ``fit_n1.db``
+# is for fitting with *n1* as the parent and predicting
+# for *n11* .
 #
-# $subhead Step 4: Sample Posterior$$
+# Step 2: Fit With n1 As Parent
+# =============================
+# Use :ref:`fit both<fit_command@variables@both>`
+# to fit with *n1* as the parent to obtain
+# *e1* the corresponding estimate for the :ref:`model_variables-name` .
+# This is done using database ``fit_n1.db``
+#
+# Step 3: Simulate Data
+# =====================
+# Set the :ref:`truth_var_table-name` equal to the estimate *e1*
+# and then use the :ref:`simulate_command-name` to simulate *N* data sets.
+# This is done using database ``fit_n1.db``
+#
+# Step 4: Sample Posterior
+# ========================
 # Use the sample command with the
-# $cref/simulate/sample_command/simulate/$$ method
-# to create $icode N$$ samples of the model variables.
-# Call these samples $icode s1_1, ... , s1_N$$.
-# This is done using database $code fit_n1.db$$
+# :ref:`sample_command@simulate` method
+# to create *N* samples of the model variables.
+# Call these samples *s1_1* , ... , *s1_N* .
+# This is done using database ``fit_n1.db``
 #
-# $subhead Step 5: Predictions For n11$$
+# Step 5: Predictions For n11
+# ===========================
 # Use the predict command with the
-# $cref/sample/predict_command/source/sample/$$
-# to create $icode N$$ predictions for the
-# model variable corresponding to fit with $icode n11$$ as the parent.
-# Call these predictions $icode p11_1, ... , p11_N$$.
-# This is done using database $code fit_n1.db$$
+# :ref:`predict_command@source@sample`
+# to create *N* predictions for the
+# model variable corresponding to fit with *n11* as the parent.
+# Call these predictions *p11_1* , ... , *p11_N* .
+# This is done using database ``fit_n1.db``
 #
-# $subhead Step 6: Priors For n11 As Parent$$
-# Use the predictions $icode p11_1, ... , p11_N$$ to create priors
-# for the model variables corresponding to fitting with $icode n11$$
-# as the parent and with data $icode y11$$.
-# In this process account for the fact that the data $icode y11$$ is a subset
-# of $icode y1$$ which was used to obtain the predictions.
-# These priors are written to the database $code fit_n11.db$$
-# which starts as a copy of the final $code fit_n1.db$$.
+# Step 6: Priors For n11 As Parent
+# ================================
+# Use the predictions *p11_1* , ... , *p11_N* to create priors
+# for the model variables corresponding to fitting with *n11*
+# as the parent and with data *y11* .
+# In this process account for the fact that the data *y11* is a subset
+# of *y1* which was used to obtain the predictions.
+# These priors are written to the database ``fit_n11.db``
+# which starts as a copy of the final ``fit_n1.db`` .
 # This is done so that the subsequent
-# $cref/init/init_command/$$ and $cref/fit/fit_command/$$ commands
-# do not wipe out the results stored in $code fit_n1.db$$.
+# :ref:`init<init_command-name>` and :ref:`fit<fit_command-name>` commands
+# do not wipe out the results stored in ``fit_n1.db`` .
 #
-# $subhead Step 7: Fit n11 As Parent$$
-# Use $cref/fit both/fit_command/variables/both/$$
-# to fit with $icode n11$$ as the parent to obtain
-# $icode e11$$ corresponding estimate for the model variables.
+# Step 7: Fit n11 As Parent
+# =========================
+# Use :ref:`fit both<fit_command@variables@both>`
+# to fit with *n11* as the parent to obtain
+# *e11* corresponding estimate for the model variables.
 #
-# $head Problem Parameters$$
+# Problem Parameters
+# ******************
 # The following parameters, used in this example, can be changed:
-# $srcthisfile%
-#   0%# begin problem parameters%# end problem parameters%1
-# %$$
+# {xrst_literal
+#     begin problem parameters
+#     end problem parameters
+# }
 #
-# $head Age and Time Values$$
+# Age and Time Values
+# *******************
 # The time values do not matter for this problem
 # because all the functions are constant with respect to time.
-# The $cref age_table$$ for this problem is given by
-# $srcthisfile%
-#  0%# BEGIN age_table%  # END age_table%1
-# %$$
-# We use $icode n_age$$ to denote the length of this table.
+# The :ref:`age_table-name` for this problem is given by
+# {xrst_literal
+#     BEGIN age_table
+#     END age_table
+# }
+# We use *n_age* to denote the length of this table.
 #
-# $head Rate Table$$
-# The only rate in this problem is $icode iota$$. There are $icode n_age$$
-# $cref/parent rate/model_variables/Fixed Effects, theta/Parent Rates/$$
-# values for $icode iota$$, one for each point in the age table.
-# There are two $icode iota$$
-# $cref/child rate effects
-#  /model_variables
-#  /Random Effects, u
-#  /Child Rate Effects
-# /$$,
+# Rate Table
+# **********
+# The only rate in this problem is *iota* . There are *n_age*
+# :ref:`parent rate<model_variables@Fixed Effects, theta@Parent Rates>`
+# values for *iota* , one for each point in the age table.
+# There are two *iota*
+# :ref:`model_variables@Random Effects, u@Child Rate Effects` ,
 # one for each child node.
-# Note that there are two children when fitting $icode n1$$ as the parent
-# and when fitting $icode n11$$ as the parent.
+# Note that there are two children when fitting *n1* as the parent
+# and when fitting *n11* as the parent.
 #
-# $head Covariates$$
-# There are two $cref/covariates/covariate_table/$$ for this example.
+# Covariates
+# **********
+# There are two :ref:`covariates<covariate_table-name>` for this example.
 # One covariate has the constant one and reference zero.
 # The other covariate is income and uses the average for its reference.
 # The average income is different depending on whether
-# $icode n1$$ or $icode n11$$
+# *n1* or *n11*
 # is the parent.
 #
-# $head Multipliers$$
+# Multipliers
+# ***********
 # There are two
-# $cref/group covariate multipliers
-#  /model_variables
-#  /Fixed Effects, theta
-#  /Group Covariate Multipliers
-# /$$.
+# :ref:`model_variables@Fixed Effects, theta@Group Covariate Multipliers` .
 #
-# $subhead gamma$$
+# gamma
+# =====
 # One multiplier multiples the constant one and models the unknown variation
 # in the data (sometimes referred to as model misspecification).
 # We call this covariate multiplier
-# $cref/gamma/data_like/Measurement Noise Covariates/gamma_j (a, t)/$$.
+# :ref:`gamma<data_like@Measurement Noise Covariates@gamma_j (a, t)>` .
 # We use a uniform prior on this multiplier so that it absorbs
 # all the noise due to model misspecification.
-# When checking for coverage by the samples $icode s1_1$$, ... , $icode s1_N$$,
+# When checking for coverage by the samples *s1_1* , ... , *s1_N* ,
 # we expand the sample standard deviation by a factor of
-# $codei%(1 + %gamma%)%$$.
-# This accounts for the fact that the noise absorbed by $icode gamma$$
+# (1 + *gamma* ) .
+# This accounts for the fact that the noise absorbed by *gamma*
 # is modeled as independent between data points.
-# When fitting with $icode n1$$ as the parent, this noise is
+# When fitting with *n1* as the parent, this noise is
 # correlated between samples in the same leaf.
 #
-# $subhead alpha$$
-# The other multiplier multiplies income and affects $icode iota$$.
+# alpha
+# =====
+# The other multiplier multiplies income and affects *iota* .
 # We call this covariate multiplier
-# $cref/alpha
-#  /avg_integrand
-#  /Rate Functions
-#  /Group Rate Covariate Multiplier, alpha_jk
-# /$$.
+# :ref:`alpha<avg_integrand@Rate Functions@Group Rate Covariate Multiplier, alpha_jk>` .
 # We note that both average income and random effects vary between the nodes.
-# When fitting with $icode n1$$ as the parent,
-# $icode alpha$$ tries to absorb the random effects at the leaf level.
-# We use a Laplace prior on $icode alpha$$ to reduce this effect.
+# When fitting with *n1* as the parent,
+# *alpha* tries to absorb the random effects at the leaf level.
+# We use a Laplace prior on *alpha* to reduce this effect.
 #
-# $head Data Table$$
+# Data Table
+# **********
 # For this example, all the data is
-# $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$.
-# There are $icode data_per_leaf$$ data point for each leaf node.
+# :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` .
+# There are *data_per_leaf* data point for each leaf node.
 # Income is varies within each leaf node so the random effect
 # can be separated from the income effect.
 # Normally there is much more data, so we compensate by using
 # a small coefficient of variation for the measurement values
-# $icode meas_cv$$.
-# The simulation value of $icode iota$$, corresponding to no effect, is
-# a function of age and defined by $codei%iota_no_effect(%age%)%$$.
+# *meas_cv* .
+# The simulation value of *iota* , corresponding to no effect, is
+# a function of age and defined by ``iota_no_effect`` ( *age* ) .
 # Each data point corresponds to a leaf node.
 # The total effect for a data point is
 # the random effect for the leaf node,
 # plus the random effect for parent of the leaf,
 # plus the income effect.
 # Each data point is for a specific age and the corresponding mean
-# is $icode%iota_no_effect(%age%)%$$ times the exponential of the total effect.
-# The standard deviation of the data is $icode meas_cv$$ times its mean.
+# is *iota_no_effect* ( ``age`` ) times the exponential of the total effect.
+# The standard deviation of the data is *meas_cv* times its mean.
 # A Gaussian with this mean and standard deviation is used to simulate
 # each data point.
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_cascade.py}
 #
 # $end
 # ----------------------------------------------------------------------------

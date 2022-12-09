@@ -3,63 +3,64 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin check_rate_limit$$
-$spell
-   const
-   CppAD
-   struct
-   pini
-   sqlite
-$$
+{xrst_begin check_rate_limit}
 
-$section Check Lower and Upper Iota and Rho Limits$$
+Check Lower and Upper Iota and Rho Limits
+#########################################
 
-$head syntax$$
-$codei%check_rate_limit(
-   %db%, %rate_case%, %rate_table%, %prior_table%, %smooth_grid%
-)%$$
+syntax
+******
 
-$head db$$
+| ``check_rate_limit`` (
+| |tab| *db* , *rate_case* , *rate_table* , *prior_table* , *smooth_grid*
+| )
+
+db
+**
 This argument has prototype
-$codei%
-   sqlite3* %db%
-%$$
-and is the database connection for $cref/logging/log_message/$$ errors.
 
-$head rate_case$$
+   ``sqlite3`` * *db*
+
+and is the database connection for :ref:`logging<log_message-name>` errors.
+
+rate_case
+*********
 This is the option table information about the limits for
-$icode iota$$ and $icode rho$$; see
-$cref/rate_case/option_table/rate_case/$$.
+*iota* and *rho* ; see
+:ref:`option_table@rate_case` .
 
-$head rate_table$$
+rate_table
+**********
 This argument has prototype
-$codei%
-   const CppAD::vector<rate_struct>& %rate_table%
-%$$
+
+   ``const CppAD::vector<rate_struct>&`` *rate_table*
+
 and it is the
-$cref/rate_table/get_rate_table/rate_table/$$.
+:ref:`get_rate_table@rate_table` .
 For this table,
-only the $code parent_smooth_id$$ column is used.
+only the ``parent_smooth_id`` column is used.
 
-$head prior_table$$
+prior_table
+***********
 This argument has prototype
-$codei%
-   const CppAD::vector<prior_struct>& %prior_table%
-%$$
-and it is the
-$cref/prior_table/get_prior_table/prior_table/$$.
-For this table, only the $code lower$$ and $code upper$$ fields are used.
 
-$head smooth_grid$$
+   ``const CppAD::vector<prior_struct>&`` *prior_table*
+
+and it is the
+:ref:`get_prior_table@prior_table` .
+For this table, only the ``lower`` and ``upper`` fields are used.
+
+smooth_grid
+***********
 This argument has prototype
-$codei%
-   const CppAD::vector<smooth_grid_struct>& %smooth_grid%
-%$$
-and it is the
-$cref/smooth_grid_table/get_smooth_grid/smooth_grid/$$.
-For this table, only the $code value_prior_id$$ field is used.
 
-$end
+   ``const CppAD::vector<smooth_grid_struct>&`` *smooth_grid*
+
+and it is the
+:ref:`smooth_grid_table<get_smooth_grid@smooth_grid>` .
+For this table, only the ``value_prior_id`` field is used.
+
+{xrst_end check_rate_limit}
 */
 # include <dismod_at/check_rate_limit.hpp>
 # include <dismod_at/error_exit.hpp>

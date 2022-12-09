@@ -2,130 +2,143 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_lasso_covariate.py$$ $newlinech #$$
-# $spell
-#  init
-#  avgint
-#  Covariates
-#  covariate
-#  smoothings
-#  mulcov
-#  exp
-#  Sincidence
-#  std
-# $$
+# {xrst_begin user_lasso_covariate.py}
+# {xrst_spell
+#     exp
+#     nonzero
+#     refits
+# }
+# {xrst_comment_ch #}
 #
-# $section Using Lasso on Covariate Multiplier$$
+# Using Lasso on Covariate Multiplier
+# ###################################
 #
-# $head See Also$$
-# $cref user_group_mulcov.py$$
+# See Also
+# ********
+# :ref:`user_group_mulcov.py-name`
 #
-# $head Purpose$$
-# This example uses a $cref/laplace/density_table/density_name/laplace/$$
+# Purpose
+# *******
+# This example uses a :ref:`density_table@density_name@laplace`
 # prior distribution on two covariate multipliers
 # to detect which covariate is present in the data.
 # It then refits the data with a uniform on the multiplier that is present
 # and the other multiplier constrained to be zero.
 #
-# $head Problem Parameters$$
+# Problem Parameters
+# ******************
 # The following values are used to simulate the data and set the priors
 # for fitting the data:
-# $srcthisfile%
-#  0%# begin problem parameters%# end problem parameters%1
-# %$$
+# {xrst_literal
+#     begin problem parameters
+#     end problem parameters
+# }
 #
-# $head Age and Time Values$$
+# Age and Time Values
+# *******************
 # The age and time values do not matter for this problem
 # because all the functions are constant in age and time.
 # This can be seen by the fact that all of the smoothings have one age
 # and one time point.
 #
-# $head Variables$$
+# Variables
+# *********
 # The are three model variables in this example:
-# $table
-# $icode iota_reference$$
-#  $cnext $cref/iota/avg_integrand/Rate Functions/iota_i(a,t)/$$
-#  corresponding to reference value of covariates
-# $rnext
-# $icode alpha_income$$ $cnext $cref/covariate multiplier/mulcov_table/$$
-#  corresponding to income.
-# $rnext
-# $icode alpha_sex$$ $cnext
-#  covariate multiplier corresponding to sex.
-# $tend
 #
-# $head Covariate Table$$
-# There are two $cref/covariates/covariate_table/$$,
-# $code income$$ and $code sex$$, in this example.
-# Income is a linear function of $cref/data_id/data_table/data_id/$$.
+# .. list-table::
+#
+#     * - *iota_reference*
+#       - :ref:`iota<avg_integrand@Rate Functions@iota_i(a,t)>`
+#         corresponding to reference value of covariates
+#     * - *alpha_income*
+#       - :ref:`covariate multiplier<mulcov_table-name>`
+#         corresponding to income.
+#     * - *alpha_sex*
+#       - covariate multiplier corresponding to sex.
+#
+# Covariate Table
+# ***************
+# There are two :ref:`covariates<covariate_table-name>` ,
+# ``income`` and ``sex`` , in this example.
+# Income is a linear function of :ref:`data_table@data_id` .
 # It starts with 0.0 and ends with 1.0.
 # To be specific,
-# $codei%
-#  %income% = %data_id% / (%n_data% - 1)
-# %$$
+#
+#     *income* = *data_id* / ( *n_data* ``- 1`` )
+#
 # Sex cycles between the values -0.5, 0.0, +0.5
-# as a function of $icode data_id$$.
+# as a function of *data_id* .
 # Note that income and sex have range 1.0.
 # This makes the scaling of the covariate multipliers simpler.
 # The reference value for each covariate has been set to the midpoint
 # of its range.
-# We use $icode x_income$$ ($icode x_sex$$) to denote the difference
+# We use *x_income* ( *x_sex* ) to denote the difference
 # of income (sex) minus its reference value.
 #
-# $head Mulcov Table$$
-# The $cref/covariate multiplier table/mulcov_table/$$ has two rows,
+# Mulcov Table
+# ************
+# The :ref:`covariate multiplier table<mulcov_table-name>` has two rows,
 # one for each covariate multiplier.
 # Both multipliers affects the value of
-# $cref/iota/avg_integrand/Rate Functions/iota_i(a,t)/$$,
+# :ref:`iota<avg_integrand@Rate Functions@iota_i(a,t)>` ,
 # but one multiplies income and the other sex.
-# We use $icode alpha_income$$ ($icode alpha_sex$$) to denote the
+# We use *alpha_income* ( *alpha_sex* ) to denote the
 # covariate multiplier corresponding to income (sex).
-# The model for the value of $icode iota$$ is
-# $codei%
-#  %iota_reference% * exp( %alpha_income%*%x_income% + %alpha_sex%*%x_sex% )
-# %$$
+# The model for the value of *iota* is
 #
-# $head Rate Table$$
-# The $cref rate_table$$ only specifies that $icode iota$$ for the parent
+#     *iota_reference* * ``exp`` ( *alpha_income* * *x_income* + *alpha_sex* * *x_sex*  )
+#
+# Rate Table
+# **********
+# The :ref:`rate_table-name` only specifies that *iota* for the parent
 # is the only nonzero rate for this example.
 # In addition, it specifies the smoothing for that rate which has only
 # one grid point. Hence there is only one model variable corresponding to
 # the rates.
 #
-# $head Data Table$$
+# Data Table
+# **********
 # For this example, all the data is
-# $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$,
+# :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` ,
 # with a Gaussian density, with mean value
-# $codei%
-#  %iota_reference% * exp( %alpha_income% * x_income )
-# %$$
+#
+#     *iota_reference* * ``exp`` ( *alpha_income* * ``x_income`` )
+#
 # and with standard deviation equal 10% of the mean.
 #
-# $head Prior Table$$
-# There are three priors in the $cref prior_table$$, one for each
+# Prior Table
+# ***********
+# There are three priors in the :ref:`prior_table-name` , one for each
 # model variable.
 #
-# $subhead iota$$
-# The prior for fitting the reference value of $icode iota$$
+# iota
+# ====
+# The prior for fitting the reference value of *iota*
 # is uniform with lower limit 0.001, and upper limit 1.
 # Its mean value 0.1 is only used as a starting and scaling point for the
-# fitting process; see $cref start_var_table$$ and $cref scale_var_table$$.
+# fitting process; see :ref:`start_var_table-name` and :ref:`scale_var_table-name` .
 #
-# $subhead alpha$$
-# There is a separate prior for $icode alpha_income$$ and $icode alpha_sex$$.
+# alpha
+# =====
+# There is a separate prior for *alpha_income* and *alpha_sex* .
 # For the first fit, they are both a Laplace density with
-# mean zero and standard deviation $icode laplace_std$$.
-# The first fit is used to decide that $icode alpha_income$$ is nonzero
-# and $icode alpha_sex$$ is zero.
-# The prior for $icode alpha_income$$ is changed to a uniform
-# and the prior for $icode alpha_sex$$ is change to have upper and lower
+# mean zero and standard deviation *laplace_std* .
+# The first fit is used to decide that *alpha_income* is nonzero
+# and *alpha_sex* is zero.
+# The prior for *alpha_income* is changed to a uniform
+# and the prior for *alpha_sex* is change to have upper and lower
 # limit zero.
-# A second fit is done to recover the value of $icode alpha_income$$
+# A second fit is done to recover the value of *alpha_income*
 # without shrinkage due to the Laplace prior.
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_lasso_covariate.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # begin problem parameters

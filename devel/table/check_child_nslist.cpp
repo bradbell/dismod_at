@@ -3,90 +3,92 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin check_child_nslist$$
-$spell
-   sqlite
-   std
-   const
-   CppAD
-   struct
-   nslist
-$$
+{xrst_begin check_child_nslist}
 
-$section Check Assumptions About Lists of Child Node Smoothing Pairs$$
+Check Assumptions About Lists of Child Node Smoothing Pairs
+###########################################################
 
-$head syntax$$
-$codei%check_child_nslist(
-   %db%,
-   %option_table%,
-   %rate_table%,
-   %node_table%,
-   %smooth_table%,
-   %nslist_table%,
-   %nslist_pair%
-)%$$
+syntax
+******
 
-$head Purpose$$
+| ``check_child_nslist`` (
+| |tab| *db* ,
+| |tab| *option_table* ,
+| |tab| *rate_table* ,
+| |tab| *node_table* ,
+| |tab| *smooth_table* ,
+| |tab| *nslist_table* ,
+| |tab| *nslist_pair*
+| )
+
+Purpose
+*******
 Checks the assumptions related to the list specified by each
-$cref/child_nslist_id/rate_table/child_nslist_id/$$.
+:ref:`rate_table@child_nslist_id` .
 
-$head db$$
+db
+**
 This argument has prototype
-$codei%
-   sqlite3* %db%
-%$$
-and is the database connection for $cref/logging/log_message/$$ errors.
 
-$head option_table$$
+   ``sqlite3`` * *db*
+
+and is the database connection for :ref:`logging<log_message-name>` errors.
+
+option_table
+************
 This argument has prototype
-$codei%
-   const CppAD::vector<option_struct>& %option_table%
-%$$
+
+   ``const CppAD::vector<option_struct>&`` *option_table*
+
 and it is the
-$cref/option_table/get_option_table/option_table/$$.
+:ref:`get_option_table@option_table` .
 
-$head rate_table$$
+rate_table
+**********
 This argument has prototype
-$codei%
-   const CppAD::vector<rate_struct>& %rate_table%
-%$$
-and it is the
-$cref/rate_table/get_rate_table/rate_table/$$.
 
-$head node_table$$
+   ``const CppAD::vector<rate_struct>&`` *rate_table*
+
+and it is the
+:ref:`get_rate_table@rate_table` .
+
+node_table
+**********
 This argument has prototype
-$codei%
-   const CppAD::vector<node_struct>& %node_table%
-%$$
-and it is the
-$cref/node_table/get_node_table/node_table/$$.
 
-$head smooth_table$$
+   ``const CppAD::vector<node_struct>&`` *node_table*
+
+and it is the
+:ref:`get_node_table@node_table` .
+
+smooth_table
+************
 This argument has prototype
-$codei%
-   const CppAD::vector<smooth_struct>& %smooth_table%
-%$$
-and it is the
-$cref/smooth_table/get_smooth_table/smooth_table/$$.
 
-$head nslist_table$$
+   ``const CppAD::vector<smooth_struct>&`` *smooth_table*
+
+and it is the
+:ref:`get_smooth_table@smooth_table` .
+
+nslist_table
+************
 This argument has prototype
-$codei%
-   const CppAD::vector<std::string>& %nslist_table%
-%$$
+
+   ``const CppAD::vector<std::string>&`` *nslist_table*
+
 and it is the
-$cref/nslist_table/get_nslist_table/nslist_table/$$.
+:ref:`get_nslist_table@nslist_table` .
 
-
-$head nslist_pair$$
+nslist_pair
+***********
 This argument has prototype
-$codei%
-   const CppAD::vector<nslist_pair_struct>& %nslist_pair%
-%$$
-and it is the
-$cref/nslist_pair/get_nslist_pair/nslist_pair/$$.
 
-$end
+   ``const CppAD::vector<nslist_pair_struct>&`` *nslist_pair*
+
+and it is the
+:ref:`get_nslist_pair@nslist_pair` .
+
+{xrst_end check_child_nslist}
 */
 # include <dismod_at/check_child_nslist.hpp>
 # include <dismod_at/null_int.hpp>

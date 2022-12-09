@@ -2,36 +2,49 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_plot_curve.py$$ $newlinech #$$
-# $spell
-# $$
+# {xrst_begin user_plot_curve.py}
+# {xrst_spell
+#     lambsa
+# }
+# {xrst_comment_ch #}
 #
-# $section Example Plotting Log-Scaled Values w.r.t Age and Time$$
+# Example Plotting Log-Scaled Values w.r.t Age and Time
+# #####################################################
 #
-# $head z_name$$
-# For this example the name of the z variables are $code A$$, $code B$$,
-# $code C$$, and $code D$$
+# z_name
+# ******
+# For this example the name of the z variables are ``A`` , ``B`` ,
+# ``C`` , and ``D``
 #
-# $head Age Grid$$
+# Age Grid
+# ********
 # The age grid for this example in 0.0, 5.0, ..., 100.0.
 #
-# $head Time Grid$$
+# Time Grid
+# *********
 # The time grid for this example is 1980.0, 1985.0, ..., 2020.0.
 #
-# $head Function$$
+# Function
+# ********
 # The function for this example is
-# $latex \[
-#   f(a, t) = \lambda * \exp \left[
-#       - \left( \frac{a - 50}{100} \right)^2
-#       - \left( \frac{(t - 2000.0}{20.0} \right)^2
-# \right]
-# \] $$
-# where $latex a$$ is age, $latex t$$ is time, and
-# $latex lambsa$$ is 1, 2, 3, 4 for variables
-# $code A$$, $code B$$, $code C$$, $code D$$ respectively.
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# .. math::
+#
+#    f(a, t) = \lambda * \exp \left[
+#        - \left( \frac{a - 50}{100} \right)^2
+#        - \left( \frac{(t - 2000.0}{20.0} \right)^2
+#  \right]
+#
+# where :math:`a` is age, :math:`t` is time, and
+# :math:`lambsa` is 1, 2, 3, 4 for variables
+# ``A`` , ``B`` , ``C`` , ``D`` respectively.
+#
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_plot_curve.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import sys

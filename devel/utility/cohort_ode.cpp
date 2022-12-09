@@ -3,90 +3,95 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin cohort_ode$$
-$spell
-   pini
-$$
+{xrst_begin cohort_ode}
 
-$section Solve The ODE on a Cohort Line$$
+Solve The ODE on a Cohort Line
+##############################
 
-$head Syntax$$
-$codei%cohort_ode(
-%rate_case%, %age%, %pini%, %iota%, %rho%, %chi%, %omega%, %s_out%, %c_out%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+| ``cohort_ode`` (
+| *rate_case* , *age* , *pini* , *iota* , *rho* , *chi* , *omega* , *s_out* , *c_out*
+| )
 
-$head Purpose$$
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+Purpose
+*******
 This routine approximates the functions
-$latex S(a)$$ and $latex C(a)$$ that solve the
-$cref/ordinary differential equation
-   /avg_integrand
-   /Ordinary Differential Equation
-/$$.
-The functions $latex S(a, t)$$, $latex C(a, t)$$
-satisfy this equation along cohort lines were $latex t - a$$ is constant.
+:math:`S(a)` and :math:`C(a)` that solve the
+:ref:`avg_integrand@Ordinary Differential Equation` .
+The functions :math:`S(a, t)`, :math:`C(a, t)`
+satisfy this equation along cohort lines were :math:`t - a` is constant.
 
-$head Float$$
-The type $icode Float$$ must be $code double$$ or
-$cref a1_double$$.
+Float
+*****
+The type *Float* must be ``double`` or
+:ref:`a1_double-name` .
 
-$head n_cohort$$
-We use the notation $icode n_cohort$$ for the number of grid
+n_cohort
+********
+We use the notation *n_cohort* for the number of grid
 points along this cohort at which the approximate solution is returned.
 
-$head rate_case$$
+rate_case
+*********
 This is the value of
-$cref/rate_case/option_table/rate_case/$$ in the option table
-and cannot be $code no_ode$$.
+:ref:`option_table@rate_case` in the option table
+and cannot be ``no_ode`` .
 
-$head age$$
-This vector has size $icode n_cohort$$ and
+age
+***
+This vector has size *n_cohort* and
 specifies the age values for this cohort.
-For $icode%k% = 1 , %...%, %n_cohort%-1%$$, the rates are approximated
-as constant over the $th k$$ age interval
-from $icode%age%[%k%-1]%$$ to $icode%age%[%k%]%$$.
+For *k* = 1 , ..., *n_cohort* ``-1`` , the rates are approximated
+as constant over the *k*-th age interval
+from *age* [ *k* ``-1`` ] to *age* [ *k* ] .
 
-$head pini$$
-This is the prevalence corresponding to $icode%age%[0]%$$; see
-$cref/pini/rate_table/rate_name/pini/$$.
-At this age $latex a_0$$,
-$latex C( a_0 )$$ is equal to $icode pini$$ and
-$latex S( a_0 ) = 1 - C( a_0 )$$.
+pini
+****
+This is the prevalence corresponding to *age* [0] ; see
+:ref:`rate_table@rate_name@pini` .
+At this age :math:`a_0`,
+:math:`C( a_0 )` is equal to *pini* and
+:math:`S( a_0 ) = 1 - C( a_0 )`.
 
-$head rate$$
-For $icode rate$$ equal to
+rate
+****
+For *rate* equal to
 iota, rho, chi, and omega,
-we use $icode rate$$ for the corresponding argument.
-It is vector with size $icode n_cohort$$ and
-$icode%rate5[%k%]%$$
-specifies the corresponding rate at age $icode%age%[%k%]%$$.
+we use *rate* for the corresponding argument.
+It is vector with size *n_cohort* and
+*rate5* [ ``k`` ]
+specifies the corresponding rate at age *age* [ *k* ] .
 
-$icode s_out$$
-This vector has size $icode n_cohort$$.
+*s_out*
+This vector has size *n_cohort* .
 The input value of its elements does not matter.
-Upon return, $icode%s_out%[%k%]%$$ is the approximation solution
-for $latex S(a, t)$$ at the corresponding age and time.
+Upon return, *s_out* [ *k* ] is the approximation solution
+for :math:`S(a, t)` at the corresponding age and time.
 
-$icode c_out$$
-This vector has size $icode n_cohort$$.
+*c_out*
+This vector has size *n_cohort* .
 The input value of its elements does not matter.
-Upon return, $icode%c_out%[%k%]%$$ is the approximation solution
-for $latex C(a, t)$$ at the corresponding age and time.
-
-$children%
+Upon return, *c_out* [ *k* ] is the approximation solution
+for :math:`C(a, t)` at the corresponding age and time.
+{xrst_toc_hidden
    example/devel/utility/cohort_ode_xam.cpp
-%$$
-$head Example$$
-The file $cref cohort_ode_xam.cpp$$ contains
-and example and test of $code cohort_ode$$.
+}
+Example
+*******
+The file :ref:`cohort_ode_xam.cpp-name` contains
+and example and test of ``cohort_ode`` .
 It returns true for success and false for failure.
 
-
-$end
+{xrst_end cohort_ode}
 */
 # include <dismod_at/cohort_ode.hpp>
 # include <dismod_at/eigen_ode2.hpp>

@@ -3,86 +3,99 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin metropolis$$ $newlinech #$$
-# $spell
-#  str
-#  sqlite
-#  dismod
-#  numpy
-#  inf
-# $$
+# {xrst_begin metropolis}
+# {xrst_spell
+#     numpy
+# }
+# {xrst_comment_ch #}
 #
-# $section Metropolis MCMC Algorithm$$
+# Metropolis MCMC Algorithm
+# #########################
 #
-# $head Syntax$$
-# $codei%(%a%, %c%) = dismod_at.metropolis(%log_f%, %m%, %x0%, %s%)
-# %$$
+# Syntax
+# ******
 #
-# $head log_f$$
-# Given a numpy $code float$$ vector of length $icode n$$, the syntax
-# $codei%
-#  %d% = %log_f%(%x%)
-# %$$
-# sets the $code float$$ $icode d$$ to the log of the un-normalized density
-# corresponding to the positive function $latex f(x)$$ mapping
-# $latex \B{R}^n$$ to the non-negative real values.
-# If $latex f(x)$$ is zero, the corresponding log-density value should equal
-# $code - float("inf")$$.
+#     ( *a* , *c* ) = ``dismod_at.metropolis`` ( *log_f* , *m* , *x0* , *s* )
 #
-# $head m$$
-# is the $code int$$ number of vectors in the MCMC chain.
+# log_f
+# *****
+# Given a numpy ``float`` vector of length *n* , the syntax
 #
-# $head x0$$
-# is a numpy $code float$$ vector of length $icode n$$
+#     *d* = *log_f* ( *x* )
+#
+# sets the ``float`` *d* to the log of the un-normalized density
+# corresponding to the positive function :math:`f(x)` mapping
+# :math:`\B{R}^n` to the non-negative real values.
+# If :math:`f(x)` is zero, the corresponding log-density value should equal
+# ``- float("inf")`` .
+#
+# m
+# *
+# is the ``int`` number of vectors in the MCMC chain.
+#
+# x0
+# **
+# is a numpy ``float`` vector of length *n*
 # that specifies the initial vector in the chain
-# (denoted by $latex x^0$$ below).
+# (denoted by :math:`x^0` below).
 #
-# $head s$$
-# is a $code float$$ or, a numpy $code float$$ vector of length $icode n$$,
-# that specifies the scaling for each of the components of $latex x$$.
+# s
+# *
+# is a ``float`` or, a numpy ``float`` vector of length *n* ,
+# that specifies the scaling for each of the components of :math:`x`.
 #
-# $subhead Vector Case$$
-# If $icode s$$ is a vector,
-# for $latex i = 1 , \ldots, m-1$$,
-# and $latex j = 0 , \ldots, n-1$$,
-# the $th j$$ component of the $th i$$ proposal vector $latex y^i$$
+# Vector Case
+# ===========
+# If *s* is a vector,
+# for :math:`i = 1 , \ldots, m-1`,
+# and :math:`j = 0 , \ldots, n-1`,
+# the *j*-th component of the *i*-th proposal vector :math:`y^i`
 # is given by
-# $latex \[
+#
+# .. math::
+#
 #  y_j^i = x_j^{i-1} + w_j^{i-1} s_j
-# \] $$
-# where $latex w_j^i \sim \B{N}(0, 1)$$ are all independent.
 #
-# $subhead Float Case$$
-# If $icode s$$ is a $code float$$,
-# $latex \[
+# where :math:`w_j^i \sim \B{N}(0, 1)` are all independent.
+#
+# Float Case
+# ==========
+# If *s* is a ``float`` ,
+#
+# .. math::
+#
 #  y_j^i = x_j^{i-1} + w_j^{i-1} s
-# \] $$
 #
-# $head a$$
-# is the $code int$$ acceptance count; i.e. the number of indices $latex i$$
-# such that $latex x^i = y^i$$
-# (for the other indices $latex x^i = x^{i-1}$$).
+# a
+# *
+# is the ``int`` acceptance count; i.e. the number of indices :math:`i`
+# such that :math:`x^i = y^i`
+# (for the other indices :math:`x^i = x^{i-1}`).
 #
-# $head c$$
-# is an $latex m \times n$$ numpy $code float$$ array that contains
+# c
+# *
+# is an :math:`m \times n` numpy ``float`` array that contains
 # the components of the Markov Chain.
-# We use the notation $latex x_j^i$$ for $icode%c%[%i%, %j%]%$$.
-# For any smooth function $latex g : \B{R}^n \rightarrow \B{R}$$,
+# We use the notation :math:`x_j^i` for *c* [ *i* , *j* ] .
+# For any smooth function :math:`g : \B{R}^n \rightarrow \B{R}`,
 # the Metropolis algorithm provides the following approximation as
-# $latex m \rightarrow \infty$$,
-# $latex \[
+# :math:`m \rightarrow \infty`,
+#
+# .. math::
+#
 #  \frac{1}{m} \sum_{i=0}^{m-1} g( x^i )
 #  \rightarrow
 #  \frac{ \int g( x ) f ( x ) \B{d} x  }{ \int f( x ) \B{d} x }
-# \] $$
 #
-# $children%example/user/metropolis.py
-# %$$
-# $head Example$$
-# The file $cref user_metropolis.py$$ contains an example and test of this
+# {xrst_toc_hidden
+#    example/user/metropolis.py
+# }
+# Example
+# *******
+# The file :ref:`user_metropolis.py-name` contains an example and test of this
 # routine.
 #
-# $end
+# {xrst_end metropolis}
 # ---------------------------------------------------------------------------
 def metropolis(log_f, m, x0, s) :
    import math

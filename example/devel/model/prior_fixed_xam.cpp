@@ -3,17 +3,17 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin prior_fixed_xam.cpp$$
-$spell
-   interp
-   xam
-$$
+{xrst_begin prior_fixed_xam.cpp}
 
-$section C++ prior_fixed: Example and Test$$
+C++ prior_fixed: Example and Test
+#################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end prior_fixed_xam.cpp}
 */
 // BEGIN C++
 # include <limits>

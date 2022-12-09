@@ -2,75 +2,87 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_bnd_mulcov.py$$ $newlinech #$$
-# $spell
-#  Integrands
-#  Sincidence
-#  bnd_mulcov
-#  covariate
-#  euros
-#  cov_diff
-# $$
+# {xrst_begin user_bnd_mulcov.py}
+# {xrst_comment_ch #}
 #
-# $section Bounding Covariate Multipliers Absolute Data Effect$$
+# Bounding Covariate Multipliers Absolute Data Effect
+# ###################################################
 #
-# $head Purpose$$
+# Purpose
+# *******
 # This example shows how to use the
-# $cref bnd_mulcov_command$$.
+# :ref:`bnd_mulcov_command-name` .
 #
-# $head Integrands$$
-# For this example there is only one integrand, $code Sincidence$$.
+# Integrands
+# **********
+# For this example there is only one integrand, ``Sincidence`` .
 #
-# $head Nodes$$
-# There are two nodes, one called $code world$$ and the other called
-# $code europe$$.
+# Nodes
+# *****
+# There are two nodes, one called ``world`` and the other called
+# ``europe`` .
 #
-# $head True Iota$$
+# True Iota
+# *********
 # For this example, the true incidence rates for europe is given by
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 import math
 mulcov_true      = -3e-3
 income_reference = 1e3
 def iota_europe_true(income) :
    effect  = mulcov_true * (income - income_reference)
    return 0.01 * math.exp( effect )
-# %$$
-# Here $icode europe_avg$$ contains the reference value for
+# {xrst_code}
+# {xrst_spell_on}
+# Here *europe_avg* contains the reference value for
 # income and weight in europe.
 #
-# $head Parent Node$$
+# Parent Node
+# ***********
 # For this example the parent node is europe and hence world data
-# is not included in the $cref data_subset_table$$.
+# is not included in the :ref:`data_subset_table-name` .
 # This demonstrates that the world node is not included when
 # the bnd_mulcov command computes its limits for the covariate multiplier.
 #
-# $head Data$$
+# Data
+# ****
 # There are four data points measuring Sincidence.
 # The first point is for the world, has a very large income, and is
 # not included when computing the multiplier bounds.
 #
-# $head Model$$
-# There is only one rate $icode iota$$ and it is constant as a function
+# Model
+# *****
+# There is only one rate *iota* and it is constant as a function
 # of age and time. In addition, there is one covariate multiplier
 # for income.
 #
-# $head bnd_mulcov$$
+# bnd_mulcov
+# **********
 # The maximum absolute effect for the this example are
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 max_abs_effect = 1.0
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 # Note that the bound on the covariate multiplier have units
 # while the maximum absolute effect does not.
 #
-# $head max_cov_diff$$
+# max_cov_diff
+# ************
 # The income values in the europe data are
 # its reference, its reference divided by two, and its reference times two.
 # The corresponding maximum absolute difference from the
 # reference is equal to the reference.
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_bnd_mulcov.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------

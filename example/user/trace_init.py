@@ -2,32 +2,35 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_trace_init.py$$ $newlinech #$$
-# $spell
-#  def
-#  init
-#  exp
-#  Integrands
-#  Sincidence
-# $$
+# {xrst_begin user_trace_init.py}
+# {xrst_spell
+#     exp
+# }
+# {xrst_comment_ch #}
 #
-# $section Using Initialization Trace Option$$
+# Using Initialization Trace Option
+# #################################
 #
-# $head Purpose$$
+# Purpose
+# *******
 # This example shows how to use the
-# $cref/trace_init_fit_model/option_table/trace_init_fit_model/$$ option.
+# :ref:`option_table@trace_init_fit_model` option.
 #
-# $head Integrands$$
-# For this example there are one integrand, $code Sincidence$$.
+# Integrands
+# **********
+# For this example there are one integrand, ``Sincidence`` .
 #
-# $head Nodes$$
+# Nodes
+# *****
 # There three nodes.
-# The first is called $code world$$ and is the parent node for this example.
-# The second (third) is called $code child_1$$ ($code child_2$$)
+# The first is called ``world`` and is the parent node for this example.
+# The second (third) is called ``child_1`` (``child_2`` )
 # and is a child of the parent node.
 #
-# $head True Iota$$
-# For this example, the true model incidence rate $icode iota$$ is
+# True Iota
+# *********
+# For this example, the true model incidence rate *iota* is
+# {xrst_code py}
 def iota_true(age, node) :
    import math
    iota_parent  = 0.01 * (1 + age / 100.0)
@@ -39,28 +42,39 @@ def iota_true(age, node) :
    if node == 'child_2' :
       return math.exp(- child_effect) * iota_parent
    assert False
+# {xrst_code}
 #
-# $head Model$$
+# Model
+# *****
 #
-# $subhead Parent Node$$
-# There is only one rate $icode iota$$ and it linear in age
+# Parent Node
+# ===========
+# There is only one rate *iota* and it linear in age
 # with knots at the age 0 and 100.
 #
-# $subhead Child Nodes$$
-# There is only one rate $icode iota$$ and it constant.
+# Child Nodes
+# ===========
+# There is only one rate *iota* and it constant.
 #
-# $head Data$$
+# Data
+# ****
 # There are six data points measuring Sincidence
-# with the true value of $icode iota$$.
+# with the true value of *iota* .
 # These correspond to ages 0 and 100 at each of the three nodes.
 #
-# $head trace_init_fit_model$$
-# The option $cref/trace_init_fit_model/option_table/trace_init_fit_model/$$
+# trace_init_fit_model
+# ********************
+# The option :ref:`option_table@trace_init_fit_model`
 # is set to true and the corresponding output is checked.
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_trace_init.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------

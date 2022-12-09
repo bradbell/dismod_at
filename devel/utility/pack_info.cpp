@@ -3,129 +3,128 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin pack_info_ctor$$
-$spell
-   mulcov
-   CppAD
-   struct
-   dismod
-   var
-   const
-   integrands
-   nslist
-$$
+{xrst_begin pack_info_ctor}
 
-$section Variable Pack Info: Constructor$$
+Variable Pack Info: Constructor
+###############################
 
-$head Syntax$$
-$codei%pack_info %pack_object%(
-   %n_integrand%,
-   %child_id2node_id%,
-   %subgroup_table%,
-   %smooth_table%,
-   %mulcov_table%,
-   %rate_table%,
-   %nslist_pair%
-)
-%$$
-$codei%pack_info %pack_copy%(%pack_object%)
-%$$
+Syntax
+******
 
-$head n_integrand$$
+| ``pack_info`` *pack_object* (
+| |tab| *n_integrand* ,
+| |tab| *child_id2node_id* ,
+| |tab| *subgroup_table* ,
+| |tab| *smooth_table* ,
+| |tab| *mulcov_table* ,
+| |tab| *rate_table* ,
+| |tab| *nslist_pair*
+| )
+| ``pack_info`` *pack_copy* ( *pack_object* )
+
+n_integrand
+***********
 This argument has prototype
-$codei%
-   size_t %n_integrand%
-%$$
+
+   ``size_t`` *n_integrand*
+
 and is the number of integrands; i.e., the size of
-$cref/integrand_table/get_integrand_table/integrand_table/$$.
-If $cref/mulcov_table/pack_info_ctor/mulcov_table/$$ has size zero,
-then $icode n_integrand$$ can be zero (a case used for testing purposes).
+:ref:`get_integrand_table@integrand_table` .
+If :ref:`pack_info_ctor@mulcov_table` has size zero,
+then *n_integrand* can be zero (a case used for testing purposes).
 
-$head child_id2node_id$$
+child_id2node_id
+****************
 This argument has prototype
-$codei%
-   const CppAD::vector<size_t> %child2node%
-%$$
-and is a mapping from $icode child_id$$ to $icode node_id$$; see
-$cref/child_id2node_id/child_info/child_id2node_id/$$.
+
+   ``const CppAD::vector<size_t>`` *child2node*
+
+and is a mapping from *child_id* to *node_id* ; see
+:ref:`child_info@child_id2node_id` .
 The size of this vector is the number of children; see
-$cref/child_size/child_info/child_size/$$.
+:ref:`child_info@child_size` .
 If
-$codei%
-   %rate_table%[%rate_id%].child_nslist_id == DISMOD_AT_NULL_INT
-%$$
-for all $icode rate_id$$, only the size of this vector matters
+
+   *rate_table* [ *rate_id* ]. ``child_nslist_id`` == ``DISMOD_AT_NULL_INT``
+
+for all *rate_id* , only the size of this vector matters
 (its values are not used).
 
-$head subgroup_table$$
+subgroup_table
+**************
 This argument has prototype
-$codei%
-   const CppAD::vector<subgroup_struct>& %subgroup_table%
-%$$
-and is the
-$cref/subgroup_table/get_subgroup_table/subgroup_table/$$.
 
-$head smooth_table$$
-This argument has prototype
-$codei%
-   const CppAD::vector<smooth_struct>& %smooth_table%
-%$$
+   ``const CppAD::vector<subgroup_struct>&`` *subgroup_table*
+
 and is the
-$cref/smooth_table/get_smooth_table/smooth_table/$$.
+:ref:`get_subgroup_table@subgroup_table` .
+
+smooth_table
+************
+This argument has prototype
+
+   ``const CppAD::vector<smooth_struct>&`` *smooth_table*
+
+and is the
+:ref:`get_smooth_table@smooth_table` .
 Only the following fields of this table are used:
-$code n_age$$, $code n_time$$.
+``n_age`` , ``n_time`` .
 
-$head mulcov_table$$
+mulcov_table
+************
 This argument has prototype
-$codei%
-   const CppAD::vector<mulcov_struct>& %mulcov_table%
-%$$
-and is the
-$cref/mulcov_table/get_mulcov_table/mulcov_table/$$.
 
-$head rate_table$$
-This argument has prototype
-$codei%
-   const CppAD::vector<rate_struct>& %rate_table%
-%$$
-and is the
-$cref/rate_table/get_rate_table/rate_table/$$.
+   ``const CppAD::vector<mulcov_struct>&`` *mulcov_table*
 
-$head nslist_pair$$
-This argument has prototype
-$codei%
-   const CppAD::vector<nslist_pair_struct>& %nslist_pair%
-%$$
 and is the
-$cref/nslist_pair/get_nslist_pair/nslist_pair/$$.
+:ref:`get_mulcov_table@mulcov_table` .
+
+rate_table
+**********
+This argument has prototype
+
+   ``const CppAD::vector<rate_struct>&`` *rate_table*
+
+and is the
+:ref:`get_rate_table@rate_table` .
+
+nslist_pair
+***********
+This argument has prototype
+
+   ``const CppAD::vector<nslist_pair_struct>&`` *nslist_pair*
+
+and is the
+:ref:`get_nslist_pair@nslist_pair` .
 If
-$codei%
-   %rate_table%[%rate_id%].child_nslist_id == DISMOD_AT_NULL_INT
-%$$
-for all $icode rate_id$$, this table is not used and can be empty; i.e.,
+
+   *rate_table* [ *rate_id* ]. ``child_nslist_id`` == ``DISMOD_AT_NULL_INT``
+
+for all *rate_id* , this table is not used and can be empty; i.e.,
 have size zero.
 
-
-$head pack_copy$$
-This object is a copy of the $icode pack_object$$ object
+pack_copy
+*********
+This object is a copy of the *pack_object* object
 (and acts the same).
 
-$head Age-Time Order$$
-When an function of age and time is stored with a specified $icode offset$$
+Age-Time Order
+**************
+When an function of age and time is stored with a specified *offset*
 in a packed vector,
 it is in time major order; i.e.,
-for $icode%i% = 0%, ... , n_age%-1%$$,
-for $icode%j% = 0%, ... , n_time%-1%$$,
-$codei%
-   %offset% + %i% * %n_time% + %j%
-%$$
+for *i* = 0, ... , *n_age* ``-1`` ,
+for *j* = 0, ... , *n_time* ``-1`` ,
+
+   *offset* + *i* * *n_time* + *j*
+
 is the index in the packed vector of the corresponding age-time point.
 
+Example
+*******
+See :ref:`pack_info Example<pack_info@Example>` .
 
-$head Example$$
-See $cref/pack_info Example/pack_info/Example/$$.
-
-$end
+{xrst_end pack_info_ctor}
 */
 
 # include <cppad/cppad.hpp>
@@ -448,107 +447,112 @@ n_child_        ( child_id2node_id.size() )
 // use default copy constructor
 /*
 -------------------------------------------------------------------------------
-$begin pack_info_sizes$$
-$spell
-   const
-$$
+{xrst_begin pack_info_sizes}
+{xrst_spell
+   subgroups
+}
 
-$section Variable Pack Info: Sizes$$
+Variable Pack Info: Sizes
+#########################
 
-$head Syntax$$
-$icode%size%              = %pack_object%.size()
-%$$
-$icode%integrand_size%    = %pack_object%.integrand_size()
-%$$
-$icode%child_size%        = %pack_object%.child_size()
-%$$
-$icode%smooth_size%       = %pack_object%.smooth_size()
-%$$
-$icode%random_size%       = %pack_object%.random_size()
-%$$
-$icode%group_size%        = %pack_object%.group_size()
-%$$
-$icode%subgroup_size%     = %pack_object%.subgroup_size(%group_id%)
-%$$
-$icode%first_subgroup_id% = %pack_object%.first_subgroup_id(%group_id%)
-%$$
+Syntax
+******
 
-$head pack_object$$
+| *size* = *pack_object* . ``size`` ()
+| *integrand_size* = *pack_object* . ``integrand_size`` ()
+| *child_size* = *pack_object* . ``child_size`` ()
+| *smooth_size* = *pack_object* . ``smooth_size`` ()
+| *random_size* = *pack_object* . ``random_size`` ()
+| *group_size* = *pack_object* . ``group_size`` ()
+| *subgroup_size* = *pack_object* . ``subgroup_size`` ( *group_id* )
+| *first_subgroup_id* = *pack_object* . ``first_subgroup_id`` ( *group_id* )
+
+pack_object
+***********
 This object has prototype
-$codei%
-   const pack_info %pack_object%
-%$$
-i.e., these member functions to not modify $icode pack_object$$.
 
-$head size$$
+   ``const pack_info`` *pack_object*
+
+i.e., these member functions to not modify *pack_object* .
+
+size
+****
 Its return value has prototype
-$codei%
-   size_t %size%
-%$$
+
+   ``size_t`` *size*
+
 and is the total number of variables; i.e.,
 the number of elements in the packed variable vector.
 
-$head integrand_size$$
+integrand_size
+**************
 This return value has prototype
-$codei%
-   size_t %integrand_size%
-%$$
-and is the size of the
-$cref/integrand_table/get_integrand_table/integrand_table/$$.
 
-$head child_size$$
+   ``size_t`` *integrand_size*
+
+and is the size of the
+:ref:`get_integrand_table@integrand_table` .
+
+child_size
+**********
 This return value has prototype
-$codei%
-   size_t %child_size%
-%$$
+
+   ``size_t`` *child_size*
+
 and is the number of children.
 
-$head smooth_size$$
+smooth_size
+***********
 This return value has prototype
-$codei%
-   size_t %smooth_size%
-%$$
-and is the size of
-$cref/smooth_table/get_smooth_table/smooth_table/$$.
 
-$head random_size$$
+   ``size_t`` *smooth_size*
+
+and is the size of
+:ref:`get_smooth_table@smooth_table` .
+
+random_size
+***********
 This return value has prototype
-$codei%
-   size_t %random_size%
-%$$
+
+   ``size_t`` *random_size*
+
 and is the number of
-$cref/random effects/model_variables/Random Effects, u/$$ in the model
+:ref:`random effects<model_variables@Random Effects, u>` in the model
 (counting those that are constrained with equal upper and lower limits).
 
-$head group_size$$
+group_size
+**********
 This return value has prototype
-$codei%
-   size_t %group_size%
-%$$
-and is the number of groups in the $cref subgroup_table$$.
 
-$head group_id$$
+   ``size_t`` *group_size*
+
+and is the number of groups in the :ref:`subgroup_table-name` .
+
+group_id
+********
 This argument has prototype
-$codei%
-   size_t %group_id%
-%$$
-and must be less than $icode group_size$$.
 
-$head subgroup_size$$
+   ``size_t`` *group_id*
+
+and must be less than *group_size* .
+
+subgroup_size
+*************
 This return value has prototype
-$codei%
-   size_t %subgroup_size%
-%$$
+
+   ``size_t`` *subgroup_size*
+
 and is the number of subgroups in the specified group.
 
-$head first_subgroup_id$$
+first_subgroup_id
+*****************
 This return value has prototype
-$codei%
-   size_t %first_subgroup_id%
-%$$
+
+   ``size_t`` *first_subgroup_id*
+
 and is the index of the first subgroup in the specified group.
 
-$end
+{xrst_end pack_info_sizes}
 */
 
 
@@ -587,68 +591,69 @@ size_t pack_info::first_subgroup_id(size_t group_id) const
 
 /*
 ------------------------------------------------------------------------------
-$begin pack_info_mulstd$$
-$spell
-   mulstd
-   dage
-   dtime
-   const
-   dismod
-$$
+{xrst_begin pack_info_mulstd}
 
-$section Variable Pack Info: Smoothing Standard Deviation Multipliers$$
+Variable Pack Info: Smoothing Standard Deviation Multipliers
+############################################################
 
-$head Syntax$$
-$icode%offset% = %pack_object%.mulstd_offset(%smooth_id%, %k%)
-%$$
+Syntax
+******
 
-$head pack_object$$
+   *offset* = *pack_object* . ``mulstd_offset`` ( *smooth_id* , *k* )
+
+pack_object
+***********
 This object has prototype
-$codei%
-   const pack_info %pack_object%
-%$$
 
-$head smooth_id$$
+   ``const pack_info`` *pack_object*
+
+smooth_id
+*********
 This argument has prototype
-$codei%
-   size_t %smooth_id%
-%$$
-and is the $cref/smooth_id/smooth_table/smooth_id/$$
+
+   ``size_t`` *smooth_id*
+
+and is the :ref:`smooth_table@smooth_id`
 for the smoothing that this multiplier effects.
 
-$head k$$
+k
+*
 This argument has prototype
-$codei%
-   size_t %k%
-%$$
+
+   ``size_t`` *k*
+
 It specifies which type of prior standard deviations that get multiplied
 by this variable as follows:
-$table
-$icode k$$ $pre  $$ $cnext Type of prior $rnext
-$code 0$$  $pre  $$ $cnext value priors for this smoothing $rnext
-$code 1$$  $pre  $$ $cnext age difference priors for this smoothing $rnext
-$code 2$$  $pre  $$ $cnext time difference priors for this smoothing
-$tend
 
-$subhead offset$$
+.. csv-table::
+   :widths: auto
+
+   *k*,Type of prior
+   ``0``,value priors for this smoothing
+   ``1``,age difference priors for this smoothing
+   ``2``,time difference priors for this smoothing
+
+offset
+======
 The return value has prototype
-$codei%
-   size_t offset
-%$$
+
+   ``size_t offset``
+
 and is the offset (index) in the packed variable vector
 where this multiplier is located.
-If $icode offset$$  has
-$codei%
-   DISMOD_AT_NULL_SIZE_T
-%$$
-for $icode%k% = 0%$$, then it has the same value for
-$icode%k% = 1, 2%$$.
+If *offset*  has
+
+   ``DISMOD_AT_NULL_SIZE_T``
+
+for *k*  = 0 , then it has the same value for
+*k*  = 1, 2 .
 In this case, the multiplier has value one and is not a variable.
 
-$head Example$$
-See $cref/pack_info Example/pack_info/Example/$$.
+Example
+*******
+See :ref:`pack_info Example<pack_info@Example>` .
 
-$end
+{xrst_end pack_info_mulstd}
 
 */
 size_t pack_info::mulstd_offset(size_t smooth_id, size_t k) const
@@ -658,96 +663,104 @@ size_t pack_info::mulstd_offset(size_t smooth_id, size_t k) const
 }
 /*
 ------------------------------------------------------------------------------
-$begin pack_info_node_rate$$
-$spell
-   std
-   cov
-   var
-   mulcov
-   dismod
-   const
-   covariate
+{xrst_begin pack_info_node_rate}
+{xrst_spell
    subvec
-$$
+}
 
-$section Variable Pack Info: Node Rates$$
+Variable Pack Info: Node Rates
+##############################
 
-$head Syntax$$
-$icode%info% = %pack_object%.node_rate_value_info(%rate_id%, %j%)
-%$$
+Syntax
+******
 
-$head subvec_info$$
-the type $code pack_info::subvec_info$$ is defined as follows:
-$srcfile%include/dismod_at/pack_info.hpp
-%5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
+   *info* = *pack_object* . ``node_rate_value_info`` ( *rate_id* , *j* )
 
-$head pack_object$$
+subvec_info
+***********
+the type ``pack_info::subvec_info`` is defined as follows:
+{xrst_literal
+   include/dismod_at/pack_info.hpp
+   // BEGIN SUBVEC_INFO
+   // END SUBVEC_INFO
+}
+
+pack_object
+***********
 This object has prototype
-$codei%
-   const pack_info %pack_object%
-%$$
 
-$head rate_id$$
+   ``const pack_info`` *pack_object*
+
+rate_id
+*******
 This argument has prototype
-$codei%
-   size_t %rate_id%
-%$$
+
+   ``size_t`` *rate_id*
+
 and it specifies the
-$cref/rate_id/rate_table/rate_id/$$ the rate values.
+:ref:`rate_table@rate_id` the rate values.
 
-$head j$$
+j
+*
 This argument has prototype
-$codei%
-   size_t %j%
-%$$
-and $icode%j% <= %n_child%$$.
 
-$head info$$
+   ``size_t`` *j*
+
+and *j* <= *n_child* .
+
+info
+****
 The return value  has prototype
-$codei%
-   pack_info::subvec_info %info%
-%$$
 
-$subhead mulcov_id$$
+   ``pack_info::subvec_info`` *info*
+
+mulcov_id
+=========
 This field is set to null.
 
-$subhead covariate_id$$
+covariate_id
+============
 This field is set to null.
 
-$subhead group_id$$
+group_id
+========
 This field is set to null.
 
-$subhead smooth_id$$
-is the $cref/group_smooth_id/mulcov_table/group_smooth_id/$$ for this rate.
-If $icode%j% == %n_child%$$,
+smooth_id
+=========
+is the :ref:`mulcov_table@group_smooth_id` for this rate.
+If *j* == *n_child* ,
 this smoothing corresponds to the parent rates.
 Otherwise it corresponds to the child rate effects and is the same
 for all children.
 If
-$codei%
-   %smooth_id% == DISMOD_AT_NULL_SIZE_T
-%$$
+
+   *smooth_id* == ``DISMOD_AT_NULL_SIZE_T``
+
 then this rate is identically zero and there are no corresponding variables.
 
-$subhead n_var$$
-is the number of packed variables for this $icode rate_id$$; i.e.
+n_var
+=====
+is the number of packed variables for this *rate_id* ; i.e.
 the product of the number of age and number of time points in the smoothing
 for this rate.
 
-$subhead offset$$
+offset
+======
 is the offset (index) in the packed variable vector for the
 specified rates:
-If $icode%j% < %n_child%$$,
-it is the rate vector for the $th j$$ child node.
-If $icode%j% == %n_child%$$,
+If *j* < *n_child* ,
+it is the rate vector for the *j*-th child node.
+If *j* == *n_child* ,
 this is the rate vector for the
-$cref/parent node/option_table/Parent Node/$$.
-(Not specified when $icode smooth_id$$ corresponds to $code null$$).
+:ref:`option_table@Parent Node` .
+(Not specified when *smooth_id* corresponds to ``null`` ).
 
-$head Example$$
-See $cref/pack_info Example/pack_info/Example/$$.
+Example
+*******
+See :ref:`pack_info Example<pack_info@Example>` .
 
-$end
+{xrst_end pack_info_node_rate}
 */
 pack_info::subvec_info pack_info::node_rate_value_info(size_t rate_id, size_t j) const
 {  assert( j <= n_child_ );
@@ -756,116 +769,124 @@ pack_info::subvec_info pack_info::node_rate_value_info(size_t rate_id, size_t j)
 
 /*
 ------------------------------------------------------------------------------
-$begin pack_info_group_meas$$
-$spell
-   std
-   cov
-   var
-   mulcov
-   dismod
-   const
-   covariate
+{xrst_begin pack_info_group_meas}
+{xrst_spell
    subvec
-$$
+}
 
-$section Variable Pack Info: Group Measurement Covariate Multipliers$$
+Variable Pack Info: Group Measurement Covariate Multipliers
+###########################################################
 
-$head Syntax$$
-$icode%n_cov% = %pack_object%.group_meas_value_n_cov(%integrand_id%)
-%$$
-$icode%n_cov% = %pack_object%.group_meas_noise_n_cov(%integrand_id%)
-%$$
-$icode%info% = %pack_object%.group_meas_value_info(%integrand_id%, %j%)
-%$$
-$icode%info% = %pack_object%.group_meas_noise_info(%integrand_id%, %j%)
-%$$
+Syntax
+******
 
-$head meas_value$$
+| *n_cov* = *pack_object* . ``group_meas_value_n_cov`` ( *integrand_id* )
+| *n_cov* = *pack_object* . ``group_meas_noise_n_cov`` ( *integrand_id* )
+| *info* = *pack_object* . ``group_meas_value_info`` ( *integrand_id* , *j* )
+| *info* = *pack_object* . ``group_meas_noise_info`` ( *integrand_id* , *j* )
+
+meas_value
+**********
 The functions
-$code group_meas_value_n_cov$$ and
-$code group_meas_value_info$$
+``group_meas_value_n_cov`` and
+``group_meas_value_info``
 return information about the measurement mean covariate multipliers.
 
-$head meas_noise$$
+meas_noise
+**********
 The functions
-$code group_meas_noise_n_cov$$ and
-$code group_meas_noise_info$$
+``group_meas_noise_n_cov`` and
+``group_meas_noise_info``
 return information about the measurement noise covariate multipliers.
 
-$head subvec_info$$
-The type $code pack_info::subvec_info$$ is defined as follows:
-$srcfile%include/dismod_at/pack_info.hpp
-%5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
+subvec_info
+***********
+The type ``pack_info::subvec_info`` is defined as follows:
+{xrst_literal
+   include/dismod_at/pack_info.hpp
+   // BEGIN SUBVEC_INFO
+   // END SUBVEC_INFO
+}
 
-$head pack_object$$
+pack_object
+***********
 This object has prototype
-$codei%
-   const pack_info %pack_object%
-%$$
 
-$head integrand_id$$
+   ``const pack_info`` *pack_object*
+
+integrand_id
+************
 This argument has prototype
-$codei%
-   size_t %integrand_id%
-%$$
+
+   ``size_t`` *integrand_id*
+
 and it specifies the
-$cref/integrand_id/integrand_table/integrand_id/$$ for the covariate
+:ref:`integrand_table@integrand_id` for the covariate
 multipliers.
 
-$head n_cov$$
+n_cov
+*****
 This return value has prototype
-$codei%
-   size_t %n_cov%
-%$$
+
+   ``size_t`` *n_cov*
+
 and is the number of covariate multipliers
-(rows in $cref mulcov_table$$) for the specified $icode integrand_id$$.
-This is referred to as $codei%n_cov(%integrand_id%)%$$ below.
+(rows in :ref:`mulcov_table-name` ) for the specified *integrand_id* .
+This is referred to as ``n_cov`` ( *integrand_id* ) below.
 
-$head j$$
+j
+*
 This argument has prototype
-$codei%
-   size_t %j%
-%$$
-and $icode%j% < n_cov(%integrand_id%)%$$.
-For each fixed $icode integrand_id$$, the
-$cref/mulcov_id/mulcov_table/mulcov_id/$$ index corresponding to $icode j$$
-is monotone increasing with $icode j$$.
 
-$head info$$
+   ``size_t`` *j*
+
+and *j* < ``n_cov`` ( *integrand_id* ) .
+For each fixed *integrand_id* , the
+:ref:`mulcov_table@mulcov_id` index corresponding to *j*
+is monotone increasing with *j* .
+
+info
+****
 this return value has prototype
-$codei%
-   pack_info::subvec_info %info%
-%$$
 
-$subhead mulcov_id$$
-is the $cref/mulcov_id/mulcov_table/mulcov_id/$$ for the
-$th j$$ covariate multiplier for this $icode integrand_id$$.
+   ``pack_info::subvec_info`` *info*
 
-$subhead covariate_id$$
-is the $cref/covariate_id/covariate_table/covariate_id/$$ for the
-$th j$$ covariate multiplier for this $icode integrand_id$$.
+mulcov_id
+=========
+is the :ref:`mulcov_table@mulcov_id` for the
+*j*-th covariate multiplier for this *integrand_id* .
 
-$subhead group_id$$
-is the $cref/group_id/mulcov_table/group_id/$$ for the
-$th j$$ covariate multiplier for this $icode integrand_id$$.
+covariate_id
+============
+is the :ref:`covariate_table@covariate_id` for the
+*j*-th covariate multiplier for this *integrand_id* .
 
-$subhead smooth_id$$
-is the $cref/group_smooth_id/mulcov_table/group_smooth_id/$$ for the
-$th j$$ covariate multiplier for this $icode integrand_id$$.
+group_id
+========
+is the :ref:`mulcov_table@group_id` for the
+*j*-th covariate multiplier for this *integrand_id* .
 
-$subhead n_var$$
+smooth_id
+=========
+is the :ref:`mulcov_table@group_smooth_id` for the
+*j*-th covariate multiplier for this *integrand_id* .
+
+n_var
+=====
 is the number of variables for this covariate multiplier; i.e.
 the product of the number of age and time points corresponding to
-this $icode smooth_id$$.
+this *smooth_id* .
 
-$subhead offset$$
+offset
+======
 is the offset in the packed variable vector where the
-$icode n_var$$ variables begin (for this covariate multiplier).
+*n_var* variables begin (for this covariate multiplier).
 
-$head Example$$
-See $cref/pack_info Example/pack_info/Example/$$.
+Example
+*******
+See :ref:`pack_info Example<pack_info@Example>` .
 
-$end
+{xrst_end pack_info_group_meas}
 */
 size_t pack_info::group_meas_value_n_cov(size_t integrand_id) const
 {  assert( integrand_id < n_integrand_ );
@@ -889,100 +910,108 @@ pack_info::group_meas_noise_info(size_t integrand_id, size_t j) const
 
 /*
 ------------------------------------------------------------------------------
-$begin pack_info_group_rate$$
-$spell
-   std
-   cov
-   var
-   mulcov
-   dismod
-   const
-   covariate
+{xrst_begin pack_info_group_rate}
+{xrst_spell
    subvec
-$$
+}
 
-$section Variable Pack Info: Group Rate Covariate Multipliers$$
+Variable Pack Info: Group Rate Covariate Multipliers
+####################################################
 
-$head Syntax$$
-$icode%n_cov% = %pack_object%.group_rate_value_n_cov(%rate_id%)
-%$$
-$icode%info% = %pack_object%.group_rate_value_info(%rate_id%, %j%)
-%$$
+Syntax
+******
 
-$head subvec_info$$
-The type $code pack_info::subvec_info$$ is defined as follows:
-$srcfile%include/dismod_at/pack_info.hpp
-%5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
+| *n_cov* = *pack_object* . ``group_rate_value_n_cov`` ( *rate_id* )
+| *info* = *pack_object* . ``group_rate_value_info`` ( *rate_id* , *j* )
 
-$head pack_object$$
+subvec_info
+***********
+The type ``pack_info::subvec_info`` is defined as follows:
+{xrst_literal
+   include/dismod_at/pack_info.hpp
+   // BEGIN SUBVEC_INFO
+   // END SUBVEC_INFO
+}
+
+pack_object
+***********
 This object has prototype
-$codei%
-   const pack_info %pack_object%
-%$$
 
-$head rate_id$$
+   ``const pack_info`` *pack_object*
+
+rate_id
+*******
 This argument has prototype
-$codei%
-   size_t %rate_id%
-%$$
+
+   ``size_t`` *rate_id*
+
 and it specifies the
-$cref/rate_id/rate_table/rate_id/$$ for the covariate
+:ref:`rate_table@rate_id` for the covariate
 multipliers.
 
-$head n_cov$$
+n_cov
+*****
 This return value has prototype
-$codei%
-   size_t %n_cov%
-%$$
+
+   ``size_t`` *n_cov*
+
 and is the number of covariate multipliers
-(rows in $cref mulcov_table$$) for the specified $icode rate_id$$.
-This is referred to as $codei%n_cov(%rate_id%)%$$ below.
+(rows in :ref:`mulcov_table-name` ) for the specified *rate_id* .
+This is referred to as ``n_cov`` ( *rate_id* ) below.
 
-$head j$$
+j
+*
 This argument has prototype
-$codei%
-   size_t %j%
-%$$
-and $icode%j% < n_cov(%rate_id%)%$$.
-For each fixed $icode rate_id$$, the
-$cref/mulcov_id/mulcov_table/mulcov_id/$$ index corresponding to $icode j$$
-is monotone increasing with $icode j$$.
 
-$head info$$
+   ``size_t`` *j*
+
+and *j* < ``n_cov`` ( *rate_id* ) .
+For each fixed *rate_id* , the
+:ref:`mulcov_table@mulcov_id` index corresponding to *j*
+is monotone increasing with *j* .
+
+info
+****
 this return value has prototype
-$codei%
-   pack_info::subvec_info %info%
-%$$
 
-$subhead mulcov_id$$
-is the $cref/mulcov_id/mulcov_table/mulcov_id/$$ for the
-$th j$$ covariate multiplier for this $icode integrand_id$$.
+   ``pack_info::subvec_info`` *info*
 
-$subhead covariate_id$$
-is the $cref/covariate_id/covariate_table/covariate_id/$$
-for the $th j$$ covariate multiplier for this $icode rate_id$$.
+mulcov_id
+=========
+is the :ref:`mulcov_table@mulcov_id` for the
+*j*-th covariate multiplier for this *integrand_id* .
 
-$subhead group_id$$
-is the $cref/group_id/mulcov_table/group_id/$$
-for the $th j$$ covariate multiplier for this $icode rate_id$$.
+covariate_id
+============
+is the :ref:`covariate_table@covariate_id`
+for the *j*-th covariate multiplier for this *rate_id* .
 
-$subhead smooth_id$$
-is the $cref/group_smooth_id/mulcov_table/group_smooth_id/$$ for the
-$th j$$ covariate multiplier for this $icode rate_id$$.
+group_id
+========
+is the :ref:`mulcov_table@group_id`
+for the *j*-th covariate multiplier for this *rate_id* .
 
-$subhead n_var$$
+smooth_id
+=========
+is the :ref:`mulcov_table@group_smooth_id` for the
+*j*-th covariate multiplier for this *rate_id* .
+
+n_var
+=====
 is the number of variables for this covariate multiplier; i.e.
 the product of the number of age and time points corresponding to
-this $icode smooth_id$$.
+this *smooth_id* .
 
-$subhead offset$$
+offset
+======
 is the offset in the packed variable vector where the
-$icode n_var$$ variables begin (for this covariate multiplier).
+*n_var* variables begin (for this covariate multiplier).
 
-$head Example$$
-See $cref/pack_info Example/pack_info/Example/$$.
+Example
+*******
+See :ref:`pack_info Example<pack_info@Example>` .
 
-$end
+{xrst_end pack_info_group_rate}
 */
 size_t pack_info::group_rate_value_n_cov(size_t rate_id) const
 {  assert( rate_id < number_rate_enum );
@@ -996,123 +1025,133 @@ pack_info::group_rate_value_info(size_t rate_id, size_t j) const
 }
 /*
 ------------------------------------------------------------------------------
-$begin pack_info_subgroup_rate$$
-$spell
-   std
-   cov
-   var
-   mulcov
-   dismod
-   const
-   covariate
+{xrst_begin pack_info_subgroup_rate}
+{xrst_spell
+   subgroups
    subvec
-$$
+}
 
-$section Variable Pack Info: Subgroup Rate Covariate Multipliers$$
+Variable Pack Info: Subgroup Rate Covariate Multipliers
+#######################################################
 
-$head Syntax$$
-$icode%n_cov% = %pack_object%.subgroup_rate_value_n_cov(%rate_id%)
-%$$
-$icode%n_sub% = %pack_object%.subgroup_rate_value_n_sub(%rate_id%, %j%)
-%$$
-$icode%info% = %pack_object%.subgroup_rate_value_info(%rate_id%, %j%, %k%)
-%$$
+Syntax
+******
 
-$head subvec_info$$
-The type $code pack_info::subvec_info$$ is defined as follows:
-$srcfile%include/dismod_at/pack_info.hpp
-%5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
+| *n_cov* = *pack_object* . ``subgroup_rate_value_n_cov`` ( *rate_id* )
+| *n_sub* = *pack_object* . ``subgroup_rate_value_n_sub`` ( *rate_id* , *j* )
+| *info* = *pack_object* . ``subgroup_rate_value_info`` ( *rate_id* , *j* , *k* )
 
-$head pack_object$$
+subvec_info
+***********
+The type ``pack_info::subvec_info`` is defined as follows:
+{xrst_literal
+   include/dismod_at/pack_info.hpp
+   // BEGIN SUBVEC_INFO
+   // END SUBVEC_INFO
+}
+
+pack_object
+***********
 This object has prototype
-$codei%
-   const pack_info %pack_object%
-%$$
 
-$head rate_id$$
+   ``const pack_info`` *pack_object*
+
+rate_id
+*******
 This argument has prototype
-$codei%
-   size_t %rate_id%
-%$$
+
+   ``size_t`` *rate_id*
+
 and it specifies the
-$cref/rate_id/rate_table/rate_id/$$
+:ref:`rate_table@rate_id`
 for the covariate multipliers.
 
-$head n_cov$$
+n_cov
+*****
 This return value has prototype
-$codei%
-   size_t %n_cov%
-%$$
+
+   ``size_t`` *n_cov*
+
 and is the number of covariate multipliers
-(rows in $cref mulcov_table$$) for the specified $icode rate_id$$.
-This is referred to as $codei%n_cov(%rate_id%)%$$ below.
+(rows in :ref:`mulcov_table-name` ) for the specified *rate_id* .
+This is referred to as ``n_cov`` ( *rate_id* ) below.
 
-$head n_sub$$
+n_sub
+*****
 This return value has prototype
-$codei%
-   size_t %n_sub%
-%$$
+
+   ``size_t`` *n_sub*
+
 and is the number of subgroups corresponding to the
-$cref/group/mulcov_table/group_id/$$ for this covariate multiplier.
-This is referred to as $codei%n_sub(%rate_id%, %j%)%$$ below.
+:ref:`group<mulcov_table@group_id>` for this covariate multiplier.
+This is referred to as ``n_sub`` ( *rate_id* , *j* ) below.
 
-$head j$$
+j
+*
 This argument has prototype
-$codei%
-   size_t %j%
-%$$
-and $icode%j% < n_cov(%rate_id%)%$$.
-For each fixed $icode rate_id$$, the
-$cref/mulcov_id/mulcov_table/mulcov_id/$$ index corresponding to $icode j$$
-is monotone increasing with $icode j$$.
 
-$head k$$
+   ``size_t`` *j*
+
+and *j* < ``n_cov`` ( *rate_id* ) .
+For each fixed *rate_id* , the
+:ref:`mulcov_table@mulcov_id` index corresponding to *j*
+is monotone increasing with *j* .
+
+k
+*
 This argument has prototype
-$codei%
-   size_t %k%
-%$$
-and $icode%k% < n_sub(%rate_id%, %j%)%$$.
-For each fixed $icode rate_id$$ and $icode j$$, the
-$cref/subgroup_id/subgroup_table/subgroup_id/$$ index corresponding to
-$icode k$$ is monotone increasing with $icode k$$.
 
-$head info$$
+   ``size_t`` *k*
+
+and *k* < ``n_sub`` ( *rate_id* , *j* ) .
+For each fixed *rate_id* and *j* , the
+:ref:`subgroup_table@subgroup_id` index corresponding to
+*k* is monotone increasing with *k* .
+
+info
+****
 this return value has prototype
-$codei%
-   pack_info::subvec_info %info%
-%$$
 
-$subhead mulcov_id$$
-is the $cref/mulcov_id/mulcov_table/mulcov_id/$$ for the
-$th j$$ covariate multiplier for this $icode integrand_id$$.
+   ``pack_info::subvec_info`` *info*
 
-$subhead covariate_id$$
-is the $cref/covariate_id/covariate_table/covariate_id/$$ for the
-$th j$$ covariate multiplier for this $icode rate_id$$.
+mulcov_id
+=========
+is the :ref:`mulcov_table@mulcov_id` for the
+*j*-th covariate multiplier for this *integrand_id* .
 
-$subhead group_id$$
-is the $cref/group_id/mulcov_table/group_id/$$ for the
-$th j$$ covariate multiplier for this $icode integrand_id$$.
+covariate_id
+============
+is the :ref:`covariate_table@covariate_id` for the
+*j*-th covariate multiplier for this *rate_id* .
 
-$subhead smooth_id$$
-is the $cref/subgroup_smooth_id/mulcov_table/subgroup_smooth_id/$$ for the
-$th j$$ covariate multiplier, and this $icode rate_id$$.
-Note that the smoothing does not depend on $icode k$$; see
-$cref/subgroup_smooth_id/mulcov_table/subgroup_smooth_id/$$.
+group_id
+========
+is the :ref:`mulcov_table@group_id` for the
+*j*-th covariate multiplier for this *integrand_id* .
 
-$subhead n_var$$
+smooth_id
+=========
+is the :ref:`mulcov_table@subgroup_smooth_id` for the
+*j*-th covariate multiplier, and this *rate_id* .
+Note that the smoothing does not depend on *k* ; see
+:ref:`mulcov_table@subgroup_smooth_id` .
+
+n_var
+=====
 is the number of variables for this covariate multiplier; i.e.
 the product of the number of age and time points corresponding to
-this $icode smooth_id$$.
+this *smooth_id* .
 
-$subhead offset$$
+offset
+======
 is the offset in the packed variable vector where the
-$icode n_var$$ variables begin (for this covariate multiplier and subgroup).
+*n_var* variables begin (for this covariate multiplier and subgroup).
 
-$head Example$$
-See $cref/pack_info Example/pack_info/Example/$$.
+Example
+*******
+See :ref:`pack_info Example<pack_info@Example>` .
 
-$end
+{xrst_end pack_info_subgroup_rate}
 */
 size_t pack_info::subgroup_rate_value_n_cov(size_t rate_id) const
 {  assert( rate_id < number_rate_enum );
@@ -1131,123 +1170,133 @@ pack_info::subvec_info pack_info::subgroup_rate_value_info(
 }
 /*
 ------------------------------------------------------------------------------
-$begin pack_info_subgroup_meas$$
-$spell
-   std
-   cov
-   var
-   mulcov
-   dismod
-   const
-   covariate
+{xrst_begin pack_info_subgroup_meas}
+{xrst_spell
+   subgroups
    subvec
-$$
+}
 
-$section Variable Pack Info: Subgroup Measurement Covariate Multipliers$$
+Variable Pack Info: Subgroup Measurement Covariate Multipliers
+##############################################################
 
-$head Syntax$$
-$icode%n_cov% = %pack_object%.subgroup_meas_value_n_cov(%integrand_id%)
-%$$
-$icode%n_sub% = %pack_object%.subgroup_meas_value_n_sub(%integrand_id%, %j%)
-%$$
-$icode%info% = %pack_object%.subgroup_meas_value_info(%integrand_id%, %j%, %k%)
-%$$
+Syntax
+******
 
-$head subvec_info$$
-The type $code pack_info::subvec_info$$ is defined as follows:
-$srcfile%include/dismod_at/pack_info.hpp
-%5%// BEGIN SUBVEC_INFO%// END SUBVEC_INFO%$$
+| *n_cov* = *pack_object* . ``subgroup_meas_value_n_cov`` ( *integrand_id* )
+| *n_sub* = *pack_object* . ``subgroup_meas_value_n_sub`` ( *integrand_id* , *j* )
+| *info* = *pack_object* . ``subgroup_meas_value_info`` ( *integrand_id* , *j* , *k* )
 
-$head pack_object$$
+subvec_info
+***********
+The type ``pack_info::subvec_info`` is defined as follows:
+{xrst_literal
+   include/dismod_at/pack_info.hpp
+   // BEGIN SUBVEC_INFO
+   // END SUBVEC_INFO
+}
+
+pack_object
+***********
 This object has prototype
-$codei%
-   const pack_info %pack_object%
-%$$
 
-$head integrand_id$$
+   ``const pack_info`` *pack_object*
+
+integrand_id
+************
 This argument has prototype
-$codei%
-   size_t %integrand_id%
-%$$
+
+   ``size_t`` *integrand_id*
+
 and it specifies the
-$cref/integrand_id/integrand_table/integrand_id/$$
+:ref:`integrand_table@integrand_id`
 for the covariate multipliers.
 
-$head n_cov$$
+n_cov
+*****
 This return value has prototype
-$codei%
-   size_t %n_cov%
-%$$
+
+   ``size_t`` *n_cov*
+
 and is the number of covariate multipliers
-(rows in $cref mulcov_table$$) for the specified $icode integrand_id$$.
-This is referred to as $codei%n_cov(%integrand_id%)%$$ below.
+(rows in :ref:`mulcov_table-name` ) for the specified *integrand_id* .
+This is referred to as ``n_cov`` ( *integrand_id* ) below.
 
-$head n_sub$$
+n_sub
+*****
 This return value has prototype
-$codei%
-   size_t %n_sub%
-%$$
+
+   ``size_t`` *n_sub*
+
 and is the number of subgroups corresponding to the
-$cref/group/mulcov_table/group_id/$$ for this covariate multiplier.
-This is referred to as $codei%n_sub(%integrand_id%, %j%)%$$ below.
+:ref:`group<mulcov_table@group_id>` for this covariate multiplier.
+This is referred to as ``n_sub`` ( *integrand_id* , *j* ) below.
 
-$head j$$
+j
+*
 This argument has prototype
-$codei%
-   size_t %j%
-%$$
-and $icode%j% < n_cov(%integrand_id%)%$$.
-For each fixed $icode integrand_id$$, the
-$cref/mulcov_id/mulcov_table/mulcov_id/$$ index corresponding to $icode j$$
-is monotone increasing with $icode j$$.
 
-$head k$$
+   ``size_t`` *j*
+
+and *j* < ``n_cov`` ( *integrand_id* ) .
+For each fixed *integrand_id* , the
+:ref:`mulcov_table@mulcov_id` index corresponding to *j*
+is monotone increasing with *j* .
+
+k
+*
 This argument has prototype
-$codei%
-   size_t %k%
-%$$
-and $icode%k% < n_sub(%integrand_id%, %j%)%$$.
-For each fixed $icode integrand_id$$ and $icode j$$, the
-$cref/subgroup_id/subgroup_table/subgroup_id/$$ index corresponding to
-$icode k$$ is monotone increasing with $icode k$$.
 
-$head info$$
+   ``size_t`` *k*
+
+and *k* < ``n_sub`` ( *integrand_id* , *j* ) .
+For each fixed *integrand_id* and *j* , the
+:ref:`subgroup_table@subgroup_id` index corresponding to
+*k* is monotone increasing with *k* .
+
+info
+****
 this return value has prototype
-$codei%
-   pack_info::subvec_info %info%
-%$$
 
-$subhead mulcov_id$$
-is the $cref/mulcov_id/mulcov_table/mulcov_id/$$ for the
-$th j$$ covariate multiplier for this $icode integrand_id$$.
+   ``pack_info::subvec_info`` *info*
 
-$subhead covariate_id$$
-is the $cref/covariate_id/covariate_table/covariate_id/$$ for the
-$th j$$ covariate multiplier for this $icode integrand_id$$.
+mulcov_id
+=========
+is the :ref:`mulcov_table@mulcov_id` for the
+*j*-th covariate multiplier for this *integrand_id* .
 
-$subhead group_id$$
-is the $cref/group_id/mulcov_table/group_id/$$ for the
-$th j$$ covariate multiplier for this $icode integrand_id$$.
+covariate_id
+============
+is the :ref:`covariate_table@covariate_id` for the
+*j*-th covariate multiplier for this *integrand_id* .
 
-$subhead smooth_id$$
-is the $cref/subgroup_smooth_id/mulcov_table/subgroup_smooth_id/$$ for the
-$th j$$ covariate multiplier, and this $icode integrand_id$$.
-Note that the smoothing does not depend on $icode k$$; see
-$cref/subgroup_smooth_id/mulcov_table/subgroup_smooth_id/$$.
+group_id
+========
+is the :ref:`mulcov_table@group_id` for the
+*j*-th covariate multiplier for this *integrand_id* .
 
-$subhead n_var$$
+smooth_id
+=========
+is the :ref:`mulcov_table@subgroup_smooth_id` for the
+*j*-th covariate multiplier, and this *integrand_id* .
+Note that the smoothing does not depend on *k* ; see
+:ref:`mulcov_table@subgroup_smooth_id` .
+
+n_var
+=====
 is the number of variables for this covariate multiplier; i.e.
 the product of the number of age and time points corresponding to
-this $icode smooth_id$$.
+this *smooth_id* .
 
-$subhead offset$$
+offset
+======
 is the offset in the packed variable vector where the
-$icode n_var$$ variables begin (for this covariate multiplier and subgroup).
+*n_var* variables begin (for this covariate multiplier and subgroup).
 
-$head Example$$
-See $cref/pack_info Example/pack_info/Example/$$.
+Example
+*******
+See :ref:`pack_info Example<pack_info@Example>` .
 
-$end
+{xrst_end pack_info_subgroup_meas}
 */
 size_t pack_info::subgroup_meas_value_n_cov(size_t integrand_id) const
 {  assert( integrand_id < n_integrand_ );

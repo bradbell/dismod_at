@@ -3,121 +3,130 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin bilinear_interp$$
-$spell
-   interpolant
-   wg
-   const
-   CppAD
+{xrst_begin bilinear_interp}
+{xrst_spell
    interp
-   dismod
-$$
+   interpolant
+   interpolating
+}
 
-$section Bilinear Interpolation$$
+Bilinear Interpolation
+######################
 
-$head Syntax$$
-$icode%z% = bilinear_interp(
-   %x%, %y%, %x_grid%, %y_grid%, %z_grid%, %i%, %j%
-)%$$
+Syntax
+******
 
-$head x$$
+| *z* = ``bilinear_interp`` (
+| |tab| *x* , *y* , *x_grid* , *y_grid* , *z_grid* , *i* , *j*
+| )
+
+x
+*
 This argument has prototype
-$codei%
-   double %x%
-%$$
-and is the $icode x$$ value at which we are
+
+   ``double`` *x*
+
+and is the *x* value at which we are
 interpolating the bilinear function.
 
-$head y$$
+y
+*
 This argument has prototype
-$codei%
-   double %y%
-%$$
-and is the $icode y$$ value
+
+   ``double`` *y*
+
+and is the *y* value
 at which we are interpolating the bilinear function.
 
-$head x_grid$$
+x_grid
+******
 This argument has prototype
-$codei%
-   const CppAD::vector<double>& %x_grid%
-%$$
-and is the $icode x$$ values corresponding to the $icode z_grid$$.
+
+   ``const CppAD::vector<double>&`` *x_grid*
+
+and is the *x* values corresponding to the *z_grid* .
 We use the following notation:
-$codei%
-   %n_x% = %x_grid%.size()
-%$$
-Note that $icode n_x$$ must be greater than or equal one.
 
-$head y_grid$$
+   *n_x* = *x_grid* . ``size`` ()
+
+Note that *n_x* must be greater than or equal one.
+
+y_grid
+******
 This argument has prototype
-$codei%
-   const CppAD::vector<double>& %y_grid%
-%$$
-and is the $icode y$$ values corresponding to the $icode z_grid$$.
+
+   ``const CppAD::vector<double>&`` *y_grid*
+
+and is the *y* values corresponding to the *z_grid* .
 We use the following notation:
-$codei%
-   %n_y% = %y_grid%.size()
-%$$
-Note that $icode n_y$$ must be greater than or equal one.
 
-$head z_grid$$
-This argument has prototype
-$codei%
-   const CppAD::vector<double>& %z_grid%
-%$$
-and has size $icode%n_x% * %n_y%$$.
-For $icode%i% = 0 , %...%, %n_x%-1%$$,
-$icode%j% = 0 , %...%, %n_y%-1%$$,
-$codei%
-   %z_grid%[ %i% * %n_y% + %j%]
-%$$
-is the value of the bilinear interpolant $latex z(x,y)$$, at
-$icode%x% = %x_grid%[%i%]%$$ and $icode%y% = %y_grid%[%j%]%$$.
+   *n_y* = *y_grid* . ``size`` ()
 
-$head i$$
+Note that *n_y* must be greater than or equal one.
+
+z_grid
+******
 This argument has prototype
-$codei%
-   size_t& %i%
-%$$
-and is between $code 0$$ and $icode%n_x%-1%$$ inclusive.
+
+   ``const CppAD::vector<double>&`` *z_grid*
+
+and has size *n_x* * *n_y* .
+For *i* = 0 , ..., *n_x* ``-1`` ,
+*j* = 0 , ..., *n_y* ``-1`` ,
+
+   *z_grid* [ *i* * *n_y* + *j* ]
+
+is the value of the bilinear interpolant :math:`z(x,y)`, at
+*x* = *x_grid* [ *i* ] and *y* = *y_grid* [ *j* ] .
+
+i
+*
+This argument has prototype
+
+   ``size_t&`` *i*
+
+and is between ``0`` and *n_x* ``-1`` inclusive.
 Its input value is a hint as to where to start searching for
-$codei%
-   %x_grid%[%i%] <= %x% < %x_grid%[%i%+1]
-%$$
+
+   *x_grid* [ *i* ] <= *x* < *x_grid* [ *i* +1]
+
 Its output value satisfies the condition above,
 or is as close as possible under the limits
-$codei%0 <= %i% < %n_x%$$.
+0 <= *i* < *n_x* .
 
-$head j$$
+j
+*
 This argument has prototype
-$codei%
-   size_t& %j%
-%$$
-and is between $code 0$$ and $icode%n_y%-1%$$ inclusive.
+
+   ``size_t&`` *j*
+
+and is between ``0`` and *n_y* ``-1`` inclusive.
 Its input value is a hint as to where to start searching for
-$codei%
-   %y_grid%[%j%] <= %y% < %y_grid%[%j%+1]
-%$$
+
+   *y_grid* [ *j* ] <= *y* < *y_grid* [ *j* +1]
+
 Its output value satisfies the condition above,
 or is as close as possible under the limits
-$codei%0 <= %j% < %n_y%$$.
+0 <= *j* < *n_y* .
 
-$head z$$
+z
+*
 The return value has prototype
-$codei%
-   double %z%
-%$$
-It is the value of the
-$cref bilinear$$ interpolant at the specified
-$icode x$$ and $icode y$$.
 
-$children%example/devel/utility/bilinear_interp_xam.cpp
-%$$
-$head Example$$
-The file $cref bilinear_interp_xam.cpp$$ contains an example and test
+   ``double`` *z*
+
+It is the value of the
+:ref:`bilinear-name` interpolant at the specified
+*x* and *y* .
+{xrst_toc_hidden
+   example/devel/utility/bilinear_interp_xam.cpp
+}
+Example
+*******
+The file :ref:`bilinear_interp_xam.cpp-name` contains an example and test
 of using this routine.
 
-$end
+{xrst_end bilinear_interp}
 ------------------------------------------------------------------------------
 */
 

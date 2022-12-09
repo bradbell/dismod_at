@@ -2,15 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin mulcov_table.py$$ $newlinech #$$
-# $spell
-#  mulcov
-# $$
+# {xrst_begin mulcov_table.py}
+# {xrst_comment_ch #}
 #
-# $section mulcov_table: Example and Test$$
+# mulcov_table: Example and Test
+# ##############################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end mulcov_table.py}
 # BEGIN PYTHON
 def mulcov_table() :
    import dismod_at

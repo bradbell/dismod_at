@@ -2,15 +2,21 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin unicode_tuple.py$$ $newlinech #$$
-# $spell
-#  unicode_tuple
-# $$
+# {xrst_begin unicode_tuple.py}
+# {xrst_spell
+#     tuple
+# }
+# {xrst_comment_ch #}
 #
-# $section unicode_tuple: Example and Test$$
+# unicode_tuple: Example and Test
+# ###############################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end unicode_tuple.py}
 # BEGIN PYTHON
 #
 def unicode_tuple() :

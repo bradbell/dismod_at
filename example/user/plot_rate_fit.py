@@ -2,26 +2,24 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_plot_rate_fit.py$$ $newlinech #$$
-# $spell
-#  Integrands
-#  Sincidence
-#  mtexcess
-#  cv
-# $$
+# {xrst_begin user_plot_rate_fit.py}
+# {xrst_comment_ch #}
 #
-# $section Example Plotting The Rates for a Fit$$
+# Example Plotting The Rates for a Fit
+# ####################################
 #
-# $head Nodes$$
+# Nodes
+# *****
 # There are four nodes in this example.
 # The world node has one child, north_america.
 # The north_america node has two children, united_states and canada.
-# The $cref/parent_node/option_table/Parent Node/$$ is canada which
+# The :ref:`parent_node<option_table@Parent Node>` is canada which
 # does not have any children.
 #
-# $head Rates$$
-# There is a parent smoothing the $icode iota$$, $icode rho$$
-# and $icode chi$$ rates.
+# Rates
+# *****
+# There is a parent smoothing the *iota* , *rho*
+# and *chi* rates.
 # There is no child node smoothing so there are no random effects
 # for these rates.
 # In addition, there is no parent smoothing for the other rates
@@ -32,25 +30,30 @@
 # The age and time difference prior for this smoothing is
 # uniform with mean zero and no upper or lower bound.
 #
-# $head Integrands$$
+# Integrands
+# **********
 # The integrands for this example are
-# $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$,
-# $cref/remission/avg_integrand/Integrand, I_i(a,t)/remission/$$, and
-# $cref/mtexcess/avg_integrand/Integrand, I_i(a,t)/mtexcess/$$.
+# :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` ,
+# :ref:`avg_integrand@Integrand, I_i(a,t)@remission` , and
+# :ref:`avg_integrand@Integrand, I_i(a,t)@mtexcess` .
 # Note that these integrands are direct measurements of the following rates:
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 integrand2rate = {
    'Sincidence':  'iota'   ,
    'remission':   'rho'    ,
    'mtexcess':    'chi'    ,
 }
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head Data$$
+# Data
+# ****
 # All of the data corresponds to canada.
 # There is one data point for each of the integrands listed above.
 # It is simulated using true value for the corresponding rate:
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 def rate_true(rate_name, age, time) :
    age_fraction  = age / 100.0
    time_fraction = (time - 1980) / 40.0
@@ -59,19 +62,31 @@ def rate_true(rate_name, age, time) :
    value         = age_fraction + time_fraction + 1.0
    factor        = { 'iota':1e-2 , 'rho':5e-2 , 'chi':1e-3  }
    return factor[rate_name] * value
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 # Even though there is not noise in the simulated data, it is modeled as
 # have the following coefficient of variation:
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 meas_cv = 0.2
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head Call to plot_rate_fit$$
-# $srcthisfile%0%# BEGIN call plot_rate_fit%# END call plot_rate_fit%1%$$
+# Call to plot_rate_fit
+# *********************
+# {xrst_literal
+#     BEGIN call plot_rate_fit
+#     END call plot_rate_fit
+# }
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_plot_rate_fit.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import time

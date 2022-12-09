@@ -3,52 +3,58 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin censor_var_limit$$
-$spell
-   var
-$$
+{xrst_begin censor_var_limit}
 
-$section Censor Variables to be Within Lower and Upper Limits$$
+Censor Variables to be Within Lower and Upper Limits
+####################################################
 
-$head Syntax$$
-$codei%censor_var_limit(
-   %var_out%, %var_in%, %var2prior%, %prior_table%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%
-   0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1
-%$$
+| ``censor_var_limit`` (
+| |tab| *var_out* , *var_in* , *var2prior* , *prior_table*
+| )
 
-$head lower, upper$$
-Let $icode lower$$ ($icode upper$$)
-denote a vector in $cref pack_info$$ order
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+lower, upper
+************
+Let *lower* ( *upper* )
+denote a vector in :ref:`pack_info-name` order
 containing the corresponding variable lower (upper) limits.
 
-$head var_out$$
-This vector must have size $icode%var2prior%.size()%$$.
+var_out
+*******
+This vector must have size *var2prior* . ``size`` () .
 The input value of its elements does not matter.
 Upon return,
-$codei%
-   if %var_in%[%i%] < %lower%[%i%] then
-      %var_out%[%i%] = %lower%[%i%]
-   else if %upper%[%i%] < %var_in%[%i%] then
-      %var_out%[%i%] = %upper%[%i%]
-   else
-      %var_out%[%i%] = %var_in%[%i%]
-%$$
 
-$head var_in$$
+| |tab| ``if`` *var_in* [ *i* ] < *lower* [ *i* ] ``then``
+| |tab| |tab| *var_out* [ *i* ] = *lower* [ *i* ]
+| |tab| ``else if`` *upper* [ *i* ] < *var_in* [ *i* ] ``then``
+| |tab| |tab| *var_out* [ *i* ] = *upper* [ *i* ]
+| |tab| ``else``
+| |tab| |tab| *var_out* [ *i* ] = *var_in* [ *i* ]
+
+var_in
+******
 This the variable values before censoring.
-It is OK if $icode var_in$$ is the same vector as $icode var_out$$.
+It is OK if *var_in* is the same vector as *var_out* .
 
-$head var2prior$$
+var2prior
+*********
 This maps each variable index to the corresponding prior.
 
-$head prior_table$$
+prior_table
+***********
 This is the prior table.
 
-$end
+{xrst_end censor_var_limit}
 */
 # include <dismod_at/censor_var_limit.hpp>
 # include <dismod_at/null_int.hpp>

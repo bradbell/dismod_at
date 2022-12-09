@@ -4,50 +4,53 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin variable_limits$$
-$spell
-   const
-   vec
-   var
-$$
+{xrst_begin variable_limits}
 
-$section Determine Limits in Variable ID Order$$
+Determine Limits in Variable ID Order
+#####################################
 
-$head Syntax$$
-$icode%get_var_limits(
-   %lower_bound%,
-   %upper_bound%,
-   %bound_random%,
-   %var2prior%,
-   %prior_table%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN PROTOTYPE%// END PROTOTYPE%1%
-%$$
+| ``get_var_limits`` (
+| |tab| ``lower_bound`` ,
+| |tab| ``upper_bound`` ,
+| |tab| ``bound_random`` ,
+| |tab| ``var2prior`` ,
+| |tab| ``prior_table``
+| )
 
-$head lower_limit, upper_limit$$
-$icode lower_limit$$ ($icode upper_limit$$)
-is a vector with size zero or equal to the number of $cref model_variables$$.
+Prototype
+*********
+{xrst_literal
+   // BEGIN PROTOTYPE
+   // END PROTOTYPE
+}
+
+lower_limit, upper_limit
+************************
+*lower_limit* ( *upper_limit* )
+is a vector with size zero or equal to the number of :ref:`model_variables-name` .
 The input value of its elements does not matter.
 Upon return it contains the lower (upper) limit for each variable.
-This include the prior limits and the $cref bnd_mulcov_table$$ limits.
+This include the prior limits and the :ref:`bnd_mulcov_table-name` limits.
 
-
-$head bound_random$$
+bound_random
+************
 This is the value of the
-$cref/bound_random/option_table/Optimize Random Only/bound_random/$$
+:ref:`option_table@Optimize Random Only@bound_random`
 in the option table.
 
-$head var2prior$$
-This argument is the $cref pack_prior$$ information corresponding to the
-$cref model_variables$$.
+var2prior
+*********
+This argument is the :ref:`pack_prior-name` information corresponding to the
+:ref:`model_variables-name` .
 
-$head prior_table$$
-This argument is the $cref/prior_table/get_prior_table/prior_table/$$.
+prior_table
+***********
+This argument is the :ref:`get_prior_table@prior_table` .
 
-
-$end
+{xrst_end variable_limits}
 */
 # include <dismod_at/get_var_limits.hpp>
 # include <dismod_at/null_int.hpp>

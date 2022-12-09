@@ -1,0 +1,53 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin node_table}
+
+The Node Table
+##############
+
+Discussion
+**********
+The node table defines a graph that is a tree by specifying
+the parent for each node.
+The ``node`` table has the following columns:
+
+node_id
+*******
+This column has type ``integer`` and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+node_name
+*********
+This column has type ``text`` and has a different value for every row;
+i.e., the names are unique and can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
+
+parent
+******
+This column has type ``integer`` and is the *node_id*
+of the parent for this node.
+If this node has no parents, *parent* is ``null`` .
+Note that this is a value for the primary key in this table, but
+the name of this column does not follow the
+:ref:`foreign key<database@Foreign Key@parent>` naming convention.
+
+Children
+========
+The children for node *p* is the sent of *node_id* values
+such that the corresponding *parent* is equal to *p* .
+
+Descendant
+==========
+The set of descendants for a node *p* is the
+set children of *p* , grand children of *p* , ... .
+{xrst_toc_hidden
+   example/table/node_table.py
+}
+Example
+*******
+The file :ref:`node_table.py-name`
+contains an example ``node`` table.
+
+{xrst_end node_table}

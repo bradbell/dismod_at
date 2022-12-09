@@ -3,17 +3,17 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_bnd_mulcov_table_xam.cpp$$
-$spell
-   xam
-   bnd_mulcov
-$$
+{xrst_begin get_bnd_mulcov_table_xam.cpp}
 
-$section C++ get_bnd_mulcov_table: Example and Test$$
+C++ get_bnd_mulcov_table: Example and Test
+##########################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end get_bnd_mulcov_table_xam.cpp}
 */
 // BEGIN C++
 # include <cmath>

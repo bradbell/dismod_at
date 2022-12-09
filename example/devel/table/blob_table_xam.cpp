@@ -3,16 +3,17 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin blob_table_xam.cpp$$
-$spell
-   xam
-$$
+{xrst_begin blob_table_xam.cpp}
 
-$section Writing and Reading Blobs: Example and Test$$
+Writing and Reading Blobs: Example and Test
+###########################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end blob_table_xam.cpp}
 */
 // BEGIN C++
 # include <cassert>

@@ -2,66 +2,77 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_sample_asy.py$$ $newlinech #$$
-# $spell
-#  init
-#  dismod
-# $$
+# {xrst_begin user_sample_asy.py}
+# {xrst_comment_ch #}
 #
-# $section Sample from Asymptotic Distribution for Model Variables$$
+# Sample from Asymptotic Distribution for Model Variables
+# #######################################################
 #
-# $head Purpose$$
+# Purpose
+# *******
 # The command
-# $codei%
-#  dismod_at %database% sample asymptotic both  %number_sample%
-#  dismod_at %database% sample asymptotic fixed %number_sample%
-# %$$
+#
+# | |tab| ``dismod_at`` *database* ``sample asymptotic both`` *number_sample*
+# | |tab| ``dismod_at`` *database* ``sample asymptotic fixed`` *number_sample*
+#
 # samples form an asymptotic approximation for the posterior distribution
-# of the $cref model_variables$$.
+# of the :ref:`model_variables-name` .
 #
-# $head Notation$$
-# $table
-# $latex \iota_n$$ $cnext model incidence for $code north_america$$ $rnext
-# $icode u_m$$ $cnext incidence random effect for $code mexico$$ $rnext
-# $icode u_c$$ $cnext incidence random effect for $code canada$$ $rnext
-# $icode y_n$$ $cnext measured incidence for $code north_america$$ $rnext
-# $icode y_m$$ $cnext measured incidence for $code mexico$$ $rnext
-# $icode y_c$$ $cnext measured incidence for $code canada$$ $rnext
-# $icode s_n$$ $cnext standard deviation for $icode y_n$$   $rnext
-# $icode s_m$$ $cnext standard deviation for $icode y_m$$   $rnext
-# $icode s_c$$ $cnext standard deviation for $icode y_c$$   $rnext
-# $icode s_r$$ $cnext standard deviation for random effects $rnext
-# $tend
-# The only fixed effect in this model is $latex \iota_n$$.
-# The random effects are $latex u_m$$ and $latex u_c$$.
+# Notation
+# ********
 #
-# $head Likelihood$$
-# We define $latex h(y, \mu , \sigma)$$
-# to be the log-density for a $latex \B{N}( \mu, \sigma^2 )$$ distribution;
+# .. csv-table::
+#     :widths: auto
+#
+#     :math:`\iota_n`,model incidence for ``north_america``
+#     *u_m*,incidence random effect for ``mexico``
+#     *u_c*,incidence random effect for ``canada``
+#     *y_n*,measured incidence for ``north_america``
+#     *y_m*,measured incidence for ``mexico``
+#     *y_c*,measured incidence for ``canada``
+#     *s_n*,standard deviation for *y_n*
+#     *s_m*,standard deviation for *y_m*
+#     *s_c*,standard deviation for *y_c*
+#     *s_r*,standard deviation for random effects
+#
+# The only fixed effect in this model is :math:`\iota_n`.
+# The random effects are :math:`u_m` and :math:`u_c`.
+#
+# Likelihood
+# **********
+# We define :math:`h(y, \mu , \sigma)`
+# to be the log-density for a :math:`\B{N}( \mu, \sigma^2 )` distribution;
 # i.e.,
-# $latex \[
+#
+# .. math::
+#
 #  h(y, \mu, \sigma) =
 #     - \frac{ ( y - \mu )^2 }{ \sigma^2 }
 #     - \log \left( \sigma \sqrt{ 2 \pi } \right)
-# \] $$
+#
 # The total log-likelihood for
-# $cref/fit fixed/fit_command/variables/fixed/$$ is
-# $latex \[
+# :ref:`fit fixed<fit_command@variables@fixed>` is
+#
+# .. math::
+#
 #  h[ y_n, \iota_n, s_n ] +
 #  h[ y_m, \iota_n, s_m ] +
 #  h[ y_c, \iota_n, s_c ]
-# \] $$
+#
 # The total log-likelihood for
-# $cref/fit both/fit_command/variables/both/$$ is
-# $latex \[
+# :ref:`fit both<fit_command@variables@both>` is
+#
+# .. math::
+#
 #  h[ y_n, \iota_n, s_n ] +
 #  h[ y_m, \exp( u_m ) \iota_n, s_m ] +
 #  h[ y_c, \exp( u_c ) \iota_n, s_c ] +
 #  h( u_m, 0, s_r ) + h( u_c , 0 , s_r )
-# \] $$
 #
-# $head Problem Parameters$$
-# $srccode%py%
+# Problem Parameters
+# ******************
+# {xrst_spell_off}
+# {xrst_code py}
 measure = {
    'north_america' : 1.0e-2 , # y_n
    'mexico'        : 2.0e-2 , # y_m
@@ -75,11 +86,17 @@ standard = {
 standard_random_effect = 1.0   # s_r
 number_sample          = 500   # number of posterior samples to generate
 number_metropolis      = 10 * number_sample
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_sample_asy.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import time

@@ -1,0 +1,109 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin smooth_table}
+
+The Smoothing Table
+###################
+
+Purpose
+*******
+Each row of the ``smooth`` table defines a statistical
+prior for a function of age and time.
+To be more specific, each row corresponds to
+a set of model :ref:`model_variables-name` that,
+using :ref:`bilinear-name` interpolation,
+define a function of age and time.
+For each variable in the set its statistical prior is defined by a row of the
+:ref:`smooth_grid_table-name` which specifies an
+age, time, value prior, age difference prior, and time difference prior.
+(The difference priors represent the smoothing in a mathematical sense.)
+
+Empty
+*****
+The smooth table must not be empty because there
+could be no :ref:`model_variables-name` in this case.
+
+smooth_id
+*********
+This column has type ``integer`` and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+smooth_name
+***********
+This column has type ``text`` and has a different value for every row;
+i.e., the names are unique and can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
+
+n_age
+*****
+This column has type ``integer`` and is the number of age values
+in this smoothing grid. It must be greater than zero.
+
+n_time
+******
+This column has type ``integer`` and is the number of _time values
+in this smoothing grid. It must be greater than zero.
+
+mulstd_value_prior_id
+*********************
+This column has type ``integer`` and its value is the
+:ref:`prior_table@prior_id` for the variable that multiplies the
+:ref:`smooth_grid_table@value_prior_id` standard deviations
+for this
+:ref:`smooth_grid_table@smooth_id` .
+
+null
+====
+If this variable is not needed,
+use the value ``null`` (which corresponds to a multiplier of one).
+
+mulstd_dage_prior_id
+********************
+This column has type ``integer`` and its value is the
+:ref:`prior_table@prior_id` for the variable that multiplies the
+:ref:`smooth_grid_table@dage_prior_id` standard deviations
+for this
+:ref:`smooth_grid_table@smooth_id` .
+
+null
+====
+If this variable is not needed,
+use the value ``null`` (which corresponds to a multiplier of one).
+
+mulstd_dtime_prior_id
+*********************
+This column has type ``integer`` and its value is the
+:ref:`prior_table@prior_id` for the variable that multiplies the
+:ref:`smooth_grid_table@dtime_prior_id` standard deviations
+for this
+:ref:`smooth_grid_table@smooth_id` .
+
+null
+====
+If this variable is not needed,
+use the value ``null`` (which corresponds to a multiplier of one).
+
+Removing an Age or Time
+***********************
+It is possible to remove an age (time) from the
+:ref:`smooth_grid_table@Rectangular Grid`
+for a specific *smooth_id* .
+This is done by decreasing *n_age* ( *n_time* ) by one
+and setting :ref:`smooth_grid_table@smooth_id` to null
+for the points in the smooth_grid_table that are being removed.
+
+Example
+=======
+:ref:`user_change_grid.py-name`
+
+{xrst_comment
+   example/table/smooth_grid_table.py is included by smooth_grid_table.omh
+%}
+Example
+*******
+The file :ref:`smooth_grid_table.py-name`
+contains an example ``smooth`` table.
+
+{xrst_end smooth_table}

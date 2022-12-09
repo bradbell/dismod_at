@@ -3,77 +3,87 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin create_table$$ $newlinech #$$
-# $spell
-#  dismod
-#  str
-#  tbl
-#  unicode
-# $$
+# {xrst_begin create_table}
+# {xrst_spell
+#     tbl
+# }
+# {xrst_comment_ch #}
 #
-# $section Create a Database Table$$
+# Create a Database Table
+# #######################
 #
-# $head Syntax$$
-# $codei%dismod_at.create_table(
-#  %connection%, %tbl_name%, %col_name%, %col_type%, %row_list%
-# )%$$
+# Syntax
+# ******
 #
-# $head connection$$
-# is a $cref/connection/create_connection/connection/$$ for this database.
+# | ``dismod_at.create_table`` (
+# | |tab| *connection* , *tbl_name* , *col_name* , *col_type* , *row_list*
+# | )
 #
-# $head tbl_name$$
-# is a $code str$$ that specifies the name of the table.
+# connection
+# **********
+# is a :ref:`create_connection@connection` for this database.
 #
-# $head col_name$$
-# is a $code list$$ of $code str$$
+# tbl_name
+# ********
+# is a ``str`` that specifies the name of the table.
+#
+# col_name
+# ********
+# is a ``list`` of ``str``
 # where the elements are the column names in the table that is created.
-# The column name for the primary key, $icode%tbl_name%_id%$$ must
+# The column name for the primary key, *tbl_name* _ ``id`` must
 # not be included in the list.
 #
-# $subhead unique$$
-# If the column name $icode%tbl_name%_name%$$ is in the list,
-# the corresponding column will have the $code unique$$ constraint.
+# unique
+# ======
+# If the column name *tbl_name* _ ``name`` is in the list,
+# the corresponding column will have the ``unique`` constraint.
 #
-# $head col_type$$
-# is a $code list$$ of $code str$$ where the elements are the column types
-# in the same order as $icode col_name$$.
+# col_type
+# ********
+# is a ``list`` of ``str`` where the elements are the column types
+# in the same order as *col_name* .
 # The valid types are
-# $code integer$$, $code real$$, $code text$$.
+# ``integer`` , ``real`` , ``text`` .
 #
-# $head row_list$$
-# is a possibly empty $code list$$ of rows contain data that is written
+# row_list
+# ********
+# is a possibly empty ``list`` of rows contain data that is written
 # to the table.
 # Each row is itself a list containing the data for one row of the
-# table in the same order as $icode col_name$$.
-# Note that the primary key column is not included in $icode row_list$$.
+# table in the same order as *col_name* .
+# Note that the primary key column is not included in *row_list* .
 # Also note that the value in each column gets converted to unicode
 # before being written to the database.
 # Note that the special value
-# $codei%
-#  %row_list%[%i%][%j%] ==  None
-# %$$
-# gets converted to $code null$$ in the table.
 #
-# $head tbl_name_id$$
-# A column with name $icode%tbl_name%_id%$$ and type
-# $code integer primary key$$ is included as the first column in the table.
+#     *row_list* [ *i* ][ *j* ] == ``None``
+#
+# gets converted to ``null`` in the table.
+#
+# tbl_name_id
+# ***********
+# A column with name *tbl_name* _ ``id`` and type
+# ``integer primary key`` is included as the first column in the table.
 # Its values start with zero (for the first row) and
 # increment by one for each row.
 #
-# $head Side Effects$$
+# Side Effects
+# ************
 # This routine does a
-# $codei%
-#  %connection%.commit()
-# %$$
+#
+#     *connection* . ``commit`` ()
+#
 # to make sure the table exists before returning.
+# {xrst_toc_hidden
+#    example/table/create_table.py
+# }
+# Example
+# *******
+# The file :ref:`create_table.py-name` is an example use of
+# ``create_table`` .
 #
-# $children%example/table/create_table.py
-# %$$
-# $head Example$$
-# The file $cref create_table.py$$ is an example use of
-# $code create_table$$.
-#
-# $end
+# {xrst_end create_table}
 # ---------------------------------------------------------------------------
 def create_table(connection, tbl_name, col_name, col_type, row_list) :
    import dismod_at

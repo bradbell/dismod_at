@@ -4,51 +4,67 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin child_data_in_fit$$
+{xrst_begin child_data_in_fit}
 
-$section For Each Child, Number of Data Points Included In Fit$$
+For Each Child, Number of Data Points Included In Fit
+#####################################################
 
-$head Syntax$$
-$icode%n_data_in_fit% = child_data_in_fit(
-   %option_map%,
-   %data_subset_table%,
-   %integrand_table%,
-   %data_table%,
-   %child_info4data%
-)%$$
+Syntax
+******
 
-$head Prototype$$
-$srcthisfile%0%// BEGIN_PROTOTYPE%// END_PROTOTYPE%1%$$
+| *n_data_in_fit* = ``child_data_in_fit`` (
+| |tab| *option_map* ,
+| |tab| *data_subset_table* ,
+| |tab| *integrand_table* ,
+| |tab| *data_table* ,
+| |tab| *child_info4data*
+| )
 
-$head option_map$$
-The key $code hold_out_integrand$$ is present in $icode option_map$$ and
-is the $cref/hold_out_integrand/option_table/hold_out_integrand/$$.
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
+
+option_map
+**********
+The key ``hold_out_integrand`` is present in *option_map* and
+is the :ref:`option_table@hold_out_integrand` .
 If it is not present, the empty string is used.
 
-$head data_subset_table$$
-is the $cref/data_subset_table/get_data_subset/data_subset_table/$$.
+data_subset_table
+*****************
+is the :ref:`get_data_subset@data_subset_table` .
 
-$head data_table$$
-is the $cref/data_table/get_data_table/data_table/$$.
+data_table
+**********
+is the :ref:`get_data_table@data_table` .
 
-$head child_info4data$$
-is a $cref child_info$$ object created using the data table.
+child_info4data
+***************
+is a :ref:`child_info-name` object created using the data table.
 
-$head n_data_in_fit$$
+n_data_in_fit
+*************
 This vector has size equal to the number of children; i.e.
-$cref/child_size/pack_info_sizes/child_size/$$.
-The $th i$$ element of this vector is the number of data point
+:ref:`pack_info_sizes@child_size` .
+The *i*-th element of this vector is the number of data point
 included in the fit
-(not $cref/held out/fit_command/hold_out/$$).
+(not :ref:`held out<fit_command@hold_out>` ).
 
-$childtable%example/devel/utility/child_data_in_fit_xam.cpp
-%$$
-$head Example$$
-The file $cref child_data_in_fit_xam.cpp$$ contains
-and example and test of $code child_data_in_fit$$.
+Contents
+********
+{xrst_toc_table
+   example/devel/utility/child_data_in_fit_xam.cpp
+}
+Example
+*******
+The file :ref:`child_data_in_fit_xam.cpp-name` contains
+and example and test of ``child_data_in_fit`` .
 It returns true for success and false for failure.
 
-$end
+{xrst_end child_data_in_fit}
 */
 # include <map>
 # include <cppad/utility/vector.hpp>

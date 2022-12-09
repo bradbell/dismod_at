@@ -2,83 +2,89 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_fit_meas_noise.py$$ $newlinech #$$
-# $spell
-#  init
-#  covariate
-#  Sincidence
-#  std
-# $$
+# {xrst_begin user_fit_meas_noise.py}
+# {xrst_comment_ch #}
 #
-# $section Group Measurement Noise Covariate Multipliers, Gamma$$
+# Group Measurement Noise Covariate Multipliers, Gamma
+# ####################################################
 #
-# $head Purpose$$
+# Purpose
+# *******
 # This example demonstrates fitting
-# $cref/group covariate multipliers
-#  /model_variables
-#  /Fixed Effects, theta
-#  /Group Covariate Multipliers
-# /$$
+# :ref:`model_variables@Fixed Effects, theta@Group Covariate Multipliers`
 # that effect the measurement noise.
 #
-# $head Random Effects$$
+# Random Effects
+# **************
 # There are no random effects in this example.
 #
-# $head Iota$$
-# The value $icode iota_true$$
+# Iota
+# ****
+# The value *iota_true*
 # is the simulated true rate for iota.
 # The prior for iota is uniform prior with lower limit
-# $icode iota_true / 100$$ and upper limit one.
-# The mean for the prior is $icode iota_true / 10$$
+# *iota_true / 100* and upper limit one.
+# The mean for the prior is *iota_true / 10*
 # (this is only used as a starting point for the optimization).
-# There is only one grid point (one $cref/model_variable/model_variables/$$)
-# corresponding to $icode iota$$, hence it is constant in age and time.
+# There is only one grid point (one :ref:`model_variable<model_variables-name>` )
+# corresponding to *iota* , hence it is constant in age and time.
 #
-# $head Other Rates$$
+# Other Rates
+# ***********
 # For this example the other rates are all zero.
 # This is specified by setting the
-# $cref/parent_smooth_id/rate_table/parent_smooth_id/$$ and
-# $cref/child_smooth_id/rate_table/child_smooth_id/$$ to null
+# :ref:`rate_table@parent_smooth_id` and
+# :ref:`rate_table@child_smooth_id` to null
 # for the other rates.
 #
-# $head Subgroup Table$$
+# Subgroup Table
+# **************
 # The data is divided into two groups.
 # The first group is hospital data and the second group is survey data.
 #
-# $head Covariate Multiplier$$
-# There is one covariate multiplier on the covariate column $code one$$
-# and the rate $code iota$$.
+# Covariate Multiplier
+# ********************
+# There is one covariate multiplier on the covariate column ``one``
+# and the rate ``iota`` .
 # This is a measurement noise covariate multiplier
-# $cref/gamma/data_like/Measurement Noise Covariates/gamma_j (a, t)/$$
+# :ref:`gamma<data_like@Measurement Noise Covariates@gamma_j (a, t)>`
 # that only effects the survey data.
 # The prior for this multiplier is a uniform on the interval from zero
-# to $codei%10 * %gamma_true%$$.
+# to 10 * *gamma_true* .
 # The true value for this multiplier, used to simulate data, is
-# called $icode gamma_true$$.
-# The mean for the prior is $codei%gamma_true% / 10%$$
+# called *gamma_true* .
+# The mean for the prior is ``gamma_true``  / 10
 # (this is only used as a starting point for the optimization).
 # There is only one grid point
 # (one model variable) corresponding to the covariate multiplier,
 # hence it is constant in age and time.
 #
-# $head Data$$
-# There are $icode n_data$$ measurements of Sincidence.
-# The hospital data has standard deviation $icode meas_std$$.
+# Data
+# ****
+# There are *n_data* measurements of Sincidence.
+# The hospital data has standard deviation *meas_std* .
 # The survey data has addition noise determine by the covariate effect.
 #
-# $head meas_noise_effect$$
-# see $cref/meas_noise_effect/option_table/meas_noise_effect/$$.
-# The function $code gamma_true$$ depends on this option,
+# meas_noise_effect
+# *****************
+# see :ref:`option_table@meas_noise_effect` .
+# The function ``gamma_true`` depends on this option,
 # this in turn affects the priors. Hence the data base must
 # be recreated for each choice of this option
 #
-# $head Scaling Gamma$$
-# The function $code gamma_true()$$ shows on the scaling of $icode gamma$$
-# depends on the value of $icode meas_noise_effect$$.
+# Scaling Gamma
+# *************
+# The function ``gamma_true()`` shows on the scaling of *gamma*
+# depends on the value of *meas_noise_effect* .
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_fit_meas_noise.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # You can changed the values below and rerun this program

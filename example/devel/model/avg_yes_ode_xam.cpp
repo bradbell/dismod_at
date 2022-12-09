@@ -3,17 +3,17 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin avg_yes_ode_xam.cpp$$
-$spell
-   interp
-   xam
-$$
+{xrst_begin avg_yes_ode_xam.cpp}
 
-$section C++ avg_yes_ode: Example and Test$$
+C++ avg_yes_ode: Example and Test
+#################################
 
-$srcthisfile%0%// BEGIN C++%// END C++%1%$$
+{xrst_literal
+   // BEGIN C++
+   // END C++
+}
 
-$end
+{xrst_end avg_yes_ode_xam.cpp}
 */
 // BEGIN C++
 # include <dismod_at/data_model.hpp>

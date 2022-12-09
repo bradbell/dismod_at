@@ -2,83 +2,99 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_const_value.py$$ $newlinech #$$
-# $spell
-#  init
-#  const
-#  nslist
-#  dismod
-# $$
+# {xrst_begin user_const_value.py}
+# {xrst_comment_ch #}
 #
-# $section Constrain Omega Using const_value$$
+# Constrain Omega Using const_value
+# #################################
 #
-# $head Node Table$$
-# For this example the $cref node_table$$ is
-# $pre
-#          universe
-#             |
-#           world
-#          /      \
-#      child_1   child_2
-# $$
+# Node Table
+# **********
+# For this example the :ref:`node_table-name` is
+# ::
 #
-# $head Problem Parameters$$
+#             universe
+#                |
+#              world
+#             /      \
+#         child_1   child_2
+#
+# Problem Parameters
+# ******************
 # The following values are used to simulate the data and set the priors
 # for fitting the data:
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 iota_true    = { 'world':0.004, 'child_1':0.002,  'child_2':0.008 }
 omega_true   = { 'world':0.01, 'child_1':0.005,  'child_2':0.002  }
 n_data       = 51
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head Child Random Effects$$
+# Child Random Effects
+# ********************
 # The following code converts the child rates to child rate effects:
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 import math
 for key in [ 'child_1', 'child_2' ] :
    iota_true[key]  = math.log( iota_true[key] / iota_true['world'] )
    omega_true[key] = math.log( omega_true[key] / omega_true['world'] )
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head Omega Priors$$
+# Omega Priors
+# ************
 # The parent and child rates for omega are constrained to be their
-# true value using the $cref/const_value/smooth_grid_table/const_value/$$
+# true value using the :ref:`smooth_grid_table@const_value`
 # column in the smooth_grid table.
 #
-# $subhead nslist$$
+# nslist
+# ======
 # Note that the different children have different priors for the
 # child random effects which requires using the
-# $cref/child_nslist/rate_table/child_nslist_id/$$ option in the
+# :ref:`child_nslist<rate_table@child_nslist_id>` option in the
 # rate table.
 #
-# $head Iota Priors$$
+# Iota Priors
+# ***********
 # The iota priors are uniform.
 #
-# $subhead Parent$$
+# Parent
+# ======
 # For the parent, the lower (upper) limit is the true value
 # divided by ten (multiplied by ten).
 # The mean, which is two times the true value, is used for the
-# $cref start_var_table$$ and $cref scale_var_table$$;
-# see $cref init_command$$.
+# :ref:`start_var_table-name` and :ref:`scale_var_table-name` ;
+# see :ref:`init_command-name` .
 #
-# $head Data$$
+# Data
+# ****
 # All of the data for this example is direct measurements of the
-# $cref/susceptible/avg_integrand/Integrand, I_i(a,t)/susceptible/$$
+# :ref:`avg_integrand@Integrand, I_i(a,t)@susceptible`
 # population (as a fraction of the initial population).
 #
-# $head random_seed$$
+# random_seed
+# ***********
 # Use the clock to seed random number generator, but pass it into
-# dismod_at using the $cref/option table/option_table/random_seed/$$:
-# $srccode%py%
+# dismod_at using the :ref:`option table<option_table@random_seed>` :
+# {xrst_spell_off}
+# {xrst_code py}
 import time
 random_seed = int( time.time() )
-# %$$
+# {xrst_code}
+# {xrst_spell_on}
 #
-# $head Source Code$$
+# Source Code
+# ***********
 # Given the problem parameters define above, below is the rest of the
 # source code for this example:
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_const_value.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # begin problem parameters

@@ -2,17 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin db2csv_command.py$$ $newlinech #$$
-# $spell
-#  csv
-#  init
-#  dismod
-# $$
+# {xrst_begin db2csv_command.py}
+# {xrst_comment_ch #}
 #
-# $section db2csv Command: Example and Test$$
+# db2csv Command: Example and Test
+# ################################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end db2csv_command.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 import sys

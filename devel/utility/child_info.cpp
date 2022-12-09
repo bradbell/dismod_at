@@ -3,139 +3,139 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin child_info$$
-$spell
-   avgint
-   dismod
-   const
-   CppAD
-   struct
-$$
+{xrst_begin child_info}
 
-$section Child Indices and Tables Indices$$
+Child Indices and Tables Indices
+################################
 
-$head Syntax$$
-$codei%child_info %child_object%(%parent_node_id%, %node_table%, %table%)
-%$$
-$icode%n_child%  = %child_object%.child_size()
-%$$
-$icode%node_id%  = %child_object%.child_id2node_id(%child_id%)
-%$$
-$icode%child%    = %child_object%.table_id2child(%table_id%)%$$
+Syntax
+******
 
-$head child_object$$
+| ``child_info`` *child_object* ( *parent_node_id* , *node_table* , *table* )
+| *n_child* = *child_object* . ``child_size`` ()
+| *node_id* = *child_object* . ``child_id2node_id`` ( *child_id* )
+
+*child* = *child_object* . ``table_id2child`` ( *table_id* )
+
+child_object
+************
 Except for it's constructor, this object has prototype
-$codei%
-   const child_info %child_object%
-%$$
 
-$head Constructor$$
+   ``const child_info`` *child_object*
 
-$subhead parent_node_id$$
+Constructor
+***********
+
+parent_node_id
+==============
 This argument has prototype
-$codei%
-   size_t %parent_node_id%
-%$$
+
+   ``size_t`` *parent_node_id*
+
 and is the
-$cref/parent node id/option_table/Parent Node/$$.
+:ref:`parent node id<option_table@Parent Node>` .
 for the fit command.
 
-$subhead node_table$$
+node_table
+==========
 This argument has prototype
-$codei%
-   const CppAD::vector<node_struct>& %node_table%
-%$$
-and is the $cref/node_table/get_node_table/node_table/$$.
-Only the following fields of this table are used: $code parent$$.
 
-$subhead table$$
+   ``const CppAD::vector<node_struct>&`` *node_table*
+
+and is the :ref:`get_node_table@node_table` .
+Only the following fields of this table are used: ``parent`` .
+
+table
+=====
 This argument has one of the following prototypes
-$codei%
-   const CppAD::vector<%data_struct%>&   %table%
-   const CppAD::vector<%avgint_struct%>& %table%
-%$$
 
+| |tab| ``const CppAD::vector<`` *data_struct* >& *table*
+| |tab| ``const CppAD::vector<`` *avgint_struct* >& *table*
 
-$head child_size$$
+child_size
+**********
 
-$subhead n_child$$
+n_child
+=======
 This return value has prototype
-$codei%
-   size_t %n_child%
-%$$
+
+   ``size_t`` *n_child*
+
 and is the size of the set of
-$cref/children/node_table/parent/Children/$$ corresponding to the
+:ref:`node_table@parent@Children` corresponding to the
 for the specified parent node.
 
-$head child_id2node_id$$
+child_id2node_id
+****************
 
-$subhead child_id$$
+child_id
+========
 This argument has prototype
-$codei%
-   size_t %child_id%
-%$$
-and is less than $icode n_child$$.
+
+   ``size_t`` *child_id*
+
+and is less than *n_child* .
 Note that the corresponding node order is the order that the
-children appear in $icode node_table$$.
-Also note that if $icode%n_child% == 0%$$,
-there is no valid value for $icode child_id$$.
+children appear in *node_table* .
+Also note that if *n_child*  == 0 ,
+there is no valid value for *child_id* .
 
-$subhead node_id$$
+node_id
+=======
 This return value has prototype
-$codei%
-   size_t %node_id%
-%$$
-and is the $cref/node_id/node_table/node_id/$$ for the
-corresponding $icode child_id$$.
 
-$head table_id2child$$
+   ``size_t`` *node_id*
 
-$subhead table_id$$
+and is the :ref:`node_table@node_id` for the
+corresponding *child_id* .
+
+table_id2child
+**************
+
+table_id
+========
 This argument has prototype
-$codei%
-   size_t %table_id%
-%$$
-and is the primary key in the $icode table$$, i.e.,
-the index into the vector $icode table$$.
 
-$subhead child$$
+   ``size_t`` *table_id*
+
+and is the primary key in the *table* , i.e.,
+the index into the vector *table* .
+
+child
+=====
 This return value has prototype
-$codei%
-   size_t %child%
-%$$
-If $icode%child% < %n_child%$$,
-$codei%
-   %table%[%table_id%].node_id
-%$$
+
+   ``size_t`` *child*
+
+If *child* < *n_child* ,
+
+   *table* [ *table_id* ]. ``node_id``
+
 is the child or a descendant of the child
-$codei%
-   %child_object%.child_id2node_id(%child%)
-%$$
-in the $cref node_table$$.
-$pre
 
-$$
-If $icode%child% == %n_child%$$,
-$codei%
-   %table%[%table_id%].node_id
-%$$
+   *child_object* . ``child_id2node_id`` ( *child* )
+
+in the :ref:`node_table-name` .
+
+If *child* == *n_child* ,
+
+   *table* [ *table_id* ]. ``node_id``
+
 is the parent node.
-$pre
 
-$$
-If $icode%child% == %n_child%+1%$$,
-$codei%
-   %table%[%table_id%].node_id
-%$$
+If *child* == *n_child* +1 ,
+
+   *table* [ *table_id* ]. ``node_id``
+
 is not the parent node and not a descendant of the parent node.
-
-$children%
+{xrst_toc_hidden
    example/devel/utility/child_info_xam.cpp
-%$$
-$head Example$$
-$cref child_info_xam.cpp$$
+}
+Example
+*******
+:ref:`child_info_xam.cpp-name`
 
-$end
+{xrst_end child_info}
 */
 # include <dismod_at/child_info.hpp>
 # include <dismod_at/error_exit.hpp>

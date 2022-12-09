@@ -1,0 +1,102 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin fixed_value}
+{xrst_spell
+   ll
+}
+
+The Fixed Effects Value Density Function
+########################################
+
+theta_j
+*******
+We use :math:`\theta_j` to denote
+one component of the
+:ref:`fixed effects<model_variables@Fixed Effects, theta>` vector.
+
+prior_id
+********
+We use *prior_id* for the prior that is attached to the
+*j*-th fixed effect; see
+:ref:`model_variables@Prior for a Variable` .
+
+lambda_j
+********
+If :math:`\theta_j` is a
+:ref:`smoothing standard deviation multiplier<model_variables@Fixed Effects, theta@Smoothing Standard Deviation Multipliers, lambda>`
+then :math:`\lambda_j = 1`.
+Otherwise :math:`\lambda_j`
+is the
+:ref:`smooth_table@mulstd_value_prior_id`
+multiplier for the
+:ref:`smooth_table@smooth_id`
+corresponding to :math:`\theta_j`.
+
+mu_j
+****
+We use :math:`\mu_j` to denote the
+:ref:`prior_table@mean`
+corresponding to *prior_id* .
+
+epsilon_j
+*********
+We use :math:`\varepsilon_j` to denote the
+:ref:`prior_table@std`
+corresponding to *prior_id* .
+
+eta_j
+*****
+We use :math:`\eta_j` to denote the
+:ref:`prior_table@eta`
+corresponding to *prior_id* .
+
+d_j
+***
+We use :math:`d_j` to denote the
+:ref:`prior_table@density_id` corresponding to *prior_id* .
+In an abuse of notation, we include
+:ref:`prior_table@eta` and
+:ref:`eta<prior_table@nu>` in *d_j* ; see
+:ref:`statistic@Notation@d` .
+
+sigma_j
+*******
+We use :math:`\sigma_j` to denote the transformed standard deviation
+corresponding to *prior_id*
+
+.. math::
+
+   \sigma_j = \left\{ \begin{array}{ll}
+      \log ( \mu_j + \eta_j + \varepsilon_j ) - \log( \mu_j + \eta_j )
+         & \R{if \; log \; density}
+      \\
+      \varepsilon_j & \R{otherwise}
+   \end{array} \right.
+
+V_j^theta
+*********
+The value density for the *j*-th component of :math:`\theta` is
+
+.. math::
+
+   V_j^\theta ( \theta )
+   =
+   \exp \left[ D \left(
+      \theta_j \W{,} \mu_j \W{,} \lambda_j \sigma_j \W{,} d_j
+   \right) \right]
+
+where :math:`D` is the
+:ref:`log-density function<statistic@Log-Density Function, D>` .
+
+V^theta
+*******
+Let :math:`n` be the number of fixed effects.
+The value density for all the fixed effects :math:`\theta` is defined by
+
+.. math::
+
+   V^\theta ( \theta ) = \prod_{j=0}^{n-1} V_j^\theta ( \theta )
+
+{xrst_end fixed_value}

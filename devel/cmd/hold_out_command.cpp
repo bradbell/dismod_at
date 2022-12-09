@@ -16,86 +16,95 @@
 
 /*
 -----------------------------------------------------------------------------
-$begin hold_out_command$$
-$spell
-   dismod
-   cov
-   covariate
-   Covariates
-$$
+{xrst_begin hold_out_command}
 
-$section Hold Out Command: Randomly Sub-sample The Data$$
+Hold Out Command: Randomly Sub-sample The Data
+##############################################
 
-$head Syntax$$
-$codei%dismod_at %database% hold_out %integrand_name% %max_fit
-%$$
-$codei%dismod_at %database% hold_out %integrand_name% %max_fit%$$
-$icode%cov_name% %cov_value_1% %cov_value_2%$$
+Syntax
+******
 
-$head Purpose$$
+   *dismod_at* ``database`` *hold_out* ``integrand_name`` ``max_fit``
+
+``dismod_at`` *database* ``hold_out`` *integrand_name* *max_fit*
+*cov_name* *cov_value_1* *cov_value_2*
+
+Purpose
+*******
 This command is used to set a maximum number of data values
 that are included in subsequent fits.
 It is intended to make the initialization and fitting faster.
 The random sample of which values to include can be made repeatable using
-$cref/random_seed/option_table/random_seed/$$.
+:ref:`option_table@random_seed` .
 
-$head database$$
+database
+********
 Is an
-$href%http://www.sqlite.org/sqlite/%$$ database containing the
-$code dismod_at$$ $cref input$$ tables which are not modified.
+http://www.sqlite.org/sqlite/ database containing the
+``dismod_at`` :ref:`input-name` tables which are not modified.
 
-$head integrand_name$$
+integrand_name
+**************
 This is the
-$cref/integrand/integrand_table/integrand_name/$$ that we are sub-sampling.
+:ref:`integrand<integrand_table@integrand_name>` that we are sub-sampling.
 
-$head max_fit$$
+max_fit
+*******
 This is the maximum number of data points to fit for the specified integrand;
 i.e., the maximum number that are not held out.
-If for this integrand there are more than $icode mas_fit$$ points with
-$cref/hold_out/data_table/hold_out/$$ zero in the data table,
-points are randomly held out so that there are $icode max_fit$$
+If for this integrand there are more than *mas_fit* points with
+:ref:`data_table@hold_out` zero in the data table,
+points are randomly held out so that there are *max_fit*
 points fit for this integrand.
 
-$head cov_name$$
+cov_name
+********
 If this argument is present, it specifies a covariate column that
 will be balanced; see covariate balancing below:
 
-$head cov_value_1$$
+cov_value_1
+***********
 If this argument is present, it specifies one of the covariate values
-for the balancing. This is a string representation of a $code double$$ value.
+for the balancing. This is a string representation of a ``double`` value.
 
-$head cov_value_2$$
+cov_value_2
+***********
 If this argument is present, it specifies the opposite covariate value
-for the balancing. This is a string representation of a $code double$$ value.
+for the balancing. This is a string representation of a ``double`` value.
 
-$head Balancing$$
+Balancing
+*********
 
-$subhead Child Nodes$$
+Child Nodes
+===========
 The choice of which points to include in the fit tries to sample the
 same number of data points from each of the child nodes (and the parent node).
 If there are not sufficiently many data for one of these nodes, the others
 make up the difference.
 
-$subhead Covariates$$
-If $icode cov_name$$ is present, any sample that has the
-covariate value $icode cov_value_1$$ or $icode cov_value_2$$
+Covariates
+==========
+If *cov_name* is present, any sample that has the
+covariate value *cov_value_1* or *cov_value_2*
 will be paired with a sample from the opposite value (if possible).
 
-$head data_subset_table$$
-Only rows of the $cref data_subset_table$$ that correspond to this integrand
+data_subset_table
+*****************
+Only rows of the :ref:`data_subset_table-name` that correspond to this integrand
 are modified.
-The $cref/hold_out/data_subset_table/hold_out/$$ is set one (zero)
+The :ref:`data_subset_table@hold_out` is set one (zero)
 if the corresponding data is (is not) selected for hold out.
-Only points that have $icode hold_out$$ zero in the data table
+Only points that have *hold_out* zero in the data table
 can have hold_out non-zero in the data_subset table.
-See the fit command $cref/hold_out/fit_command/hold_out/$$
+See the fit command :ref:`fit_command@hold_out`
 documentation.
 
-$head Example$$
-The files $cref user_hold_out_1.py$$ and $cref user_hold_out_2.py$$
+Example
+*******
+The files :ref:`user_hold_out_1.py-name` and :ref:`user_hold_out_2.py-name`
 contain examples and tests using this command.
 
-$end
+{xrst_end hold_out_command}
 */
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 // ---------------------------------------------------------------------------

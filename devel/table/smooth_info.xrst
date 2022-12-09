@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin smooth_info}
+
+smooth_info: The Smoothing Information Class
+############################################
+
+Contents
+********
+{xrst_toc_table
+   devel/table/smooth_info.cpp
+}
+
+{xrst_end smooth_info}

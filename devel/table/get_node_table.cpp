@@ -3,59 +3,63 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-$begin get_node_table$$
-$spell
-   sqlite
-   struct
-   cpp
-   std
-$$
+{xrst_begin get_node_table}
 
-$section C++: Get the Node Table Information$$
+C++: Get the Node Table Information
+###################################
 
-$head Syntax$$
-$icode%node_table% = get_node_table(%db%)%$$
+Syntax
+******
+*node_table* = ``get_node_table`` ( *db* )
 
-$head Purpose$$
-To read the $cref node_table$$ and return it as a C++ data structure.
+Purpose
+*******
+To read the :ref:`node_table-name` and return it as a C++ data structure.
 
-$head db$$
-The argument $icode db$$ has prototype
-$codei%
-   sqlite3* %db%
-%$$
+db
+**
+The argument *db* has prototype
+
+   ``sqlite3`` * *db*
+
 and is an open connection to the database.
 
-$head node_struct$$
+node_struct
+***********
 This is a structure with the following fields
-$table
-Type $cnext Field $cnext Description
-$rnext
-$code std::string$$ $cnext $code node_name$$  $cnext
-   The $cref/node_name/node_table/node_name/$$ for this node
-$rnext
-$code int$$ $cnext $code parent$$  $cnext
-   The $cref/parent/node_table/parent/$$ $icode node_id$$
-$tend
 
-$head node_table$$
-The return value $icode node_table$$ has prototype
-$codei%
-   CppAD::vector<node_struct>  %node_table%
-%$$
-For each $cref/node_id/node_table/node_id/$$,
-$codei%
-   %node_table%[%node_id%]
-%$$
+.. list-table::
+
+   * - Type
+     - Field
+     - Description
+   * - ``std::string``
+     - ``node_name``
+     - The :ref:`node_table@node_name` for this node
+   * - ``int``
+     - ``parent``
+     - The :ref:`node_table@parent` *node_id*
+
+node_table
+**********
+The return value *node_table* has prototype
+
+   ``CppAD::vector<node_struct>`` *node_table*
+
+For each :ref:`node_table@node_id` ,
+
+   *node_table* [ *node_id* ]
+
 is the information for the corresponding node.
-
-$children%example/devel/table/get_node_table_xam.cpp
-%$$
-$head Example$$
-The file $cref get_node_table_xam.cpp$$ contains an example that uses
+{xrst_toc_hidden
+   example/devel/table/get_node_table_xam.cpp
+}
+Example
+*******
+The file :ref:`get_node_table_xam.cpp-name` contains an example that uses
 this function.
 
-$end
+{xrst_end get_node_table}
 -----------------------------------------------------------------------------
 */
 

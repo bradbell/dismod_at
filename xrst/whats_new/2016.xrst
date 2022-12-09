@@ -1,0 +1,681 @@
+$Id:$
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin whats_new_2016}
+{xrst_spell
+   cholesky
+   cholmod
+   cmake
+   covariance
+   dd
+   devel
+   eigen
+   factorization
+   gcc
+   gsl
+   hpp
+   iter
+   lagrange
+   libdir
+   metis
+   mm
+   nlp
+   optimizer
+   relrisk
+   rng
+   suitesparse
+   wmisleading
+   zsum
+}
+
+Changes and Additions to Dismod_at During 2016
+##############################################
+
+mm-dd
+*****
+
+12-03
+=====
+
+#. The *meas_std* filed was added to the
+   data_sim table.
+#. The option arguments were added to each
+   :ref:`log_table@message_type@command` message in the log table.
+#. The :ref:`db2csv_command-name` was modified so that
+   :ref:`db2csv_command@data.csv@meas_value` and *meas_std*
+   always correspond to the :ref:`data_table-name` .
+   The columns
+   :ref:`db2csv_command@data.csv@sim_value` and *sim_std*
+   correspond to the :ref:`data_sim_table-name` when the previous fit
+   used simulated data.
+   In addition, some bugs in this command, related to the
+   :ref:`fit_command@simulate_index` , were fixed.
+#. There was some confusion in the documentation of the columns in the
+   :ref:`db2csv_command@predict.csv` file.
+   To be specific, it was not clear that these columns correspond
+   to the :ref:`avgint_table-name` instead of the :ref:`data_table-name` .
+   This has been fixed.
+#. The :ref:`log_table@message_type` ``warning``
+   was missing in the log file documentation. It has been added.
+#. Change the :ref:`simulate_command-name` so that it adjusts
+   *meas_std* data_sim table field
+   to be relative to the simulated measurements instead of
+   using the data table
+   :ref:`data_table@meas_std` .
+
+10-31
+=====
+
+#. Include documentation for the
+   :ref:`covariate<db2csv_command@data.csv@Covariates>` columns in
+   the ``data.csv`` file.
+#. Improve the documentation for the
+   :ref:`predict_table@sample_index` column in the
+   predict table. (It refers to variable and not data samples.)
+#. Add the :ref:`db2csv_command@predict.csv` output
+   file to the ``db2csv`` command.
+
+10-20
+=====
+
+#. **API Change** :
+   The *fit_simulate_index* option was removed
+   from the :ref:`option_table-name`
+   and the argument :ref:`fit_command@simulate_index`
+   was added to the simulate command.
+#. Improve the discussion of the
+   :ref:`output tables<data_flow@Output Tables by Table Name>` .
+#. Fix some compiler warnings.
+
+10-19
+=====
+
+#. **API Change** :
+   The argument :ref:`sample_command@number_sample`
+   was added to the sample command.
+#. **API Change** :
+   The *number_simulate* option was removed from the :ref:`option_table-name`
+   and the argument :ref:`simulate_command@number_simulate`
+   was added to the simulate command.
+#. The :ref:`db2csv_command@log.csv` file was added too the
+   db2csv command output.
+
+10-18
+=====
+
+#. In the :ref:`user_example-name` examples,
+   change *name* _ ``dict`` to *name* _ ``table``
+   for *name* equal to ``var`` , ``predict`` , and ``sample`` .
+   This makes it clearer that they are copies of the corresponding tables
+   as a python list of dictionaries; see :ref:`get_table_dict-name` .
+#. If :ref:`option_table@Optimize Random Only@bound_random` was zero,
+   the :ref:`sample_command-name` would terminate with a ``cppad_mixed``
+   error message. This has been fixed. In addition, the random bound documentation
+   now includes mention that is not accounted for in the
+   :ref:`sample_command@asymptotic` .
+#. Advance to ``cppad_mixed-20161018`` .
+   This fixed a bug in ``cppad_mixed``
+   logging error messages versus generating asserts.
+
+10-17
+=====
+
+#. Improve the invalid prevalence error message.
+#. Fix some more warnings on a old compiler (g++4.4.7).
+#. Add choice for debug or release build in
+   the IHME cluster program ``install_dismod_at.sh`` .
+#. In cmake, search the default library directory last.
+   This enables choosing a non-default version of a library as
+   well as finding the default libraries when needed.
+#. Fix assertion when
+   ``log_fatal_error`` is false.
+#. Add the
+   :ref:`run_cmake.sh@system_specific_library_list`
+   argument to the cmake install script.
+
+10-16
+=====
+
+#. The :ref:`zsum_child_rate.py<user_zsum_child_rate.py-name>`
+   example / test was added.
+#. There was a bug (that has been fixed) in
+   :ref:`create_database-name` .
+   This bug would sometimes mark the wrong time index as having a ``null``
+   :ref:`smooth_grid_table@dtime_prior_id`
+   in the smooth_grid table.
+#. Add the
+   ``log_fatal_error`` flag
+   to the dismod_at configuration.
+#. Remove the ``dev::pack_info.cpp`` ``variable_name`` routine.
+   (The :ref:`var_table-name` and
+   :ref:`db2csv_command@variable.csv` file
+   provide this information.)
+#. Report invalid prevalence values in the :ref:`log_table-name`
+   (in the case were
+   ``log_fatal_error`` is true).
+
+10-15
+=====
+Add the
+:ref:`option_table@Zero Sum Constraints@zero_sum_child_rate` option which
+constrains the sum of the random effects to be zero.
+
+10-14
+=====
+
+#. Fix a warning (that appeared on some systems) about missing braces in
+   ``devel/dismod_at.cpp`` .
+#. Add option so that user can specify the C++ compiler during the install of
+   :ref:`install_unix@Special Requirements@ipopt` and
+   :ref:`install_unix@Special Requirements@cppad_mixed`
+#. **API Change:**
+   the :ref:`data_table@data_name` field
+   was added to the data table.
+
+10-13
+=====
+
+#. Improve ``bin/install_suitesparse.sh``
+   so that it automatically includes the ``metis`` package.
+   Note that the proper value for *metis_version* ,
+   in the suitesparse install,
+   is printed at the end of the ipopt install.
+#. Improve the way that
+   :ref:`cmake<run_cmake.sh-name>` searches for libraries and reports failure
+   to find a particular library.
+   The search was failing on a particular Mac system.
+#. Advance cppad-20161012. This fixes a problem in the detection of c++ 2011
+   feature availability.
+
+10-12
+=====
+
+#. Add the option to set the
+   :ref:`option_table@Optimize Random Only@bound_random` to zero.
+#. Change *name* _ ``dict`` to *name* _ ``table`` in the python examples.
+   For example, ``data_dict`` was changed to
+   :ref:`create_database@data_table` .
+#. There was a problem with the
+   :ref:`install_unix@Special Requirements@cppad` install script
+   ``bin/install_cppad.sh`` that caused a compiler error in
+   ``forward2sweep.hpp`` when CppAD was not using c++11 features.
+   This has been fixed.
+
+10-11
+=====
+The ``import_cascade.py`` program was removed
+(it has not been kept up to date).
+
+09-30
+=====
+
+#. A new assert, that checks for infinity or nan results during the integration,
+   was added. This should be converted to a more useful error message;
+   (this was done on :ref:`whats_new_2016@mm-dd@10-16` ).
+   Furthermore, in some cases it can be avoided; see
+   :ref:`wish_list@ODE Solution@Large Excess Mortality`
+   in the wish list.
+#. Use one value for *libdir* for all the install scripts;
+   determined by ``bin/libdir.sh`` .
+#. Change :ref:`run_cmake.sh-name` to
+   use link from build and install prefix to corresponding debug or release
+   directories (so same as install scripts).
+#. Advance to Ipopt-3.12.6
+
+09-29
+=====
+
+#. In the case where ``dismod_at`` is in the prefix,
+   build debug and release versions in separate directories; see
+   :ref:`install_unix@Special Requirements` .
+#. Advance to eigen-3.2.9 and cppad-20160929.
+#. There was a bug in the sampling of the random effects during the
+   :ref:`sample asymptotic<sample_command@asymptotic>` command
+   (found by a gcc-6.2.1 ``-Wmisleading-indentation`` warning).
+   This has been fixed.
+#. Add a missing ``import sys`` to
+   ``db2csv_command.py`` .
+
+09-21
+=====
+Add the :ref:`db2csv_command@option.csv` table to the
+output generated by the command
+
+   ``dismodat.py`` *database* ``db2csv``
+
+08-28
+=====
+Change
+'If the ``fit_command`` has not been run' to
+'If the ``fit_command`` has been run' in :ref:`db2csv_command-name` .
+Make the same change for the reference to running the ``sample_command`` .
+
+07-29
+=====
+
+#. Add the optimizer
+   :ref:`option_table@Optimize Fixed and Random@accept_after_max_steps`
+   option to both the fixed and random effects optimization.
+#. Correct a problem with detecting the actual random seed in
+   the :ref:`user_speed.py-name` speed test.
+
+07-28
+=====
+
+#. Advance to ``cppad_mixed-20150728`` .
+   This should increase the speed of the :ref:`fit_command-name` .
+   It should also make it more robust; i.e., work in more cases.
+#. The :ref:`user_speed.py-name` example now uses the
+   :ref:`fit_command-name` , instead of the :ref:`sample_command-name`
+   to fit the simulated data.
+#. Add comments about debug and release builds under
+   :ref:`run_cmake.sh@build_type` in ``run_cmake.sh`` .
+#. Change ``DEBUG`` and ``RELEASE`` to ``debug`` and ``release``
+   in
+   :ref:`run_cmake.sh-name` and the install for
+   :ref:`install_unix@Special Requirements@eigen` ,
+   :ref:`install_unix@System Requirements@suitesparse` ,
+   :ref:`install_unix@Special Requirements@ipopt` ,
+   :ref:`install_unix@Special Requirements@cppad_mixed` .
+
+07-15
+=====
+In ``bin/install_cppad_mixed.sh``
+change ``cmake_build_type`` to ``build_type`` ; see
+:ref:`install_unix@Special Requirements@cppad_mixed` .
+In addition, add this parameter to the install for
+:ref:`install_unix@Special Requirements@eigen` ,
+:ref:`install_unix@System Requirements@suitesparse` , and
+:ref:`install_unix@Special Requirements@ipopt` .
+CppAD does not need this choice as it adapter to the choice of
+the systems that use it.
+Note that the install for ``dismod_at``
+must have the same :ref:`run_cmake.sh@build_type`
+as
+:ref:`install_unix@Special Requirements@cppad_mixed` .
+(This is no longer an issue.)
+
+07-14
+=====
+Advance to ``cppad_mixed-20150711`` .
+This should increase the speed of the
+:ref:`sample_command@asymptotic` version
+of the ``sample_command`` .
+It also includes a change to optimizing the random effects
+that should eventually improve the speed of :ref:`fit_command-name` .
+(At this point, the change does not always result in an improvement.)
+
+07-11
+=====
+Advance to ``cppad_mixed-20150711`` .
+This should give better recovery when the
+fixed effects enter a region where the Hessian w.r.t the random effects
+it is not positive definite.
+To be specific, the optimizer should try backing up the fixed effects and if
+that fails, it should exit the optimization and report the value of the
+fixed effects.
+
+06-13
+=====
+Advance to ``cppad_mixed-20150613`` .
+This fixes a bug in the
+:ref:`sample_command@asymptotic` version
+of the sample command.
+
+06-12
+=====
+Advance to ``cppad_mixed-20150612`` .
+This removes the choice between ``ipopt`` and ``box_newton``
+for optimizing the random effects; see 06-05 below.
+
+06-06
+=====
+Advance to ``cppad_mixed-20150606`` .
+
+06-05
+=====
+Advance to ``cppad_mixed-20150605`` .
+This involved hooking
+up new option to choose between ``ipopt`` and ``box_newton``
+for optimizing the random effects; see
+``random_box_newton`` .
+The :ref:`user_speed.py-name` speed test time (on one machine) changed from
+``elapsed seconds = 68.09``
+to
+``elapsed seconds = 42.31``
+when *random_box_newton* was changed from ``false`` (the default)
+to ``true`` .
+The random seed for both cases above was
+``random_seed = 1465142803`` .
+The results for the two cases were the same.
+
+05-16
+=====
+
+#. The ``database2csv`` program has been moved to the
+   :ref:`db2csv_command-name` .
+#. The ``python_three_command`` installation setting has been changed to the
+   :ref:`run_cmake.sh@python3_executable` setting.
+#. The dismod_at :ref:`python-name` module is now installed during the
+   :ref:`make install<install_unix@dismod_at@Install>` command.
+   The ``dismodat.py`` program is also installed by this command; e.g.
+   see :ref:`db2csv_command-name` .
+
+05-15
+=====
+
+#. Advance to ``cppad_mixed-20150515``
+   This yields better :ref:`sample_command-name` results
+   when the implicit information matrix is not positive definite
+   (for diagnostic purposes).
+#. Add the ``adaptive`` and ``trace-adaptive`` values for the
+   :ref:`option_table@Optimize Fixed and Random@derivative_test`
+   (``derivative_test_fixed`` only).
+
+05-11
+=====
+
+#. Advance to ``cppad_mixed-20150511`` .
+   This yields sampling when covariance matrix is not positive definite
+   (for diagnostic purposes).
+#. Add sampling random effects to the wish list items.
+#. Add a description of the
+   :ref:`model_variables@Age and Time Variation`
+   for each of the model variables.
+
+05-10
+=====
+Fix :ref:`db2csv_command-name` so that it works with
+:ref:`smoothing standard deviation multipliers<model_variables@Fixed Effects, theta@Smoothing Standard Deviation Multipliers, lambda>` .
+This required adding the
+:ref:`db2csv_command@variable.csv@s_id` column to the
+``variable.csv`` file.
+
+05-09
+=====
+
+#. Change the scaling of fixed effect
+   to key off *eta* not ``null`` in value priors; see
+   :ref:`scaling<prior_table@eta@Scaling Fixed Effects>` .
+   This enables more user choice over which fixed effects get scaled.
+#. The error detection for non-positive Hessian (added yesterday) was
+   working properly when variables were bound constrained.
+#. The :ref:`sample asymptotic<sample_command@asymptotic>`
+   command was using the :ref:`scaled<prior_table@eta@Scaling Fixed Effects>`
+   information matrix. This has been fixed.
+#. Advance to ``cppad_mixed-20160511`` .
+
+05-08
+=====
+
+#. Advance to ``cppad_mixed-20160508`` .
+   This enables one to use
+   :ref:`sample_command@asymptotic` statistics
+   when the information matrix is singular,
+   by setting the :ref:`prior_table@lower` and upper limits
+   equal for variables that have non-positive Hessian.
+#. This new version of ``cppad_mixed`` also has new random effects simulator
+   that uses less memory and less time.
+#. During the :ref:`sample_command-name` ,
+   detect when the Hessian with respect to a fixed effect is not positive
+   and report the corresponding :ref:`var_table@var_id` .
+
+05-07
+=====
+
+#. Fix a bug that occurred when the minimum (maximum)
+   value in the :ref:`age_table-name` and :ref:`time_table-name` was not
+   the first (last) entry.
+#. Add a ``db2csv_command`` item
+   to the wish list.
+#. Start work on ``test/diabetes.py`` (under construction).
+
+05-06
+=====
+Advance to ``cppad_mixed-20160506`` to fix a bug in
+:ref:`sample asymptotic<sample_command@asymptotic>` when
+there are no random effects.
+
+05-05
+=====
+
+#. Change the :ref:`option_table@Optimize Fixed and Random@max_num_iter`
+   option so that ``-1`` returns the input :ref:`model_variables-name` ,
+   and ``0`` , includes the move of the initial variable values
+   (to be inside the constraints).
+#. Change the :ref:`option_table-name` so that all entries have default values
+   and do not need to appear in the table.
+#. Add the :ref:`option_table@Optimize Fixed Only@bound_frac_fixed`
+   option.
+
+05-04
+=====
+
+#. Print the :ref:`install_unix@Special Requirements@ipopt`
+   library directories during the
+   :ref:`install_unix@dismod_at@Cmake Command` .
+#. In the :ref:`db2csv_command-name` program,
+   change ``fit_res`` , ``fit_dage`` and ``fit_dtime``
+   to :ref:`db2csv_command@variable.csv@res_value`
+   ``res_dage`` and ``res_dtime`` respectively.
+#. Put ``cppad_mixed:`` at the beginning of warnings and error messages
+   that come from the
+   :ref:`install_unix@Special Requirements@cppad_mixed` package.
+#. Add missing ``dev::log_message::message_type`` cases
+   to the ``log_message`` documentation.
+#. Change :ref:`user_group_mulcov.py-name` to use ``null`` smoothing
+   pointer in the middle (not last) covariate multiplier (better test).
+#. Change ``test/user/relrisk.py`` tolerance so that the
+   ``cppad_mixed`` solution check passes.
+#. Advance to ``cppad_mixed-20160504`` .
+#. Change the fixed effects optimization so that it uses the Ipopt option
+   *nlp_scaling_method* = ``none`` .
+   This fixed the remain solution check warnings generated by ``cppad_mixed`` .
+
+05-03
+=====
+
+#. Advance to ``cppad_mixed-20160503`` .
+#. Fix warning in ``devel/utility/pack_info.cpp`` .
+
+05-01
+=====
+
+#. Allow for a covariate multiplier
+   :ref:`mulcov_table@group_smooth_id` to be null.
+   This enables on the include, or drop out, a multiplier by
+   only changing one entry the :ref:`mulcov_table-name` .
+#. Fix problem with documentation for *sigma*
+   that occurred in changes on :ref:`whats_new_2016@mm-dd@04-22` .
+#. Fix discussion of
+   :ref:`fixed_value@lambda_j`
+   in the value prior for fixed effects.
+   To be specific, all fixed effects :math:`\theta_j`,
+   not just the parent rates,
+   have a value prior multiplier :math:`\lambda_j`.
+
+04-28
+=====
+
+#. Add the :ref:`metropolis-name` MCMC utility for testing results.
+#. Complete implementation and testing of the sample command
+   with :ref:`sample_command@method` equal to ``asymptotic`` ;
+   see the example and test in :ref:`user_sample_asy.py-name` .
+
+04-27
+=====
+
+#. Advance to ``cppad_mixed-20160427`` .
+#. Add discussion about bounds and
+   :ref:`fit_var_table@Lagrange Multipliers` .
+#. Remove ``dismod_at::manage_gsl_rng`` and instead use
+   ``CppAD::mixed::manage_gsl_rng`` .
+   This fixed that use of
+   :ref:`option_table@random_seed` so that it applies
+   to all ``dismod_at`` simulated values.
+#. Add a choice of :ref:`sample_command@method` to the
+   sample command. This makes it easier to :ref:`predict<predict_command-name>`
+   with the :ref:`model_variables-name` equal to the results of a fit.
+   It also provides asymptotic posterior sampling for the model_variables.
+#. There were some place in the code where ``dismod_at`` was assuming
+   that the minimum  and maximum age and time were the first and last
+   entries in the :ref:`age_table-name` and :ref:`time_table-name` respectively.
+   This has been fixed.
+
+04-24
+=====
+
+#. The :ref:`db2csv_command-name` utility
+   has been documented and is now part of the user API.
+#. The name of the ``table`` section has been changed to :ref:`database-name` .
+
+04-23
+=====
+
+#. Change the data
+   :ref:`weighted residual<data_like@Weighted Residual and Likelihood>`
+   to be on the measurement values, not the adjusted measurement values.
+   This simplifies the weighted residuals and avoids the condition where the
+   :ref:`mean_value<mulcov_table@mulcov_type@meas_value>` covariate multipliers
+   affect the
+   :ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>` .
+#. Add the Lagrange multipliers
+   :ref:`fit_var_table@lagrange_value` ,
+   ``lagrange_dage`` and ``lagrange_dtime`` to the fit_var table.
+#. Advance to ``cppad_mixed-20160423`` .
+
+04-22
+=====
+
+#. Scale (during optimization of fixed effects) all the :ref:`model_variables-name`
+   that have a log-Gaussian or log-Laplace distribution for their value prior.
+   To be specific, the optimization variables are the offset log transform
+   of the corresponding model variables.
+#. When there was no data, and prior for the :ref:`model_variables-name`
+   was log-Gaussian or log-Laplace, the prior mean was not the optimal estimate.
+   This was because the estimate for the model variance affected the
+   log-transformed standard deviation *sigma* .
+   This was a feature (it agreed with the documentation) but it was not desirable.
+   This have been changed so that *sigma* is defined in terms of the
+   prior mean and not in terms of the model value.
+   The corresponding log-Gaussian wish list item has been removed.
+
+04-21
+=====
+Change the sample command so that it has a
+:ref:`sample_command@method` argument.
+Using *method* = ``simulate`` does the same as the
+sample command before this change.
+The new feature is *method* = ``fit_var`` .
+The
+:ref:`sample_command@asymptotic` method
+is not yet implemented.
+
+04-20
+=====
+
+#. Change ``number_sample`` in option table to
+   :ref:`simulate_command@number_simulate` .
+#. The :ref:`sample_command@method` argument was added
+   to the sample command.
+
+04-19
+=====
+
+#. In the data_sim table, change ``sample_index`` to
+   :ref:`data_sim_table@simulate_index` .
+#. In the option table, change ``fit_sample_index`` to
+   :ref:`fit_simulate_index<fit_command@simulate_index>` .
+
+04-18
+=====
+Advance to new version of CppAD and cppad_mixed
+this fixes the compiler warnings when building the release version.
+
+04-17
+=====
+Fix some errors and warnings when
+:ref:`run_cmake.sh@build_type` was
+``RELEASE`` . Note that release version is about twice as fast
+as the debug version (when using the debug version of
+:ref:`install_unix@Special Requirements@cppad_mixed` .
+
+04-11
+=====
+Initialize the optimization when *max_num_iter_fixed*
+is zero, (this does more model checking).
+
+04-09
+=====
+Advance to a newer version of cppad_mixed.
+This has a change so that when
+:ref:`option_table@Optimize Fixed and Random@max_num_iter` is zero,
+for the fixed effects optimization problem,
+the resulting fixed effects estimate is the same as in the
+:ref:`start_var_table-name` .
+
+04-07
+=====
+Advance to a newer version of cppad_mixed
+(rerun ``bin/install_cppad_mixed.sh`` ).
+This has a change to the routine that checks derivatives
+of the fixed effects optimization problem.
+
+03-29
+=====
+Advance to a newer version of cppad_mixed
+(rerun ``bin/install_cppad_mixed.sh`` ).
+This has an important bug fix (see ``cppad_mixed`` whats new).
+
+02-26
+=====
+Advance to a newer version of cppad_mixed
+(rerun ``bin/install_cppad_mixed.sh`` ).
+This has an important bug fix (see ``cppad_mixed`` whats new).
+
+02-06
+=====
+Advance to a newer version of cppad_mixed
+(rerun ``bin/install_cppad_mixed.sh`` ).
+
+01-26
+=====
+
+#. Advance to a newer version of cppad_mixed
+   (rerun ``bin/install_cppad_mixed.sh`` ).
+#. The :ref:`install_unix@System Requirements@suitesparse`
+   package is now required.
+   This is because one now has the option to use it for Cholesky factorization;
+   see the ``cholmod_cholesky`` setting for installing
+   :ref:`install_unix@Special Requirements@cppad_mixed` .
+
+01-16
+=====
+Remove some :ref:`wish_list-name` items that have been completed
+and move some others to the
+`cppad_mixed <moby.ihme.washington.edu/bradbell/cppad_mixed/wish_list.htm>`_
+package.
+
+01-15
+=====
+Advance to newer version of ``cppad_mixed`` .
+
+01-10
+=====
+Advance to newer version of ``Eigen`` and ``cppad_mixed`` .
+You should rerun ``bin/install_eigen.sh`` and then
+``bin/install_cppad_mixed.sh`` .
+
+01-06
+=====
+The :ref:`avgint_table-name` created by ``import_cascade.py``
+had the wrong number of age values. This has been fixed.
+
+01-05
+=====
+Advance to a newer version of cppad_mixed
+(rerun ``bin/install_cppad_mixed.sh`` ).
+
+{xrst_end whats_new_2016}

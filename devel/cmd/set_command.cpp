@@ -14,129 +14,139 @@
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
 -----------------------------------------------------------------------------
-$begin set_command$$
-$spell
-   sim
-   var
-   dismod
-   init
-   avgint
-$$
+{xrst_begin set_command}
 
-$section Directly Setting Table Values$$
+Directly Setting Table Values
+#############################
 
-$head Syntax$$
-$codei%dismod_at %database% set option %name% %value%
-%$$
-$comment The syntax cases below are implementd in the dismod_at main program
-$$
-$codei%dismod_at %database% set avgint data
-%$$
-$codei%dismod_at %database% set %table_out% %source%
-%$$
-$codei%dismod_at %database% set %table_out% %source% %sample_index%
-%$$
+Syntax
+******
 
-$head database$$
+   ``dismod_at`` *database* ``set option`` *name* *value*
+
+{xrst_comment The syntax cases below are implementd in the dismod_at main program
+}
+
+| ``dismod_at`` *database* ``set avgint data``
+| ``dismod_at`` *database* ``set`` *table_out* *source*
+| ``dismod_at`` *database* ``set`` *table_out* *source* *sample_index*
+
+database
+********
 Is an
-$href%http://www.sqlite.org/sqlite/%$$ database containing the
-$code dismod_at$$ $cref input$$ tables which are not modified.
+http://www.sqlite.org/sqlite/ database containing the
+``dismod_at`` :ref:`input-name` tables which are not modified.
 
-$head option$$
+option
+******
 This documentation is for the case where
-$code option$$ follows $code set$$.
+``option`` follows ``set`` .
 
-$subhead name$$
+name
+====
 Is the name of the option we are setting.
 It must be a valid
-$cref/option_name/option_table/Table Format/option_name/$$.
+:ref:`option_table@Table Format@option_name` .
 
-$subhead value$$
+value
+=====
 Is the new
-$cref/option_value/option_table/Table Format/option_value/$$
+:ref:`option_table@Table Format@option_value`
 for the specified option name.
-If $icode value$$ is the empty string, null is used for the corresponding
+If *value* is the empty string, null is used for the corresponding
 value in the database; see
-$cref/text can be null, not empty/database/Null/Text can be Null, not Empty/$$.
+:ref:`database@Null@Text can be Null, not Empty` .
 
-$subhead init$$
-The set option commands does not require the $code init$$ to be run first.
-In addition, if $icode option_name$$ is not $code parent_node_id$$,
-the $cref model_variables$$ do not change and you do not have to
-re-run the $cref init_command$$.
+init
+====
+The set option commands does not require the ``init`` to be run first.
+In addition, if *option_name* is not ``parent_node_id`` ,
+the :ref:`model_variables-name` do not change and you do not have to
+re-run the :ref:`init_command-name` .
 
-$head avgint$$
+avgint
+******
 This documentation is for the case where
-$code avgint$$ follows $code set$$.
-In this case $code data$$ must follow $code avgint$$
-and the $cref avgint_table$$ is set to be equal to the $cref data_table$$.
+``avgint`` follows ``set`` .
+In this case ``data`` must follow ``avgint``
+and the :ref:`avgint_table-name` is set to be equal to the :ref:`data_table-name` .
 The only difference is that the column name
-$cref/data_id/data_table/data_id/$$
+:ref:`data_table@data_id`
 in the data table has column name
-$cref/avgint_id/avgint_table/avgint_id/$$
+:ref:`avgint_table@avgint_id`
 in the avgint table.
 
-$head table_out$$
-The $icode table_out$$ cases set the values in $icode table_out$$
-using the values specified by $icode source$$.
+table_out
+*********
+The *table_out* cases set the values in *table_out*
+using the values specified by *source* .
 If this table exists before the command,
 the values originally in the table are lost.
 
-$subhead start_var$$
-If $icode table_out$$ is $code start_var$$,
-the $cref/start_var/start_var_table/$$ table is created.
+start_var
+=========
+If *table_out* is ``start_var`` ,
+the :ref:`start_var<start_var_table-name>` table is created.
 Note that this table may also be created directly by the user
-(with the aid of the $cref var_table$$).
+(with the aid of the :ref:`var_table-name` ).
 
-$subhead scale_var$$
-If $icode table_out$$ is $code scale_var$$,
-the $cref/scale_var/scale_var_table/$$ table is created.
+scale_var
+=========
+If *table_out* is ``scale_var`` ,
+the :ref:`scale_var<scale_var_table-name>` table is created.
 Note that this table may also be created directly by the user
-(with the aid of the $cref var_table$$).
+(with the aid of the :ref:`var_table-name` ).
 
-$subhead truth_var$$
-If $icode table_out$$ is $code truth_var$$,
-the $cref/truth_var/truth_var_table/$$ table is created.
+truth_var
+=========
+If *table_out* is ``truth_var`` ,
+the :ref:`truth_var<truth_var_table-name>` table is created.
 Note that this table may also be created directly by the user
-(with the aid of the $cref var_table$$).
+(with the aid of the :ref:`var_table-name` ).
 
-$head source$$
-The set command $icode source$$ must be one of the
+source
+******
+The set command *source* must be one of the
 possibilities listed below
-(and not be the same as $icode table_out$$).
-Only the case where $icode source$$ is $icode sample$$
-has the extra argument $icode sample_index$$.
+(and not be the same as *table_out* ).
+Only the case where *source* is *sample*
+has the extra argument *sample_index* .
 
-$subhead sample$$
-If $icode source$$ is $code sample$$,
-$icode sample_index$$ must be present.
-In this case the $cref model_variables$$ in the sample table,
+sample
+======
+If *source* is ``sample`` ,
+*sample_index* must be present.
+In this case the :ref:`model_variables-name` in the sample table,
 and corresponding to the specified sample index,
-are used for the values in $icode table_out$$.
+are used for the values in *table_out* .
 
-$subhead prior_mean$$
-If $icode source$$ is $code prior_mean$$,
-the mean of the priors is used for the values in $icode table_out$$.
+prior_mean
+==========
+If *source* is ``prior_mean`` ,
+the mean of the priors is used for the values in *table_out* .
 
-$subhead fit_var$$
-If $icode source$$ is $code fit_var$$,
-the results of the previous fit is used for the values in $icode table_out$$.
+fit_var
+=======
+If *source* is ``fit_var`` ,
+the results of the previous fit is used for the values in *table_out* .
 
-$subhead start, scale, truth$$
-If $icode source$$ is
-$cref/start_var/start_var_table/$$,
-$cref/scale_var/scale_var_table/$$, or
-$cref/truth_var/truth_var_table/$$,
-the contents of this table are copied to $icode table_out$$.
-
-$children%example/get_started/set_command.py
-%$$
-$head Example$$
+start, scale, truth
+===================
+If *source* is
+:ref:`start_var<start_var_table-name>` ,
+:ref:`scale_var<scale_var_table-name>` , or
+:ref:`truth_var<truth_var_table-name>` ,
+the contents of this table are copied to *table_out* .
+{xrst_toc_hidden
+   example/get_started/set_command.py
+}
+Example
+*******
 The files
-$cref set_command.py$$ and $cref set_command.py$$
+:ref:`set_command.py-name` and :ref:`set_command.py-name`
 contains examples and tests using this command.
 
-$end
+{xrst_end set_command}
 */
 // ----------------------------------------------------------------------------
 void set_option_command(

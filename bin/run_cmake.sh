@@ -3,120 +3,120 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $OMhelpKeyCharacter=&
-# &begin run_cmake.sh&& &newlinech #&&
-# &spell
-#  libdir
-#  cmake
-#  makefile
-#  cxx
-#  std
-#  dismod
-#  lcppad
-#  cholmod
-#  xam
-#  cpp
-#  usr
-#  eigen
-#  ipopt
-#  cppad
-#  bools
-#  devel
-#  hpp
-#  pthread
-#  checkpointing
-#  Wshadow
-#  Wconversion
-#  Wpedantic
-#  gcc
-#  gfortran
-# &&
 #
-# &section bin/run_cmake.sh: User Configuration Options&&
+# {xrst_begin run_cmake.sh}
+# {xrst_spell
+#     cmake
+#     colons
+#     compilers
+#     cxx
+#     fortran
+#     gcc
+#     gfortran
+#     gnu
+#     libdir
+#     makefile
+#     pthread
+#     usr
+#     wconversion
+#     wpedantic
+#     wshadow
+# }
+# {xrst_comment_ch #}
 #
-# &head verbose_makefile&&
+# bin/run_cmake.sh: User Configuration Options
+# ############################################
+#
+# verbose_makefile
+# ****************
 # Use 'no' for normal and 'yes' for verbose make output:
-# &codep
+# {xrst_code sh}
 verbose_makefile='no'
-# &&
+# {xrst_code}
 #
-# &head build_type&&
-# Use either &code debug&& or &code release&& for the type of this build:
-# &codep
+# build_type
+# **********
+# Use either ``debug`` or ``release`` for the type of this build:
+# {xrst_code sh}
 build_type='release'
-# &&
+# {xrst_code}
 #
-# &head dismod_at_prefix&&
+# dismod_at_prefix
+# ****************
 # Prefix where dismod_at will be installed:
-# &codep
+# {xrst_code sh}
 dismod_at_prefix="$HOME/prefix/dismod_at"
-# &&
-# If &icode dismod_at_prefix&& ends in &code dismod_at&&,
-# &code run_cmake.sh&& will use a soft link from this prefix to
-# &icode%dismod_at_prefix%.debug%&& or
-# &icode%dismod_at_prefix%.release%&&
-# depending on the choice for &icode build_type&&.
+# {xrst_code}
+# If *dismod_at_prefix* ends in ``dismod_at`` ,
+# ``run_cmake.sh`` will use a soft link from this prefix to
+# *dismod_at_prefix* . ``debug`` or
+# *dismod_at_prefix* . ``release``
+# depending on the choice for *build_type* .
 #
-# &head Debug and Release&&
+# Debug and Release
+# *****************
 # If a soft link is used for the install,
-# the same technique will be used to map the &code build&&
+# the same technique will be used to map the ``build``
 # directory to the debug or release version.
 # If you are using both a debug and release versions of dismod_at,
 # both versions of the
-# &cref/special requirements/install_unix/Special Requirements/&&
+# :ref:`install_unix@Special Requirements`
 # will need to be installed.
 #
-# &head python3_executable&&
+# python3_executable
+# ******************
 # Path to the python3 executable on this machine.
-# &codep
+# {xrst_code sh}
 python3_executable='/usr/bin/python3'
-# &&
+# {xrst_code}
 # You can use the command $code which python3$$ to determine the location
 # of the default version for this system.
-# In the past, removing the &code #&& characters in front of the following
+# In the past, removing the  characters in front of the following
 # command would work for the IHME cluster:
-# &codei%
-# # python3_executable='/usr/local/anaconda3-current/bin/python'
-# %&&
 #
-# &head specific_compiler&&
+#     ``python3_executable`` ='/ ``usr/local/anaconda3-current/bin/python`` '
+#
+# specific_compiler
+# *****************
 # On some systems, e.g. the Mac using port, there are problems with mixing
 # different compiler systems for fortran and C++; see
-# &href%https://github.com/coin-or/Ipopt/discussions/471%ipopt issue 471%&&.
+# `ipopt issue 471 <https://github.com/coin-or/Ipopt/discussions/471>`_.
 # This variable allows you to set a specific compiler for
 # C, and or CXX and or FC. For example
-# &code
-#  specific_compiler='CC=gcc CXX=g++ FC=gfortran'
-# &&
+# ``specific_compiler='CC=gcc CXX=g++ FC=gfortran'``
 # uses the gnu versions of these compilers.
 # The configuration will automatically find compilers that are not specified;
 # i.e., if
-# &codep
+# {xrst_code sh}
 specific_compiler=''
-# &&
+# {xrst_code}
 #
-# &head extra_cxx_flags&&
+# extra_cxx_flags
+# ***************
 # Extra C++ flags used during compilation:
-# &codep
+# {xrst_code sh}
 extra_cxx_flags='-std=c++11 -Wpedantic -Wall -Wshadow -Wconversion'
-# &&
-# An alternative might be &code -Wall&&.
+# {xrst_code}
+# An alternative might be ``-Wall`` .
 #
-# &head cmake_libdir&&
+# cmake_libdir
+# ************
 # Sub-directory of each prefix where libraries are installed.
-# &codep
+# {xrst_code sh}
 cmake_libdir='lib64'
-# &&
+# {xrst_code}
 #
-# &head system_specific_library_list&&
+# system_specific_library_list
+# ****************************
 # List of libraries that are needed for a particular system. For example,
-# if when you build &code dismod_at&& the &code pthread&& library is
+# if when you build ``dismod_at`` the ``pthread`` library is
 # required by your system, then include it here.
 # Libraries in the list can be separated by spaces or semi-colons.
-# &codep
+# {xrst_code sh}
 system_specific_library_list=''
-# &&
-# &end
+# {xrst_code}
+#
+# {xrst_end run_cmake.sh}
 # ============================================================================
 # bash function that echos and executes a command
 echo_eval() {

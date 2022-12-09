@@ -5,17 +5,18 @@
 # ifndef DISMOD_AT_AVG_NOISE_EFFECT_HPP
 # define DISMOD_AT_AVG_NOISE_EFFECT_HPP
 /*
-$begin devel_avg_noise_effect$$
-$spell
-   Integrands
-$$
+{xrst_begin devel_avg_noise_effect}
 
-$section Computing Average Noise Effect$$
+Computing Average Noise Effect
+##############################
 
-$childtable%devel/model/avg_noise_effect.cpp
-%$$
+Contents
+********
+{xrst_toc_table
+   devel/model/avg_noise_effect.cpp
+}
 
-$end
+{xrst_end devel_avg_noise_effect}
 */
 
 # include <cppad/utility/vector.hpp>

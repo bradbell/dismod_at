@@ -2,99 +2,110 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin user_sim_log.py$$ $newlinech #$$
-# $spell
-#  std
-#  Sincidence
-#  covariate
-# $$
-# $section Simulating Data with Log Transformed Distribution$$
+# {xrst_begin user_sim_log.py}
+# {xrst_comment_ch #}
 #
-# $head See Also$$
-# $cref user_data_sim.py$$
+# Simulating Data with Log Transformed Distribution
+# #################################################
 #
-# $head Example Parameters$$
+# See Also
+# ********
+# :ref:`user_data_sim.py-name`
+#
+# Example Parameters
+# ******************
 # The following values are used to simulate the data
-# $srccode%py%
+# {xrst_spell_off}
+# {xrst_code py}
 number_simulate   = 2000
 iota_true         = 0.01
 meas_value_global = iota_true * 1.5
 eta_global        = iota_true * 1e-3
 meas_std_global   = meas_value_global * 0.25
 gamma_global      = meas_value_global * 0.25
-# %$$
-# $head Model$$
+# {xrst_code}
+# {xrst_spell_on}
+# Model
+# *****
 # The only non-zero model variable for this example is
 # the rate of incidence for the world which is constant in age and time.
 #
-# $head Data$$
+# Data
+# ****
 # There is only one data point for this example and it's integrand is
-# $cref/Sincidence/avg_integrand/Integrand, I_i(a,t)/Sincidence/$$.
-# This data has a log transformed distribution with mean $icode iota_true$$,
-# offset $icode eta_global$$, and standard deviation
-# $icode meas_std_global$$.
+# :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` .
+# This data has a log transformed distribution with mean *iota_true* ,
+# offset *eta_global* , and standard deviation
+# *meas_std_global* .
 #
-# $head Covariate Multiplier$$
+# Covariate Multiplier
+# ********************
 # For this example there is one covariate multiplier.
-# It is a $cref/meas_noise/mulcov_table/mulcov_type/meas_noise/$$ multiplier
+# It is a :ref:`mulcov_table@mulcov_type@meas_noise` multiplier
 # and the corresponding covariate value is one.
 #
-# $head Notation$$
-# $table
-# $latex y$$       $cnext is the measurement value, $icode meas_value_global$$
-# $rnext
-# $latex \mu$$     $cnext mean of the data, $icode iota_true$$
-# $rnext
-# $latex \eta$$    $cnext offset in log transform, $icode eta_global$$
-# $rnext
-# $latex \Delta$$  $cnext data measurement error, $icode meas_std_global$$
-# $rnext
-# $latex \gamma$$  $cnext meta regression error, $icode gamma_global$$
-# $rnext
-# $latex n$$       $cnext number of simulated data values,
-#                  $cref/number_simulate/simulate_command/number_simulate/$$
-# $rnext
-# $latex z_i$$     $cnext $th i$$ simulate data for $latex i = 1, \ldots , n$$
-# $tend
+# Notation
+# ********
 #
-# $head sigma$$
-# The $cref/transformed standard deviation
-#  /data_like
-#  /Notation
-#  /Transformed Standard Deviation, sigma_i
-# /$$
+# .. list-table::
+#
+#     * - :math:`y`
+#       - is the measurement value, *meas_value_global*
+#     * - :math:`\mu`
+#       - mean of the data, *iota_true*
+#     * - :math:`\eta`
+#       - offset in log transform, *eta_global*
+#     * - :math:`\Delta`
+#       - data measurement error, *meas_std_global*
+#     * - :math:`\gamma`
+#       - meta regression error, *gamma_global*
+#     * - :math:`n`
+#       - number of simulated data values,
+#         :ref:`simulate_command@number_simulate`
+#     * - :math:`z_i`
+#       - *i*-th simulate data for :math:`i = 1, \ldots , n`
+#
+# sigma
+# *****
+# The :ref:`transformed standard deviation<data_like@Notation@Transformed Standard Deviation, sigma_i>`
 # is given by
-# $latex \[
+#
+# .. math::
+#
 #  \sigma = \log( y + \eta + \Delta ) - \log(y + \eta)
-# \] $$
+#
+# {xrst_code py}
 
 #
-# $head delta$$
+# {xrst_code}
+# delta
+# *****
 # For this example we use the
-# $cref/add_std_scale_none
-#  /data_like
-#  /Adjusted Standard Deviation, delta_i(theta)
-#  /add_std_scale_none
-# /$$
+# :ref:`data_like@Adjusted Standard Deviation, delta_i(theta)@add_std_scale_none`
 # option in the definition of the
-# $cref/adjusted standard deviation
-#  /data_like
-#  /Adjusted Standard Deviation, delta_i(theta)
-# /$$ $latex \delta$$; i.e.,
-# $latex \[
+# :ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>` :math:`\delta`; i.e.,
+#
+# .. math::
+#
 #  \delta = \sigma + \gamma
-# \] $$
 #
-# $head Simulations$$
-# The offset log transform of each simulated measurement $latex z_i$$ has
+# Simulations
+# ***********
+# The offset log transform of each simulated measurement :math:`z_i` has
 # the following Gaussian distribution:
-# $latex \[
-#  \log( z_i + \eta ) - \log( \mu + \eta ) \sim N(0, \delta^2 )
-# \] $$
 #
-# $head Source Code$$
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# .. math::
+#
+#  \log( z_i + \eta ) - \log( \mu + \eta ) \sim N(0, \delta^2 )
+#
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_sim_log.py}
 #
 # $end
 # ------------------------------------------------------------------------

@@ -2,12 +2,18 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $begin data_table.py$$ $newlinech #$$
+# {xrst_begin data_table.py}
+# {xrst_comment_ch #}
 #
-# $section data_table: Example and Test$$
+# data_table: Example and Test
+# ############################
 #
-# $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
-# $end
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end data_table.py}
 # BEGIN PYTHON
 def data_table() :
    import dismod_at
