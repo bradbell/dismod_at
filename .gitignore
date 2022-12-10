@@ -13,7 +13,7 @@
 # it looks to git like a file instead of a directory.
 /build
 #
-# Director created by pip
+# Directories created by pip
 /python/dist/
 /python/dismod_at.egg-info/
 #
