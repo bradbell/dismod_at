@@ -13,7 +13,6 @@ image_link='https://bradbell.github.io/dismod_at'
 # version number (can be empty).
 version_files='
    doc.xrst
-   dev.xrst
    python/setup.cfg
 '
 #

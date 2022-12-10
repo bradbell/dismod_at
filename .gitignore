@@ -13,25 +13,15 @@
 # it looks to git like a file instead of a directory.
 /build
 #
-# Files created by pip
-/python/dismod_at.egg-info/
+# Director created by pip
 /python/dist/
+/python/dismod_at.egg-info/
 #
 # a previous release build that /build can point to
 /build.release/
 #
 # a previous debug build that /build can point to
 /build.debug/
-#
-# directory where xrst puts its output
-/sphinx/rst
-#
-# directory where user documentation is built
-/doc/
-/rst/
-#
-# directory where developer documentation is built
-/dev/
 #
 # Directory where externals are downloaded and built
 /external/

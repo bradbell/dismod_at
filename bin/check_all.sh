@@ -46,11 +46,8 @@ done
 echo_eval version.sh check
 #
 # build developer documentation
-if [ -e doc ]
-then
-   echo_eval rm -r doc
-fi
 echo_eval xrst \
+   --group_list default dev \
    --local_toc \
    --html_theme sphinx_rtd_theme \
 # ----------------------------------------------------------------------------

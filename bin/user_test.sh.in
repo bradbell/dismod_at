@@ -19,15 +19,13 @@ for try in {1..3}
 do
    if @python3_executable@ $user_test >& user_test.tmp
    then
-      sed -i.tmp \
-         -e '/warning: Adding subgroup informtion to following tables:/d' \
-         user_test.tmp
+      sed -i user_test.tmp \
+         -e '/warning: Adding subgroup informtion to following tables:/d'
       #
       if ! grep 'warning:' user_test.tmp > /dev/null
       then
          cat user_test.tmp
          rm user_test.tmp
-         rm user_test.tmp.tmp
          echo 'user_test.sh: OK'
          exit 0
       fi
@@ -41,6 +39,5 @@ do
 done
 cat user_test.tmp
 rm user_test.tmp
-rm user_test.tmp.tmp
 echo "user_test.sh: $user_test: Error or warning 3 times in a row."
 exit 1
