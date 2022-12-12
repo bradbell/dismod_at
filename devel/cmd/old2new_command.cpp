@@ -63,6 +63,12 @@ The ``zero_sum_random`` option name was changed to
 If the option name ``zero_sum_random`` is in the option table, it is
 changed to :ref:`option_table@Zero Sum Constraints@zero_sum_child_rate` .
 
+Example
+*******
+{xrst_toc_list
+   example/get_started/old2new_command.py
+}
+
 {xrst_end old2new_command}
 */
 
