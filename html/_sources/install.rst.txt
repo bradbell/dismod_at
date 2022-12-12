@@ -1,0 +1,41 @@
+.. _install-name:
+
+!!!!!!!
+install
+!!!!!!!
+
+xrst input file: ``xrst/install/install.xrst``
+
+.. meta::
+   :keywords: install, installing, dismod_at
+
+.. index:: install, installing, dismod_at
+
+.. _install-title:
+
+Installing dismod_at
+####################
+
+.. meta::
+   :keywords: contents
+
+.. index:: contents
+
+.. _install@Contents:
+
+Contents
+********
+
+.. csv-table::
+   :header:  "Child", "Title"
+   :widths: auto
+
+   "dock_dismod_at.sh", :ref:`dock_dismod_at.sh-title`
+   "install_unix", :ref:`install_unix-title`
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   dock_dismod_at.sh
+   install_unix

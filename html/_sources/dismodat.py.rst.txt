@@ -1,0 +1,70 @@
+.. _dismodat.py-name:
+
+!!!!!!!!!!!
+dismodat.py
+!!!!!!!!!!!
+
+xrst input file: ``python/bin/dismodat.py.in``
+
+.. meta::
+   :keywords: dismodat.py, python, program, syntax
+
+.. index:: dismodat.py, python, program, syntax
+
+.. _dismodat.py-title:
+
+Python Program Syntax
+#####################
+
+.. meta::
+   :keywords: syntax
+
+.. index:: syntax
+
+.. _dismodat.py@Syntax:
+
+Syntax
+******
+dismodat.py database command ...
+
+.. meta::
+   :keywords: log, table
+
+.. index:: log, table
+
+.. _dismodat.py@Log Table:
+
+Log Table
+*********
+
+.. meta::
+   :keywords: start
+
+.. index:: start
+
+.. _dismodat.py@Log Table@Start:
+
+Start
+=====
+At the start, a ``dismodat.py``
+command adds a
+:ref:`log_table@message_type@command`
+log entry with
+:ref:`log_table@message`
+equal to
+
+    ``begin`` *command*  ...
+
+.. meta::
+   :keywords: end
+
+.. index:: end
+
+.. _dismodat.py@Log Table@End:
+
+End
+===
+At the end,
+a ``dismodat.py`` command adds a command log entry with message equal to
+
+    ``end`` *command*

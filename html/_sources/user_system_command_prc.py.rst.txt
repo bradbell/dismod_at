@@ -1,0 +1,43 @@
+.. _user_system_command_prc.py-name:
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!
+user_system_command_prc.py
+!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+xrst input file: ``example/user/system_command_prc.py``
+
+.. meta::
+   :keywords: user_system_command_prc.py, example, using, system_command_prc
+
+.. index:: user_system_command_prc.py, example, using, system_command_prc
+
+.. _user_system_command_prc.py-title:
+
+Example Using system_command_prc
+################################
+
+.. meta::
+   :keywords: discussion
+
+.. index:: discussion
+
+.. _user_system_command_prc.py@Discussion:
+
+Discussion
+**********
+This example demonstrates some of the different argument cases for the
+:ref:`system_command_prc-name` function.
+
+.. meta::
+   :keywords: source, code
+
+.. index:: source, code
+
+.. _user_system_command_prc.py@Source Code:
+
+Source Code
+***********
+
+.. literalinclude:: ../../example/user/system_command_prc.py
+   :lines: 30-111
+   :language: py

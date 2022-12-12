@@ -1,0 +1,270 @@
+.. _user_example-name:
+
+!!!!!!!!!!!!
+user_example
+!!!!!!!!!!!!
+
+xrst input file: ``example/user/user.xrst``
+
+.. meta::
+   :keywords: user_example, user, examples, and, tests
+
+.. index:: user_example, user, examples, and, tests
+
+.. _user_example-title:
+
+User Examples and Tests
+#######################
+
+.. meta::
+   :keywords: see, also
+
+.. index:: see, also
+
+.. _user_example@See Also:
+
+See Also
+********
+:ref:`get_started-name`
+
+.. meta::
+   :keywords: run, one, example
+
+.. index:: run, one, example
+
+.. _user_example@Run One Example:
+
+Run One Example
+***************
+If you have
+:ref:`built dismod_at<install_unix@dismod_at@Build>` and
+are in the directory
+:ref:`dismod_at.git<install_unix@Download dismod_at.git>` ,
+you can run one of these examples with the command
+
+   *python3_executable* ``example/user/`` *name*
+
+where :ref:`run_cmake.sh@python3_executable`
+is the python3 program and *name* is the name of the example.
+The name of the example
+includes the ``.py`` extension at the end,
+but does not include ``user_`` at the front.
+
+.. meta::
+   :keywords: user_speed.py
+
+.. index:: user_speed.py
+
+.. _user_example@Run One Example@user_speed.py:
+
+user_speed.py
+=============
+The ``user_speed.py`` example is an exception; see its
+:ref:`user_speed.py@Syntax` .
+
+.. meta::
+   :keywords: example.db
+
+.. index:: example.db
+
+.. _user_example@example.db:
+
+example.db
+**********
+Each of these examples will create a corresponding database called
+
+   ``build/example/user/example.db``
+
+which can be inspected using any sqlite viewer; e.g.,
+http://sqlitebrowser.org/.
+
+.. meta::
+   :keywords: examples, with, explanation
+
+.. index:: examples, with, explanation
+
+.. _user_example@Examples With Explanation:
+
+Examples With Explanation
+*************************
+
+.. list-table::
+
+   * - 
+       user_age_avg_split.py
+     - :ref:`user_age_avg_split.py-title`
+   * - user_average_integrand.py
+     - :ref:`user_average_integrand.py-title`
+   * - user_bilevel_random.py
+     - :ref:`user_bilevel_random.py-title`
+   * - user_bnd_mulcov.py
+     - :ref:`user_bnd_mulcov.py-title`
+   * - user_cascade.py
+     - :ref:`user_cascade.py-title`
+   * - user_censor.py
+     - :ref:`user_censor.py-title`
+   * - user_change_grid.py
+     - :ref:`user_change_grid.py-title`
+   * - user_compress.py
+     - :ref:`user_compress.py-title`
+   * - user_connection_file.py
+     - :ref:`user_connection_file.py-title`
+   * - user_const_value.py
+     - :ref:`user_const_value.py-title`
+   * - user_continue_fit.py
+     - :ref:`user_continue_fit.py-title`
+   * - user_covid_19.py
+     - :ref:`user_covid_19.py-title`
+   * - user_csv2db.py
+     - :ref:`user_csv2db.py-title`
+   * - user_data_density.py
+     - :ref:`user_data_density.py-title`
+   * - user_data_sim.py
+     - :ref:`user_data_sim.py-title`
+   * - user_diabetes.py
+     - :ref:`user_diabetes.py-title`
+   * - user_fit_fixed_both.py
+     - :ref:`user_fit_fixed_both.py-title`
+   * - user_fit_meas_noise.py
+     - :ref:`user_fit_meas_noise.py-title`
+   * - user_fit_random.py
+     - :ref:`user_fit_random.py-title`
+   * - user_fit_sim.py
+     - :ref:`user_fit_sim.py-title`
+   * - user_group_mulcov.py
+     - :ref:`user_group_mulcov.py-title`
+   * - user_hes_fixed_math.py
+     - :ref:`user_hes_fixed_math.py-title`
+   * - user_hes_random.py
+     - :ref:`user_hes_random.py-title`
+   * - user_hold_out_1.py
+     - :ref:`user_hold_out_1.py-title`
+   * - user_hold_out_2.py
+     - :ref:`user_hold_out_2.py-title`
+   * - user_ill_condition.py
+     - :ref:`user_ill_condition.py-title`
+   * - user_jump_at_age.py
+     - :ref:`user_jump_at_age.py-title`
+   * - user_lasso_covariate.py
+     - :ref:`user_lasso_covariate.py-title`
+   * - user_mulstd.py
+     - :ref:`user_mulstd.py-title`
+   * - user_no_children.py
+     - :ref:`user_no_children.py-title`
+   * - user_one_function.py
+     - :ref:`user_one_function.py-title`
+   * - user_plot_curve.py
+     - :ref:`user_plot_curve.py-title`
+   * - user_plot_data_fit.py
+     - :ref:`user_plot_data_fit.py-title`
+   * - user_plot_rate_fit.py
+     - :ref:`user_plot_rate_fit.py-title`
+   * - user_predict_fit.py
+     - :ref:`user_predict_fit.py-title`
+   * - user_predict_mulcov.py
+     - :ref:`user_predict_mulcov.py-title`
+   * - user_residual.py
+     - :ref:`user_residual.py-title`
+   * - user_sample_asy.py
+     - :ref:`user_sample_asy.py-title`
+   * - user_sample_asy_sim.py
+     - :ref:`user_sample_asy_sim.py-title`
+   * - user_sample_sim.py
+     - :ref:`user_sample_sim.py-title`
+   * - user_sim_log.py
+     - :ref:`user_sim_log.py-title`
+   * - user_speed.py
+     - :ref:`user_speed.py-title`
+   * - user_subgroup_mulcov.py
+     - :ref:`user_subgroup_mulcov.py-title`
+   * - user_sum_residual.py
+     - :ref:`user_sum_residual.py-title`
+   * - user_system_command_prc.py
+     - :ref:`user_system_command_prc.py-title`
+   * - user_trace_init.py
+     - :ref:`user_trace_init.py-title`
+   * - user_trapezoidal.py
+     - :ref:`user_trapezoidal.py-title`
+   * - user_warm_start.py
+     - :ref:`user_warm_start.py-title`
+   * - user_zsum_child_rate.py
+     - :ref:`user_zsum_child_rate.py-title`
+   * - user_zsum_mulcov_meas.py
+     - :ref:`user_zsum_mulcov_meas.py-title`
+   * - user_zsum_mulcov_rate.py
+     - :ref:`user_zsum_mulcov_rate.py-title`
+
+.. meta::
+   :keywords: more, examples
+
+.. index:: more, examples
+
+.. _user_example@More Examples:
+
+More Examples
+*************
+
+.. csv-table::
+   :widths: auto
+
+   user_metropolis.py,:ref:`user_metropolis.py-title`
+   user_const_random.py,:ref:`user_const_random.py-title`
+   user_diff_constraint.py,:ref:`user_diff_constraint.py-title`
+   user_re_scale.py,:ref:`user_re_scale.py-title`
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   user_age_avg_split.py
+   user_bilevel_random.py
+   user_bnd_mulcov.py
+   user_cascade.py
+   user_censor.py
+   user_change_grid.py
+   user_compress.py
+   user_const_random.py
+   user_const_value.py
+   user_continue_fit.py
+   user_covid_19.py
+   user_csv2db.py
+   user_data_density.py
+   user_data_sim.py
+   user_diabetes.py
+   user_diff_constraint.py
+   user_fit_fixed_both.py
+   user_fit_meas_noise.py
+   user_fit_random.py
+   user_fit_sim.py
+   user_group_mulcov.py
+   user_hes_fixed_math.py
+   user_hes_random.py
+   user_hold_out_1.py
+   user_hold_out_2.py
+   user_ill_condition.py
+   user_jump_at_age.py
+   user_lasso_covariate.py
+   user_mulstd.py
+   user_no_children.py
+   user_one_function.py
+   user_plot_curve.py
+   user_plot_data_fit.py
+   user_plot_rate_fit.py
+   user_predict_fit.py
+   user_predict_mulcov.py
+   user_re_scale.py
+   user_residual.py
+   user_sample_asy.py
+   user_sample_asy_sim.py
+   user_sample_sim.py
+   user_sim_log.py
+   user_speed.py
+   user_subgroup_mulcov.py
+   user_sum_residual.py
+   user_system_command_prc.py
+   user_trace_init.py
+   user_trapezoidal.py
+   user_warm_start.py
+   user_zsum_child_rate.py
+   user_zsum_mulcov_meas.py
+   user_zsum_mulcov_rate.py

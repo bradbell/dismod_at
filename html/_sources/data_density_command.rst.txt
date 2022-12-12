@@ -1,0 +1,185 @@
+.. _data_density_command-name:
+
+!!!!!!!!!!!!!!!!!!!!
+data_density_command
+!!!!!!!!!!!!!!!!!!!!
+
+xrst input file: ``devel/cmd/data_density_command.cpp``
+
+.. meta::
+   :keywords: data_density_command, data, density, command:, change, the, density, for, an, integrand
+
+.. index:: data_density_command, data, density, command:, change, the, density, for, an, integrand
+
+.. _data_density_command-title:
+
+Data Density Command: Change the Density for an Integrand
+#########################################################
+
+.. meta::
+   :keywords: syntax
+
+.. index:: syntax
+
+.. _data_density_command@Syntax:
+
+Syntax
+******
+
+| ``dismod_at`` *database* ``data_density``
+| ``dismod_at`` *database* ``data_density`` *integrand_name* *density_name* *eta_factor* *nu*
+
+.. meta::
+   :keywords: purpose
+
+.. index:: purpose
+
+.. _data_density_command@Purpose:
+
+Purpose
+*******
+This command is used to change the density used for an integrand
+during subsequent fits..
+
+.. meta::
+   :keywords: database
+
+.. index:: database
+
+.. _data_density_command@database:
+
+database
+********
+Is an
+http://www.sqlite.org/sqlite/ database containing the
+``dismod_at`` :ref:`input-name` tables which are not modified.
+If this is the only argument, all the data densities are set back to the
+values specified by the :ref:`data_table-name` .
+
+.. meta::
+   :keywords: integrand_name
+
+.. index:: integrand_name
+
+.. _data_density_command@integrand_name:
+
+integrand_name
+**************
+This is the
+:ref:`integrand<integrand_table@integrand_name>` that we setting
+the density for.
+
+.. meta::
+   :keywords: density_name
+
+.. index:: density_name
+
+.. _data_density_command@density_name:
+
+density_name
+************
+This is the :ref:`density_table@density_name`
+that we are using for the new density.
+
+.. meta::
+   :keywords: eta_factor
+
+.. index:: eta_factor
+
+.. _data_density_command@eta_factor:
+
+eta_factor
+**********
+This specifies the value of
+:ref:`statistic@Notation@eta` used with this density setting.
+This value is not used when the density is
+:ref:`density_table@Notation@Linear`
+(You can use the text ``null`` in this case).
+If the density is
+:ref:`density_table@Notation@Log Scaled` ,
+the value of *eta* used with this density is
+
+   *eta* = *eta_factor* * ``median`` ( *meas_value*  )
+
+Here ``median`` ( *meas_value* ) is the median of the
+:ref:`data_table@meas_value` in the data table.
+
+.. meta::
+   :keywords: nu
+
+.. index:: nu
+
+.. _data_density_command@nu:
+
+nu
+**
+This specifies the value of
+:ref:`statistic@Notation@nu` used with this density setting.
+This value is only used when the density is
+``students`` or ``log_students`` .
+(You can use text ``null`` is when it is not used.)
+
+.. meta::
+   :keywords: data_subset_table
+
+.. index:: data_subset_table
+
+.. _data_density_command@data_subset_table:
+
+data_subset_table
+*****************
+Only rows of the :ref:`data_subset_table-name` that correspond to this integrand
+are modified.
+
+.. meta::
+   :keywords: density_id
+
+.. index:: density_id
+
+.. _data_density_command@data_subset_table@density_id:
+
+density_id
+==========
+The subset table :ref:`data_subset_table@density_id`
+for this integrand is changed to this *density* .
+
+.. meta::
+   :keywords: eta
+
+.. index:: eta
+
+.. _data_density_command@data_subset_table@eta:
+
+eta
+===
+If the density is
+:ref:`density_table@Notation@Log Scaled` ,
+the subset table :ref:`data_subset_table@eta`
+is set to the value defined above.
+Otherwise, it is set to null.
+
+.. meta::
+   :keywords: nu
+
+.. index:: nu
+
+.. _data_density_command@data_subset_table@nu:
+
+nu
+==
+If the density is ``students`` or ``log_students`` ,
+the subset table :ref:`data_subset_table@nu`
+is set to the value specified above.
+Otherwise, it is set to null.
+
+.. meta::
+   :keywords: example
+
+.. index:: example
+
+.. _data_density_command@Example:
+
+Example
+*******
+The file :ref:`user_data_density.py-name` contains an example and test
+using this command.

@@ -1,0 +1,161 @@
+.. _average_integrand-name:
+
+!!!!!!!!!!!!!!!!!
+average_integrand
+!!!!!!!!!!!!!!!!!
+
+xrst input file: ``python/dismod_at/average_integrand.py``
+
+.. meta::
+   :keywords: average_integrand, compute, the, average, integrand
+
+.. index:: average_integrand, compute, the, average, integrand
+
+.. _average_integrand-title:
+
+Compute The Average Integrand
+#############################
+
+.. meta::
+   :keywords: syntax
+
+.. index:: syntax
+
+.. _average_integrand@Syntax:
+
+Syntax
+******
+
+| *avg_integrand* = ``dismod_at.average_integrand`` (
+| |tab| *rate* , *integrand_name* , *grid* , *abs_tol*
+| )
+
+.. meta::
+   :keywords: purpose
+
+.. index:: purpose
+
+.. _average_integrand@Purpose:
+
+Purpose
+*******
+The :ref:`predict_command-name` is a much faster way to calculate these values.
+This routine is easier to use and provides independent testing of the
+dismod_at integrators.
+
+.. meta::
+   :keywords: rate
+
+.. index:: rate
+
+.. _average_integrand@rate:
+
+rate
+****
+This is a dictionary and it's possible keys are the
+:ref:`rate names<rate_table@rate_name>` .
+If a *key* is a key in the dictionary,
+
+   *value* = *rate* [ *key* ]( *age* , *time* )
+
+returns a float equal to the value of the specified rate
+at the specified age and time.
+Note that *age* will always be zero when evaluating
+
+   *value* = *rate* [ ``'pini'`` ]( *age* , *time* )
+
+If a rate name is not in the dictionary, the corresponding rate is zero.
+
+.. meta::
+   :keywords: integrand_name
+
+.. index:: integrand_name
+
+.. _average_integrand@integrand_name:
+
+integrand_name
+**************
+This string is one of the
+:ref:`integrand names<integrand_table@integrand_name>` .
+
+.. meta::
+   :keywords: grid
+
+.. index:: grid
+
+.. _average_integrand@grid:
+
+grid
+****
+This argument defines the grid for trapezoidal integration.
+(The dismod_at integrands are often non-smooth and so a low order integration
+method is called for.)
+The *grid* is a dictionary with the following keys:
+
+.. meta::
+   :keywords: age
+
+.. index:: age
+
+.. _average_integrand@grid@age:
+
+age
+===
+*grid* [ ``'age'`` ] is a list of floats containing the grid points
+for the average w.r.t. age.
+These points are monotone increasing, the first (last) point is the
+lower (upper) age limit for the average
+
+.. meta::
+   :keywords: time
+
+.. index:: time
+
+.. _average_integrand@grid@time:
+
+time
+====
+*grid* [ ``'time'`` ] is a list of floats containing the grid points
+for the average w.r.t. time.
+These points are monotone increasing, the first (last) point is the
+lower (upper) time limit for the average
+
+.. meta::
+   :keywords: abs_tol
+
+.. index:: abs_tol
+
+.. _average_integrand@abs_tol:
+
+abs_tol
+*******
+This float is an absolute error bound, that the integrator will achieve.
+
+.. meta::
+   :keywords: avg_integrand
+
+.. index:: avg_integrand
+
+.. _average_integrand@avg_integrand:
+
+avg_integrand
+*************
+This is the calculated value for the
+:ref:`average integrand<avg_integrand@Average Integrand, A_i>` .
+
+.. meta::
+   :keywords: example
+
+.. index:: example
+
+.. _average_integrand@Example:
+
+Example
+*******
+The file :ref:`user_average_integrand.py-name` contains an example and test of this routine.
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   user_average_integrand.py

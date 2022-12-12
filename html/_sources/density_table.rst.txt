@@ -1,0 +1,269 @@
+.. _density_table-name:
+
+!!!!!!!!!!!!!
+density_table
+!!!!!!!!!!!!!
+
+xrst input file: ``xrst/table/density_table.xrst``
+
+.. meta::
+   :keywords: density_table, the, density, table
+
+.. index:: density_table, the, density, table
+
+.. _density_table-title:
+
+The Density Table
+#################
+
+.. meta::
+   :keywords: discussion
+
+.. index:: discussion
+
+.. _density_table@Discussion:
+
+Discussion
+**********
+The ``density`` table is used to identify densities.
+It has the following columns:
+
+.. meta::
+   :keywords: density_id
+
+.. index:: density_id
+
+.. _density_table@density_id:
+
+density_id
+**********
+This column has type ``integer``
+and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+.. meta::
+   :keywords: density_name
+
+.. index:: density_name
+
+.. _density_table@density_name:
+
+density_name
+************
+This column has type ``text`` .
+This column is unique; i.e., each name can only appear ones in this table.
+All of the *density_id* values that appear in the
+:ref:`prior<prior_table@density_id>` and
+:ref:`data<data_table@density_id>` tables
+must appear in the density table.
+Below is a list of the possible density names
+with a link to the corresponding meaning:
+
+.. meta::
+   :keywords: uniform
+
+.. index:: uniform
+
+.. _density_table@density_name@uniform:
+
+uniform
+=======
+:ref:`statistic@Log-Density Function, D@Uniform`
+
+.. meta::
+   :keywords: gaussian
+
+.. index:: gaussian
+
+.. _density_table@density_name@gaussian:
+
+gaussian
+========
+:ref:`statistic@Log-Density Function, D@Gaussian`
+
+.. meta::
+   :keywords: cen_gaussian
+
+.. index:: cen_gaussian
+
+.. _density_table@density_name@cen_gaussian:
+
+cen_gaussian
+============
+:ref:`statistic@Log-Density Function, D@Censored Gaussian`
+
+.. meta::
+   :keywords: log_gaussian
+
+.. index:: log_gaussian
+
+.. _density_table@density_name@log_gaussian:
+
+log_gaussian
+============
+:ref:`statistic@Log-Density Function, D@Log-Gaussian`
+
+.. meta::
+   :keywords: cen_log_gaussian
+
+.. index:: cen_log_gaussian
+
+.. _density_table@density_name@cen_log_gaussian:
+
+cen_log_gaussian
+================
+:ref:`statistic@Log-Density Function, D@Censored Log-Gaussian`
+
+.. meta::
+   :keywords: laplace
+
+.. index:: laplace
+
+.. _density_table@density_name@laplace:
+
+laplace
+=======
+:ref:`statistic@Log-Density Function, D@Laplace`
+
+.. meta::
+   :keywords: cen_laplace
+
+.. index:: cen_laplace
+
+.. _density_table@density_name@cen_laplace:
+
+cen_laplace
+===========
+:ref:`statistic@Log-Density Function, D@Censored Laplace`
+
+.. meta::
+   :keywords: log_laplace
+
+.. index:: log_laplace
+
+.. _density_table@density_name@log_laplace:
+
+log_laplace
+===========
+:ref:`statistic@Log-Density Function, D@Log-Laplace`
+
+.. meta::
+   :keywords: cen_log_laplace
+
+.. index:: cen_log_laplace
+
+.. _density_table@density_name@cen_log_laplace:
+
+cen_log_laplace
+===============
+:ref:`statistic@Log-Density Function, D@Censored Log-Laplace`
+
+.. meta::
+   :keywords: students
+
+.. index:: students
+
+.. _density_table@density_name@students:
+
+students
+========
+:ref:`statistic@Log-Density Function, D@Student's-t`
+
+.. meta::
+   :keywords: log_students
+
+.. index:: log_students
+
+.. _density_table@density_name@log_students:
+
+log_students
+============
+:ref:`statistic@Log-Density Function, D@Log-Student's-t`
+
+.. meta::
+   :keywords: notation
+
+.. index:: notation
+
+.. _density_table@Notation:
+
+Notation
+********
+
+.. meta::
+   :keywords: linear
+
+.. index:: linear
+
+.. _density_table@Notation@Linear:
+
+Linear
+======
+We refer to the following densities as linear:
+``gaussian`` ,
+``cen_gaussian`` ,
+``laplace`` ,
+``cen_laplace`` ,
+``students`` .
+
+.. meta::
+   :keywords: censored
+
+.. index:: censored
+
+.. _density_table@Notation@Censored:
+
+Censored
+========
+We refer to the following densities as censored:
+``cen_gaussian`` ,
+``cen_log_gaussian`` ,
+``cen_laplace`` ,
+``cen_log_laplace`` .
+
+.. meta::
+   :keywords: log, scaled
+
+.. index:: log, scaled
+
+.. _density_table@Notation@Log Scaled:
+
+Log Scaled
+==========
+We refer to the following densities as log scaled:
+``log_gaussian`` ,
+``cen_log_laplace`` ,
+``log_laplace`` ,
+``log_students`` .
+
+.. meta::
+   :keywords: nonsmooth
+
+.. index:: nonsmooth
+
+.. _density_table@Notation@Nonsmooth:
+
+Nonsmooth
+=========
+We refer to the following densities as nonsmooth:
+``laplace`` ,
+``cen_laplace`` ,
+``log_laplace`` .
+
+.. meta::
+   :keywords: example
+
+.. index:: example
+
+.. _density_table@Example:
+
+Example
+*******
+The file :ref:`density_table.py-name`
+contains an example ``density`` table.
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   density_table.py

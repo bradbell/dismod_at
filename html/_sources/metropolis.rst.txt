@@ -1,0 +1,173 @@
+.. _metropolis-name:
+
+!!!!!!!!!!
+metropolis
+!!!!!!!!!!
+
+xrst input file: ``python/dismod_at/metropolis.py``
+
+.. meta::
+   :keywords: metropolis, metropolis, mcmc, algorithm
+
+.. index:: metropolis, metropolis, mcmc, algorithm
+
+.. _metropolis-title:
+
+Metropolis MCMC Algorithm
+#########################
+
+.. meta::
+   :keywords: syntax
+
+.. index:: syntax
+
+.. _metropolis@Syntax:
+
+Syntax
+******
+
+    ( *a* , *c* ) = ``dismod_at.metropolis`` ( *log_f* , *m* , *x0* , *s* )
+
+.. meta::
+   :keywords: log_f
+
+.. index:: log_f
+
+.. _metropolis@log_f:
+
+log_f
+*****
+Given a numpy ``float`` vector of length *n* , the syntax
+
+    *d* = *log_f* ( *x* )
+
+sets the ``float`` *d* to the log of the un-normalized density
+corresponding to the positive function :math:`f(x)` mapping
+:math:`\B{R}^n` to the non-negative real values.
+If :math:`f(x)` is zero, the corresponding log-density value should equal
+``- float("inf")`` .
+
+.. meta::
+   :keywords: m
+
+.. index:: m
+
+.. _metropolis@m:
+
+m
+*
+is the ``int`` number of vectors in the MCMC chain.
+
+.. meta::
+   :keywords: x0
+
+.. index:: x0
+
+.. _metropolis@x0:
+
+x0
+**
+is a numpy ``float`` vector of length *n*
+that specifies the initial vector in the chain
+(denoted by :math:`x^0` below).
+
+.. meta::
+   :keywords: s
+
+.. index:: s
+
+.. _metropolis@s:
+
+s
+*
+is a ``float`` or, a numpy ``float`` vector of length *n* ,
+that specifies the scaling for each of the components of :math:`x`.
+
+.. meta::
+   :keywords: vector, case
+
+.. index:: vector, case
+
+.. _metropolis@s@Vector Case:
+
+Vector Case
+===========
+If *s* is a vector,
+for :math:`i = 1 , \ldots, m-1`,
+and :math:`j = 0 , \ldots, n-1`,
+the *j*-th component of the *i*-th proposal vector :math:`y^i`
+is given by
+
+.. math::
+
+ y_j^i = x_j^{i-1} + w_j^{i-1} s_j
+
+where :math:`w_j^i \sim \B{N}(0, 1)` are all independent.
+
+.. meta::
+   :keywords: float, case
+
+.. index:: float, case
+
+.. _metropolis@s@Float Case:
+
+Float Case
+==========
+If *s* is a ``float`` ,
+
+.. math::
+
+ y_j^i = x_j^{i-1} + w_j^{i-1} s
+
+.. meta::
+   :keywords: a
+
+.. index:: a
+
+.. _metropolis@a:
+
+a
+*
+is the ``int`` acceptance count; i.e. the number of indices :math:`i`
+such that :math:`x^i = y^i`
+(for the other indices :math:`x^i = x^{i-1}`).
+
+.. meta::
+   :keywords: c
+
+.. index:: c
+
+.. _metropolis@c:
+
+c
+*
+is an :math:`m \times n` numpy ``float`` array that contains
+the components of the Markov Chain.
+We use the notation :math:`x_j^i` for *c* [ *i* , *j* ] .
+For any smooth function :math:`g : \B{R}^n \rightarrow \B{R}`,
+the Metropolis algorithm provides the following approximation as
+:math:`m \rightarrow \infty`,
+
+.. math::
+
+ \frac{1}{m} \sum_{i=0}^{m-1} g( x^i )
+ \rightarrow
+ \frac{ \int g( x ) f ( x ) \B{d} x  }{ \int f( x ) \B{d} x }
+
+.. meta::
+   :keywords: example
+
+.. index:: example
+
+.. _metropolis@Example:
+
+Example
+*******
+The file :ref:`user_metropolis.py-name` contains an example and test of this
+routine.
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   user_metropolis.py

@@ -1,0 +1,21 @@
+.. _fit_command.py-name:
+
+!!!!!!!!!!!!!!
+fit_command.py
+!!!!!!!!!!!!!!
+
+xrst input file: ``example/get_started/fit_command.py``
+
+.. meta::
+   :keywords: fit_command.py, fit, command:, example, and, test
+
+.. index:: fit_command.py, fit, command:, example, and, test
+
+.. _fit_command.py-title:
+
+fit Command: Example and Test
+#############################
+
+.. literalinclude:: ../../example/get_started/fit_command.py
+   :lines: 19-83
+   :language: py

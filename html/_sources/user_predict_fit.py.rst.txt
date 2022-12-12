@@ -1,0 +1,170 @@
+.. _user_predict_fit.py-name:
+
+!!!!!!!!!!!!!!!!!!!
+user_predict_fit.py
+!!!!!!!!!!!!!!!!!!!
+
+xrst input file: ``example/user/predict_fit.py``
+
+.. meta::
+   :keywords: user_predict_fit.py, predict, average, integrand, using, results, of, a, fit
+
+.. index:: user_predict_fit.py, predict, average, integrand, using, results, of, a, fit
+
+.. _user_predict_fit.py-title:
+
+Predict Average Integrand Using Results of a Fit
+################################################
+
+.. meta::
+   :keywords: purpose
+
+.. index:: purpose
+
+.. _user_predict_fit.py@Purpose:
+
+Purpose
+*******
+This examples used the :ref:`fit both<fit_command@variables@both>` command
+to estimate the model variables.
+It then uses the :ref:`predict fit_var<predict_command@source@fit_var>`
+command to compute the
+:ref:`avg_integrand@Integrand, I_i(a,t)@susceptible`
+population :math:`S(a)` at age :math:`a = 50`.
+
+.. meta::
+   :keywords: note, table
+
+.. index:: note, table
+
+.. _user_predict_fit.py@Note Table:
+
+Note Table
+**********
+::
+
+          north_america
+           /          \
+     united_states   canada
+
+.. meta::
+   :keywords: problem, parameters
+
+.. index:: problem, parameters
+
+.. _user_predict_fit.py@Problem Parameters:
+
+Problem Parameters
+******************
+The following values are used to simulate the data and set the priors
+for fitting the data:
+
+.. literalinclude:: ../../example/user/predict_fit.py
+   :lines: 98-100
+   :language: py
+
+.. meta::
+   :keywords: age, and, time, values
+
+.. index:: age, and, time, values
+
+.. _user_predict_fit.py@Age and Time Values:
+
+Age and Time Values
+*******************
+The age and time values do not affect the fitting for this problem
+because all the functions are constant in age and time.
+This follows from the fact that all of the smoothings have one age
+and one time point.
+
+.. meta::
+   :keywords: rate, table
+
+.. index:: rate, table
+
+.. _user_predict_fit.py@Rate Table:
+
+Rate Table
+**********
+The :ref:`rate_table-name` only specifies that the only
+:ref:`var_table@var_type@rate` variables are
+*iota* for the parent and children.
+In addition, it specifies the smoothings for these rates
+each of which has one grid point.
+
+.. meta::
+   :keywords: variables
+
+.. index:: variables
+
+.. _user_predict_fit.py@Variables:
+
+Variables
+*********
+There are three model variables in this example:
+
+.. list-table::
+
+    * - *iota_north_america*
+      - The true value for
+        :ref:`iota(a,t)<math_ode@Incidence, iota(a, t)>` in north_america.
+    * - *canada_effect*
+      - The true model value for the canada
+        :ref:`child rate effect<model_variables@Random Effects, u@Child Rate Effects>` on iota.
+    * - *united_states_effect*
+      - The true model value for the united_states
+        :ref:`child rate effect<model_variables@Random Effects, u@Child Rate Effects>` on iota.
+
+.. meta::
+   :keywords: integrand, table
+
+.. index:: integrand, table
+
+.. _user_predict_fit.py@Integrand Table:
+
+Integrand Table
+***************
+The :ref:`integrand_table-name` for this example includes
+:ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` and
+:ref:`avg_integrand@Integrand, I_i(a,t)@susceptible` .
+
+.. meta::
+   :keywords: data, table
+
+.. index:: data, table
+
+.. _user_predict_fit.py@Data Table:
+
+Data Table
+**********
+There are three measurements of *Sincidence*
+in the :ref:`data_table-name` , one for each node.
+No noise is added to the measurements, and the priors on
+*iota* are uniform, so the fit should correspond to the
+model values used to simulate the data.
+
+.. meta::
+   :keywords: avgint, table
+
+.. index:: avgint, table
+
+.. _user_predict_fit.py@Avgint Table:
+
+Avgint Table
+************
+There are three predictions of the susceptible population at
+age 50 specified in the :ref:`avgint_table-name` , one for each node.
+
+.. meta::
+   :keywords: source, code
+
+.. index:: source, code
+
+.. _user_predict_fit.py@Source Code:
+
+Source Code
+***********
+
+.. literalinclude:: ../../example/user/predict_fit.py
+   :lines: 97-320
+   :language: py

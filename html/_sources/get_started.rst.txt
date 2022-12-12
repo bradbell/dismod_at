@@ -1,0 +1,105 @@
+.. _get_started-name:
+
+!!!!!!!!!!!
+get_started
+!!!!!!!!!!!
+
+xrst input file: ``example/get_started/get_started.xrst``
+
+.. meta::
+   :keywords: get_started, dismod_at, getting, started, examples, /, tests
+
+.. index:: get_started, dismod_at, getting, started, examples, /, tests
+
+.. _get_started-title:
+
+Dismod_at Getting Started Examples / Tests
+##########################################
+
+.. meta::
+   :keywords: see, also
+
+.. index:: see, also
+
+.. _get_started@See Also:
+
+See Also
+********
+:ref:`csv2db_command-name`
+
+.. meta::
+   :keywords: database
+
+.. index:: database
+
+.. _get_started@Database:
+
+Database
+********
+:ref:`get_started_db.py-name`
+
+.. meta::
+   :keywords: run, one, example
+
+.. index:: run, one, example
+
+.. _get_started@Run One Example:
+
+Run One Example
+***************
+If you have
+:ref:`built dismod_at<install_unix@dismod_at@Build>` and
+are in the directory
+:ref:`dismod_at.git<install_unix@Download dismod_at.git>` ,
+you can run one of these examples with the command
+
+   *python3_executable* ``example/get_started/`` *name*
+
+where :ref:`run_cmake.sh@python3_executable`
+is the python3 program and *name* is the name of the example.
+The name of the example
+includes the ``.py`` extension at the end.
+
+.. meta::
+   :keywords: get_started.db
+
+.. index:: get_started.db
+
+.. _get_started@get_started.db:
+
+get_started.db
+**************
+Each of these examples uses the database
+
+   ``build/example/get_started/get_started.db``
+
+which is created by :ref:`get_started_db.py-name` and
+can be inspected using any sqlite viewer; e.g.,
+http://sqlitebrowser.org/.
+
+.. meta::
+   :keywords: commands
+
+.. index:: commands
+
+.. _get_started@Commands:
+
+Commands
+********
+
+.. csv-table::
+   :widths: auto
+
+   init_command.py,:ref:`init_command.py-title`
+   set_command.py,:ref:`set_command.py-title`
+   fit_command.py,:ref:`fit_command.py-title`
+   simulate_command.py,:ref:`simulate_command.py-title`
+   sample_command.py,:ref:`sample_command.py-title`
+   predict_command.py,:ref:`predict_command.py-title`
+   db2csv_command.py,:ref:`db2csv_command.py-title`
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   get_started_db.py

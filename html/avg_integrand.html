@@ -1,0 +1,1117 @@
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta content="avg_integrand, model, for, the, average, integrand" name="keywords" />
+<meta content="ordinary, differential, equation" name="keywords" />
+<meta content="data, or, avgint, table, notation" name="keywords" />
+<meta content="i" name="keywords" />
+<meta content="a_i" name="keywords" />
+<meta content="b_i" name="keywords" />
+<meta content="c_i" name="keywords" />
+<meta content="d_i" name="keywords" />
+<meta content="s_i" name="keywords" />
+<meta content="g_i" name="keywords" />
+<meta content="covariate, difference,, x_ij" name="keywords" />
+<meta content="w_i" name="keywords" />
+<meta content="n_i" name="keywords" />
+<meta content="rate, functions" name="keywords" />
+<meta content="parent, rate,, q_k" name="keywords" />
+<meta content="child, rate, effect,, u_ik" name="keywords" />
+<meta content="j_k" name="keywords" />
+<meta content="group, rate, covariate, multiplier,, alpha_jk" name="keywords" />
+<meta content="subgroup, rate, covariate, multiplier,, delta, alpha_jk" name="keywords" />
+<meta content="adjusted, rate,, r_ik" name="keywords" />
+<meta content="pini,, p_i0(t)" name="keywords" />
+<meta content="iota_i(a,t)" name="keywords" />
+<meta content="rho_i(a,t)" name="keywords" />
+<meta content="chi_i(a,t)" name="keywords" />
+<meta content="omega_i(a,t)" name="keywords" />
+<meta content="s_i(a,t)" name="keywords" />
+<meta content="c_i(a,t)" name="keywords" />
+<meta content="differential, equation" name="keywords" />
+<meta content="integrand,, i_i(a,t)" name="keywords" />
+<meta content="sincidence" name="keywords" />
+<meta content="remission" name="keywords" />
+<meta content="mtexcess" name="keywords" />
+<meta content="mtother" name="keywords" />
+<meta content="mtwith" name="keywords" />
+<meta content="susceptible" name="keywords" />
+<meta content="withc" name="keywords" />
+<meta content="prevalence" name="keywords" />
+<meta content="tincidence" name="keywords" />
+<meta content="mtspecific" name="keywords" />
+<meta content="mtall" name="keywords" />
+<meta content="mtstandard" name="keywords" />
+<meta content="relrisk" name="keywords" />
+<meta content="mulcov" name="keywords" />
+<meta content="measurement, value, covariates" name="keywords" />
+<meta content="k_i" name="keywords" />
+<meta content="group, measurement, covariate, multiplier,, beta_j" name="keywords" />
+<meta content="subgroup, measurement, covariate, multiplier,, delta, beta_j" name="keywords" />
+<meta content="measurement, effect" name="keywords" />
+<meta content="adjusted, integrand" name="keywords" />
+<meta content="weight, integral,, wbar_i" name="keywords" />
+<meta content="average, integrand,, a_i" name="keywords" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="data_like" href="data_like.html" /><link rel="prev" title="model_variables" href="model_variables.html" />
+
+    <meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+        <title>avg_integrand - dismod_at documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="xrst_root_doc.html"><div class="brand">dismod_at  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="xrst_root_doc.html">
+  
+  
+  <span class="sidebar-brand-text">dismod_at  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="xrst_table_of_contents.html">Table of Contents</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="dismod_at.html">dismod_at</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="math_abstract.html">math_abstract</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="math_ode.html">math_ode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="censor_density.html">censor_density</a></li>
+<li class="toctree-l3"><a class="reference internal" href="prevalence_ode.html">prevalence_ode</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="install.html">install</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="dock_dismod_at.sh.html">dock_dismod_at.sh</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="install_unix.html">install_unix</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="run_cmake.sh.html">run_cmake.sh</a></li>
+<li class="toctree-l4"><a class="reference internal" href="example_install.sh.html">example_install.sh</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="get_started.html">get_started</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="get_started_db.py.html">get_started_db.py</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="user_example.html">user_example</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_age_avg_split.py.html">user_age_avg_split.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_bilevel_random.py.html">user_bilevel_random.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_bnd_mulcov.py.html">user_bnd_mulcov.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_cascade.py.html">user_cascade.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_censor.py.html">user_censor.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_change_grid.py.html">user_change_grid.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_compress.py.html">user_compress.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_const_random.py.html">user_const_random.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_const_value.py.html">user_const_value.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_continue_fit.py.html">user_continue_fit.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_covid_19.py.html">user_covid_19.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_csv2db.py.html">user_csv2db.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_data_density.py.html">user_data_density.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_data_sim.py.html">user_data_sim.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_diabetes.py.html">user_diabetes.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_diff_constraint.py.html">user_diff_constraint.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_fit_fixed_both.py.html">user_fit_fixed_both.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_fit_meas_noise.py.html">user_fit_meas_noise.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_fit_random.py.html">user_fit_random.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_fit_sim.py.html">user_fit_sim.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_group_mulcov.py.html">user_group_mulcov.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_hes_fixed_math.py.html">user_hes_fixed_math.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_hes_random.py.html">user_hes_random.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_hold_out_1.py.html">user_hold_out_1.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_hold_out_2.py.html">user_hold_out_2.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_ill_condition.py.html">user_ill_condition.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_jump_at_age.py.html">user_jump_at_age.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_lasso_covariate.py.html">user_lasso_covariate.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_mulstd.py.html">user_mulstd.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_no_children.py.html">user_no_children.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_one_function.py.html">user_one_function.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_plot_curve.py.html">user_plot_curve.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_plot_data_fit.py.html">user_plot_data_fit.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_plot_rate_fit.py.html">user_plot_rate_fit.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_predict_fit.py.html">user_predict_fit.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_predict_mulcov.py.html">user_predict_mulcov.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_re_scale.py.html">user_re_scale.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_residual.py.html">user_residual.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_sample_asy.py.html">user_sample_asy.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_sample_asy_sim.py.html">user_sample_asy_sim.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_sample_sim.py.html">user_sample_sim.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_sim_log.py.html">user_sim_log.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_speed.py.html">user_speed.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_subgroup_mulcov.py.html">user_subgroup_mulcov.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_sum_residual.py.html">user_sum_residual.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_system_command_prc.py.html">user_system_command_prc.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_trace_init.py.html">user_trace_init.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_trapezoidal.py.html">user_trapezoidal.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_warm_start.py.html">user_warm_start.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_zsum_child_rate.py.html">user_zsum_child_rate.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_zsum_mulcov_meas.py.html">user_zsum_mulcov_meas.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_zsum_mulcov_rate.py.html">user_zsum_mulcov_rate.py</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="database.html">database</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="input.html">input</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="age_table.html">age_table</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="age_table.py.html">age_table.py</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="avgint_table.html">avgint_table</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="avgint_table.py.html">avgint_table.py</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="covariate_table.html">covariate_table</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="covariate_table.py.html">covariate_table.py</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="data_table.html">data_table</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="data_table.py.html">data_table.py</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="density_table.html">density_table</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="density_table.py.html">density_table.py</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="integrand_table.html">integrand_table</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="integrand_table.py.html">integrand_table.py</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="mulcov_table.html">mulcov_table</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="mulcov_table.py.html">mulcov_table.py</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="node_table.html">node_table</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="node_table.py.html">node_table.py</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="nslist_pair_table.html">nslist_pair_table</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="nslist_pair_table.py.html">nslist_pair_table.py</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="nslist_table.html">nslist_table</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="nslist_table.py.html">nslist_table.py</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="option_table.html">option_table</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="option_default.html">option_default</a></li>
+<li class="toctree-l5"><a class="reference internal" href="option_table.py.html">option_table.py</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="prior_table.html">prior_table</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="prior_table.py.html">prior_table.py</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="rate_table.html">rate_table</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="rate_table.py.html">rate_table.py</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="smooth_grid_table.html">smooth_grid_table</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="smooth_grid_table.py.html">smooth_grid_table.py</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="smooth_table.html">smooth_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="subgroup_table.html">subgroup_table</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="time_table.html">time_table</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="time_table.py.html">time_table.py</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="weight_grid_table.html">weight_grid_table</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="weight_grid_table.py.html">weight_grid_table.py</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="weight_table.html">weight_table</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="data_flow.html">data_flow</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="age_avg_table.html">age_avg_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bnd_mulcov_table.html">bnd_mulcov_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="data_sim_table.html">data_sim_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="data_subset_table.html">data_subset_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="depend_var_table.html">depend_var_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fit_data_subset_table.html">fit_data_subset_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fit_var_table.html">fit_var_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hes_fixed_table.html">hes_fixed_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hes_random_table.html">hes_random_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="log_table.html">log_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mixed_info_table.html">mixed_info_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="predict_table.html">predict_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="prior_sim_table.html">prior_sim_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sample_table.html">sample_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scale_var_table.html">scale_var_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="start_var_table.html">start_var_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="trace_fixed_table.html">trace_fixed_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="truth_var_table.html">truth_var_table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="var_table.html">var_table</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 current has-children"><a class="reference internal" href="model.html">model</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="model_variables.html">model_variables</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">avg_integrand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_like.html">data_like</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="variable_prior.html">variable_prior</a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" role="switch" type="checkbox"/><label for="toctree-checkbox-27"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="fixed_value.html">fixed_value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="random_value.html">random_value</a></li>
+<li class="toctree-l4"><a class="reference internal" href="smooth_dage.html">smooth_dage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="smooth_dtime.html">smooth_dtime</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fixed_diff.html">fixed_diff</a></li>
+<li class="toctree-l4"><a class="reference internal" href="random_diff.html">random_diff</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fixed_prior.html">fixed_prior</a></li>
+<li class="toctree-l4"><a class="reference internal" href="random_prior.html">random_prior</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="statistic.html">statistic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bilinear.html">bilinear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="posterior.html">posterior</a></li>
+<li class="toctree-l3"><a class="reference internal" href="prev_dep.html">prev_dep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="numeric_average.html">numeric_average</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="command.html">command</a><input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" role="switch" type="checkbox"/><label for="toctree-checkbox-28"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="dismodat.py.html">dismodat.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bnd_mulcov_command.html">bnd_mulcov_command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data_density_command.html">data_density_command</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="depend_command.html">depend_command</a><input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" role="switch" type="checkbox"/><label for="toctree-checkbox-29"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="depend_command.py.html">depend_command.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="fit_command.html">fit_command</a><input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" role="switch" type="checkbox"/><label for="toctree-checkbox-30"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="fit_command.py.html">fit_command.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="hold_out_command.html">hold_out_command</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="init_command.html">init_command</a><input class="toctree-checkbox" id="toctree-checkbox-31" name="toctree-checkbox-31" role="switch" type="checkbox"/><label for="toctree-checkbox-31"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="init_command.py.html">init_command.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="old2new_command.html">old2new_command</a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" role="switch" type="checkbox"/><label for="toctree-checkbox-32"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="old2new_command.py.html">old2new_command.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="predict_command.html">predict_command</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" role="switch" type="checkbox"/><label for="toctree-checkbox-33"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="predict_command.py.html">predict_command.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="sample_command.html">sample_command</a><input class="toctree-checkbox" id="toctree-checkbox-34" name="toctree-checkbox-34" role="switch" type="checkbox"/><label for="toctree-checkbox-34"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="sample_command.py.html">sample_command.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="set_command.html">set_command</a><input class="toctree-checkbox" id="toctree-checkbox-35" name="toctree-checkbox-35" role="switch" type="checkbox"/><label for="toctree-checkbox-35"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="set_command.py.html">set_command.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="simulate_command.html">simulate_command</a><input class="toctree-checkbox" id="toctree-checkbox-36" name="toctree-checkbox-36" role="switch" type="checkbox"/><label for="toctree-checkbox-36"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="simulate_command.py.html">simulate_command.py</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="python.html">python</a><input class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" role="switch" type="checkbox"/><label for="toctree-checkbox-37"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="average_integrand.html">average_integrand</a><input class="toctree-checkbox" id="toctree-checkbox-38" name="toctree-checkbox-38" role="switch" type="checkbox"/><label for="toctree-checkbox-38"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="user_average_integrand.py.html">user_average_integrand.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="connection_file.html">connection_file</a><input class="toctree-checkbox" id="toctree-checkbox-39" name="toctree-checkbox-39" role="switch" type="checkbox"/><label for="toctree-checkbox-39"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="user_connection_file.py.html">user_connection_file.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="create_connection.html">create_connection</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="create_database.html">create_database</a><input class="toctree-checkbox" id="toctree-checkbox-40" name="toctree-checkbox-40" role="switch" type="checkbox"/><label for="toctree-checkbox-40"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="create_database.py.html">create_database.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="create_table.html">create_table</a><input class="toctree-checkbox" id="toctree-checkbox-41" name="toctree-checkbox-41" role="switch" type="checkbox"/><label for="toctree-checkbox-41"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="create_table.py.html">create_table.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="csv2db_command.html">csv2db_command</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="db2csv_command.html">db2csv_command</a><input class="toctree-checkbox" id="toctree-checkbox-42" name="toctree-checkbox-42" role="switch" type="checkbox"/><label for="toctree-checkbox-42"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="db2csv_command.py.html">db2csv_command.py</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ihme_db.sh.html">ihme_db.sh</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="get_name_type.html">get_name_type</a><input class="toctree-checkbox" id="toctree-checkbox-43" name="toctree-checkbox-43" role="switch" type="checkbox"/><label for="toctree-checkbox-43"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="get_name_type.py.html">get_name_type.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="get_row_list.html">get_row_list</a><input class="toctree-checkbox" id="toctree-checkbox-44" name="toctree-checkbox-44" role="switch" type="checkbox"/><label for="toctree-checkbox-44"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="get_row_list.py.html">get_row_list.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="get_table_dict.html">get_table_dict</a><input class="toctree-checkbox" id="toctree-checkbox-45" name="toctree-checkbox-45" role="switch" type="checkbox"/><label for="toctree-checkbox-45"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="get_table_dict.py.html">get_table_dict.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="metropolis.html">metropolis</a><input class="toctree-checkbox" id="toctree-checkbox-46" name="toctree-checkbox-46" role="switch" type="checkbox"/><label for="toctree-checkbox-46"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="user_metropolis.py.html">user_metropolis.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="modify_command.html">modify_command</a><input class="toctree-checkbox" id="toctree-checkbox-47" name="toctree-checkbox-47" role="switch" type="checkbox"/><label for="toctree-checkbox-47"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="modify_command.py.html">modify_command.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="perturb_command.html">perturb_command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_curve.html">plot_curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_data_fit.html">plot_data_fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plot_rate_fit.html">plot_rate_fit</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="replace_table.html">replace_table</a><input class="toctree-checkbox" id="toctree-checkbox-48" name="toctree-checkbox-48" role="switch" type="checkbox"/><label for="toctree-checkbox-48"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="replace_table.py.html">replace_table.py</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sql_command.html">sql_command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="system_command_prc.html">system_command_prc</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="unicode_tuple.html">unicode_tuple</a><input class="toctree-checkbox" id="toctree-checkbox-49" name="toctree-checkbox-49" role="switch" type="checkbox"/><label for="toctree-checkbox-49"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="unicode_tuple.py.html">unicode_tuple.py</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="release_notes.html">release_notes</a><input class="toctree-checkbox" id="toctree-checkbox-50" name="toctree-checkbox-50" role="switch" type="checkbox"/><label for="toctree-checkbox-50"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="whats_new_2022.html">whats_new_2022</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whats_new_2021.html">whats_new_2021</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whats_new_2020.html">whats_new_2020</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whats_new_2019.html">whats_new_2019</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whats_new_2018.html">whats_new_2018</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whats_new_2017.html">whats_new_2017</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whats_new_2016.html">whats_new_2016</a></li>
+<li class="toctree-l3"><a class="reference internal" href="whats_new_2015.html">whats_new_2015</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="wish_list.html">wish_list</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="xrst_index.html">Index</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
+<span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span></p>
+<section id="avg-integrand">
+<span id="avg-integrand-name"></span><h1>avg_integrand<a class="headerlink" href="#avg-integrand" title="Permalink to this headline">#</a></h1>
+<p>xrst input file: <code class="docutils literal notranslate"><span class="pre">xrst/model/avg_integrand.xrst</span></code></p>
+<section id="model-for-the-average-integrand">
+<span id="avg-integrand-title"></span><span id="index-0"></span><h2>Model for the Average Integrand<a class="headerlink" href="#model-for-the-average-integrand" title="Permalink to this headline">#</a></h2>
+<section id="ordinary-differential-equation">
+<span id="avg-integrand-ordinary-differential-equation"></span><span id="index-1"></span><h3>Ordinary Differential Equation<a class="headerlink" href="#ordinary-differential-equation" title="Permalink to this headline">#</a></h3>
+<p>In the case where the <a class="reference internal" href="rate_table.html#rate-table-name"><span class="std std-ref">rates</span></a> do not depend on time,
+the dismod_ode ordinary differential equation is</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+   S'(a) &amp; = &amp; - [ \iota(a) + \omega (a) ] S(a) + \rho(a) C(a)
+   \\
+   C'(a) &amp; = &amp; + \iota(a) S(a) - [ \rho(a) + \chi(a) + \omega (a) ] C(a)
+\end{eqnarray}</div></div>
+<p>with the initial condition <span class="math notranslate nohighlight">\(C(0) = p_0\)</span> and <span class="math notranslate nohighlight">\(S(0) = 1 - p_0\)</span>.
+This equation is made more complicated by the fact that the
+rates vary with time as well as with each data point.
+The reason for the variation between data points due both to the
+<a class="reference internal" href="model_variables.html#model-variables-random-effects-u"><span class="std std-ref">random effects</span></a> as well as the
+<a class="reference internal" href="mulcov_table.html#mulcov-table-mulcov-type-rate-value"><span class="std std-ref">rate_value</span></a> covariates.</p>
+</section>
+<section id="data-or-avgint-table-notation">
+<span id="avg-integrand-data-or-avgint-table-notation"></span><span id="index-2"></span><h3>Data or Avgint Table Notation<a class="headerlink" href="#data-or-avgint-table-notation" title="Permalink to this headline">#</a></h3>
+<section id="i">
+<span id="avg-integrand-data-or-avgint-table-notation-i"></span><span id="index-3"></span><h4>i<a class="headerlink" href="#i" title="Permalink to this headline">#</a></h4>
+<p>We use <span class="math notranslate nohighlight">\(i\)</span> to denote either,
+<a class="reference internal" href="data_table.html#data-table-data-id"><span class="std std-ref">data_id</span></a> for a row in the data table or,
+<a class="reference internal" href="avgint_table.html#avgint-table-avgint-id"><span class="std std-ref">avgint_id</span></a> for a row in the avgint table.</p>
+</section>
+<section id="a-i">
+<span id="avg-integrand-data-or-avgint-table-notation-a-i"></span><span id="index-4"></span><h4>a_i<a class="headerlink" href="#a-i" title="Permalink to this headline">#</a></h4>
+<p>We use <span class="math notranslate nohighlight">\(a_i\)</span> to denote the corresponding <em>age_lower</em> in the
+<a class="reference internal" href="data_table.html#data-table-age-lower"><span class="std std-ref">data table</span></a> or
+<a class="reference internal" href="avgint_table.html#avgint-table-age-lower"><span class="std std-ref">avgint table</span></a> .</p>
+</section>
+<section id="b-i">
+<span id="avg-integrand-data-or-avgint-table-notation-b-i"></span><span id="index-5"></span><h4>b_i<a class="headerlink" href="#b-i" title="Permalink to this headline">#</a></h4>
+<p>We use <span class="math notranslate nohighlight">\(b_i\)</span> to denote the corresponding <em>age_upper</em> in the
+<a class="reference internal" href="data_table.html#data-table-age-upper"><span class="std std-ref">data table</span></a> or
+<a class="reference internal" href="avgint_table.html#avgint-table-age-upper"><span class="std std-ref">avgint table</span></a> .</p>
+</section>
+<section id="c-i">
+<span id="avg-integrand-data-or-avgint-table-notation-c-i"></span><span id="index-6"></span><h4>c_i<a class="headerlink" href="#c-i" title="Permalink to this headline">#</a></h4>
+<p>We use <span class="math notranslate nohighlight">\(c_i\)</span> to denote the corresponding <em>time_lower</em> in the
+<a class="reference internal" href="data_table.html#data-table-time-lower"><span class="std std-ref">data table</span></a> or
+<a class="reference internal" href="avgint_table.html#avgint-table-time-lower"><span class="std std-ref">avgint table</span></a> .</p>
+</section>
+<section id="d-i">
+<span id="avg-integrand-data-or-avgint-table-notation-d-i"></span><span id="index-7"></span><h4>d_i<a class="headerlink" href="#d-i" title="Permalink to this headline">#</a></h4>
+<p>We use <span class="math notranslate nohighlight">\(d_i\)</span> to denote the corresponding <em>time_upper</em> in the
+<a class="reference internal" href="data_table.html#data-table-time-upper"><span class="std std-ref">data table</span></a> or
+<a class="reference internal" href="avgint_table.html#avgint-table-time-upper"><span class="std std-ref">avgint table</span></a> .</p>
+</section>
+<section id="s-i">
+<span id="avg-integrand-data-or-avgint-table-notation-s-i"></span><span id="index-8"></span><h4>s_i<a class="headerlink" href="#s-i" title="Permalink to this headline">#</a></h4>
+<p>We use <span class="math notranslate nohighlight">\(s_i\)</span> to denote the corresponding <em>subgroup_id</em> in the
+<a class="reference internal" href="data_table.html#data-table-subgroup-id"><span class="std std-ref">data table</span></a> or
+<a class="reference internal" href="avgint_table.html#avgint-table-subgroup-id"><span class="std std-ref">avgint table</span></a> .</p>
+</section>
+<section id="g-i">
+<span id="avg-integrand-data-or-avgint-table-notation-g-i"></span><span id="index-9"></span><h4>g_i<a class="headerlink" href="#g-i" title="Permalink to this headline">#</a></h4>
+<p>We use <span class="math notranslate nohighlight">\(g_i\)</span> to denote the
+<a class="reference internal" href="subgroup_table.html#subgroup-table-group-id"><span class="std std-ref">group_id</span></a> that <span class="math notranslate nohighlight">\(s_i\)</span> is part of.</p>
+</section>
+<section id="covariate-difference-x-ij">
+<span id="avg-integrand-data-or-avgint-table-notation-covariate-difference-x-ij"></span><span id="index-10"></span><h4>Covariate Difference, x_ij<a class="headerlink" href="#covariate-difference-x-ij" title="Permalink to this headline">#</a></h4>
+<p>We use <span class="math notranslate nohighlight">\(x_{i,j}\)</span> to denote the covariate difference for the
+<em>i</em>-th data point and the <em>j</em>-th covariate.
+Here <em>i</em> denotes a
+<a class="reference internal" href="data_table.html#data-table-data-id"><span class="std std-ref">data_id</span></a> in the data table and
+<em>j</em> denotes a
+<a class="reference internal" href="covariate_table.html#covariate-table-covariate-id"><span class="std std-ref">covariate_id</span></a> in the covariate table.
+The difference is the corresponding data table
+<a class="reference internal" href="data_table.html#data-table-covariates"><span class="std std-ref">covariate value</span></a> minus the covariate table
+<a class="reference internal" href="covariate_table.html#covariate-table-reference"><span class="std std-ref">reference value</span></a> .</p>
+</section>
+<section id="w-i">
+<span id="avg-integrand-data-or-avgint-table-notation-w-i"></span><span id="index-11"></span><h4>w_i<a class="headerlink" href="#w-i" title="Permalink to this headline">#</a></h4>
+<p>We use <span class="math notranslate nohighlight">\(w_i (a, t)\)</span> for the weighting as a function of age and time
+that corresponds to the
+<a class="reference internal" href="data_table.html#data-table-weight-id"><span class="std std-ref">weight_id</span></a>
+for this <em>data_id</em> .</p>
+</section>
+<section id="n-i">
+<span id="avg-integrand-data-or-avgint-table-notation-n-i"></span><span id="index-12"></span><h4>n_i<a class="headerlink" href="#n-i" title="Permalink to this headline">#</a></h4>
+<p>We use <span class="math notranslate nohighlight">\(n_i\)</span> to denote the corresponding
+<a class="reference internal" href="data_table.html#data-table-node-id"><span class="std std-ref">node_id</span></a> value.</p>
+</section>
+</section>
+<section id="rate-functions">
+<span id="avg-integrand-rate-functions"></span><span id="index-13"></span><h3>Rate Functions<a class="headerlink" href="#rate-functions" title="Permalink to this headline">#</a></h3>
+<section id="parent-rate-q-k">
+<span id="avg-integrand-rate-functions-parent-rate-q-k"></span><span id="index-14"></span><h4>Parent Rate, q_k<a class="headerlink" href="#parent-rate-q-k" title="Permalink to this headline">#</a></h4>
+<p>We use <span class="math notranslate nohighlight">\(k\)</span> to denote a
+<a class="reference internal" href="rate_table.html#rate-table-rate-id"><span class="std std-ref">rate_id</span></a> and
+<span class="math notranslate nohighlight">\(q_k (a, t)\)</span> the piecewise linear rate function
+for the corresponding to the
+<a class="reference internal" href="model_variables.html#model-variables-fixed-effects-theta-parent-rates"><span class="std std-ref">parent rate</span></a> .
+This is the model for the rate corresponding to the
+<a class="reference internal" href="option_table.html#option-table-parent-node"><span class="std std-ref">Parent Node</span></a>
+and the reference value for the covariates; i.e.
+<span class="math notranslate nohighlight">\(x_{i,j} = 0\)</span>.
+The adjusted rate
+<a class="reference internal" href="#avg-integrand-rate-functions-adjusted-rate-r-ik"><span class="std std-ref">r_ik</span></a>
+is defined below.</p>
+</section>
+<section id="child-rate-effect-u-ik">
+<span id="avg-integrand-rate-functions-child-rate-effect-u-ik"></span><span id="index-15"></span><h4>Child Rate Effect, u_ik<a class="headerlink" href="#child-rate-effect-u-ik" title="Permalink to this headline">#</a></h4>
+<p>If the node for this data point <span class="math notranslate nohighlight">\(n_i\)</span> is a
+<a class="reference internal" href="node_table.html#node-table-parent-children"><span class="std std-ref">child</span></a> node,
+or a descendant of a child node,
+<span class="math notranslate nohighlight">\(u_{i,k} (a, t)\)</span> is the piecewise linear random effect
+for the corresponding
+<a class="reference internal" href="model_variables.html#model-variables-random-effects-u-child-rate-effects"><span class="std std-ref">child and rate</span></a> .
+If <span class="math notranslate nohighlight">\(n_i\)</span> is the parent node,
+there is no random effect for this data and
+<span class="math notranslate nohighlight">\(u_{i,k} (a, t) = 0\)</span>.
+Otherwise <span class="math notranslate nohighlight">\(n_i\)</span> is not the parent node or
+a descendant of the parent node and the corresponding data is not used.</p>
+</section>
+<section id="j-k">
+<span id="avg-integrand-rate-functions-j-k"></span><span id="index-16"></span><h4>J_k<a class="headerlink" href="#j-k" title="Permalink to this headline">#</a></h4>
+<p>We use <span class="math notranslate nohighlight">\(J_k\)</span> to denote the set of
+<a class="reference internal" href="mulcov_table.html#mulcov-table-covariate-id"><span class="std std-ref">covariate_id</span></a> values in the mulcov table
+such that the corresponding
+<a class="reference internal" href="mulcov_table.html#mulcov-table-rate-id"><span class="std std-ref">rate_id</span></a> is equal to <span class="math notranslate nohighlight">\(k\)</span>,
+<a class="reference internal" href="mulcov_table.html#mulcov-table-mulcov-type"><span class="std std-ref">mulcov_type</span></a> is <code class="docutils literal notranslate"><span class="pre">rate_value</span></code> ,
+and <a class="reference internal" href="mulcov_table.html#mulcov-table-group-id"><span class="std std-ref">group_id</span></a> equal to <span class="math notranslate nohighlight">\(g_i\)</span>.
+These covariates that affect the <em>k</em>-th rate for this group of measurements.</p>
+</section>
+<section id="group-rate-covariate-multiplier-alpha-jk">
+<span id="avg-integrand-rate-functions-group-rate-covariate-multiplier-alpha-jk"></span><span id="index-17"></span><h4>Group Rate Covariate Multiplier, alpha_jk<a class="headerlink" href="#group-rate-covariate-multiplier-alpha-jk" title="Permalink to this headline">#</a></h4>
+<p>For each rate index <span class="math notranslate nohighlight">\(k\)</span>,
+and each covariate index <span class="math notranslate nohighlight">\(j \in J_k\)</span>,
+we use <span class="math notranslate nohighlight">\(\alpha_{j,k} (a, t)\)</span> to denote the
+piecewise linear function corresponding to the
+<a class="reference internal" href="model_variables.html#model-variables-fixed-effects-theta-group-covariate-multipliers"><span class="std std-ref">group covariate multiplier</span></a> .
+Note that these are
+<a class="reference internal" href="mulcov_table.html#mulcov-table-mulcov-type-rate-value"><span class="std std-ref">rate_value</span></a> covariate multipliers
+specified by the mulcov table.</p>
+</section>
+<section id="subgroup-rate-covariate-multiplier-delta-alpha-jk">
+<span id="avg-integrand-rate-functions-subgroup-rate-covariate-multiplier-delta-alpha-jk"></span><span id="index-18"></span><h4>Subgroup Rate Covariate Multiplier, Delta alpha_jk<a class="headerlink" href="#subgroup-rate-covariate-multiplier-delta-alpha-jk" title="Permalink to this headline">#</a></h4>
+<p>For each rate index <span class="math notranslate nohighlight">\(k\)</span>,
+and each covariate index <span class="math notranslate nohighlight">\(j \in J_k\)</span>,
+we use <span class="math notranslate nohighlight">\(\Delta \alpha_{j,k} (a, t)\)</span> to denote the
+piecewise linear function corresponding to the <span class="math notranslate nohighlight">\(s_i\)</span>
+<a class="reference internal" href="model_variables.html#model-variables-random-effects-u-subgroup-covariate-multipliers"><span class="std std-ref">subgroup covariate multiplier</span></a> .</p>
+</section>
+<section id="adjusted-rate-r-ik">
+<span id="avg-integrand-rate-functions-adjusted-rate-r-ik"></span><span id="index-19"></span><h4>Adjusted Rate, r_ik<a class="headerlink" href="#adjusted-rate-r-ik" title="Permalink to this headline">#</a></h4>
+<p>We define the adjusted <em>k</em>-th rate for the <em>i</em>-th data point by</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[r_{i,k} (a , t)
+=
+\exp \left \{
+   u_{i,k} (a, t) + \sum_{j \in J(k)}
+      x_{i,j} [ \alpha_{j,k} (a, t) + \Delta \alpha_{j,k} (a, t) ]
+\right \}
+q_k ( a, t )\]</div>
+</div>
+<p>If <span class="math notranslate nohighlight">\(n_i\)</span> is the parent node,
+the random effects is zero <span class="math notranslate nohighlight">\(u_{i,k} (a, t) = 0\)</span>.
+If this data point also has the reference value for the covariates,
+<span class="math notranslate nohighlight">\(r_{i,k} (a, t) = q_k (a, t)\)</span>.</p>
+</section>
+<section id="pini-p-i0-t">
+<span id="avg-integrand-rate-functions-pini-p-i0-t"></span><span id="index-20"></span><h4>pini, p_i0(t)<a class="headerlink" href="#pini-p-i0-t" title="Permalink to this headline">#</a></h4>
+<p>We use <span class="math notranslate nohighlight">\(p_{i,0} (t)\)</span> to denote the model value
+(as apposed to a measurement value)
+for prevalence at the initial age as a function of time.
+Note that this function is constant with respect to age <span class="math notranslate nohighlight">\(a\)</span>;
+see <a class="reference internal" href="rate_table.html#rate-table-rate-name-pini"><span class="std std-ref">pini</span></a> .
+This is denoted by <span class="math notranslate nohighlight">\(r_{i,0} (a, t)\)</span> above.</p>
+</section>
+<section id="iota-i-a-t">
+<span id="avg-integrand-rate-functions-iota-i-a-t"></span><span id="index-21"></span><h4>iota_i(a,t)<a class="headerlink" href="#iota-i-a-t" title="Permalink to this headline">#</a></h4>
+<p>We use <code class="docutils literal notranslate"><span class="pre">iota_i</span></code> ( <em>a</em> , <em>t</em> ) and <span class="math notranslate nohighlight">\(\iota_i (a,t)\)</span>
+to denote the model value for adjusted susceptible incidence
+as a function of age and time;
+see <a class="reference internal" href="rate_table.html#rate-table-rate-name-iota"><span class="std std-ref">iota</span></a> .
+This is denoted by <span class="math notranslate nohighlight">\(r_{i,1} ( a, t )\)</span> above.</p>
+</section>
+<section id="rho-i-a-t">
+<span id="avg-integrand-rate-functions-rho-i-a-t"></span><span id="index-22"></span><h4>rho_i(a,t)<a class="headerlink" href="#rho-i-a-t" title="Permalink to this headline">#</a></h4>
+<p>We use <code class="docutils literal notranslate"><span class="pre">rho_i</span></code> ( <em>a</em> , <em>t</em> ) and <span class="math notranslate nohighlight">\(\rho_i (a,t)\)</span>
+to denote the model value for adjusted remission
+as a function of age and time;
+see <a class="reference internal" href="rate_table.html#rate-table-rate-name-rho"><span class="std std-ref">rho</span></a> .
+This is denoted by <span class="math notranslate nohighlight">\(r_{i,2} ( a, t )\)</span> above.</p>
+</section>
+<section id="chi-i-a-t">
+<span id="avg-integrand-rate-functions-chi-i-a-t"></span><span id="index-23"></span><h4>chi_i(a,t)<a class="headerlink" href="#chi-i-a-t" title="Permalink to this headline">#</a></h4>
+<p>We use <code class="docutils literal notranslate"><span class="pre">chi_i</span></code> ( <em>a</em> , <em>t</em> ) and <span class="math notranslate nohighlight">\(\chi_i (a,t)\)</span>
+to denote the model value for adjusted excess mortality
+(mortality due to the cause) as a function of age and time.
+This is denoted by <span class="math notranslate nohighlight">\(r_{i,3} ( a, t )\)</span> above.</p>
+</section>
+<section id="omega-i-a-t">
+<span id="avg-integrand-rate-functions-omega-i-a-t"></span><span id="index-24"></span><h4>omega_i(a,t)<a class="headerlink" href="#omega-i-a-t" title="Permalink to this headline">#</a></h4>
+<p>We use <code class="docutils literal notranslate"><span class="pre">omega_i</span></code> ( <em>a</em> , <em>t</em> ) and <span class="math notranslate nohighlight">\(\omega_i (a,t)\)</span>
+to denote the model value for adjusted other cause mortality
+as a function of age and time;
+see <a class="reference internal" href="rate_table.html#rate-table-rate-name-omega"><span class="std std-ref">omega</span></a> .
+This is denoted by <span class="math notranslate nohighlight">\(r_{i,4} ( a, t )\)</span> above.</p>
+</section>
+</section>
+<section id="s-i-a-t">
+<span id="avg-integrand-s-i-a-t"></span><span id="index-25"></span><h3>S_i(a,t)<a class="headerlink" href="#s-i-a-t" title="Permalink to this headline">#</a></h3>
+<p>We use <span class="math notranslate nohighlight">\(S_i (a,t)\)</span> to denote the
+model value for susceptible fraction of the population.</p>
+</section>
+<section id="c-i-a-t">
+<span id="avg-integrand-c-i-a-t"></span><span id="index-26"></span><h3>C_i(a,t)<a class="headerlink" href="#c-i-a-t" title="Permalink to this headline">#</a></h3>
+<p>We use <span class="math notranslate nohighlight">\(C_i (a,t)\)</span> to denote the
+model value for with condition fraction of the population.</p>
+</section>
+<section id="differential-equation">
+<span id="avg-integrand-differential-equation"></span><span id="index-27"></span><h3>Differential Equation<a class="headerlink" href="#differential-equation" title="Permalink to this headline">#</a></h3>
+<p>We drop the subscript <span class="math notranslate nohighlight">\(i\)</span> in the
+<a class="reference internal" href="#avg-integrand-rate-functions-adjusted-rate-r-ik"><span class="std std-ref">adjusted rates</span></a>
+to simplify notation in the equations below.
+The with condition and susceptible fractions at age zero are</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[C (0, t) =  p_0 (t) \; , \; S (0, t) = 1 - p_0 (t)\]</div>
+</div>
+<p>We use <span class="math notranslate nohighlight">\(c\)</span> to denote cohort; i.e., <span class="math notranslate nohighlight">\(t = a + c\)</span>,
+Given the rates (initial prevalence is called a rate),
+the functions <span class="math notranslate nohighlight">\(S (a,t)\)</span> and <span class="math notranslate nohighlight">\(C (a,t)\)</span> for <span class="math notranslate nohighlight">\(a &gt; 0\)</span>
+are defined by</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\begin{eqnarray}
+( \B{d} / \B{d} a )
+S(a, a+c)
+&amp; = &amp;
+- [ \iota (a, a+c) + \omega (a, a+c) ] S(a, a+c)
++ \rho(a, a+c) C(a, a+c)
+\\
+( \B{d} / \B{d} a )
+C(a, a+c)
+&amp; = &amp;
++ \iota(a, a+c) S(a, a+c)
+- [ \rho(a, a+c) + \chi(a, a+c) + \omega(a, a+c) ] C(a, a+c)
+\end{eqnarray}</div></div>
+</section>
+<section id="integrand-i-i-a-t">
+<span id="avg-integrand-integrand-i-i-a-t"></span><span id="index-28"></span><h3>Integrand, I_i(a,t)<a class="headerlink" href="#integrand-i-i-a-t" title="Permalink to this headline">#</a></h3>
+<p>We use <span class="math notranslate nohighlight">\(I_i (a, t)\)</span> to denote the integrand as a function of
+age and time.
+Depending on the value of
+see <a class="reference internal" href="data_table.html#data-table-integrand-id"><span class="std std-ref">integrand_id</span></a> for data index <span class="math notranslate nohighlight">\(i\)</span>,
+the function <span class="math notranslate nohighlight">\(I_i (a, t)\)</span> is defined below.
+The age and time arguments <span class="math notranslate nohighlight">\((a, t)\)</span>
+and the subscript <span class="math notranslate nohighlight">\(i\)</span> are dropped to simplify notation.
+The rates are adjusted rates.
+(Integrands that do not use <span class="math notranslate nohighlight">\(S\)</span>, <span class="math notranslate nohighlight">\(C\)</span>
+or <span class="math notranslate nohighlight">\(P\)</span>, do not require solving the differential equation.)</p>
+<section id="sincidence">
+<span id="avg-integrand-integrand-i-i-a-t-sincidence"></span><span id="index-29"></span><h4>Sincidence<a class="headerlink" href="#sincidence" title="Permalink to this headline">#</a></h4>
+<p>The incidence rate relative to susceptible population is
+<span class="math notranslate nohighlight">\(I  = \iota\)</span>.</p>
+</section>
+<section id="remission">
+<span id="avg-integrand-integrand-i-i-a-t-remission"></span><span id="index-30"></span><h4>remission<a class="headerlink" href="#remission" title="Permalink to this headline">#</a></h4>
+<p>The remission rate is
+<span class="math notranslate nohighlight">\(I  = \rho\)</span>.</p>
+</section>
+<section id="mtexcess">
+<span id="avg-integrand-integrand-i-i-a-t-mtexcess"></span><span id="index-31"></span><h4>mtexcess<a class="headerlink" href="#mtexcess" title="Permalink to this headline">#</a></h4>
+<p>The excess mortality rate is
+<span class="math notranslate nohighlight">\(I  = \chi\)</span>.</p>
+</section>
+<section id="mtother">
+<span id="avg-integrand-integrand-i-i-a-t-mtother"></span><span id="index-32"></span><h4>mtother<a class="headerlink" href="#mtother" title="Permalink to this headline">#</a></h4>
+<p>The other cause mortality rate is
+<span class="math notranslate nohighlight">\(I  = \omega\)</span>.</p>
+</section>
+<section id="mtwith">
+<span id="avg-integrand-integrand-i-i-a-t-mtwith"></span><span id="index-33"></span><h4>mtwith<a class="headerlink" href="#mtwith" title="Permalink to this headline">#</a></h4>
+<p>The with condition mortality rate is
+<span class="math notranslate nohighlight">\(I  = \omega  + \chi\)</span>.</p>
+</section>
+<section id="susceptible">
+<span id="avg-integrand-integrand-i-i-a-t-susceptible"></span><span id="index-34"></span><h4>susceptible<a class="headerlink" href="#susceptible" title="Permalink to this headline">#</a></h4>
+<p>The susceptible fraction of the population is
+<span class="math notranslate nohighlight">\(I  = S\)</span>.</p>
+</section>
+<section id="withc">
+<span id="avg-integrand-integrand-i-i-a-t-withc"></span><span id="index-35"></span><h4>withC<a class="headerlink" href="#withc" title="Permalink to this headline">#</a></h4>
+<p>The with condition fraction of the population is
+<span class="math notranslate nohighlight">\(I  = C\)</span>.</p>
+</section>
+<section id="prevalence">
+<span id="avg-integrand-integrand-i-i-a-t-prevalence"></span><span id="index-36"></span><h4>prevalence<a class="headerlink" href="#prevalence" title="Permalink to this headline">#</a></h4>
+<p>The prevalence of the condition is
+<span class="math notranslate nohighlight">\(I  = P = C / ( S + C )\)</span>.</p>
+</section>
+<section id="tincidence">
+<span id="avg-integrand-integrand-i-i-a-t-tincidence"></span><span id="index-37"></span><h4>Tincidence<a class="headerlink" href="#tincidence" title="Permalink to this headline">#</a></h4>
+<p>The incidence rate relative to the total population is
+<span class="math notranslate nohighlight">\(I  = \iota ( 1 - P )\)</span>.</p>
+</section>
+<section id="mtspecific">
+<span id="avg-integrand-integrand-i-i-a-t-mtspecific"></span><span id="index-38"></span><h4>mtspecific<a class="headerlink" href="#mtspecific" title="Permalink to this headline">#</a></h4>
+<p>The cause specific mortality rate is
+<span class="math notranslate nohighlight">\(I  = \chi  P\)</span>.</p>
+</section>
+<section id="mtall">
+<span id="avg-integrand-integrand-i-i-a-t-mtall"></span><span id="index-39"></span><h4>mtall<a class="headerlink" href="#mtall" title="Permalink to this headline">#</a></h4>
+<p>The all cause mortality rate is
+<span class="math notranslate nohighlight">\(I  = \omega  + \chi  P\)</span>.</p>
+</section>
+<section id="mtstandard">
+<span id="avg-integrand-integrand-i-i-a-t-mtstandard"></span><span id="index-40"></span><h4>mtstandard<a class="headerlink" href="#mtstandard" title="Permalink to this headline">#</a></h4>
+<p>The standardized mortality ratio is
+<span class="math notranslate nohighlight">\(I  = ( \omega  + \chi  ) / ( \omega  + \chi  P )\)</span>.</p>
+</section>
+<section id="relrisk">
+<span id="avg-integrand-integrand-i-i-a-t-relrisk"></span><span id="index-41"></span><h4>relrisk<a class="headerlink" href="#relrisk" title="Permalink to this headline">#</a></h4>
+<p>The relative risk is
+<span class="math notranslate nohighlight">\(I  = ( \omega  + \chi  ) / \omega\)</span>.</p>
+</section>
+<section id="mulcov">
+<span id="avg-integrand-integrand-i-i-a-t-mulcov"></span><span id="index-42"></span><h4>mulcov<a class="headerlink" href="#mulcov" title="Permalink to this headline">#</a></h4>
+<p>If the <a class="reference internal" href="integrand_table.html#integrand-table-integrand-name"><span class="std std-ref">integrand_name</span></a> is
+<code class="docutils literal notranslate"><span class="pre">mulcov_</span></code> <em>mulcov_id</em> , <span class="math notranslate nohighlight">\(I\)</span> is the covariate multiplier
+corresponding to <a class="reference internal" href="mulcov_table.html#mulcov-table-mulcov-id"><span class="std std-ref">mulcov_id</span></a> .
+In this case there are no covariate that affect the measurement.</p>
+</section>
+</section>
+<section id="measurement-value-covariates">
+<span id="avg-integrand-measurement-value-covariates"></span><span id="index-43"></span><h3>Measurement Value Covariates<a class="headerlink" href="#measurement-value-covariates" title="Permalink to this headline">#</a></h3>
+<section id="k-i">
+<span id="avg-integrand-measurement-value-covariates-k-i"></span><span id="index-44"></span><h4>K_i<a class="headerlink" href="#k-i" title="Permalink to this headline">#</a></h4>
+<p>We use <span class="math notranslate nohighlight">\(K_i\)</span> to the set of
+<a class="reference internal" href="mulcov_table.html#mulcov-table-covariate-id"><span class="std std-ref">covariate_id</span></a> values in the mulcov table
+such that the corresponding
+<a class="reference internal" href="mulcov_table.html#mulcov-table-integrand-id"><span class="std std-ref">integrand_id</span></a> corresponds to
+<span class="math notranslate nohighlight">\(I_i (a, t)\)</span>,
+<a class="reference internal" href="mulcov_table.html#mulcov-table-mulcov-type"><span class="std std-ref">mulcov_type</span></a> is <code class="docutils literal notranslate"><span class="pre">meas_value</span></code> ,
+and <a class="reference internal" href="mulcov_table.html#mulcov-table-group-id"><span class="std std-ref">group_id</span></a> equal to <span class="math notranslate nohighlight">\(g_i\)</span>.
+These are the covariates that affect the <em>i</em>-th measurement value.</p>
+</section>
+<section id="group-measurement-covariate-multiplier-beta-j">
+<span id="avg-integrand-measurement-value-covariates-group-measurement-covariate-multiplier-beta-j"></span><span id="index-45"></span><h4>Group Measurement Covariate Multiplier, beta_j<a class="headerlink" href="#group-measurement-covariate-multiplier-beta-j" title="Permalink to this headline">#</a></h4>
+<p>For each covariate index <span class="math notranslate nohighlight">\(j \in K_i\)</span>,
+we use <span class="math notranslate nohighlight">\(\beta_j (a, t)\)</span> to denote the
+piecewise linear function corresponding to the
+<a class="reference internal" href="model_variables.html#model-variables-fixed-effects-theta-group-covariate-multipliers"><span class="std std-ref">group covariate multiplier</span></a> .
+Note that these are
+<a class="reference internal" href="mulcov_table.html#mulcov-table-mulcov-type-meas-value"><span class="std std-ref">meas_value</span></a> covariate multipliers
+specified by the mulcov table.</p>
+</section>
+<section id="subgroup-measurement-covariate-multiplier-delta-beta-j">
+<span id="avg-integrand-measurement-value-covariates-subgroup-measurement-covariate-multiplier-delta-beta-j"></span><span id="index-46"></span><h4>Subgroup Measurement Covariate Multiplier, Delta beta_j<a class="headerlink" href="#subgroup-measurement-covariate-multiplier-delta-beta-j" title="Permalink to this headline">#</a></h4>
+<p>For each covariate index <span class="math notranslate nohighlight">\(j \in K_i\)</span>,
+we use <span class="math notranslate nohighlight">\(\Delta \beta_j (a, t)\)</span> to denote the
+piecewise linear function corresponding to the <span class="math notranslate nohighlight">\(s_i\)</span>
+<a class="reference internal" href="model_variables.html#model-variables-random-effects-u-subgroup-covariate-multipliers"><span class="std std-ref">subgroup covariate multiplier</span></a> .</p>
+</section>
+<section id="measurement-effect">
+<span id="avg-integrand-measurement-value-covariates-measurement-effect"></span><span id="index-47"></span><h4>Measurement Effect<a class="headerlink" href="#measurement-effect" title="Permalink to this headline">#</a></h4>
+<p>The effect for the <em>i</em>-th measurement value,
+as a function of the fixed effects <span class="math notranslate nohighlight">\(\theta\)</span>, is</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[E_i ( a, t ) = \sum_{j \in K_i}
+   x_{i,j} [ \beta_j (a, t) + \Delta \beta_j (a, t) ]\]</div>
+</div>
+</section>
+</section>
+<section id="adjusted-integrand">
+<span id="avg-integrand-adjusted-integrand"></span><span id="index-48"></span><h3>Adjusted Integrand<a class="headerlink" href="#adjusted-integrand" title="Permalink to this headline">#</a></h3>
+<p>The adjusted integrand is the following function of age and time:</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[I_i (a, t) \; \exp \left[ E_i (a, t) \right]\]</div>
+</div>
+<p>Note that if <span class="math notranslate nohighlight">\(I_i (a, t)\)</span> is a covariate multiplier
+<a class="reference internal" href="#avg-integrand-integrand-i-i-a-t-mulcov"><span class="std std-ref">mulcov</span></a> ,
+the adjusted integrand is equal to <span class="math notranslate nohighlight">\(I_i(a,t)\)</span>; i.e.,
+there is no adjustment.</p>
+</section>
+<section id="weight-integral-wbar-i">
+<span id="avg-integrand-weight-integral-wbar-i"></span><span id="index-49"></span><h3>Weight Integral, wbar_i<a class="headerlink" href="#weight-integral-wbar-i" title="Permalink to this headline">#</a></h3>
+<p>We use <span class="math notranslate nohighlight">\(\bar{w}_i\)</span> to denote the weight integral defined by</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\bar{w}_i = \frac{1}{b_i - a_i} \frac{1}{d_i - c_i}
+\int_{a(i)}^{b(i)}  \int_{c(i)}^{d(i)} w_i (a,t) \; \B{d} t \; \B{d} a\]</div>
+</div>
+</section>
+<section id="average-integrand-a-i">
+<span id="avg-integrand-average-integrand-a-i"></span><span id="index-50"></span><h3>Average Integrand, A_i<a class="headerlink" href="#average-integrand-a-i" title="Permalink to this headline">#</a></h3>
+<p>We use <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(\theta\)</span> to denote the vector of
+<a class="reference internal" href="model_variables.html#model-variables-random-effects-u"><span class="std std-ref">random effects</span></a> and
+<a class="reference internal" href="model_variables.html#model-variables-fixed-effects-theta"><span class="std std-ref">fixed effects</span></a> respectively.
+The model for the <em>i</em>-th measurement,
+not counting integrand effects or measurement noise, is</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[A_i ( u , \theta )
+=
+\frac{1}{b_i - a_i} \frac{1}{d_i - c_i}
+\left[
+\int_{a(i)}^{b(i)}  \int_{c(i)}^{d(i)}
+\frac{ w_i (a,t) }{ \bar{w}_i }
+I_i (a, t) \; \exp \left[ E_i (a, t) \right]  \; \B{d} t \; \B{d} a
+\right]
+\;\]</div>
+</div>
+<p>Note that this is actually a weighted average of the integrand function
+<span class="math notranslate nohighlight">\(I_i (a, t)\)</span> times the total measurement covariate effect
+<span class="math notranslate nohighlight">\(E_i (a, t)\)</span>
+Also note that in the case where
+<span class="math notranslate nohighlight">\(a(i) = b(i)\)</span>, <span class="math notranslate nohighlight">\(c(i) = d(i)\)</span>, or both,
+the average is defined as the limiting value.</p>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="data_like.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">data_like</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="model_variables.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">model_variables</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">avg_integrand</a><ul>
+<li><a class="reference internal" href="#model-for-the-average-integrand">Model for the Average Integrand</a><ul>
+<li><a class="reference internal" href="#ordinary-differential-equation">Ordinary Differential Equation</a></li>
+<li><a class="reference internal" href="#data-or-avgint-table-notation">Data or Avgint Table Notation</a><ul>
+<li><a class="reference internal" href="#i">i</a></li>
+<li><a class="reference internal" href="#a-i">a_i</a></li>
+<li><a class="reference internal" href="#b-i">b_i</a></li>
+<li><a class="reference internal" href="#c-i">c_i</a></li>
+<li><a class="reference internal" href="#d-i">d_i</a></li>
+<li><a class="reference internal" href="#s-i">s_i</a></li>
+<li><a class="reference internal" href="#g-i">g_i</a></li>
+<li><a class="reference internal" href="#covariate-difference-x-ij">Covariate Difference, x_ij</a></li>
+<li><a class="reference internal" href="#w-i">w_i</a></li>
+<li><a class="reference internal" href="#n-i">n_i</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rate-functions">Rate Functions</a><ul>
+<li><a class="reference internal" href="#parent-rate-q-k">Parent Rate, q_k</a></li>
+<li><a class="reference internal" href="#child-rate-effect-u-ik">Child Rate Effect, u_ik</a></li>
+<li><a class="reference internal" href="#j-k">J_k</a></li>
+<li><a class="reference internal" href="#group-rate-covariate-multiplier-alpha-jk">Group Rate Covariate Multiplier, alpha_jk</a></li>
+<li><a class="reference internal" href="#subgroup-rate-covariate-multiplier-delta-alpha-jk">Subgroup Rate Covariate Multiplier, Delta alpha_jk</a></li>
+<li><a class="reference internal" href="#adjusted-rate-r-ik">Adjusted Rate, r_ik</a></li>
+<li><a class="reference internal" href="#pini-p-i0-t">pini, p_i0(t)</a></li>
+<li><a class="reference internal" href="#iota-i-a-t">iota_i(a,t)</a></li>
+<li><a class="reference internal" href="#rho-i-a-t">rho_i(a,t)</a></li>
+<li><a class="reference internal" href="#chi-i-a-t">chi_i(a,t)</a></li>
+<li><a class="reference internal" href="#omega-i-a-t">omega_i(a,t)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#s-i-a-t">S_i(a,t)</a></li>
+<li><a class="reference internal" href="#c-i-a-t">C_i(a,t)</a></li>
+<li><a class="reference internal" href="#differential-equation">Differential Equation</a></li>
+<li><a class="reference internal" href="#integrand-i-i-a-t">Integrand, I_i(a,t)</a><ul>
+<li><a class="reference internal" href="#sincidence">Sincidence</a></li>
+<li><a class="reference internal" href="#remission">remission</a></li>
+<li><a class="reference internal" href="#mtexcess">mtexcess</a></li>
+<li><a class="reference internal" href="#mtother">mtother</a></li>
+<li><a class="reference internal" href="#mtwith">mtwith</a></li>
+<li><a class="reference internal" href="#susceptible">susceptible</a></li>
+<li><a class="reference internal" href="#withc">withC</a></li>
+<li><a class="reference internal" href="#prevalence">prevalence</a></li>
+<li><a class="reference internal" href="#tincidence">Tincidence</a></li>
+<li><a class="reference internal" href="#mtspecific">mtspecific</a></li>
+<li><a class="reference internal" href="#mtall">mtall</a></li>
+<li><a class="reference internal" href="#mtstandard">mtstandard</a></li>
+<li><a class="reference internal" href="#relrisk">relrisk</a></li>
+<li><a class="reference internal" href="#mulcov">mulcov</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#measurement-value-covariates">Measurement Value Covariates</a><ul>
+<li><a class="reference internal" href="#k-i">K_i</a></li>
+<li><a class="reference internal" href="#group-measurement-covariate-multiplier-beta-j">Group Measurement Covariate Multiplier, beta_j</a></li>
+<li><a class="reference internal" href="#subgroup-measurement-covariate-multiplier-delta-beta-j">Subgroup Measurement Covariate Multiplier, Delta beta_j</a></li>
+<li><a class="reference internal" href="#measurement-effect">Measurement Effect</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#adjusted-integrand">Adjusted Integrand</a></li>
+<li><a class="reference internal" href="#weight-integral-wbar-i">Weight Integral, wbar_i</a></li>
+<li><a class="reference internal" href="#average-integrand-a-i">Average Integrand, A_i</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/scripts/furo.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

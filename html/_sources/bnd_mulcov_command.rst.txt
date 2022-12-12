@@ -1,0 +1,171 @@
+.. _bnd_mulcov_command-name:
+
+!!!!!!!!!!!!!!!!!!
+bnd_mulcov_command
+!!!!!!!!!!!!!!!!!!
+
+xrst input file: ``devel/cmd/bnd_mulcov_command.cpp``
+
+.. meta::
+   :keywords: bnd_mulcov_command, bound, the, covariate, multiplier, absolute, data, effect
+
+.. index:: bnd_mulcov_command, bound, the, covariate, multiplier, absolute, data, effect
+
+.. _bnd_mulcov_command-title:
+
+Bound The Covariate Multiplier Absolute Data Effect
+###################################################
+
+.. meta::
+   :keywords: syntax
+
+.. index:: syntax
+
+.. _bnd_mulcov_command@Syntax:
+
+Syntax
+******
+
+| ``dismod_at`` *database* ``bnd_mulcov`` *max_abs_effect*
+| ``dismod_at`` *database* ``bnd_mulcov`` *max_abs_effect* *covariate_name*
+
+.. meta::
+   :keywords: purpose
+
+.. index:: purpose
+
+.. _bnd_mulcov_command@Purpose:
+
+Purpose
+*******
+This command is used to set the maximum absolute effect
+in the model for the data values.
+This is done by changing the lower and upper bounds
+for the covariate multipliers (ignoring bounds in the corresponding priors).
+The :ref:`mulcov_table@mulcov_type@meas_noise` multipliers and
+:ref:`model_variables@Random Effects, u@Subgroup Covariate Multipliers`
+are not included.
+The subgroup covariate multipliers are random effects and
+:ref:`option_table@Optimize Random Only@bound_random`
+set the absolute bound for all the random effects.
+
+.. meta::
+   :keywords: database
+
+.. index:: database
+
+.. _bnd_mulcov_command@database:
+
+database
+********
+Is an
+http://www.sqlite.org/sqlite/ database containing the
+``dismod_at`` :ref:`input-name` tables which are not modified.
+
+.. meta::
+   :keywords: max_abs_effect
+
+.. index:: max_abs_effect
+
+.. _bnd_mulcov_command@max_abs_effect:
+
+max_abs_effect
+**************
+is either ``inf`` (for infinity) or
+a non-negative value that bounds absolute covariate effects.
+A covariate multiplier is defined by each row of the :ref:`mulcov_table-name` .
+We use the notation *mul_value* for a value of the multiplier.
+We use the notation *cov_value* for a value of the
+:ref:`covariate<data_table@Covariates>` in the data table.
+We use the notation *cov_ref* for the
+:ref:`covariate_table@reference` for the covariate.
+The maximum effect condition is
+
+   | *mul_value* * ( *cov_value* ``-`` *cov_ref* ) | <= *max_abs_effect*
+
+Note that the limits on the covariate multiplier in its prior have units
+and the *max_abs_effect* does not have units.
+
+.. meta::
+   :keywords: covariate_name
+
+.. index:: covariate_name
+
+.. _bnd_mulcov_command@covariate_name:
+
+covariate_name
+**************
+If this argument is present, it is a
+:ref:`covariate_table@covariate_name` .
+In this case, the inequality above only refers to
+covariate multipliers that use this covariate.
+
+.. meta::
+   :keywords: bnd_mulcov_table
+
+.. index:: bnd_mulcov_table
+
+.. _bnd_mulcov_command@bnd_mulcov_table:
+
+bnd_mulcov_table
+****************
+The table :ref:`bnd_mulcov_table-name` is an input and output for this command.
+
+.. meta::
+   :keywords: max_cov_diff
+
+.. index:: max_cov_diff
+
+.. _bnd_mulcov_command@bnd_mulcov_table@max_cov_diff:
+
+max_cov_diff
+============
+The :ref:`bnd_mulcov_table@max_cov_diff` column is not changed.
+
+.. meta::
+   :keywords: max_mulcov
+
+.. index:: max_mulcov
+
+.. _bnd_mulcov_command@bnd_mulcov_table@max_mulcov:
+
+max_mulcov
+==========
+The :ref:`bnd_mulcov_table@max_mulcov` column is set so the
+inequality above is true for all the data that is modeled using this
+covariate multiplier and that is included in the fit.
+To be specific, for each covariate multiplier
+
+   *max_mulcov* = *max_abs_effect* / *max_cov_diff*
+
+If *covariate_name* is present,
+*max_mulcov* the bound is only changed
+for multipliers that use that covariate.
+The *max_mulcov* value for
+:ref:`mulcov_table@mulcov_type@meas_noise` covariates
+are not changed.
+
+.. meta::
+   :keywords: infinite, case
+
+.. index:: infinite, case
+
+.. _bnd_mulcov_command@Infinite Case:
+
+Infinite Case
+*************
+The case where *max_abs_effect* is ``inf`` or
+*max_cov_diff* is zero,
+*max_mulcov* is set to null (which corresponds to plus infinity).
+
+.. meta::
+   :keywords: example
+
+.. index:: example
+
+.. _bnd_mulcov_command@Example:
+
+Example
+*******
+The file ``user_bnd_mulcov.py`` contains an example and test
+using this command.

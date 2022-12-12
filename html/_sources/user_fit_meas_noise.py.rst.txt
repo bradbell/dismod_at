@@ -1,0 +1,163 @@
+.. _user_fit_meas_noise.py-name:
+
+!!!!!!!!!!!!!!!!!!!!!!
+user_fit_meas_noise.py
+!!!!!!!!!!!!!!!!!!!!!!
+
+xrst input file: ``example/user/fit_meas_noise.py``
+
+.. meta::
+   :keywords: user_fit_meas_noise.py, group, measurement, noise, covariate, multipliers,, gamma
+
+.. index:: user_fit_meas_noise.py, group, measurement, noise, covariate, multipliers,, gamma
+
+.. _user_fit_meas_noise.py-title:
+
+Group Measurement Noise Covariate Multipliers, Gamma
+####################################################
+
+.. meta::
+   :keywords: purpose
+
+.. index:: purpose
+
+.. _user_fit_meas_noise.py@Purpose:
+
+Purpose
+*******
+This example demonstrates fitting
+:ref:`model_variables@Fixed Effects, theta@Group Covariate Multipliers`
+that effect the measurement noise.
+
+.. meta::
+   :keywords: random, effects
+
+.. index:: random, effects
+
+.. _user_fit_meas_noise.py@Random Effects:
+
+Random Effects
+**************
+There are no random effects in this example.
+
+.. meta::
+   :keywords: iota
+
+.. index:: iota
+
+.. _user_fit_meas_noise.py@Iota:
+
+Iota
+****
+The value *iota_true*
+is the simulated true rate for iota.
+The prior for iota is uniform prior with lower limit
+*iota_true / 100* and upper limit one.
+The mean for the prior is *iota_true / 10*
+(this is only used as a starting point for the optimization).
+There is only one grid point (one :ref:`model_variable<model_variables-name>` )
+corresponding to *iota* , hence it is constant in age and time.
+
+.. meta::
+   :keywords: other, rates
+
+.. index:: other, rates
+
+.. _user_fit_meas_noise.py@Other Rates:
+
+Other Rates
+***********
+For this example the other rates are all zero.
+This is specified by setting the
+:ref:`rate_table@parent_smooth_id` and
+:ref:`rate_table@child_smooth_id` to null
+for the other rates.
+
+.. meta::
+   :keywords: subgroup, table
+
+.. index:: subgroup, table
+
+.. _user_fit_meas_noise.py@Subgroup Table:
+
+Subgroup Table
+**************
+The data is divided into two groups.
+The first group is hospital data and the second group is survey data.
+
+.. meta::
+   :keywords: covariate, multiplier
+
+.. index:: covariate, multiplier
+
+.. _user_fit_meas_noise.py@Covariate Multiplier:
+
+Covariate Multiplier
+********************
+There is one covariate multiplier on the covariate column ``one``
+and the rate ``iota`` .
+This is a measurement noise covariate multiplier
+:ref:`gamma<data_like@Measurement Noise Covariates@gamma_j (a, t)>`
+that only effects the survey data.
+The prior for this multiplier is a uniform on the interval from zero
+to 10 * *gamma_true* .
+The true value for this multiplier, used to simulate data, is
+called *gamma_true* .
+The mean for the prior is ``gamma_true``  / 10
+(this is only used as a starting point for the optimization).
+There is only one grid point
+(one model variable) corresponding to the covariate multiplier,
+hence it is constant in age and time.
+
+.. meta::
+   :keywords: data
+
+.. index:: data
+
+.. _user_fit_meas_noise.py@Data:
+
+Data
+****
+There are *n_data* measurements of Sincidence.
+The hospital data has standard deviation *meas_std* .
+The survey data has addition noise determine by the covariate effect.
+
+.. meta::
+   :keywords: meas_noise_effect
+
+.. index:: meas_noise_effect
+
+.. _user_fit_meas_noise.py@meas_noise_effect:
+
+meas_noise_effect
+*****************
+see :ref:`option_table@meas_noise_effect` .
+The function ``gamma_true`` depends on this option,
+this in turn affects the priors. Hence the data base must
+be recreated for each choice of this option
+
+.. meta::
+   :keywords: scaling, gamma
+
+.. index:: scaling, gamma
+
+.. _user_fit_meas_noise.py@Scaling Gamma:
+
+Scaling Gamma
+*************
+The function ``gamma_true()`` shows on the scaling of *gamma*
+depends on the value of *meas_noise_effect* .
+
+.. meta::
+   :keywords: source, code
+
+.. index:: source, code
+
+.. _user_fit_meas_noise.py@Source Code:
+
+Source Code
+***********
+
+.. literalinclude:: ../../example/user/fit_meas_noise.py
+   :lines: 90-383
+   :language: py

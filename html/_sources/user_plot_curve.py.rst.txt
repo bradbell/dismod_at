@@ -1,0 +1,77 @@
+.. _user_plot_curve.py-name:
+
+!!!!!!!!!!!!!!!!!!
+user_plot_curve.py
+!!!!!!!!!!!!!!!!!!
+
+xrst input file: ``example/user/plot_curve.py``
+
+.. meta::
+   :keywords: user_plot_curve.py, example, plotting, log-scaled, values, w.r.t, age, and, time
+
+.. index:: user_plot_curve.py, example, plotting, log-scaled, values, w.r.t, age, and, time
+
+.. _user_plot_curve.py-title:
+
+Example Plotting Log-Scaled Values w.r.t Age and Time
+#####################################################
+
+.. meta::
+   :keywords: z_name
+
+.. index:: z_name
+
+.. _user_plot_curve.py@z_name:
+
+z_name
+******
+For this example the name of the z variables are ``A`` , ``B`` ,
+``C`` , and ``D``
+
+.. meta::
+   :keywords: age, grid
+
+.. index:: age, grid
+
+.. _user_plot_curve.py@Age Grid:
+
+Age Grid
+********
+The age grid for this example in 0.0, 5.0, ..., 100.0.
+
+.. meta::
+   :keywords: time, grid
+
+.. index:: time, grid
+
+.. _user_plot_curve.py@Time Grid:
+
+Time Grid
+*********
+The time grid for this example is 1980.0, 1985.0, ..., 2020.0.
+
+.. meta::
+   :keywords: function
+
+.. index:: function
+
+.. _user_plot_curve.py@Function:
+
+Function
+********
+The function for this example is
+
+.. math::
+
+   f(a, t) = \lambda * \exp \left[
+       - \left( \frac{a - 50}{100} \right)^2
+       - \left( \frac{(t - 2000.0}{20.0} \right)^2
+ \right]
+
+where :math:`a` is age, :math:`t` is time, and
+:math:`lambsa` is 1, 2, 3, 4 for variables
+``A`` , ``B`` , ``C`` , ``D`` respectively.
+
+.. literalinclude:: ../../example/user/plot_curve.py
+   :lines: 50-105
+   :language: py

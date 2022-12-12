@@ -1,0 +1,264 @@
+.. _set_command-name:
+
+!!!!!!!!!!!
+set_command
+!!!!!!!!!!!
+
+xrst input file: ``devel/cmd/set_command.cpp``
+
+.. meta::
+   :keywords: set_command, directly, setting, table, values
+
+.. index:: set_command, directly, setting, table, values
+
+.. _set_command-title:
+
+Directly Setting Table Values
+#############################
+
+.. meta::
+   :keywords: syntax
+
+.. index:: syntax
+
+.. _set_command@Syntax:
+
+Syntax
+******
+
+   ``dismod_at`` *database* ``set option`` *name* *value*
+
+| ``dismod_at`` *database* ``set avgint data``
+| ``dismod_at`` *database* ``set`` *table_out* *source*
+| ``dismod_at`` *database* ``set`` *table_out* *source* *sample_index*
+
+.. meta::
+   :keywords: database
+
+.. index:: database
+
+.. _set_command@database:
+
+database
+********
+Is an
+http://www.sqlite.org/sqlite/ database containing the
+``dismod_at`` :ref:`input-name` tables which are not modified.
+
+.. meta::
+   :keywords: option
+
+.. index:: option
+
+.. _set_command@option:
+
+option
+******
+This documentation is for the case where
+``option`` follows ``set`` .
+
+.. meta::
+   :keywords: name
+
+.. index:: name
+
+.. _set_command@option@name:
+
+name
+====
+Is the name of the option we are setting.
+It must be a valid
+:ref:`option_table@Table Format@option_name` .
+
+.. meta::
+   :keywords: value
+
+.. index:: value
+
+.. _set_command@option@value:
+
+value
+=====
+Is the new
+:ref:`option_table@Table Format@option_value`
+for the specified option name.
+If *value* is the empty string, null is used for the corresponding
+value in the database; see
+:ref:`database@Null@Text can be Null, not Empty` .
+
+.. meta::
+   :keywords: init
+
+.. index:: init
+
+.. _set_command@option@init:
+
+init
+====
+The set option commands does not require the ``init`` to be run first.
+In addition, if *option_name* is not ``parent_node_id`` ,
+the :ref:`model_variables-name` do not change and you do not have to
+re-run the :ref:`init_command-name` .
+
+.. meta::
+   :keywords: avgint
+
+.. index:: avgint
+
+.. _set_command@avgint:
+
+avgint
+******
+This documentation is for the case where
+``avgint`` follows ``set`` .
+In this case ``data`` must follow ``avgint``
+and the :ref:`avgint_table-name` is set to be equal to the :ref:`data_table-name` .
+The only difference is that the column name
+:ref:`data_table@data_id`
+in the data table has column name
+:ref:`avgint_table@avgint_id`
+in the avgint table.
+
+.. meta::
+   :keywords: table_out
+
+.. index:: table_out
+
+.. _set_command@table_out:
+
+table_out
+*********
+The *table_out* cases set the values in *table_out*
+using the values specified by *source* .
+If this table exists before the command,
+the values originally in the table are lost.
+
+.. meta::
+   :keywords: start_var
+
+.. index:: start_var
+
+.. _set_command@table_out@start_var:
+
+start_var
+=========
+If *table_out* is ``start_var`` ,
+the :ref:`start_var<start_var_table-name>` table is created.
+Note that this table may also be created directly by the user
+(with the aid of the :ref:`var_table-name` ).
+
+.. meta::
+   :keywords: scale_var
+
+.. index:: scale_var
+
+.. _set_command@table_out@scale_var:
+
+scale_var
+=========
+If *table_out* is ``scale_var`` ,
+the :ref:`scale_var<scale_var_table-name>` table is created.
+Note that this table may also be created directly by the user
+(with the aid of the :ref:`var_table-name` ).
+
+.. meta::
+   :keywords: truth_var
+
+.. index:: truth_var
+
+.. _set_command@table_out@truth_var:
+
+truth_var
+=========
+If *table_out* is ``truth_var`` ,
+the :ref:`truth_var<truth_var_table-name>` table is created.
+Note that this table may also be created directly by the user
+(with the aid of the :ref:`var_table-name` ).
+
+.. meta::
+   :keywords: source
+
+.. index:: source
+
+.. _set_command@source:
+
+source
+******
+The set command *source* must be one of the
+possibilities listed below
+(and not be the same as *table_out* ).
+Only the case where *source* is *sample*
+has the extra argument *sample_index* .
+
+.. meta::
+   :keywords: sample
+
+.. index:: sample
+
+.. _set_command@source@sample:
+
+sample
+======
+If *source* is ``sample`` ,
+*sample_index* must be present.
+In this case the :ref:`model_variables-name` in the sample table,
+and corresponding to the specified sample index,
+are used for the values in *table_out* .
+
+.. meta::
+   :keywords: prior_mean
+
+.. index:: prior_mean
+
+.. _set_command@source@prior_mean:
+
+prior_mean
+==========
+If *source* is ``prior_mean`` ,
+the mean of the priors is used for the values in *table_out* .
+
+.. meta::
+   :keywords: fit_var
+
+.. index:: fit_var
+
+.. _set_command@source@fit_var:
+
+fit_var
+=======
+If *source* is ``fit_var`` ,
+the results of the previous fit is used for the values in *table_out* .
+
+.. meta::
+   :keywords: start,, scale,, truth
+
+.. index:: start,, scale,, truth
+
+.. _set_command@source@start, scale, truth:
+
+start, scale, truth
+===================
+If *source* is
+:ref:`start_var<start_var_table-name>` ,
+:ref:`scale_var<scale_var_table-name>` , or
+:ref:`truth_var<truth_var_table-name>` ,
+the contents of this table are copied to *table_out* .
+
+.. meta::
+   :keywords: example
+
+.. index:: example
+
+.. _set_command@Example:
+
+Example
+*******
+The files
+:ref:`set_command.py-name` and :ref:`set_command.py-name`
+contains examples and tests using this command.
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   set_command.py

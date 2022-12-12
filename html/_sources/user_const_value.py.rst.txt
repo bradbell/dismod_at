@@ -1,0 +1,164 @@
+.. _user_const_value.py-name:
+
+!!!!!!!!!!!!!!!!!!!
+user_const_value.py
+!!!!!!!!!!!!!!!!!!!
+
+xrst input file: ``example/user/const_value.py``
+
+.. meta::
+   :keywords: user_const_value.py, constrain, omega, using, const_value
+
+.. index:: user_const_value.py, constrain, omega, using, const_value
+
+.. _user_const_value.py-title:
+
+Constrain Omega Using const_value
+#################################
+
+.. meta::
+   :keywords: node, table
+
+.. index:: node, table
+
+.. _user_const_value.py@Node Table:
+
+Node Table
+**********
+For this example the :ref:`node_table-name` is
+::
+
+            universe
+               |
+             world
+            /      \
+        child_1   child_2
+
+.. meta::
+   :keywords: problem, parameters
+
+.. index:: problem, parameters
+
+.. _user_const_value.py@Problem Parameters:
+
+Problem Parameters
+******************
+The following values are used to simulate the data and set the priors
+for fitting the data:
+
+.. literalinclude:: ../../example/user/const_value.py
+   :lines: 28-30
+   :language: py
+
+.. meta::
+   :keywords: child, random, effects
+
+.. index:: child, random, effects
+
+.. _user_const_value.py@Child Random Effects:
+
+Child Random Effects
+********************
+The following code converts the child rates to child rate effects:
+
+.. literalinclude:: ../../example/user/const_value.py
+   :lines: 39-42
+   :language: py
+
+.. meta::
+   :keywords: omega, priors
+
+.. index:: omega, priors
+
+.. _user_const_value.py@Omega Priors:
+
+Omega Priors
+************
+The parent and child rates for omega are constrained to be their
+true value using the :ref:`smooth_grid_table@const_value`
+column in the smooth_grid table.
+
+.. meta::
+   :keywords: nslist
+
+.. index:: nslist
+
+.. _user_const_value.py@Omega Priors@nslist:
+
+nslist
+======
+Note that the different children have different priors for the
+child random effects which requires using the
+:ref:`child_nslist<rate_table@child_nslist_id>` option in the
+rate table.
+
+.. meta::
+   :keywords: iota, priors
+
+.. index:: iota, priors
+
+.. _user_const_value.py@Iota Priors:
+
+Iota Priors
+***********
+The iota priors are uniform.
+
+.. meta::
+   :keywords: parent
+
+.. index:: parent
+
+.. _user_const_value.py@Iota Priors@Parent:
+
+Parent
+======
+For the parent, the lower (upper) limit is the true value
+divided by ten (multiplied by ten).
+The mean, which is two times the true value, is used for the
+:ref:`start_var_table-name` and :ref:`scale_var_table-name` ;
+see :ref:`init_command-name` .
+
+.. meta::
+   :keywords: data
+
+.. index:: data
+
+.. _user_const_value.py@Data:
+
+Data
+****
+All of the data for this example is direct measurements of the
+:ref:`avg_integrand@Integrand, I_i(a,t)@susceptible`
+population (as a fraction of the initial population).
+
+.. meta::
+   :keywords: random_seed
+
+.. index:: random_seed
+
+.. _user_const_value.py@random_seed:
+
+random_seed
+***********
+Use the clock to seed random number generator, but pass it into
+dismod_at using the :ref:`option table<option_table@random_seed>` :
+
+.. literalinclude:: ../../example/user/const_value.py
+   :lines: 83-84
+   :language: py
+
+.. meta::
+   :keywords: source, code
+
+.. index:: source, code
+
+.. _user_const_value.py@Source Code:
+
+Source Code
+***********
+Given the problem parameters define above, below is the rest of the
+source code for this example:
+
+.. literalinclude:: ../../example/user/const_value.py
+   :lines: 100-388
+   :language: py

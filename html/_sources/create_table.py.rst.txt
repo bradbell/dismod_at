@@ -1,0 +1,21 @@
+.. _create_table.py-name:
+
+!!!!!!!!!!!!!!!
+create_table.py
+!!!!!!!!!!!!!!!
+
+xrst input file: ``example/table/create_table.py``
+
+.. meta::
+   :keywords: create_table.py, create_table, and, unicode:, example, and, test
+
+.. index:: create_table.py, create_table, and, unicode:, example, and, test
+
+.. _create_table.py-title:
+
+create_table and Unicode: Example and Test
+##########################################
+
+.. literalinclude:: ../../example/table/create_table.py
+   :lines: 18-55
+   :language: py

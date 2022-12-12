@@ -1,0 +1,346 @@
+.. _censor_density-name:
+
+!!!!!!!!!!!!!!
+censor_density
+!!!!!!!!!!!!!!
+
+xrst input file: ``xrst/math/censor_density.xrst``
+
+.. meta::
+   :keywords: censor_density, the, censored, gaussian, and, laplace, densities
+
+.. index:: censor_density, the, censored, gaussian, and, laplace, densities
+
+.. _censor_density-title:
+
+The Censored Gaussian and Laplace Densities
+###########################################
+
+.. meta::
+   :keywords: references
+
+.. index:: references
+
+.. _censor_density@References:
+
+References
+**********
+See
+`censoring <https://en.wikipedia.org/wiki/Censoring_(statistics)>`_
+and the heading
+*Likelihoods for mixed continuous-discrete distributions*
+on the
+`wiki page <https://en.wikipedia.org/wiki/Likelihood_function>`_
+for likelihood functions.
+
+.. meta::
+   :keywords: discussion
+
+.. index:: discussion
+
+.. _censor_density@Discussion:
+
+Discussion
+**********
+We use :math:`\mu` for the mean and
+:math:`\delta > 0` for the standard deviation
+of a Gaussian or Laplace random variable :math:`y`.
+We use :math:`c \leq \mu` for the value we are
+censoring the random variable at.
+The censored random variable is defined by
+
+.. math::
+
+   \underline{y} = \left\{ \begin{array}{ll}
+      c & \R{if} \; y \leq c
+      \\
+      y & \R{otherwise}
+   \end{array} \right.
+
+The crucial property is that the
+censored density functions (defined below)
+are smooth function with respect to the mean value :math:`\mu`
+(but not even continuous with respect to :math:`c` or :math:`y`).
+
+.. meta::
+   :keywords: simulation, test
+
+.. index:: simulation, test
+
+.. _censor_density@Simulation Test:
+
+Simulation Test
+***************
+The file ``test/user/censor_density.py`` contains a test
+of maximum likelihood estimation using the continuous-discrete densities
+proposed below.
+
+.. meta::
+   :keywords: gaussian
+
+.. index:: gaussian
+
+.. _censor_density@Gaussian:
+
+Gaussian
+********
+
+.. meta::
+   :keywords: density,, g(y,mu,delta)
+
+.. index:: density,, g(y,mu,delta)
+
+.. _censor_density@Gaussian@Density, G(y,mu,delta):
+
+Density, G(y,mu,delta)
+======================
+The Gaussian density function is given by
+
+.. math::
+
+   G( y , \mu , \delta )
+   =
+   \sqrt{ \frac{1}{ 2 \pi \delta^2 } }
+   \exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
+
+.. meta::
+   :keywords: error, function
+
+.. index:: error, function
+
+.. _censor_density@Gaussian@Error Function:
+
+Error Function
+==============
+The Error function is defined (for :math:`0 \leq x`) by
+
+.. math::
+
+   \R{erf}(x)
+   =
+   \sqrt{ \frac{1}{\pi} } \int_{-x}^{+x} \exp \left( - t^2 \right) \; \R{d} t
+
+Using he change of variables :math:`t = \sqrt{2}^{-1} (y - \mu) / \delta )`
+we have :math:`y = \mu + t \delta \sqrt{2}` and
+
+.. math::
+
+   \R{erf}(x)
+   =
+   \sqrt{ \frac{1}{2 \pi \delta^2} }
+   \int_{\mu - x \delta \sqrt{2}}^{\mu + x \delta \sqrt{2}}
+   \exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
+   \; \R{d} y
+
+Setting :math:`x = \sqrt{2}^{-1} ( \mu - c ) / \delta` we obtain
+
+.. math::
+
+   \R{erf}\left( \sqrt{2}^{-1} ( \mu - c ) / \delta \right)
+   =
+   \sqrt{ \frac{1}{2 \pi \delta^2} }
+   \int_{c}^{2 \mu - c}
+   \exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
+   \; \R{d} y
+
+Note that this integral is negative when :math:`c > \mu`.
+The Gaussian density is symmetric about :math:`y = \mu`
+and its integral from minus infinity to plus infinity is one.
+Hence
+
+.. math::
+
+   \frac{
+      1 - \R{erf}\left( \sqrt{2}^{-1} ( \mu - c ) / \delta \right)
+   }{2}
+   =
+   \sqrt{ \frac{1}{2 \pi \delta^2} }
+   \int_{-\infty}^{c}
+   \exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
+   \; \R{d} y
+
+.. meta::
+   :keywords: censored, density,, g(y,mu,delta,c)
+
+.. index:: censored, density,, g(y,mu,delta,c)
+
+.. _censor_density@Gaussian@Censored Density, G(y,mu,delta,c):
+
+Censored Density, G(y,mu,delta,c)
+=================================
+The censored Gaussian density is defined by
+
+.. math::
+
+   G ( \underline{y} , \mu , \delta , c )
+   =
+   \left\{ \begin{array}{ll}
+   \left( 1 - \R{erf}\left( \sqrt{2}^{-1} (\mu - c) / \delta  \right) \right) / 2
+   & \R{if} \; \underline{y} = c
+   \\
+   G( \underline{y} , \mu , \delta )  & \R{otherwise}
+   \end{array} \right.
+
+This density function is with respect to the
+Lebesgue measure plus an atom with mass one at :math:`\underline{y} = c`.
+
+.. meta::
+   :keywords: difference, between, means
+
+.. index:: difference, between, means
+
+.. _censor_density@Gaussian@Difference Between Means:
+
+Difference Between Means
+========================
+We use :math:`\overline{\underline{y}}` to
+denote the mean after censoring the distribution:
+
+.. math::
+
+   \frac{ \overline{\underline{y}} - \mu }{ \delta }
+   =
+   \frac{c - \mu}{2 \delta }
+   \left( 1 - \R{erf}\left( \sqrt{2}^{-1} (\mu - c) / \delta  \right) \right)
+   +
+   \sqrt{ \frac{1}{ 2 \pi \delta^2 } }
+   \int_c^{+\infty} \frac{y - \mu}{ \delta }
+    \exp \left[ - \frac{1}{2} \left( \frac{y - \mu}{\delta} \right)^2 \right]
+   \; \R{d} y
+
+.. math::
+
+   \frac{ \overline{\underline{y}} - \mu }{ \delta }
+   =
+   \frac{c - \mu}{2 \delta }
+   \left( 1 - \R{erf}\left( \sqrt{2}^{-1} (\mu - c) / \delta  \right) \right)
+   -
+   \sqrt{ \frac{1}{ 2 \pi \delta^2 } }
+   \left[
+    \exp \left( - \frac{1}{2} \left[ \frac{y - \mu}{\delta} \right]^2 \right)
+   \right]_c^{+\infty}
+
+.. math::
+
+   \overline{\underline{y}} - \mu
+   =
+   \frac{c - \mu}{2}
+   \left( 1 - \R{erf}\left( \sqrt{2}^{-1} (\mu - c) / \delta  \right) \right)
+   +
+   \sqrt{ \frac{1}{ 2 \pi } }
+    \exp \left( - \frac{1}{2} \left[ \frac{c - \mu}{\delta} \right]^2 \right)
+
+.. meta::
+   :keywords: laplace
+
+.. index:: laplace
+
+.. _censor_density@Laplace:
+
+Laplace
+*******
+
+.. meta::
+   :keywords: density,, l(y,mu,delta)
+
+.. index:: density,, l(y,mu,delta)
+
+.. _censor_density@Laplace@Density, L(y,mu,delta):
+
+Density, L(y,mu,delta)
+======================
+The Laplace density function is given by
+
+.. math::
+
+   L( y , \mu , \delta )
+   =
+   \sqrt{ \frac{1}{2 \delta^2 } }
+   \exp \left[ - \sqrt{2} \left| \frac{y - \mu}{\delta} \right| \right]
+
+.. meta::
+   :keywords: indefinite, integral
+
+.. index:: indefinite, integral
+
+.. _censor_density@Laplace@Indefinite Integral:
+
+Indefinite Integral
+===================
+
+The indefinite integral with respect to :math:`y`,
+for :math:`x \leq \mu`, is
+
+.. math::
+
+   \int_{-\infty}^{x} L( y , \mu , \delta ) \; \R{d} y
+   =
+   \sqrt{ \frac{1}{2 \delta^2 } }
+   \int_{-\infty}^{x}
+   \exp \left( - \sqrt{2} \frac{\mu - y}{\delta} \right) \; \R{d} y
+
+Using :math:`c \leq \mu`, we obtain
+
+.. math::
+
+   \int_{-\infty}^{c} L( y , \mu , \delta ) \; \R{d} y
+   =
+   \frac{1}{2}
+   \exp \left( - \sqrt{2} \frac{\mu - c}{\delta} \right)
+
+.. meta::
+   :keywords: censored, density,, l(y,mu,delta,c)
+
+.. index:: censored, density,, l(y,mu,delta,c)
+
+.. _censor_density@Laplace@Censored Density, L(y,mu,delta,c):
+
+Censored Density, L(y,mu,delta,c)
+=================================
+The censored Laplace density is defined by
+
+.. math::
+
+   L ( \underline{y} , \mu , \delta , c )
+   =
+   \left\{ \begin{array}{ll}
+   (1 / 2 )
+   \exp \left( - ( \mu - c ) \sqrt{2} / \delta \right)
+      & \R{if} \; \underline{y} = c
+      \\
+      L( \underline{y} , \mu , \delta )
+      & \R{otherwise}
+   \end{array} \right.
+
+This density function is with respect to the
+Lebesgue measure plus an atom with mass one at :math:`\underline{y} = c`.
+
+.. meta::
+   :keywords: difference, between, means
+
+.. index:: difference, between, means
+
+.. _censor_density@Laplace@Difference Between Means:
+
+Difference Between Means
+========================
+We use :math:`\overline{\underline{y}}` to
+denote the mean after censoring the distribution:
+
+.. math::
+
+   \frac{ \overline{\underline{y}} - \mu }{ \delta }
+   =
+   \frac{c - \mu}{2 \delta }
+   \exp \left( - \sqrt{2} \frac{\mu - c}{\delta} \right)
+   +
+   \sqrt{ \frac{1}{2 \delta^2 } }
+   \int_c^{+\infty} \frac{y - \mu}{\delta}
+   \exp \left[ - \sqrt{2} \left| \frac{y - \mu}{\delta} \right| \right]
+   \; \R{d} y
+
+Using integration by parts,
+one can obtain a formula for :math:`\overline{\underline{y}} - \mu`
+in a manner similar to calculation of the
+:ref:`censor_density@Gaussian@Difference Between Means`
+for the Gaussian case.

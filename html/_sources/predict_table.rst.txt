@@ -1,0 +1,163 @@
+.. _predict_table-name:
+
+!!!!!!!!!!!!!
+predict_table
+!!!!!!!!!!!!!
+
+xrst input file: ``xrst/table/predict_table.xrst``
+
+.. meta::
+   :keywords: predict_table, the, predict, table:, average, integrand, predictions
+
+.. index:: predict_table, the, predict, table:, average, integrand, predictions
+
+.. _predict_table-title:
+
+The Predict Table: Average Integrand Predictions
+################################################
+
+.. meta::
+   :keywords: see, also
+
+.. index:: see, also
+
+.. _predict_table@See Also:
+
+See Also
+********
+:ref:`avgint_table-name`
+
+.. meta::
+   :keywords: purpose
+
+.. index:: purpose
+
+.. _predict_table@Purpose:
+
+Purpose
+*******
+This table contains model predictions for the
+:ref:`average integrand<avg_integrand@Average Integrand, A_i>` .
+
+.. meta::
+   :keywords: avgint, subset
+
+.. index:: avgint, subset
+
+.. _predict_table@Avgint Subset:
+
+Avgint Subset
+*************
+For each row in the predict table,
+the *avgint_id* column below identifies
+the corresponding row in the :ref:`avgint_table-name` .
+Only a subset of the rows of the avgint table is included.
+The subset is defined by the following node and covariate conditions:
+
+.. meta::
+   :keywords: node
+
+.. index:: node
+
+.. _predict_table@Avgint Subset@Node:
+
+Node
+====
+The :ref:`node<avgint_table@node_id>` must be the
+:ref:`option_table@Parent Node` , or a
+:ref:`node_table@parent@Descendant` of the parent node.
+
+.. meta::
+   :keywords: covariates
+
+.. index:: covariates
+
+.. _predict_table@Avgint Subset@Covariates:
+
+Covariates
+==========
+All of the
+:ref:`avgint_table@Covariates` must satisfy the
+:ref:`covariate_table@max_difference` criteria.
+
+.. meta::
+   :keywords: predict_id
+
+.. index:: predict_id
+
+.. _predict_table@predict_id:
+
+predict_id
+**********
+This column has type ``integer`` and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+.. meta::
+   :keywords: sample_index
+
+.. index:: sample_index
+
+.. _predict_table@sample_index:
+
+sample_index
+************
+This column has type ``integer`` and specifies the set of
+:ref:`model_variables-name` that the *avg_integrand* corresponds to.
+If :ref:`predict_command@source` is
+``fit_var`` or ``truth_var`` , *sample_index* is null
+(and the corresponding model variables are used).
+Otherwise *source* is ``sample`` and *sample_index*
+is the corresponding value in the
+:ref:`sample_table<sample_table@sample_index>` .
+This column is monotone non-decreasing; i.e. the value in each row
+is greater than or equal the value in the previous row.
+Each
+:ref:`sample_table@sample_index` value
+in the sample table appears multiple times in the predict table,
+once for each *avgint_id* in the
+of the :ref:`predict_table@Avgint Subset` .
+
+.. meta::
+   :keywords: avgint_id
+
+.. index:: avgint_id
+
+.. _predict_table@avgint_id:
+
+avgint_id
+*********
+This column has type ``integer`` and specifies the
+:ref:`avgint_table@avgint_id` that
+*avg_integrand* corresponds to.
+For each *sample_index* value,
+*avgint_id* is monotone increasing and includes every element
+of the :ref:`predict_table@Avgint Subset` .
+
+.. meta::
+   :keywords: avg_integrand
+
+.. index:: avg_integrand
+
+.. _predict_table@avg_integrand:
+
+avg_integrand
+*************
+This column type ``real`` and is the
+:ref:`average integrand<avg_integrand@Average Integrand, A_i>`
+:math:`A_i(u, \theta)`.
+The model variables :math:`(u, \theta)` corresponding to the
+model variables with *sample_index* in :ref:`sample_table-name` .
+The subscript :math:`i` denotes the
+information in the avgint table for the specified
+:ref:`avgint_table@avgint_id` .
+
+.. meta::
+   :keywords: example
+
+.. index:: example
+
+.. _predict_table@Example:
+
+Example
+*******
+The :ref:`predict_command.py-name` is an example that creates this table.

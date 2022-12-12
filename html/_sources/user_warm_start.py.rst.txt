@@ -1,0 +1,62 @@
+.. _user_warm_start.py-name:
+
+!!!!!!!!!!!!!!!!!!
+user_warm_start.py
+!!!!!!!!!!!!!!!!!!
+
+xrst input file: ``example/user/warm_start.py``
+
+.. meta::
+   :keywords: user_warm_start.py, continuing, a, fit, using, ipopt, warm, start
+
+.. index:: user_warm_start.py, continuing, a, fit, using, ipopt, warm, start
+
+.. _user_warm_start.py-title:
+
+Continuing a Fit Using Ipopt Warm Start
+#######################################
+
+.. meta::
+   :keywords: option, table
+
+.. index:: option, table
+
+.. _user_warm_start.py@Option Table:
+
+Option Table
+************
+In the option table defined below,
+*max_num_iter_fixed*  = 5 .
+This fit will terminate when
+the maximum number of iterations is reached.
+The corresponding warning is suppressed by setting
+*warn_on_stderr* = ``false`` .
+The second fit will start where the first left off.
+To see this, set *print_level_fixed*  = 5 (in the option table) and
+:ref:`run this example<user_example@Run One Example>` .
+
+.. meta::
+   :keywords: fixed, trace, table
+
+.. index:: fixed, trace, table
+
+.. _user_warm_start.py@Fixed Trace Table:
+
+Fixed Trace Table
+*****************
+This example uses the :ref:`trace_fixed_table-name`
+to check the number of iterations used.
+
+.. meta::
+   :keywords: source, code
+
+.. index:: source, code
+
+.. _user_warm_start.py@Source Code:
+
+Source Code
+***********
+
+.. literalinclude:: ../../example/user/warm_start.py
+   :lines: 42-247
+   :language: py

@@ -1,0 +1,73 @@
+.. _depend_command-name:
+
+!!!!!!!!!!!!!!
+depend_command
+!!!!!!!!!!!!!!
+
+xrst input file: ``devel/cmd/depend_command.cpp``
+
+.. meta::
+   :keywords: depend_command, the, depend, command
+
+.. index:: depend_command, the, depend, command
+
+.. _depend_command-title:
+
+The Depend Command
+##################
+
+.. meta::
+   :keywords: syntax
+
+.. index:: syntax
+
+.. _depend_command@Syntax:
+
+Syntax
+******
+``dismod_at`` *database* ``depend``
+
+.. meta::
+   :keywords: database
+
+.. index:: database
+
+.. _depend_command@database:
+
+database
+********
+Is an
+http://www.sqlite.org/sqlite/ database containing the
+``dismod_at`` :ref:`input-name` tables which are not modified.
+
+.. meta::
+   :keywords: depend_var_table
+
+.. index:: depend_var_table
+
+.. _depend_command@depend_var_table:
+
+depend_var_table
+****************
+A new :ref:`depend_var_table-name` is created with the information
+that maps a :ref:`var_table@var_id`
+to its meaning in terms of the
+:ref:`model_variables-name` .
+
+.. meta::
+   :keywords: example
+
+.. index:: example
+
+.. _depend_command@Example:
+
+Example
+*******
+The file :ref:`depend_command.py-name` contains an example and test
+using this command.
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   depend_command.py

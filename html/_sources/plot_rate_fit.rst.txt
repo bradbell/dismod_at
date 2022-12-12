@@ -1,0 +1,105 @@
+.. _plot_rate_fit-name:
+
+!!!!!!!!!!!!!
+plot_rate_fit
+!!!!!!!!!!!!!
+
+xrst input file: ``python/dismod_at/plot_rate_fit.py``
+
+.. meta::
+   :keywords: plot_rate_fit, plot, the, rates, for, a, fit
+
+.. index:: plot_rate_fit, plot, the, rates, for, a, fit
+
+.. _plot_rate_fit-title:
+
+Plot The Rates for a Fit
+########################
+
+.. meta::
+   :keywords: syntax
+
+.. index:: syntax
+
+.. _plot_rate_fit@Syntax:
+
+Syntax
+******
+
+| *plot_set* = ``plot_rate_fit`` (
+| |tab| *database* , *pdf_file* , *plot_title* , *rate_set*
+| )
+
+.. meta::
+   :keywords: database
+
+.. index:: database
+
+.. _plot_rate_fit@database:
+
+database
+********
+This ``str`` is the file name for
+an existing dismod_at database that contains the results of a
+:ref:`fit<fit_command-name>` .
+If there is a :ref:`sample_table-name` it is assumed
+it was created using a :ref:`sample_command-name` after the :ref:`fit_command-name` .
+
+.. meta::
+   :keywords: pdf_file
+
+.. index:: pdf_file
+
+.. _plot_rate_fit@pdf_file:
+
+pdf_file
+********
+Is the location where the pdf file containing the plot will be placed.
+
+.. meta::
+   :keywords: plot_title
+
+.. index:: plot_title
+
+.. _plot_rate_fit@plot_title:
+
+plot_title
+**********
+This ``str`` is a title printed at the top of every plot.
+
+.. meta::
+   :keywords: rate_set
+
+.. index:: rate_set
+
+.. _plot_rate_fit@rate_set:
+
+rate_set
+********
+Each element of this ``set`` an ``str`` containing a
+:ref:`rate_table@rate_name`
+that we are plotting the fit for.
+
+.. meta::
+   :keywords: plot_set
+
+.. index:: plot_set
+
+.. _plot_rate_fit@plot_set:
+
+plot_set
+********
+Each element of this ``set`` is a ``str`` containing
+the name of a rate (in *rate_set* ) that was plotted.
+If a rate was not plotted, it is constrained to be zero by the rate table.
+
+.. meta::
+   :keywords: example
+
+.. index:: example
+
+.. _plot_rate_fit@Example:
+
+Example
+*******
+:ref:`user_plot_rate_fit.py-name` .

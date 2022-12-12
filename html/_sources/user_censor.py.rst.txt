@@ -1,0 +1,144 @@
+.. _user_censor.py-name:
+
+!!!!!!!!!!!!!!
+user_censor.py
+!!!!!!!!!!!!!!
+
+xrst input file: ``example/user/censor.py``
+
+.. meta::
+   :keywords: user_censor.py, fitting, data, that, has, negative, values, censored
+
+.. index:: user_censor.py, fitting, data, that, has, negative, values, censored
+
+.. _user_censor.py-title:
+
+Fitting Data That Has Negative Values Censored
+##############################################
+
+.. meta::
+   :keywords: purpose
+
+.. index:: purpose
+
+.. _user_censor.py@Purpose:
+
+Purpose
+*******
+This example uses the
+:ref:`density_table@density_name@cen_gaussian`
+density to represent data that is has its negative value replaced by zero.
+
+.. meta::
+   :keywords: problem, parameters
+
+.. index:: problem, parameters
+
+.. _user_censor.py@Problem Parameters:
+
+Problem Parameters
+******************
+The following values are used to simulate the data and set the priors
+for fitting the data:
+
+.. literalinclude:: ../../example/user/censor.py
+   :lines: 82-84
+   :language: py
+
+.. meta::
+   :keywords: age, and, time, values
+
+.. index:: age, and, time, values
+
+.. _user_censor.py@Age and Time Values:
+
+Age and Time Values
+*******************
+The age and time values do not matter for this problem
+because all the functions are constant in age and time.
+This can be seen by the fact that all of the smoothings have one age
+and one time point.
+
+.. meta::
+   :keywords: variables
+
+.. index:: variables
+
+.. _user_censor.py@Variables:
+
+Variables
+*********
+There is one model variable for this example *iota_true*
+:ref:`iota<avg_integrand@Rate Functions@iota_i(a,t)>`
+the true value used to simulate the data.
+
+.. meta::
+   :keywords: rate, table
+
+.. index:: rate, table
+
+.. _user_censor.py@Rate Table:
+
+Rate Table
+**********
+The :ref:`rate_table-name` only specifies that *iota* for the parent
+is the only nonzero rate for this example.
+In addition, it specifies the smoothing for that rate which has only
+one grid point. Hence there is only one model variable corresponding to
+the rates.
+
+.. meta::
+   :keywords: data, table
+
+.. index:: data, table
+
+.. _user_censor.py@Data Table:
+
+Data Table
+**********
+For this example, all the data is
+:ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` ,
+with a Gaussian density, with mean *iota_true*
+and standard deviation 2* *iota_true* .
+The data is then censored, to be specific,
+values below zero are replaced by the value zero.
+
+.. meta::
+   :keywords: prior, table
+
+.. index:: prior, table
+
+.. _user_censor.py@Prior Table:
+
+Prior Table
+***********
+There is one prior in the :ref:`prior_table-name` for the only
+model variable.
+
+.. meta::
+   :keywords: discussion
+
+.. index:: discussion
+
+.. _user_censor.py@Discussion:
+
+Discussion
+**********
+This fits two data sets.
+The first is simulated using python and put in the :ref:`data_table-name` .
+The second is simulated using the :ref:`simulate_command-name`
+and put in the :ref:`data_sim_table-name` .
+
+.. meta::
+   :keywords: source, code
+
+.. index:: source, code
+
+.. _user_censor.py@Source Code:
+
+Source Code
+***********
+
+.. literalinclude:: ../../example/user/censor.py
+   :lines: 81-308
+   :language: py

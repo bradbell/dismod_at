@@ -1,0 +1,111 @@
+.. _user_no_children.py-name:
+
+!!!!!!!!!!!!!!!!!!!
+user_no_children.py
+!!!!!!!!!!!!!!!!!!!
+
+xrst input file: ``example/user/no_children.py``
+
+.. meta::
+   :keywords: user_no_children.py, case, with, no, children;, i.e.,, no, random, effects
+
+.. index:: user_no_children.py, case, with, no, children;, i.e.,, no, random, effects
+
+.. _user_no_children.py-title:
+
+Case with no Children; i.e., no Random Effects
+##############################################
+
+.. meta::
+   :keywords: integrands
+
+.. index:: integrands
+
+.. _user_no_children.py@Integrands:
+
+Integrands
+**********
+There is an integrand that directly measures each of the model rates; i.e.,
+:ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` ,
+:ref:`avg_integrand@Integrand, I_i(a,t)@remission` ,
+:ref:`avg_integrand@Integrand, I_i(a,t)@mtexcess` , and
+:ref:`avg_integrand@Integrand, I_i(a,t)@mtother` .
+In addition the integrand prevalence is included, but is data values
+are for age zero which corresponds to the
+:ref:`rate_table@rate_name@pini` rate.
+
+.. meta::
+   :keywords: nodes
+
+.. index:: nodes
+
+.. _user_no_children.py@Nodes:
+
+Nodes
+*****
+There are four nodes in this example.
+The world node has one child, north_america.
+The north_america node has two children, united_states and canada.
+The :ref:`parent_node<option_table@Parent Node>` is canada which
+does not have any children.
+
+.. meta::
+   :keywords: data
+
+.. index:: data
+
+.. _user_no_children.py@Data:
+
+Data
+****
+All of the data corresponds to canada.
+There is one data point for each integrand and it is the true value
+for the corresponding rate; i.e., there is no noise in this data.
+
+.. literalinclude:: ../../example/user/no_children.py
+   :lines: 37-51
+   :language: py
+
+.. meta::
+   :keywords: outlier
+
+.. index:: outlier
+
+.. _user_no_children.py@Data@Outlier:
+
+Outlier
+=======
+There is also one outlier at the end of the data table with
+:ref:`data_table@hold_out` equal to one.
+
+.. meta::
+   :keywords: smoothing
+
+.. index:: smoothing
+
+.. _user_no_children.py@Smoothing:
+
+Smoothing
+*********
+There is a smoothing the for each of the possible rates for the
+parent node canada.
+There is no child node smoothing.
+The value priors for this smoothing is uniform with lower limit 1e-4
+and upper limit 1.0. The mean 0.1, is only used as a starting point
+for the optimization.
+The time difference prior for this smoothing is
+gaussian with mean zero and standard deviation 1e-2.
+
+.. meta::
+   :keywords: source, code
+
+.. index:: source, code
+
+.. _user_no_children.py@Source Code:
+
+Source Code
+***********
+
+.. literalinclude:: ../../example/user/no_children.py
+   :lines: 81-314
+   :language: py

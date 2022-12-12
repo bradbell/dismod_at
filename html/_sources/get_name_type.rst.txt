@@ -1,0 +1,111 @@
+.. _get_name_type-name:
+
+!!!!!!!!!!!!!
+get_name_type
+!!!!!!!!!!!!!
+
+xrst input file: ``python/dismod_at/get_name_type.py``
+
+.. meta::
+   :keywords: get_name_type, get, column, names, and, types, in, a, table
+
+.. index:: get_name_type, get, column, names, and, types, in, a, table
+
+.. _get_name_type-title:
+
+Get Column Names and Types in a Table
+#####################################
+
+.. meta::
+   :keywords: syntax
+
+.. index:: syntax
+
+.. _get_name_type@Syntax:
+
+Syntax
+******
+( *col_name* , *col_type* )
+
+    = ``dismod_at.get_name_type`` ( *connection* , *tbl_name* )
+
+.. meta::
+   :keywords: connection
+
+.. index:: connection
+
+.. _get_name_type@connection:
+
+connection
+**********
+is a :ref:`create_connection@connection` for this database.
+
+.. meta::
+   :keywords: table_name
+
+.. index:: table_name
+
+.. _get_name_type@table_name:
+
+table_name
+**********
+is a ``str`` that specifies the name of the table.
+
+.. meta::
+   :keywords: col_name
+
+.. index:: col_name
+
+.. _get_name_type@col_name:
+
+col_name
+********
+is a list of strings containing the column names in the same order as they
+appear in the table.
+
+.. meta::
+   :keywords: col_type
+
+.. index:: col_type
+
+.. _get_name_type@col_type:
+
+col_type
+********
+is a list of strings containing the column types in the same order as
+the columns appear in the table.
+The possible values for the column types are
+``integer`` , ``real`` , ``text`` , or
+``integer primary key`` .
+Note that the types in the database are converted to lower case before
+being returned in *col_type* .
+
+.. meta::
+   :keywords: primary, key
+
+.. index:: primary, key
+
+.. _get_name_type@Primary Key:
+
+Primary Key
+***********
+This routine assumes the primary key is an integer,  corresponds
+to the first column, and has name *tbl_name* _ ``id`` .
+
+.. meta::
+   :keywords: example
+
+.. index:: example
+
+.. _get_name_type@Example:
+
+Example
+*******
+The file :ref:`get_name_type.py-name` is an example use of
+``get_name_type`` .
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   get_name_type.py

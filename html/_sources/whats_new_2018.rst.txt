@@ -1,0 +1,1711 @@
+.. _whats_new_2018-name:
+
+!!!!!!!!!!!!!!
+whats_new_2018
+!!!!!!!!!!!!!!
+
+xrst input file: ``xrst/whats_new/2018.xrst``
+
+.. meta::
+   :keywords: whats_new_2018, changes, and, additions, to, dismod_at, during, 2018
+
+.. index:: whats_new_2018, changes, and, additions, to, dismod_at, during, 2018
+
+.. _whats_new_2018-title:
+
+Changes and Additions to Dismod_at During 2018
+##############################################
+
+.. meta::
+   :keywords: mm-dd
+
+.. index:: mm-dd
+
+.. _whats_new_2018@mm-dd:
+
+mm-dd
+*****
+
+.. meta::
+   :keywords: 12-19
+
+.. index:: 12-19
+
+.. _whats_new_2018@mm-dd@12-19:
+
+12-19
+=====
+The
+:ref:`data_like@Adjusted Standard Deviation, delta_i(theta)@add_var_scale_log` would sometimes fail to converge
+when the initial value of corresponding covariate multiplier
+:ref:`data_like@Measurement Noise Covariates@gamma_j (a, t)` was zero.
+This was because the derivative of the object w.r.t. this
+multiplier was zero even though zero is not the solution.
+This has been fixed by changing the definition when adding variances
+to use *gamma_j* for the variance (instead of the standard deviation).
+The :ref:`user_fit_meas_noise.py-name` example was modified so that it demonstrates
+how the new definition affects the
+:ref:`scaling of gamma<user_fit_meas_noise.py@Scaling Gamma>` .
+
+.. meta::
+   :keywords: 12-15
+
+.. index:: 12-15
+
+.. _whats_new_2018@mm-dd@12-15:
+
+12-15
+=====
+Add options for how the measurement noise effect
+:ref:`option_table@meas_noise_effect` is defined.
+The gives the choice of
+:ref:`adding variances or standard deviations<data_like@Adjusted Standard Deviation, delta_i(theta)@Add Variance or Standard Deviation>` .
+It also gives the choice to
+:ref:`scale<data_like@Adjusted Standard Deviation, delta_i(theta)@Scaling>`
+the added standard deviations for non-log densities.
+
+.. meta::
+   :keywords: 12-14
+
+.. index:: 12-14
+
+.. _whats_new_2018@mm-dd@12-14:
+
+12-14
+=====
+Add :ref:`user_fit_meas_noise.py-name` , an example that fits
+:ref:`gamma<data_like@Measurement Noise Covariates@gamma_j (a, t)>`
+using simulated data.
+
+.. meta::
+   :keywords: 10-30
+
+.. index:: 10-30
+
+.. _whats_new_2018@mm-dd@10-30:
+
+10-30
+=====
+
+#. The *avg_age_split* option was changed to the
+   :ref:`option_table@Age Average Grid@age_avg_split` option.
+   This way the :ref:`age_avg_table-name` does not appear
+   to have the same primary key as the :ref:`age_table-name` .
+#. The
+   :ref:`age_avg_table@Age Average Grid`
+   is now output in the :ref:`age_avg_table-name` to make
+   :ref:`option_table@Age Average Grid@age_avg_split` easier to use.
+#. There was a bug in the age_avg_split option
+   when two splits occurred in the same
+   :ref:`option_table@Age Average Grid@ode_step_size` interval.
+   This has been fixed.
+#. There was a bug in the age_avg_split option
+   when the minimum and maximum age in the :ref:`age_table-name` were equal.
+   This case now results in an error message.
+#. If the :ref:`set option<set_command@option>` command had an empty
+   string for a value, the empty string was placed in the option table.
+   This violated the
+   :ref:`database@Null@Text can be Null, not Empty`
+   rule and has been fixed.
+#. If the :ref:`option_table@Age Average Grid@age_avg_split` was not sorted,
+   the program would error even if the :ref:`set_command-name` was
+   trying to fix it. This has been changed so the set command
+   can fix it.
+#. A check of the file
+   :ref:`avg_age.csv<db2csv_command@age_avg.csv>` was added to the
+   :ref:`db2csv_command.py-name` example.
+
+.. meta::
+   :keywords: 10-22
+
+.. index:: 10-22
+
+.. _whats_new_2018@mm-dd@10-22:
+
+10-22
+=====
+Start work on an
+:ref:`math_abstract-name` to the mathematics of dismod_at.
+
+.. meta::
+   :keywords: 10-21
+
+.. index:: 10-21
+
+.. _whats_new_2018@mm-dd@10-21:
+
+10-21
+=====
+Change the way that average integrands are computed; see
+:ref:`numeric_average-name` .
+This enables using a step size that varies with age; see
+:ref:`age_avg_table@Age Average Grid` .
+Here is one case of a speed comparison for this change using a uniformly
+spaced grid:
+before 4.9 seconds, after 3.6 second.
+Here is the memory comparison for the same case:
+before 288.7 MB, after 121.8 MB.
+This test takes advantage of the fact that the new method only
+integrates one cohort when
+*age_lower* = *age_upper* and
+*time_lower* = *time_upper* .
+It does not use *age_avg_split* to vary the spacing of the age grid.
+
+.. meta::
+   :keywords: 10-13
+
+.. index:: 10-13
+
+.. _whats_new_2018@mm-dd@10-13:
+
+10-13
+=====
+
+#. The :ref:`option_table@Age Average Grid@ode_step_size` documentation
+   was changed to reflect the fact that it is also used for approximating
+   the integrals in the average integrand.
+#. The documentation for the
+   age corresponding to :ref:`rate_table@rate_name@pini`
+   was fixed.
+   To be specific, the corresponding age
+   is the minimum age in the :ref:`age_table-name` ,
+   not the age corresponding to :ref:`age_table@age_id` zero.
+
+.. meta::
+   :keywords: 10-05
+
+.. index:: 10-05
+
+.. _whats_new_2018@mm-dd@10-05:
+
+10-05
+=====
+Fix typos in the
+:ref:`avg_integrand@Data or Avgint Table Notation` .
+To be specific, change :math:`a_i` to :math:`b_i`, :math:`s_i`
+or :math:`t_i` where appropriate.
+
+.. meta::
+   :keywords: 09-30
+
+.. index:: 09-30
+
+.. _whats_new_2018@mm-dd@09-30:
+
+09-30
+=====
+
+#. The *n_data_per_child* argument to the speed test
+   has been replaced by
+   :ref:`user_speed.py@ode_step_size` .
+
+#. Advance to cppad-0180925 and cppad_mixed-0180925.
+   This had the following effect timing result for ``bin/speed.sh`` :
+
+   .. csv-table::
+      :widths: auto
+
+      ,user time,memory
+      before,10.395 sec,1.265 GB
+      after,9.376  sec,1.247 GB
+
+.. meta::
+   :keywords: 09-28
+
+.. index:: 09-28
+
+.. _whats_new_2018@mm-dd@09-28:
+
+09-28
+=====
+The program did not report an error when a
+:ref:`data_table@weight_id` in the data table was null.
+This has been fixed.
+
+.. meta::
+   :keywords: 09-24
+
+.. index:: 09-24
+
+.. _whats_new_2018@mm-dd@09-24:
+
+09-24
+=====
+The :ref:`ode<wish_list@ODE Solution>` wish list entry
+has been extended and moved to the front of the list.
+
+.. meta::
+   :keywords: 09-14
+
+.. index:: 09-14
+
+.. _whats_new_2018@mm-dd@09-14:
+
+09-14
+=====
+An :ref:`smooth_table@Empty` smooth table would cause the
+program to crash.
+An error message is now printed for this case.
+
+.. meta::
+   :keywords: 08-30
+
+.. index:: 08-30
+
+.. _whats_new_2018@mm-dd@08-30:
+
+08-30
+=====
+The documentation for the
+:ref:`rate_table@child_smooth_id` and
+:ref:`rate_table@child_nslist_id` was improved.
+To be specific, these specify priors for the child
+:ref:`rate effects<model_variables@Random Effects, u@Child Rate Effects>`
+and not for the child rates.
+
+.. meta::
+   :keywords: 08-29
+
+.. index:: 08-29
+
+.. _whats_new_2018@mm-dd@08-29:
+
+08-29
+=====
+Advance to ``cppad-20180827`` and ``cppad_mixed-20180829``
+(working on speed).
+
+.. meta::
+   :keywords: 08-22
+
+.. index:: 08-22
+
+.. _whats_new_2018@mm-dd@08-22:
+
+08-22
+=====
+
+#. Add :ref:`dismodat.py-name` to the documentation under the command section.
+#. Advance to cppad-20180820 and cppad_mixed-20180821.
+   This uses a new CppAD feature and resulted in the following
+   change for :ref:`user_speed.py-name` :
+   old_time=9.33 seconds, new_time=7.39 seconds.
+
+.. meta::
+   :keywords: 08-13
+
+.. index:: 08-13
+
+.. _whats_new_2018@mm-dd@08-13:
+
+08-13
+=====
+The fit_data_subset table had a an extra column
+(that was not in the API) named *data_subset_id* which has been removed.
+This extra column was identically equal to the
+:ref:`fit_data_subset_table@fit_data_subset_id` column.
+Note that *fit_data_subset_id* is a foreign key for
+:ref:`data_subset_table@data_subset_id` in the
+data_subset table.
+This follows the :ref:`database@Foreign Key` convention
+for the dismod_at database.
+
+.. meta::
+   :keywords: 08-09
+
+.. index:: 08-09
+
+.. _whats_new_2018@mm-dd@08-09:
+
+08-09
+=====
+
+#. Fix some bugs in :ref:`csv2db_command-name` .
+#. Advance to ``cppad-20180809`` and ``cppad_mixed-20180809`` .
+   This fixes a bug in cppad (that originally showed up in dismod_at testing).
+
+.. meta::
+   :keywords: 08-08
+
+.. index:: 08-08
+
+.. _whats_new_2018@mm-dd@08-08:
+
+08-08
+=====
+Edit the :ref:`wish_list@ODE Solution@Prevalence ODE`
+wish list item.
+
+.. meta::
+   :keywords: 08-07
+
+.. index:: 08-07
+
+.. _whats_new_2018@mm-dd@08-07:
+
+08-07
+=====
+Add the :ref:`csv2db_command-name` wish list items
+(removed on :ref:`2019-09-24<whats_new_2019@mm-dd@09-24>` ).
+
+.. meta::
+   :keywords: 08-06
+
+.. index:: 08-06
+
+.. _whats_new_2018@mm-dd@08-06:
+
+08-06
+=====
+
+#. The measurement integrand name,
+   in the :ref:`get_started_db.py@Discussion`
+   of the get started database,
+   has been corrected from ``mtother`` to ``susceptible`` .
+#. The data column ``data_info`` was changed to ``c_data_info``
+   and a :ref:`get_started_db.py@Discussion`
+   of this column was added to the get started example.
+
+.. meta::
+   :keywords: 07-31
+
+.. index:: 07-31
+
+.. _whats_new_2018@mm-dd@07-31:
+
+07-31
+=====
+Put more emphasis on the difference between the
+:ref:`parent rates<avg_integrand@Rate Functions@Parent Rate, q_k>` ,
+:ref:`child rate effects<avg_integrand@Rate Functions@Child Rate Effect, u_ik>` , and
+:ref:`adjusted rates<avg_integrand@Rate Functions@Adjusted Rate, r_ik>` .
+
+.. meta::
+   :keywords: 07-30
+
+.. index:: 07-30
+
+.. _whats_new_2018@mm-dd@07-30:
+
+07-30
+=====
+
+#. Add the
+   :ref:`run_cmake.sh@build_type` to the
+   usage message that is printed when no command
+   line arguments are give to ``dismod_at`` .
+#. Some dismod_at :ref:`commands<command-name>`
+   (e.g., :ref:`predict_command-name` )
+   were not trapping and reporting exceptions.
+   This has been fixed.
+#. The following sentence was added to the
+   :ref:`wish_list@ODE Solution@Prevalence ODE` item:
+   This formulation of the ODE also have the advantage that it is stable
+   even as :math:`S + C \rightarrow 0`; i.e, it will not get the
+   associated nans cause by division of zero by zero.
+
+.. meta::
+   :keywords: 07-27
+
+.. index:: 07-27
+
+.. _whats_new_2018@mm-dd@07-27:
+
+07-27
+=====
+Add the
+:ref:`wish_list@ODE Solution@Prevalence ODE`
+wish list item.
+
+.. meta::
+   :keywords: 07-26
+
+.. index:: 07-26
+
+.. _whats_new_2018@mm-dd@07-26:
+
+07-26
+=====
+
+.. meta::
+   :keywords: api, change
+
+.. index:: api, change
+
+.. _whats_new_2018@mm-dd@API Change:
+
+API Change
+==========
+The :ref:`predict_table@sample_index` in the
+predict table was changed to be null (not zero) when the
+source for the last predict command is not
+:ref:`predict_command@source@sample` .
+This also change the
+:ref:`db2csv_command@predict.csv@s_index` in the
+``predict.csv`` file generated by the db2csv command
+to be empty (not zero) for this case.
+
+.. meta::
+   :keywords: other, changes
+
+.. index:: other, changes
+
+.. _whats_new_2018@mm-dd@Other Changes:
+
+Other Changes
+=============
+
+#. Improve the discussion of the
+   :ref:`csv2db_command@mtother` data
+   in the db2csv command.
+#. Execute :ref:`db2csv_command-name` at end of :ref:`user_csv2db.py-name` example.
+#. A :ref:`predict_command-name` was added to the end of the user
+   ``csv2db.py`` example and a discussion of these
+   :ref:`csv2db_command@Predictions` was added.
+
+.. meta::
+   :keywords: 07-25
+
+.. index:: 07-25
+
+.. _whats_new_2018@mm-dd@07-25:
+
+07-25
+=====
+
+#. Add mention that, during a ``db2csv`` command,
+   the age-time grid for rates is the same as the user's choice of
+   grid for :ref:`csv2db_command@integrand@mtother` .
+#. Add discussion of why the default the prefix for
+   :ref:`install_unix@Special Requirements@eigen` is different
+   from the other prefixes.
+#. Change the default value of
+   :ref:`run_cmake.sh@build_type` to ``debug`` .
+   You have to change this to get the faster (``release`` )
+   version of dismod_at.
+#. Improve discussion of the
+   :ref:`install_unix@Paths` needed during and after the install process.
+#. Advance to ``cppad_mixed-20180725`` .
+   This should improve detection
+   (during the :ref:`install<install_unix-name>` )
+   of when the default settings for
+   :ref:`run_cmake.sh@extra_cxx_flags` do not work.
+
+.. meta::
+   :keywords: 07-23
+
+.. index:: 07-23
+
+.. _whats_new_2018@mm-dd@07-23:
+
+07-23
+=====
+
+#. Advance to ``cppad-20180723`` .
+#. Fix :ref:`log_table@unix_time` for the end of the commands
+   that use ``dismodat.py`` was mistakenly reported as the same
+   as the begin time.
+   This has been fixed.
+#. Added the :ref:`csv2db_command-name` to help one get started using dismod_at.
+#. More discussion has been added for when an
+   :ref:`set_command@option@init`
+   is required after a set option command.
+
+.. meta::
+   :keywords: 07-21
+
+.. index:: 07-21
+
+.. _whats_new_2018@mm-dd@07-21:
+
+07-21
+=====
+Add restrictions on ( *a* , *t* ) arguments to
+:ref:`create_database@weight_table`
+*fun* ( *a* , *t* ) and smooth_table
+:ref:`fun(a, t)<create_database@smooth_table@fun>`
+in ``create_database`` .
+
+.. meta::
+   :keywords: 07-13
+
+.. index:: 07-13
+
+.. _whats_new_2018@mm-dd@07-13:
+
+07-13
+=====
+Advance to ``cppad_mixed-20180713`` .
+
+.. meta::
+   :keywords: 06-30
+
+.. index:: 06-30
+
+.. _whats_new_2018@mm-dd@06-30:
+
+06-30
+=====
+Advance to
+``cppad-20180630`` ,
+``cppad_mixed-20180630`` ,
+and remove
+``checkpoint_newton_step`` from :ref:`run_cmake.sh-name` .
+This should make be faster and use less memory when
+:ref:`option_table@Optimize Fixed Only@quasi_fixed` is false.
+For the :ref:`user_speed.py-name` example with
+*n_children* =30 ,
+*n_data_per_child* =20 , and
+*quasi_fixed* = ``false``
+the elapsed time improved from
+``14.1`` to ``8.3`` seconds.
+
+.. meta::
+   :keywords: 06-29
+
+.. index:: 06-29
+
+.. _whats_new_2018@mm-dd@06-29:
+
+06-29
+=====
+Advance to ``cppad-20180627`` and ``cppad_mixed-20180629`` .
+Again this is expected to be an improvement to the optimization
+of cppad functions when
+:ref:`run_cmake.sh@build_type` is ``release`` .
+
+.. meta::
+   :keywords: 06-21
+
+.. index:: 06-21
+
+.. _whats_new_2018@mm-dd@06-21:
+
+06-21
+=====
+
+#. Add text about failures during the dismod_at install correctness
+   :ref:`tests<install_unix@dismod_at@Test>` .
+#. The :ref:`init_command-name` and :ref:`db2csv_command-name` would hang
+   if :ref:`node_table@parent` and *node_id*
+   were equal in the node table.
+   An error message is now generated
+   for any case where a node was a descendant of itself.
+
+.. meta::
+   :keywords: 06-20
+
+.. index:: 06-20
+
+.. _whats_new_2018@mm-dd@06-20:
+
+06-20
+=====
+Advance to ``cppad-20180620`` and ``cppad_mixed-20180620`` .
+This should use less memory, and increase speed,
+during the optimization of cppad functions,
+which is only done when
+:ref:`run_cmake.sh@build_type` is ``release`` .
+
+.. meta::
+   :keywords: 06-18
+
+.. index:: 06-18
+
+.. _whats_new_2018@mm-dd@06-18:
+
+06-18
+=====
+Change the set command  so that the possible sources include the
+:ref:`scale, truth<set_command@source@start, scale, truth>` tables.
+
+.. meta::
+   :keywords: 06-14
+
+.. index:: 06-14
+
+.. _whats_new_2018@mm-dd@06-14:
+
+06-14
+=====
+Advance to ``cppad-20180613`` and ``cppad_mixed-20180614`` .
+This should use less memory during the optimization of cppad functions,
+which is only done when
+:ref:`run_cmake.sh@build_type` is ``release`` .
+In addition, it should fix a problem with
+``cppad_mixed`` finding the file ``cholmod.h``
+on some systems.
+
+.. meta::
+   :keywords: 06-09
+
+.. index:: 06-09
+
+.. _whats_new_2018@mm-dd@06-09:
+
+06-09
+=====
+Advance to using version 20180609 of
+:ref:`install_unix@Special Requirements@cppad_mixed` .
+This changes ``suitesparse`` from a special requirement to a
+:ref:`system requirement<install_unix@System Requirements@suitesparse>` .
+
+.. meta::
+   :keywords: 06-04
+
+.. index:: 06-04
+
+.. _whats_new_2018@mm-dd@06-04:
+
+06-04
+=====
+Advance to using version 20180604 of
+:ref:`install_unix@Special Requirements@cppad` and
+:ref:`install_unix@Special Requirements@cppad_mixed` .
+This will probably have no effect but might reduce the amount of memory
+``dismod_at`` uses.
+
+.. meta::
+   :keywords: 05-24
+
+.. index:: 05-24
+
+.. _whats_new_2018@mm-dd@05-24:
+
+05-24
+=====
+A wish list :ref:`wish_list@meas_std` entry was added
+and the minimum_meas_cv entry was removed (because it was completed).
+
+.. meta::
+   :keywords: 05-23
+
+.. index:: 05-23
+
+.. _whats_new_2018@mm-dd@05-23:
+
+05-23
+=====
+**Warning** : this is not a backward compatible change to the user API.
+The
+``minimum_meas_cv`` option was removed from the :ref:`option_table-name`
+and the column
+:ref:`integrand_table@minimum_meas_cv`
+was added to the integrand table.
+This enable one to used different
+minimum measurement coefficients of variation for different integrands.
+
+.. meta::
+   :keywords: 05-21
+
+.. index:: 05-21
+
+.. _whats_new_2018@mm-dd@05-21:
+
+05-21
+=====
+Advance to using
+:ref:`cppad-20180521<install_unix@Special Requirements@cppad>` , and
+:ref:`cppad_mixed-20180521<install_unix@Special Requirements@cppad_mixed>` .
+This should both reduce memory usage.
+
+.. meta::
+   :keywords: 05-14
+
+.. index:: 05-14
+
+.. _whats_new_2018@mm-dd@05-14:
+
+05-14
+=====
+There was a bug in the simulation of age difference and time
+difference prior means introduced on
+:ref:`04-24<whats_new_2018-name>` .
+To be specific :math:`\sigma`
+was being used where :math:`\delta` should have been.
+
+.. meta::
+   :keywords: 05-09
+
+.. index:: 05-09
+
+.. _whats_new_2018@mm-dd@05-09:
+
+05-09
+=====
+A minimum_meas_cv and
+a :ref:`command diagram<wish_list@Command Diagrams>` entry
+were added to the wish list.
+The minimum_meas_cv entry has been completed; see
+:ref:`integrand_table@minimum_meas_cv` .
+
+.. meta::
+   :keywords: 05-08
+
+.. index:: 05-08
+
+.. _whats_new_2018@mm-dd@05-08:
+
+05-08
+=====
+Round off error could make some values in :ref:`fit_var_table-name`
+not satisfy the lower and upper limits for the corresponding variables.
+This has been fixed.
+
+.. meta::
+   :keywords: 05-07
+
+.. index:: 05-07
+
+.. _whats_new_2018@mm-dd@05-07:
+
+05-07
+=====
+Advance to using
+:ref:`cppad-20180507<install_unix@Special Requirements@cppad>` , and
+:ref:`cppad_mixed-20180507<install_unix@Special Requirements@cppad_mixed>` .
+This should both increase speed and reduce memory usage.
+
+.. meta::
+   :keywords: 05-05
+
+.. index:: 05-05
+
+.. _whats_new_2018@mm-dd@05-05:
+
+05-05
+=====
+
+#. The text describing the purpose of the
+   :ref:`prior table<prior_table@Purpose>` ,
+   :ref:`smooth table<smooth_table@Purpose>` , and
+   :ref:`smooth_grid table<smooth_grid_table@Purpose>`
+   was improved.
+#. The :ref:`model_variables-name` section was improved.
+   To be specific,
+   the term subvector was changed to group of variables
+   and more mention was made of the corresponding function.
+
+.. meta::
+   :keywords: 05-04
+
+.. index:: 05-04
+
+.. _whats_new_2018@mm-dd@05-04:
+
+05-04
+=====
+
+#. Advance to using
+   :ref:`cppad-20180503<install_unix@Special Requirements@cppad>` , and
+   :ref:`cppad_mixed-20180503<install_unix@Special Requirements@cppad_mixed>` .
+   This should reduce the amount of memory used
+   without adversely affecting its speed.
+#. Use
+   :ref:`child rate effect<model_variables@Random Effects, u@Child Rate Effects>`
+   when referring to the a random effect
+   :ref:`u_ik<avg_integrand@Rate Functions@Child Rate Effect, u_ik>` .
+   This distinguishes it from the corresponding rate for that child
+   :ref:`r_ik<avg_integrand@Rate Functions@Adjusted Rate, r_ik>` .
+
+.. meta::
+   :keywords: 05-02
+
+.. index:: 05-02
+
+.. _whats_new_2018@mm-dd@05-02:
+
+05-02
+=====
+
+#. It is possible for the :ref:`start_var_table-name` values to violate
+   the lower and upper limits for a variable.
+   An error message that specifies which variable's starting value
+   violates the constraints is printed.
+   (The fit used to terminate with no message when this occurred.)
+#. The :ref:`sample simulate<sample_command@simulate>`
+   used to start its fits at the :ref:`truth_var_table-name` values.
+   This has been changed to use the :ref:`start_var_table-name` values.
+
+.. meta::
+   :keywords: 04-30
+
+.. index:: 04-30
+
+.. _whats_new_2018@mm-dd@04-30:
+
+04-30
+=====
+
+#. A description of the log entries when
+   using the :ref:`dismodat.py<dismodat.py@Log Table>` syntax was added.
+#. The documentation for log entry at the end of a command
+   was corrected from ``done`` to
+   :ref:`end<log_table@message_type@command>` .
+#. The ``sql_command`` was modified to return its
+   :ref:`sql_command@result` .
+#. The under construction warning was removed from the
+   :ref:`modify_command-name` .
+
+.. meta::
+   :keywords: 04-26
+
+.. index:: 04-26
+
+.. _whats_new_2018@mm-dd@04-26:
+
+04-26
+=====
+
+#. The columns
+   :ref:`db2csv_command@variable.csv@sim_v, sim_a, sim_t`
+   were added to the
+   :ref:`db2csv_command@variable.csv` file.
+#. The :ref:`modify_command-name` was marked as under construction.
+
+.. meta::
+   :keywords: 04-25
+
+.. index:: 04-25
+
+.. _whats_new_2018@mm-dd@04-25:
+
+04-25
+=====
+
+#. Add Instructions for running one
+   :ref:`get_started<get_started@Run One Example>` or
+   :ref:`user<user_example@Run One Example>` .
+#. Improve the :ref:`user_fit_random.py-name` example.
+#. Improve ``user_fit_fixed.py`` and move it to
+   :ref:`user_fit_fixed_both.py-name` .
+#. Add the ``user_sample_simple.py`` example.
+#. There was a bug in the :ref:`sample_command-name` and the
+   fit :ref:`fit_command@simulate_index` when
+   the data set was empty. These have been fixed.
+#. The :ref:`fit_command@simulate_index@prior_sim_table` was
+   note being used to replace the prior means when fitting with a
+   *simulate_index* .
+   This has been fixed.
+
+.. meta::
+   :keywords: 04-24
+
+.. index:: 04-24
+
+.. _whats_new_2018@mm-dd@04-24:
+
+04-24
+=====
+Change the simulate command to also output the
+:ref:`simulate_command@prior_sim_table` .
+Use this table to include variation of the prior means when using the
+``sample`` command with the
+:ref:`sample_command@simulate` method;
+see :ref:`posterior@Simulation` in the discussion
+of the posterior distribution for maximum likelihood estimates.
+
+.. meta::
+   :keywords: 04-23
+
+.. index:: 04-23
+
+.. _whats_new_2018@mm-dd@04-23:
+
+04-23
+=====
+Improve the description for
+:ref:`posterior@Simulation` from the posterior
+distribution of maximum likelihood estimators that use priors.
+
+.. meta::
+   :keywords: 04-22
+
+.. index:: 04-22
+
+.. _whats_new_2018@mm-dd@04-22:
+
+04-22
+=====
+Add a proof that prevalence does not depend on other cause mortality; see
+:ref:`prev_dep-name` .
+
+.. meta::
+   :keywords: 04-21
+
+.. index:: 04-21
+
+.. _whats_new_2018@mm-dd@04-21:
+
+04-21
+=====
+**Warning** : this is not a backward compatible change to the user API.
+Change the name of the ``simulate_table`` to :ref:`data_sim_table-name` .
+In the data sim table change ``simulate_value`` to
+:ref:`data_sim_table@data_sim_value` and
+``simulate_delta`` to ``data_sim_delta`` .
+
+.. meta::
+   :keywords: 04-16
+
+.. index:: 04-16
+
+.. _whats_new_2018@mm-dd@04-16:
+
+04-16
+=====
+
+#. Add a linear matrix :math:`B` to the prior in
+   :ref:`posterior@Lemma 2` so that it can apply to
+   computing the posterior statistics when we have difference priors.
+#. Add :ref:`posterior@Simulation`
+   to the posterior simulation discussion.
+
+.. meta::
+   :keywords: 04-13
+
+.. index:: 04-13
+
+.. _whats_new_2018@mm-dd@04-13:
+
+04-13
+=====
+
+#. Add some text to make it easier to follow
+   the final step in the :ref:`posterior@Lemma 2@Proof`
+   of Lemma 2 of the posterior distribution section.
+#. Print an error and exit when the
+   set option :ref:`set_command@option@name` is not a valid choice
+   (the program used to put the invalid option in the option table).
+
+.. meta::
+   :keywords: 04-12
+
+.. index:: 04-12
+
+.. _whats_new_2018@mm-dd@04-12:
+
+04-12
+=====
+
+#. There is a problem with using the sample command
+   :ref:`sample_command@simulate` method.
+   The new :ref:`posterior-name` model section discusses the problem.
+#. The requirements for the
+   last age (last time) priors were changed so they do not need to be null;
+   see null under
+   :ref:`dage_prior_id<smooth_grid_table@dage_prior_id@null>` and
+   :ref:`dtime_prior_id<smooth_grid_table@dtime_prior_id@null>` .
+   This made it possible to modify the example
+   :ref:`user_change_grid.py-name` so that it removes the
+   last age (instead of one in the middle of the grid)
+   without having to change any *dage_prior_id* values.
+   There is a problem with using the sample command
+   :ref:`sample_command@simulate` method.
+   The model section :ref:`posterior-name` discusses the problem.
+
+.. meta::
+   :keywords: 04-11
+
+.. index:: 04-11
+
+.. _whats_new_2018@mm-dd@04-11:
+
+04-11
+=====
+Instructions for
+:ref:`smooth_table@Removing an Age or Time`
+from a smoothing grid were added.
+This is useful when one determines (through fitting) that there is
+not enough data to determine a variable, or that a variable is nearly
+linear in a region.
+
+.. meta::
+   :keywords: 04-10
+
+.. index:: 04-10
+
+.. _whats_new_2018@mm-dd@04-10:
+
+04-10
+=====
+The ``fit_random.py`` user example has been improved including a
+:ref:`user_fit_random.py@Discussion` of what is going on.
+
+.. meta::
+   :keywords: 04-09
+
+.. index:: 04-09
+
+.. _whats_new_2018@mm-dd@04-09:
+
+04-09
+=====
+There was a mistake in the
+:ref:`get_started_db.py@Discussion` of the
+``get_started_db.py`` example.
+The adjusted other cause mortality for this example is
+:math:`\exp ( \alpha x ) \omega` not :math:`\alpha x \omega`.
+This has been fixed.
+
+.. meta::
+   :keywords: 04-08
+
+.. index:: 04-08
+
+.. _whats_new_2018@mm-dd@04-08:
+
+04-08
+=====
+Some uses have complained that it is hard to navigate the documentation.
+The links at the top of every page have been changed in an attempt to
+make this clearer.
+
+.. meta::
+   :keywords: 04-07
+
+.. index:: 04-07
+
+.. _whats_new_2018@mm-dd@04-07:
+
+04-07
+=====
+
+#. Add
+   :ref:`option_table@Optimize Fixed Only@limited_memory_max_history_fixed`
+   to the option table.
+   The default for this option was previously hard coded into the program
+   and could not be changed.
+   As it turns out, we seem to get better convergence with larger values for
+   this option when
+   :ref:`option_table@Optimize Fixed Only@quasi_fixed` true.
+#. The documentation for the optimizer options have been split up into
+   three groups:
+   :ref:`fixed and random<option_table@Optimize Fixed and Random>` ,
+   :ref:`fixed only<option_table@Optimize Fixed Only>` , and
+   :ref:`random only<option_table@Optimize Random Only>` .
+
+.. meta::
+   :keywords: 04-06
+
+.. index:: 04-06
+
+.. _whats_new_2018@mm-dd@04-06:
+
+04-06
+=====
+
+#. The ``init`` command documentation was improved to include a
+   list of the :ref:`init_command@Deleted Tables` .
+#. The :ref:`depend_var_table-name` was added to the set of tables deleted by
+   the ``init`` command
+   because it must be the same length as the :ref:`var_table-name` or the
+   :ref:`db2csv_command-name` will fail.
+#. The db2csv command was improved so that it prints
+   an error message when the length of any of the variable tables is not
+   the same as the :ref:`var_table-name` .
+#. Advance to ``cppad_mixed-20180406`` .
+   This allows for testing some new ideas, but does not yet have any effect on
+   ``dismod_at`` .
+
+.. meta::
+   :keywords: 03-21
+
+.. index:: 03-21
+
+.. _whats_new_2018@mm-dd@03-21:
+
+03-21
+=====
+In the definition of
+:ref:`delta_i<data_like@Adjusted Standard Deviation, delta_i(theta)>` ,
+The text
+:math:`delta_i ( \theta )` was changed to :math:`\delta_i ( \theta )`.
+
+.. meta::
+   :keywords: 03-13
+
+.. index:: 03-13
+
+.. _whats_new_2018@mm-dd@03-13:
+
+03-13
+=====
+The documentation of the restrictions on the priors for the
+:ref:`random effects<model_variables@Random Effects, u>` has been improved.
+See
+:ref:`rate_table@Child Value Priors` and
+:ref:`rate_table@Child Difference Priors` .
+In addition, the error messages when these restrictions are violated
+has also been improved.
+
+.. meta::
+   :keywords: 03-10
+
+.. index:: 03-10
+
+.. _whats_new_2018@mm-dd@03-10:
+
+03-10
+=====
+The install :ref:`download<install_unix@Download dismod_at.git>` procedure was changed
+to use the following command to determine the version number:
+::
+
+   grep '^SET(dismod_at_version' CMakeLists.txt
+
+.. meta::
+   :keywords: 03-08
+
+.. index:: 03-08
+
+.. _whats_new_2018@mm-dd@03-08:
+
+03-08
+=====
+There was a mistake in the error message for wrong column
+type detected in an :ref:`input-name` table.
+To be specific, a syntax error would occur on the line
+::
+
+   msg  = 'expected type ' + ty ++  ' for column ' + name
+
+This was fixed by changing ``++`` to ``+`` .
+
+.. meta::
+   :keywords: 03-06
+
+.. index:: 03-06
+
+.. _whats_new_2018@mm-dd@03-06:
+
+03-06
+=====
+
+#. Some users were using the
+   type names ``INTEGER`` , ``REAL`` , and ``TEXT`` .
+   The database specifications have been extended to allow for these
+   :ref:`database@Type Names` , and the necessary changes were made.
+#. The error messaging when :ref:`db2csv_command-name` detected an invalid
+   :ref:`database@Primary Key` has been improved.
+#. Change :ref:`db2csv_command-name` so it checks the type of all the columns
+   in the :ref:`input-name` tables.
+
+.. meta::
+   :keywords: 02-20
+
+.. index:: 02-20
+
+.. _whats_new_2018@mm-dd@02-20:
+
+02-20
+=====
+Advance to ``cppad_mixed-20180220`` .
+This fixes a problem, for some compilers, where some friend functions in
+``cppad_mixed.hpp`` were not defined.
+
+.. meta::
+   :keywords: 02-17
+
+.. index:: 02-17
+
+.. _whats_new_2018@mm-dd@02-17:
+
+02-17
+=====
+Change the :ref:`user_diabetes.py-name` example so that it constrains the
+child omega rates to vary with age and time using the
+:ref:`user_diabetes.py@Problem Parameters@parent_age_grid`
+and *parent_time_grid* .
+
+.. meta::
+   :keywords: 02-14
+
+.. index:: 02-14
+
+.. _whats_new_2018@mm-dd@02-14:
+
+02-14
+=====
+
+#. Add
+   :ref:`user_diabetes.py@Problem Parameters@child_age_grid`
+   and
+   :ref:`user_diabetes.py@Problem Parameters@child_time_grid`
+   to the diabetes example problem parameters.
+#. Improve documentation of
+   :ref:`rate_table@child_nslist_id` .
+
+.. meta::
+   :keywords: 02-13
+
+.. index:: 02-13
+
+.. _whats_new_2018@mm-dd@02-13:
+
+02-13
+=====
+The changes below are for :ref:`user_diabetes.py-name` :
+
+#. Add
+   :ref:`user_diabetes.py@Problem Parameters@random_seed`
+   and
+   :ref:`user_diabetes.py@Problem Parameters@tolerance_fixed`
+   to the problem parameters.
+#. Change
+   :ref:`user_diabetes.py@Problem Parameters@fit_with_noise_in_data`
+   to be false, so less data can result in tests passing; i.e,
+   makes automated testing faster.
+#. Change max_abs_rel_err to
+   :ref:`user_diabetes.py@Problem Parameters@accept_rel_err` .
+#. Change
+   :ref:`user_diabetes.py@Problem Parameters@ode_step_size`
+   to be larger to make the automated testing run faster.
+
+.. meta::
+   :keywords: 02-12
+
+.. index:: 02-12
+
+.. _whats_new_2018@mm-dd@02-12:
+
+02-12
+=====
+The changes below are for :ref:`user_diabetes.py-name` :
+
+#. Add two child nodes (random effects) to the
+   :ref:`user_diabetes.py@Problem Parameters@node_list` .
+#. Changes so the example with random effects runs faster:
+   Increase the
+   :ref:`tolerance_fixed<option_table@Optimize Fixed and Random@tolerance>` .
+   Reduce the number of points in the
+   :ref:`age<user_diabetes.py@Problem Parameters@parent_age_grid>` and
+   :ref:`time<user_diabetes.py@Problem Parameters@parent_time_grid>` grids.
+#. Set the :ref:`scale_var_table-name` equal to the :ref:`start_var_table-name` .
+   This avoids nans during evaluation of the objective with random effects.
+#. Optimize first with no random effects and then use that as a starting
+   point for optimizing with random effects.
+#. Fix a list by changing it from time_index_rate_parent to time_index_rate_child.
+#. Change number of time grid points in random effects from two to one
+   (random effects are constant for this example).
+
+.. meta::
+   :keywords: 02-11
+
+.. index:: 02-11
+
+.. _whats_new_2018@mm-dd@02-11:
+
+02-11
+=====
+
+#. Advance to ``cppad_mixed-20180208``
+   (no change from user's perspective).
+#. Change ``db2csv_command`` so that it displays *eta_v*
+   when ever it affects the fixed effects
+   :ref:`scaling<prior_table@eta@Scaling Fixed Effects>` ; see
+   :ref:`db2csv_command@variable.csv@prior_info` .
+
+The changes below are for :ref:`user_diabetes.py-name` :
+
+#. Remove two priors that are no longer being used.
+#. Change the priors for the rates so use log
+   :ref:`scaling<prior_table@eta@Scaling Fixed Effects>`
+   during the optimization process.
+#. Add
+   :ref:`user_diabetes.py@Problem Parameters@derivative_test_fixed` , and
+   :ref:`user_diabetes.py@Problem Parameters@mulcov_dict`
+   to the set of problem parameters.
+#. Increase the number of points in the age and time grids.
+#. Correct documentation for covariate
+   :ref:`user_diabetes.py@Covariates@Multipliers` .
+
+.. meta::
+   :keywords: 02-09
+
+.. index:: 02-09
+
+.. _whats_new_2018@mm-dd@02-09:
+
+02-09
+=====
+
+#. Detect and report an error when a data table
+   :ref:`density<data_table@density_id>` is ``log_students`` and
+   :ref:`data_table@eta` is less than zero or null.
+#. Update the values used for *option_name* in the
+   :ref:`option_table.py-name` example.
+
+.. meta::
+   :keywords: 02-08
+
+.. index:: 02-08
+
+.. _whats_new_2018@mm-dd@02-08:
+
+02-08
+=====
+
+#. Add :ref:`start_var<set_command@source@start, scale, truth>` to the possible
+   sources for the ``set`` command.
+#. Advance to ``cppad_mixed-20180208`` .
+   This fixes a bug in the Laplace
+   :ref:`density<data_table@density_id>` in the data table when
+   :ref:`option_table@Optimize Fixed Only@quasi_fixed` was ``false`` .
+#. Detect and report an error when the density in the data table is
+   :ref:`density_table@Notation@Nonsmooth` .
+
+.. meta::
+   :keywords: 02-05
+
+.. index:: 02-05
+
+.. _whats_new_2018@mm-dd@02-05:
+
+02-05
+=====
+Advance to ``cppad_mixed-20180205`` .
+This is expected to improve the scaling of the fixed effect optimization
+(in some cases).
+
+.. meta::
+   :keywords: 02-04
+
+.. index:: 02-04
+
+.. _whats_new_2018@mm-dd@02-04:
+
+02-04
+=====
+The variable.csv :ref:`db2csv_command@variable.csv@start` column
+was only correct when
+:ref:`db2csv_command@variable.csv@var_type` was ``rate`` .
+This has been fixed.
+The changes below are for :ref:`user_diabetes.py-name` :
+
+#. Add
+   :ref:`user_diabetes.py@Problem Parameters@truth2start` ,
+   :ref:`user_diabetes.py@Problem Parameters@accept_rel_err` ,
+   to the problem parameters.
+#. Add fitting of multipliers for the following covariates:
+   market scan 2000 on
+   :ref:`mulcov_table@mulcov_type@meas_value` ,
+   body mass index and sex on the
+   :ref:`mulcov_table@mulcov_type@rate_value` for iota.
+
+.. meta::
+   :keywords: 02-03
+
+.. index:: 02-03
+
+.. _whats_new_2018@mm-dd@02-03:
+
+02-03
+=====
+The age and time limits in the
+:ref:`db2csv_command@data.csv` file were rounded off
+(as are most of its other columns)
+to reduce the space used when viewing the columns in a spread sheet program.
+
+The changes below are for :ref:`user_diabetes.py-name` :
+
+#. Make the standard deviations in the parent rate differences
+   :ref:`user_diabetes.py@Problem Parameters` .
+#. Change :ref:`user_diabetes.py@Problem Parameters@node_list`
+   example to only the parent node.
+#. Add
+   :ref:`user_diabetes.py@Problem Parameters@integrand_list` ,
+   :ref:`user_diabetes.py@Problem Parameters@ode_step_size` ,
+   :ref:`user_diabetes.py@Problem Parameters@meas_repeat` ,
+   :ref:`user_diabetes.py@Problem Parameters@quasi_fixed` ,
+   to the problem parameters.
+
+.. meta::
+   :keywords: 02-02
+
+.. index:: 02-02
+
+.. _whats_new_2018@mm-dd@02-02:
+
+02-02
+=====
+All these changes are to :ref:`user_diabetes.py-name`
+which is still under construction.
+
+#. Added age and time variation to omega and chi.
+#. Increased number of optimizer iterations because
+   there is feed back from the initial iota to prevalence at all ages.
+#. Increase number of age grid points to 9
+   so ages are closer to being integer valued.
+#. The :ref:`user_diabetes.py@Problem Parameters`
+   were moved into the documentation section of the this example.
+
+.. meta::
+   :keywords: 02-01
+
+.. index:: 02-01
+
+.. _whats_new_2018@mm-dd@02-01:
+
+02-01
+=====
+Added time variation to :ref:`rate_table@rate_name@iota` in the
+:ref:`user_diabetes.py-name` example.
+This example is still under construction, but it has some interesting
+techniques for simulating data and testing models.
+
+.. meta::
+   :keywords: 01-31
+
+.. index:: 01-31
+
+.. _whats_new_2018@mm-dd@01-31:
+
+01-31
+=====
+
+#. The :ref:`db2csv_command@variable.csv@start` column
+   was added to the ``variable.csv`` file created by the
+   :ref:`db2csv_command-name` .
+#. The :ref:`db2csv_command.py-name` example was improved
+   to better demonstrate (and test) which field in
+   :ref:`db2csv_command@variable.csv`
+   are empty
+
+.. meta::
+   :keywords: 01-30
+
+.. index:: 01-30
+
+.. _whats_new_2018@mm-dd@01-30:
+
+01-30
+=====
+Improve the documentation for the
+:ref:`create_database@smooth_table` argument to the
+``create_database`` python function.
+
+.. meta::
+   :keywords: 01-28
+
+.. index:: 01-28
+
+.. _whats_new_2018@mm-dd@01-28:
+
+01-28
+=====
+
+#. Add mention that
+   :ref:`predict_table@sample_index` is always zero when the
+   source for the predict command is
+   :ref:`predict_command@source@fit_var` or
+   :ref:`predict_command@source@truth_var` .
+#. Mention that under normal circumstances,
+   :ref:`option_table@Optimize Fixed and Random@derivative_test`
+   should be ``none`` .
+
+.. meta::
+   :keywords: 01-26
+
+.. index:: 01-26
+
+.. _whats_new_2018@mm-dd@01-26:
+
+01-26
+=====
+
+#. A special discussion of the prior mean,
+   in the case where the density is
+   :ref:`prior_table@mean@uniform` ,
+   was added.
+#. Improve error message when number of unique ages (times)
+   :ref:`smooth_grid_table-name` does not agree with
+   the corresponding :ref:`smooth_table@n_age`
+   ( :ref:`smooth_table@n_time` ) in smooth table.
+#. The definition of the
+   :ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>`
+   for the log transformed densities was changed so that the standard deviation
+   effect multiplies
+   :ref:`Delta<data_like@Notation@Minimum CV Standard Deviation, Delta_i>` .
+#. There was a bug in how :ref:`db2csv_command-name` determined the reference value
+   for covariates in the :ref:`avgint_table-name` .
+   This has been fixed.
+
+.. meta::
+   :keywords: 01-25
+
+.. index:: 01-25
+
+.. _whats_new_2018@mm-dd@01-25:
+
+01-25
+=====
+Add mention that the :ref:`simulate_command@meas_value`
+is not used during the simulate command.
+
+.. meta::
+   :keywords: 01-24
+
+.. index:: 01-24
+
+.. _whats_new_2018@mm-dd@01-24:
+
+01-24
+=====
+Change the specification for the
+:ref:`create_database@smooth_table` function
+
+   ( *v* , *da* , *dt* ) = *fun* ( *a* , *t* )
+
+so that ``None`` can be returned for *da* and *dt*
+when there is no such forward difference.
+In addition, change the :ref:`user_example-name` examples to use this feature.
+
+.. meta::
+   :keywords: 01-23
+
+.. index:: 01-23
+
+.. _whats_new_2018@mm-dd@01-23:
+
+01-23
+=====
+
+#. Improve documentation of which data points require a separate solution of the
+   :ref:`integrand_table@integrand_name@ODE` .
+   In addition, we added a discussion of the
+   purpose of the ODE grid.
+#. Advance to ``cppad_mixed-20180123`` .
+   This fixed a bug in ``cppad_mixed-20180122`` .
+
+.. meta::
+   :keywords: 01-22
+
+.. index:: 01-22
+
+.. _whats_new_2018@mm-dd@01-22:
+
+01-22
+=====
+
+#. Advance to ``cppad_mixed-20180122`` .
+   This only makes sure the new version works
+   and should not result in any change to ``dismod-at`` .
+#. Improve the instructions for combining both
+   :ref:`run_cmake.sh@Debug and Release`
+   versions of dismod_at on the same system.
+
+.. meta::
+   :keywords: 01-21
+
+.. index:: 01-21
+
+.. _whats_new_2018@mm-dd@01-21:
+
+01-21
+=====
+
+#. Include discussion of the
+   :ref:`weighted residual<statistic@Weighted Residual Function, R>`
+   in the :ref:`simulate_command-name` documentation.
+#. Some other minor improvements and corrections were made
+   to the documentation.
+#. The calculation of the
+   :ref:`data_sim_table@data_sim_value`
+   was corrected to allow for negative values in
+   :ref:`density_table@Notation@Linear` cases.
+   (The mistake fixed here was made during the changes on
+   :ref:`whats_new_2018@mm-dd@01-20` ; see below.)
+#. Check for and abort with an error message when there is a ``null``
+   value in the data table
+   :ref:`data_table@meas_value` column.
+
+.. meta::
+   :keywords: 01-20
+
+.. index:: 01-20
+
+.. _whats_new_2018@mm-dd@01-20:
+
+01-20
+=====
+
+#. The method used by the :ref:`simulate_command-name` was simplified and documented.
+   To be specific, the average integrand, instead of the simulated
+   data value, was used to compute the transformed standard deviation.
+#. The fields *meas_value* and *meas_std*
+   in the data_sim table were changed to
+   :ref:`data_sim_table@data_sim_value` and
+   *data_sim_delta* .
+
+.. meta::
+   :keywords: 01-18
+
+.. index:: 01-18
+
+.. _whats_new_2018@mm-dd@01-18:
+
+01-18
+=====
+
+#. The flags ``-Wpedantic`` , ``-Wshadow`` and ``-Wconversion``
+   were added to the default value of
+   :ref:`run_cmake.sh@extra_cxx_flags` .
+   In addition, fix the corresponding warning messages generated by gcc
+   during the
+   :ref:`install_unix@dismod_at` part of the instal process.
+#. Fix an un-used variable warning when
+   :ref:`run_cmake.sh@build_type` is ``release`` .
+#. Replace the default acceptable tolerance by the
+   :ref:`tolerances<option_table@Optimize Fixed and Random@tolerance>`
+   specified in the options table.
+   (The acceptable tolerance is used when the optimizer is having trouble
+   obtaining the desired tolerance.)
+#. Advance to ``cppad_mixed-20180117`` . This fixes warnings
+   with the new compiler flags above.
+
+.. meta::
+   :keywords: 01-16
+
+.. index:: 01-16
+
+.. _whats_new_2018@mm-dd@01-16:
+
+01-16
+=====
+The ``data.csv`` file did not include the
+:ref:`db2csv_command@data.csv@sim_value` and
+*sim_std* columns when there was
+no :ref:`fit_command@simulate_index`
+in the previous fit command.
+If there is a :ref:`data_sim_table-name` the default value zero is used for
+*simulate_index* when it does not appear in the previous fit command.
+
+.. meta::
+   :keywords: 01-12
+
+.. index:: 01-12
+
+.. _whats_new_2018@mm-dd@01-12:
+
+01-12
+=====
+There was a bug in the change on 01-09. To be specific,
+the case where a child had no
+:ref:`random effects<model_variables@Random Effects, u>` ,
+and the child had data with no rate covariates,
+was not handled correctly. This has been fixed.
+
+.. meta::
+   :keywords: 01-09
+
+.. index:: 01-09
+
+.. _whats_new_2018@mm-dd@01-09:
+
+01-09
+=====
+A change was made to speed up the calculations for measurements
+that have the reference value for all the rate covariates; see
+:ref:`mulcov_table@mulcov_type@rate_value` in the mulcov table
+documentation.

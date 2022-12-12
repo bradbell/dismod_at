@@ -1,0 +1,199 @@
+.. _database-name:
+
+!!!!!!!!
+database
+!!!!!!!!
+
+xrst input file: ``xrst/table/database.xrst``
+
+.. meta::
+   :keywords: database, the, dismod_at, database, tables
+
+.. index:: database, the, dismod_at, database, tables
+
+.. _database-title:
+
+The Dismod_at Database Tables
+#############################
+
+.. meta::
+   :keywords: comment, columns, and, tables
+
+.. index:: comment, columns, and, tables
+
+.. _database@Comment Columns and Tables:
+
+Comment Columns and Tables
+**************************
+Any table (in this database)
+may have any number of columns with names that begin
+with the two characters ``c_`` .
+These are comment columns and are ignored by ``dismod_at`` .
+In addition, tables with a names beginning with ``c_``
+are also considered comments and are ignored by ``dismod_at`` .
+
+.. meta::
+   :keywords: primary, key
+
+.. index:: primary, key
+
+.. _database@Primary Key:
+
+Primary Key
+***********
+If *table_name* is a table (in this database), its first column
+has name *table_name* _ ``id`` that is the primary key for the table.
+The values in this column are ``integer`` ,
+start at zero and increment by one for each row in the table.
+
+.. meta::
+   :keywords: name, column
+
+.. index:: name, column
+
+.. _database@Name Column:
+
+Name Column
+***********
+Suppose that *table_name* is a table (in this database),
+and the column *table_name* _ ``name`` exists.
+In this case, the values in this column are ``text`` must be unique;
+i.e., the names can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
+
+.. meta::
+   :keywords: foreign, key
+
+.. index:: foreign, key
+
+.. _database@Foreign Key:
+
+Foreign Key
+***********
+If *this* is the name of a table its primary key is
+the column *this* _ ``id`` .
+If this primary key is used in another table it is
+called a foreign key (in the other table).
+The name of the column in the other table will be *this* _ ``id``
+or it will end with _ *this* _ ``id`` .
+A value in the foreign key column must also appear in the
+corresponding primary key column, or it must be ``null`` .
+
+.. meta::
+   :keywords: parent
+
+.. index:: parent
+
+.. _database@Foreign Key@parent:
+
+parent
+======
+Note that the column :ref:`node_table@parent` is a primary
+key value for the :ref:`node table<node_table-name>` ; i.e, ``node_id`` .
+Note that this column is not named *node_id* nor does it end
+in _ *node_id* .
+This is not an exception because the ``parent`` column is itself
+in the ``node`` table and hence this is not a foreign key.
+
+.. meta::
+   :keywords: null
+
+.. index:: null
+
+.. _database@Null:
+
+Null
+****
+It is an error for a value to be ``null``
+unless the documentation for the corresponding column specifies
+a meaning for this case.
+Lower and upper bounds are an exception to this rule (see below).
+
+.. meta::
+   :keywords: bounds
+
+.. index:: bounds
+
+.. _database@Null@Bounds:
+
+Bounds
+======
+If a lower (upper) bound is ``null`` ,
+it is interpreted as minus (plus) infinity.
+
+.. meta::
+   :keywords: integer
+
+.. index:: integer
+
+.. _database@Null@Integer:
+
+Integer
+=======
+The minimum integer (negative integer with the largest absolute value)
+is used to represent a ``null`` integer value in a table.
+An error message will be generated if
+the minimum integer appears in a table that is read by dismod_at.
+
+.. meta::
+   :keywords: text, can, be, null,, not, empty
+
+.. index:: text, can, be, null,, not, empty
+
+.. _database@Null@Text can be Null, not Empty:
+
+Text can be Null, not Empty
+===========================
+The empty string is used to represent a ``null`` text value in a table.
+An error message will be generated if the empty string
+appears in a text field that is read by dismod_at.
+
+.. meta::
+   :keywords: real, can, be, null,, not, nan
+
+.. index:: real, can, be, null,, not, nan
+
+.. _database@Null@Real Can be Null, not Nan:
+
+Real Can be Null, not Nan
+=========================
+If a real value is ``null`` , it is represented as ``nan`` .
+An error message will be generated if
+the value ``nan`` appears in a table that is read by dismod_at.
+
+.. meta::
+   :keywords: type, names
+
+.. index:: type, names
+
+.. _database@Type Names:
+
+Type Names
+**********
+The types in this database are ``integer`` , ``real`` and
+``text`` . The type names ``INTEGER`` , ``REAL`` , and ``TEXT``
+can also be used.
+
+.. meta::
+   :keywords: contents
+
+.. index:: contents
+
+.. _database@Contents:
+
+Contents
+********
+
+.. csv-table::
+   :header:  "Child", "Title"
+   :widths: auto
+
+   "input", :ref:`input-title`
+   "data_flow", :ref:`data_flow-title`
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   input
+   data_flow

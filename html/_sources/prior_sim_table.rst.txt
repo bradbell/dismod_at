@@ -1,0 +1,188 @@
+.. _prior_sim_table-name:
+
+!!!!!!!!!!!!!!!
+prior_sim_table
+!!!!!!!!!!!!!!!
+
+xrst input file: ``xrst/table/prior_sim_table.xrst``
+
+.. meta::
+   :keywords: prior_sim_table, simulated, variation, in, prior
+
+.. index:: prior_sim_table, simulated, variation, in, prior
+
+.. _prior_sim_table-title:
+
+Simulated Variation in Prior
+############################
+
+.. meta::
+   :keywords: discussion
+
+.. index:: discussion
+
+.. _prior_sim_table@Discussion:
+
+Discussion
+**********
+The ``prior_sim`` table is created during a
+:ref:`simulate_command-name` .
+It contains :ref:`simulate_command@number_simulate`
+sets of priors where each set
+has one row for each variable in the :ref:`var_table-name` .
+Each row has a value, age difference, and time difference prior.
+
+.. meta::
+   :keywords: prior_sim_id
+
+.. index:: prior_sim_id
+
+.. _prior_sim_table@prior_sim_id:
+
+prior_sim_id
+************
+This column has type ``integer`` and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+.. meta::
+   :keywords: simulate_index
+
+.. index:: simulate_index
+
+.. _prior_sim_table@simulate_index:
+
+simulate_index
+**************
+The column has type ``integer`` . It specifies the index
+for this simulated prior value. This index starts at zero,
+repeats as the same for the entire set of *var_id* values,
+and then increments by one between prior sets.
+The final (maximum) value for *simulate_index* is
+:ref:`simulate_command@number_simulate` minus one.
+
+.. meta::
+   :keywords: var_id
+
+.. index:: var_id
+
+.. _prior_sim_table@var_id:
+
+var_id
+******
+This column has type ``integer`` and is the primary key
+for the :ref:`var_table-name` .
+This identifies which :ref:`var_table@var_id`
+each row of the prior_sim table corresponds to.
+If *n_var* is the number of rows in the var table,
+
+   *prior_sim_id* = *simulate_index* * *n_var* + *var_id*
+
+for *simulate_index* equal zero to *number_simulate* ``-1``
+and *var_id* equal zero to ``n_var`` *-1* .
+
+.. meta::
+   :keywords: prior_sim_value
+
+.. index:: prior_sim_value
+
+.. _prior_sim_table@prior_sim_value:
+
+prior_sim_value
+***************
+This column has type ``real`` and is
+a simulated from the value prior for this variable.
+If there is no value prior, or if the density for the value prior
+is uniform, *prior_sim_value* is ``null`` .
+
+.. meta::
+   :keywords: zero_sum_child_rate
+
+.. index:: zero_sum_child_rate
+
+.. _prior_sim_table@prior_sim_value@zero_sum_child_rate:
+
+zero_sum_child_rate
+===================
+If the :ref:`option_table@Zero Sum Constraints@zero_sum_child_rate` option
+is chosen for a rate, the simulated values for the corresponding
+:ref:`model_variables@Random Effects, u@Child Rate Effects`
+will sum to zero at each grid point in the corresponding smoothing for;
+see :ref:`rate_table@child_smooth_id` in the rate table.
+Note that using ``zero_sum_child_rate`` for a rate
+requires that the same smoothing is used by all the child random effects
+for that rate.
+This is done by simulating using independent priors and then subtracting
+averages of the simulated values.
+
+.. meta::
+   :keywords: zero_sum_mulcov_group
+
+.. index:: zero_sum_mulcov_group
+
+.. _prior_sim_table@prior_sim_value@zero_sum_mulcov_group:
+
+zero_sum_mulcov_group
+=====================
+If the :ref:`option_table@Zero Sum Constraints@zero_sum_mulcov_group` option
+is chosen for a group, the simulated values for the corresponding
+:ref:`model_variables@Random Effects, u@Subgroup Covariate Multipliers`
+will sum to zero at each grid point in the corresponding smoothing.
+This summation is with respect to subgroups in the group specified
+by a :ref:`mulcov_table@group_id` in the mulcov table.
+
+.. meta::
+   :keywords: prior_sim_dage
+
+.. index:: prior_sim_dage
+
+.. _prior_sim_table@prior_sim_dage:
+
+prior_sim_dage
+**************
+This column has type ``real`` and is
+a simulated from the dage prior for this variable.
+If there is no dage prior, or if the density for the dage prior
+is uniform, *prior_sim_dage* is ``null`` .
+
+.. meta::
+   :keywords: prior_sim_dtime
+
+.. index:: prior_sim_dtime
+
+.. _prior_sim_table@prior_sim_dtime:
+
+prior_sim_dtime
+***************
+This column has type ``real`` and is
+a simulated from the dtime prior for this variable.
+If there is no dtime prior, or if the density for the dtime prior
+is uniform, *prior_sim_dtime* is ``null`` .
+
+.. meta::
+   :keywords: censoring
+
+.. index:: censoring
+
+.. _prior_sim_table@Censoring:
+
+Censoring
+*********
+If the simulated values for the prior is censored to be within the
+upper and lower limits for the corresponding variable.
+To be specific, if *sim* is the value simulated just using the
+:ref:`prior_table@density_id` ,
+and *lower* , *upper* are the corresponding limits;
+the corresponding simulated value or difference is
+
+   ``max`` [ *upper* , ``min`` ( *lower* , *sim*  ) ]
+
+.. meta::
+   :keywords: example
+
+.. index:: example
+
+.. _prior_sim_table@Example:
+
+Example
+*******
+See the :ref:`simulate_command.py-name` example and test.

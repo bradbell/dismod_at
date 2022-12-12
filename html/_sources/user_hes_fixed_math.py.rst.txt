@@ -1,0 +1,539 @@
+.. _user_hes_fixed_math.py-name:
+
+!!!!!!!!!!!!!!!!!!!!!!
+user_hes_fixed_math.py
+!!!!!!!!!!!!!!!!!!!!!!
+
+xrst input file: ``example/user/hes_fixed_math.py``
+
+.. meta::
+   :keywords: user_hes_fixed_math.py, check, the, hessian, of, the, fixed, effects, objective
+
+.. index:: user_hes_fixed_math.py, check, the, hessian, of, the, fixed, effects, objective
+
+.. _user_hes_fixed_math.py-title:
+
+Check the Hessian of the Fixed Effects Objective
+################################################
+
+.. meta::
+   :keywords: purpose
+
+.. index:: purpose
+
+.. _user_hes_fixed_math.py@Purpose:
+
+Purpose
+*******
+This is a detailed mathematical explanation of computing Hessian of the
+fixed effects objective used by the
+:ref:`sample_command@asymptotic` sampling method.
+
+.. meta::
+   :keywords: reference
+
+.. index:: reference
+
+.. _user_hes_fixed_math.py@Reference:
+
+Reference
+*********
+See the
+`theory <https://bradbell.github.io/cppad_mixed/doc/theory.htm>`_
+section of the ``cppad_mixed`` documentation.
+
+.. meta::
+   :keywords: notation
+
+.. index:: notation
+
+.. _user_hes_fixed_math.py@Notation:
+
+Notation
+********
+
+.. csv-table::
+    :widths: auto
+
+    :math:`\theta`,model incidence for the parent region
+    :math:`u_0`,incidence random effect for first child
+    :math:`u_1`,incidence random effect for second child
+    :math:`y_0`,measured incidence for the first child
+    :math:`y_1`,measured incidence for the second child
+    :math:`s`,standard deviation for data and random effects
+
+The only fixed effect in this model is :math:`\theta`
+(sometimes written *theta* ) the incidence level for the world.
+The random effects are :math:`u_0` and :math:`u_1`.
+
+.. meta::
+   :keywords: problem, parameters
+
+.. index:: problem, parameters
+
+.. _user_hes_fixed_math.py@Problem Parameters:
+
+Problem Parameters
+******************
+
+.. literalinclude:: ../../example/user/hes_fixed_math.py
+   :lines: 48-57
+   :language: py
+
+.. meta::
+   :keywords: random, likelihood
+
+.. index:: random, likelihood
+
+.. _user_hes_fixed_math.py@Random Likelihood:
+
+Random Likelihood
+*****************
+The negative log-likelihood for this example, ignoring the constant
+of integration, is
+
+.. math::
+
+ f( \theta, u )
+ = \frac{1}{2 s^2} \left(
+    [ y_0 - \theta \exp( u_0 ) ]^2 +
+    [ y_1 - \theta \exp( u_1 ) ]^2 +
+    u_0^2 +
+    u_1^2
+ \right)
+
+.. meta::
+   :keywords: gradient, w.r.t., fixed, effects
+
+.. index:: gradient, w.r.t., fixed, effects
+
+.. _user_hes_fixed_math.py@Gradient w.r.t. Fixed Effects:
+
+Gradient w.r.t. Fixed Effects
+*****************************
+
+.. math::
+
+ f_\theta ( \theta, u )
+ =
+ \frac{1}{s^2} [
+    \theta \exp( 2 u_0 ) - y_0 \exp( u_0 ) +
+    \theta \exp( 2 u_1 ) - y_1 \exp( u_1 )
+ ]
+
+.. meta::
+   :keywords: gradient, w.r.t., random, effects
+
+.. index:: gradient, w.r.t., random, effects
+
+.. _user_hes_fixed_math.py@Gradient w.r.t. Random Effects:
+
+Gradient w.r.t. Random Effects
+******************************
+
+.. math::
+
+ f_u ( \theta, u )
+ =
+ \frac{1}{s^2} \left(
+ \begin{array}{c}
+    \theta^2 \exp( 2 u_0 ) - y_0 \theta \exp( u_0 )  + u_0
+    \\
+    \theta^2 \exp( 2 u_1 ) - y_1 \theta \exp( u_1 )  + u_1
+ \end{array}
+ \right)
+
+.. meta::
+   :keywords: hessian, w.r.t., fixed, effects
+
+.. index:: hessian, w.r.t., fixed, effects
+
+.. _user_hes_fixed_math.py@Hessian w.r.t. Fixed Effects:
+
+Hessian w.r.t. Fixed Effects
+****************************
+
+.. math::
+
+ f_{\theta,\theta} ( \theta, u )
+ =
+ \frac{1}{s^2} [ \exp( 2 u_0 ) + \exp( 2 u_1 ) ]
+
+.. meta::
+   :keywords: hessian, w.r.t., random, effects
+
+.. index:: hessian, w.r.t., random, effects
+
+.. _user_hes_fixed_math.py@Hessian w.r.t. Random Effects:
+
+Hessian w.r.t. Random Effects
+*****************************
+
+.. math::
+
+ f_{u,u} ( \theta, u )
+ =
+ \frac{1}{s^2} \left(
+ \begin{array}{cc}
+    2 \theta^2 \exp( 2 u_0 ) - y_0 \theta \exp( u_0 ) + 1   & 0
+    \\
+    0   & 2 \theta^2 \exp( 2 u_1 ) - y_1 \theta \exp( u_1 ) + 1
+ \end{array}
+ \right)
+
+.. meta::
+   :keywords: hessian, cross, term
+
+.. index:: hessian, cross, term
+
+.. _user_hes_fixed_math.py@Hessian Cross Term:
+
+Hessian Cross Term
+******************
+
+.. math::
+
+ f_{u,\theta} ( \theta, u )
+ =
+ \frac{1}{s^2} \left(
+ \begin{array}{c}
+    2 \theta \exp( 2 u_0 ) - y_0 \exp( u_0 )
+    \\
+    2 \theta \exp( 2 u_1 ) - y_1 \exp( u_1 )
+ \end{array}
+ \right)
+
+.. meta::
+   :keywords: optimal, random, effects
+
+.. index:: optimal, random, effects
+
+.. _user_hes_fixed_math.py@Optimal Random Effects:
+
+Optimal Random Effects
+**********************
+
+.. meta::
+   :keywords: implicit, function, definition
+
+.. index:: implicit, function, definition
+
+.. _user_hes_fixed_math.py@Optimal Random Effects@Implicit Function Definition:
+
+Implicit Function Definition
+============================
+The optimal random effects :math:`\hat{u} ( \theta )`
+solve the equation
+
+.. math::
+
+ f_u [ \theta , \hat{u} ( \theta ) ] = 0
+
+.. meta::
+   :keywords: derivatives, of, optimal, random, effects
+
+.. index:: derivatives, of, optimal, random, effects
+
+.. _user_hes_fixed_math.py@Optimal Random Effects@Derivatives of Optimal Random Effects:
+
+Derivatives of Optimal Random Effects
+=====================================
+Using the implicit function theorem we have
+
+.. math::
+
+ \hat{u}^{(1)} ( \theta )= -
+    f_{u,u} [ \theta , \hat{u} ( \theta) ]^{-1}
+       f_{u,\theta} [ \theta , \hat{u} ( \theta) ]
+
+Substituting in the formulas above for the Hessian terms on the
+right hand side we obtain:
+
+.. math::
+
+ \hat{u}_i^{(1)} ( \theta ) = - \frac{
+    2 \theta \exp[ 2 \hat{u}_i ( \theta) ] -
+    y_i \exp[ \hat{u}_i ( \theta) ]
+ }{
+    2 \theta^2 \exp[ 2 \hat{u}_i ( \theta) ] -
+    y_i \theta \exp[ \hat{u}_i ( \theta) ] + 1
+ }
+
+We can compute :math:`\hat{u}_i ( \theta )` by optimizing the
+random effects corresponding to the fixed effects being :math:`\theta`.
+We define :math:`g_i ( \theta )` by the equation
+
+.. math::
+
+ g_i ( \theta ) = 2 \theta \exp[ 2 \hat{u}_i ( \theta) ]
+             - y_i \exp[ \hat{u}_i ( \theta ) ]
+
+Give :math:`\hat{u}_i ( \theta )` we can compute :math:`g_i ( \theta )`.
+Given :math:`g_i ( \theta )`, we can compute
+the derivative :math:`\hat{u}_i^{(1)} ( \theta )` using
+
+.. math::
+
+ \hat{u}_i^{(1)} ( \theta ) = -
+    \frac{ g_i ( \theta ) }{ \theta g_i ( \theta ) + 1}
+
+Given :math:`\hat{u}^{(1)} ( \theta )`, we can compute
+the derivative :math:`g_i^{(1)} ( \theta )` using
+
+.. math::
+
+ g_i^{(1)} ( \theta ) =
+ 2 \exp[ 2 \hat{u}_i ( \theta) ]  +
+ \left(
+    4 \theta \exp [ 2 \hat{u}_i ( \theta ) ] -
+    y_i \exp [ \hat{u}_i ( \theta ) ]
+ \right) \hat{u}_i^{(1)} ( \theta )
+
+Given :math:`g_i^{(1)} ( \theta )`, we can compute
+the second derivative :math:`\hat{u}_i^{(2)} ( \theta )` using
+
+.. math::
+
+ \hat{u}_i^{(2)} ( \theta ) =
+ \frac{ g_i ( \theta ) [ g_i ( \theta ) + \theta g_i ^{(1)} ( \theta ) ] }
+ { [ \theta g_i ( \theta ) + 1 ]^2 }
+ -
+ \frac{ g_i ^{(1)}( \theta ) }{ \theta g_i ( \theta ) + 1}
+
+.. math::
+
+ \hat{u}_i^{(2)} ( \theta ) =
+ \frac{ g_i ( \theta )^2 - g_i ^{(1)}( \theta )}
+ { [ \theta g_i ( \theta ) + 1 ]^2 }
+
+Given :math:`\hat{u}^{(2)} ( \theta )`, we can compute
+the second derivative :math:`g_i^{(2)} ( \theta )` using
+
+.. math::
+ :nowrap:
+
+ \begin{eqnarray}
+ g_i^{(2)} ( \theta ) & = &
+ 8 \exp[ 2 \hat{u}_i ( \theta) ] \hat{u}_i^{(1)} ( \theta )
+ \\ & + &
+ \left(
+    8 \theta \exp [ 2 \hat{u}_i ( \theta ) ]  -
+    y_i \exp [ \hat{u}_i ( \theta ) ]
+ \right) \hat{u}_i^{(1)} ( \theta )^2
+ \\ & + &
+ \left(
+    4 \theta \exp [ 2 \hat{u}_i ( \theta ) ] -
+    y_i \exp [ \hat{u}_i ( \theta ) ]
+ \right) \hat{u}_i^{(2)} ( \theta )
+ \end{eqnarray}
+
+.. meta::
+   :keywords: laplace, approximation
+
+.. index:: laplace, approximation
+
+.. _user_hes_fixed_math.py@Laplace Approximation:
+
+Laplace Approximation
+*********************
+Up to a constant, the Laplace approximation (fixed effects objective),
+as a function of the fixed effects, is:
+
+.. math::
+
+ L ( \theta ) = F( \theta ) + G( \theta )
+
+where :math:`F( \theta )` and :math:`G( \theta )` are defined by
+
+.. math::
+
+ F( \theta ) = f[ \theta , \hat{u} ( \theta ) ]
+
+.. math::
+
+ G( \theta ) =\frac{1}{2} \log \det f_{u,u} [ \theta , \hat{u} ( \theta ) ]
+
+The derivative of :math:`F( \theta )` is given by
+
+.. math::
+
+ F^{(1)} ( \theta ) =
+ f_\theta [ \theta , \hat{u} ( \theta ) ] +
+ f_u [ \theta , \hat{u} ( \theta ) ]  \hat{u}^{(1)} ( \theta )
+
+It follows from the definition of :math:`\hat{u} ( \theta )` that
+:math:`f_u [ \theta , \hat{u} ( \theta ) ] = 0` and
+
+.. math::
+
+ F^{(1)} ( \theta ) = f_\theta [ \theta , \hat{u} ( \theta ) ]
+
+Taking the derivative of the equation above we obtain
+
+.. math::
+
+ F^{(2)} ( \theta ) =
+ f_{\theta,\theta} [ \theta , \hat{u} ( \theta ) ] +
+ f_{\theta,u} [ \theta , \hat{u} ( \theta ) ] \hat{u}^{(1)} ( \theta )
+
+Combining the definition of :math:`G( \theta )`, :math:`g_i ( \theta )`
+and the formula for :math:`f_{u,u} ( \theta , u )` we have
+
+.. math::
+
+ G( \theta )
+ =
+ \frac{1}{2} \log \det \left(
+ \begin{array}{cc}
+    [ \theta g_0 ( \theta ) + 1 ] / s^2 & 0
+    \\
+    0   & [ \theta g_1 ( \theta ) + 1 ] / s^2
+ \end{array}
+ \right)
+
+Defining :math:`h_i ( \theta )` by
+
+.. math::
+
+ h_i ( \theta ) = \theta g_i ( \theta ) + 1
+
+we obtain the representation
+
+.. math::
+
+ G ( \theta ) =
+ + \frac{1}{2} \left(
+ \log [ h_0 ( \theta ) ] + \log [ h_1 ( \theta ) ] - \log ( s^4 )
+ \right)
+
+The first and second derivative of :math:`h_i ( \theta )`
+and :math:`G( \theta )` are given by
+
+.. math::
+
+ h_i^{(1)} ( \theta ) = g_i ( \theta ) + \theta g_i^{(1)} ( \theta )
+
+.. math::
+
+ G^{(1)} ( \theta ) =
+  \frac{1}{2} \left(
+     \frac{ h_0^{(1)} ( \theta ) }{ h_0 ( \theta ) }
+     +
+     \frac{ h_1^{(1)} ( \theta ) }{ h_1 ( \theta ) }
+  \right)
+
+.. math::
+
+ h_i^{(2)} ( \theta ) = 2 g_i^{(1)} ( \theta ) + \theta g_i^{(2)} ( \theta )
+
+.. math::
+
+ G^{(2)} ( \theta ) =
+  \frac{1}{2} \left(
+     \frac{ h_0 ( \theta ) h_0^{(2)} ( \theta ) - h_0^{(1)} ( \theta )^2 }
+     { h_0 ( \theta )^2 }
+     +
+     \frac{ h_1 ( \theta ) h_1^{(2)} ( \theta ) - h_1^{(1)} ( \theta )^2 }
+     { h_1 ( \theta )^2 }
+  \right)
+
+.. meta::
+   :keywords: asymptotic, statistics
+
+.. index:: asymptotic, statistics
+
+.. _user_hes_fixed_math.py@Asymptotic Statistics:
+
+Asymptotic Statistics
+*********************
+The asymptotic posterior distribution for the optimal estimate of
+:math:`\theta` give the data :math:`y`
+is a normal with variance equal to the inverse of
+
+.. math::
+
+ L^{(2)} ( \theta ) = F^{(2)} ( \theta ) + G^{(2)} ( \theta )
+
+.. meta::
+   :keywords: scaling, fixed, effects
+
+.. index:: scaling, fixed, effects
+
+.. _user_hes_fixed_math.py@Scaling Fixed Effects:
+
+Scaling Fixed Effects
+*********************
+If :ref:`prior_table@eta` is not null,
+the Hessian is with respect to :math:`\alpha = \log( \theta + \eta )`.
+Inverting this relation we define
+:math:`\theta ( \alpha ) = \exp( \alpha ) - \eta`.
+The fixed effects objective as a function of :math:`\alpha` is
+
+.. math::
+
+ H( \alpha ) =
+ L[ \theta ( \alpha ) ] =
+ F[ \theta( \alpha ) ] + G[ \theta( \alpha ) ]
+
+Taking the first and second derivatives, we have
+
+.. math::
+
+ H^{(1)}( \alpha ) =  \left(
+    F^{(1)}[ \theta( \alpha ) ] + G^{(1)}[ \theta( \alpha ) ]
+ \right) \exp( \alpha )
+
+.. math::
+ :nowrap:
+
+ \begin{eqnarray}
+ H^{(2)}( \alpha ) & = & \left(
+    F^{(1)}[ \theta( \alpha ) ] + G^{(1)}[ \theta( \alpha ) ]
+ \right) \exp( \alpha )
+ \\ & + &
+ \left(
+    F^{(2)}[ \theta( \alpha ) ] + G^{(2)}[ \theta( \alpha ) ]
+ \right) \exp( 2 \alpha )
+ \end{eqnarray}
+
+.. meta::
+   :keywords: optimal, fixed, effects
+
+.. index:: optimal, fixed, effects
+
+.. _user_hes_fixed_math.py@Scaling Fixed Effects@Optimal Fixed Effects:
+
+Optimal Fixed Effects
+=====================
+The first order necessary conditions for
+:math:`\hat{\alpha}`
+to be a minimizer of the fixed effects object is
+:math:`H^{(1)} ( \hat{\alpha} ) = 0`.
+In this case we can simplify the Hessian scaling as follows:
+
+.. math::
+ :nowrap:
+
+ \begin{eqnarray}
+ H^{(2)}( \hat{\alpha} ) & = & \left(
+    F^{(2 }( \hat{\theta} ) + G^{(2)}( \hat{\theta} )
+ \right) \exp( 2 \hat{\alpha} )
+ \\ & = &
+ L^{(2)} ( \hat{\theta} ) \exp( 2 \hat{\alpha} )
+ \end{eqnarray}
+
+where :math:`\hat{\theta} = \theta( \hat{\alpha} )`.
+
+.. meta::
+   :keywords: source, code
+
+.. index:: source, code
+
+.. _user_hes_fixed_math.py@Source Code:
+
+Source Code
+***********
+
+.. literalinclude:: ../../example/user/hes_fixed_math.py
+   :lines: 424-861
+   :language: py

@@ -1,0 +1,137 @@
+.. _user_age_avg_split.py-name:
+
+!!!!!!!!!!!!!!!!!!!!!
+user_age_avg_split.py
+!!!!!!!!!!!!!!!!!!!!!
+
+xrst input file: ``example/user/age_avg_split.py``
+
+.. meta::
+   :keywords: user_age_avg_split.py, non-uniform, age, average, grid
+
+.. index:: user_age_avg_split.py, non-uniform, age, average, grid
+
+.. _user_age_avg_split.py-title:
+
+Non-uniform Age Average Grid
+############################
+
+.. meta::
+   :keywords: purpose
+
+.. index:: purpose
+
+.. _user_age_avg_split.py@Purpose:
+
+Purpose
+*******
+This example demonstrate one reason for using the
+:ref:`option_table@Age Average Grid@age_avg_split` option to create an
+:ref:`age_avg_table@Age Average Grid`
+that is not uniformly spaced.
+
+.. meta::
+   :keywords: variables
+
+.. index:: variables
+
+.. _user_age_avg_split.py@Variables:
+
+Variables
+*********
+For this case there is only one rate *omega* for the parent node
+and there are no other :ref:`model_variables-name` .
+
+.. meta::
+   :keywords: prior
+
+.. index:: prior
+
+.. _user_age_avg_split.py@Prior:
+
+Prior
+*****
+The prior for *omega* is mean ``0.1`` and standard deviation
+``.01`` for ages ``0.0`` and ``0.9`` .
+The prior for *omega* is mean ``0.01`` and standard deviation
+``0.001`` for ages ``1.1`` and ``100.0`` .
+
+.. meta::
+   :keywords: data
+
+.. index:: data
+
+.. _user_age_avg_split.py@Data:
+
+Data
+****
+There is no data for this model; i.e., the prior is the only
+information available.
+
+.. meta::
+   :keywords: fit
+
+.. index:: fit
+
+.. _user_age_avg_split.py@Fit:
+
+Fit
+***
+A fit is done, and this should make :ref:`fit_var_table-name`
+equal to the mean of the prior.
+
+.. meta::
+   :keywords: predict
+
+.. index:: predict
+
+.. _user_age_avg_split.py@Predict:
+
+Predict
+*******
+A predict is done for other cause mortality for two cases.
+The first case averages over the age interval ``[ 0.0, 0.9 ]`` .
+The second case averages over the age interval ``[ 1.1, 100.0 ]`` .
+
+.. meta::
+   :keywords: ode_step_size
+
+.. index:: ode_step_size
+
+.. _user_age_avg_split.py@ode_step_size:
+
+ode_step_size
+*************
+The :ref:`option_table@Age Average Grid@ode_step_size` is
+``50.0`` for this example.
+If there were no *age_avg_split* , a linear approximation
+would be used from age 0.0 to age 50.
+
+.. meta::
+   :keywords: age_avg_split
+
+.. index:: age_avg_split
+
+.. _user_age_avg_split.py@age_avg_split:
+
+age_avg_split
+*************
+The age average grid is split at age ``1.0`` ; i.e.,
+The age average grid points are ``0.0`` , ``1.0`` , ``50.0`` , and
+``100.0`` .
+A piecewise linear function of age is used between these grid points.
+(Note everything is constant w.r.t time for this case.)
+
+.. meta::
+   :keywords: source, code
+
+.. index:: source, code
+
+.. _user_age_avg_split.py@Source Code:
+
+Source Code
+***********
+
+.. literalinclude:: ../../example/user/age_avg_split.py
+   :lines: 71-264
+   :language: py

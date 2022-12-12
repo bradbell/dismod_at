@@ -1,0 +1,113 @@
+.. _node_table-name:
+
+!!!!!!!!!!
+node_table
+!!!!!!!!!!
+
+xrst input file: ``xrst/table/node_table.xrst``
+
+.. meta::
+   :keywords: node_table, the, node, table
+
+.. index:: node_table, the, node, table
+
+.. _node_table-title:
+
+The Node Table
+##############
+
+.. meta::
+   :keywords: discussion
+
+.. index:: discussion
+
+.. _node_table@Discussion:
+
+Discussion
+**********
+The node table defines a graph that is a tree by specifying
+the parent for each node.
+The ``node`` table has the following columns:
+
+.. meta::
+   :keywords: node_id
+
+.. index:: node_id
+
+.. _node_table@node_id:
+
+node_id
+*******
+This column has type ``integer`` and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+.. meta::
+   :keywords: node_name
+
+.. index:: node_name
+
+.. _node_table@node_name:
+
+node_name
+*********
+This column has type ``text`` and has a different value for every row;
+i.e., the names are unique and can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
+
+.. meta::
+   :keywords: parent
+
+.. index:: parent
+
+.. _node_table@parent:
+
+parent
+******
+This column has type ``integer`` and is the *node_id*
+of the parent for this node.
+If this node has no parents, *parent* is ``null`` .
+Note that this is a value for the primary key in this table, but
+the name of this column does not follow the
+:ref:`foreign key<database@Foreign Key@parent>` naming convention.
+
+.. meta::
+   :keywords: children
+
+.. index:: children
+
+.. _node_table@parent@Children:
+
+Children
+========
+The children for node *p* is the sent of *node_id* values
+such that the corresponding *parent* is equal to *p* .
+
+.. meta::
+   :keywords: descendant
+
+.. index:: descendant
+
+.. _node_table@parent@Descendant:
+
+Descendant
+==========
+The set of descendants for a node *p* is the
+set children of *p* , grand children of *p* , ... .
+
+.. meta::
+   :keywords: example
+
+.. index:: example
+
+.. _node_table@Example:
+
+Example
+*******
+The file :ref:`node_table.py-name`
+contains an example ``node`` table.
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   node_table.py

@@ -1,0 +1,21 @@
+.. _get_row_list.py-name:
+
+!!!!!!!!!!!!!!!
+get_row_list.py
+!!!!!!!!!!!!!!!
+
+xrst input file: ``example/table/get_row_list.py``
+
+.. meta::
+   :keywords: get_row_list.py, get_row_list:, example, and, test
+
+.. index:: get_row_list.py, get_row_list:, example, and, test
+
+.. _get_row_list.py-title:
+
+get_row_list: Example and Test
+##############################
+
+.. literalinclude:: ../../example/table/get_row_list.py
+   :lines: 18-54
+   :language: py

@@ -1,0 +1,137 @@
+.. _user_sum_residual.py-name:
+
+!!!!!!!!!!!!!!!!!!!!
+user_sum_residual.py
+!!!!!!!!!!!!!!!!!!!!
+
+xrst input file: ``example/user/sum_residual.py``
+
+.. meta::
+   :keywords: user_sum_residual.py, sum, of, residuals, at, optimal, estimate
+
+.. index:: user_sum_residual.py, sum, of, residuals, at, optimal, estimate
+
+.. _user_sum_residual.py-title:
+
+Sum of Residuals at Optimal Estimate
+####################################
+
+.. meta::
+   :keywords: problem
+
+.. index:: problem
+
+.. _user_sum_residual.py@Problem:
+
+Problem
+*******
+For this case the only data is we a sequence of  positive measurements of
+:ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence`
+which we denote by :math:`y_i1` for :math:`i = 0 , \ldots , N-1`.
+We model :math:`y_i` as independent and Gaussian with mean equal
+to the true value of iota :math:`\iota`,
+and standard deviation :math:`\sigma_i`.
+The negative log likelihood, up to a constant w.r.t :math:`\iota`, is
+
+.. math::
+
+ f( \iota ) =
+ \frac{1}{2} \sum_{i=0}^{N-1} \left( \frac{y_i - \iota}{\sigma_i} \right)^2
+
+.. meta::
+   :keywords: optimal, solution
+
+.. index:: optimal, solution
+
+.. _user_sum_residual.py@Optimal Solution:
+
+Optimal Solution
+****************
+The optimal estimator for :math:`\iota` satisfies the equation
+
+.. math::
+
+ 0 = f'( \hat{\iota} ) =
+    - \sum_{i=1}^{N-1} \frac{y_i - \hat{\iota} }{\sigma_i^2}
+
+.. meta::
+   :keywords: weighted, residuals
+
+.. index:: weighted, residuals
+
+.. _user_sum_residual.py@Weighted Residuals:
+
+Weighted Residuals
+******************
+We use the notation :math:`r_i` for the weighted residuals
+
+.. math::
+
+ r_i = \frac{y_i - \hat{\iota}}{\sigma_i}
+
+If :math:`\hat{\iota}` were the true value for :math:`\iota`,
+the weighted residuals would be mean zero and variance one.
+But :math:`\hat{\iota}` is instead the maximum likelihood estimator and
+
+.. math::
+
+ 0 = \sum_{i=1}^{N-1} \frac{y_i - \hat{\iota} }{\sigma_i^2}
+
+.. math::
+
+ 0 = \sum_{i=1}^{N-1} \frac{r_i}{\sigma_i}
+
+Note that if :math:`\sigma_i` were the same for all :math:`i`,
+the sum of the weighted residuals :math:`\sum_i r_i` would be zero.
+
+.. meta::
+   :keywords: cv, standard, deviations
+
+.. index:: cv, standard, deviations
+
+.. _user_sum_residual.py@CV Standard Deviations:
+
+CV Standard Deviations
+**********************
+We consider the case were we a coefficient of variation :math:`\lambda`
+is used to model the measurement noise; :math:`\sigma_i = \lambda y_i`.
+In this case
+
+.. math::
+
+ 0 = \sum_{i=1}^{N-1} \frac{r_i}{y_i}
+
+.. meta::
+   :keywords: weighted, average, of, weighted, residuals
+
+.. index:: weighted, average, of, weighted, residuals
+
+.. _user_sum_residual.py@Weighted Average of Weighted Residuals:
+
+Weighted Average of Weighted Residuals
+**************************************
+We define the weight :math:`w_i` by
+
+.. math::
+
+ w_i = \sigma_i^{-1} / \sum_{i=0}^{N-1} \sigma_i^{-1}
+
+The corresponding weighted average of the weighted residuals is zero; i.e,
+
+.. math::
+
+ 0 = \sum_{i=1}^{N-1} w_i r_i
+
+.. meta::
+   :keywords: source, code
+
+.. index:: source, code
+
+.. _user_sum_residual.py@Source Code:
+
+Source Code
+***********
+
+.. literalinclude:: ../../example/user/sum_residual.py
+   :lines: 95-302
+   :language: py

@@ -1,0 +1,164 @@
+.. _user_predict_mulcov.py-name:
+
+!!!!!!!!!!!!!!!!!!!!!!
+user_predict_mulcov.py
+!!!!!!!!!!!!!!!!!!!!!!
+
+xrst input file: ``example/user/predict_mulcov.py``
+
+.. meta::
+   :keywords: user_predict_mulcov.py, predict, covariate, multiplier, values
+
+.. index:: user_predict_mulcov.py, predict, covariate, multiplier, values
+
+.. _user_predict_mulcov.py-title:
+
+Predict Covariate Multiplier Values
+###################################
+
+.. meta::
+   :keywords: purpose
+
+.. index:: purpose
+
+.. _user_predict_mulcov.py@Purpose:
+
+Purpose
+*******
+This examples demonstrates covariate multiplier predictions.
+
+.. meta::
+   :keywords: problem, parameters
+
+.. index:: problem, parameters
+
+.. _user_predict_mulcov.py@Problem Parameters:
+
+Problem Parameters
+******************
+The following values are used to simulate the data and set the priors
+for fitting the data:
+
+.. literalinclude:: ../../example/user/predict_mulcov.py
+   :lines: 92-99
+   :language: py
+
+.. meta::
+   :keywords: age, and, time, values
+
+.. index:: age, and, time, values
+
+.. _user_predict_mulcov.py@Age and Time Values:
+
+Age and Time Values
+*******************
+The reference value for *iota* is constant
+in age and time, but the value of the covariate multiplier that
+affects iota changes with age and time.
+
+.. meta::
+   :keywords: rate, table
+
+.. index:: rate, table
+
+.. _user_predict_mulcov.py@Rate Table:
+
+Rate Table
+**********
+The :ref:`rate_table-name` specifies that the only
+:ref:`var_table@var_type@rate` variable is
+*iota* for north_america.
+In addition, it specifies the smoothing for this rate
+has one grid point.
+
+.. meta::
+   :keywords: mulcov, table
+
+.. index:: mulcov, table
+
+.. _user_predict_mulcov.py@Mulcov Table:
+
+Mulcov Table
+************
+The :ref:`mulcov_table-name` specifies that
+the covariate *alpha* is a bilinear function of age and time.
+In fact, it is equal to the function ``alpha_true`` defined
+as one of the problem parameters.
+
+.. meta::
+   :keywords: variables
+
+.. index:: variables
+
+.. _user_predict_mulcov.py@Variables:
+
+Variables
+*********
+There are five model variables in this example:
+
+.. list-table::
+
+    * - *iota_reference*
+      - There is one variable corresponding to the reference value for
+        :ref:`iota(a,t)<math_ode@Incidence, iota(a, t)>` in north_america.
+    * - *alpha*
+      - There are four variables corresponding to the
+        :ref:`mulcov_table@mulcov_type@rate_value`
+        covariate multiplier that affect *iota* .
+
+.. meta::
+   :keywords: integrand, table
+
+.. index:: integrand, table
+
+.. _user_predict_mulcov.py@Integrand Table:
+
+Integrand Table
+***************
+The :ref:`integrand_table-name` for this example includes
+:ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` and
+:ref:`avg_integrand@Integrand, I_i(a,t)@mulcov` .
+The ``mulcov_0`` integrand corresponds the value of *alpha* .
+
+.. meta::
+   :keywords: data, table
+
+.. index:: data, table
+
+.. _user_predict_mulcov.py@Data Table:
+
+Data Table
+**********
+There are four measurements of *Sincidence*
+in the :ref:`data_table-name` , one for (age, time) pair corresponding
+to an *alpha* model variable.
+No noise is added to the measurements, and the prior on
+*iota* constrains it to the *iota_reference* .
+
+.. meta::
+   :keywords: avgint, table
+
+.. index:: avgint, table
+
+.. _user_predict_mulcov.py@Avgint Table:
+
+Avgint Table
+************
+There are four predictions of *alpha* requested by the
+:ref:`avgint_table-name` , one for each *alpha* model variable.
+The predictions are compared with the truth to see that the
+fit is prefect (there is no noise in the data).
+
+.. meta::
+   :keywords: source, code
+
+.. index:: source, code
+
+.. _user_predict_mulcov.py@Source Code:
+
+Source Code
+***********
+
+.. literalinclude:: ../../example/user/predict_mulcov.py
+   :lines: 91-307
+   :language: py

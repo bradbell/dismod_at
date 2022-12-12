@@ -1,0 +1,86 @@
+.. _scale_var_table-name:
+
+!!!!!!!!!!!!!!!
+scale_var_table
+!!!!!!!!!!!!!!!
+
+xrst input file: ``xrst/table/scale_var_table.xrst``
+
+.. meta::
+   :keywords: scale_var_table, scaling, fixed, effects, objective, and, constraints
+
+.. index:: scale_var_table, scaling, fixed, effects, objective, and, constraints
+
+.. _scale_var_table-title:
+
+Scaling Fixed Effects Objective and Constraints
+###############################################
+
+.. meta::
+   :keywords: discussion
+
+.. index:: discussion
+
+.. _scale_var_table@Discussion:
+
+Discussion
+**********
+The fixed effects are scaled using the *eta* in the
+corresponding priors; see
+:ref:`scaling<prior_table@eta@Scaling Fixed Effects>` .
+The fixed effects objective
+and constraints are scaled using their values at the
+:ref:`model_variables-name` corresponding to the scale_var table.
+The :ref:`init_command<init_command@scale_var_table>`
+creates a scale_var table
+using the mean of the priors for the model variables values.
+The :ref:`set_command<set_command@table_out@scale_var>`
+can also be used to change the start_var table.
+This table may also be created directly by the user
+(with the aid of the :ref:`var_table-name` ).
+
+.. meta::
+   :keywords: scale_var_id
+
+.. index:: scale_var_id
+
+.. _scale_var_table@scale_var_id:
+
+scale_var_id
+************
+This column has type ``integer`` and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+The *scale_var_id* column is also a foreign key for the
+:ref:`var_table-name` ; i.e.,
+
+   *var_id* = *scale_var_id*
+
+In addition, the size of both tables is the same.
+
+.. meta::
+   :keywords: scale_var_value
+
+.. index:: scale_var_value
+
+.. _scale_var_table@scale_var_value:
+
+scale_var_value
+***************
+The column has type ``real`` and is
+the value of the :ref:`model_variables-name`
+used to scale the likelihood function during the :ref:`fit_command-name` .
+To be specific, the fixed effects objective function is scaled so that its
+derivative is order one at this value of the model variables.
+The random effects objective is not currently scaled and so that
+value of the random effects does not matter (currently).
+
+.. meta::
+   :keywords: example
+
+.. index:: example
+
+.. _scale_var_table@Example:
+
+Example
+*******
+See the :ref:`init_command.py-name` example and test.

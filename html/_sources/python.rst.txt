@@ -1,0 +1,77 @@
+.. _python-name:
+
+!!!!!!
+python
+!!!!!!
+
+xrst input file: ``python/dismod_at/__init__.py``
+
+.. meta::
+   :keywords: python, python, utilities
+
+.. index:: python, python, utilities
+
+.. _python-title:
+
+Python Utilities
+################
+
+.. meta::
+   :keywords: contents
+
+.. index:: contents
+
+.. _python@Contents:
+
+Contents
+********
+
+.. csv-table::
+   :header:  "Child", "Title"
+   :widths: auto
+
+   "average_integrand", :ref:`average_integrand-title`
+   "connection_file", :ref:`connection_file-title`
+   "create_connection", :ref:`create_connection-title`
+   "create_database", :ref:`create_database-title`
+   "create_table", :ref:`create_table-title`
+   "csv2db_command", :ref:`csv2db_command-title`
+   "db2csv_command", :ref:`db2csv_command-title`
+   "get_name_type", :ref:`get_name_type-title`
+   "get_row_list", :ref:`get_row_list-title`
+   "get_table_dict", :ref:`get_table_dict-title`
+   "metropolis", :ref:`metropolis-title`
+   "modify_command", :ref:`modify_command-title`
+   "perturb_command", :ref:`perturb_command-title`
+   "plot_curve", :ref:`plot_curve-title`
+   "plot_data_fit", :ref:`plot_data_fit-title`
+   "plot_rate_fit", :ref:`plot_rate_fit-title`
+   "replace_table", :ref:`replace_table-title`
+   "sql_command", :ref:`sql_command-title`
+   "system_command_prc", :ref:`system_command_prc-title`
+   "unicode_tuple", :ref:`unicode_tuple-title`
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   average_integrand
+   connection_file
+   create_connection
+   create_database
+   create_table
+   csv2db_command
+   db2csv_command
+   get_name_type
+   get_row_list
+   get_table_dict
+   metropolis
+   modify_command
+   perturb_command
+   plot_curve
+   plot_data_fit
+   plot_rate_fit
+   replace_table
+   sql_command
+   system_command_prc
+   unicode_tuple

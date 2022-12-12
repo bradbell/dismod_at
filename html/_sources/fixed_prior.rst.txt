@@ -1,0 +1,292 @@
+.. _fixed_prior-name:
+
+!!!!!!!!!!!
+fixed_prior
+!!!!!!!!!!!
+
+xrst input file: ``xrst/model/fixed_prior.xrst``
+
+.. meta::
+   :keywords: fixed_prior, prior, for, fixed, effect, values
+
+.. index:: fixed_prior, prior, for, fixed, effect, values
+
+.. _fixed_prior-title:
+
+Prior for Fixed Effect Values
+#############################
+
+.. meta::
+   :keywords: theta
+
+.. index:: theta
+
+.. _fixed_prior@theta:
+
+theta
+*****
+
+.. meta::
+   :keywords: lambda
+
+.. index:: lambda
+
+.. _fixed_prior@theta@lambda:
+
+lambda
+======
+We use :math:`\lambda` to denote
+the sub-vector of the fixed effects that are
+:ref:`standard deviation multipliers<model_variables@Fixed Effects, theta@Smoothing Standard Deviation Multipliers, lambda>` .
+
+.. meta::
+   :keywords: beta
+
+.. index:: beta
+
+.. _fixed_prior@theta@beta:
+
+beta
+====
+We use :math:`\beta` to denote
+the sub-vector of the fixed effects that are
+:ref:`model_variables@Fixed Effects, theta@Parent Rates`
+or
+:ref:`model_variables@Fixed Effects, theta@Group Covariate Multipliers` .
+
+.. meta::
+   :keywords: theta
+
+.. index:: theta
+
+.. _fixed_prior@theta@theta:
+
+theta
+=====
+We use :math:`\theta` to denote the entire fixed effects vector; i.e.,
+:math:`\theta = ( \lambda , \beta )`.
+
+.. meta::
+   :keywords: value, constraints
+
+.. index:: value, constraints
+
+.. _fixed_prior@Value Constraints:
+
+Value Constraints
+*****************
+
+.. meta::
+   :keywords: theta_k
+
+.. index:: theta_k
+
+.. _fixed_prior@Value Constraints@theta_k:
+
+theta_k
+=======
+We use :math:`\theta_k` to denote
+one component of  :math:`\theta`.
+
+.. meta::
+   :keywords: l_k^v
+
+.. index:: l_k^v
+
+.. _fixed_prior@Value Constraints@L_k^v:
+
+L_k^v
+=====
+We use :math:`L_k^v` to denote the
+:ref:`prior_table@lower` limit
+corresponding to the
+:ref:`smooth_grid_table@value_prior_id`
+that corresponds to the fixed effect :math:`\theta_k`.
+
+.. meta::
+   :keywords: u_k^v
+
+.. index:: u_k^v
+
+.. _fixed_prior@Value Constraints@U_k^v:
+
+U_k^v
+=====
+We use :math:`U_k^v` to denote the
+:ref:`prior_table@upper` limit
+corresponding to the
+:ref:`smooth_grid_table@value_prior_id`
+that corresponds to the fixed effect :math:`\theta_k`.
+
+.. meta::
+   :keywords: age, difference, limits
+
+.. index:: age, difference, limits
+
+.. _fixed_prior@Age Difference Limits:
+
+Age Difference Limits
+*********************
+The fixed effects corresponding to the standard deviation multipliers
+:ref:`smooth_table@mulstd_value_prior_id` ,
+:ref:`smooth_table@mulstd_dage_prior_id` , and
+:ref:`smooth_table@mulstd_dtime_prior_id`
+are constant with respect to age and time.
+Hence the constraints
+below do not apply to the standard deviation multipliers.
+
+.. meta::
+   :keywords: a_i(k)
+
+.. index:: a_i(k)
+
+.. _fixed_prior@Age Difference Limits@a_i(k):
+
+a_i(k)
+======
+We use :math:`a_{i(k)}` to denote the age corresponding to the
+:ref:`smooth_grid_table@age_id` for the fixed effect
+:math:`\theta_k`.
+If this is the maximum age for the corresponding
+:ref:`smooth_table@smooth_id` ,
+then there is no age difference for this fixed effect.
+Otherwise, we use :math:`a_{i(k)+1}` to denote the next larger age
+in the smoothing grid and
+:math:`\theta_{\ell(k)}` denote the corresponding component of
+:math:`\theta` corresponding to the next larger age.
+
+.. meta::
+   :keywords: delta^a
+
+.. index:: delta^a
+
+.. _fixed_prior@Age Difference Limits@Delta^a:
+
+Delta^a
+=======
+If :math:`a_{i(k)}` is not the maximum age, we use the notation
+
+.. math::
+
+   \Delta^a_k \theta = \theta_{\ell(k)} - \theta_k
+
+.. meta::
+   :keywords: l_k^a
+
+.. index:: l_k^a
+
+.. _fixed_prior@Age Difference Limits@L_k^a:
+
+L_k^a
+=====
+We use :math:`L_k^a` to denote the
+:ref:`prior_table@lower` limit
+corresponding to the
+:ref:`smooth_grid_table@dage_prior_id`
+that corresponds to the fixed effect :math:`\theta_k`.
+
+.. meta::
+   :keywords: u_k^a
+
+.. index:: u_k^a
+
+.. _fixed_prior@Age Difference Limits@U_k^a:
+
+U_k^a
+=====
+We use :math:`U_k^a` to denote the
+:ref:`prior_table@upper` limit
+corresponding to the
+:ref:`smooth_grid_table@dage_prior_id`
+that corresponds to the fixed effect :math:`\theta_k`.
+
+.. meta::
+   :keywords: time, difference, limits
+
+.. index:: time, difference, limits
+
+.. _fixed_prior@Time Difference Limits:
+
+Time Difference Limits
+**********************
+The time difference :math:`\Delta^t_k \theta`,
+the index :math:`j(k)`, and limits
+:math:`L_k^t` and :math:`U_k^t` are defined in a fashion
+similar as for the age differences.
+
+.. meta::
+   :keywords: capital, theta
+
+.. index:: capital, theta
+
+.. _fixed_prior@Capital Theta:
+
+Capital Theta
+*************
+The constraint set :math:`\Theta` is defined as the set of
+:math:`\theta` such that the following conditions hold:
+
+#. For all :math:`k`,
+
+   .. math::
+
+      L_k^v \leq \theta_k \leq U_k^v
+
+#. For :math:`k`,
+   that are not standard deviation multipliers,
+   and such that :math:`a_{i(k)}` is not the maximum age
+   for the corresponding smoothing,
+
+   .. math::
+
+      L_k^a \leq \Delta^a_k \theta \leq U_k^a
+
+#. For :math:`k`,
+   that are not standard deviation multipliers,
+   and such that :math:`t_{j(k)}` is not the maximum time
+   for the corresponding smoothing,
+
+   .. math::
+
+      L_k^t \leq \Delta^t_k \theta \leq U_k^t
+
+.. meta::
+   :keywords: normalization, constant,, c_theta
+
+.. index:: normalization, constant,, c_theta
+
+.. _fixed_prior@Normalization Constant, C_theta:
+
+Normalization Constant, C_theta
+*******************************
+The normalization constant for the fixed effects density is
+
+.. math::
+
+   C_\theta
+   =
+   \int_{\Theta}
+      V^\theta ( \theta ) A^\theta ( \theta ) T^\theta ( \theta )
+         \; \B{d} \theta
+
+See :ref:`fixed_value@V^theta` ,
+:ref:`fixed_diff@A^theta` , and
+:ref:`fixed_diff@T^theta`  for the definitions of
+:math:`V^\theta`, :math:`A^\theta` and :math:`T^\theta`.
+
+.. meta::
+   :keywords: p(theta)
+
+.. index:: p(theta)
+
+.. _fixed_prior@p(theta):
+
+p(theta)
+********
+We define the prior for the fixed effects by
+
+.. math::
+
+   C_\theta \; \B{p} ( \theta )
+   =
+   V^\theta ( \theta ) A^\theta ( \theta ) T^\theta ( \theta )

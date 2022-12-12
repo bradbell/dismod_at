@@ -1,0 +1,207 @@
+.. _plot_data_fit-name:
+
+!!!!!!!!!!!!!
+plot_data_fit
+!!!!!!!!!!!!!
+
+xrst input file: ``python/dismod_at/plot_data_fit.py``
+
+.. meta::
+   :keywords: plot_data_fit, plot, the, data, fit, by, integrand
+
+.. index:: plot_data_fit, plot, the, data, fit, by, integrand
+
+.. _plot_data_fit-title:
+
+Plot The Data Fit By Integrand
+##############################
+
+.. meta::
+   :keywords: syntax
+
+.. index:: syntax
+
+.. _plot_data_fit@Syntax:
+
+Syntax
+******
+
+.. literalinclude:: ../../python/dismod_at/plot_data_fit.py
+   :lines: 117-123
+   :language: py
+
+.. meta::
+   :keywords: database
+
+.. index:: database
+
+.. _plot_data_fit@database:
+
+database
+********
+This ``str`` is the file name for
+an existing dismod_at database that contains the results of a
+:ref:`fit_command-name` .
+This argument can't be ``None`` .
+
+.. meta::
+   :keywords: pdf_file
+
+.. index:: pdf_file
+
+.. _plot_data_fit@pdf_file:
+
+pdf_file
+********
+This ``str``
+is the location where the pdf file containing the plot will be placed.
+This argument can't be ``None`` .
+
+.. meta::
+   :keywords: plot_title
+
+.. index:: plot_title
+
+.. _plot_data_fit@plot_title:
+
+plot_title
+**********
+This ``str`` is extra text printed at the beginning of the
+title for each plot.
+If this argument is ``None`` , there is no extra text.
+
+.. meta::
+   :keywords: max_plot
+
+.. index:: max_plot
+
+.. _plot_data_fit@max_plot:
+
+max_plot
+********
+This is a ``int`` specifying the maximum number of points
+to plot per integrand.
+If this argument is less that the number of values for an integrand,
+the values are randomly sub-sampled keeping the same order.
+The x-axis (data index) is the original index value before sub-sampling.
+If this argument is ``None`` no sub-sampling is done.
+
+.. meta::
+   :keywords: integrand_list
+
+.. index:: integrand_list
+
+.. _plot_data_fit@integrand_list:
+
+integrand_list
+**************
+Each element of this ``list`` is a ``str`` containing an
+:ref:`integrand_table@integrand_name`
+that we are plotting the fit for.
+If this argument is ``None`` all of the integrands,
+except those with names that begin with ``mulcov_`` ,
+are included.
+
+.. meta::
+   :keywords: n_fit_dict
+
+.. index:: n_fit_dict
+
+.. _plot_data_fit@n_fit_dict:
+
+n_fit_dict
+**********
+This is a dictionary with keys that are the integrand names
+in *integrand_list* .
+(If *integrand_list* is ``None`` , the keys are all the
+integrand names that do not begin with ``mulcov_`` .)
+The value *n_fit_dict* [ *key* ] is the number of rows
+in the :ref:`data_subset_table-name` that correspond to this integrand and
+are not held out in the data table (see below).
+If this is less than 2, the corresponding integrand is not plotted.
+
+.. meta::
+   :keywords: plot, legend
+
+.. index:: plot, legend
+
+.. _plot_data_fit@Plot Legend:
+
+Plot Legend
+***********
+
+.. meta::
+   :keywords: data, table, hold, out
+
+.. index:: data, table, hold, out
+
+.. _plot_data_fit@Plot Legend@Data Table Hold Out:
+
+Data Table Hold Out
+===================
+We use data table hold out to refer to values that have
+*hold_out* equal to one in the data table.
+This does not include hold outs created by the hold out command
+or hold outs created by the hold option.
+The data table hold out values are not included during the automatic
+choice of the plotting limits.
+
+.. meta::
+   :keywords: point, symbol
+
+.. index:: point, symbol
+
+.. _plot_data_fit@Plot Legend@Point Symbol:
+
+Point Symbol
+============
+Values that are within the automatically chosen plotting limits
+are plotted using the point character ``.`` .
+
+.. meta::
+   :keywords: plus, symbol
+
+.. index:: plus, symbol
+
+.. _plot_data_fit@Plot Legend@Plus Symbol:
+
+Plus Symbol
+===========
+Values that are outside the automatically chosen plotting limits
+are plotted using the point plus character ``+`` .
+
+.. meta::
+   :keywords: green
+
+.. index:: green
+
+.. _plot_data_fit@Plot Legend@Green:
+
+Green
+=====
+Values that correspond to data that is held out in the data table
+are plotted using the color green.
+
+.. meta::
+   :keywords: red, and, black
+
+.. index:: red, and, black
+
+.. _plot_data_fit@Plot Legend@Red and Black:
+
+Red and Black
+=============
+Values that correspond to data that is not held out in the data table,
+and is not within (is within) the automatically chosen limits,
+are plotted using the color red (black).
+
+.. meta::
+   :keywords: example
+
+.. index:: example
+
+.. _plot_data_fit@Example:
+
+Example
+*******
+:ref:`user_plot_data_fit.py-name` .

@@ -1,0 +1,264 @@
+.. _user_data_sim.py-name:
+
+!!!!!!!!!!!!!!!!
+user_data_sim.py
+!!!!!!!!!!!!!!!!
+
+xrst input file: ``example/user/data_sim.py``
+
+.. meta::
+   :keywords: user_data_sim.py, explanation, of, simulated, data, table,, data_sim
+
+.. index:: user_data_sim.py, explanation, of, simulated, data, table,, data_sim
+
+.. _user_data_sim.py-title:
+
+Explanation of Simulated Data Table, data_sim
+#############################################
+
+.. meta::
+   :keywords: see, also
+
+.. index:: see, also
+
+.. _user_data_sim.py@See Also:
+
+See Also
+********
+:ref:`user_sim_log.py-name`
+
+.. meta::
+   :keywords: purpose
+
+.. index:: purpose
+
+.. _user_data_sim.py@Purpose:
+
+Purpose
+*******
+This example explains the :ref:`data_sim_table-name` by showing that the
+:ref:`Adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>`
+for the simulated data is the same as for the original data.
+
+.. meta::
+   :keywords: random, effects
+
+.. index:: random, effects
+
+.. _user_data_sim.py@Random Effects:
+
+Random Effects
+**************
+There are no random effects in this example.
+
+.. meta::
+   :keywords: priors
+
+.. index:: priors
+
+.. _user_data_sim.py@Priors:
+
+Priors
+******
+The priors do not matter for this example except for the fact that
+the :ref:`truth_var_table-name` values for the :ref:`model_variables-name`
+must satisfy the lower and upper limits in the corresponding priors.
+
+.. meta::
+   :keywords: iota
+
+.. index:: iota
+
+.. _user_data_sim.py@Iota:
+
+Iota
+****
+The value *iota_true*
+is the simulated true rate for iota.
+There is only one grid point (one :ref:`model_variable<model_variables-name>` )
+corresponding to *iota* , hence it is constant in age and time.
+
+.. meta::
+   :keywords: other, rates
+
+.. index:: other, rates
+
+.. _user_data_sim.py@Other Rates:
+
+Other Rates
+***********
+For this example the other rates are all zero.
+This is specified by setting the
+:ref:`rate_table@parent_smooth_id` and
+:ref:`rate_table@child_smooth_id` to null
+for the other rates.
+
+.. meta::
+   :keywords: covariate, multiplier
+
+.. index:: covariate, multiplier
+
+.. _user_data_sim.py@Covariate Multiplier:
+
+Covariate Multiplier
+********************
+There is one covariate multiplier on the covariate column ``one``
+and the rate ``iota`` .
+This is a measurement noise covariate multiplier
+:ref:`gamma<data_like@Measurement Noise Covariates@gamma_j (a, t)>` .
+The true value for this multiplier, used to simulate data, is returned by
+``gamma_true`` ( *meas_noise_effect* ) .
+There is only one grid point in the covariate multiplier,
+hence it is constant in age and time.  It follows that
+:ref:`average noise effect<data_like@Measurement Noise Covariates@Average Noise Effect, E_i(theta)>`
+:math:`E_i ( \theta )` is constant and equal to *gamma_true* .
+
+.. meta::
+   :keywords: data
+
+.. index:: data
+
+.. _user_data_sim.py@Data:
+
+Data
+****
+There are *n_data* measurements of Sincidence and each has a standard
+deviation *meas_std* (before adding the covariate effect).
+The :ref:`data_table@meas_value` do not affect (do affect)
+the values in :ref:`data_sim_table-name` when the
+:ref:`density<data_table@density_id>` is
+:ref:`density_table@Notation@Linear`
+(:ref:`density_table@Notation@Log Scaled` ).
+
+.. meta::
+   :keywords: data, subset
+
+.. index:: data, subset
+
+.. _user_data_sim.py@Data Subset:
+
+Data Subset
+***********
+Data is only simulated for
+:ref:`data_subset_table@data_id`
+values that appear in the data_subset table.
+For this case, this includes all the
+:ref:`data_table@data_id` values in the data table.
+
+.. meta::
+   :keywords: meas_noise_effect
+
+.. index:: meas_noise_effect
+
+.. _user_data_sim.py@meas_noise_effect:
+
+meas_noise_effect
+*****************
+see :ref:`option_table@meas_noise_effect` .
+
+.. meta::
+   :keywords: notation, before, simulation
+
+.. index:: notation, before, simulation
+
+.. _user_data_sim.py@Notation Before Simulation:
+
+Notation Before Simulation
+**************************
+The following values do not depend on the simulated data:
+
+.. meta::
+   :keywords: y
+
+.. index:: y
+
+.. _user_data_sim.py@Notation Before Simulation@y:
+
+y
+=
+This is the measured value; see
+:ref:`data_sim_table@Method@y` .
+
+.. meta::
+   :keywords: capital, delta
+
+.. index:: capital, delta
+
+.. _user_data_sim.py@Notation Before Simulation@Capital Delta:
+
+Capital Delta
+=============
+This is the minimum cv standard deviation corresponding to :math:`y`; see
+:ref:`Delta<data_like@Notation@Minimum CV Standard Deviation, Delta_i>` .
+
+.. meta::
+   :keywords: sigma
+
+.. index:: sigma
+
+.. _user_data_sim.py@Notation Before Simulation@sigma:
+
+sigma
+=====
+This is the transformed standard deviation corresponding to :math:`y`; see
+:ref:`sigma<data_like@Notation@Transformed Standard Deviation, sigma_i>` .
+
+.. meta::
+   :keywords: e
+
+.. index:: e
+
+.. _user_data_sim.py@Notation Before Simulation@E:
+
+E
+=
+This is the average noise effect corresponding to :math:`y`; see
+:ref:`E<data_sim_table@Method@Capital E>` .
+
+.. meta::
+   :keywords: delta
+
+.. index:: delta
+
+.. _user_data_sim.py@Notation Before Simulation@delta:
+
+delta
+=====
+This is the adjusted standard deviation corresponding to :math:`y`; see
+:ref:`data_sim_table@Method@delta` .
+
+.. meta::
+   :keywords: simulation, notation
+
+.. index:: simulation, notation
+
+.. _user_data_sim.py@Simulation Notation:
+
+Simulation Notation
+*******************
+
+.. meta::
+   :keywords: z
+
+.. index:: z
+
+.. _user_data_sim.py@Simulation Notation@z:
+
+z
+=
+This is the simulated measurement value, before censoring,
+in the data_sim table; see :ref:`data_sim_table@Method@z` .
+
+.. meta::
+   :keywords: source, code
+
+.. index:: source, code
+
+.. _user_data_sim.py@Source Code:
+
+Source Code
+***********
+
+.. literalinclude:: ../../example/user/data_sim.py
+   :lines: 128-485
+   :language: py

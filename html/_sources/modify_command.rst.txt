@@ -1,0 +1,223 @@
+.. _modify_command-name:
+
+!!!!!!!!!!!!!!
+modify_command
+!!!!!!!!!!!!!!
+
+xrst input file: ``python/dismod_at/modify_command.py``
+
+.. meta::
+   :keywords: modify_command, modify, a, column, of, an, sqlite, database
+
+.. index:: modify_command, modify, a, column, of, an, sqlite, database
+
+.. _modify_command-title:
+
+Modify a Column of an Sqlite Database
+#####################################
+
+.. meta::
+   :keywords: deprecated
+
+.. index:: deprecated
+
+.. _modify_command@Deprecated:
+
+Deprecated
+**********
+This command was deprecated on 2021-12-05.
+
+.. meta::
+   :keywords: syntax
+
+.. index:: syntax
+
+.. _modify_command@Syntax:
+
+Syntax
+******
+
+.. meta::
+   :keywords: as, program
+
+.. index:: as, program
+
+.. _modify_command@Syntax@As Program:
+
+As Program
+==========
+
+| ``dismodat.py`` *database* ``modify`` \\
+| |tab| *table_name* *column_name* *row_expression* *value_expression*  \\
+| |tab| *statement_one* *statement_two*  ...
+
+.. meta::
+   :keywords: as, python, function
+
+.. index:: as, python, function
+
+.. _modify_command@Syntax@As Python Function:
+
+As Python Function
+==================
+``dismod_at.modify_command`` ( *database* , *arg_list* )
+
+.. meta::
+   :keywords: see, also
+
+.. index:: see, also
+
+.. _modify_command@See Also:
+
+See Also
+********
+It is simpler to use the :ref:`set_command-name` when it is
+it is capable of making a change.
+
+.. meta::
+   :keywords: warning
+
+.. index:: warning
+
+.. _modify_command@Warning:
+
+Warning
+*******
+You can change any value in the database using the modify command.
+It is suggested that you re-run the :ref:`init_command-name` ,
+unless you are certain that the set of
+:ref:`model_variables-name` was not affected by this change.
+
+.. meta::
+   :keywords: arg_list
+
+.. index:: arg_list
+
+.. _modify_command@arg_list:
+
+arg_list
+********
+This is a list of strings containing the arguments in the
+program syntax. To be specific,
+*arg_list* [0] is *table_name* ,
+*arg_list* [1] is *column_name* ,
+e.t.c.
+
+.. meta::
+   :keywords: database
+
+.. index:: database
+
+.. _modify_command@database:
+
+database
+********
+Is the file name corresponding to the Sqlite database.
+
+.. meta::
+   :keywords: table_name
+
+.. index:: table_name
+
+.. _modify_command@table_name:
+
+table_name
+**********
+Is the name of the table in the database that is modified.
+
+.. meta::
+   :keywords: column_name
+
+.. index:: column_name
+
+.. _modify_command@column_name:
+
+column_name
+***********
+Is the name of the column in the table that is modified.
+
+.. meta::
+   :keywords: row_expression
+
+.. index:: row_expression
+
+.. _modify_command@row_expression:
+
+row_expression
+**************
+This is a python expression that evaluates to
+``True`` or ``False`` .
+Only rows where the expression is ``True`` are modified.
+
+.. meta::
+   :keywords: value_expression
+
+.. index:: value_expression
+
+.. _modify_command@value_expression:
+
+value_expression
+****************
+This is a python expression that specifies the value to be placed in the
+specified column when the row expression is ``True`` .
+
+.. meta::
+   :keywords: expressions
+
+.. index:: expressions
+
+.. _modify_command@Expressions:
+
+Expressions
+***********
+For each row, an expression can reference the value in a column using
+the corresponding column name. In other words, for each column, a variable
+with the column name is set to the value in that column.
+
+.. meta::
+   :keywords: statements
+
+.. index:: statements
+
+.. _modify_command@statements:
+
+statements
+**********
+There may be zero or more python statements at the end of the
+command line. Each one is executed before the expressions are evaluated.
+For example, one of the statements might be
+::
+
+    from math import exp
+
+This would make the function ``exp`` ( *x* ) available for use
+in *row_expression* and *value_expression* .
+
+.. meta::
+   :keywords: log, table
+
+.. index:: log, table
+
+.. _modify_command@Log Table:
+
+Log Table
+*********
+See :ref:`dismodat.py<dismodat.py@Log Table>` .
+
+.. meta::
+   :keywords: example
+
+.. index:: example
+
+.. _modify_command@Example:
+
+Example
+*******
+The file :ref:`modify_command.py-name` contains an example and test
+using this command.
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   modify_command.py

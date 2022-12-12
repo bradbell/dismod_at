@@ -1,0 +1,21 @@
+.. _time_table.py-name:
+
+!!!!!!!!!!!!!
+time_table.py
+!!!!!!!!!!!!!
+
+xrst input file: ``example/table/time_table.py``
+
+.. meta::
+   :keywords: time_table.py, time_table:, example, and, test
+
+.. index:: time_table.py, time_table:, example, and, test
+
+.. _time_table.py-title:
+
+time_table: Example and Test
+############################
+
+.. literalinclude:: ../../example/table/time_table.py
+   :lines: 18-44
+   :language: py

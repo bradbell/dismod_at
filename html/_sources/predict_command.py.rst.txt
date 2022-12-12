@@ -1,0 +1,21 @@
+.. _predict_command.py-name:
+
+!!!!!!!!!!!!!!!!!!
+predict_command.py
+!!!!!!!!!!!!!!!!!!
+
+xrst input file: ``example/get_started/predict_command.py``
+
+.. meta::
+   :keywords: predict_command.py, predict, command:, example, and, test
+
+.. index:: predict_command.py, predict, command:, example, and, test
+
+.. _predict_command.py-title:
+
+predict Command: Example and Test
+#################################
+
+.. literalinclude:: ../../example/get_started/predict_command.py
+   :lines: 19-93
+   :language: py

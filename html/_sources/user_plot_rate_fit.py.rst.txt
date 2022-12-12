@@ -1,0 +1,124 @@
+.. _user_plot_rate_fit.py-name:
+
+!!!!!!!!!!!!!!!!!!!!!
+user_plot_rate_fit.py
+!!!!!!!!!!!!!!!!!!!!!
+
+xrst input file: ``example/user/plot_rate_fit.py``
+
+.. meta::
+   :keywords: user_plot_rate_fit.py, example, plotting, the, rates, for, a, fit
+
+.. index:: user_plot_rate_fit.py, example, plotting, the, rates, for, a, fit
+
+.. _user_plot_rate_fit.py-title:
+
+Example Plotting The Rates for a Fit
+####################################
+
+.. meta::
+   :keywords: nodes
+
+.. index:: nodes
+
+.. _user_plot_rate_fit.py@Nodes:
+
+Nodes
+*****
+There are four nodes in this example.
+The world node has one child, north_america.
+The north_america node has two children, united_states and canada.
+The :ref:`parent_node<option_table@Parent Node>` is canada which
+does not have any children.
+
+.. meta::
+   :keywords: rates
+
+.. index:: rates
+
+.. _user_plot_rate_fit.py@Rates:
+
+Rates
+*****
+There is a parent smoothing the *iota* , *rho*
+and *chi* rates.
+There is no child node smoothing so there are no random effects
+for these rates.
+In addition, there is no parent smoothing for the other rates
+so they are zero.
+The value priors for the rate smoothing is uniform with lower limit 1e-4
+and upper limit 1.0. The mean 0.1, is only used as a starting point
+for the optimization.
+The age and time difference prior for this smoothing is
+uniform with mean zero and no upper or lower bound.
+
+.. meta::
+   :keywords: integrands
+
+.. index:: integrands
+
+.. _user_plot_rate_fit.py@Integrands:
+
+Integrands
+**********
+The integrands for this example are
+:ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` ,
+:ref:`avg_integrand@Integrand, I_i(a,t)@remission` , and
+:ref:`avg_integrand@Integrand, I_i(a,t)@mtexcess` .
+Note that these integrands are direct measurements of the following rates:
+
+.. literalinclude:: ../../example/user/plot_rate_fit.py
+   :lines: 42-46
+   :language: py
+
+.. meta::
+   :keywords: data
+
+.. index:: data
+
+.. _user_plot_rate_fit.py@Data:
+
+Data
+****
+All of the data corresponds to canada.
+There is one data point for each of the integrands listed above.
+It is simulated using true value for the corresponding rate:
+
+.. literalinclude:: ../../example/user/plot_rate_fit.py
+   :lines: 57-64
+   :language: py
+
+Even though there is not noise in the simulated data, it is modeled as
+have the following coefficient of variation:
+
+.. literalinclude:: ../../example/user/plot_rate_fit.py
+   :lines: 71-71
+   :language: py
+
+.. meta::
+   :keywords: call, to, plot_rate_fit
+
+.. index:: call, to, plot_rate_fit
+
+.. _user_plot_rate_fit.py@Call to plot_rate_fit:
+
+Call to plot_rate_fit
+*********************
+
+.. literalinclude:: ../../example/user/plot_rate_fit.py
+   :lines: 288-293
+   :language: py
+
+.. meta::
+   :keywords: source, code
+
+.. index:: source, code
+
+.. _user_plot_rate_fit.py@Source Code:
+
+Source Code
+***********
+
+.. literalinclude:: ../../example/user/plot_rate_fit.py
+   :lines: 92-348
+   :language: py

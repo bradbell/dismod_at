@@ -1,0 +1,78 @@
+.. _time_table-name:
+
+!!!!!!!!!!
+time_table
+!!!!!!!!!!
+
+xrst input file: ``xrst/table/time_table.xrst``
+
+.. meta::
+   :keywords: time_table, the, time, table
+
+.. index:: time_table, the, time, table
+
+.. _time_table-title:
+
+The Time Table
+##############
+
+.. meta::
+   :keywords: time_id
+
+.. index:: time_id
+
+.. _time_table@time_id:
+
+time_id
+*******
+This column has type ``integer`` and is the primary key for
+the this table.
+Its initial value is zero, and it increments by one for each row.
+
+.. meta::
+   :keywords: time
+
+.. index:: time
+
+.. _time_table@time:
+
+time
+****
+This column has type ``real`` and is a set of time values.
+The values in the time column must be unique; i.e.,
+none of the values may be repeated.
+The values can be in any specific order; e.g.,
+they do not need to be increasing or decreasing.
+
+.. meta::
+   :keywords: ode, grid
+
+.. index:: ode, grid
+
+.. _time_table@time@Ode Grid:
+
+Ode Grid
+========
+Note that the maximum minus the minimum time divided by the
+:ref:`option_table@Age Average Grid@ode_step_size` will determine the
+time spacing between solutions of the
+:ref:`avg_integrand@Ordinary Differential Equation`
+along cohort lines.
+
+.. meta::
+   :keywords: example
+
+.. index:: example
+
+.. _time_table@Example:
+
+Example
+*******
+The file :ref:`time_table.py-name`
+contains an example ``time`` table.
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   time_table.py

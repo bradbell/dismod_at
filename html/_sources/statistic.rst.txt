@@ -1,0 +1,533 @@
+.. _statistic-name:
+
+!!!!!!!!!
+statistic
+!!!!!!!!!
+
+xrst input file: ``xrst/model/statistic.xrst``
+
+.. meta::
+   :keywords: statistic, some, statistical, function, definitions
+
+.. index:: statistic, some, statistical, function, definitions
+
+.. _statistic-title:
+
+Some Statistical Function Definitions
+#####################################
+
+.. meta::
+   :keywords: notation
+
+.. index:: notation
+
+.. _statistic@Notation:
+
+Notation
+********
+
+.. meta::
+   :keywords: y
+
+.. index:: y
+
+.. _statistic@Notation@y:
+
+y
+=
+If :math:`z` is not present,
+we are computing residual and statistical density for :math:`y`
+or :math:`\log( y + \eta )`.
+
+.. meta::
+   :keywords: z
+
+.. index:: z
+
+.. _statistic@Notation@z:
+
+z
+=
+If :math:`z` is present,
+we are computing the residual and statistical density for :math:`z - y`
+or :math:`\log( z + \eta ) - \log ( y + \eta )`.
+This is used for smoothing difference of :ref:`model_variables-name`
+with respect to age and time.
+
+.. meta::
+   :keywords: mu
+
+.. index:: mu
+
+.. _statistic@Notation@mu:
+
+mu
+==
+In the linear case, :math:`\mu` denotes
+the expected value for :math:`y` or
+the difference between :math:`y` and :math:`z`.
+In the log case, it denotes
+the expected value for :math:`\log( y + \eta )` or
+the difference between :math:`\log( y + \eta )` and
+:math:`\log( z + \eta )`.
+
+.. meta::
+   :keywords: delta
+
+.. index:: delta
+
+.. _statistic@Notation@delta:
+
+delta
+=====
+If the density is
+:ref:`density_table@Notation@Linear` ,
+this is the standard deviation for :math:`y` or :math:`z - y`,
+If the density is
+:ref:`density_table@Notation@Log Scaled` ,
+this is the standard deviation for :math:`\log( y + \eta )`
+or :math:`\log( z + \eta )  - \log ( y + \eta )`.
+Note that :math:`\delta` has a different definition for different cases:
+
+#. For data cases, :math:`\delta` is the
+   :ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>` :math:`\delta_i( \theta )`.
+#. For priors cases, :math:`\delta` is the transformed standard deviation;
+   e.g.,
+   :ref:`fixed_value@sigma_j` ,
+   :ref:`random_value@sigma_j` ,
+   :ref:`smooth_dage@sigma_ij` ,
+   :ref:`smooth_dtime@sigma_ij` .
+
+.. meta::
+   :keywords: eta
+
+.. index:: eta
+
+.. _statistic@Notation@eta:
+
+eta
+===
+We use :math:`\eta` to denote the offset in log transform
+for the corresponding entry in the
+:ref:`data<data_table@eta>` or
+:ref:`prior<prior_table@eta>` table.
+
+.. meta::
+   :keywords: nu
+
+.. index:: nu
+
+.. _statistic@Notation@nu:
+
+nu
+==
+We use :math:`\nu` to denote the degrees of freedom in Student's-t
+for the corresponding entry in the
+:ref:`data<data_table@nu>` or
+:ref:`prior<prior_table@nu>` table.
+
+.. meta::
+   :keywords: d
+
+.. index:: d
+
+.. _statistic@Notation@d:
+
+d
+=
+We use :math:`d` to denote the *density_id*
+for the corresponding entry in the
+:ref:`data<data_table@density_id>` or
+:ref:`prior<prior_table@density_id>` table.
+In an abuse of notation,
+we write :math:`\eta[d]`, :math:`\nu[d]`
+for the offset and degrees corresponding to the same entry in the
+data or prior table.
+
+.. meta::
+   :keywords: weighted, residual, function,, r
+
+.. index:: weighted, residual, function,, r
+
+.. _statistic@Weighted Residual Function, R:
+
+Weighted Residual Function, R
+*****************************
+
+.. meta::
+   :keywords: value
+
+.. index:: value
+
+.. _statistic@Weighted Residual Function, R@Value:
+
+Value
+=====
+If the density is
+:ref:`density_table@density_name@uniform` ,
+the weighted residual function for values is
+
+.. math::
+
+   R(y, \mu, \delta, d) = 0
+
+If the density is
+:ref:`density_table@Notation@Linear` ,
+the weighted residual function for values is
+
+.. math::
+
+   R(y, \mu, \delta, d) = \frac{y - \mu}{\delta}
+
+If the density is
+:ref:`density_table@Notation@Log Scaled` ,
+the weighted residual function for values is
+
+.. math::
+
+   R(y, \mu, \delta, d)
+   =
+   \frac{
+      \log( y + \eta[d] ) - \log( \mu + \eta[d] )
+   }{
+      \delta
+   }
+
+Note that, for both the linear and log case,
+:math:`\mu` has the same units as :math:`y`.
+
+.. meta::
+   :keywords: difference
+
+.. index:: difference
+
+.. _statistic@Weighted Residual Function, R@Difference:
+
+Difference
+==========
+If the density is uniform,
+the weighted residual function for differences is
+
+.. math::
+
+   R(z, y, \mu, \delta, d) = 0
+
+If the density is
+:ref:`density_table@Notation@Linear` ,
+the weighted residual function for differences is
+
+.. math::
+
+   R(z, y, \mu, \delta, d) = \frac{z - y - \mu}{\delta}
+
+Note that, in the linear case, all the arguments (except :math:`d`)
+have the same units.
+If the density is
+:ref:`density_table@Notation@Log Scaled` ,
+the weighted residual function for differences is
+
+.. math::
+
+   R(z, y, \mu, \delta, d)
+   =
+   \frac{
+      \log(z + \eta[d] ) - \log( y + \eta[d] ) - \mu
+   }{
+      \delta
+   }
+
+Note that in the log case, :math:`z, y` and :math:`\eta` have the same units
+while :math:`\mu` and :math:`\delta` are in log space.
+
+.. meta::
+   :keywords: log-density, function,, d
+
+.. index:: log-density, function,, d
+
+.. _statistic@Log-Density Function, D:
+
+Log-Density Function, D
+***********************
+In the discussion below,
+log scaling refers to scaling the argument to the density function and
+log-density refers to taking the log of the result of the
+density function.
+
+.. meta::
+   :keywords: uniform
+
+.. index:: uniform
+
+.. _statistic@Log-Density Function, D@Uniform:
+
+Uniform
+=======
+If the density is ``uniform`` ,
+the log-density function for values :math:`D(y, \mu, \delta, d)`,
+and for differences :math:`D(z, y, \mu, \delta, d)`,
+are both defined by :math:`D = 0`.
+
+.. meta::
+   :keywords: gaussian
+
+.. index:: gaussian
+
+.. _statistic@Log-Density Function, D@Gaussian:
+
+Gaussian
+========
+If the density name is ``gaussian`` ,
+the log-density functions for values :math:`D(y, \mu, \delta, d)`,
+and for differences :math:`D(z, y, \mu, \delta, d)`,
+are defined by
+
+.. math::
+
+   D
+   =
+   - \log \left( \delta \sqrt{2 \pi} \right) - \frac{1}{2} R^2
+
+where :math:`D` and :math:`R` have the same arguments;
+see :ref:`statistic@Weighted Residual Function, R` .
+
+.. meta::
+   :keywords: censored, gaussian
+
+.. index:: censored, gaussian
+
+.. _statistic@Log-Density Function, D@Censored Gaussian:
+
+Censored Gaussian
+=================
+If the density name is ``cen_gaussian`` ,
+the log-density function is not defined for differences.
+The log-density function for values :math:`y > 0`
+is the same as for the ``gaussian`` case.
+The log-density function for the values :math:`y \leq 0`,
+is defined by
+
+.. math::
+
+   D(y, \mu, \delta, d)
+   =
+   \log ( \R{erfc}[ \mu / ( \delta \sqrt{2} ) ] ) - \log(2)
+
+where :math:`\R{erfc}` is the complementary error function;
+see the Gaussian case for the
+:ref:`censored density<censor_density@Gaussian@Censored Density, G(y,mu,delta,c)>`
+where the censoring value is :math:`c = 0`.
+
+.. meta::
+   :keywords: log-gaussian
+
+.. index:: log-gaussian
+
+.. _statistic@Log-Density Function, D@Log-Gaussian:
+
+Log-Gaussian
+============
+If the density name is ``log_gaussian`` ,
+the log-density function for values is
+
+.. math::
+
+   D(y, \mu, \delta, d)
+   =
+   - \log \left[ \delta \sqrt{2 \pi} \right]
+   - \frac{1}{2} R(y, \mu, \delta, d)^2
+
+The log-density function for differences is
+
+.. math::
+
+   D(z, y, \mu, \delta, d)
+   =
+   - \log \left( \delta \sqrt{2 \pi} \right)
+   - \frac{1}{2} R(z, y, \mu, \delta, d)^2
+
+.. meta::
+   :keywords: censored, log-gaussian
+
+.. index:: censored, log-gaussian
+
+.. _statistic@Log-Density Function, D@Censored Log-Gaussian:
+
+Censored Log-Gaussian
+=====================
+If the density name is ``cen_log_gaussian`` ,
+the log-density function is not defined for differences.
+The log-density function for values :math:`y > 0`
+is the same as for the ``log_gaussian`` case.
+The log-density function for the values :math:`y \leq 0`,
+is defined by
+
+.. math::
+
+   D(y, \mu, \delta, d)
+   =
+   \log ( \R{erfc}[ ( \mu - \eta ) / ( \delta \sqrt{2} ) ] ) - \log(2)
+
+where we the arguments to :math:`\delta` are the same as
+in the log Gaussian case
+and :math:`\R{erfc}` is the complementary error function;
+see the Gaussian case for the
+:ref:`censored density<censor_density@Gaussian@Censored Density, G(y,mu,delta,c)>`
+where the censoring value is :math:`c = \eta`.
+
+.. meta::
+   :keywords: laplace
+
+.. index:: laplace
+
+.. _statistic@Log-Density Function, D@Laplace:
+
+Laplace
+=======
+If the density name is ``laplace`` ,
+the log-density functions for values :math:`D(y, \mu, \delta, d)`,
+and for differences :math:`D(z, y, \mu, \delta, d)`,
+are defined by
+
+.. math::
+
+   D
+   =
+   - \log \left( \delta \sqrt{2} \right) - \sqrt{2} | R |
+
+where :math:`D` and :math:`R` have the same arguments.
+
+.. meta::
+   :keywords: censored, laplace
+
+.. index:: censored, laplace
+
+.. _statistic@Log-Density Function, D@Censored Laplace:
+
+Censored Laplace
+================
+If the density name is ``cen_laplace`` ,
+the log-density function is not defined for differences.
+The log-density function for values :math:`y > 0`
+is the same as for the ``laplace`` case.
+The log-density function for the values :math:`y \leq 0`,
+is defined by
+
+.. math::
+
+   D(y, \mu, \delta, d)
+   =
+   - \mu \sqrt{2} / \delta - \log(2)
+
+where :math:`\R{erfc}` is the complementary error function;
+see the Gaussian case for the
+:ref:`censored density<censor_density@Laplace@Censored Density, L(y,mu,delta,c)>`
+where the censoring value is :math:`c = 0`.
+
+.. meta::
+   :keywords: log-laplace
+
+.. index:: log-laplace
+
+.. _statistic@Log-Density Function, D@Log-Laplace:
+
+Log-Laplace
+===========
+If the density name is ``log_laplace`` ,
+the log-density function for values is
+
+.. math::
+
+   D(y, \mu, \delta, d)
+   =
+   - \log \left[ \delta \sqrt{2} \right]
+   - \sqrt{2} \left| R(y, \mu, \delta, d) \right|
+
+The log-density function for differences is
+
+.. math::
+
+   D(z, y, \mu, \delta, d)
+   =
+   - \log \left( \delta \sqrt{2} \right)
+   - \sqrt{2} \left| R(z, y, \mu, \delta, d) \right|
+
+.. meta::
+   :keywords: censored, log-laplace
+
+.. index:: censored, log-laplace
+
+.. _statistic@Log-Density Function, D@Censored Log-Laplace:
+
+Censored Log-Laplace
+====================
+If the density name is ``cen_log_laplace`` ,
+the log-density function is not defined for differences.
+The log-density function for values :math:`y > 0`
+is the same as for the ``log_laplace`` case.
+The log-density function for the values :math:`y \leq 0`,
+is defined by
+
+.. math::
+
+   D(y, \mu, \delta, d)
+   =
+   - ( \mu - \eta ) \sqrt{2} / \delta - \log(2)
+
+where we the arguments to :math:`\delta` are the same as
+in the log Laplace case.
+See the Laplace case for the
+:ref:`censored density<censor_density@Laplace@Censored Density, L(y,mu,delta,c)>`
+where the censoring value is :math:`c = \eta`.
+
+.. meta::
+   :keywords: student's-t
+
+.. index:: student's-t
+
+.. _statistic@Log-Density Function, D@Student's-t:
+
+Student's-t
+===========
+If the density name is ``students`` ,
+the log-density functions for values :math:`D(y, \mu, \delta, d)`,
+and for differences :math:`D(z, y, \mu, \delta, d)`,
+are defined by
+
+.. math::
+
+   D
+   =
+   \log \left(
+   \frac{ \Gamma( ( \nu + 1 ) / 2 ) }{ \sqrt{ \nu \pi } \Gamma( \nu / 2 ) }
+   \right)
+   -
+   \frac{\nu + 1}{2} \log \left( 1 + R^2 / ( \nu - 2 ) \right)
+
+where :math:`D` and :math:`R` have the same arguments
+and we have abbreviated :math:`\nu[d]` using just :math:`\nu`.
+
+.. meta::
+   :keywords: log-student's-t
+
+.. index:: log-student's-t
+
+.. _statistic@Log-Density Function, D@Log-Student's-t:
+
+Log-Student's-t
+===============
+If the density name is ``log_students`` ,
+the log-density functions for values :math:`D(y, \mu, \delta, d)`,
+and for differences :math:`D(z, y, \mu, \delta, d)`,
+are defined by
+
+.. math::
+
+   D
+   =
+   \log \left(
+   \frac{ \Gamma( ( \nu + 1 ) / 2 ) }{ \sqrt{ \nu \pi } \Gamma( \nu / 2 ) }
+   \right)
+   -
+   \frac{\nu + 1}{2} \log \left( 1 + R^2 / ( \nu - 2 ) \right)
+
+where :math:`D` and :math:`R` have the same arguments.

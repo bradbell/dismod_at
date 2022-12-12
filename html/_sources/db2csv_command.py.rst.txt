@@ -1,0 +1,21 @@
+.. _db2csv_command.py-name:
+
+!!!!!!!!!!!!!!!!!
+db2csv_command.py
+!!!!!!!!!!!!!!!!!
+
+xrst input file: ``example/get_started/db2csv_command.py``
+
+.. meta::
+   :keywords: db2csv_command.py, db2csv, command:, example, and, test
+
+.. index:: db2csv_command.py, db2csv, command:, example, and, test
+
+.. _db2csv_command.py-title:
+
+db2csv Command: Example and Test
+################################
+
+.. literalinclude:: ../../example/get_started/db2csv_command.py
+   :lines: 19-200
+   :language: py

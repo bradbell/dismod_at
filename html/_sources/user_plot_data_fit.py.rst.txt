@@ -1,0 +1,186 @@
+.. _user_plot_data_fit.py-name:
+
+!!!!!!!!!!!!!!!!!!!!!
+user_plot_data_fit.py
+!!!!!!!!!!!!!!!!!!!!!
+
+xrst input file: ``example/user/plot_data_fit.py``
+
+.. meta::
+   :keywords: user_plot_data_fit.py, example, plotting, the, data, and, its, fit
+
+.. index:: user_plot_data_fit.py, example, plotting, the, data, and, its, fit
+
+.. _user_plot_data_fit.py-title:
+
+Example Plotting The Data and Its Fit
+#####################################
+
+.. meta::
+   :keywords: nodes
+
+.. index:: nodes
+
+.. _user_plot_data_fit.py@Nodes:
+
+Nodes
+*****
+There are four nodes in this example.
+The world node has one child, north_america.
+The north_america node has two children, united_states and canada.
+The :ref:`parent_node<option_table@Parent Node>` is canada which
+does not have any children.
+
+.. meta::
+   :keywords: rates
+
+.. index:: rates
+
+.. _user_plot_data_fit.py@Rates:
+
+Rates
+*****
+There is a parent smoothing the *iota* , *rho*
+and *chi* rates.
+This smoothing has one grid point; i.e., the rates are constant
+in age and time.
+There is no child node smoothing so there are no random effects
+for these rates.
+In addition, there is no parent smoothing for the other rates
+so they are zero.
+The value priors for the rate smoothing is uniform with lower limit 1e-4
+and upper limit 1.0. The mean 0.1, is only used as a starting point
+for the optimization.
+There are no difference priors because the smoothing
+has only one grid point.
+
+.. meta::
+   :keywords: integrands
+
+.. index:: integrands
+
+.. _user_plot_data_fit.py@Integrands:
+
+Integrands
+**********
+The integrands for this example are
+:ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` ,
+:ref:`avg_integrand@Integrand, I_i(a,t)@remission` ,
+:ref:`avg_integrand@Integrand, I_i(a,t)@mtexcess` , and
+:ref:`avg_integrand@Integrand, I_i(a,t)@prevalence` .
+The first three integrands are direct measurements of the following rates:
+
+.. literalinclude:: ../../example/user/plot_data_fit.py
+   :lines: 45-49
+   :language: py
+
+Prevalence is in the integrand table, but it has no simulated data.
+This shows what happens when there is no data for one of the
+integrands in the :ref:`plot_data_fit@integrand_list` .
+
+.. meta::
+   :keywords: data
+
+.. index:: data
+
+.. _user_plot_data_fit.py@Data:
+
+Data
+****
+All of the data corresponds to canada.
+
+.. meta::
+   :keywords: n_data
+
+.. index:: n_data
+
+.. _user_plot_data_fit.py@Data@n_data:
+
+n_data
+======
+There are *n_data* data points for each of the integrands where
+
+.. literalinclude:: ../../example/user/plot_data_fit.py
+   :lines: 65-65
+   :language: py
+
+.. meta::
+   :keywords: max_plot
+
+.. index:: max_plot
+
+.. _user_plot_data_fit.py@Data@max_plot:
+
+max_plot
+========
+This is the maximum number of data points to plot per integrand.
+The points are chosen randomly, but there order is preserved.
+
+.. literalinclude:: ../../example/user/plot_data_fit.py
+   :lines: 75-75
+   :language: py
+
+.. meta::
+   :keywords: measurement, noise
+
+.. index:: measurement, noise
+
+.. _user_plot_data_fit.py@Data@Measurement Noise:
+
+Measurement Noise
+=================
+The data is simulated a Gaussian with mean equal to the
+corresponding *rate_true* :
+
+.. literalinclude:: ../../example/user/plot_data_fit.py
+   :lines: 85-89
+   :language: py
+
+and with coefficient of variation *meas_cv* :
+
+.. literalinclude:: ../../example/user/plot_data_fit.py
+   :lines: 95-95
+   :language: py
+
+.. meta::
+   :keywords: hold_out
+
+.. index:: hold_out
+
+.. _user_plot_data_fit.py@Data@hold_out:
+
+hold_out
+========
+There is also one outlier for each integrand
+(that is not simulated with the Gaussian noise described above).
+The outlier is placed in the middle of the data set for each integrand.
+The :ref:`data_table@hold_out` for the outliers is set to one
+(it is zero for all the other data).
+
+.. meta::
+   :keywords: call, to, plot_data_fit
+
+.. index:: call, to, plot_data_fit
+
+.. _user_plot_data_fit.py@Call to plot_data_fit:
+
+Call to plot_data_fit
+*********************
+
+.. literalinclude:: ../../example/user/plot_data_fit.py
+   :lines: 315-328
+   :language: py
+
+.. meta::
+   :keywords: source, code
+
+.. index:: source, code
+
+.. _user_plot_data_fit.py@Source Code:
+
+Source Code
+***********
+
+.. literalinclude:: ../../example/user/plot_data_fit.py
+   :lines: 124-374
+   :language: py

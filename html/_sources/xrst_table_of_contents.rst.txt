@@ -1,0 +1,211 @@
+.. _xrst_table_of_contents-title:
+
+Table of Contents
+*****************
+:ref:`dismod_at-title`
+
+| :ref:`1<math_abstract-title>` An Introduction To The Mathematics of Dismod_at
+|    :ref:`1.1<math_ode-title>` The Dismod_at Ordinary Differential Equation
+|    :ref:`1.2<censor_density-title>` The Censored Gaussian and Laplace Densities
+|    :ref:`1.3<prevalence_ode-title>` The Prevalence Only ODE
+| :ref:`2<install-title>` Installing dismod_at
+|    :ref:`2.1<dock_dismod_at.sh-title>` Install and Run dismod_at in a Docker Image
+|    :ref:`2.2<install_unix-title>` Installing dismod_at in Unix
+|       :ref:`2.2.1<run_cmake.sh-title>` bin/run_cmake.sh: User Configuration Options
+|       :ref:`2.2.2<example_install.sh-title>` An Example Installation
+| :ref:`3<get_started-title>` Dismod_at Getting Started Examples / Tests
+|    :ref:`3.1<get_started_db.py-title>` Create get_started Input Tables: Example and Test
+| :ref:`4<user_example-title>` User Examples and Tests
+|    :ref:`4.1<user_age_avg_split.py-title>` Non-uniform Age Average Grid
+|    :ref:`4.2<user_bilevel_random.py-title>` Example Fitting With Two Levels of Random Effects
+|    :ref:`4.3<user_bnd_mulcov.py-title>` Bounding Covariate Multipliers Absolute Data Effect
+|    :ref:`4.4<user_cascade.py-title>` Generating Priors For Next Level Down Node Tree
+|    :ref:`4.5<user_censor.py-title>` Fitting Data That Has Negative Values Censored
+|    :ref:`4.6<user_change_grid.py-title>` Remove an Age or Time From a Smoothing
+|    :ref:`4.7<user_compress.py-title>` Using Data Interval Compression
+|    :ref:`4.8<user_const_random.py-title>` Fitting With Non-Zero Constant Random Effects in Smoothing Grid
+|    :ref:`4.9<user_const_value.py-title>` Constrain Omega Using const_value
+|    :ref:`4.10<user_continue_fit.py-title>` Continuing a Fit From Where it Left Off
+|    :ref:`4.11<user_covid_19.py-title>` Model The Covid-19 Epidemic
+|    :ref:`4.12<user_csv2db.py-title>` csv2db_command: Example and Test
+|    :ref:`4.13<user_data_density.py-title>` Fit With Outliers Using Data Density Command
+|    :ref:`4.14<user_data_sim.py-title>` Explanation of Simulated Data Table, data_sim
+|    :ref:`4.15<user_diabetes.py-title>` An Example / Speed Test Fitting Simulated Diabetes Data
+|    :ref:`4.16<user_diff_constraint.py-title>` Fitting with Constraints on Differences in Age and Time
+|    :ref:`4.17<user_fit_fixed_both.py-title>` Fit Fixed First Then Both
+|    :ref:`4.18<user_fit_meas_noise.py-title>` Group Measurement Noise Covariate Multipliers, Gamma
+|    :ref:`4.19<user_fit_random.py-title>` Fitting Just Random Effects
+|    :ref:`4.20<user_fit_sim.py-title>` Fitting Simulated Data Example
+|    :ref:`4.21<user_group_mulcov.py-title>` Using Group Covariate Multipliers
+|    :ref:`4.22<user_hes_fixed_math.py-title>` Check the Hessian of the Fixed Effects Objective
+|    :ref:`4.23<user_hes_random.py-title>` Check the Hessian of the Random Effects Objective
+|    :ref:`4.24<user_hold_out_1.py-title>` Using hold_out in Data, Subset Data, and Option Tables
+|    :ref:`4.25<user_hold_out_2.py-title>` hold_out Command: Balancing Sex Covariate Values
+|    :ref:`4.26<user_ill_condition.py-title>` An Ill Conditioned Example Where Re-Scaling is Helpful
+|    :ref:`4.27<user_jump_at_age.py-title>` Zero Rate Until a Jump at a Known Age
+|    :ref:`4.28<user_lasso_covariate.py-title>` Using Lasso on Covariate Multiplier
+|    :ref:`4.29<user_mulstd.py-title>` Estimating Smoothing Standard Deviation Multiplies
+|    :ref:`4.30<user_no_children.py-title>` Case with no Children; i.e., no Random Effects
+|    :ref:`4.31<user_one_function.py-title>` Fitting One Function of Two Variables
+|    :ref:`4.32<user_plot_curve.py-title>` Example Plotting Log-Scaled Values w.r.t Age and Time
+|    :ref:`4.33<user_plot_data_fit.py-title>` Example Plotting The Data and Its Fit
+|    :ref:`4.34<user_plot_rate_fit.py-title>` Example Plotting The Rates for a Fit
+|    :ref:`4.35<user_predict_fit.py-title>` Predict Average Integrand Using Results of a Fit
+|    :ref:`4.36<user_predict_mulcov.py-title>` Predict Covariate Multiplier Values
+|    :ref:`4.37<user_re_scale.py-title>` Case Where Re-Scaling is Useful
+|    :ref:`4.38<user_residual.py-title>` Weighted Residuals
+|    :ref:`4.39<user_sample_asy.py-title>` Sample from Asymptotic Distribution for Model Variables
+|    :ref:`4.40<user_sample_asy_sim.py-title>` Sampling From The Asymptotic Distribution for a Simulated Data Fit
+|    :ref:`4.41<user_sample_sim.py-title>` Sample Posterior Using Simulated Data
+|    :ref:`4.42<user_sim_log.py-title>` Simulating Data with Log Transformed Distribution
+|    :ref:`4.43<user_speed.py-title>` A Simulate Data Speed Test
+|    :ref:`4.44<user_subgroup_mulcov.py-title>` Example Fitting With Subgroup Covariate Multipliers
+|    :ref:`4.45<user_sum_residual.py-title>` Sum of Residuals at Optimal Estimate
+|    :ref:`4.46<user_system_command_prc.py-title>` Example Using system_command_prc
+|    :ref:`4.47<user_trace_init.py-title>` Using Initialization Trace Option
+|    :ref:`4.48<user_trapezoidal.py-title>` Using the Trapezoidal ODE Solver
+|    :ref:`4.49<user_warm_start.py-title>` Continuing a Fit Using Ipopt Warm Start
+|    :ref:`4.50<user_zsum_child_rate.py-title>` Constrain Sum of Child Rate Effect to Zero
+|    :ref:`4.51<user_zsum_mulcov_meas.py-title>` Constrain Sum of Subgroup Measurement Covariate Multipliers to Zero
+|    :ref:`4.52<user_zsum_mulcov_rate.py-title>` Constrain Sum of Subgroup Rate Covariate Multipliers to Zero
+| :ref:`5<database-title>` The Dismod_at Database Tables
+|    :ref:`5.1<input-title>` Tables That Are Only Used as Inputs
+|       :ref:`5.1.1<age_table-title>` The Age Table
+|          :ref:`5.1.1.1<age_table.py-title>` age_table: Example and Test
+|       :ref:`5.1.2<avgint_table-title>` The avgint Table: Defines Average Integrand Cases
+|          :ref:`5.1.2.1<avgint_table.py-title>` avgint_table: Example and Test
+|       :ref:`5.1.3<covariate_table-title>` The Covariate Table
+|          :ref:`5.1.3.1<covariate_table.py-title>` covariate_table: Example and Test
+|       :ref:`5.1.4<data_table-title>` The Data Table
+|          :ref:`5.1.4.1<data_table.py-title>` data_table: Example and Test
+|       :ref:`5.1.5<density_table-title>` The Density Table
+|          :ref:`5.1.5.1<density_table.py-title>` density_table: Example and Test
+|       :ref:`5.1.6<integrand_table-title>` The Integrand Table
+|          :ref:`5.1.6.1<integrand_table.py-title>` integrand_table: Example and Test
+|       :ref:`5.1.7<mulcov_table-title>` The mulcov Table: Covariate Multipliers
+|          :ref:`5.1.7.1<mulcov_table.py-title>` mulcov_table: Example and Test
+|       :ref:`5.1.8<node_table-title>` The Node Table
+|          :ref:`5.1.8.1<node_table.py-title>` node_table: Example and Test
+|       :ref:`5.1.9<nslist_pair_table-title>` Lists of Node Smoothing Pairs
+|          :ref:`5.1.9.1<nslist_pair_table.py-title>` nslist_pair_table: Example and Test
+|       :ref:`5.1.10<nslist_table-title>` The Node Smoothing List Table
+|          :ref:`5.1.10.1<nslist_table.py-title>` nslist_table: Example and Test
+|       :ref:`5.1.11<option_table-title>` The Option Table
+|          :ref:`5.1.11.1<option_default-title>` List of Option Default Values
+|          :ref:`5.1.11.2<option_table.py-title>` option_table: Example and Test
+|       :ref:`5.1.12<prior_table-title>` The Prior Table
+|          :ref:`5.1.12.1<prior_table.py-title>` prior_table: Example and Test
+|       :ref:`5.1.13<rate_table-title>` The Rate Table
+|          :ref:`5.1.13.1<rate_table.py-title>` rate_table: Example and Test
+|       :ref:`5.1.14<smooth_grid_table-title>` The Smooth Grid Table
+|          :ref:`5.1.14.1<smooth_grid_table.py-title>` smooth_grid_table: Example and Test
+|       :ref:`5.1.15<smooth_table-title>` The Smoothing Table
+|       :ref:`5.1.16<subgroup_table-title>` The Subgroup Table
+|       :ref:`5.1.17<time_table-title>` The Time Table
+|          :ref:`5.1.17.1<time_table.py-title>` time_table: Example and Test
+|       :ref:`5.1.18<weight_grid_table-title>` The Weight Grid Table
+|          :ref:`5.1.18.1<weight_grid_table.py-title>` weight_grid_table: Example and Test
+|       :ref:`5.1.19<weight_table-title>` The Weight Table
+|    :ref:`5.2<data_flow-title>` The Dismod_at Data Flow
+|       :ref:`5.2.1<age_avg_table-title>` The Age Average Table
+|       :ref:`5.2.2<bnd_mulcov_table-title>` The Covariate and Multiplier Bound Table
+|       :ref:`5.2.3<data_sim_table-title>` Simulated Measurements and Adjusted Standard Deviations
+|       :ref:`5.2.4<data_subset_table-title>` The Data Subset Table
+|       :ref:`5.2.5<depend_var_table-title>` Which Variables The Model Depends On
+|       :ref:`5.2.6<fit_data_subset_table-title>` The Model and Weighted Residuals Corresponding to a Fit
+|       :ref:`5.2.7<fit_var_table-title>` The Optimization Results for Variables
+|       :ref:`5.2.8<hes_fixed_table-title>` Hessian of The Fixed Effect Objective Function
+|       :ref:`5.2.9<hes_random_table-title>` Hessian of The Random Effect Objective Function
+|       :ref:`5.2.10<log_table-title>` The Log Table
+|       :ref:`5.2.11<mixed_info_table-title>` The CppAD Mixed Information Table
+|       :ref:`5.2.12<predict_table-title>` The Predict Table: Average Integrand Predictions
+|       :ref:`5.2.13<prior_sim_table-title>` Simulated Variation in Prior
+|       :ref:`5.2.14<sample_table-title>` The Sample Table: Samples of Variable Values
+|       :ref:`5.2.15<scale_var_table-title>` Scaling Fixed Effects Objective and Constraints
+|       :ref:`5.2.16<start_var_table-title>` Starting Values Used During a Fit
+|       :ref:`5.2.17<trace_fixed_table-title>` The Fixed Effects Optimization Trace Table
+|       :ref:`5.2.18<truth_var_table-title>` True Values Used During Simulations
+|       :ref:`5.2.19<var_table-title>` Identifying Model Variables
+| :ref:`6<model-title>` The Age-Time Dismod Model
+|    :ref:`6.1<model_variables-title>` The Model Variables
+|    :ref:`6.2<avg_integrand-title>` Model for the Average Integrand
+|    :ref:`6.3<data_like-title>` Data Likelihood and Weighted Residuals
+|    :ref:`6.4<variable_prior-title>` Prior for the Model Variables
+|       :ref:`6.4.1<fixed_value-title>` The Fixed Effects Value Density Function
+|       :ref:`6.4.2<random_value-title>` The Random Effects Value Density Function
+|       :ref:`6.4.3<smooth_dage-title>` Prior Density Function for Smoothing Age Difference
+|       :ref:`6.4.4<smooth_dtime-title>` Prior Density Function for Smoothing Time Difference
+|       :ref:`6.4.5<fixed_diff-title>` Fixed Effects Differences Density Function
+|       :ref:`6.4.6<random_diff-title>` Random Effects Differences Density Function
+|       :ref:`6.4.7<fixed_prior-title>` Prior for Fixed Effect Values
+|       :ref:`6.4.8<random_prior-title>` Prior for Random Effect Values
+|    :ref:`6.5<statistic-title>` Some Statistical Function Definitions
+|    :ref:`6.6<bilinear-title>` dismod_at Bilinear Interpolation
+|    :ref:`6.7<posterior-title>` Simulating Posterior Distribution for Model Variables
+|    :ref:`6.8<prev_dep-title>` Prevalence Does Not Depend On Other Cause Mortality
+|    :ref:`6.9<numeric_average-title>` Numerical Approximation of Average Integrands
+| :ref:`7<command-title>` The dismod_at Commands
+|    :ref:`7.1<dismodat.py-title>` Python Program Syntax
+|    :ref:`7.2<bnd_mulcov_command-title>` Bound The Covariate Multiplier Absolute Data Effect
+|    :ref:`7.3<data_density_command-title>` Data Density Command: Change the Density for an Integrand
+|    :ref:`7.4<depend_command-title>` The Depend Command
+|       :ref:`7.4.1<depend_command.py-title>` depend Command: Example and Test
+|    :ref:`7.5<fit_command-title>` The Fit Command
+|       :ref:`7.5.1<fit_command.py-title>` fit Command: Example and Test
+|    :ref:`7.6<hold_out_command-title>` Hold Out Command: Randomly Sub-sample The Data
+|    :ref:`7.7<init_command-title>` The Initialize Command
+|       :ref:`7.7.1<init_command.py-title>` init Command: Example and Test
+|    :ref:`7.8<old2new_command-title>` Convert an Old Database to New Format
+|       :ref:`7.8.1<old2new_command.py-title>` old2new Command: Example and Test
+|    :ref:`7.9<predict_command-title>` The Predict Command
+|       :ref:`7.9.1<predict_command.py-title>` predict Command: Example and Test
+|    :ref:`7.10<sample_command-title>` The Sample Command
+|       :ref:`7.10.1<sample_command.py-title>` sample Command: Example and Test
+|    :ref:`7.11<set_command-title>` Directly Setting Table Values
+|       :ref:`7.11.1<set_command.py-title>` set Command: Example and Test
+|    :ref:`7.12<simulate_command-title>` The Simulate Command
+|       :ref:`7.12.1<simulate_command.py-title>` simulate Command: Example and Test
+| :ref:`8<python-title>` Python Utilities
+|    :ref:`8.1<average_integrand-title>` Compute The Average Integrand
+|       :ref:`8.1.1<user_average_integrand.py-title>` Using the Python average_integrand Utility
+|    :ref:`8.2<connection_file-title>` Get File Name For a Database Connection
+|       :ref:`8.2.1<user_connection_file.py-title>` Example Using connection_file
+|    :ref:`8.3<create_connection-title>` Create a Python sqlite3 Database Connection
+|    :ref:`8.4<create_database-title>` Create a Dismod_at Database
+|       :ref:`8.4.1<create_database.py-title>` create_database: Example and Test
+|    :ref:`8.5<create_table-title>` Create a Database Table
+|       :ref:`8.5.1<create_table.py-title>` create_table and Unicode: Example and Test
+|    :ref:`8.6<csv2db_command-title>` Conversion of a Csv File to a Dismod_at Database
+|    :ref:`8.7<db2csv_command-title>` Create Csv Files that Summarize The Database
+|       :ref:`8.7.1<db2csv_command.py-title>` db2csv Command: Example and Test
+|       :ref:`8.7.2<ihme_db.sh-title>` Make a Local Copy an IHME Dismod_at Database
+|    :ref:`8.8<get_name_type-title>` Get Column Names and Types in a Table
+|       :ref:`8.8.1<get_name_type.py-title>` get_name_type: Example and Test
+|    :ref:`8.9<get_row_list-title>` Get Data From a Table
+|       :ref:`8.9.1<get_row_list.py-title>` get_row_list: Example and Test
+|    :ref:`8.10<get_table_dict-title>` Get All Data From a Table
+|       :ref:`8.10.1<get_table_dict.py-title>` get_table_dict: Example and Test
+|    :ref:`8.11<metropolis-title>` Metropolis MCMC Algorithm
+|       :ref:`8.11.1<user_metropolis.py-title>` Predict Average Integrand Using Results of a Fit
+|    :ref:`8.12<modify_command-title>` Modify a Column of an Sqlite Database
+|       :ref:`8.12.1<modify_command.py-title>` modify Command: Example and Test
+|    :ref:`8.13<perturb_command-title>` Perturb Command: Random Change to Start or Scale Tables
+|    :ref:`8.14<plot_curve-title>` Plot Log-Scaled Values With Respect To Age and Time
+|    :ref:`8.15<plot_data_fit-title>` Plot The Data Fit By Integrand
+|    :ref:`8.16<plot_rate_fit-title>` Plot The Rates for a Fit
+|    :ref:`8.17<replace_table-title>` Replace A a Table
+|       :ref:`8.17.1<replace_table.py-title>` replace_table: Example and Test
+|    :ref:`8.18<sql_command-title>` Execute an SQL command
+|    :ref:`8.19<system_command_prc-title>` Print Run and Check a System Command
+|    :ref:`8.20<unicode_tuple-title>` Convert an Iterable Object to a Unicode String
+|       :ref:`8.20.1<unicode_tuple.py-title>` unicode_tuple: Example and Test
+| :ref:`9<release_notes-title>` Changes and Additions to Dismod_at
+|    :ref:`9.1<whats_new_2022-title>` Changes and Additions to Dismod_at During 2022
+|    :ref:`9.2<whats_new_2021-title>` Changes and Additions to Dismod_at During 2021
+|    :ref:`9.3<whats_new_2020-title>` Changes and Additions to Dismod_at During 2020
+|    :ref:`9.4<whats_new_2019-title>` Changes and Additions to Dismod_at During 2019
+|    :ref:`9.5<whats_new_2018-title>` Changes and Additions to Dismod_at During 2018
+|    :ref:`9.6<whats_new_2017-title>` Changes and Additions to Dismod_at During 2017
+|    :ref:`9.7<whats_new_2016-title>` Changes and Additions to Dismod_at During 2016
+|    :ref:`9.8<whats_new_2015-title>` Changes and Additions to Dismod_at During 2015
+| :ref:`10<wish_list-title>` Dismod_at Wish List

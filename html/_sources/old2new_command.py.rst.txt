@@ -1,0 +1,21 @@
+.. _old2new_command.py-name:
+
+!!!!!!!!!!!!!!!!!!
+old2new_command.py
+!!!!!!!!!!!!!!!!!!
+
+xrst input file: ``example/get_started/old2new_command.py``
+
+.. meta::
+   :keywords: old2new_command.py, old2new, command:, example, and, test
+
+.. index:: old2new_command.py, old2new, command:, example, and, test
+
+.. _old2new_command.py-title:
+
+old2new Command: Example and Test
+#################################
+
+.. literalinclude:: ../../example/get_started/old2new_command.py
+   :lines: 19-97
+   :language: py

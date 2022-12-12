@@ -1,0 +1,121 @@
+.. _hes_fixed_table-name:
+
+!!!!!!!!!!!!!!!
+hes_fixed_table
+!!!!!!!!!!!!!!!
+
+xrst input file: ``xrst/table/hes_fixed_table.xrst``
+
+.. meta::
+   :keywords: hes_fixed_table, hessian, of, the, fixed, effect, objective, function
+
+.. index:: hes_fixed_table, hessian, of, the, fixed, effect, objective, function
+
+.. _hes_fixed_table-title:
+
+Hessian of The Fixed Effect Objective Function
+##############################################
+
+.. meta::
+   :keywords: creation
+
+.. index:: creation
+
+.. _hes_fixed_table@Creation:
+
+Creation
+********
+A new version of this table is created each time the
+:ref:`sample_command@asymptotic`
+sample command is executed.
+The :ref:`density_table@density_name@laplace` densities
+are not included in the Hessian
+because the Laplace density is not differentiable at zero.
+None of the constraints are included in the calculation of this Hessian.
+
+.. meta::
+   :keywords: scaling
+
+.. index:: scaling
+
+.. _hes_fixed_table@Scaling:
+
+Scaling
+*******
+The Hessian is in the scaled space for the fixed effects; see
+:ref:`prior_table@eta@Scaling Fixed Effects` .
+
+.. meta::
+   :keywords: hes_fixed_id
+
+.. index:: hes_fixed_id
+
+.. _hes_fixed_table@hes_fixed_id:
+
+hes_fixed_id
+************
+This column has type ``integer`` and is the primary key for
+the this table.
+Its initial value is zero, and it increments by one for each row.
+
+.. meta::
+   :keywords: row_var_id
+
+.. index:: row_var_id
+
+.. _hes_fixed_table@row_var_id:
+
+row_var_id
+**********
+This is the :ref:`var_table@var_id`
+for the row of the Hessian that this element corresponds to.
+
+.. meta::
+   :keywords: col_var_id
+
+.. index:: col_var_id
+
+.. _hes_fixed_table@col_var_id:
+
+col_var_id
+**********
+This is the :ref:`var_table@var_id`
+for the column of the Hessian that this element corresponds to.
+
+.. meta::
+   :keywords: hes_fixed_value
+
+.. index:: hes_fixed_value
+
+.. _hes_fixed_table@hes_fixed_value:
+
+hes_fixed_value
+***************
+This column has type ``real`` and is the value of the second derivative
+of the fixed effects objective w.r.t. the two
+:ref:`fixed effects<model_variables@Fixed Effects, theta>`
+specified by the row and column indices above.
+Note that the row and column indices are equal for the diagonal
+elements of the Hessian.
+
+.. meta::
+   :keywords: representation
+
+.. index:: representation
+
+.. _hes_fixed_table@Representation:
+
+Representation
+**************
+
+#. Only the lower triangle of the Hessian is included
+   (because the Hessian is symmetric).
+#. The matrix is in row major order; i.e. *row_var_id*
+   is monotone non-decreasing and for each value of *row_var_id*
+   the *col_var_id* is monotone increasing.
+#. This is a sparse representation; i.e.,
+   if a pair of row and column indices in the lower triangle
+   are not present, the Hessian is zero for that row and column pair.
+#. The asymptotic statistics require the Hessian to be positive definite
+   on the sub-set of variables that have their lower limit less than upper.
+   Only these variables are included in the sparse representation of the Hessian.

@@ -1,0 +1,63 @@
+.. _sql_command-name:
+
+!!!!!!!!!!!
+sql_command
+!!!!!!!!!!!
+
+xrst input file: ``python/dismod_at/sql_command.py``
+
+.. meta::
+   :keywords: sql_command, execute, an, sql, command
+
+.. index:: sql_command, execute, an, sql, command
+
+.. _sql_command-title:
+
+Execute an SQL command
+######################
+
+.. meta::
+   :keywords: syntax
+
+.. index:: syntax
+
+.. _sql_command@Syntax:
+
+Syntax
+******
+
+    *result* = ``dismod_at.sql_command`` ( *connection* , *command* )
+
+.. meta::
+   :keywords: connection
+
+.. index:: connection
+
+.. _sql_command@connection:
+
+connection
+**********
+is a :ref:`create_connection@connection` for an
+sql_lite database.
+
+.. meta::
+   :keywords: command
+
+.. index:: command
+
+.. _sql_command@command:
+
+command
+*******
+is a ``str`` containing the command that is executed.
+
+.. meta::
+   :keywords: result
+
+.. index:: result
+
+.. _sql_command@result:
+
+result
+******
+Is a list corresponding to the rows returned by the command.

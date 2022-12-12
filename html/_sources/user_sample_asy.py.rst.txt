@@ -1,0 +1,127 @@
+.. _user_sample_asy.py-name:
+
+!!!!!!!!!!!!!!!!!!
+user_sample_asy.py
+!!!!!!!!!!!!!!!!!!
+
+xrst input file: ``example/user/sample_asy.py``
+
+.. meta::
+   :keywords: user_sample_asy.py, sample, from, asymptotic, distribution, for, model, variables
+
+.. index:: user_sample_asy.py, sample, from, asymptotic, distribution, for, model, variables
+
+.. _user_sample_asy.py-title:
+
+Sample from Asymptotic Distribution for Model Variables
+#######################################################
+
+.. meta::
+   :keywords: purpose
+
+.. index:: purpose
+
+.. _user_sample_asy.py@Purpose:
+
+Purpose
+*******
+The command
+
+| |tab| ``dismod_at`` *database* ``sample asymptotic both`` *number_sample*
+| |tab| ``dismod_at`` *database* ``sample asymptotic fixed`` *number_sample*
+
+samples form an asymptotic approximation for the posterior distribution
+of the :ref:`model_variables-name` .
+
+.. meta::
+   :keywords: notation
+
+.. index:: notation
+
+.. _user_sample_asy.py@Notation:
+
+Notation
+********
+
+.. csv-table::
+    :widths: auto
+
+    :math:`\iota_n`,model incidence for ``north_america``
+    *u_m*,incidence random effect for ``mexico``
+    *u_c*,incidence random effect for ``canada``
+    *y_n*,measured incidence for ``north_america``
+    *y_m*,measured incidence for ``mexico``
+    *y_c*,measured incidence for ``canada``
+    *s_n*,standard deviation for *y_n*
+    *s_m*,standard deviation for *y_m*
+    *s_c*,standard deviation for *y_c*
+    *s_r*,standard deviation for random effects
+
+The only fixed effect in this model is :math:`\iota_n`.
+The random effects are :math:`u_m` and :math:`u_c`.
+
+.. meta::
+   :keywords: likelihood
+
+.. index:: likelihood
+
+.. _user_sample_asy.py@Likelihood:
+
+Likelihood
+**********
+We define :math:`h(y, \mu , \sigma)`
+to be the log-density for a :math:`\B{N}( \mu, \sigma^2 )` distribution;
+i.e.,
+
+.. math::
+
+ h(y, \mu, \sigma) =
+    - \frac{ ( y - \mu )^2 }{ \sigma^2 }
+    - \log \left( \sigma \sqrt{ 2 \pi } \right)
+
+The total log-likelihood for
+:ref:`fit fixed<fit_command@variables@fixed>` is
+
+.. math::
+
+ h[ y_n, \iota_n, s_n ] +
+ h[ y_m, \iota_n, s_m ] +
+ h[ y_c, \iota_n, s_c ]
+
+The total log-likelihood for
+:ref:`fit both<fit_command@variables@both>` is
+
+.. math::
+
+ h[ y_n, \iota_n, s_n ] +
+ h[ y_m, \exp( u_m ) \iota_n, s_m ] +
+ h[ y_c, \exp( u_c ) \iota_n, s_c ] +
+ h( u_m, 0, s_r ) + h( u_c , 0 , s_r )
+
+.. meta::
+   :keywords: problem, parameters
+
+.. index:: problem, parameters
+
+.. _user_sample_asy.py@Problem Parameters:
+
+Problem Parameters
+******************
+
+.. literalinclude:: ../../example/user/sample_asy.py
+   :lines: 76-88
+   :language: py
+
+.. meta::
+   :keywords: source, code
+
+.. index:: source, code
+
+.. _user_sample_asy.py@Source Code:
+
+Source Code
+***********
+
+.. literalinclude:: ../../example/user/sample_asy.py
+   :lines: 102-419
+   :language: py

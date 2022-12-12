@@ -1,0 +1,889 @@
+.. _option_table-name:
+
+!!!!!!!!!!!!
+option_table
+!!!!!!!!!!!!
+
+xrst input file: ``xrst/table/option_table.xrst``
+
+.. meta::
+   :keywords: option_table, the, option, table
+
+.. index:: option_table, the, option, table
+
+.. _option_table-title:
+
+The Option Table
+################
+
+.. meta::
+   :keywords: table, format
+
+.. index:: table, format
+
+.. _option_table@Table Format:
+
+Table Format
+************
+This table has the following columns:
+
+.. meta::
+   :keywords: option_id
+
+.. index:: option_id
+
+.. _option_table@Table Format@option_id:
+
+option_id
+=========
+This column
+has type ``integer`` and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+.. meta::
+   :keywords: option_name
+
+.. index:: option_name
+
+.. _option_table@Table Format@option_name:
+
+option_name
+===========
+This column
+has type ``text`` and has a different value for every row;
+i.e., the names are unique and can act as substitutes for the primary key.
+
+.. meta::
+   :keywords: option_value
+
+.. index:: option_value
+
+.. _option_table@Table Format@option_value:
+
+option_value
+============
+This column has type ``text`` and is
+the value for the corresponding option.
+
+.. meta::
+   :keywords: default
+
+.. index:: default
+
+.. _option_table@Default:
+
+Default
+*******
+The possible values for *option_name* together with the corresponding
+default *option_value* are listed in :ref:`option_default-name` .
+
+.. meta::
+   :keywords: changing, values
+
+.. index:: changing, values
+
+.. _option_table@Changing Values:
+
+Changing Values
+***************
+This table is special in that you can change almost all its values
+without invalidating the
+:ref:`output tables<data_flow@Command Output Tables>` .
+There is one exception; see
+:ref:`option_table@Parent Node` below.
+
+.. meta::
+   :keywords: parent, node
+
+.. index:: parent, node
+
+.. _option_table@Parent Node:
+
+Parent Node
+***********
+Unlike other options,
+if you change the parent node, you must re-run the :ref:`init_command-name` ; see
+:ref:`option_table@Changing Values` above.
+
+.. meta::
+   :keywords: parent_node_id
+
+.. index:: parent_node_id
+
+.. _option_table@Parent Node@parent_node_id:
+
+parent_node_id
+==============
+If *option_name* = ``parent_node_id``
+the corresponding *option_value*
+is an integer that specifies the parent
+:ref:`node_table@node_id` .
+It is easier (and equivalent) to use *parent_node_name*
+instead of *parent_node_id* ; see below.
+
+.. meta::
+   :keywords: parent_node_name
+
+.. index:: parent_node_name
+
+.. _option_table@Parent Node@parent_node_name:
+
+parent_node_name
+================
+If *option_name* = ``parent_node_name``
+the corresponding *option_value*
+is an string that specifies the parent
+:ref:`node_table@node_name` .
+
+.. meta::
+   :keywords: name, or, id
+
+.. index:: name, or, id
+
+.. _option_table@Parent Node@Name or Id:
+
+Name or Id
+==========
+
+#. If both *parent_node_name* and *parent_node_id* are not null,
+   the corresponding :ref:`node_table@node_id`
+   and :ref:`node_table@node_name` must agree; see :ref:`node_table-name` .
+#. If *parent_node_name* is null, *parent_node_id* is not null and
+   *parent_node_id* determines the parent node.
+#. If *parent_node_id* is null, *parent_node_name* is not null and
+   the :ref:`node_table-name` is searched to determine
+   the corresponding *parent_node_id* .
+   this takes some extra time that it is not expected to be significant.
+
+.. meta::
+   :keywords: children
+
+.. index:: children
+
+.. _option_table@Parent Node@Children:
+
+Children
+========
+The :ref:`node_table@parent@Children` corresponding to
+the parent node.
+
+.. meta::
+   :keywords: data, subset, table
+
+.. index:: data, subset, table
+
+.. _option_table@Parent Node@Data Subset Table:
+
+Data Subset Table
+=================
+Rows in the ``data`` table for which the
+:ref:`node<data_table@node_id>`
+is not the parent node,
+or a :ref:`node_table@parent@Descendant` of the parent node,
+are not included in the :ref:`data_subset_table-name` and the
+:ref:`fit_data_subset_table-name` .
+
+.. meta::
+   :keywords: avgint, subset, table
+
+.. index:: avgint, subset, table
+
+.. _option_table@Parent Node@Avgint Subset Table:
+
+Avgint Subset Table
+===================
+Rows in the ``avgint`` table for which the
+:ref:`node<data_table@node_id>`
+is not a :ref:`node_table@parent@Descendant`
+of the parent node,
+are not included in the :ref:`predict_table-name` ;
+see the heading Note for the
+:ref:`predict table<predict_table@Avgint Subset@Node>` .
+
+.. meta::
+   :keywords: zero, sum, constraints
+
+.. index:: zero, sum, constraints
+
+.. _option_table@Zero Sum Constraints:
+
+Zero Sum Constraints
+********************
+
+.. meta::
+   :keywords: zero_sum_child_rate
+
+.. index:: zero_sum_child_rate
+
+.. _option_table@Zero Sum Constraints@zero_sum_child_rate:
+
+zero_sum_child_rate
+===================
+If *option_name* is ``zero_sum_child_rate`` ,
+the corresponding value is a space separated subset of the
+:ref:`rate names<rate_table@rate_name>` .
+For each rate in the list, each age, and each time,
+the sum of the corresponding
+:ref:`child rate effect<model_variables@Random Effects, u@Child Rate Effects>`
+estimates is constrained to be zero.
+These are additional constraints in the optimization problem for the
+:ref:`fixed effects<model_variables@Fixed Effects, theta>` .
+The file :ref:`zsum_child_rate.py<user_zsum_child_rate.py-name>`
+contains an example and test using these constraints.
+Note that for each rate in *zero_sum_child_rate* ,
+:ref:`rate_table@child_nslist_id` must be null; i.e.,
+all of the child must use the same smoothing for this rate.
+
+.. meta::
+   :keywords: zero_sum_mulcov_group
+
+.. index:: zero_sum_mulcov_group
+
+.. _option_table@Zero Sum Constraints@zero_sum_mulcov_group:
+
+zero_sum_mulcov_group
+=====================
+If *option_name* is ``zero_sum_mulcov_group`` ,
+the corresponding value is a space separated subset of the
+:ref:`group names<subgroup_table@group_name>` .
+For each group in the list, each age, and each time, and each
+:ref:`mulcov_table@mulcov_id` ,
+the sum of the corresponding
+:ref:`subgroup covariate multiplier<model_variables@Random Effects, u@Subgroup Covariate Multipliers>`
+estimates is constrained to be zero.
+These are additional constraints in the optimization problem for the
+:ref:`fixed effects<model_variables@Fixed Effects, theta>` .
+The files :ref:`zsum_mulcov_rate.py<user_zsum_mulcov_rate.py-name>`
+and :ref:`zsum_mulcov_meas.py<user_zsum_mulcov_meas.py-name>`
+contain examples and tests using these constraints.
+
+.. meta::
+   :keywords: extra, columns
+
+.. index:: extra, columns
+
+.. _option_table@Extra Columns:
+
+Extra Columns
+*************
+
+.. meta::
+   :keywords: data_extra_columns
+
+.. index:: data_extra_columns
+
+.. _option_table@Extra Columns@data_extra_columns:
+
+data_extra_columns
+==================
+If *option_name* is ``data_extra_columns`` ,
+the corresponding value is space separated list of extra columns,
+in the :ref:`data_table-name` .
+These columns are not used by ``dismod_at`` except that
+they get displayed in the
+:ref:`data.csv<db2csv_command@data.csv@data_extra_columns>` file.
+
+.. meta::
+   :keywords: avgint_extra_columns
+
+.. index:: avgint_extra_columns
+
+.. _option_table@Extra Columns@avgint_extra_columns:
+
+avgint_extra_columns
+====================
+If *option_name* is ``avgint_extra_columns`` ,
+the corresponding value is space separated list of extra columns,
+in the :ref:`avgint_table-name` .
+These columns are not used by ``dismod_at`` except that
+they get displayed in the
+:ref:`predict.csv<db2csv_command@predict.csv@avgint_extra_columns>` file.
+
+.. meta::
+   :keywords: age, average, grid
+
+.. index:: age, average, grid
+
+.. _option_table@Age Average Grid:
+
+Age Average Grid
+****************
+
+.. meta::
+   :keywords: ode_step_size
+
+.. index:: ode_step_size
+
+.. _option_table@Age Average Grid@ode_step_size:
+
+ode_step_size
+=============
+If *option_name* = ``ode_step_size`` ,
+the corresponding *option_value*
+is a positive floating point number (greater than zero)
+that specifies step size used to approximate the solution of the
+:ref:`avg_integrand@Ordinary Differential Equation` .
+It is also the step size is also used to approximate the integrals in
+the definition of the
+:ref:`average integrands<avg_integrand@Average Integrand, A_i>` .
+The default value for *ode_step_size* is ``10.0``
+which is reasonable if all the rates
+*iota* , *rho* , *chi* , and *omega*
+are all less than ``0.1`` .
+
+.. meta::
+   :keywords: age_avg_split
+
+.. index:: age_avg_split
+
+.. _option_table@Age Average Grid@age_avg_split:
+
+age_avg_split
+=============
+If *option_name* = ``age_avg_split`` ,
+the corresponding *option_value* is a space separated set of
+age values at which to split the age integration.
+This split is both for the computation of the average integrands
+and for the solution of the ODE; see
+:ref:`age_avg_table@Age Average Grid` .
+If this value is null, *age_avg_split* is the empty set.
+
+.. meta::
+   :keywords: rate_case
+
+.. index:: rate_case
+
+.. _option_table@rate_case:
+
+rate_case
+*********
+This option's name should be changed to ode_method.
+
+.. meta::
+   :keywords: no_ode
+
+.. index:: no_ode
+
+.. _option_table@rate_case@no_ode:
+
+no_ode
+======
+The *rate_case* value does not matter for the following integrands:
+``Sincidence`` ,
+``remission`` ,
+``mtexcess`` ,
+``mtother`` ,
+``mtwith`` ,
+``relrisk`` ,
+``mulcov_`` *mulcov_id* .
+If all of your integrands are in the set above, you can use
+``no_ode`` as the rate case and avoid having to worry about
+constraining certain rates to be positive or zero.
+
+.. meta::
+   :keywords: trapezoidal
+
+.. index:: trapezoidal
+
+.. _option_table@rate_case@trapezoidal:
+
+trapezoidal
+===========
+If *option_name* = ``rate_case`` and
+*option_value* = ``trapezoidal`` ,
+a trapezoidal method is used to approximation the ODE solution.
+
+.. meta::
+   :keywords: iota_zero_rho_zero
+
+.. index:: iota_zero_rho_zero
+
+.. _option_table@rate_case@iota_zero_rho_zero:
+
+iota_zero_rho_zero
+==================
+If *option_name* = ``rate_case`` and
+*option_value* = ``iota_zero_rho_zero`` ,
+the :ref:`parent smoothing<rate_table@parent_smooth_id>` for
+*iota* and *rho* must always have lower and upper limit zero.
+In this case an eigen vector method is used to approximate the ODE solution.
+
+.. meta::
+   :keywords: iota_pos_rho_zero
+
+.. index:: iota_pos_rho_zero
+
+.. _option_table@rate_case@iota_pos_rho_zero:
+
+iota_pos_rho_zero
+=================
+If *option_name* = ``rate_case`` and
+*option_value* = ``iota_pos_rho_zero`` ,
+the :ref:`parent smoothing<rate_table@parent_smooth_id>` for
+*iota* must always have lower limit greater than zero and for
+*rho* lower and upper limit zero.
+In this case an eigen vector method is used to approximate the ODE solution.
+
+.. meta::
+   :keywords: iota_zero_rho_pos
+
+.. index:: iota_zero_rho_pos
+
+.. _option_table@rate_case@iota_zero_rho_pos:
+
+iota_zero_rho_pos
+=================
+If *option_name* = ``rate_case`` and
+*option_value* = ``iota_zero_rho_pos`` ,
+the :ref:`parent smoothing<rate_table@parent_smooth_id>` for
+*rho* must always have lower limit greater than zero and for
+*iota* lower and upper limit zero.
+In this case an eigen vector method is used to approximate the ODE solution.
+
+.. meta::
+   :keywords: iota_pos_rho_pos
+
+.. index:: iota_pos_rho_pos
+
+.. _option_table@rate_case@iota_pos_rho_pos:
+
+iota_pos_rho_pos
+================
+If *option_name* = ``rate_case`` and
+*option_value* = ``iota_zero_rho_pos`` ,
+the :ref:`parent smoothing<rate_table@parent_smooth_id>` for
+*iota* and *rho*
+must always have lower limit greater than zero.
+In this case an eigen vector method is used to approximate the ODE solution.
+
+.. meta::
+   :keywords: optimize, fixed, and, random
+
+.. index:: optimize, fixed, and, random
+
+.. _option_table@Optimize Fixed and Random:
+
+Optimize Fixed and Random
+*************************
+The following options control the Ipopt optimization
+of both the fixed and random effects:
+
+.. meta::
+   :keywords: derivative_test
+
+.. index:: derivative_test
+
+.. _option_table@Optimize Fixed and Random@derivative_test:
+
+derivative_test
+===============
+If *option_name* is
+``derivative_test_fixed`` (``derivative_test_random`` ),
+the corresponding *option_value*
+is one of the choices below.
+The default value for this option is ``none`` .
+(Under normal circumstances, you should use ``none``
+because the other choices will take more execution time
+and are for program validation.)
+
+.. csv-table::
+   :widths: auto
+
+   *option_value*,Description,Restrictions
+   ``none``,do not perform derivative test,none
+   ``first-order``,test first derivatives,none
+   ``second-order``,test first and second derivatives,in fixed case *quasi_fixed* must be false.
+   ``only-second-order``,only test second derivatives,in fixed case *quasi_fixed* must be false.
+   ``adaptive``,a step size adaptive first order derivative test,only for fixed case
+   ``trace-adaptive``,trace adaptive test on standard output,only for fixed case
+
+.. meta::
+   :keywords: max_num_iter
+
+.. index:: max_num_iter
+
+.. _option_table@Optimize Fixed and Random@max_num_iter:
+
+max_num_iter
+============
+If *option_name* is
+``max_num_iter_fixed`` (``max_num_iter_random`` ),
+the corresponding *option_value*
+is an integer greater than or equal ``-1`` that specifies the
+maximum number of iterations.
+This is called ``max_iter`` in the Ipopt documentation.
+If Ipopt is run with zero iterations, the solution in the
+:ref:`fit_var_table@fit_var_value` column of the fit table
+may not correspond to the starting fixed effects; i.e.,
+the fixed effects in the :ref:`start_var_table-name` table; see the heading
+:ref:`option_table@Optimize Fixed Only@bound_frac_fixed` below.
+In the special case where *max_num_iter_fixed* is ``-1`` ,
+the solution in the fit table
+is the start_var table value for the fixed effects
+and the corresponding optimal value for the random effects.
+
+.. meta::
+   :keywords: print_level
+
+.. index:: print_level
+
+.. _option_table@Optimize Fixed and Random@print_level:
+
+print_level
+===========
+If *option_name* is
+``print_level_fixed`` (``print_level_random`` ),
+the corresponding *option_value*
+is a positive integer between 0 and 12 inclusive
+that specifies the print level
+for optimizing the fixed effects (random effects).
+Zero, corresponds to no printing and is the default for ``dismod_at``
+(the value 5 is the normal default for Ipopt).
+At least one these two print values
+(for the fixed and random effects) should be zero.
+
+.. meta::
+   :keywords: accept_after_max_steps
+
+.. index:: accept_after_max_steps
+
+.. _option_table@Optimize Fixed and Random@accept_after_max_steps:
+
+accept_after_max_steps
+======================
+If *option_name* is
+``accept_after_max_steps_fixed`` (``accept_after_max_steps_random`` ),
+the corresponding *option_value*
+is a positive integer specifying the maximum number of
+backtracking steps to take before accepting a line search point.
+
+.. meta::
+   :keywords: tolerance
+
+.. index:: tolerance
+
+.. _option_table@Optimize Fixed and Random@tolerance:
+
+tolerance
+=========
+If *option_name* is
+``tolerance_fixed`` (``tolerance_random`` ),
+the corresponding *option_value*
+is a positive floating point number
+that specifies the desired relative convergence tolerance
+for optimizing the fixed effects (random effects).
+(This is called ``tol`` in Ipopt documentation.)
+For the fixed effects, this tolerance is relative to the derivatives
+of the fixed effects objective at the value of the fixed effects in
+:ref:`scale_var_table-name` .
+
+.. meta::
+   :keywords: optimize, fixed, only
+
+.. index:: optimize, fixed, only
+
+.. _option_table@Optimize Fixed Only:
+
+Optimize Fixed Only
+*******************
+The following options control the
+`Ipopt <http://www.coin-or.org/Ipopt/documentation/>`_ optimization
+of the fixed effects:
+
+.. meta::
+   :keywords: quasi_fixed
+
+.. index:: quasi_fixed
+
+.. _option_table@Optimize Fixed Only@quasi_fixed:
+
+quasi_fixed
+===========
+If *option_name* is
+``quasi_fixed`` ,
+the corresponding possible values are
+``true`` or ``false`` .
+If it is ``true`` , a quasi-Newton method is used to optimize
+the fixed effects. Otherwise a full Newton method is used.
+
+.. meta::
+   :keywords: bound_frac_fixed
+
+.. index:: bound_frac_fixed
+
+.. _option_table@Optimize Fixed Only@bound_frac_fixed:
+
+bound_frac_fixed
+================
+If *option_name* is
+``bound_frac_fixed``
+the corresponding *option_value*
+is greater than zero and lese than or equal one half.
+It determines the maximum an initial value in the :ref:`start_var_table-name` ,
+is moved to be interior to the corresponding upper and lower bounds.
+If there is an upper or lower bound for a fixed effect,
+then both are present in the :ref:`prior_table-name` and
+
+   *bound_frac_fixed* * ( *upper* ``-`` *lower* )
+
+is the maximum that ``start_var`` table value is moved.
+This is called ``bound_frac`` in the Ipopt documentation
+and :math:`\kappa_2` in the corresponding paper.
+The default value for this option is ``1e-2`` .
+Note that *bound_push* in the Ipopt documentation
+(:math:`\kappa_1` in the paper) is set to be effectively zero.
+
+.. meta::
+   :keywords: limited_memory_max_history_fixed
+
+.. index:: limited_memory_max_history_fixed
+
+.. _option_table@Optimize Fixed Only@limited_memory_max_history_fixed:
+
+limited_memory_max_history_fixed
+================================
+if *option_name* is ``limited_memory_max_history_fixed`` ,
+the corresponding *option_value* is
+the number of most recent iterations that are taken into account
+for the limited-memory quasi-Newton approximation.
+
+.. meta::
+   :keywords: optimize, random, only
+
+.. index:: optimize, random, only
+
+.. _option_table@Optimize Random Only:
+
+Optimize Random Only
+********************
+The following options control the Ipopt optimization
+of the random effects:
+
+.. meta::
+   :keywords: method_random
+
+.. index:: method_random
+
+.. _option_table@Optimize Random Only@method_random:
+
+method_random
+=============
+If *option_name* is ``method_random`` ,
+*option_value* is either ``ipopt_solve`` or ``ipopt_random`` .
+The method ``ipopt_solve`` is part of the standard CppAD package.
+The method ``ipopt_random`` is a special purpose interface to ipopt
+designed to optimizer the random effects for the cppad_mixed package
+(which should be faster).
+
+.. meta::
+   :keywords: bound_random
+
+.. index:: bound_random
+
+.. _option_table@Optimize Random Only@bound_random:
+
+bound_random
+============
+If *option_name* is ``bound_random`` ,
+*option_value* is a bound for the absolute value of
+:ref:`random effects<model_variables@Random Effects, u>` .
+If *bound_random* is ``null`` ,
+plus and minus infinity is used for the bounds; see
+:ref:`database@Null@Bounds` .
+This bound does not apply for random effects that have their upper
+and lower limits equal; see
+:ref:`constant child value priors<rate_table@Child Value Priors@Constant>` .
+In addition, if a child node does not have any data,
+its rate random effects automatically use a random bound of zero.
+
+#. The theory for
+   :ref:`install_unix@Special Requirements@cppad_mixed`
+   does not include bounds for the random effects.
+
+#. The bound *bound_random* does apply to
+   random effects corresponding to
+   :ref:`constant child value priors<rate_table@Child Value Priors@Constant>` .
+   The theory for fitting with constant random effects is just fine
+   because they are treated a parameters, and not random effects,
+   in the Laplace approximation.
+
+#. The special case where *bound_random* is zero,
+   fits as if there were no random effects except for the fact that
+   the resulting optimal value can be used as a starting point for fitting
+   with random effects; see
+   :ref:`set start_var fit_var<set_command@table_out@start_var>` and
+   :ref:`fit_fixed_both.py<user_fit_fixed_both.py-name>` .
+
+#. Fitting with no random effects corresponds to
+   a ``null`` value for all the
+   :ref:`rate_table@child_smooth_id` and
+   :ref:`rate_table@child_nslist_id` in the rate table.
+   This is different from *bound_random* zero which includes
+   the random effects (with value zero) in the
+   :ref:`model_variables-name` .
+
+#. Note that the theory used to compute
+   :ref:`sample_command@asymptotic` samples of the fixed
+   effects, does not take *bound_random* into account.
+   On the other hand; the samples of the random effects are withing the
+   limits specified by *bound_random* .
+
+.. meta::
+   :keywords: meas_noise_effect
+
+.. index:: meas_noise_effect
+
+.. _option_table@meas_noise_effect:
+
+meas_noise_effect
+*****************
+If *option_name* = ``meas_noise_effect`` ,
+*option_value* determines how the
+:ref:`average noise effect<data_like@Measurement Noise Covariates@Average Noise Effect, E_i(theta)>`
+changes the measurement noise.
+The possible *option_value* are:
+:ref:`data_like@Adjusted Standard Deviation, delta_i(theta)@add_std_scale_all` ,
+:ref:`data_like@Adjusted Standard Deviation, delta_i(theta)@add_std_scale_none` ,
+:ref:`data_like@Adjusted Standard Deviation, delta_i(theta)@add_std_scale_log` ,
+:ref:`data_like@Adjusted Standard Deviation, delta_i(theta)@add_var_scale_all` ,
+:ref:`data_like@Adjusted Standard Deviation, delta_i(theta)@add_var_scale_none` ,
+:ref:`data_like@Adjusted Standard Deviation, delta_i(theta)@add_var_scale_log` .
+
+.. meta::
+   :keywords: warn_on_stderr
+
+.. index:: warn_on_stderr
+
+.. _option_table@warn_on_stderr:
+
+warn_on_stderr
+**************
+If *option_name* is
+``warn_on_stderr`` ,
+the corresponding possible values are
+``true`` or ``false`` .
+If the value is true,
+warning messages are written to standard error.
+In either case, these messages are recorded in the :ref:`log_table-name` .
+Error messages are always written to standard error
+and recorded in the log table.
+
+.. meta::
+   :keywords: minimum_meas_cv
+
+.. index:: minimum_meas_cv
+
+.. _option_table@minimum_meas_cv:
+
+minimum_meas_cv
+***************
+This option is no longer available because it is now
+integrand specific; see
+:ref:`integrand_table@minimum_meas_cv` .
+
+.. meta::
+   :keywords: hold_out_integrand
+
+.. index:: hold_out_integrand
+
+.. _option_table@hold_out_integrand:
+
+hold_out_integrand
+******************
+If *option_name* = ``hold_out_integrand`` ,
+the corresponding *option_value* is a space separated list of
+:ref:`integrand_names<integrand_table@integrand_name>` .
+(The integrand names cannot begin with ``mulcov_`` .)
+All the data for the corresponding integrands is held out during any fit.
+See the fit command :ref:`fit_command@hold_out`
+documentation.
+
+.. meta::
+   :keywords: random_seed
+
+.. index:: random_seed
+
+.. _option_table@random_seed:
+
+random_seed
+***********
+This is a non-negative integer used to seed the random number
+generator that is used by ``dismod_at`` .
+If this value is zero, the clock is used to seed the random number generator;
+see :ref:`log_table@message_type@random_seed` in the log table.
+
+.. meta::
+   :keywords: compress_interval
+
+.. index:: compress_interval
+
+.. _option_table@compress_interval:
+
+compress_interval
+*****************
+If *option_name* = ``compress_interval`` ,
+the corresponding *option_value* is a space separated list
+with two elements.
+The first element is called the *age_size* and the
+second element is called *time_size* .
+If :ref:`data_table@age_upper` is equal to
+:ref:`data_table@age_lower` and
+:ref:`data_table@time_upper` is equal to
+:ref:`data_table@time_lower` ,
+the model for the data does not require integration over an interval.
+The average for data table age intervals with
+
+   *age_upper* ``-`` *age_lower* <= *age_size*
+
+is approximated by the value at age
+
+   ( *age_upper* + *age_lower* ) / 2.0
+
+The average for data table time intervals with
+
+   *time_upper* ``-`` *time_lower* <= *time_size*
+
+is approximated by the value at time
+
+   ( *time_upper* + *time_lower* ) / 2.0
+
+The default value for *age_size* and *time_size* is zero; i.e.,
+no age or time compression.
+
+.. meta::
+   :keywords: trace_init_fit_model
+
+.. index:: trace_init_fit_model
+
+.. _option_table@trace_init_fit_model:
+
+trace_init_fit_model
+********************
+If *option_name* is
+``trace_init_fit_model`` ,
+the corresponding possible values are
+``true`` or ``false`` .
+If it is ``true`` ,
+a trace of the initialization of the ``fit_model`` data structure
+is printed on standard output.
+This gives one an indication of progress for large problems where
+this initialization takes a long time.
+
+.. meta::
+   :keywords: example
+
+.. index:: example
+
+.. _option_table@Example:
+
+Example
+*******
+The files :ref:`option_table.py-name`
+contains an example ``option`` table.
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   option_default
+   option_table.py

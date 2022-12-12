@@ -1,0 +1,227 @@
+.. _trace_fixed_table-name:
+
+!!!!!!!!!!!!!!!!!
+trace_fixed_table
+!!!!!!!!!!!!!!!!!
+
+xrst input file: ``xrst/table/trace_fixed_table.xrst``
+
+.. meta::
+   :keywords: trace_fixed_table, the, fixed, effects, optimization, trace, table
+
+.. index:: trace_fixed_table, the, fixed, effects, optimization, trace, table
+
+.. _trace_fixed_table-title:
+
+The Fixed Effects Optimization Trace Table
+##########################################
+
+.. meta::
+   :keywords: discussion
+
+.. index:: discussion
+
+.. _trace_fixed_table@Discussion:
+
+Discussion
+**********
+The trace_fixed table contains the ipopt trace information
+for optimizing the fixed effects during the most recent
+:ref:`fit fixed<fit_command@variables@fixed>` or
+:ref:`fit both<fit_command@variables@both>` command.
+Each row of this table corresponds to one iteration of the
+fixed effects optimization.
+
+.. meta::
+   :keywords: trace_fixed_id
+
+.. index:: trace_fixed_id
+
+.. _trace_fixed_table@trace_fixed_id:
+
+trace_fixed_id
+**************
+This column has type ``integer`` and
+is the primary key for the data table.
+Its initial value is zero, and it increments by one for each row.
+Note that all the variables and constraints have been re-scaled by
+dismod_at and cppad_mixed before ipopt even sees the problem.
+
+.. meta::
+   :keywords: iter
+
+.. index:: iter
+
+.. _trace_fixed_table@iter:
+
+iter
+****
+This column has type ``integer`` and
+is the current iteration count (which is equal to *trace_fixed_id* ).
+This includes regular iterations and iterations during the restoration phase.
+
+.. meta::
+   :keywords: obj_value
+
+.. index:: obj_value
+
+.. _trace_fixed_table@obj_value:
+
+obj_value
+*********
+This column has type ``real`` and
+is the objective value at the current point.
+
+.. meta::
+   :keywords: inf_pr
+
+.. index:: inf_pr
+
+.. _trace_fixed_table@inf_pr:
+
+inf_pr
+******
+This column has type ``real`` and
+is the constraint violation at the current point.
+This quantity is the infinity-norm (max) of the constraint
+violation for :math:`g(x)` in the Ipopt documentation.
+During the restoration phase, this value remains the constraint
+violation of the original problem at the current point.
+The option ``inf_pr_output`` can be used to switch to the printing of
+a different quantity.
+
+.. meta::
+   :keywords: inf_du
+
+.. index:: inf_du
+
+.. _trace_fixed_table@inf_du:
+
+inf_du
+******
+This column has type ``real`` and
+is the dual infeasibility at the current point.
+This quantity measure the infinity-norm (max) of the
+internal dual infeasibility, i.e, the derivative of the lagrangian
+with respect to the primal variables
+
+.. math::
+
+   \nabla f(x) \nabla c(x) \lambda - z
+
+where :math:`z` are the lagrange multipliers for the box constraints and
+:math:`c(x)` are the nonlinear equality constraints
+(inequality constraints are reformulated using slack variables
+and problem scaling).
+During the restoration phase,
+this is the value of the dual infeasibility for the restoration phase problem.
+
+.. meta::
+   :keywords: mu
+
+.. index:: mu
+
+.. _trace_fixed_table@mu:
+
+mu
+**
+This column has type ``real`` and
+is the value of the barrier parameter :math:`\mu`.
+
+.. meta::
+   :keywords: d_norm
+
+.. index:: d_norm
+
+.. _trace_fixed_table@d_norm:
+
+d_norm
+******
+This column has type ``real`` and
+is the infinity norm (max) of the primal step
+(for the original variables :math:`x` and the internal slack
+variables :math:`s`).
+During the restoration phase,
+this value includes the values of additional variables that
+capture the violation in :math:`c(x) = 0`.
+
+.. meta::
+   :keywords: regularization_size
+
+.. index:: regularization_size
+
+.. _trace_fixed_table@regularization_size:
+
+regularization_size
+*******************
+This column has type ``real`` and
+is the value of the regularization term for the Hessian
+of the Lagrangian in the augmented system.
+
+.. meta::
+   :keywords: alpha_du
+
+.. index:: alpha_du
+
+.. _trace_fixed_table@alpha_du:
+
+alpha_du
+********
+This column has type ``real`` and
+is the step size for the dual variables for the box constraints in the
+equality constrained formulation; i.e., :math:`z`.
+
+.. meta::
+   :keywords: alpha_pr
+
+.. index:: alpha_pr
+
+.. _trace_fixed_table@alpha_pr:
+
+alpha_pr
+********
+This column has type ``real`` and
+is the step size for the primal variables
+:math:`x` and :math:`\lambda` in the equality constrained formulation.
+The number is usually followed by a character for additional diagnostic
+information regarding the step acceptance criterion.
+
+.. meta::
+   :keywords: ls_trials
+
+.. index:: ls_trials
+
+.. _trace_fixed_table@ls_trials:
+
+ls_trials
+*********
+This column has type ``integer`` and
+is the number of backtracking line search steps
+(does not include second-order correction steps).
+
+.. meta::
+   :keywords: restoration
+
+.. index:: restoration
+
+.. _trace_fixed_table@restoration:
+
+restoration
+***********
+This column has type ``integer`` is zero or one.
+If it is one (zero), this is a restoration iteration
+(is not a restoration iteration).
+
+.. meta::
+   :keywords: reference
+
+.. index:: reference
+
+.. _trace_fixed_table@Reference:
+
+Reference
+*********
+A. Wachter and L. T. Biegler.,
+On the implementation of a primal-dual interior point
+filter line search algorithm for large-scale nonlinear programming.
+Mathematical Programming, 106(1):25-57, 2006.
