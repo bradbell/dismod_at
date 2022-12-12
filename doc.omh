@@ -14,6 +14,20 @@ $latex \newcommand{\B}[1]{ {\bf #1} } $$
 $latex \newcommand{\R}[1]{ {\rm #1} } $$
 $latex \newcommand{\W}[1]{ \; #1 \; } $$
 
+$head Old Documentation$$
+This is an old version of the documentation built using
+$href%http://bradbell.github.io/omhelp%omhelp%$$.
+
+$head Current Documentation$$
+The current version of the documentation is built using the sphinx
+$href%http://bradbell.github.io/xrst/html/purpose.html%xrst%$$ wrapper.
+Use this link to get the
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+
+$pre
+
+$$
+
 $section dismod_at-20221105: User Documentation and API$$
 
 $head Purpose$$
