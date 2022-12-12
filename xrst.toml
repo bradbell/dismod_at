@@ -8,7 +8,7 @@ html_directory    = 'build/html'
 tex_directory     = 'build/tex'
 
 [root_file]
-default = 'doc.xrst'
+default = 'dismod_at.xrst'
 dev     = 'devel/devel.xrst'
 
 [include_all]
