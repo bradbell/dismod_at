@@ -7,13 +7,13 @@ dismod_at
 xrst input file: ``dismod_at.xrst``
 
 .. meta::
-   :keywords: dismod_at, dismod_at-20221212:, user, documentation, and, api
+   :keywords: dismod_at, dismod_at-20221213:, user, documentation, and, api
 
-.. index:: dismod_at, dismod_at-20221212:, user, documentation, and, api
+.. index:: dismod_at, dismod_at-20221213:, user, documentation, and, api
 
 .. _dismod_at-title:
 
-dismod_at-20221212: User Documentation and API
+dismod_at-20221213: User Documentation and API
 ##############################################
 
 .. meta::
@@ -28,15 +28,15 @@ Purpose
 Estimating disease rates as functions of age and time.
 
 .. meta::
-   :keywords: links
+   :keywords: git, repository
 
-.. index:: links
+.. index:: git, repository
 
-.. _dismod_at@Links:
+.. _dismod_at@Git Repository:
 
-Links
-*****
-`github <https://github.com/bradbell/dismod_at>`_
+Git Repository
+**************
+`<https://github.com/bradbell/dismod_at>`_
 
 .. meta::
    :keywords: contents
