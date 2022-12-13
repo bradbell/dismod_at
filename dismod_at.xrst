@@ -4,7 +4,6 @@
 # ----------------------------------------------------------------------------
 {xrst_begin dismod_at}
 {xrst_spell
-   github
 }
 
 dismod_at-20221212: User Documentation and API
@@ -14,9 +13,9 @@ Purpose
 *******
 Estimating disease rates as functions of age and time.
 
-Links
-*****
-`github <https://github.com/bradbell/dismod_at>`_
+Git Repository
+**************
+https://github.com/bradbell/dismod_at_
 
 Contents
 ********
