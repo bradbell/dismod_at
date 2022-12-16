@@ -13,6 +13,7 @@ $Id:$
    lsoda
    matplotlib
    mm
+   omhelp
    prc
    rel
    scipi
@@ -27,6 +28,15 @@ Changes and Additions to Dismod_at During 2022
 
 mm-dd
 *****
+
+12-13
+=====
+Finish conversion of dismod_at documentation from
+`omhelp <http://bradbell.github.io/omhelp/doc/omhelp.htm>`_
+to the sphinx
+`xrst <http://bradbell.github.io/xrst/html/purpose.html>`_  wrapper.
+The following is a link to the
+`old documentation <http://bradbell.github.io/dismod_at/doc/dismod_at.htm>`_ .
 
 12-02
 =====
