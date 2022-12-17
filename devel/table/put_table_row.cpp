@@ -12,6 +12,10 @@ $spell
    vec
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section C++: Insert New Row at End of a Table$$
 
 $head Syntax$$

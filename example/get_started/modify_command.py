@@ -8,7 +8,11 @@
 #  dismod
 # $$
 #
-# $section modify Command: Example and Test$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section modify Command: Example and Test$$
 #
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end

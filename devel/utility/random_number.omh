@@ -5,6 +5,10 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin random_number$$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Pseudo Random Number Generation$$
 
 $childtable%devel/utility/manage_gsl_rng.omh

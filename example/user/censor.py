@@ -16,7 +16,11 @@
 #  cen
 # $$
 #
-# $section Fitting Data That Has Negative Values Censored$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Fitting Data That Has Negative Values Censored$$
 #
 # $head Purpose$$
 # This example uses the

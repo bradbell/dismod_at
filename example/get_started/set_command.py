@@ -7,7 +7,11 @@
 #  var
 # $$
 #
-# $section set Command: Example and Test$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section set Command: Example and Test$$
 #
 # $head truth_var Table$$
 # The $cref set_command$$ in this example creates a

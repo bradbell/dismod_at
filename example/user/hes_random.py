@@ -7,7 +7,11 @@
 #  cppad
 # $$
 #
-# $section Check the Hessian of the Random Effects Objective$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Check the Hessian of the Random Effects Objective$$
 #
 # $head Purpose$$
 # This example checks the computation of the Hessian of the

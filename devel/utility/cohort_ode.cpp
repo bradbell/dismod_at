@@ -8,6 +8,10 @@ $spell
    pini
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Solve The ODE on a Cohort Line$$
 
 $head Syntax$$

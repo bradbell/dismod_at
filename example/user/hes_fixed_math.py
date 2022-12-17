@@ -7,7 +7,11 @@
 #  cppad
 # $$
 #
-# $section Check the Hessian of the Fixed Effects Objective$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Check the Hessian of the Fixed Effects Objective$$
 #
 # $head Purpose$$
 # This is a detailed mathematical explanation of computing Hessian of the

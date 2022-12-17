@@ -10,7 +10,11 @@
 #  tbl
 # $$
 #
-# $section Replace A a Table$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Replace A a Table$$
 #
 # $head Syntax$$
 # $codei%dismod_at.replace_table(%connection%, %tbl_name%, %table_dict%)

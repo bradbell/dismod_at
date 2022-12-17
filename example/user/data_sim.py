@@ -12,7 +12,11 @@
 #  cv
 # $$
 #
-# $section Explanation of Simulated Data Table, data_sim$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Explanation of Simulated Data Table, data_sim$$
 #
 # $head See Also$$
 # $cref user_sim_log.py$$

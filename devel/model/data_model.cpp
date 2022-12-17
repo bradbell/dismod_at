@@ -24,6 +24,10 @@ $spell
    sim_stdcv
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Data Model: Constructor$$
 
 $head Syntax$$
@@ -455,6 +459,10 @@ $spell
    sim_stdcv
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Set Value Necessary for Likelihood (not for Average Integrand)$$
 
 $head Syntax$$
@@ -568,6 +576,10 @@ $spell
    vec
    const
    CppAD
+$$
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
 $$
 $section Data Model: Compute One Average Integrand$$
 
@@ -688,6 +700,10 @@ $spell
    mtother
    relrisk
    xam
+$$
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
 $$
 $section One Weighted Residual and Log-Likelihood for any Integrands$$
 
@@ -909,6 +925,10 @@ $spell
    struct
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section All the Weighted Residuals and Log-Likelihoods$$
 
 $head Syntax$$

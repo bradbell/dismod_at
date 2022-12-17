@@ -1,4 +1,3 @@
-# Plan for future changes on master branch
 # ----------------------------------------------------------------------------
 # None of the lists below can have white space or a dollar sign in an entry.
 #
@@ -12,6 +11,7 @@
 # (with the possible exception of the extra_seds commands).
 # The files in bin/devel.sh ignore_files are automatically in this list.
 # ignore_files='
+#     doc.omh
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
@@ -30,5 +30,9 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|covaraite|covariate|
-s|eqaul|equal|
+s|$section|$nospell\
+$bold This is old dismod documentation:$$ Here is a link to its\
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.\
+$$\
+&|
+#

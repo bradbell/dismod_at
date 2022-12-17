@@ -31,6 +31,10 @@ $spell
    init
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Fit Model Constructor$$
 
 $head Syntax$$
@@ -323,6 +327,10 @@ $spell
    struct
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Run optimization to determine the optimal fixed and random effects$$
 
 $head Syntax$$
@@ -599,6 +607,10 @@ $spell
    var
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Get Solution Corresponding to Previous Fit$$
 
 $head Syntax$$
@@ -691,6 +703,10 @@ $spell
    vec
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Compute Hessian Of Random Effects Objective$$
 
 $head Syntax$$
@@ -781,6 +797,10 @@ $spell
    uhat
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Sample From Posterior Distribution for a Fit$$
 
 $head Syntax$$

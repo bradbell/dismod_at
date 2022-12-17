@@ -15,6 +15,10 @@ $spell
    cen
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Simulate a Dismod_at Random Distribution$$
 
 $head Syntax$$

@@ -11,7 +11,11 @@
 #  tbl
 # $$
 #
-# $section Get Data From a Table$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Get Data From a Table$$
 #
 # $head Syntax$$
 # $icode%row_list% = dismod_at.get_row_list(%$$

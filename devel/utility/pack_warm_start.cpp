@@ -6,6 +6,10 @@
 $begin pack_warm_start$$
 $spell
 $$
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Packing and Unpacking Warm Start Information in a Vector$$
 
 $head Syntax$$

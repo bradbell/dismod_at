@@ -21,6 +21,10 @@ $spell
    Integrands
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Constructing An Average Noise Effect Object$$
 
 $head Syntax$$
@@ -139,6 +143,10 @@ $spell
    covariates
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Computing One Average Integrand$$
 
 $head Syntax$$

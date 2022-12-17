@@ -13,7 +13,11 @@
 #  sqlite
 # $$
 #
-# $section Convert an Iterable Object to a Unicode String$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Convert an Iterable Object to a Unicode String$$
 #
 # $head Syntax$$
 # $icode%u_tuple% = dismod_at.unicode_tuple(%iterable%, %quote_string%)%$$

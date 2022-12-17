@@ -4,7 +4,11 @@
 # ----------------------------------------------------------------------------
 # $begin python$$ $newlinech #$$
 #
-# $section Python Utilities$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Python Utilities$$
 #
 # $comment BEGIN_SORT_THIS_LINE_PLUS_2$$
 # $childtable%

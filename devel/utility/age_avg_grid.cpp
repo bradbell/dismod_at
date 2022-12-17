@@ -13,6 +13,10 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
 $begin age_avg_grid$$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Split the Age Average Grid$$
 
 $head Syntax$$

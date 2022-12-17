@@ -10,7 +10,11 @@
 #  dismod
 # $$
 #
-# $section Create a Python sqlite3 Database Connection$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Create a Python sqlite3 Database Connection$$
 #
 # $head Syntax$$
 # $icode%connection% = dismod_at.create_connection(%file_name%, %new%)

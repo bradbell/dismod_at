@@ -11,7 +11,11 @@
 #  pini
 # $$
 #
-# $section Case with no Children; i.e., no Random Effects$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Case with no Children; i.e., no Random Effects$$
 #
 # $head Integrands$$
 # There is an integrand that directly measures each of the model rates; i.e.,

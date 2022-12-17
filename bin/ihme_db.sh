@@ -14,7 +14,11 @@
 #  cmake
 # $$
 #
-# $section Make a Local Copy an IHME Dismod_at Database$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Make a Local Copy an IHME Dismod_at Database$$
 #
 # $head Syntax$$
 # $codei%bin/ihme_db.sh [--%user%] %relative_dir% %database%

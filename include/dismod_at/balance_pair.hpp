@@ -11,6 +11,10 @@ $spell
    dismod
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Balanced Sampling from Vector of Standard Pairs$$
 
 $head Syntax$$

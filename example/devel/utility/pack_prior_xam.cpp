@@ -10,6 +10,10 @@ $spell
    var
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section C++ pack_prior: Example and Test$$
 
 $srcthisfile%0

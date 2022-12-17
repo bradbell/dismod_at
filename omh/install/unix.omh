@@ -37,6 +37,10 @@ $spell
    scipy
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Installing dismod_at in Unix$$
 
 $children%bin/run_cmake.sh

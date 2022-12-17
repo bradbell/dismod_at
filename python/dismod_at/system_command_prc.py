@@ -13,7 +13,11 @@
 #  returncode
 # $$
 #
-# $section Print Run and Check a System Command$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Print Run and Check a System Command$$
 #
 # $head Syntax$$
 # $srcthisfile%0%# BEGIN syntax%# END syntax%1%$$

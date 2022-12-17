@@ -20,6 +20,10 @@ $spell
    Integrands
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Constructing An  Average Integrand Object$$
 
 $head Syntax$$
@@ -155,6 +159,10 @@ $spell
    covariates
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Computing One Average Integrand$$
 
 $head Syntax$$
@@ -536,6 +544,10 @@ $spell
    ini
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Add ODE Solution for One Cohort To time_line_object$$
 
 $head Syntax$$

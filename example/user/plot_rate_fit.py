@@ -10,7 +10,11 @@
 #  cv
 # $$
 #
-# $section Example Plotting The Rates for a Fit$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Example Plotting The Rates for a Fit$$
 #
 # $head Nodes$$
 # There are four nodes in this example.

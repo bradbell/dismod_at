@@ -12,7 +12,11 @@
 #  inf
 # $$
 #
-# $section Metropolis MCMC Algorithm$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Metropolis MCMC Algorithm$$
 #
 # $head Syntax$$
 # $codei%(%a%, %c%) = dismod_at.metropolis(%log_f%, %m%, %x0%, %s%)

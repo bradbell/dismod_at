@@ -10,6 +10,10 @@ $spell
    dtime
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Prior for Random Effect Values$$
 
 $head p(u|theta)$$

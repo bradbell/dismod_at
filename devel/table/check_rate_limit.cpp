@@ -12,6 +12,10 @@ $spell
    sqlite
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Check Lower and Upper Iota and Rho Limits$$
 
 $head syntax$$

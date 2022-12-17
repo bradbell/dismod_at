@@ -10,7 +10,11 @@
 #  exp
 # $$
 #
-# $section Fitting Simulated Data Example$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Fitting Simulated Data Example$$
 #
 # $head Parent Iota$$
 # The value $icode iota_parent_true$$

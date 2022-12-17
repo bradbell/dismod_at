@@ -11,7 +11,11 @@
 #  exp
 # $$
 #
-# $section Using hold_out in Data, Subset Data, and Option Tables$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Using hold_out in Data, Subset Data, and Option Tables$$
 #
 # $head Purpose$$
 # This example shows how to use hold_out in the

@@ -9,7 +9,11 @@
 #  cv
 # $$
 #
-# $section Fit With Outliers Using Data Density Command$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Fit With Outliers Using Data Density Command$$
 #
 # $head Purpose$$
 # This example first fits using a Gaussian data density.

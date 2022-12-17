@@ -5,6 +5,10 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin fit_model$$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Object that Fits Fixed and Random Effects Model to Data$$
 
 $childtable%devel/model/fit_model.cpp

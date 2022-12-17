@@ -7,7 +7,11 @@
 #  init
 # $$
 #
-# $section Non-uniform Age Average Grid$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Non-uniform Age Average Grid$$
 #
 # $head Purpose$$
 # This example demonstrate one reason for using the

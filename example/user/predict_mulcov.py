@@ -12,7 +12,11 @@
 #  Mulcov
 # $$
 #
-# $section Predict Covariate Multiplier Values$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Predict Covariate Multiplier Values$$
 #
 # $head Purpose$$
 # This examples demonstrates covariate multiplier predictions.

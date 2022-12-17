@@ -30,7 +30,11 @@
 #  ik
 # $$
 #
-# $section An Example / Speed Test Fitting Simulated Diabetes Data$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section An Example / Speed Test Fitting Simulated Diabetes Data$$
 #
 # $head Running This example$$
 # see $cref/run one example/user_example/Run One Example/$$.

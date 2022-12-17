@@ -18,6 +18,10 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 -----------------------------------------------------------------------------
 $begin simulate_command$$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section The Simulate Command$$
 $spell
    sim

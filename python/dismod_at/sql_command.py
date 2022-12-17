@@ -10,7 +10,11 @@
 #  dismod
 # $$
 #
-# $section Execute an SQL command$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Execute an SQL command$$
 #
 # $head Syntax$$
 # $icode%result% = dismod_at.sql_command(%connection%, %command%)

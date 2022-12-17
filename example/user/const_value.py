@@ -10,7 +10,11 @@
 #  dismod
 # $$
 #
-# $section Constrain Omega Using const_value$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Constrain Omega Using const_value$$
 #
 # $head Node Table$$
 # For this example the $cref node_table$$ is

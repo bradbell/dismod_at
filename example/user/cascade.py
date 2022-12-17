@@ -13,7 +13,11 @@
 #  init
 # $$
 #
-# $section Generating Priors For Next Level Down Node Tree$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Generating Priors For Next Level Down Node Tree$$
 #
 # $head Node Table$$
 # The following is a diagram of the node tree for this example:

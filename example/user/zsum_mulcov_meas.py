@@ -10,7 +10,11 @@
 #  cv
 # $$
 #
-# $section Constrain Sum of Subgroup Measurement Covariate Multipliers to Zero$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Constrain Sum of Subgroup Measurement Covariate Multipliers to Zero$$
 #
 # $head See Also$$
 # $cref user_zsum_child_rate.py$$,

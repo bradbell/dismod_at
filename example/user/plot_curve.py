@@ -6,7 +6,11 @@
 # $spell
 # $$
 #
-# $section Example Plotting Log-Scaled Values w.r.t Age and Time$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Example Plotting Log-Scaled Values w.r.t Age and Time$$
 #
 # $head z_name$$
 # For this example the name of the z variables are $code A$$, $code B$$,

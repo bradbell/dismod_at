@@ -14,6 +14,10 @@ $spell
    sep
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section C++: Execution of an SQL Command$$
 
 $head Syntax$$

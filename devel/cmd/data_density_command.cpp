@@ -23,6 +23,10 @@ $spell
    py
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Data Density Command: Change the Density for an Integrand$$
 
 $head Syntax$$

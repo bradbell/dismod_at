@@ -9,7 +9,11 @@
 #  pos
 # $$
 #
-# $section Zero Rate Until a Jump at a Known Age$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Zero Rate Until a Jump at a Known Age$$
 #
 # $head Purpose$$
 # Usually the prior for the rate is smooth.

@@ -12,6 +12,10 @@ $spell
    std
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section C++: Check That table_id Column Has Proper Values$$
 
 $head Syntax$$

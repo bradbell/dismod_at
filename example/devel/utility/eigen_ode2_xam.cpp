@@ -8,6 +8,10 @@ $spell
    eigen
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Example and Test of Eigenvector Method of Solving ODE$$
 
 $srcthisfile%0%// BEGIN C++%// END C++%1%$$

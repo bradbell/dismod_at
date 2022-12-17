@@ -11,7 +11,11 @@
 #  const
 # $$
 #
-# $section Continuing a Fit From Where it Left Off$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Continuing a Fit From Where it Left Off$$
 #
 # $head Option Table$$
 # In the option table defined below,

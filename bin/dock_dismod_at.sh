@@ -15,7 +15,11 @@
 #   podman
 # $$
 #
-# $section Install and Run dismod_at in a Docker Image$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Install and Run dismod_at in a Docker Image$$
 #
 # $head Syntax$$
 # $codei%./dock_dismod_at.sh image base

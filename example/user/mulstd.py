@@ -9,7 +9,11 @@
 #  cv
 # $$
 #
-# $section Estimating Smoothing Standard Deviation Multiplies$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Estimating Smoothing Standard Deviation Multiplies$$
 #
 # $head Purpose$$
 # This example uses a smoothing standard deviation multiplier

@@ -10,7 +10,11 @@
 #  dismod
 # $$
 #
-# $section Get File Name For a Database Connection$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Get File Name For a Database Connection$$
 #
 # $head Syntax$$
 # $icode%file_name% = dismod_at.connection_file_name(%connection%)

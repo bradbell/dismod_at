@@ -9,6 +9,10 @@ $spell
    xam
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section C++ adj_integrand: Example and Test$$
 
 $srcthisfile%

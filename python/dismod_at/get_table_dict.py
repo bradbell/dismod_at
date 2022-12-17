@@ -11,7 +11,11 @@
 #  Sql
 # $$
 #
-# $section Get All Data From a Table$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Get All Data From a Table$$
 #
 # $head Syntax$$
 # $icode%table_dict% = dismod_at.get_table_dict(%connection%, %tbl_name%)%$$

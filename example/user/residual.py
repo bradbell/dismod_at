@@ -14,7 +14,11 @@
 #  dage
 # $$
 #
-# $section Weighted Residuals$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Weighted Residuals$$
 #
 # $head Example Parameters$$
 # The following values are used to simulate the data and define the priors:

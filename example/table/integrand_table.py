@@ -4,7 +4,11 @@
 # ----------------------------------------------------------------------------
 # $begin integrand_table.py$$ $newlinech #$$
 #
-# $section integrand_table: Example and Test$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section integrand_table: Example and Test$$
 #
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$
 # $end

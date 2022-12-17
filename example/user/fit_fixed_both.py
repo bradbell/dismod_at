@@ -10,7 +10,11 @@
 #  exp
 # $$
 #
-# $section Fit Fixed First Then Both$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Fit Fixed First Then Both$$
 #
 # $head Purpose$$
 # This example demonstrates using the commands

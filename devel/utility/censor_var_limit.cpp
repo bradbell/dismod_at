@@ -8,6 +8,10 @@ $spell
    var
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Censor Variables to be Within Lower and Upper Limits$$
 
 $head Syntax$$

@@ -10,7 +10,11 @@
 #  std
 # $$
 #
-# $section Group Measurement Noise Covariate Multipliers, Gamma$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Group Measurement Noise Covariate Multipliers, Gamma$$
 #
 # $head Purpose$$
 # This example demonstrates fitting

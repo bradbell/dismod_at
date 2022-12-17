@@ -29,7 +29,11 @@
 #  bnd
 # $$
 #
-# $section Create Csv Files that Summarize The Database$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Create Csv Files that Summarize The Database$$
 #
 # $head Syntax$$
 #

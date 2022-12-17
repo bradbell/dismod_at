@@ -11,6 +11,10 @@ $spell
    ostream
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Put a Message in the Log Table$$
 
 $head Syntax$$

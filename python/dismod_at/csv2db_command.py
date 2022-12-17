@@ -23,7 +23,11 @@
 #  std
 # $$
 #
-# $section Conversion of a Csv File to a Dismod_at Database$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Conversion of a Csv File to a Dismod_at Database$$
 #
 # $head Deprecated$$
 # This command was deprecated on 2021-12-05.

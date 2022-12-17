@@ -11,7 +11,11 @@
 #  std
 # $$
 #
-# $section Fitting One Function of Two Variables$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Fitting One Function of Two Variables$$
 #
 # $head Purpose$$
 # This example shows how to fit one function of two variables given

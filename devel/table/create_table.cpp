@@ -14,6 +14,10 @@ $spell
    dismod_at
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Use C++ to Create a Database Table$$
 
 $head Syntax$$

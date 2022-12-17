@@ -10,7 +10,11 @@
 #  arg
 #  exp
 # $$
-# $section Modify a Column of an Sqlite Database$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Modify a Column of an Sqlite Database$$
 #
 # $head Deprecated$$
 # This command was deprecated on 2021-12-05.

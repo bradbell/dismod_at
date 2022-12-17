@@ -7,7 +7,11 @@
 #  init
 # $$
 #
-# $section Constrain Sum of Child Rate Effect to Zero$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Constrain Sum of Child Rate Effect to Zero$$
 #
 # $head See Also$$
 # $cref user_zsum_mulcov_rate.py$$,

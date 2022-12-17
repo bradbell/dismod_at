@@ -8,7 +8,11 @@
 #  const
 # $$
 #
-# $section Fitting With Non-Zero Constant Random Effects in Smoothing Grid$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Fitting With Non-Zero Constant Random Effects in Smoothing Grid$$
 #
 # $head Source Code$$
 # $srcthisfile%0%# BEGIN PYTHON%# END PYTHON%1%$$

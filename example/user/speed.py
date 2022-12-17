@@ -11,7 +11,11 @@
 #  cv
 # $$
 #
-# $section A Simulate Data Speed Test$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section A Simulate Data Speed Test$$
 #
 # $head Syntax$$
 # $icode%python3% example/user/speed.py \

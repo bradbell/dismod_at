@@ -2,7 +2,11 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# $section A Simulate Data Speed Test$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section A Simulate Data Speed Test$$
 #
 # $head random_seed$$
 # is a non-negative integer specifying

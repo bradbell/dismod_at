@@ -7,7 +7,11 @@
 #  Sincidence
 # $$
 #
-# $section Sum of Residuals at Optimal Estimate$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Sum of Residuals at Optimal Estimate$$
 #
 # $head Problem$$
 # For this case the only data is we a sequence of  positive measurements of

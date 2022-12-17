@@ -11,7 +11,11 @@
 #  var
 # $$
 #
-# $section Example Fitting With Subgroup Covariate Multipliers $$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Example Fitting With Subgroup Covariate Multipliers $$
 #
 # $head Node Table$$
 # The following is a diagram of the node tree for this example:

@@ -13,6 +13,10 @@ $spell
    const
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section C++: Get the Density Table Information$$
 
 $head Syntax$$

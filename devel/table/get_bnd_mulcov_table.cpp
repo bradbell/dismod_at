@@ -11,6 +11,10 @@ $spell
    cov_diff
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section C++: Get the Data Subset Table$$
 
 $head Syntax$$

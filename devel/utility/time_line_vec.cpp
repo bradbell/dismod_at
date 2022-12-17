@@ -13,6 +13,10 @@ $spell
    diff
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Vector of Time Lines For Averaging a Function of Age and Time$$
 
 $head Syntax$$

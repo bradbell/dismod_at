@@ -18,6 +18,10 @@ $spell
    CppAD
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Compute Weighted Residual and Log-Density$$
 
 $head Syntax$$

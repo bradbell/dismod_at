@@ -9,7 +9,11 @@
 #  def
 # $$
 #
-# $section Using Data Interval Compression$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Using Data Interval Compression$$
 #
 # $head Purpose$$
 # This example shows how to use the

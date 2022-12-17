@@ -5,6 +5,10 @@ $Id:$
 # ----------------------------------------------------------------------------
 $begin depend$$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Compute Data or Prior Dependencies$$
 
 $childtable%devel/model/depend.cpp

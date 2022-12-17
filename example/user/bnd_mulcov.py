@@ -12,7 +12,11 @@
 #  cov_diff
 # $$
 #
-# $section Bounding Covariate Multipliers Absolute Data Effect$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Bounding Covariate Multipliers Absolute Data Effect$$
 #
 # $head Purpose$$
 # This example shows how to use the

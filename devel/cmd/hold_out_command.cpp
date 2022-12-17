@@ -24,6 +24,10 @@ $spell
    Covariates
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Hold Out Command: Randomly Sub-sample The Data$$
 
 $head Syntax$$

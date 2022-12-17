@@ -11,7 +11,11 @@
 #  dismodat.py
 #  std
 # $$
-# $section csv2db_command: Example and Test$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section csv2db_command: Example and Test$$
 #
 # $head Using This Example$$
 # See $cref/run one example/user_example/Run One Example/$$ for instructions

@@ -11,7 +11,11 @@
 #  r_ik
 # $$
 #
-# $section Create get_started Input Tables: Example and Test$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Create get_started Input Tables: Example and Test$$
 #
 # $head Syntax$$
 # $codei%get_started_db.get_started_db()%$$

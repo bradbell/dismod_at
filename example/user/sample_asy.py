@@ -8,7 +8,11 @@
 #  dismod
 # $$
 #
-# $section Sample from Asymptotic Distribution for Model Variables$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Sample from Asymptotic Distribution for Model Variables$$
 #
 # $head Purpose$$
 # The command

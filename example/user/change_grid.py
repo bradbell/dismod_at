@@ -4,7 +4,11 @@
 # ----------------------------------------------------------------------------
 # $begin user_change_grid.py$$ $newlinech #$$
 #
-# $section Remove an Age or Time From a Smoothing$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Remove an Age or Time From a Smoothing$$
 #
 # $head Purpose$$
 # This examples uses SQL commands to modify a data base.

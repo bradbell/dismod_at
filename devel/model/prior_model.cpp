@@ -15,6 +15,10 @@ $spell
    var
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Construct Fixed Negative Log-Likelihood Object$$
 
 $head Syntax$$
@@ -164,6 +168,10 @@ $spell
    dtime
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Replace Prior Means$$
 
 $head Syntax$$
@@ -217,6 +225,10 @@ $spell
    var
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Evaluate Fixed Negative Log-Likelihood for the Fixed Effects$$
 
 $head Syntax$$
@@ -402,6 +414,10 @@ $spell
    var
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Evaluate Fixed Negative Log-Likelihood for the Random Effects$$
 
 $head Syntax$$

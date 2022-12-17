@@ -11,6 +11,10 @@ $spell
    str
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Plot The Rates for a Fit$$
 
 $head Syntax$$

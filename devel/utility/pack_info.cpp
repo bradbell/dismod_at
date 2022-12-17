@@ -15,6 +15,10 @@ $spell
    nslist
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Variable Pack Info: Constructor$$
 
 $head Syntax$$
@@ -453,6 +457,10 @@ $spell
    const
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Variable Pack Info: Sizes$$
 
 $head Syntax$$
@@ -596,6 +604,10 @@ $spell
    dismod
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Variable Pack Info: Smoothing Standard Deviation Multipliers$$
 
 $head Syntax$$
@@ -670,6 +682,10 @@ $spell
    subvec
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Variable Pack Info: Node Rates$$
 
 $head Syntax$$
@@ -768,6 +784,10 @@ $spell
    subvec
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Variable Pack Info: Group Measurement Covariate Multipliers$$
 
 $head Syntax$$
@@ -901,6 +921,10 @@ $spell
    subvec
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Variable Pack Info: Group Rate Covariate Multipliers$$
 
 $head Syntax$$
@@ -1008,6 +1032,10 @@ $spell
    subvec
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Variable Pack Info: Subgroup Rate Covariate Multipliers$$
 
 $head Syntax$$
@@ -1143,6 +1171,10 @@ $spell
    subvec
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Variable Pack Info: Subgroup Measurement Covariate Multipliers$$
 
 $head Syntax$$

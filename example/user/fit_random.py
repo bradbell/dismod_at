@@ -10,7 +10,11 @@
 #  var
 # $$
 #
-# $section Fitting Just Random Effects$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Fitting Just Random Effects$$
 #
 # $head Purpose$$
 # This example demonstrates using the command

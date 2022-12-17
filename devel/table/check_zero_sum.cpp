@@ -13,6 +13,10 @@ $spell
    nslist
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Check Only One Smoothing for Each Rate in zero_sum_child_rate$$
 
 $head syntax$$

@@ -15,6 +15,10 @@ $spell
    const
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Which Variables The Data Model Depends On$$
 
 $head Syntax$$
@@ -124,6 +128,10 @@ $spell
    vec
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Which Variables The Prior Depends On$$
 
 $head Syntax$$

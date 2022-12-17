@@ -7,7 +7,11 @@
 #  std
 # $$
 #
-# $section An Ill Conditioned Example Where Re-Scaling is Helpful$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section An Ill Conditioned Example Where Re-Scaling is Helpful$$
 #
 # $head Notation$$
 # $table

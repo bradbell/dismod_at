@@ -12,6 +12,10 @@ $spell
    nslist
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section C++: Get the nslist Table Information$$
 
 $head Syntax$$

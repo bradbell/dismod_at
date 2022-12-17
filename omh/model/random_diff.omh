@@ -16,6 +16,10 @@ $spell
    subvector
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section Random Effects Differences Density Function$$
 
 $head k, K$$

@@ -11,6 +11,10 @@ $spell
    covariates
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section The Predict Table: Average Integrand Predictions$$
 
 $head See Also$$

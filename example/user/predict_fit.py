@@ -11,7 +11,11 @@
 #  Avgint
 # $$
 #
-# $section Predict Average Integrand Using Results of a Fit$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Predict Average Integrand Using Results of a Fit$$
 #
 # $head Purpose$$
 # This examples used the $cref/fit both/fit_command/variables/both/$$ command

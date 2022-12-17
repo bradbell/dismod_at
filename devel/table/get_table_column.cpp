@@ -13,6 +13,10 @@ $spell
    hpp
 $$
 
+$nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
 $section C++: Get The Type and Values in a Table Column$$
 
 $head Syntax$$

@@ -12,7 +12,11 @@
 #  mulcov
 # $$
 #
-# $section Using Group Covariate Multipliers$$
+# $nospell
+$bold This is old dismod documentation:$$ Here is a link to its
+$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$$
+$section Using Group Covariate Multipliers$$
 #
 # $head See Also$$
 # $cref user_lasso_covariate.py$$.
