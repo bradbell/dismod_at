@@ -29,6 +29,12 @@ Changes and Additions to Dismod_at During 2022
 mm-dd
 *****
 
+12-18
+=====
+Advance to cppad_mixed-20220518.
+This avoids a bug in ipopt which would crash when all the fixed
+effects had equal lower and upper bounds.
+
 12-13
 =====
 Finish conversion of dismod_at documentation from
