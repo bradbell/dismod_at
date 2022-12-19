@@ -1,0 +1,81 @@
+lines 5-83 of file: example/user/data_density.py
+
+# {xrst_begin user_data_density.py}
+# {xrst_spell
+#     nonzero
+# }
+# {xrst_comment_ch #}
+#
+# Fit With Outliers Using Data Density Command
+# ############################################
+#
+# Purpose
+# *******
+# This example first fits using a Gaussian data density.
+# It uses the first fit as a starting point for another fit
+# with a Student's-t data density.
+# The :ref:`data_density_command-name` is used to change the data density.
+#
+# Problem Parameters
+# ******************
+# The following values are used to simulate and model the data:
+# {xrst_literal
+#     begin problem parameters
+#     end problem parameters
+# }
+#
+# Age and Time Values
+# *******************
+# The age and time values do not matter for this problem
+# because all the functions are constant in age and time.
+# This can be seen by the fact that all of the smoothing has one age
+# and one time point.
+#
+# Variables
+# *********
+# The constant value used to model
+# :ref:`iota<avg_integrand@Rate Functions@iota_i(a,t)>`
+# for the parent node is only one model variable in this example.
+#
+# Data Table
+# **********
+# For this example, all the data is
+# :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` .
+# The good data is Gaussian with mean *iota_true*
+# and standard deviation *meas_cv* * *iota_true* .
+# The outlier data has mean 10* *iota_true*
+# and standard deviation 2* *iota_true* .
+#
+# Rate Table
+# **********
+# The :ref:`rate_table-name` only specifies that *iota* for the parent
+# is the only nonzero rate for this example.
+# In addition, it specifies the smoothing for that rate which has only
+# one grid point. Hence there is only one model variable corresponding to
+# the rates.
+#
+# Prior Table
+# ***********
+# The prior for *iota* is uniform with lower limit 1e-4,
+# upper limit 1.0 and mean 0.1.
+# Note that the mean is not really the mean of this uniform distribution
+# and it is only used to get the initial starting and scaling point
+# for the optimization; see :ref:`init_command-name` .
+#
+# Fitting
+# *******
+# A first fit is done using a Gaussian density for the data.
+# This is used to get a better starting point for the optimization.
+# All the density values in the data table are changed to be Students-t
+# and a second fit is done.
+# The results of the second fit are check for accuracy of the estimate
+# and for proper detection of the outliers.
+#
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_data_density.py}

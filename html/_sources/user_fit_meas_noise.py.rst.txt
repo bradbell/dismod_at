@@ -1,0 +1,85 @@
+lines 5-87 of file: example/user/fit_meas_noise.py
+
+# {xrst_begin user_fit_meas_noise.py}
+# {xrst_comment_ch #}
+#
+# Group Measurement Noise Covariate Multipliers, Gamma
+# ####################################################
+#
+# Purpose
+# *******
+# This example demonstrates fitting
+# :ref:`model_variables@Fixed Effects, theta@Group Covariate Multipliers`
+# that effect the measurement noise.
+#
+# Random Effects
+# **************
+# There are no random effects in this example.
+#
+# Iota
+# ****
+# The value *iota_true*
+# is the simulated true rate for iota.
+# The prior for iota is uniform prior with lower limit
+# *iota_true / 100* and upper limit one.
+# The mean for the prior is *iota_true / 10*
+# (this is only used as a starting point for the optimization).
+# There is only one grid point (one :ref:`model_variable<model_variables-name>` )
+# corresponding to *iota* , hence it is constant in age and time.
+#
+# Other Rates
+# ***********
+# For this example the other rates are all zero.
+# This is specified by setting the
+# :ref:`rate_table@parent_smooth_id` and
+# :ref:`rate_table@child_smooth_id` to null
+# for the other rates.
+#
+# Subgroup Table
+# **************
+# The data is divided into two groups.
+# The first group is hospital data and the second group is survey data.
+#
+# Covariate Multiplier
+# ********************
+# There is one covariate multiplier on the covariate column ``one``
+# and the rate ``iota`` .
+# This is a measurement noise covariate multiplier
+# :ref:`gamma<data_like@Measurement Noise Covariates@gamma_j (a, t)>`
+# that only effects the survey data.
+# The prior for this multiplier is a uniform on the interval from zero
+# to 10 * *gamma_true* .
+# The true value for this multiplier, used to simulate data, is
+# called *gamma_true* .
+# The mean for the prior is ``gamma_true``  / 10
+# (this is only used as a starting point for the optimization).
+# There is only one grid point
+# (one model variable) corresponding to the covariate multiplier,
+# hence it is constant in age and time.
+#
+# Data
+# ****
+# There are *n_data* measurements of Sincidence.
+# The hospital data has standard deviation *meas_std* .
+# The survey data has addition noise determine by the covariate effect.
+#
+# meas_noise_effect
+# *****************
+# see :ref:`option_table@meas_noise_effect` .
+# The function ``gamma_true`` depends on this option,
+# this in turn affects the priors. Hence the data base must
+# be recreated for each choice of this option
+#
+# Scaling Gamma
+# *************
+# The function ``gamma_true()`` shows on the scaling of *gamma*
+# depends on the value of *meas_noise_effect* .
+#
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_fit_meas_noise.py}

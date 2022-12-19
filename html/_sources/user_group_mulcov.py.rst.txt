@@ -1,0 +1,107 @@
+lines 5-109 of file: example/user/group_mulcov.py
+
+# {xrst_begin user_group_mulcov.py}
+# {xrst_comment_ch #}
+#
+# Using Group Covariate Multipliers
+# #################################
+#
+# See Also
+# ********
+# :ref:`user_lasso_covariate.py-name` .
+#
+# Purpose
+# *******
+# This example demonstrates using
+# :ref:`model_variables@Fixed Effects, theta@Group Covariate Multipliers` .
+#
+# True Value of Variables
+# ***********************
+# The values of the unknown variables that is used to
+# simulate the data are
+# {xrst_literal
+#     BEGIN True values used to simulate data
+#     END True values used to simulate data
+# }
+#
+# Integrand
+# *********
+# There are only two integrands in this example,
+# :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` and
+# :ref:`avg_integrand@Integrand, I_i(a,t)@remission` .
+#
+# Node Tables
+# ***********
+# The node table for this example is
+# ::
+#
+#                   world
+#                  /     \
+#     north_america       south_america
+#
+# Subgroup Table
+# **************
+# For this example there are two groups, north_america and south_america,
+# and only one element in each group.
+# Thus we use the same name for the subgroup as for the group.
+#
+# Covariates
+# **********
+# There are two covariates in this example, *income* and *sex* .
+# Both these covariates are scaled so their lowest value is -0.5 and highest
+# value is +0.5.
+#
+# Covariate Multipliers
+# *********************
+# There are two covariate multipliers in this example.
+# The first multiples *income* and effects the Sincidence measurements,
+# but only in north_america.
+# The second multiples *sex* and effects the remission measurements,
+# but only in south_america.
+# Both are group covariate multipliers and hence fixed effects.
+#
+# Simulated Data
+# **************
+# The data is simulated using the true value for the variables,
+# and the covariate effects mentioned above. No noise is added to the data,
+# but it is modeled as having a ten percent coefficient of variation.
+#
+# Rate Variables
+# **************
+# The rate variables define the functions
+# :ref:`iota<avg_integrand@Rate Functions@iota_i(a,t)>` and
+# :ref:`rho<avg_integrand@Rate Functions@rho_i(a,t)>` using
+# :ref:`bilinear interpolation<bilinear-name>` of a rectangular grid.
+# The grid's minimum age and time is (0, 1995). Its maximum age and time
+# is (100, 2015). Thus there are four iota variables and four rho variables.
+# The value prior for both these variables is uniform with lower (upper) limit
+# 0.001 (1.0). The mean is the true value of iota divided by 3.
+# This mean effects the starting and scaling
+# points during the optimization, but not the statistics (for a uniform).
+# The difference priors for the rate variables are gaussian
+# with mean zero and standard deviation 0.01.
+#
+# Covariate Multipliers Variables
+# *******************************
+# The covariate multiplier functions for this example are constant.
+# Hence there is one variable for each function.
+# These are group covariate multipliers so there is only one
+# function for each row of the mulcov_table (for which the group smoothing
+# is not null); i.e., there are two group covariate multiplier variables.
+# The first multiplies income and affects the measurement of
+# Sincidence for north_america.
+# The second multiplies sex and affects the measurement of
+# remission for south_america.
+# The prior for both these variables is uniform with lower (upper) limit
+# -5.0 (+5.0). The mean is the true value of the incidence covariate
+# multiplier divided by 3. This mean effects the starting and scaling
+# points during the optimization, but not the statistics (for a uniform).
+#
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_group_mulcov.py}

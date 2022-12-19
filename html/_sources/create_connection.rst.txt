@@ -1,0 +1,34 @@
+lines 6-37 of file: python/dismod_at/create_connection.py
+
+# {xrst_begin create_connection}
+# {xrst_comment_ch #}
+#
+# Create a Python sqlite3 Database Connection
+# ###########################################
+#
+# Syntax
+# ******
+#
+#     *connection* = ``dismod_at.create_connection`` ( *file_name* , *new* )
+#
+# file_name
+# *********
+# is as ``str`` containing the name of the file where the data base
+# is stored. If the file does not exist, an error message is printed
+# and the program is terminated with a non-zero error status.
+#
+# new
+# ***
+# is either ``True`` or ``False`` .
+# If it is true, and a data base with the same name already exists,
+# the existing database is deleted before creating the connection.
+#
+# connection
+# **********
+# The return value is an sqlite3
+# `connection object <https://docs.python.org/2/library/sqlite3.html#connection-objects>`_
+# You must close this connection when you are done with it by executing
+#
+#     *connection* . ``close`` ()
+#
+# {xrst_end create_connection}

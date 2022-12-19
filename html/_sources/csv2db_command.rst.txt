@@ -1,0 +1,267 @@
+lines 5-269 of file: python/dismod_at/csv2db_command.py
+
+# {xrst_begin csv2db_command}
+# {xrst_spell
+#     dt
+#     mtall
+#     mtexcess
+#     mtother
+#     mtspecific
+#     mtstandard
+#     mtwith
+#     relrisk
+#     tincidence
+# }
+# {xrst_comment_ch #}
+#
+# Conversion of a Csv File to a Dismod_at Database
+# ################################################
+#
+# Deprecated
+# **********
+# This command was deprecated on 2021-12-05.
+#
+# Syntax
+# ******
+#
+# As Program
+# ==========
+# ``dismodat.py`` *database* *csv2db* *configure_csv* *measure_csv*
+#
+# As Python Function
+# ==================
+# ``dismod_at.csv2db_command`` ( *database* , *configure_csv* , *measure_csv* )
+#
+# See Also
+# ********
+# :ref:`get_started-name`
+#
+# Example
+# *******
+# This command has limited capability and is only meant as an example
+# to help one get started using dismod_at.
+# See :ref:`user_csv2db.py-name` for an example that uses this command.
+#
+# mtall
+# *****
+# The all cause mortality data ``mtall``
+# in the *measure_csv* file has special meaning.
+# We assume it has been converted to constraints on other cause
+# mortality; see :ref:`csv2db_command@mtother` below.
+# For this reason, it should not be included when fitting,
+# and is only in *measure_csv* as a check that the desired values
+# are satisfied (by checking residuals in a data fit).
+# For this reason, :ref:`csv2db_command@hold_out` must be
+# one for all the ``mtall`` data; i.e., it is not included during a fit.
+#
+# mtother
+# *******
+#
+# Constraint
+# ==========
+# The other cause mortality data ``mtother``
+# in the *measure_csv* file has special meaning.
+# It is intended to represent the all cause mortality data
+# as constraints on other cause mortality in the model.
+# To be specific, the :ref:`csv2db_command@meas_value`
+# is a constraint on :math:`\omega` at the corresponding age-time pairs.
+#
+# Age-Time Pairs
+# ==============
+# Each row with *integrand* = ``mtother`` must have
+# *age_lower* == *age_upper* and
+# *time_lower* == *time_upper* .
+#
+# Rectangular Grid
+# ================
+# The ``mtother`` data must be specified on a rectangular grid; i.e.,
+# each age that appears, appears in one and only one row for every time
+# that appears.
+# This property can also be stated as
+# each time that appears, appears in one and only one row for every age
+# that appears.
+#
+# hold_out
+# ========
+# The :ref:`csv2db_command@hold_out` must be
+# one for all the ``mtother`` data because
+# it is a constraint, not data, during a fit.
+#
+# Rate Grid
+# =========
+# All of the
+# :ref:`non zero rates<csv2db_command@configure_csv@non_zero_rates>`
+# use the age-time grid corresponding the ``mtother`` data.
+# In other words, they are modeled as piecewise bilinear between the
+# age-time points at which ``mtother`` is specified.
+#
+# Predictions
+# ***********
+# The :ref:`avgint_table-name` is set up so that
+# :ref:`predictions<predict_command-name>` for the integrands
+# :ref:`csv2db_command@integrand@Sincidence` ,
+# :ref:`csv2db_command@integrand@remission` ,
+# :ref:`csv2db_command@integrand@mtexcess` ,
+# corresponding to the value of the rates iota, rho, chi on the
+# :ref:`csv2db_command@mtother@Rectangular Grid` .
+# Only the non-zero rates are included.
+# Predictions for
+# :ref:`csv2db_command@integrand@prevalence` in the
+# rectangular grid are also included.
+#
+# database
+# ********
+# This argument
+# is an ``str`` containing the name of the dismod_at database
+# file that is written by this command.
+#
+# configure_csv
+# *************
+# This argument
+# is an ``str`` containing the configuration file name and must
+# end with the ``.csv`` extension.
+# The first row contains the following column names
+# ``name`` , ``value`` .
+# Column names that begin with ``c_`` are comments
+# and will not be used by future versions of ``csv2db`` .
+# The configuration options are documented by the corresponding
+# name below.
+#
+# non_zero_rates
+# ==============
+# The *value* in this row is a list rates that are non-zero
+# in the model.
+# The possible rates are
+# ``pini`` , ``iota`` , ``rho`` , ``chi`` , ``omega`` .
+# The rates in the list are separated by a single space
+# and ``omega`` must appear in the list.
+# There is no default value for this value; i.e., it must appear.
+#
+# measure_csv
+# ***********
+# is an ``str`` containing the data file name
+# and must end with the ``.csv`` extension.
+# Each row of the data file corresponds to one data point.
+# The first row of the file contains the column names.
+# The other rows correspond to data points.
+# Each column of the necessary columns in the data file is documented
+# under its column name below.
+# Column names that begin with ``c_`` are comments
+# and will not be used by future versions of ``csv2db`` .
+#
+# integrand
+# *********
+# This column of *measure_csv* contains
+# one of the valid integrands:
+#
+# Sincidence
+# ==========
+# The incidence rate relative to susceptible population:
+# :math:`\iota`.
+#
+# remission
+# =========
+# The remission rate:
+# :math:`\rho`.
+#
+# mtexcess
+# ========
+# The excess mortality rate:
+# :math:`\chi`.
+#
+# mtother
+# =======
+# The other cause mortality rate:
+# :math:`\omega`.
+#
+# mtwith
+# ======
+# The with condition mortality rate:
+# :math:`\omega + \chi`.
+#
+# susceptible
+# ===========
+# The susceptible fraction of the population:
+# :math:`S`.
+#
+# withC
+# =====
+# The with condition fraction of the population:
+# :math:`C`.
+#
+# prevalence
+# ==========
+# The prevalence of the condition:
+# :math:`P = C / [ S + C ]`.
+#
+# Tincidence
+# ==========
+# The incidence rate relative to the total population:
+# :math:`\iota [ 1 - P ]`.
+#
+# mtspecific
+# ==========
+# The cause specific mortality rate:
+# :math:`\chi P`.
+#
+# mtall
+# =====
+# The all cause mortality rate:
+# :math:`\omega + \chi P`.
+#
+# mtstandard
+# ==========
+# The standardized mortality ratio:
+# :math:`[ \omega + \chi ] / [ \omega + \chi P ]`.
+#
+# relrisk
+# =======
+# The relative risk:
+# :math:`[ \omega + \chi ] / \omega`.
+#
+# age_lower
+# *********
+# This column of *measure_csv* contains
+# The initial age for averaging the integrand for this row; :math:`b`.
+#
+# age_upper
+# *********
+# This column of *measure_csv* contains
+# the final age for averaging the integrand for this row; :math:`c`.
+#
+# time_lower
+# **********
+# This column of *measure_csv* contains
+# the initial time for averaging the integrand for this row; :math:`r`.
+#
+# time_upper
+# **********
+# This column of *measure_csv* contains
+# the final time for averaging the integrand for this row; :math:`s`.
+#
+# meas_value
+# **********
+# This column of *measure_csv* contains
+# the value of the average integrand plus measurement noise
+#
+# .. math::
+#
+#  e + \frac{1}{c-b} \frac{1}{s-r} \int_b^c \int_r^s I(a , t) \; da \; dt
+#
+# where :math:`e` is the measurement noise,
+# :math:`a` and :math:`t` are the age and time integration variables,
+# and :math:`I(a, t)` is the value of the integrand for this row.
+#
+# meas_std
+# ********
+# This column of *measure_csv* contains
+# the standard deviation of the measurement noise :math:`e`.
+#
+# hold_out
+# ********
+# This column of *measure_csv* contains
+# either zero or one. If it is one, this row is included
+# dismod_at fits. Otherwise it is excluded.
+# In either case, the residuals are computed for this row.
+#
+# {xrst_end csv2db_command}

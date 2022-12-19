@@ -1,0 +1,14 @@
+lines 5-16 of file: example/table/get_name_type.py
+
+# {xrst_begin get_name_type.py}
+# {xrst_comment_ch #}
+#
+# get_name_type: Example and Test
+# ###############################
+#
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end get_name_type.py}

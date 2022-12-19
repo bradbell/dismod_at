@@ -1,0 +1,145 @@
+lines 5-147 of file: xrst/table/mulcov_table.xrst
+
+{xrst_begin mulcov_table}
+
+The mulcov Table: Covariate Multipliers
+#######################################
+
+Discussion
+**********
+This table specifies the covariate multipliers and their priors.
+If this table is empty, there are no covariate multipliers in the model.
+This table has the following columns
+
+mulcov_id
+*********
+This column has type ``integer`` and is its value is the
+primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+mulcov_type
+***********
+This column has type ``text`` .
+The possible values are:
+
+rate_value
+==========
+This covariate multiplier
+adjusts a rate in the average integrand calculation;
+see :ref:`alpha<avg_integrand@Rate Functions@Group Rate Covariate Multiplier, alpha_jk>` .
+A separate solution of the
+:ref:`avg_integrand@Ordinary Differential Equation`
+is required for each cohort and each measurement,
+that has values not equal to the
+:ref:`covariate_table@reference` for the covariate specified
+by :ref:`mulcov_table@covariate_id` .
+In other words, measurements that have the reference value for all the
+rate covariates do not add as much to the computational load.
+
+meas_value
+==========
+This covariate multiplier adjusts the average integrand to match the
+:ref:`measurement value<data_table@meas_value>` ; see
+:ref:`beta<avg_integrand@Measurement Value Covariates@Group Measurement Covariate Multiplier, beta_j>` .
+
+meas_noise
+==========
+This covariate multiplier adjusts the measurement noise; see
+:ref:`gamma_j<data_like@Measurement Noise Covariates@gamma_j (a, t)>` .
+
+rate_id
+*******
+This column has type ``integer`` .
+If *mulcov_type* is ``rate_value`` ,
+*rate_id* is the
+:ref:`rate_table@rate_id` that determines
+the rate that this covariate and multiplier effects.
+If *mulcov_type* is ``meas_value`` or ``meas_noise`` ,
+this column must be ``null`` .
+
+integrand_id
+************
+This column has type ``integer`` .
+If *mulcov_type* is ``rate_value`` ,
+this column should be ``null`` .
+If *mulcov_type* is ``meas_value`` or ``meas_noise`` ,
+*integrand_id* is the
+:ref:`integrand_table@integrand_id` that determines
+which measurement integrand this multiplier effects.
+The corresponding integrand cannot be a covariate multiplier; see
+``mulcov_`` *mulcov_id* below
+:ref:`integrand_table@integrand_name` .
+
+covariate_id
+************
+This column has type ``integer`` and is a
+:ref:`covariate_table@covariate_id`
+in the ``covariate`` table.
+This specifies the covariate column in the
+:ref:`data_table-name` that this multiplier acts on.
+
+group_id
+********
+This column has type ``integer`` and is a
+:ref:`subgroup_table@group_id` .
+There is a fixed effect covariate multiplier for all the data
+that has a :ref:`data_table@subgroup_id` that
+corresponds to this group id.
+This covariate only affects the average integrand for data points in
+this group; see
+:ref:`group_id<avg_integrand@Data or Avgint Table Notation@g_i>` .
+The *group_id* cannot be null.
+
+group_smooth_id
+***************
+This column has type ``integer`` and its value is a
+:ref:`smooth_grid_table@smooth_id`
+in the ``smooth_grid`` table.
+This smoothing is the prior for
+the fixed effects corresponding to this covariate multiplier.
+If the *group_smooth_id* is ``null`` , these fixed effects
+are always zero and no :ref:`model_variables-name` are allocated for them.
+
+pini
+====
+If *group_smooth_id* is not null,
+*mulcov_type* is ``rate_value`` ,
+and *rate_id* corresponds to
+:ref:`rate_table@rate_name` ``pini`` ,
+*group_smooth_id* must correspond to
+:ref:`smooth_table@n_age` equal to one
+(because age will have no effect for this covariate multiplier).
+
+subgroup_smooth_id
+******************
+This column has type ``integer`` and its value is a
+:ref:`smooth_grid_table@smooth_id`
+in the ``smooth_grid`` table.
+This smoothing is the prior for
+the random effects corresponding to this covariate multiplier.
+If the *subgroup_smooth_id* is ``null`` , these random effects
+are always zero and no :ref:`model_variables-name` are allocated for them.
+
+meas_noise
+==========
+If *mulcov_type* is ``meas_noise`` ,
+*subgroup_smooth_id* must be null.
+
+pini
+====
+If *subgroup_smooth_is* is not null,
+*mulcov_type* is ``rate_value``
+and *rate_id* corresponds to
+:ref:`rate_table@rate_name` ``pini`` ,
+*subgroup_smooth_id* must correspond to
+:ref:`smooth_table@n_age` equal to one
+(because age will have no effect for these covariate multipliers).
+{xrst_toc_hidden
+   example/table/mulcov_table.py
+}
+Example
+*******
+The file :ref:`mulcov_table.py-name`
+contains an example ``covariate`` table.
+
+{xrst_end mulcov_table}

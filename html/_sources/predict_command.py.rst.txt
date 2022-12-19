@@ -1,0 +1,14 @@
+lines 5-16 of file: example/get_started/predict_command.py
+
+# {xrst_begin predict_command.py}
+# {xrst_comment_ch #}
+#
+# predict Command: Example and Test
+# #################################
+#
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end predict_command.py}

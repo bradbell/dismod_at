@@ -1,0 +1,17 @@
+lines 5-19 of file: example/table/unicode_tuple.py
+
+# {xrst_begin unicode_tuple.py}
+# {xrst_spell
+#     tuple
+# }
+# {xrst_comment_ch #}
+#
+# unicode_tuple: Example and Test
+# ###############################
+#
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end unicode_tuple.py}

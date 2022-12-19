@@ -1,0 +1,96 @@
+lines 21-114 of file: devel/cmd/bnd_mulcov_command.cpp
+
+{xrst_begin bnd_mulcov_command}
+{xrst_spell
+   mul
+}
+
+Bound The Covariate Multiplier Absolute Data Effect
+###################################################
+
+Syntax
+******
+
+| ``dismod_at`` *database* ``bnd_mulcov`` *max_abs_effect*
+| ``dismod_at`` *database* ``bnd_mulcov`` *max_abs_effect* *covariate_name*
+
+Purpose
+*******
+This command is used to set the maximum absolute effect
+in the model for the data values.
+This is done by changing the lower and upper bounds
+for the covariate multipliers (ignoring bounds in the corresponding priors).
+The :ref:`mulcov_table@mulcov_type@meas_noise` multipliers and
+:ref:`model_variables@Random Effects, u@Subgroup Covariate Multipliers`
+are not included.
+The subgroup covariate multipliers are random effects and
+:ref:`option_table@Optimize Random Only@bound_random`
+set the absolute bound for all the random effects.
+
+database
+********
+Is an
+http://www.sqlite.org/sqlite/ database containing the
+``dismod_at`` :ref:`input-name` tables which are not modified.
+
+max_abs_effect
+**************
+is either ``inf`` (for infinity) or
+a non-negative value that bounds absolute covariate effects.
+A covariate multiplier is defined by each row of the :ref:`mulcov_table-name` .
+We use the notation *mul_value* for a value of the multiplier.
+We use the notation *cov_value* for a value of the
+:ref:`covariate<data_table@Covariates>` in the data table.
+We use the notation *cov_ref* for the
+:ref:`covariate_table@reference` for the covariate.
+The maximum effect condition is
+
+   | *mul_value* * ( *cov_value* ``-`` *cov_ref* ) | <= *max_abs_effect*
+
+Note that the limits on the covariate multiplier in its prior have units
+and the *max_abs_effect* does not have units.
+
+covariate_name
+**************
+If this argument is present, it is a
+:ref:`covariate_table@covariate_name` .
+In this case, the inequality above only refers to
+covariate multipliers that use this covariate.
+
+bnd_mulcov_table
+****************
+The table :ref:`bnd_mulcov_table-name` is an input and output for this command.
+
+max_cov_diff
+============
+The :ref:`bnd_mulcov_table@max_cov_diff` column is not changed.
+
+max_mulcov
+==========
+The :ref:`bnd_mulcov_table@max_mulcov` column is set so the
+inequality above is true for all the data that is modeled using this
+covariate multiplier and that is included in the fit.
+To be specific, for each covariate multiplier
+
+   *max_mulcov* = *max_abs_effect* / *max_cov_diff*
+
+If *covariate_name* is present,
+*max_mulcov* the bound is only changed
+for multipliers that use that covariate.
+The *max_mulcov* value for
+:ref:`mulcov_table@mulcov_type@meas_noise` covariates
+are not changed.
+
+Infinite Case
+*************
+The case where *max_abs_effect* is ``inf`` or
+*max_cov_diff* is zero,
+*max_mulcov* is set to null (which corresponds to plus infinity).
+
+{xrst_comment 2DO: create the user_bnd_mulcov.py example}
+Example
+*******
+The file ``user_bnd_mulcov.py`` contains an example and test
+using this command.
+
+{xrst_end bnd_mulcov_command}

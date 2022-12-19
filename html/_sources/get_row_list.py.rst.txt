@@ -1,0 +1,14 @@
+lines 5-16 of file: example/table/get_row_list.py
+
+# {xrst_begin get_row_list.py}
+# {xrst_comment_ch #}
+#
+# get_row_list: Example and Test
+# ##############################
+#
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end get_row_list.py}

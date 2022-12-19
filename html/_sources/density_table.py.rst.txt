@@ -1,0 +1,14 @@
+lines 5-16 of file: example/table/density_table.py
+
+# {xrst_begin density_table.py}
+# {xrst_comment_ch #}
+#
+# density_table: Example and Test
+# ###############################
+#
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end density_table.py}

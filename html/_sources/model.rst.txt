@@ -1,0 +1,22 @@
+lines 5-24 of file: xrst/model/model.xrst
+
+{xrst_begin model}
+
+The Age-Time Dismod Model
+#########################
+
+Contents
+********
+{xrst_toc_table
+   xrst/model/model_variable.xrst
+   xrst/model/avg_integrand.xrst
+   xrst/model/data_like.xrst
+   xrst/model/variable_prior.xrst
+   xrst/model/statistic.xrst
+   xrst/model/bilinear.xrst
+   xrst/model/posterior.xrst
+   xrst/model/prev_depend.xrst
+   xrst/model/numeric_average.xrst
+}
+
+{xrst_end model}

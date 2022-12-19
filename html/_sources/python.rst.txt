@@ -1,0 +1,37 @@
+lines 5-39 of file: python/dismod_at/__init__.py
+
+# {xrst_begin python}
+# {xrst_comment_ch #}
+#
+# Python Utilities
+# ################
+#
+# {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
+#
+# Contents
+# ********
+# {xrst_toc_table
+#    python/dismod_at/average_integrand.py
+#    python/dismod_at/connection_file.py
+#    python/dismod_at/create_connection.py
+#    python/dismod_at/create_database.py
+#    python/dismod_at/create_table.py
+#    python/dismod_at/csv2db_command.py
+#    python/dismod_at/db2csv_command.py
+#    python/dismod_at/get_name_type.py
+#    python/dismod_at/get_row_list.py
+#    python/dismod_at/get_table_dict.py
+#    python/dismod_at/metropolis.py
+#    python/dismod_at/modify_command.py
+#    python/dismod_at/perturb_command.py
+#    python/dismod_at/plot_curve.py
+#    python/dismod_at/plot_data_fit.py
+#    python/dismod_at/plot_rate_fit.py
+#    python/dismod_at/replace_table.py
+#    python/dismod_at/sql_command.py
+#    python/dismod_at/system_command_prc.py
+#    python/dismod_at/unicode_tuple.py
+# }
+# {xrst_comment END_SORT_THIS_LINE_MINUS_2}
+#
+# {xrst_end python}

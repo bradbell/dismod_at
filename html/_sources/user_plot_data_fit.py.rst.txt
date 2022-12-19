@@ -1,0 +1,119 @@
+lines 5-121 of file: example/user/plot_data_fit.py
+
+# {xrst_begin user_plot_data_fit.py}
+# {xrst_comment_ch #}
+#
+# Example Plotting The Data and Its Fit
+# #####################################
+#
+# Nodes
+# *****
+# There are four nodes in this example.
+# The world node has one child, north_america.
+# The north_america node has two children, united_states and canada.
+# The :ref:`parent_node<option_table@Parent Node>` is canada which
+# does not have any children.
+#
+# Rates
+# *****
+# There is a parent smoothing the *iota* , *rho*
+# and *chi* rates.
+# This smoothing has one grid point; i.e., the rates are constant
+# in age and time.
+# There is no child node smoothing so there are no random effects
+# for these rates.
+# In addition, there is no parent smoothing for the other rates
+# so they are zero.
+# The value priors for the rate smoothing is uniform with lower limit 1e-4
+# and upper limit 1.0. The mean 0.1, is only used as a starting point
+# for the optimization.
+# There are no difference priors because the smoothing
+# has only one grid point.
+#
+# Integrands
+# **********
+# The integrands for this example are
+# :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` ,
+# :ref:`avg_integrand@Integrand, I_i(a,t)@remission` ,
+# :ref:`avg_integrand@Integrand, I_i(a,t)@mtexcess` , and
+# :ref:`avg_integrand@Integrand, I_i(a,t)@prevalence` .
+# The first three integrands are direct measurements of the following rates:
+# {xrst_spell_off}
+# {xrst_code py}
+integrand2rate = {
+   'Sincidence':  'iota'   ,
+   'remission':   'rho'    ,
+   'mtexcess':    'chi'    ,
+}
+# {xrst_code}
+# {xrst_spell_on}
+# Prevalence is in the integrand table, but it has no simulated data.
+# This shows what happens when there is no data for one of the
+# integrands in the :ref:`plot_data_fit@integrand_list` .
+#
+# Data
+# ****
+# All of the data corresponds to canada.
+#
+# n_data
+# ======
+# There are *n_data* data points for each of the integrands where
+# {xrst_spell_off}
+# {xrst_code py}
+n_data  = 100
+# {xrst_code}
+# {xrst_spell_on}
+#
+# max_plot
+# ========
+# This is the maximum number of data points to plot per integrand.
+# The points are chosen randomly, but there order is preserved.
+# {xrst_spell_off}
+# {xrst_code py}
+max_plot = int( n_data / 2 )
+# {xrst_code}
+# {xrst_spell_on}
+#
+# Measurement Noise
+# =================
+# The data is simulated a Gaussian with mean equal to the
+# corresponding *rate_true* :
+# {xrst_spell_off}
+# {xrst_code py}
+rate_true = {
+   'iota'  : 1e-2 ,
+   'rho'   : 1e-3 ,
+   'chi'   : 1e-4 ,
+}
+# {xrst_code}
+# {xrst_spell_on}
+# and with coefficient of variation *meas_cv* :
+# {xrst_spell_off}
+# {xrst_code py}
+meas_cv = 0.2
+# {xrst_code}
+# {xrst_spell_on}
+#
+# hold_out
+# ========
+# There is also one outlier for each integrand
+# (that is not simulated with the Gaussian noise described above).
+# The outlier is placed in the middle of the data set for each integrand.
+# The :ref:`data_table@hold_out` for the outliers is set to one
+# (it is zero for all the other data).
+#
+# Call to plot_data_fit
+# *********************
+# {xrst_literal
+#     BEGIN call plot_data_fit
+#     END call plot_data_fit
+# }
+#
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_plot_data_fit.py}

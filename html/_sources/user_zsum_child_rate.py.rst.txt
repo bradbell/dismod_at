@@ -1,0 +1,76 @@
+lines 5-78 of file: example/user/zsum_child_rate.py
+
+# {xrst_begin user_zsum_child_rate.py}
+# {xrst_comment_ch #}
+#
+# Constrain Sum of Child Rate Effect to Zero
+# ##########################################
+#
+# See Also
+# ********
+# :ref:`user_zsum_mulcov_rate.py-name` ,
+# :ref:`user_zsum_mulcov_meas.py-name`
+#
+# Purpose
+# *******
+# This example demonstrates using
+# The :ref:`option_table@Zero Sum Constraints@zero_sum_child_rate`
+# to improve the speed and accuracy of estimation of the fixed effects.
+#
+# Problem Parameters
+# ******************
+# {xrst_literal
+#     begin problem parameters
+#     end problem parameters
+# }
+#
+# Data Simulation
+# ***************
+#
+# north_america
+# =============
+# The true rates for the parent region ``north_america``
+# (used for simulating data) are the
+# *iota_parent* and *rho_parent* problem parameters.
+#
+# canada
+# ======
+# The true
+# :ref:`child rate effect<model_variables@Random Effects, u@Child Rate Effects>`
+# for ``canada`` is *rate_effect_child* .
+#
+# united_states
+# =============
+# The true child rate effect
+# for the ``united_states`` is ``-`` *rate_effect_child* .
+#
+# mexico
+# ======
+# No data is included for mexico, hence it is automatically constrained to have
+# zero child rate random effects.
+#
+# Nodes
+# *****
+# There are just four nodes for this example,
+# The parent node, ``north_america`` , and the three child nodes
+# ``united_states`` , ``canada`` and ``mexico`` .
+#
+# Model Variables
+# ***************
+# The non-zero :ref:`model_variables-name` for this example are
+# :ref:`rate_table@rate_name@iota` and *rho* .
+# Both the parent and child rates use a grid with one point in age
+# and two points in time. Thus there are six model variables for each rate,
+# two for the parent rates and four for the child rate effects.
+# The resulting rates will be constant
+# in age and constant in time except between the two time grid points
+# where it is linear with respect to time.
+#
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_zsum_child_rate.py}

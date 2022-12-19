@@ -1,0 +1,120 @@
+lines 5-122 of file: xrst/table/integrand_table.xrst
+
+{xrst_begin integrand_table}
+
+The Integrand Table
+###################
+
+Discussion
+**********
+The ``integrand`` table is used to identify data integrands.
+It has the following columns:
+
+integrand_id
+************
+This column has type ``integer``
+and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+minimum_meas_cv
+***************
+This column has type ``real`` and is non-negative
+and less than or equal one.
+It specifies the minimum coefficient of variation for measurement values
+with this integrand.
+To be specific; for the data table
+:ref:`data_table@integrand_id` is the same,
+:ref:`data_table@meas_value` is the measurement value, and
+:ref:`data_table@meas_std` is the measurement standard,
+the minimum cv measurement standard deviation is
+
+   *Delta* = ``max`` ( *meas_std* , *minimum_meas_cv* * | *meas_value* | )
+
+see :ref:`Delta<data_like@Notation@Minimum CV Standard Deviation, Delta_i>`
+in the data likelihood section.
+
+integrand_name
+**************
+This column has type ``text`` .
+The following is a list of the possible values for *integrand_name* .
+This column is unique; i.e., each name can only appear once in this table.
+All of the *integrand_id* values that appear in the
+:ref:`data<data_table@integrand_id>` and
+:ref:`avgint<avgint_table@integrand_id>` tables
+need to appear in the integrand table.
+
+ODE
+===
+If the column ODE below is yes, and a data point has a
+:ref:`rate covariate<mulcov_table@mulcov_type@rate_value>`
+that is not equal to its
+:ref:`covariate_table@reference` value, the
+:ref:`avg_integrand@Differential Equation`
+needs to be solved for each cohort
+that intersects or surrounds the age-time span for this data point.
+(The space between cohorts is determined by the
+:ref:`option_table@Age Average Grid@ode_step_size` .)
+
+This computation is preformed each time the :ref:`model_variables-name` change.
+
+Names
+=====
+
+.. list-table::
+
+   * - Integrand Name
+     - Description
+     - ODE
+   * - :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence`
+     - incidence rate relative to susceptible population
+     - no
+   * - :ref:`avg_integrand@Integrand, I_i(a,t)@remission`
+     - remission rate
+     - no
+   * - :ref:`avg_integrand@Integrand, I_i(a,t)@mtexcess`
+     - excess mortality rate
+     - no
+   * - :ref:`avg_integrand@Integrand, I_i(a,t)@mtother`
+     - other cause mortality rate
+     - no
+   * - :ref:`avg_integrand@Integrand, I_i(a,t)@mtwith`
+     - with condition mortality rate
+     - no
+   * - :ref:`avg_integrand@Integrand, I_i(a,t)@relrisk`
+     - relative risk
+     - no
+   * - :ref:`avg_integrand@Integrand, I_i(a,t)@susceptible`
+     - susceptible fraction of the population
+     - yes
+   * - :ref:`avg_integrand@Integrand, I_i(a,t)@withC`
+     - with condition fraction of the population
+     - yes
+   * - :ref:`avg_integrand@Integrand, I_i(a,t)@prevalence`
+     - prevalence of the condition
+     - yes
+   * - :ref:`avg_integrand@Integrand, I_i(a,t)@Tincidence`
+     - incidence rate relative to total population
+     - yes
+   * - :ref:`avg_integrand@Integrand, I_i(a,t)@mtspecific`
+     - cause specific mortality rate
+     - yes
+   * - :ref:`avg_integrand@Integrand, I_i(a,t)@mtall`
+     - all cause mortality rate
+     - yes
+   * - :ref:`avg_integrand@Integrand, I_i(a,t)@mtstandard`
+     - standardized mortality ratio
+     - yes
+   * - ``mulcov_`` *mulcov_id*
+     - the group covariate multiplier specified by
+       :ref:`mulcov_table@mulcov_id`
+     - no
+
+{xrst_toc_hidden
+   example/table/integrand_table.py
+}
+Example
+*******
+The file :ref:`integrand_table.py-name`
+contains an example ``integrand`` table.
+
+{xrst_end integrand_table}

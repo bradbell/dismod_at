@@ -1,0 +1,480 @@
+lines 5-482 of file: example/user/diabetes.py
+
+# {xrst_begin user_diabetes.py}
+# {xrst_spell
+#     bmi
+#     bool
+#     integrals
+#     ms
+#     mtspecific
+#     rel
+#     ts
+# }
+# {xrst_comment_ch #}
+#
+# An Example / Speed Test Fitting Simulated Diabetes Data
+# #######################################################
+#
+# Running This example
+# ********************
+# see :ref:`user_example@Run One Example` .
+# The time required to run the program will be printed at then end.
+#
+# omega
+# *****
+# The model rate :ref:`rate_table@rate_name@omega`
+# is constrained to have the value used during simulation of the data.
+#
+# rho
+# ***
+# The model rate :ref:`rate_table@rate_name@rho`
+# is constrained to be zero.
+#
+# Covariates
+# **********
+#
+# Covariate Table
+# ===============
+# The covariate table has the following values:
+#
+# .. csv-table::
+#     :widths: auto
+#
+#     covariate_name,reference,max_difference
+#     sex,0,0.6
+#     bmi,28,null
+#     ms_2000,0,null
+#
+# Data Table
+# ==========
+# The :ref:`covariate<data_table@Covariates>` columns in the
+# data table have the following values:
+# *sex* is ``0.5`` for male and ``-0.5`` for female,
+# *bmi* is body mass index 20 <= *bmi*  <= 36 ,
+# *ms_2000* is ``1.0`` if this is year 2000 market scan data
+# and ``0.0`` otherwise.
+#
+# Multipliers
+# ===========
+# There are three covariate multipliers, one for each covariate.
+# (In general, a covariate can have more than one multiplier.)
+# In addition, each covariate multiplier has one grid point; i.e.,
+# the multiplier is constant in age and time.
+# The value for each multiplier has a uniform distribution
+# with the lower and upper limits below:
+#
+# .. csv-table::
+#     :widths: auto
+#
+#     covariate,affected,lower,upper
+#     sex,iota,-2.0,+2.0
+#     bmi,iota,-0.1,+0.1
+#     ms_2000,prevalence,-1.0,+1.0
+#
+# Note that the for sex and bmi these are
+# :ref:`mulcov_table@mulcov_type@rate_value` multipliers and
+# for ms_2000 it is a
+# :ref:`mulcov_table@mulcov_type@meas_value` multiplier.
+#
+# Truth Var Table
+# ***************
+# The values in the :ref:`truth_var_table-name` are generated using bilinear
+# interpolation of the log of values specified points.
+#
+# Parent Rates
+# ============
+# We use the notation
+# as for age start,
+# ae for age end,
+# ts for time start, and
+# te for time end.
+# The following table gives the values used for the parent rates
+# (note that the parent rate for pini cannot change with age):
+#
+# .. list-table::
+#
+#     * - rate
+#       - (as,ts)
+#       - (as,te)
+#       - (ae,ts)
+#       - (ae,te)
+#     * - pini
+#       - .01
+#       - .01
+#       - .01
+#       - .01
+#     * - iota
+#       - .001
+#       - .002
+#       - .01
+#       - .02
+#     * - omega
+#       - .003
+#       - .002
+#       - .3
+#       - .2
+#     * - chi
+#       - .004
+#       - .002
+#       - .1
+#       - .05
+#
+# Child Rate Effects
+# ==================
+# The child rate effects are in log space
+# (see :ref:`u_ik<avg_integrand@Rate Functions@Child Rate Effect, u_ik>` ),
+# constant in age and time,
+# positive for even index children, negative for odd indices, and have the
+# following values:
+#
+# .. csv-table::
+#     :widths: auto
+#
+#     rate,even index,odd index
+#     pini,.1,-.1
+#     iota,.15,-.15
+#     chi,.25,-.25
+#
+# There is an exception for omega, which is constrained. It is defined
+# on the parent age grid and has the following values:
+#
+# .. list-table::
+#
+#     * - index
+#       - (as,ts)
+#       - (as,te)
+#       - (ae,ts)
+#       - (ae,te)
+#     * - even
+#       - .1
+#       - .02
+#       - .02
+#       - .03
+#     * - odd
+#       - -.1
+#       - -.02
+#       - -.02
+#       - -.03
+#
+# Predict Table
+# *************
+# The :ref:`predict_command-name` is used to compute the
+# :ref:`predict_table@avg_integrand` corresponding to the
+# true values for the variables.
+# This is then used to create a version of the :ref:`data_table-name`
+# with no noise, and with a standard deviation that is modeled using
+# a coefficient of variation.
+#
+# Problem Parameters
+# ******************
+# The problem parameters below can (and should) be changed to experiment with
+# how they affect the results.
+#
+# mulcov_dict
+# ===========
+# This is a dictionary that maps each covariate name
+# to the true value for the corresponding covariate multiplier.
+# These values must satisfy the lower and upper
+# :ref:`multiplier<user_diabetes.py@Covariates@Multipliers>` limits above:
+# {xrst_spell_off}
+# {xrst_code py}
+mulcov_dict = { 'sex':0.5, 'bmi':0.02, 'ms_2000':0.25 }
+# {xrst_code}
+# {xrst_spell_on}
+#
+# node_list
+# =========
+# This is a ``list`` with ``str`` elements.
+# The first element of this list is the parent node,
+# the others are the child nodes. There must be an even number of children;
+# i.e., an odd number of elements in this list.
+# The case with no child nodes; i.e., one element in the list, is OK:
+# {xrst_spell_off}
+# {xrst_code py}
+node_list = [ 'US', 'Alabama', 'California' ]
+# {xrst_code}
+# {xrst_spell_on}
+#
+# integrand_list
+# ==============
+# This is a ``list`` with ``str`` elements that are
+# :ref:`integrand names<integrand_table@integrand_name>`
+# that will have measurements in the :ref:`data_table-name`
+# and :ref:`data_sim_table-name` .
+# As mentioned above, the rates
+# :ref:`user_diabetes.py@omega`  and
+# :ref:`user_diabetes.py@rho`
+# are know during the estimation (fitting) process.
+# The integrands must inform the estimation of
+# the model rates for
+# :ref:`rate_table@rate_name@pini` ,
+# :ref:`rate_table@rate_name@iota` , and
+# :ref:`rate_table@rate_name@chi` .
+# Note that measuring prevalence at age zero should determine pini,
+# prevalence at other ages corresponds to integrals of iota, and
+# given prevalence, mtspecific should determine chi.
+# {xrst_spell_off}
+# {xrst_code py}
+integrand_table = [
+   { 'name':'mtspecific' },
+   { 'name':'prevalence' }
+]
+# {xrst_code}
+# {xrst_spell_on}
+#
+# parent_age_grid
+# ===============
+# This specifies the age grid used for all the parent rate
+# :ref:`smoothings<rate_table@parent_smooth_id>` .
+# It is also the age grid used for constraining the child omega rates using
+# :ref:`rate_table@child_nslist_id` .
+# In addition, it is the set of ages in the :ref:`age_table-name` .
+# It is a ``dict`` with ``float`` values
+# (except for *number* which is a positive ``int`` ) containing
+# the start age, end age, number of age grid points, and
+# standard deviation of the log-Gaussian used to smooth the
+# :ref:`model_variables@Fixed Effects, theta@Parent Rates`
+# age differences.
+# (This does not include :ref:`rate_table@rate_name@pini`
+# because it only has one age point.)
+# The interval between age grid points is the end age, minus the start age,
+# divided by the number of grid points minus one.
+# {xrst_spell_off}
+# {xrst_code py}
+parent_age_grid  = { 'start':0.0, 'end':100.0, 'number':6, 'std':0.4 }
+# {xrst_code}
+# {xrst_spell_on}
+#
+# child_age_grid
+# ==============
+# The is the age grid used for all the child rate effect
+# :ref:`smoothings<rate_table@child_smooth_id>` except for
+# omega (see *parent_age_grid* above).
+# It is a ``dict`` with the following values:
+# The value of *index* is a list of indices (``int`` ) in the parent
+# age grid where there are
+# :ref:`random effects<model_variables@Random Effects, u>` .
+# Each of these indices must be less than *number* in the age grid.
+# The value *std* (a ``float`` ) is the standard deviation in the
+# Gaussian used to smooth the child rate effect values.
+# (This does not include :ref:`rate_table@rate_name@pini`
+# because it only has one age point.)
+# {xrst_spell_off}
+# {xrst_code py}
+child_age_grid  = { 'index':[0], 'std':0.2 }
+# {xrst_code}
+# {xrst_spell_on}
+#
+# parent_time_grid
+# ================
+# This specifies the time grid used for all the parent rate
+# :ref:`smoothings<rate_table@parent_smooth_id>` .
+# It is also the time grid used for constraining the child omega rates using
+# :ref:`rate_table@child_nslist_id` .
+# In addition, it is the set of times in the :ref:`time_table-name` .
+# :ref:`rate_table@child_nslist_id` .
+# It is a ``dict`` with ``float`` values
+# (except for *number* which is a positive ``int`` ) containing
+# the start time, end time, number of time grid points, and
+# standard deviation of the log-Gaussian used to smooth the
+# :ref:`model_variables@Fixed Effects, theta@Parent Rates`
+# time differences.
+# (This includes :ref:`rate_table@rate_name@pini` ).
+# This is also the set of times in the :ref:`time_table-name` .
+# The interval between time grid points is the end time, minus the start time,
+# divided by the number of grid points minus one.
+# {xrst_spell_off}
+# {xrst_code py}
+parent_time_grid = { 'start':1990.0, 'end': 2020, 'number':2, 'std':0.6  }
+# {xrst_code}
+# {xrst_spell_on}
+#
+# child_time_grid
+# ===============
+# The is the time grid used for all the child rate effect
+# :ref:`smoothings<rate_table@child_smooth_id>` except for
+# omega (see *parent_time_grid* above).
+# It is a ``dict`` with the following values:
+# The value of *index* is a list of indices (``int`` ) in the parent
+# time grid where there are
+# :ref:`random effects<model_variables@Random Effects, u>` .
+# Each of these indices must be less than *number* in the time grid.
+# The value *std* (a ``float`` ) is the standard deviation in the
+# Gaussian used to smooth the child rate effect values.
+# (This includes :ref:`rate_table@rate_name@pini` ).
+# {xrst_spell_off}
+# {xrst_code py}
+child_time_grid  = { 'index':[0], 'std':0.2 }
+# {xrst_code}
+# {xrst_spell_on}
+#
+# ode_step_size
+# =============
+# This is a ``str`` that specifies the
+# :ref:`option_table@Age Average Grid@ode_step_size` .
+# It is suggest that this value be less than the intervals in the
+# age and time grids:
+# {xrst_spell_off}
+# {xrst_code py}
+ode_step_size = '10.0'
+# {xrst_code}
+# {xrst_spell_on}
+#
+# meas_cv
+# =======
+# This is a ``float`` that specifies the measurement standard deviations
+# :ref:`data_table@meas_std` by
+#
+#     *meas_std* = *meas_cv* * *meas_value*
+#
+# For this example, the data table column
+# :ref:`data_table@meas_value` does not have any noise; i.e.,
+# the values in that column are the corresponding
+# :ref:`average integrand<avg_integrand@Average Integrand, A_i>` .
+# The *meas_std* determines the noise level used by the
+# :ref:`simulate_command-name` :
+# {xrst_spell_off}
+# {xrst_code py}
+meas_cv = 0.1
+# {xrst_code}
+# {xrst_spell_on}
+#
+# meas_repeat
+# ===========
+# This is a positive ``int`` that specifies
+# the number of times each noiseless measurement is repeated.
+# Note that the simulated measurements will be different, because
+# the noise for each measurement will be different.
+# There are *meas_repeat*
+# data points for each integrand in the integrand list,
+# each age in the age grid,
+# each time in the time grid,
+# each node in the node list.
+# In addition if an age is not the first age and time is not the first time,
+# there is a data point in the middle of the age-time interval that ends
+# at that (age, time):
+# {xrst_spell_off}
+# {xrst_code py}
+meas_repeat = 1
+# {xrst_code}
+# {xrst_spell_on}
+#
+# fit_with_noise_in_data
+# ======================
+# This is a ``bool`` that specifies if measurement noise is included
+# when fitting the data; i.e., if the column
+# :ref:`data_sim_table@data_sim_value` is used to
+# fit the :ref:`model_variables-name` .
+# Otherwise, the measurements without noise
+# are used to fit the model variables; i.e., the column
+# :ref:`data_table@meas_value` :
+# {xrst_spell_off}
+# {xrst_code py}
+fit_with_noise_in_data = False
+# {xrst_code}
+# {xrst_spell_on}
+#
+# random_seed
+# ===========
+# This ``str`` must be a non-negative integer and is the
+# :ref:`option_table@random_seed` option value.
+# This is used to seed the random number generator used to simulate the
+# noise in the measurement values.
+# The affects the results of the fit when *fit_with_noise_in_data*
+# is true
+# {xrst_spell_off}
+# {xrst_code py}
+random_seed = '0'
+# {xrst_code}
+# {xrst_spell_on}
+#
+# quasi_fixed
+# ===========
+# This ``str`` that is either ``true`` or ``false`` and is the
+# :ref:`option_table@Optimize Fixed Only@quasi_fixed` option value.
+# If it is true, a quasi-Newton method is used.
+# This only requires function values and
+# first derivatives for the objective and constraints.
+# If it is false, a Newton method is used.
+# This requires second derivatives in which case initialization
+# and function evaluations take longer:
+# {xrst_spell_off}
+# {xrst_code py}
+quasi_fixed = 'false'
+# {xrst_code}
+# {xrst_spell_on}
+#
+# tolerance_fixed
+# ===============
+# This ``str`` contains the
+# :ref:`tolerance_fixed<option_table@Optimize Fixed and Random@tolerance>` option value.
+# {xrst_spell_off}
+# {xrst_code py}
+tolerance_fixed = '1e-4'
+# {xrst_code}
+# {xrst_spell_on}
+#
+# derivative_test_fixed
+# =====================
+# This ``str`` is the
+# :ref:`option_table@Optimize Fixed and Random@derivative_test`
+# option for the fixed effects.
+# The choice ``trace-adaptive`` can be used to see if the partial
+# derivatives of the objective and constraints after the
+# :ref:`scaling<prior_table@eta@Scaling Fixed Effects>` of the fixed effects.
+# The choice ``none`` is normal for a working example.
+# {xrst_spell_off}
+# {xrst_code py}
+derivative_test_fixed = 'none'
+# {xrst_code}
+# {xrst_spell_on}
+#
+# truth2start
+# ===========
+# This is a ``float`` that is used to map
+#
+#     *start_var_value* = *truth2start* * *truth_var_value*
+#
+# for each model variable that is not constrained to a specific value.
+# The notation
+# :ref:`truth_var_table@truth_var_value` is the true value
+# used to simulate the data and
+# :ref:`start_var_table@start_var_value` is the initial
+# value of the variable during the fit.
+# An error will result if the starting value for a variable is not within
+# the upper and lower limits for a variable.
+# The starting values are also used for the :ref:`scale_var_table-name` .
+# *truth2start* :
+# {xrst_spell_off}
+# {xrst_code py}
+truth2start = 0.3
+# {xrst_code}
+# {xrst_spell_on}
+#
+# accept_rel_err
+# ==============
+# This is a ``float`` that specifies the absolute relative error
+# to be accepted as passing the test.
+# If the test passes, for each model variable
+#
+#     *accept_rel_err* >= *fit_var_value* / *truth_var_value* ``- 1.0``
+#
+# where
+# :ref:`truth_var_table@truth_var_value` is the true value
+# used to simulate the data and
+# :ref:`fit_var_table@fit_var_value` is result of the fit.
+# A python assertion is generated if the condition above is not satisfied.
+# {xrst_spell_off}
+# {xrst_code py}
+accept_rel_err = 0.25
+# {xrst_code}
+# {xrst_spell_on}
+#
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_diabetes.py}

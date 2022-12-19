@@ -1,0 +1,25 @@
+lines 5-27 of file: xrst/model/random_prior.xrst
+
+{xrst_begin random_prior}
+
+Prior for Random Effect Values
+##############################
+
+p(u|theta)
+**********
+We define the prior for the random effects,
+given the fixed effects, by
+
+.. math::
+
+   \B{p} ( u | \theta )
+   =
+   V^u ( u | \theta ) A^u ( u | \theta ) T^u ( u | \theta )
+
+See
+:ref:`random_value@V^u` ,
+:ref:`random_diff@A^u` , and
+:ref:`random_diff@T^u`  for the definitions of
+:math:`V^u`, :math:`A^u` and :math:`T^u`.
+
+{xrst_end random_prior}

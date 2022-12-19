@@ -1,0 +1,123 @@
+lines 5-125 of file: example/user/data_sim.py
+
+# {xrst_begin user_data_sim.py}
+# {xrst_comment_ch #}
+#
+# Explanation of Simulated Data Table, data_sim
+# #############################################
+#
+# See Also
+# ********
+# :ref:`user_sim_log.py-name`
+#
+# Purpose
+# *******
+# This example explains the :ref:`data_sim_table-name` by showing that the
+# :ref:`Adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>`
+# for the simulated data is the same as for the original data.
+#
+# Random Effects
+# **************
+# There are no random effects in this example.
+#
+# Priors
+# ******
+# The priors do not matter for this example except for the fact that
+# the :ref:`truth_var_table-name` values for the :ref:`model_variables-name`
+# must satisfy the lower and upper limits in the corresponding priors.
+#
+# Iota
+# ****
+# The value *iota_true*
+# is the simulated true rate for iota.
+# There is only one grid point (one :ref:`model_variable<model_variables-name>` )
+# corresponding to *iota* , hence it is constant in age and time.
+#
+# Other Rates
+# ***********
+# For this example the other rates are all zero.
+# This is specified by setting the
+# :ref:`rate_table@parent_smooth_id` and
+# :ref:`rate_table@child_smooth_id` to null
+# for the other rates.
+#
+# Covariate Multiplier
+# ********************
+# There is one covariate multiplier on the covariate column ``one``
+# and the rate ``iota`` .
+# This is a measurement noise covariate multiplier
+# :ref:`gamma<data_like@Measurement Noise Covariates@gamma_j (a, t)>` .
+# The true value for this multiplier, used to simulate data, is returned by
+# ``gamma_true`` ( *meas_noise_effect* ) .
+# There is only one grid point in the covariate multiplier,
+# hence it is constant in age and time.  It follows that
+# :ref:`average noise effect<data_like@Measurement Noise Covariates@Average Noise Effect, E_i(theta)>`
+# :math:`E_i ( \theta )` is constant and equal to *gamma_true* .
+#
+# Data
+# ****
+# There are *n_data* measurements of Sincidence and each has a standard
+# deviation *meas_std* (before adding the covariate effect).
+# The :ref:`data_table@meas_value` do not affect (do affect)
+# the values in :ref:`data_sim_table-name` when the
+# :ref:`density<data_table@density_id>` is
+# :ref:`density_table@Notation@Linear`
+# (:ref:`density_table@Notation@Log Scaled` ).
+#
+# Data Subset
+# ***********
+# Data is only simulated for
+# :ref:`data_subset_table@data_id`
+# values that appear in the data_subset table.
+# For this case, this includes all the
+# :ref:`data_table@data_id` values in the data table.
+#
+# meas_noise_effect
+# *****************
+# see :ref:`option_table@meas_noise_effect` .
+#
+# Notation Before Simulation
+# **************************
+# The following values do not depend on the simulated data:
+#
+# y
+# =
+# This is the measured value; see
+# :ref:`data_sim_table@Method@y` .
+#
+# Capital Delta
+# =============
+# This is the minimum cv standard deviation corresponding to :math:`y`; see
+# :ref:`Delta<data_like@Notation@Minimum CV Standard Deviation, Delta_i>` .
+#
+# sigma
+# =====
+# This is the transformed standard deviation corresponding to :math:`y`; see
+# :ref:`sigma<data_like@Notation@Transformed Standard Deviation, sigma_i>` .
+#
+# E
+# =
+# This is the average noise effect corresponding to :math:`y`; see
+# :ref:`E<data_sim_table@Method@Capital E>` .
+#
+# delta
+# =====
+# This is the adjusted standard deviation corresponding to :math:`y`; see
+# :ref:`data_sim_table@Method@delta` .
+#
+# Simulation Notation
+# *******************
+#
+# z
+# =
+# This is the simulated measurement value, before censoring,
+# in the data_sim table; see :ref:`data_sim_table@Method@z` .
+#
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_data_sim.py}

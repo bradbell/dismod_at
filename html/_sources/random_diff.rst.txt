@@ -1,0 +1,47 @@
+lines 5-49 of file: xrst/model/random_diff.xrst
+
+{xrst_begin random_diff}
+{xrst_spell
+   subvector
+}
+
+Random Effects Differences Density Function
+###########################################
+
+k, K
+****
+For each :ref:`rate_table@rate_id`
+and each :ref:`child<option_table@Parent Node@Children>`
+there is a smoothing and corresponding set of model variables.
+In addition, for each
+:ref:`mulcov_table@mulcov_id`
+and each :ref:`subgroup_table@subgroup_id`
+corresponding to the
+:ref:`mulcov_table@group_id` for this *mulcov_id* ,
+there is a smoothing and a corresponding set of model variables.
+We use :math:`k` to index these smoothings :math:`s_k` and
+:math:`K` for the number of these smoothings.
+We use :math:`u^k` to denote the subvector of the random effects
+:math:`u` that corresponds to the *k*-th smoothing.
+
+A^u
+***
+The random effects age difference function is
+
+.. math::
+
+   A^u ( u | \theta ) =  \prod_{k=0}^{K-1} A^s ( s_k , u^k, \theta )
+
+see definition of :ref:`smooth_dage@A^s` .
+
+T^u
+***
+The random effects time difference function is
+
+.. math::
+
+   T^u ( u | \theta ) =  \prod_{k=0}^{K-1} T^s ( s_k , u^k, \theta )
+
+see definition of :ref:`smooth_dtime@T^s` .
+
+{xrst_end random_diff}

@@ -1,0 +1,225 @@
+lines 5-227 of file: xrst/table/data_table.xrst
+
+{xrst_begin data_table}
+{xrst_spell
+   differentiable
+   nonsmooth
+}
+
+The Data Table
+##############
+
+Discussion
+**********
+Each row of the data table corresponds to one measurement;
+see :ref:`data_table@meas_value` below.
+
+data_id
+*******
+This column has type ``integer`` and is the primary key for the
+``data`` table.
+Its initial value is zero, and it increments by one for each row.
+
+data_name
+*********
+This column has type ``text`` and has a different value for every row;
+i.e., the names are unique and can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
+
+integrand_id
+************
+This column has type ``integer`` and is the
+:ref:`integrand_table@integrand_id` that identifies
+the integrand for this measurement.
+
+density_id
+**********
+This column has type ``integer`` and is the
+:ref:`density_table@density_id` that identifies
+the density function for the measurement nose.
+The :ref:`density_table@density_name`
+corresponding to *density_id* cannot be ``uniform`` .
+(Use :ref:`data_table@hold_out` to ignore data during fitting.)
+This density may be replaced using the :ref:`data_density_command-name` .
+
+Nonsmooth
+=========
+If the density is :ref:`density_table@Notation@Nonsmooth` ,
+the :ref:`average_integrand<avg_integrand-name>`
+cannot depend on any of the random effects.
+For example, if the
+:ref:`data_table@node_id` is the
+:ref:`option_table@Parent Node@parent_node_id` ,
+the average integrand does not depend on the random effects.
+Also, if the node corresponding to a child that has all its random effects
+constrained, the average integrand does not depend on the random effects.
+Each nonsmooth data point adds a hidden variable to the optimization
+problem (that is the max of the residual and its negative).
+Having a lot of these variables slows down the optimization.
+
+node_id
+*******
+This column has type ``integer`` and is the
+:ref:`node_table@node_id` that identifies
+the node for this measurement.
+
+Parent Data
+===========
+If the *node_id* is the
+:ref:`option_table@Parent Node@parent_node_id` ,
+this data will be associated with the parent node and not
+have any random effects in its model.
+
+Child Data
+==========
+If the *node_id* is a
+:ref:`child<node_table@parent@Children>` of the parent node,
+or a :ref:`node_table@parent@Descendant` of a child,
+the data will be associated with the random effects for that child.
+In this case *density_id* cannot correspond to
+:ref:`density_table@density_name@laplace` or
+:ref:`density_table@density_name@log_laplace` .
+The corresponding densities would not be differentiable at zero
+and the Laplace approximation would not make sense in this case.
+
+subgroup_id
+***********
+This column has type ``integer`` and is the
+:ref:`subgroup_table@subgroup_id`
+that this data point corresponds to.
+
+group_id
+========
+The automatically is a :ref:`subgroup_table@group_id` corresponding
+to the *subgroup_id* even though the *group_id* does not
+appear in the data file (if it does appear, it will not be used).
+
+Nonsmooth
+=========
+If the density is
+:ref:`data_table@density_id@Nonsmooth` ,
+the :ref:`mulcov_table@subgroup_smooth_id`
+corresponding to *subgroup_id* must be null.
+
+weight_id
+*********
+This column has type ``integer`` and is the
+:ref:`weight_grid_table@weight_id` that identifies
+the weighting used for this measurement.
+If *weight_id* is nu
+
+null
+====
+If *weight_id* is ``null`` ,
+the constant weighting is used for this data point.
+
+hold_out
+********
+This column has type ``integer`` and has value zero or one.
+Only the rows where hold_out is zero are included
+in the objective optimized during a :ref:`fit_command-name` .
+See the fit command :ref:`fit_command@hold_out`
+documentation.
+
+meas_value
+**********
+This column has type ``real`` and is the measured value
+for each row of the ``data`` table;
+i.e., the measurement of the integrand, node,  etc.
+
+meas_std
+********
+This column has type ``real`` ,
+has same units at the data,
+and must be a positive number.
+This is not the only contribution to the standard deviation
+used in the data likelihood; see
+:ref:`minimum cv standard deviation<data_like@Notation@Minimum CV Standard Deviation, Delta_i>` :math:`\Delta`,
+:ref:`transformed standard deviation<data_like@Notation@Transformed Standard Deviation, sigma_i>` :math:`\sigma`, and
+:ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>` :math:`\delta ( \theta )`.
+
+eta
+***
+This column has type ``real`` .
+If *density_id* corresponds to a
+:ref:`log scaled density<density_table@Notation@Log Scaled>` ,
+*eta* must be greater than or equal zero and is
+the offset in the log transformation for this data point; see
+log scaled case definition of the
+:ref:`weighted residual function<statistic@Weighted Residual Function, R>` .
+This offset may be replaced using the :ref:`data_density_command-name` .
+
+null
+====
+If *density_id* does not correspond to
+``log_gaussian`` , ``log_laplace`` , or ``log_students`` ,
+*eta* can be ``null`` .
+
+nu
+**
+This column has type ``real`` .
+If *density_id* corresponds to
+``students`` or ``log_students`` ,
+*nu* must be greater than two and is
+number of degrees of freedom in the distribution for this point; see
+the definition of the log-density for
+:ref:`statistic@Log-Density Function, D@Student's-t` and
+:ref:`statistic@Log-Density Function, D@Log-Student's-t` .
+The degrees of freedom may be replaced using the
+:ref:`data_density_command-name` .
+
+null
+====
+If *density_id* does not correspond to
+``students`` or ``log_students`` ,
+*nu* can be ``null`` .
+
+age_lower
+*********
+This column has type ``real`` and is the lower age limit
+for this measurement.
+It must be greater than or equal the minimum :ref:`age_table-name` value.
+
+age_upper
+*********
+This column has type ``real`` and is the upper age limit
+for this measurement.
+It must be greater than or equal the corresponding *age_lower*
+and less than or equal the maximum :ref:`age_table-name` value.
+
+time_lower
+**********
+This column has type ``real`` and is the lower time limit
+for this measurement.
+It must be greater than or equal the minimum :ref:`time_table-name` value.
+
+time_upper
+**********
+This column has type ``real`` and is the upper time limit
+for this measurement.
+It must be greater than or equal the corresponding *time_lower*
+and less than or equal the maximum :ref:`time_table-name` value.
+
+Covariates
+**********
+The covariate columns have type ``real`` and column names
+that begin with the two characters ``x_`` .
+For each valid :ref:`covariate_table@covariate_id` ,
+column ``x_`` *covariate_id* contains
+the value, for this measurement, of the covariate specified by
+*covariate_id* .
+
+Null
+====
+The covariate value ``null`` is interpreted as the
+:ref:`covariate_table@reference` value for
+the corresponding covariate.
+{xrst_toc_hidden
+   example/table/data_table.py
+}
+Example
+*******
+The file :ref:`data_table.py-name`
+create example ``data`` tables.
+
+{xrst_end data_table}

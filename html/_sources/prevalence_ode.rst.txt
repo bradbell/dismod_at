@@ -1,0 +1,87 @@
+lines 5-89 of file: xrst/math/prevalence_ode.xrst
+
+{xrst_begin prevalence_ode}
+{xrst_spell
+   rrr
+}
+
+The Prevalence Only ODE
+#######################
+
+Theorem
+*******
+If :math:`S` and :math:`C` satisfy the dismod_at
+:ref:`avg_integrand@Ordinary Differential Equation` then prevalence :math:`P = C / (S + C)` satisfies
+
+.. math::
+
+   P' = + \iota  - ( \iota + \rho + \chi ) P  +  \chi  P^2
+
+Proof
+*****
+Suppose that :math:`S(a)` and :math:`C(a)` satisfy the dismod_at
+:ref:`avg_integrand@Ordinary Differential Equation`
+
+.. math::
+
+   \begin{array}{rrr}
+      S' =&  - ( \iota + \omega ) S &                     + \rho C \\
+      C' =&               + \iota S & - ( \rho + \chi + \omega ) C
+   \end{array}
+
+It follows that
+
+.. math::
+
+   (S + C)' = - \omega S - ( \omega + \chi ) C
+
+Using :math:`C = (S + C) P`, we also have
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   C'         & = & (S + C)' P + (S + C) P'
+   \\
+   (S + C) P' & = & C' - (S + C)' P
+   \\
+   (S + C) P' & = &
+      + \iota S - ( \rho + \chi + \omega ) C
+      + \omega S P + ( \omega + \chi ) C P
+   \\
+   P' & = &
+      + \iota (1 - P) - ( \rho + \chi + \omega ) P
+      + \omega (1 - P) P + ( \omega + \chi ) P^2
+   \\
+   P' & = & + \iota  - ( \iota + \rho + \chi ) P  +  \chi  P^2
+   \end{eqnarray}
+
+Advantage
+*********
+One advantage of this approach,
+over the original ODE in :math:`(S, C)`,
+is that the solution is stable as :math:`S + C \rightarrow 0`.
+The :math:`(S, C)`  approach computes :math:`P = C / (S + C)`.
+
+Integrands
+**********
+All of the current integrands, except for
+:ref:`avg_integrand@Integrand, I_i(a,t)@susceptible` and
+:ref:`avg_integrand@Integrand, I_i(a,t)@withC`
+can be computed from :math:`P` (given that the rates are inputs to the ODE).
+
+S and C
+*******
+If we know all cause mortality :math:`\alpha = \omega + \chi P`,
+once we have solved for :math:`P`,
+we can compute :math:`\omega = \alpha - \chi P`.
+Furthermore
+
+.. math::
+
+   (S + C)' = - \alpha (S + C)
+
+We can also compute :math:`S + C`, and
+:math:`C = P (S + C)`, :math:`S = (1 - P)(S + C)`.
+
+{xrst_end prevalence_ode}

@@ -1,0 +1,812 @@
+lines 6-815 of file: xrst/whats_new/2017.xrst
+
+{xrst_begin whats_new_2017}
+{xrst_spell
+   apposed
+   cmake
+   command command
+   dd
+   eigen
+   fabs
+   frac
+   github
+   libdir
+   lrt
+   mm
+   optimizer
+   postscripts
+   sparsity
+   subgraph
+   suitesparse
+   tst
+   unscaled
+}
+
+Changes and Additions to Dismod_at During 2017
+##############################################
+
+mm-dd
+*****
+
+12-30
+=====
+Advance to using ``cppad_mixed-20171230`` .
+This uses the CppAD subgraph method to compute the Hessian
+with respect to the random effects.
+It is expected to be faster on large problems, but more testing is required
+to verify this.
+
+12-22
+=====
+Some users did not realize that ``bin/install_all.sh`` was just
+an example install to help system administrators.
+This script has been included in the documentation and moved to
+:ref:`bin/example_install.sh<example_install.sh-name>` to make this clear.
+
+12-21
+=====
+Advance to using ``cppad-20171215``
+which is required by ``cppad_mixed-20171218`` .
+
+12-20
+=====
+
+#. Advance to using ``cppad_mixed-20171218`` .
+   This uses the CppAD subgraph method to compute the sparsity of the Hessian
+   with respect to the random effects.
+   It is expected to be faster on large problems, but more testing is required
+   to verify this.
+#. Sometimes, new versions of the python files were not installed because the
+   ``bin/setup.py`` file was not executable. This has been fixed.
+
+12-16
+=====
+
+#. There was a mistake in the linking of the
+   :ref:`install_unix@System Requirements@sqlite3` and
+   :ref:`install_unix@System Requirements@gsl` libraries
+   that caused a problem during
+   :ref:`testing<install_unix@dismod_at@Test>` on some systems.
+   This has been fixed.
+#. The value :ref:`libdir<run_cmake.sh@cmake_libdir>` is now specified
+   in ``bin/run_cmake.sh``
+   (it used to be specified by ``bin/libdir.sh`` ).
+
+12-13
+=====
+There was a bug in the
+:ref:`predict sample<predict_command@source@sample>` command
+when :ref:`run_cmake.sh@build_type` was ``debug`` .
+To be specific, the check to see if the database was consistent
+had an error in it.
+This has been fixed.
+
+12-10
+=====
+
+#. Move documentation from IHME to github; see
+
+   https://bradbell.github.io/dismod_at/doc/index.html.
+#. The :ref:`install_unix@System Requirements@git` program
+   was added to the system requirements.
+#. The :ref:`download<install_unix@Download dismod_at.git>` instructions
+   were changed to use ``git`` for distributing the program.
+
+11-12
+=====
+
+#. Fix the definition of the
+   :ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>`
+   for the measurement values
+   (the definition for log an linear cases is the same).
+#. Fix the definition of the
+   :ref:`mulcov_table@mulcov_type@meas_value` covariate multipliers
+   :ref:`beta_j<avg_integrand@Measurement Value Covariates@Subgroup Measurement Covariate Multiplier, Delta beta_j>`
+   and the
+   :ref:`mulcov_table@mulcov_type@meas_noise` covariate multipliers
+   :ref:`data_like@Measurement Noise Covariates@gamma_j (a, t)` .
+   They used to be :math:`\beta_{i,j}` and :math:`\gamma_{i,j}`
+   but they do not depend on the data index :math:`i`.
+
+11-08
+=====
+Change the title of the :ref:`data_like-name` section and
+fix minor typos in the notation for the
+age upper limit :ref:`data_like@Notation@b_i` and
+time upper limit :ref:`data_like@Notation@t_i` .
+
+10-25
+=====
+
+#. Advance to ``cppad_mixed-20171025``
+   and install it using the rev_hes_sparsity option.
+#. Advance to ``cppad-20171023``
+   to avoid a compiler warning.
+
+10-24
+=====
+Some minor changes were made to the bilinear interpolation section.
+To be more specific, some typos were fixed in
+:ref:`bilinear@Function Grid` and the
+:ref:`bilinear@Interpolant@Outside Both Limits`
+discussions.
+In addition, the :ref:`bilinear@Plotting` discussion was added.
+
+10-22
+=====
+
+#. Add the option to specify
+   :ref:`option_table@Parent Node@parent_node_name`
+   instead of parent_node_id.
+   The :ref:`create_database-name` routine was changed to put the parent_node_name
+   in the option table, instead of mapping it to the parent_node_id.
+   (Using parent_node_id avoids a lookup in the node table,
+   but the time for this lookup is not expected to be significant.)
+#. Fix ``create_connection`` in case where
+   :ref:`create_connection@new` is true and previous version
+   of the file did not exist.
+   (Not sure why this did not create more failures.)
+
+10-21
+=====
+
+#. The :ref:`depend_command-name` was added and the
+   :ref:`db2csv_command@variable.csv@depend` column was
+   added to the ``variable.csv`` file.
+#. The Input and Output by Command paragraph
+   in the :ref:`data_flow-name` page was corrected.
+   To be specific :ref:`fit_data_subset_table-name` , not :ref:`data_subset_table-name` ,
+   is output by the :ref:`fit_command-name` .
+
+10-20
+=====
+Add the
+``checkpoint_newton_step``
+option to the dismod_at configuration script.
+The default value in ``run_cmake.sh`` for this setting
+is ``yes`` (it used to be set at ``no`` ).
+
+10-18
+=====
+
+#. Improve documentation for following sections:
+   :ref:`avg_integrand-name` ,
+   :ref:`model_variables-name` ,
+   :ref:`get_started_db.py-name` .
+#. Add cross references from values in the
+   :ref:`rate_table-name` and :ref:`integrand_table-name`
+   to the corresponding average integrand notation.
+#. Simplify the python code in :ref:`get_started_db.py-name` .
+#. A warning about re-running the
+   :ref:`set_command<set_command@option@init>` command
+   was added to the set command and the
+   :ref:`modify_command<modify_command@Warning>` .
+
+10-17
+=====
+
+#. The :ref:`db2csv_command.py-name` example / test was added
+   and the corresponding :ref:`wish_list-name` item was removed.
+#. The :ref:`command@Log Messages` were missing
+   for the :ref:`db2csv_command-name` .
+   This has been fixed.
+#. The empty text was sometimes placed in
+   the :ref:`log_table@table_name` column of the log table.
+   This was a bug and has been fixed by using ``null`` in these cases; see
+   :ref:`database@Null@Text can be Null, not Empty` .
+#. The ``create_connection`` routine now exist with a fatal
+   error message when the specified
+   :ref:`create_connection@file_name` does not exist.
+#. The :ref:`modify_command-name` was added.
+
+10-14
+=====
+
+#. Specifications were added to forbid
+   :ref:`data_table@node_id@Child Data`
+   from having
+   :ref:`density_table@density_name@laplace` or
+   :ref:`density_table@density_name@log_laplace` densities.
+#. In addition, the discussion of
+   :ref:`random_effects<data_like@Notation@Random Effects, u>` vector :math:`u`
+   in the data likelihood model was improved.
+
+10-13
+=====
+
+#. In the
+   :ref:`db2csv_command@variable.csv` file
+   replace the *sam_value* column by the
+   :ref:`db2csv_command@variable.csv@sam_avg` and
+   :ref:`db2csv_command@variable.csv@sam_std` columns.
+#. The :ref:`simulate_command-name` has been extended to handle
+   :ref:`density_table@density_name@students` and
+   :ref:`density_table@density_name@log_students`
+   densities in the
+   :ref:`data_table@density_id` .
+
+10-09
+=====
+Advance to cppad_mixed-20171009.
+
+10-06
+=====
+
+#. Add the :ref:`db2csv_command@variable.csv@truth`
+   column to the ``variable.csv`` file create by the
+   :ref:`db2csv_command-name` .
+#. Add the sample table as a possible source for the values used in the
+   :ref:`set command<set_command@source@sample>` .
+#. Add the fit_var and truth_var tables as a possible source for the
+   predict command.
+   Note that the predict command now requires the
+   :ref:`predict_command@source` argument.
+#. The fit_var
+   :ref:`sample_command@method`
+   for the sample command has been removed.
+   It was no longer useful
+   given the ability to specify fit_var in the :ref:`predict_command-name` .
+#. In the fit table, change ``variable_value`` to
+   :ref:`fit_var_table@fit_var_value` .
+#. There was a problem with the install process where by the include
+   directories for
+   :ref:`install_unix@System Requirements@sqlite3` ,
+   :ref:`install_unix@System Requirements@gsl` , or
+   :ref:`install_unix@Special Requirements@ipopt` ,
+   might not be set correctly.
+   This has been fixed.
+
+10-05
+=====
+
+#. The restrictions on the
+   :ref:`rate_table@Child Value Priors` and
+   :ref:`rate_table@Child Difference Priors`
+   have been changed.
+   To be specific, the density need not be Gaussian,
+   it can be anything but Laplace and Log-Laplace.
+   The user needs to be careful to ensure that the Hessian
+   of the likelihood with respect to the random effects is positive definite; see
+   :ref:`rate_table@child_smooth_id@Random Effects Hessian` .
+#. Add specifications for
+   :ref:`comment tables<database@Comment Columns and Tables>` .
+#. Change the ``create_database`` so that when certain entries
+   are not present, the value null is used for the corresponding
+   entry in the database.
+   In addition, remove the corresponding setting to ``None`` in the
+   :ref:`user_example-name` examples.
+#. Change ``random_bound`` to
+   :ref:`option_table@Optimize Random Only@bound_random` .
+   Change ``zero_sum_child_rate`` to
+   :ref:`option_table@Zero Sum Constraints@zero_sum_child_rate` .
+   Change ``fixed_bound_frac`` to
+   :ref:`option_table@Optimize Fixed Only@bound_frac_fixed` .
+
+10-04
+=====
+Add the :ref:`statistic@Log-Density Function, D@Student's-t` and
+:ref:`statistic@Log-Density Function, D@Log-Student's-t`
+density functions; see ``user_students.py`` .
+This required changing :ref:`density_table-name` in a way that is not backward
+compatible. To be specific, the
+:ref:`density_table@density_name@students` and
+:ref:`density_table@density_name@log_students` rows
+were added to the table.
+
+10-02
+=====
+
+#. Change the ``create_database``
+   :ref:`create_database@data_table` so that
+   *meas_std* and *eta* need not appear when they are null.
+   In addition, remove the null *eta* values from the
+   :ref:`user_example-name` examples.
+#. Reduce the chance of random
+   failure in the :ref:`user_lasso_covariate.py-name` example.
+
+10-01
+=====
+Simplify the weighted residual function
+:ref:`R<statistic@Weighted Residual Function, R>`
+and the log density function
+:ref:`D<statistic@Log-Density Function, D>` .
+To be specific,
+the :ref:`density_table@density_id`
+and :ref:`prior_table@eta` were combined into :math:`d` in the
+
+09-30
+=====
+Advance to cppad_mixed-20170930.
+This fixes a bug where the optimization of the fixed effects
+was terminating (instead of backing up) when the optimization
+of the random effects failed.
+
+09-29
+=====
+
+#. The change on :ref:`whats_new_2017@mm-dd@09-20`
+   introduced a bug because it ignored the
+   :ref:`option_table@warn_on_stderr` option.
+   This has been fixed.
+#. The :ref:`user_re_scale.py-name` example was added.
+#. Add the :ref:`set_command@option` version of the set command.
+   Changes to the option table that are done this way get recorded in the
+   :ref:`log_table-name` .
+
+09-28
+=====
+Add the scale_var table which enables the user
+to have more control over scaling the objective. See
+:ref:`scale_var_table@scale_var_value` and
+:ref:`set command<set_command@table_out@scale_var>` .
+
+09-27
+=====
+
+#. This change was merged into the master branch on 09-29.
+   Remove the ``start`` command.
+   It has been replace by the :ref:`set_command-name` syntax
+
+      ``dismod_at set start_var`` *source*
+
+#. Fix a bug in :ref:`db2csv_command-name` that occurred when
+   :ref:`smooth_table@mulstd_value_prior_id`
+   was not null.
+#. Fix a bug in :ref:`db2csv_command-name` when
+   :ref:`option_table@warn_on_stderr` was present.
+#. Fix a bug in :ref:`db2csv_command-name` when
+   :ref:`option_table@Extra Columns@data_extra_columns` or
+   :ref:`option_table@Extra Columns@avgint_extra_columns` was
+   present and null.
+#. A ``db2csv`` wish list item was added (fulfilled on
+   :ref:`whats_new_2017@mm-dd@10-17` ).
+
+09-26
+=====
+These changes were merged into the master branch on 09-29.
+
+#. Add the :ref:`sql_command-name` python function.
+#. Change :ref:`init_command-name` so that it also creates a version of the
+   :ref:`start_var_table-name` using the prior means.
+#. Remove the ``truth`` command.
+   It has been replace by the :ref:`set_command-name` syntax
+
+      ``dismod_at set truth_var fit_var``
+
+09-25
+=====
+Advance to cppad_mixed-20170925 for improved error handling
+and messaging.
+
+09-23
+=====
+Advance to cppad_mixed-20170923 for improved error handling
+and messaging.
+
+09-21
+=====
+
+#. Advance to ``cppad_mixed-20160919``
+   We are working on improving error messaging when ``nan`` occurs
+   during optimization.
+#. Add ``susceptible`` and ``withC`` to
+   the documentation for the types of average integrands
+   :ref:`I_i(a,t)<avg_integrand@Integrand, I_i(a,t)>` .
+   These integrands were already available, see
+   :ref:`integrand_table@integrand_name` .
+
+09-20
+=====
+All warnings are now printed to standard error as well as being
+logged in the database.
+Errors are also printed, but this is not a change.
+
+09-19
+=====
+
+#. Some of the
+   :ref:`install_unix@System Requirements`
+   were not being installed in the proper place on the MAC.
+   The install has been modified to use
+   :ref:`install_unix@System Requirements@pkg-config` to find these
+   non-standard locations.
+#. The ``log_fatal_error`` option was removed from :ref:`run_cmake.sh-name`
+   (by putting an assert before the exit in the fatal error routine).
+
+09-18
+=====
+
+#. Advance to ``cppad_mixed-20160918`` ; see
+   :ref:`install_unix@Special Requirements@cppad_mixed` .
+   This provides more error messaging when nan's occur in the
+   random effects objective.
+#. The documentation for
+   :ref:`database@Null@Bounds`
+   was improved.
+
+09-17
+=====
+
+#. There was a bug in setting the lower and upper limits of random effects
+   equal that sometimes caused a ``nan`` result during ``initialize`` .
+   This has been fixed.
+#. Make :ref:`bilinear-name` and ``ode_grid`` separate sections
+   and improve their presentations.
+
+09-16
+=====
+Advance to ``cppad_mixed-20160916`` ; see
+:ref:`install_unix@Special Requirements@cppad_mixed` .
+This makes the optimization with respect to the random effects back
+up when the object results in a ``nan`` .
+
+09-02
+=====
+
+#. Instructions were added for building both the debug and release
+   :ref:`run_cmake.sh@Debug and Release`
+   version of ``dismod_at`` on the same system.
+#. The :ref:`install_unix@Special Requirements@cppad_mixed`
+   install script was changed so that it does not optimize AD functions when
+   :ref:`run_cmake.sh@build_type` is ``debug`` .
+   This can be used to verify that optimizing to AD functions only
+   affects the speed and memory used by ``dismod_at`` and
+   not its results.
+
+09-01
+=====
+
+#. Add the
+   :ref:`user_speed.py@n_children` argument to the
+   speed example / test.
+#. Add a definition of the
+   :ref:`option_table@Parent Node@Children`
+   to the option table.
+
+08-30
+=====
+Advance to cppad-20170830. This fixes a problem with the cmake command;
+to be specific,
+
+   ``Policy CMP0046 is not set: Error on non-existent dependency``
+
+08-07
+=====
+
+#. Advance to ``cppad_mixed-20170801`` to fix an install problem where
+   ``ran_obj_tst`` was not defined.
+#. The postscripts ``fixed`` and ``random`` were missing from the
+   :ref:`option_table@Optimize Fixed and Random@accept_after_max_steps`
+   documentation.
+#. It would be nice to have a sample_data_subset table that is similar to the
+   :ref:`fit_data_subset_table-name` , but corresponds to
+   :ref:`sample command<sample_command@simulate>`
+   with *method* equal to ``data_sim`` .
+
+05-23
+=====
+Advance to cppad-20170522.
+
+05-05
+=====
+Improved the detection of which
+:ref:`data_table-name` rows do not require the
+:ref:`random effects<model_variables@Random Effects, u>`
+to make correspond :ref:`avg_integrand-name` model prediction.
+This may make the computation more efficient, but otherwise
+the user should see no difference.
+
+05-02
+=====
+The noise covariate multipliers effect
+used to scale the measurement standard deviation.
+Now it is directly added to the measurement standard deviation; see
+:ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>` .
+This makes the :ref:`mulcov_table@mulcov_type@meas_noise`
+covariate multipliers more difficult to use because they have units.
+On the other hand, it is more flexible for
+use in meta-regression when the standard deviations for some measurements
+is small and the difference between measurement sets is large.
+
+05-01
+=====
+
+#. Remove recommendation for using
+   ``prior_zero`` and ``prior_one`` as
+   :ref:`prior names<prior_table@prior_name>` .
+   These have been replace by more flexible, and easier to use
+   :ref:`smooth_grid_table@const_value` ,
+   and use of null as smoothing; e.g.,
+   null as a *parent_smooth_id* in the
+   :ref:`rate table<rate_table@parent_smooth_id>` .
+#. Provide more information by splitting node into
+   :ref:`db2csv_command@data.csv@child` and
+   :ref:`db2csv_command@data.csv@node` in
+   data.csv
+#. The :ref:`get_started-name` section has been moved to the same level as
+   :ref:`user_example-name` and the
+   ``Commands`` heading has been added to the user section
+   (it has since been removed).
+#. Improve smooth_grid table
+   documentation for cases and meaning when the following value are null:
+   :ref:`smooth_grid_table@const_value` ,
+   :ref:`smooth_grid_table@value_prior_id` ,
+   :ref:`smooth_grid_table@dage_prior_id` ,
+   :ref:`smooth_grid_table@dtime_prior_id` .
+
+04-29
+=====
+
+#. The avgint_subset table has been removed.
+   The avgint table is only
+   :ref:`used<avgint_table@Purpose@Usage>` by the :ref:`predict_command-name` .
+   As such, it can be changed, and the predict command can be re-run,
+   without having to first run any other commands.
+#. There was a bug and the case
+   :ref:`fit fixed<fit_command@variables@fixed>` would not run
+   when
+   :ref:`option_table@Zero Sum Constraints@zero_sum_child_rate` was not null
+   (specified one or more rates).
+   This has been fixed.
+#. For each *rate_name* in
+   :ref:`option_table@Zero Sum Constraints@zero_sum_child_rate`
+   the corresponding
+   :ref:`rate_table@child_nslist_id`
+   must be null.
+   An error messages is reported if this is not the case.
+
+04-27
+=====
+Change the :ref:`option_table@Zero Sum Constraints@zero_sum_child_rate` option
+so it can select specific rates to have zero sum.
+This was necessary so that
+:ref:`rate_table@child_nslist_id` can be used
+to use different priors for each child and some rates,
+while other rates have the same prior for each child and zero sum.
+
+04-26
+=====
+
+#. In the :ref:`user_example-name` examples,
+   move the setup of
+   :ref:`create_database@avgint_table`
+   just before the setup of
+   :ref:`create_database@data_table`
+   because they are so similar.
+#. The :ref:`db2csv_command@predict.csv@avgint_id` was
+   added to the ``predict.csv`` file.
+#. Add :ref:`option_table@Extra Columns@data_extra_columns`
+   and remove ``data_name`` column from the data table.
+
+04-25
+=====
+
+#. Advance to cppad_mixed-20170424.
+#. The convergence criteria, is now relative to the derivative values
+   at the mean of the prior for the fixed effects.
+   This also holds for the values printed during the optimization of the
+   fixed effects, see :ref:`option_table@Optimize Fixed and Random@print_level` .
+   These values used to be relative to the
+   :ref:`starting variables<start_var_table-name>` which would change
+   when one continued an optimization.
+#. Add the :ref:`user_continue_fit.py-name` example.
+#. Add the :ref:`option_table@warn_on_stderr` option.
+#. Add the :ref:`option_table@Extra Columns@avgint_extra_columns` option.
+
+04-24
+=====
+Fix bug in ``dev::eigen_ode2.cpp`` where
+the ``std::abs`` function was being called and ``std::fabs``
+should have been called.
+(This caused some tests to fail on the Mac but not on Fedora.)
+
+04-23
+=====
+Advance to cppad_mixed-20170423, this improves the detection of
+convergence of the fixed effects optimization problem, see
+:ref:`fit_command-name` .
+
+04-22
+=====
+
+#. The :ref:`init_command-name` now deletes any existing
+   :ref:`output tables<data_flow@Output Tables by Table Name>` .
+#. The version number in the dismod_at python package
+   was stuck at ``20160516`` ; i.e., not being updated.
+   This has been fixed.
+
+04-21
+=====
+
+#. Change the name of the output section to the
+   :ref:`data_flow-name` section.
+#. Add the :ref:`option_table@minimum_meas_cv` option.
+   This is useful because the IHME database has
+   bad measurement standard deviations that are two or more orders of
+   magnitude small than the corresponding measurement values.
+#. Change the simulate command so only the ``log_gaussian`` and
+   ``log_laplace`` negative data is set to zero.
+   (It used to also do this in the ``gaussian`` and ``laplace`` cases.)
+
+04-20
+=====
+
+#. Add a comment about
+   :ref:`init_command@Changing Values` , in the input tables,
+   to the ``init`` command.
+#. Add more links that show how the different :ref:`model_variables-name` appear
+   in the :ref:`avg_integrand-name` .
+#. Correct the discussion of model variables to state that it is now
+   possible to have a different smoothing for each
+   :ref:`child rate effect<model_variables@Random Effects, u@Child Rate Effects>` .
+
+04-19
+=====
+The offset in the log transformation for the data is now specified
+in the data table (for each data point) instead of in the
+integrand table (for all data points corresponding to an integrand); see
+:ref:`data_table@eta` .
+
+04-18
+=====
+Change the definition of adjusted standard deviation for data in the
+:ref:`Gaussian and Laplace<data_like@Adjusted Standard Deviation, delta_i(theta)>`
+case (it is now different from the Log-Gaussian and Log-Laplace case).
+(This has since been changed back.)
+
+04-17
+=====
+Add ``random`` to possible choices for
+:ref:`fit_command@variables` during the fit.
+
+04-16
+=====
+
+#. The change on 04-15 introduced a bug whereby non-zero values for
+   :ref:`option_table@Optimize Random Only@bound_random` were not having
+   any effects.
+   This has been fixed.
+#. The :ref:`fit_command@variables` argument was added to the
+   fit command. It is better to use *variables* equal to ``fixed`` ,
+   a apposed to changing
+   :ref:`option_table@Optimize Random Only@bound_random`
+   in the ``option`` table.
+#. The :ref:`wish_list-name` was updated.
+
+04-15
+=====
+It is now possible to constrain each random effect to have a specific value;
+see
+:ref:`constant child value priors<rate_table@Child Value Priors@Constant>` .
+
+04-09
+=====
+
+#. The :ref:`smooth_grid_table@const_value` option
+   was added to the ``smooth_grid`` table.
+   This makes it much easier to constrain a variable to
+   have a specific value at a specific age and time.
+#. Instructions on how to create the database
+   :ref:`user_example@example.db` for a specific example,
+   were added to the user example section.
+
+04-07
+=====
+
+#. More discussion was added for how the
+   :ref:`option_table@Parent Node`
+   and the
+   :ref:`covariate_table@max_difference`
+   affect the
+   :ref:`data_subset_table-name` and ``avgint_subset_table`` .
+#. The :ref:`get_started-name` example was changed to use a single
+   exponential model.
+   In addition, the :ref:`get_started_db.py-name` example is now
+   a good starting point for editing to add more complexity to the model.
+
+04-05
+=====
+
+#. The definition of the average integrand has been changed to include the
+   :ref:`measurement value covariate effect<avg_integrand@Measurement Value Covariates@Measurement Effect>` .
+#. The ``bin/install_suitesparse.sh`` script has been changed to
+   work on the MAC (where the ``-lrt`` library is not available).
+#. The optimization tolerance in :ref:`user_group_mulcov.py-name`
+   was made smaller to avoid test failures on some machines.
+
+04-04
+=====
+The notation *average weight* (for :math:`\bar{w}_i`) was
+corrected to be
+:ref:`weight integral<avg_integrand@Weight Integral, wbar_i>` .
+
+04-03
+=====
+Advance to ``cppad-20170402`` and ``cppad_mixed-20170403`` .
+The Cppad change fixes a bug in the optimization of conditional expressions.
+This in turn enables Cppad Mixed to make more use of AD function optimization
+(and still pass all the tests in ``dismod_at`` ).
+
+04-01
+=====
+
+#. Remove the need to set *PKG_CONFIG_PATH* during the
+   :ref:`install_unix-name` procedure
+   (:ref:`run_cmake.sh@dismod_at_prefix`
+   in ``bin/run_cmake.sh`` is used to determine this setting automatically).
+#. Improve the discussion on setting the
+   :ref:`python path<install_unix@Paths@PYTHONPATH>` .
+
+03-30
+=====
+Add ``susceptible`` and ``withC`` to the list
+of possible integrand names; see
+:ref:`integrand_table@integrand_name` .
+
+03-29
+=====
+Advance to cppad-20170329 and cppad_mixed-20170329.
+
+03-17
+=====
+Advance to cppad_mixed-20170317.
+This includes a change to the ``cppad_mixed`` ,
+but no change from the ``dismod_at`` user's perspective.
+
+03-06
+=====
+Advance to
+:ref:`cppad-20170306<install_unix@Special Requirements@cppad>` .
+This fixes another bug in Cppad.
+
+03-04
+=====
+Advance to
+:ref:`cppad-20170304<install_unix@Special Requirements@cppad>` .
+This fixes a bug in Cppad.
+Advance to
+:ref:`cppad_mixed-20170304<install_unix@Special Requirements@cppad_mixed>` .
+This improves the scaling and solution check for optimization of the
+fixed effects.
+
+03-03
+=====
+Simplify the install procedure. Now it is only necessary to adjust
+the settings in
+:ref:`install_unix@Special Requirements@run_cmake.sh` .
+These settings are automatically used by all the
+``bin/install_`` *package* . ``sh`` scripts.
+
+01-27
+=====
+The values in the
+:ref:`covariate<db2csv_command@predict.csv@Covariates>` columns
+of the ``predict.csv`` file were not correct
+(did not correspond to the :ref:`avgint_table-name` .
+This has been fixed.
+
+01-26
+=====
+Advance to cppad_mixed-20171126.
+This version includes the scaling mentioned under 01-24,
+but prints the original (unscaled) objective in the optimizer trace.
+
+01-24
+=====
+Advance to cppad_mixed-20171124.
+This version re-scales the problem using the derivatives values at
+the starting point.
+This is in addition to the
+:ref:`scaling<prior_table@eta@Scaling Fixed Effects>` done using ``eta`` .
+
+01-14
+=====
+The ``adaptive`` and ``trace-adaptive``
+:ref:`option_table@Optimize Fixed and Random@derivative_test` options
+generated error messages. This has been fixed and they now work.
+
+01-15
+=====
+Advance to cppad-20161113 and cppad_mixed-20170114.
+
+{xrst_end whats_new_2017}

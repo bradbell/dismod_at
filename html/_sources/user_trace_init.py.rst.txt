@@ -1,0 +1,75 @@
+lines 5-77 of file: example/user/trace_init.py
+
+# {xrst_begin user_trace_init.py}
+# {xrst_spell
+#     exp
+# }
+# {xrst_comment_ch #}
+#
+# Using Initialization Trace Option
+# #################################
+#
+# Purpose
+# *******
+# This example shows how to use the
+# :ref:`option_table@trace_init_fit_model` option.
+#
+# Integrands
+# **********
+# For this example there are one integrand, ``Sincidence`` .
+#
+# Nodes
+# *****
+# There three nodes.
+# The first is called ``world`` and is the parent node for this example.
+# The second (third) is called ``child_1`` (``child_2`` )
+# and is a child of the parent node.
+#
+# True Iota
+# *********
+# For this example, the true model incidence rate *iota* is
+# {xrst_code py}
+def iota_true(age, node) :
+   import math
+   iota_parent  = 0.01 * (1 + age / 100.0)
+   child_effect = 0.2
+   if node == 'world' :
+      return iota_parent
+   if node == 'child_1' :
+      return math.exp(+ child_effect) * iota_parent
+   if node == 'child_2' :
+      return math.exp(- child_effect) * iota_parent
+   assert False
+# {xrst_code}
+#
+# Model
+# *****
+#
+# Parent Node
+# ===========
+# There is only one rate *iota* and it linear in age
+# with knots at the age 0 and 100.
+#
+# Child Nodes
+# ===========
+# There is only one rate *iota* and it constant.
+#
+# Data
+# ****
+# There are six data points measuring Sincidence
+# with the true value of *iota* .
+# These correspond to ages 0 and 100 at each of the three nodes.
+#
+# trace_init_fit_model
+# ********************
+# The option :ref:`option_table@trace_init_fit_model`
+# is set to true and the corresponding output is checked.
+#
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_trace_init.py}

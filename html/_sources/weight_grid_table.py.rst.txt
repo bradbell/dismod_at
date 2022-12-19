@@ -1,0 +1,14 @@
+lines 5-16 of file: example/table/weight_grid_table.py
+
+# {xrst_begin weight_grid_table.py}
+# {xrst_comment_ch #}
+#
+# weight_grid_table: Example and Test
+# ###################################
+#
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end weight_grid_table.py}

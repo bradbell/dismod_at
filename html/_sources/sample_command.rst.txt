@@ -1,0 +1,207 @@
+lines 23-227 of file: devel/cmd/sample_command.cpp
+
+{xrst_begin sample_command}
+{xrst_spell
+   covariance
+}
+
+The Sample Command
+##################
+
+Syntax
+******
+
+| ``dismod_at`` *database* ``sample`` *method* *variables* *number_sample*
+| ``dismod_at`` *database* ``sample`` *method* *variables* *number_sample* *simulate_index*
+
+database
+********
+Is an
+http://www.sqlite.org/sqlite/ database containing the
+``dismod_at`` :ref:`input-name` tables which are not modified.
+
+Purpose
+*******
+This command simulates samples of the :ref:`model_variables-name`
+from the posterior distribution; see
+:ref:`posterior@Simulation` for the posterior distribution.
+
+method
+******
+The sample command argument *method* must be
+``simulate`` or ``asymptotic`` ; see discussion below:
+
+variables
+*********
+The sample command argument *variables* must be
+``fixed`` or ``both`` .
+This corresponds to the asymptotic statistics for
+:ref:`fit fixed<fit_command@variables@fixed>` and
+:ref:`fit both<fit_command@variables@both>` respectively.
+
+number_sample
+*************
+Is the number of samples. Each sample contains a complete
+set of model variables.
+If *method* is ``simulate`` ,
+*number_sample* must be equal to
+:ref:`simulate_command@number_simulate`
+in the previous simulate command.
+
+simulate_index
+**************
+If this argument is present, *method* must be ``asymptotic``
+and *simulate_index* must be the same as in the corresponding
+:ref:`fit command<fit_command@simulate_index>` .
+
+simulate
+********
+A complete set of :ref:`model_variables-name` ,
+corresponding to each :ref:`sample_table@sample_index` ,
+is written to the sample table.
+They correspond to fitting the data in the data_sim table with
+:ref:`data_sim_table@simulate_index` equal to
+*sample_index* .
+The fixed effects correspond to the optimal fit of both the fixed and random
+effects with the prior for the fixed effects replaced by the corresponding
+values in the :ref:`prior_sim_table-name` .
+This value is used for the fixed effects and the value for the
+random effects is obtained by optimizing just the random
+effects with the prior for the random effects replaced by the corresponding
+values in the :ref:`prior_sim_table-name` .
+This requires running *number_sample* fits of the model variables
+(fitting just the random effects is faster compared to fitting both).
+See :ref:`posterior@Simulation` in the discussion of the
+posterior distribution of maximum likelihood estimates.
+
+asymptotic
+**********
+If *method* is ``asymptotic`` ,
+the :ref:`fit_var_table-name` is an additional input in this case
+and it assumed to correspond to a
+fit :ref:`fit_command@variables@both` .
+If the previous fit did (did not) have a
+:ref:`fit_command@simulate_index` it
+must (must not) be included in the sample_command.
+The asymptotic statistics of the model variables is used to generate
+*number_sample* samples of the model variables
+The samples with different values of *sample_index* are independent.
+All of the Laplace density terms are ignored by the asymptotic statistics.
+The constraints are also ignored, except the constraints were
+the lower and upper limits for a variable are equal.
+
+Fixed Effects Distribution
+==========================
+The asymptotic distribution used to simulate the fixed effects is a normal
+with mean equal to the value of the fixed effects in the :ref:`fit_var_table-name`
+and covariance equal to the inverse of the
+Hessian of the fixed effect objective
+:ref:`sample_command@Output Tables@hes_fixed_table` .
+If a fixed effect is scaled
+(see :ref:`prior_table@eta@Scaling Fixed Effects` )
+the scaled version of the fixed effect has the asymptotic distribution.
+If the lower and upper limits are equal, the corresponding variable
+is simulated as having that constant value.
+
+Random Effects Distribution
+===========================
+If the lower and upper limits for a random effect are equal,
+the random effect is simulated as having that constant value.
+If the lower and upper limits are not equal and
+*variables* is ``fixed`` ,
+the random effect is simulated with value zero.
+Otherwise,
+the asymptotic distribution used to simulate a random effect is a normal
+with mean equal to the value of the random effect in the :ref:`fit_var_table-name`
+This is the optimal value given the fixed effects; see
+:ref:`sample_command@Extra Input Tables@fit_var_table` below.
+The covariance of the random effects is equal to the inverse of the
+Hessian of the random effect objective
+:ref:`sample_command@Output Tables@hes_fixed_table` .
+
+Extra Input Tables
+******************
+
+data_sim_table
+==============
+If *method* is ``simulate`` ,
+this command has the extra input :ref:`data_sim_table-name`
+which was created by the previous :ref:`simulate_command-name` .
+
+prior_sim_table
+===============
+If *method* is ``simulate`` ,
+this command has the extra input :ref:`prior_sim_table-name`
+which was created by the previous :ref:`simulate_command-name` .
+
+fit_var_table
+=============
+If *method* is ``asymptotic`` ,
+this command has the extra input :ref:`fit_var_table-name`
+which was created by a previous fit command which
+must have included :ref:`fit_command@variables@both`
+fixed and random effects.
+
+Output Tables
+*************
+
+sample_table
+============
+A new :ref:`sample_table-name` is created each time this command is run.
+It contains samples of the model variables.
+Hence the number of rows in this table is *number_sample*
+times the number of rows in the :ref:`var_table-name` .
+If the ``asymptotic`` command fails because the
+fixed effects information matrix is not positive definite,
+this command will terminate with an error and the sample table will not exist.
+The corresponding fixed effects information matrix will be in the
+:ref:`sample_command@Output Tables@hes_fixed_table` .
+
+No Sample Table
+===============
+In the special case where *method* is ``asymptotic``
+and the Hessian of the fixed objective is not positive definite,
+the sample table is not created; i.e.,
+there is be no sample table in the database after this command.
+In addition, if *variables* is ``both`` and the Hessian
+of the random effects objective is not positive definite,
+the sample table is not created.
+
+hes_fixed_table
+===============
+A new :ref:`hes_fixed_table-name` is created each time this command is run
+with *method* equal to ``asymptotic`` .
+The Hessian of the fixed effects objective is written in this table.
+If *simulate_index* is present (is not present) the Hessian corresponds
+to the simulated measurements in the :ref:`data_sim_table-name`
+(measurements in the :ref:`data_table-name` ).
+
+hes_random_table
+================
+A new :ref:`hes_random_table-name` is created each time this command is run
+with *method* equal to ``asymptotic`` and
+*variables* equal to ``both`` .
+The Hessian of the random effects objective is written in this table.
+If *simulate_index* is present (is not present) the Hessian corresponds
+to the simulated measurements in the :ref:`data_sim_table-name`
+(measurements in the :ref:`data_table-name` ).
+
+Bounds
+******
+If you use the ``simulate`` method,
+the samples are all within the specified bounds, including the bounds
+on the random effects specified by
+:ref:`option_table@Optimize Random Only@bound_random` .
+If you use the ``asymptotic`` method,
+the only bounds that are enforced are where the upper and lower limits
+are equal.
+{xrst_toc_hidden
+   example/get_started/sample_command.py
+}
+Example
+*******
+The files
+:ref:`sample_command.py-name` , :ref:`user_sample_asy.py-name`
+contain examples and tests using this command.
+
+{xrst_end sample_command}

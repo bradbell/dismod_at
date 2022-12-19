@@ -1,0 +1,51 @@
+lines 5-53 of file: xrst/table/fit_data_subset_table.xrst
+
+{xrst_begin fit_data_subset_table}
+
+The Model and Weighted Residuals Corresponding to a Fit
+#######################################################
+
+Discussion
+**********
+The fit_data_subset table compares the model and data
+for the :ref:`model_variables-name`
+corresponding to a :ref:`fit_command-name` .
+A new ``fit_data_subset`` table is created each time the
+:ref:`fit_command-name` is executed.
+
+fit_data_subset_id
+******************
+This column has type ``integer`` and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+The *fit_data_subset_id* column is also a foreign key for the
+:ref:`data_subset_table-name` ; i.e.,
+
+   *data_subset_id* = *fit_data_subset_id*
+
+In addition, the size of both tables is the same.
+
+avg_integrand
+*************
+This column type ``real`` and is the
+:ref:`average integrand<avg_integrand@Average Integrand, A_i>`
+:math:`A_i(u, \theta)`.
+The model variables :math:`(u, \theta)` corresponding to the
+:ref:`fit_var_table-name` .
+The subscript :math:`i` denotes the
+information in the data table for the
+:ref:`data_table@data_id` that corresponds to this
+:ref:`data_subset_table@data_subset_id` .
+
+weighted_residual
+*****************
+The column has type ``real`` and contains the
+:ref:`weighted_residuals<statistic@Weighted Residual Function, R>`
+that correspond to the
+:ref:`model_variables-name` obtained by the fit; see
+:ref:`fit_var_table@fit_var_value` .
+
+Example
+*******
+See the :ref:`fit_command.py-name` example and test.
+
+{xrst_end fit_data_subset_table}

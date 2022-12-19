@@ -1,0 +1,14 @@
+lines 5-16 of file: example/get_started/init_command.py
+
+# {xrst_begin init_command.py}
+# {xrst_comment_ch #}
+#
+# init Command: Example and Test
+# ##############################
+#
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end init_command.py}

@@ -1,0 +1,191 @@
+lines 5-193 of file: example/user/cascade.py
+
+# {xrst_begin user_cascade.py}
+# {xrst_spell
+#     misspecification
+# }
+# {xrst_comment_ch #}
+#
+# Generating Priors For Next Level Down Node Tree
+# ###############################################
+#
+# Node Table
+# **********
+# The following is a diagram of the node tree for this example:
+# ::
+#
+#                   n1
+#             /-----/\-----\
+#           n11            n12
+#         /     \        /     \
+#       n111   n112    n121   n122
+#
+# We refer to *n1* as the root node and
+# *n111* , *n112* , *n121* , *n122* as the leaf nodes.
+#
+# Problem
+# *******
+# Given the information for a fit with *n1* as the parent,
+# with corresponding data *y1* ,
+# pass down summary information for a fit with *n11* as the parent
+# with corresponding data *y11* .
+#
+# Procedure
+# *********
+#
+# Step 1: Create Database
+# =======================
+# This first database ``fit_n1.db``
+# is for fitting with *n1* as the parent and predicting
+# for *n11* .
+#
+# Step 2: Fit With n1 As Parent
+# =============================
+# Use :ref:`fit both<fit_command@variables@both>`
+# to fit with *n1* as the parent to obtain
+# *e1* the corresponding estimate for the :ref:`model_variables-name` .
+# This is done using database ``fit_n1.db``
+#
+# Step 3: Simulate Data
+# =====================
+# Set the :ref:`truth_var_table-name` equal to the estimate *e1*
+# and then use the :ref:`simulate_command-name` to simulate *N* data sets.
+# This is done using database ``fit_n1.db``
+#
+# Step 4: Sample Posterior
+# ========================
+# Use the sample command with the
+# :ref:`sample_command@simulate` method
+# to create *N* samples of the model variables.
+# Call these samples *s1_1* , ... , *s1_N* .
+# This is done using database ``fit_n1.db``
+#
+# Step 5: Predictions For n11
+# ===========================
+# Use the predict command with the
+# :ref:`predict_command@source@sample`
+# to create *N* predictions for the
+# model variable corresponding to fit with *n11* as the parent.
+# Call these predictions *p11_1* , ... , *p11_N* .
+# This is done using database ``fit_n1.db``
+#
+# Step 6: Priors For n11 As Parent
+# ================================
+# Use the predictions *p11_1* , ... , *p11_N* to create priors
+# for the model variables corresponding to fitting with *n11*
+# as the parent and with data *y11* .
+# In this process account for the fact that the data *y11* is a subset
+# of *y1* which was used to obtain the predictions.
+# These priors are written to the database ``fit_n11.db``
+# which starts as a copy of the final ``fit_n1.db`` .
+# This is done so that the subsequent
+# :ref:`init<init_command-name>` and :ref:`fit<fit_command-name>` commands
+# do not wipe out the results stored in ``fit_n1.db`` .
+#
+# Step 7: Fit n11 As Parent
+# =========================
+# Use :ref:`fit both<fit_command@variables@both>`
+# to fit with *n11* as the parent to obtain
+# *e11* corresponding estimate for the model variables.
+#
+# Problem Parameters
+# ******************
+# The following parameters, used in this example, can be changed:
+# {xrst_literal
+#     begin problem parameters
+#     end problem parameters
+# }
+#
+# Age and Time Values
+# *******************
+# The time values do not matter for this problem
+# because all the functions are constant with respect to time.
+# The :ref:`age_table-name` for this problem is given by
+# {xrst_literal
+#     BEGIN age_table
+#     END age_table
+# }
+# We use *n_age* to denote the length of this table.
+#
+# Rate Table
+# **********
+# The only rate in this problem is *iota* . There are *n_age*
+# :ref:`parent rate<model_variables@Fixed Effects, theta@Parent Rates>`
+# values for *iota* , one for each point in the age table.
+# There are two *iota*
+# :ref:`model_variables@Random Effects, u@Child Rate Effects` ,
+# one for each child node.
+# Note that there are two children when fitting *n1* as the parent
+# and when fitting *n11* as the parent.
+#
+# Covariates
+# **********
+# There are two :ref:`covariates<covariate_table-name>` for this example.
+# One covariate has the constant one and reference zero.
+# The other covariate is income and uses the average for its reference.
+# The average income is different depending on whether
+# *n1* or *n11*
+# is the parent.
+#
+# Multipliers
+# ***********
+# There are two
+# :ref:`model_variables@Fixed Effects, theta@Group Covariate Multipliers` .
+#
+# gamma
+# =====
+# One multiplier multiples the constant one and models the unknown variation
+# in the data (sometimes referred to as model misspecification).
+# We call this covariate multiplier
+# :ref:`gamma<data_like@Measurement Noise Covariates@gamma_j (a, t)>` .
+# We use a uniform prior on this multiplier so that it absorbs
+# all the noise due to model misspecification.
+# When checking for coverage by the samples *s1_1* , ... , *s1_N* ,
+# we expand the sample standard deviation by a factor of
+# (1 + *gamma* ) .
+# This accounts for the fact that the noise absorbed by *gamma*
+# is modeled as independent between data points.
+# When fitting with *n1* as the parent, this noise is
+# correlated between samples in the same leaf.
+#
+# alpha
+# =====
+# The other multiplier multiplies income and affects *iota* .
+# We call this covariate multiplier
+# :ref:`alpha<avg_integrand@Rate Functions@Group Rate Covariate Multiplier, alpha_jk>` .
+# We note that both average income and random effects vary between the nodes.
+# When fitting with *n1* as the parent,
+# *alpha* tries to absorb the random effects at the leaf level.
+# We use a Laplace prior on *alpha* to reduce this effect.
+#
+# Data Table
+# **********
+# For this example, all the data is
+# :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` .
+# There are *data_per_leaf* data point for each leaf node.
+# Income is varies within each leaf node so the random effect
+# can be separated from the income effect.
+# Normally there is much more data, so we compensate by using
+# a small coefficient of variation for the measurement values
+# *meas_cv* .
+# The simulation value of *iota* , corresponding to no effect, is
+# a function of age and defined by ``iota_no_effect`` ( *age* ) .
+# Each data point corresponds to a leaf node.
+# The total effect for a data point is
+# the random effect for the leaf node,
+# plus the random effect for parent of the leaf,
+# plus the income effect.
+# Each data point is for a specific age and the corresponding mean
+# is *iota_no_effect* ( ``age`` ) times the exponential of the total effect.
+# The standard deviation of the data is *meas_cv* times its mean.
+# A Gaussian with this mean and standard deviation is used to simulate
+# each data point.
+#
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_cascade.py}

@@ -1,0 +1,23 @@
+lines 6-26 of file: example/user/system_command_prc.py
+
+{xrst_begin user_system_command_prc.py}
+{xrst_spell
+   prc
+}
+
+Example Using system_command_prc
+################################
+
+Discussion
+**********
+This example demonstrates some of the different argument cases for the
+:ref:`system_command_prc-name` function.
+
+Source Code
+***********
+{xrst_literal
+   # BEGIN PYTHON
+   # END PYTHON
+}
+
+{xrst_end user_system_command_prc.py}

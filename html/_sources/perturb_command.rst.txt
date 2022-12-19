@@ -1,0 +1,64 @@
+lines 5-66 of file: python/dismod_at/perturb_command.py
+
+# {xrst_begin perturb_command}
+# {xrst_spell
+#     perturb
+#     perturbing
+#     tbl
+# }
+# {xrst_comment_ch #}
+#
+# Perturb Command: Random Change to Start or Scale Tables
+# #######################################################
+#
+# Syntax
+# ******
+#
+# As Program
+# ==========
+# ``dismodat.py`` *database* ``perturb`` *tbl_name* *sigma*
+#
+# As Python Function
+# ==================
+# ``dismod_at.perturb_command`` ( *database* , *tbl_name* , *sigma* )
+#
+# database
+# ********
+# is the path from the currently directory to the database.
+# This must be a :ref:`dismod_at<database-name>` and
+# the :ref:`init_command-name` must have been run on the database.
+#
+# tbl_name
+# ********
+# This is the name of an input table that we are perturbing.
+# This must be one of the following choices:
+#
+# scale_var
+# =========
+# In this case the :ref:`scale_var_table-name` is perturbed.
+# This can be useful when one starts near the solution where the
+# derivative of the objective may be small.
+#
+# start_var
+# =========
+# In this case the :ref:`start_var_table-name` is perturbed.
+# This can be useful when one wants to see if the starting point
+# has an effect on the solution.
+#
+# sigma
+# *****
+# We use *multiplier* for a randomly chose multiplier,
+# that is different for each table entry, and that has a log with
+# mean zero and standard deviation *sigma* .
+# The value chosen for each table entry is its original value
+# times the multiplier.
+# If this value is below (above) the lower (upper) limit
+# for the table entry the lower (upper) limit is chosen.
+#
+# Random Seed
+# ===========
+# If the :ref:`option_table@random_seed` is non-zero,
+# it is used to seed the random number generator that is used.
+# Otherwise, the system clock is used to seed the random number generator.
+#
+# {xrst_end perturb_command}

@@ -1,0 +1,337 @@
+lines 5-339 of file: xrst/model/posterior.xrst
+
+{xrst_begin posterior}
+{xrst_spell
+   cc
+   covariance
+   determinant
+   estimator
+   lemma
+   lemmas
+   maximizer
+}
+
+Simulating Posterior Distribution for Model Variables
+#####################################################
+
+Purpose
+*******
+The ``sample`` command with method equal to
+:ref:`sample_command@simulate`
+fits simulated random measurements :ref:`data_sim_table-name`
+and simulated random priors :ref:`prior_sim_table-name` .
+The Lemmas on this page prove that, in the linear Gaussian case,
+this gives the proper statistics for the posterior distribution
+of the maximum likelihood estimate.
+Note that the dismod_at case is not linear nor are all the
+statistics Gaussian.
+
+Lemma 1
+*******
+Suppose we are given
+a matrix :math:`A \in \B{R}^{m \times n}`,
+a positive definite matrix, :math:`V \in \B{R}^{m \times m}` and
+a :math:`y \in \B{R}^{m \times 1}`.
+Further suppose that there is an
+unknown vector :math:`\bar{\theta} \in \B{R}^{n \times 1}` such that
+:math:`y \sim \B{N} ( A \bar{\theta} , V )`.
+The maximum likelihood estimator :math:`\hat{\theta}`
+for :math:`\bar{\theta}` given :math:`y` has mean
+:math:`\B{E} [ \hat{\theta} ] = \bar{\theta}` and variance
+
+.. math::
+
+   \B{E} [ ( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T} ]
+   =
+   ( A^\R{T} V^{-1} A )^{-1}
+   =
+   - \; \left(
+      \frac{ \partial^2 } { \partial \theta^2 } \log \B{p} ( y | \theta )
+   \right)^{-1}
+
+Proof
+=====
+The probability density for :math:`y` given :math:`\theta` is
+
+.. math::
+
+   \B{p} ( y | \theta )
+   =
+   \det ( 2 \pi V )^{-1/2} \exp \left[
+      - \frac{1}{2} ( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
+   \right]
+
+Dropping the determinant term,
+because it does not depend on :math:`\theta`,
+and taking the negative log we get the objective
+
+.. math::
+
+   f ( \theta ) = \frac{1}{2} ( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
+
+and the equivalent problem to minimize :math:`f ( \theta )` with
+respect to :math:`\theta \in \B{R}^{n \times 1}`.
+The derivative :math:`f^{(1)} ( \theta ) \in \B{R}^{1 \times n}`
+is given by
+
+.. math::
+
+   f^{(1)} ( \theta ) = - ( y - A \theta )^\R{T} V^{-1} A
+
+It follows that
+
+.. math::
+
+   - \frac{ \partial^2 } { \partial \theta^2 } \log \B{p} ( y | \theta )
+   =
+   f^{(2)} ( \theta )
+   =
+   A^\R{T} V^{-1} A
+
+This completes the proof of the equation for the second partial
+of :math:`\B{p} ( y | \theta )` in the statement of the lemma.
+
+The maximum likelihood estimate :math:`\hat{\theta}` satisfies the
+equation :math:`f^{(1)} ( \hat{\theta} ) = 0`; i.e.,
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   0 & = & - ( y - A \hat{\theta} )^\R{T} V^{-1} A
+   \\
+   A^\R{T} V^{-1} y  & = & A^\R{T} V^{-1} A \hat{\theta}
+   \\
+   \hat{\theta} & =  & ( A^\R{T} V^{-1} A )^{-1} A^\R{T} V^{-1} y
+   \end{eqnarray}
+
+Defining :math:`e = y - A \bar{\theta}`, we have
+:math:`\B{E} [ e ] = 0` and
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \hat{\theta} & =  &
+   ( A^\R{T} V^{-1} A )^{-1} A^\R{T} V^{-1} ( A \bar{\theta} + e )
+   \\
+   \hat{\theta}
+   & =  &
+   \bar{\theta} + ( A^\R{T} V^{-1} A )^{-1} A^\R{T} V^{-1} e
+   \end{eqnarray}
+
+This expresses the estimate :math:`\hat{\theta}` as a deterministic
+function of the noise :math:`e`.
+It follows from the last equation for :math:`\hat{\theta}` above,
+and the fact that :math:`\B{E} [ e ] = 0`,
+that :math:`\B{E} [ \hat{\theta} ] = \bar{\theta}`.
+This completes the proof of the equation for the expected value
+of :math:`\hat{\theta}` in the statement of the lemma.
+
+It also follows, from the equation for :math:`\hat{\theta}` above, that
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   ( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T}
+   & = &
+   ( A^\R{T} V^{-1} A )^{-1} A^\R{T}
+   V^{-1} e e^\R{T} V^{-1}
+   A ( A^\R{T} V^{-1} A )^{-1}
+   \\
+   \B{E} [ ( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T} ]
+   & = &
+   ( A^\R{T} V^{-1} A )^{-1}
+   \end{eqnarray}
+
+This completes the proof of the equation for the covariance of
+:math:`\hat{\theta} - \bar{\theta}` in the statement of the lemma.
+
+Remark
+======
+For the case in
+:ref:`posterior@Lemma 1` , the second partial of
+:math:`\log \B{p} ( y | \theta )` with respect to :math:`\theta`
+does not depend on :math:`\theta` and :math:`A V^{-1} A` is the
+information matrix.
+
+Lemma 2
+*******
+Suppose that in addition to all the information in
+:ref:`posterior@Lemma 1` we have
+a matrix :math:`B \in \B{R}^{p \times n}`,
+a positive definite matrix, :math:`P \in \B{R}^{p \times p}`,
+and :math:`z \in \B{R}^{p \times 1}` where we have
+independent prior information
+:math:`B \theta \sim \B{N}( z , P )`.
+Further suppose :math:`B` has rank :math:`n`.
+For this case we define :math:`\hat{\theta}` as the maximizer of
+:math:`\B{p}( y | \theta ) \B{p}( \theta )`.
+It follows that
+
+.. math::
+
+   \B{E} [
+      ( \hat{\theta} - \B{E}[ \hat{\theta} ] )
+      ( \hat{\theta} - \B{E}[ \hat{\theta} ] )^\R{T}
+   \prec
+   ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+   =
+   - \; \left(
+      \frac{ \partial^2 } { \partial \theta^2 }
+      \log [ \B{p} ( y | \theta ) \B{p} ( \theta ) ]
+   \right)^{-1}
+
+where :math:`\prec` means less than in a positive definite matrix sense.
+
+Remark
+======
+The posterior distribution for the maximum likelihood estimate,
+when including a prior,
+cannot be sampled by fitting simulated data alone.
+To see this, consider the case where column one of the matrix :math:`A`
+is zero.
+In this case, that data :math:`y` does not depend on :math:`\theta_1` and
+:math:`\hat{\theta}_1 = \bar{\theta}_1`
+no matter what the value of :math:`y`.
+On the other hand,
+the posterior distribution for :math:`\theta_1`, for this case,
+is the same as its prior distribution and has uncertainty.
+
+Proof
+=====
+
+.. math::
+
+   \B{p} ( y | \theta ) \B{p} ( \theta )
+   =
+   \det ( 2 \pi V )^{-1/2} \det ( 2 \pi P )^{-1/2} \exp \left[
+   - \frac{1}{2}
+      ( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
+   - \frac{1}{2}
+      ( B \theta - z )^\R{T} P^{-1} ( B \theta - z )
+   \right]
+
+The derivative of the corresponding negative log likelihood is
+
+.. math::
+
+   - ( y - A \theta )^\R{T} V^{-1} A  + ( B \theta - z )^\R{T} P^{-1} B
+
+From this point,
+the proof of the equation for the second partial is very similar to
+Lemma 1 and left to the reader.
+
+Setting the derivative to zero, we get the corresponding maximum likelihood
+estimate :math:`\hat{\theta}` satisfies
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   ( y - A \hat{\theta} )^\R{T} V^{-1} A
+   & = &
+   ( B \hat{\theta} - z )^\R{T} P^{-1} B
+   \\
+   y^\R{T} V^{-1} A + z^\R{T} P^{-1} B
+   & = &
+   \hat{\theta}^\R{T} A^\R{T} V^{-1} A + \hat{\theta}^\R{T} B^\R{T} P^{-1} B
+   \\
+   \hat{\theta}
+   & = &
+   ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+   ( A^\R{T} V^{-1} y + B^\R{T} P^{-1} z )
+   \\
+   \hat{\theta}
+   & = &
+   ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+   ( A^\R{T} V^{-1} A \bar{\theta} + B^\R{T} P^{-1} z )
+   +
+   ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1} A^\R{T} V^{-1} e
+   \end{eqnarray}
+
+The first term is deterministic and the second term is mean zero.
+It follows that
+
+.. math::
+   :nowrap:
+
+   \begin{eqnarray}
+   \B{E} [ \hat{\theta} ]
+   & = &
+   ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+   ( A^\R{T} V^{-1} A \bar{\theta} + B^\R{T} P^{-1} z )
+   \\
+   \B{E} [
+      ( \hat{\theta} - \B{E} [ \hat{\theta} ] )
+      ( \hat{\theta} - \B{E} [ \hat{\theta} ] )^\R{T}
+   ]
+   & = &
+   ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+   A^\R{T} V^{-1} A
+   ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+   \end{eqnarray}
+
+Since the matrix :math:`B^\R{T} P^{-1} B` is positive definite, we have
+
+.. math::
+
+   A^\R{T} V^{-1} A  \prec A^\R{T} V^{-1} A + B^\R{T} P^{-1} B
+
+Replacing
+:math:`A^\R{T} V^{-1} A` by
+:math:`A^\R{T} V^{-1} A + B^\R{T} P^{-1} B`
+in the center of the previous expression
+for the variance of :math:`\hat{\theta}` we obtain
+
+.. math::
+
+   \B{E} [
+      ( \hat{\theta} - \B{E} [ \hat{\theta} ] )
+      ( \hat{\theta} - \B{E} [ \hat{\theta} ] )^\R{T}
+   ]
+   \prec
+   ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+
+This completes the proof of this lemma.
+
+Simulation
+**********
+Suppose we simulate date
+:math:`y \sim \B{N}( A \bar{\theta}, V)` and independent prior values
+:math:`z \sim \B{N}( B \bar{\theta}, P)` were
+:math:`A`, :math:`V` are as in :ref:`posterior@Lemma 1` and
+:math:`B`, :math:`P` are as in :ref:`posterior@Lemma 2` .
+Furthermore, we define :math:`\hat{\theta}` as the maximizer of
+
+.. math::
+
+   \B{p}( y, z | \theta ) = \B{p} ( y | \theta ) \B{p} ( z | \theta )
+
+We define :math:`w \in \B{R}^{(m + n) \times 1}`,
+:math:`C \in \B{R}^{ (m + n) \times n}`, and
+:math:`U \in \B{R}^{ (m + n) \times (m + n)}` by
+
+.. math::
+
+   w = \left( \begin{array}{c} y \\ z \end{array} \right)
+   \W{,}
+   C = \left( \begin{array}{cc} A & 0 \\ 0 & B \end{array} \right)
+   \W{,}
+   U = \left( \begin{array}{cc} V & 0 \\ 0 & P \end{array} \right)
+
+We can now apply Lemma 1 with :math:`y` replaced by :math:`w`,
+:math:`A` replaced by :math:`C` and
+:math:`V` replaced by :math:`U`.
+It follows from Lemma 1 that :math:`\B{E} [ \hat{\theta} ] = \bar{\theta}` and
+
+.. math::
+
+   \B{E} [ ( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T} ]
+   =
+   ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+
+which is the proper posterior variance for the case in Lemma 2.
+
+{xrst_end posterior}

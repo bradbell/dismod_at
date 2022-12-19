@@ -1,0 +1,34 @@
+lines 7-38 of file: python/bin/dismodat.py.in
+
+# {xrst_begin dismodat.py}
+# {xrst_comment_ch #}
+#
+# Python Program Syntax
+# #####################
+#
+# Syntax
+# ******
+# dismodat.py database command ...
+#
+# Log Table
+# *********
+#
+# Start
+# =====
+# At the start, a ``dismodat.py``
+# command adds a
+# :ref:`log_table@message_type@command`
+# log entry with
+# :ref:`log_table@message`
+# equal to
+#
+#     ``begin`` *command*  ...
+#
+# End
+# ===
+# At the end,
+# a ``dismodat.py`` command adds a command log entry with message equal to
+#
+#     ``end`` *command*
+#
+# {xrst_end dismodat.py}

@@ -1,0 +1,81 @@
+lines 5-83 of file: xrst/table/subgroup_table.xrst
+
+{xrst_begin subgroup_table}
+{xrst_spell
+   subgroups
+}
+The Subgroup Table
+##################
+
+Purpose
+*******
+This table allows one to divide the data into groups and subgroups.
+A group (subgroups within a group) correspond to the fixed effects
+(random effects) created by one row in the covariate multiplier table
+:ref:`mulcov_table-name` .
+
+subgroup_id
+***********
+This column has type ``integer`` and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+
+subgroup_name
+*************
+This column has type ``text`` and has a different value for every row;
+i.e., the names are unique and can act as substitutes for the primary key.
+The names are intended to be easier for a human to remember than the ids.
+
+group_id
+********
+This column has type ``integer`` .
+Its value in its first row is zero (where *subgroup_id* is zero).
+The value in each subsequent row is either the same as the previous row,
+or one greater than the previous row.
+The group corresponding to a group id is the union of all the subgroups
+with the same group_id.
+
+group_name
+**********
+This column has type ``text`` .
+Rows that have the same (different) *group_id* must have the same
+(different) *group_name* .
+Spaces are not allowed the *group_name* because they are used by the
+:ref:`option_table@Zero Sum Constraints@zero_sum_mulcov_group`
+option to separate group names.
+The *group_name* must be different for different *group_id*
+values. In addition, it should note be equal to any *subgroup_name*
+values, except in the special case where it is the only subgroup for the
+group.
+
+Discussion
+**********
+
+Spaces
+======
+It would be possible to allow spaces in the *group_name*
+if we add another option called *separator* that was the
+character used to separate lists in the option table
+(the default value for this option would be space).
+
+Order
+=====
+The order of the rows in the subgroup table is set up so that *group_id*
+is monotone non-decreasing. This requirement could be removed
+(it just make the initial implementation of subgroups easier).
+
+group Table
+===========
+One might think it would be easier to have a separate group table
+and not require *group_id* to be monotone and not have to include
+*group_name* in this table. The problem with this is ``group``
+is a keyword in SQL and hence it is hard to work with a table named group.
+
+{xrst_comment
+   example/table/subgroup_table.py
+%}
+Example
+*******
+2DO: create a file ``subgroup_table.py``
+that contains an example subgroup table.
+
+{xrst_end subgroup_table}

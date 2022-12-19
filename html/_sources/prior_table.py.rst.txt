@@ -1,0 +1,14 @@
+lines 5-16 of file: example/table/prior_table.py
+
+# {xrst_begin prior_table.py}
+# {xrst_comment_ch #}
+#
+# prior_table: Example and Test
+# #############################
+#
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end prior_table.py}

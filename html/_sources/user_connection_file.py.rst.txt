@@ -1,0 +1,15 @@
+lines 6-18 of file: example/user/connection_file.py
+
+{xrst_begin user_connection_file.py}
+
+Example Using connection_file
+#############################
+
+Source Code
+***********
+{xrst_literal
+   # BEGIN PYTHON
+   # END PYTHON
+}
+
+{xrst_end user_connection_file.py}

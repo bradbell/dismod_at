@@ -1,0 +1,15 @@
+lines 6-18 of file: xrst/install/install.xrst
+
+{xrst_begin install}
+
+Installing dismod_at
+####################
+
+Contents
+********
+{xrst_toc_table
+   bin/dock_dismod_at.sh
+   xrst/install/unix.xrst
+}
+
+{xrst_end install}

@@ -1,0 +1,45 @@
+lines 5-47 of file: xrst/table/depend_var_table.xrst
+
+{xrst_begin depend_var_table}
+
+Which Variables The Model Depends On
+####################################
+
+Purpose
+*******
+This table is created by the :ref:`depend_command-name` and
+is not used by any commands.
+It is only meant as a diagnostic to see if the model has more
+variables than necessary; e.g.,
+random effects with not associated data.
+
+depend_var_id
+*************
+This column has type ``integer`` and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+The *depend_var_id* column is also a foreign key for the
+:ref:`var_table-name` ; i.e.,
+
+   *depend_var_id* = *var_id*
+
+In addition, the size of both tables is the same.
+
+data_depend
+***********
+This column type ``integer`` and is either zero or one.
+If it is one (zero), the model for the data does (does not) depend on the
+:ref:`model_variable<model_variables-name>` corresponding to this
+:ref:`var_table@var_id` .
+
+prior_depend
+************
+This column type ``integer`` and is either zero or one.
+If it is one (zero), the model for the prior does (does not) depend on the
+:ref:`model_variable<model_variables-name>` corresponding to this
+:ref:`var_table@var_id` .
+
+Example
+*******
+See the :ref:`depend_command.py-name` example and test.
+
+{xrst_end depend_var_table}

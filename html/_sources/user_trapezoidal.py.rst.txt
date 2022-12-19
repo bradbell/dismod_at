@@ -1,0 +1,46 @@
+lines 6-49 of file: example/user/trapezoidal.py
+
+{xrst_begin user_trapezoidal.py}
+{xrst_spell
+   mtexcess
+   mtother
+   trapezoidal
+}
+
+Using the Trapezoidal ODE Solver
+################################
+
+Rates
+*****
+The non-zero rates in this example are iota, rho, chi, and omega.
+They are all constant in age and time because they each have one smoothing
+grid point.
+
+Integrands
+**********
+The integrands for this example are prevalence, remission, mtexcess,
+and mtother.
+Modeling the prevalence integrand requires solving the ODE.
+The other integrands are direct measurements of the rates.
+To be specific, remission measures rho,
+mtexcess measures chi, and
+mtother measures omega.
+
+Data
+****
+For each of the integrands there is one data point are
+age 50 and time 2000.
+No noise is added to the data but it is modeled as if it
+had a 10 percent coefficient of variation.
+
+Random Effects
+**************
+There are no random effects in this example.
+
+rate_case
+*********
+The rate case for this example is ``trapezoidal`` .
+This case has does not require any of the rates to be positive,
+so we use a lower limit of one for all the rates.
+
+{xrst_end user_trapezoidal.py}

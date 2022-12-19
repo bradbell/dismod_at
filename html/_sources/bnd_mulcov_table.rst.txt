@@ -1,0 +1,54 @@
+lines 5-56 of file: xrst/table/bnd_mulcov_table.xrst
+
+{xrst_begin bnd_mulcov_table}
+
+The Covariate and Multiplier Bound Table
+########################################
+
+bnd_mulcov_id
+*************
+This column has type ``integer`` and is the primary key for this table.
+Its initial value is zero, and it increments by one for each row.
+The ``bnd_mulcov_id`` column is also a foreign key for the
+:ref:`mulcov_table-name` ; i.e.,
+
+   *mulcov_id* = *bnd_mulcov_id*
+
+In addition, the size of both tables is the same.
+
+max_cov_diff
+************
+This column has type *real* and contains the maximum absolute difference
+of the covariate minus its reference (for this covariate multiplier).
+
+#. This maximum is restricted to the data table covariate values
+   that have :ref:`data_subset_table@data_id`
+   in the data_subset table.
+#. This maximum is further restricted to the covariate column
+   corresponding to the :ref:`mulcov_table@covariate_id`
+   for this covariate multiplier.
+#. If the :ref:`mulcov_table@mulcov_type`
+   for this multiplier is ``rate_value`` ,
+   :ref:`mulcov_table@integrand_id` for this multiplier is null
+   and the maximum is respect to all integrands.
+#. If the *mulcov_type* for this multiplier is not ``rate_value`` ,
+   :ref:`mulcov_table@integrand_id` for this multiplier is not null
+   and the maximum is further restricted the that integrand.
+
+If this value is zero, the corresponding covariate multiplier does not
+affect the model value for any of the data included during a fit.
+
+max_mulcov
+**********
+This column has type ``real`` , is non-negative.
+The value *max_mulcov* is a maximum for the
+upper limit for the corresponding covariate multiplier during optimization.
+The value ``-`` *max_mulcov* is a minimum for the
+lower limit for the corresponding covariate multiplier during optimization.
+This maximum and minimum are in addition to the priors for the multiplier.
+If *max_mulcov* is null,
+it is interpreted as plus infinity and has no effect.
+Also, in the special case where the prior upper and lower limits are equal,
+this maximum and minimum are ignored (have no effect).
+
+{xrst_end bnd_mulcov_table}

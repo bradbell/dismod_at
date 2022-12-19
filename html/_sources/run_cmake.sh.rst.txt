@@ -1,0 +1,115 @@
+lines 7-119 of file: bin/run_cmake.sh
+
+# {xrst_begin run_cmake.sh}
+# {xrst_spell
+#     cmake
+#     colons
+#     compilers
+#     cxx
+#     fortran
+#     gcc
+#     gfortran
+#     gnu
+#     libdir
+#     makefile
+#     pthread
+#     usr
+#     wconversion
+#     wpedantic
+#     wshadow
+# }
+# {xrst_comment_ch #}
+#
+# bin/run_cmake.sh: User Configuration Options
+# ############################################
+#
+# verbose_makefile
+# ****************
+# Use 'no' for normal and 'yes' for verbose make output:
+# {xrst_code sh}
+verbose_makefile='no'
+# {xrst_code}
+#
+# build_type
+# **********
+# Use either ``debug`` or ``release`` for the type of this build:
+# {xrst_code sh}
+build_type='release'
+# {xrst_code}
+#
+# dismod_at_prefix
+# ****************
+# Prefix where dismod_at will be installed:
+# {xrst_code sh}
+dismod_at_prefix="$HOME/prefix/dismod_at"
+# {xrst_code}
+# If *dismod_at_prefix* ends in ``dismod_at`` ,
+# ``run_cmake.sh`` will use a soft link from this prefix to
+# *dismod_at_prefix* . ``debug`` or
+# *dismod_at_prefix* . ``release``
+# depending on the choice for *build_type* .
+#
+# Debug and Release
+# *****************
+# If a soft link is used for the install,
+# the same technique will be used to map the ``build``
+# directory to the debug or release version.
+# If you are using both a debug and release versions of dismod_at,
+# both versions of the
+# :ref:`install_unix@Special Requirements`
+# will need to be installed.
+#
+# python3_executable
+# ******************
+# Path to the python3 executable on this machine.
+# {xrst_code sh}
+python3_executable='/usr/bin/python3'
+# {xrst_code}
+# You can use the command $code which python3$$ to determine the location
+# of the default version for this system.
+# In the past, removing the  characters in front of the following
+# command would work for the IHME cluster:
+#
+#     ``python3_executable`` ='/ ``usr/local/anaconda3-current/bin/python`` '
+#
+# specific_compiler
+# *****************
+# On some systems, e.g. the Mac using port, there are problems with mixing
+# different compiler systems for fortran and C++; see
+# `ipopt issue 471 <https://github.com/coin-or/Ipopt/discussions/471>`_.
+# This variable allows you to set a specific compiler for
+# C, and or CXX and or FC. For example
+# ``specific_compiler='CC=gcc CXX=g++ FC=gfortran'``
+# uses the gnu versions of these compilers.
+# The configuration will automatically find compilers that are not specified;
+# i.e., if
+# {xrst_code sh}
+specific_compiler=''
+# {xrst_code}
+#
+# extra_cxx_flags
+# ***************
+# Extra C++ flags used during compilation:
+# {xrst_code sh}
+extra_cxx_flags='-std=c++11 -Wpedantic -Wall -Wshadow -Wconversion'
+# {xrst_code}
+# An alternative might be ``-Wall`` .
+#
+# cmake_libdir
+# ************
+# Sub-directory of each prefix where libraries are installed.
+# {xrst_code sh}
+cmake_libdir='lib64'
+# {xrst_code}
+#
+# system_specific_library_list
+# ****************************
+# List of libraries that are needed for a particular system. For example,
+# if when you build ``dismod_at`` the ``pthread`` library is
+# required by your system, then include it here.
+# Libraries in the list can be separated by spaces or semi-colons.
+# {xrst_code sh}
+system_specific_library_list=''
+# {xrst_code}
+#
+# {xrst_end run_cmake.sh}

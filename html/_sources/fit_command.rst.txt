@@ -1,0 +1,221 @@
+lines 23-241 of file: devel/cmd/fit_command.cpp
+
+{xrst_begin fit_command}
+{xrst_spell
+   apposed
+   iter
+}
+
+The Fit Command
+###############
+
+Syntax
+******
+
+| ``dismod_at`` *database* ``fit`` *variables*
+| ``dismod_at`` *database* ``fit`` *variables* *simulate_index*
+| ``dismod_at`` *database* ``fit`` *variables* ``warm_start``
+| ``dismod_at`` *database* ``fit`` *variables* *simulate_index* ``warm_start``
+
+database
+********
+Is an
+http://www.sqlite.org/sqlite/ database containing the
+``dismod_at`` :ref:`input-name` tables which are not modified.
+
+variables
+*********
+This argument is ``fixed`` , ``random`` or ``both`` .
+If it is ``fixed`` (``random`` )
+only the fixed effects (random effects) are optimized.
+If it is ``both`` , both the fixed and random effects
+are optimized.
+
+fixed
+=====
+This option optimizes the fixed effects with the
+random effects corresponding to
+:ref:`constant child value priors<rate_table@Child Value Priors@Constant>`
+at their constrained values and the other random effects
+constrained to be zero.
+(This is equivalent to fitting with
+:ref:`option_table@Optimize Random Only@bound_random` equal to zero.)
+This is useful when one uses fitting with no random effects as
+a starting point for fitting with random effects; see
+:ref:`set_command-name` ,
+:ref:`start_var_table-name` , and
+:ref:`fit_fixed_both.py<user_fit_fixed_both.py-name>` .
+This enables one to see the different between the two
+fits in the :ref:`log_table-name`
+(as apposed to changing
+:ref:`option_table@Optimize Random Only@bound_random`
+in the ``option`` table).
+
+random
+======
+This optimizes the random effects with
+the fixed effects set to their starting values; see
+:ref:`start_var_table-name` .
+
+both
+====
+This option fits both the
+:ref:`fixed<model_variables@Fixed Effects, theta>` and
+:ref:`random<model_variables@Random Effects, u>` effects.
+
+simulate_index
+**************
+If *simulate_index* is present, it must be less than
+:ref:`simulate_command@number_simulate` .
+
+data_sim_table
+==============
+If *simulate_index* is present, this is an extra input table.
+The :ref:`data_sim_table@data_sim_value` entries,
+corresponding to *simulate_index* ,
+are used in place of the data table
+:ref:`data_table@meas_value` entries.
+All the rest of the data table values
+are the same as when *simulated_index* is not present; e.g.,
+:ref:`data_table@meas_std` comes from the data table.
+
+prior_sim_table
+===============
+If *simulate_index* is present, this is an extra input table.
+The :ref:`prior_sim_table@prior_sim_value` entries,
+corresponding to *simulate_index* ,
+are used in place of the prior table
+:ref:`prior_table@mean` entries.
+All the rest of the prior table values
+are the same as when *simulated_index* is not present; e.g.,
+:ref:`prior_table@std` comes from the prior table.
+
+warm_start
+**********
+If ``warm_start`` is at the end of the command, the
+:ref:`fit_command@Output Tables@ipopt_info_table`
+written by the previous fit,
+is used to start the optimization of the fixed effects
+where the previous fit left off.
+This is intended to be used in the following cases:
+
+#. Termination of previous fit is due to reaching
+   :ref:`max_num_iter_fixed<option_table@Optimize Fixed and Random@max_num_iter>` .
+#. The
+   :ref:`option_table@Optimize Fixed and Random@tolerance` for the
+   fixed or random effects been changed.
+
+Other options besides those listed above,
+should be the same as for the previous fit.
+
+data_subset_table
+*****************
+Only the data table rows with :ref:`data_table@data_id`
+that also appear in the :ref:`data_subset table<data_subset_table@data_id>`
+are included in the fit and residuals.
+
+hold_out
+********
+A data table :ref:`data_table@meas_value`
+is held out from the fit, but included in the residuals,
+if any of the following conditions hold:
+
+#. The data table :ref:`data_table@hold_out` is non-zero.
+#. The corresponding data_subset table
+   :ref:`data_subset_table@hold_out` is non-zero;
+   see :ref:`hold_out_command-name` .
+#. The data table :ref:`integrand<data_table@integrand_id>`
+   corresponds to an :ref:`integrand_table@integrand_name`
+   that is in the option table
+   :ref:`option_table@hold_out_integrand` list
+
+After the optimal variable values are found,
+the hold out residuals are computed so one can check the
+predictive validity for hold out data.
+The residuals for hold out data (other data) are computed once (many times)
+for each fit.
+
+Output Tables
+*************
+
+fit_var_table
+=============
+A new :ref:`fit_var_table-name` is created each time this command is run.
+It contains the results of the fit in its
+:ref:`fit_var_table@fit_var_value` column.
+
+fit_data_subset_table
+=====================
+A new :ref:`fit_data_subset_table-name` is created each time this command is run.
+It is a comparison of the model and data corresponding to the fit results.
+
+trace_fixed
+===========
+A new :ref:`trace_fixed_table-name` is created each time a
+``fit fixed`` or ``fit both`` command is run.
+It contains a trace of the corresponding optimization.
+
+hes_random_table
+================
+A new :ref:`hes_random_table-name` is created each time this command is run
+with *variables* equal to ``random`` or ``both`` .
+The Hessian of the random effects objective is written in this table.
+If *simulate_index* is present (is not present) the Hessian corresponds
+to the simulated measurements in the :ref:`data_sim_table-name`
+(measurements in the :ref:`data_table-name` ).
+
+mixed_info
+==========
+A new :ref:`mixed_info_table-name` table is created each time this command is run.
+
+ipopt_info_table
+================
+The fixed effect are optimized when
+*variables* is equal to ``both`` or ``fixed`` .
+In the case a new ``ipopt_info`` table, corresponding to the final
+fit for the fixed effects, is written to the ipopt_info table.
+The contents of this table are unspecified; i.e., not part of the
+dismod_at API and my change.
+
+Random Effects
+**************
+A model has random effects if one of the
+:ref:`rate_table@child_smooth_id` or
+:ref:`rate_table@child_nslist_id` is not ``null`` .
+In some cases it helps to
+first fit with *variables* equal to ``fixed``
+and then fit with *variables* equal to ``both`` .
+
+Convergence Problems
+********************
+The derivative of the fixed effects objective,
+at the prior mean for the fixed effects,
+is used to scale the fixed effects objective.
+If the optimal value for a fixed effect is equal to its prior mean,
+its partial derivative at the prior mean is often near zero.
+Near zero derivatives, at the prior mean, cause the scaling to be unstable
+and result in convergence problems.
+You may be able to fix this
+by using a uniform distribution, and a different prior mean,
+for a fixed effect that does not change.
+If this does not work, the data will not determine that fixed effect
+and you may have to constrain it to have the value you want.
+
+Ipopt Options
+*************
+Some of the options in the :ref:`option_table-name` are for controlling
+`Ipopt <https://coin-or.github.io/Ipopt/OPTIONS.html>`_.
+You can override these options, or set other options, using a file called
+``ipopt.opt`` in the directory where a fit command is run.
+Doing so not supported because ``dismod_at``
+expects certain options to be set a certain way.
+The set of such options that is not specified and may change with time.
+{xrst_toc_hidden
+   example/get_started/fit_command.py
+}
+Example
+*******
+The file :ref:`fit_command.py-name` contains an example and test
+using this command.
+
+{xrst_end fit_command}

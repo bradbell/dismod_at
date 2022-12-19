@@ -1,0 +1,58 @@
+lines 6-61 of file: python/dismod_at/get_table_dict.py
+
+# {xrst_begin get_table_dict}
+# {xrst_spell
+#     sql
+#     tbl
+# }
+# {xrst_comment_ch #}
+#
+# Get All Data From a Table
+# #########################
+#
+# Syntax
+# ******
+# *table_dict* = ``dismod_at.get_table_dict`` ( *connection* , *tbl_name* )
+#
+# connection
+# **********
+# is a :ref:`create_connection@connection` for this database.
+#
+# tbl_name
+# ********
+# is a ``str`` that specifies the name of the table.
+# We use the notation *n_row* for the number of rows in
+# the table.
+#
+# table_dict
+# **********
+# This is a list, with length *n_row* , where each element
+# of the list is a dictionary.
+# For each dictionaries, the set of keys is the column names in the table
+# (excluding the primary key *tbl_name* _ ``id`` ).
+# The value *table_dict* [ *i* ][ *col_name* ] corresponds to
+# and the column with name *col_name* and primary key
+# *tbl_name* _ ``id`` = *i* .
+# The python type corresponding to the values in the table are
+# as follows:
+#
+# .. csv-table::
+#     :widths: auto
+#
+#     Sql Table,Python
+#     ``integer``,``int``
+#     ``real``,``float``
+#     ``text``,``str``
+#     ``null``,``None``
+#
+# You can determine the type for all the columns in the table using
+# :ref:`get_name_type-name` .
+# {xrst_toc_hidden
+#    example/table/get_table_dict.py
+# }
+# Example
+# *******
+# The file :ref:`get_table_dict.py-name` is an example use of
+# ``get_table_dict`` .
+#
+# {xrst_end get_table_dict}

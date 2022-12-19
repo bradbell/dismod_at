@@ -1,0 +1,32 @@
+lines 5-34 of file: example/user/continue_fit.py
+
+# {xrst_begin user_continue_fit.py}
+# {xrst_spell
+#     iter
+#     stderr
+# }
+# {xrst_comment_ch #}
+#
+# Continuing a Fit From Where it Left Off
+# #######################################
+#
+# Option Table
+# ************
+# In the option table defined below,
+# *max_num_iter_fixed*  = 5 .
+# This fit will terminate when
+# the maximum number of iterations is reached.
+# The corresponding warning is suppressed by setting
+# *warn_on_stderr* = ``false`` .
+# The second fit will start where the first left off.
+# To see this, set *print_level_fixed*  = 5 (in the option table) and
+# :ref:`run this example<user_example@Run One Example>` .
+#
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_continue_fit.py}

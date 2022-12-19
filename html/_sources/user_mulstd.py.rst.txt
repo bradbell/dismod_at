@@ -1,0 +1,85 @@
+lines 5-87 of file: example/user/mulstd.py
+
+# {xrst_begin user_mulstd.py}
+# {xrst_comment_ch #}
+#
+# Estimating Smoothing Standard Deviation Multiplies
+# ##################################################
+#
+# Purpose
+# *******
+# This example uses a smoothing standard deviation multiplier
+# :ref:`lambda<model_variables@Fixed Effects, theta@Smoothing Standard Deviation Multipliers, lambda>`
+# to determine the standard deviation of the random effects.
+#
+# Problem Parameters
+# ******************
+# The following values are used to simulate and model the data:
+# {xrst_literal
+#     begin problem parameters
+#     end problem parameters
+# }
+#
+# Age and Time Values
+# *******************
+# The age and time values do not matter for this problem
+# because all the functions are constant in age and time.
+# This can be seen by the fact that all of the smoothing has one age
+# and one time point.
+#
+# Variables
+# *********
+#
+# Parent
+# ======
+# A constant value used to model
+# :ref:`iota<avg_integrand@Rate Functions@iota_i(a,t)>`
+# for the parent node.
+#
+# Children
+# ========
+# A fixed value is used for each of the
+# :ref:`model_variables@Random Effects, u@Child Rate Effects`
+# so that this example passes its test without having a lot of children.
+# You could try increasing the number of children and simulating
+# the rate random effect for each child.
+#
+# Data Table
+# **********
+# For this example, all the data is
+# :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence`
+# with a known standard deviation.
+#
+# Rate Table
+# **********
+# The :ref:`rate_table-name` only specifies that *iota* for the parent
+# and children are non-zero.
+#
+# Prior Table
+# ***********
+#
+# Parent
+# ======
+# The prior for the parent node *iota* is uniform with lower limit 1e-4,
+# upper limit 1.0 and mean 0.1.
+# Note that the mean is not really the mean of this uniform distribution
+# and it is only used to get the initial starting and scaling point
+# for the optimization; see :ref:`init_command-name` .
+#
+# Children
+# ========
+# The prior for the child nodes *iota* is Gaussian
+# with mean zero and standard deviation one.
+# This is so that the actual standard deviation is *lambda*  * 1
+# which is equal to *lambda* .
+#
+# Fitting
+# *******
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_mulstd.py}

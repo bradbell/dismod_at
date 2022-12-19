@@ -1,0 +1,306 @@
+lines 6-309 of file: xrst/wish_list.xrst
+
+{xrst_begin wish_list}
+{xrst_spell
+   args
+   auxillary
+   checkpointing
+   conditionals
+   cppadcg
+   curred
+   distributions
+   eigen
+   kwargs
+   lagrange
+   minima
+   onces
+   optimizer
+   reformulated
+   truncates
+   truncation
+}
+
+Dismod_at Wish List
+###################
+
+Parallel Testing
+****************
+It would be good to changes the dismod_at test so that
+they did not use the same file name (e.g., example.db) and could be
+run in parallel.
+
+Binomial Distribution
+*********************
+
+.. list-table::
+
+   * - *n*
+     - number of samples
+   * - *p*
+     - probability of success for each sample
+   * - *k*
+     - number of success events
+   * - *r*
+     - rate of success; i.e., :math:`k / n`
+   * - *mu*
+     - mean value for rate of success
+   * - *sigma*
+     - standard deviation for rate of success
+
+The mean of :math:`k` is :math:`n p`
+and its variance is :math:`n p (1-p)`.
+It follows that :math:`p = \mu` and
+
+.. math::
+
+   n = \mu ( 1 - \mu ) / \sigma^2
+
+The probability mass function for :math:`k` is
+
+.. math::
+
+   \B{p} (k | n, p) = \frac{ n! }{ k! (n -k)! }  p^k (1-p)^{n-k}
+
+It follows that
+
+.. math::
+
+   \B{p} ( r | \mu , \sigma )
+   =
+      \mu^{n r} (1 - \mu)^{ n(1-r) }
+      \frac{ \Gamma(n+1) }{ \Gamma( n r ) \Gamma[ n (1 - r) ] }
+
+where
+
+.. math::
+
+   n( \mu , \sigma )  = \mu ( 1 - \mu ) / \sigma^2
+
+This representation of the density for :math:`r` is smooth respect to
+:math:`\mu` and hence can be included in dismod_at.
+Note that, in dismod_at, the standard deviation for a data point is fixed
+and hence the number of samples :math:`n` depends on :math:`\mu`.
+This density is only defined for :math:`0 \leq \mu \leq 1`
+and is zero at the end points.
+If :math:`\mu` is a dismod_at rate and :math:`r`
+is a direct measurement of a :math:`\mu`, it will help to constrain
+the rate to the feasible region.
+
+Speed
+*****
+The CppADCodeGen package (and CppAD JIT) compiles CppAD code.
+While the compilation takes time, the resulting derivative evaluations
+are much faster; see
+`speed-cppadcg <https://coin-or.github.io/CppAD/doc/speed_cppadcg.htm>`_.
+Perhaps it is possible to make certain calculations; e.g.,
+the ODE solution an CppAD atomic function that is evaluated using
+CppADCodeGen or CppAD JIT.
+
+Bound Constraints
+*****************
+
+#. Currently the user must convert active bound constraints to equality
+   constraints to get asymptotic statistics for the fixed effects,
+   because the Hessian of the objective is often not positive definite.
+   Automatically detect when these bound constraints
+   are active at the solution and treat the corresponding variables as
+   equality constraints during the asymptotic statistics calculation.
+#. Document how the bounds affect the priors and posterior distributions
+   during the fit, simulate, and sample commands.
+   Note that there is some discussion of bounds in the
+   :ref:`wish_list@Simulating Priors` wish list item below.
+
+Laplace Random Effect
+*********************
+The marginal likelihood for Laplace random effects is smooth,
+because the model for the data is smooth w.r.t. the random effects.
+Hence, it is possible to extend dismod_at to include Laplace random effect.
+In addition, the random effects in dismod_at are not correlated.
+It follows that, the integral of Gaussian random effects
+(Laplace random effects) can be evaluated using the error function
+(exponential function).
+Thus, we could include bounds on the random effect.
+
+Immunity
+********
+It would be possible to include an immunity state :math:`I` and have
+:math:`\rho` the rate at which one gets curred from the disease, and does
+not get it again. There would be a switch that one chooses to say that onces
+you are curred you become immune. This would require changing
+the definition of some of the integrands; e.g., prevalence would be
+:math:`C / (S + C + I)`. It would also require changing the ODE, but in
+a way that should be faster because there is no feedback.
+
+Simulating Priors
+*****************
+The code for simulating values for the prior distribution
+:ref:`prior_sim_table@prior_sim_value`
+currently truncates the simulated values to be within the
+lower and lower limits for the distribution.
+Note that constraining an optimizer to be between lower
+and upper limits corresponds to truncated distribution.
+The mean for a truncated distribution need not lie between
+the lower and upper limits.
+We should remove the truncation in the simulated prior values
+and we should remove the restriction that the prior table
+:ref:`prior_table@mean` needs to be between the
+lower and upper limits.
+This will require projecting onto the lower and upper limits
+when the prior mean is used in the :ref:`start_var_table-name` or
+:ref:`scale_var_table-name` .
+
+Multi-Threading
+***************
+On a shared-memory system,
+it should be possible to split the data into subsets
+and evaluate the corresponding likelihood terms
+using a different thread for each subset.
+The function, and derivative values, corresponding to
+each thread would then be summed to get the value corresponding
+to the entire likelihood.
+This should be done for the initialization
+as well as for the function and derivative evaluation during optimization.
+The execution time for problems with large amounts of data
+should be divided by a number close to the number of cores
+available on the system.
+
+User Examples
+*************
+The :ref:`user_example-name` examples below
+:ref:`user_example@Examples With Explanation`
+have a discussion at the top of each example.
+Add a discussion for the other the user examples.
+
+meas_std
+********
+Currently the data table
+:ref:`data_table@meas_std`
+must be specified (except for uniform density).
+Perhaps we should allow for this standard deviation to be
+``null`` in the case when the corresponding
+:ref:`data_table@meas_value` must not be zero
+and the :ref:`integrand_table@minimum_meas_cv`
+would be used to determine the measurement accuracy.
+
+Lagrange Multipliers
+********************
+Change the Lagrange multipliers
+:ref:`fit_var_table@lagrange_dage` (dtime) in the
+fit_var table to be null when there is no corresponding age (time) different;
+i.e., at the maximum age (time).
+(Currently these Lagrange multipliers are zero.)
+
+Censored Laplace
+****************
+The censored density formula for a Gaussian
+:ref:`G(y,mu,delta,c)<censor_density@Gaussian@Censored Density, G(y,mu,delta,c)>`
+is correct even if :math:`c > \mu`.
+On the other hand, the formula for the Laplace case
+:ref:`L(y,mu,delta,c)<censor_density@Laplace@Censored Density, L(y,mu,delta,c)>`
+requires :math:`c \leq \mu`.
+The Laplace case can be extended using the fact that it is symmetric,
+integrating from :math:`\mu` to :math:`c`,
+using absolute values for the integration limits,
+and the Sign function.
+This will result in a non-smooth the optimization problem.
+Perhaps the problem can be reformulated with auxillary variables
+to be a smooth problem ?
+
+create_database
+***************
+Make a version of :ref:`create_database-name` that uses
+keyword arguments and replaces the ones that are not present by
+default values. This could be done using the prototype
+
+   ``def create_database`` (* *args* , * * *kwargs* ) :
+
+where *args* are the positional arguments and
+*kwargs* are the keyword arguments.
+This would enable backward compatibility.
+
+ODE Solution
+************
+
+Prevalence ODE
+==============
+If :math:`S` and :math:`C` satisfy the dismod_at
+:ref:`avg_integrand@Ordinary Differential Equation` then prevalence :math:`P = C / (S + C)` satisfies
+
+.. math::
+
+   P' = \iota  [ 1 - P ] - \rho P - \chi  [ 1 - P] P
+
+We can therefore solve for prevalence without other cause mortality
+:math:`\omega` or all cause mortality :math:`\omega + \chi P`.
+
+#. The ODE for :math:`P` is non-linear,
+   while the ODE is :math:`(S, C)` is linear.
+#. All of the current integrands, except for
+   :ref:`avg_integrand@Integrand, I_i(a,t)@susceptible` and
+   :ref:`avg_integrand@Integrand, I_i(a,t)@withC`
+   can be computed from :math:`P` (given that the rates are inputs to the ODE).
+#. If we know all cause mortality :math:`\alpha = \omega + \chi P`,
+   once we have solved for :math:`P`,
+   we can compute :math:`\omega = \alpha - \chi P`.
+   Furthermore
+
+   .. math::
+
+      (S + C)' = - \alpha (S + C)
+
+   So we can also compute :math:`S + C`, and
+   :math:`C = P (S + C)`,
+#. Given the original ODE, we know that the true solution for
+   :math:`S`, must be positive, and :math:`C`, :math:`P` must be
+   non-negative.
+   Negative values for these quantities will correspond to
+   numerical precision errors in the solution of the ODE.
+#. One advantage of this approach,
+   over the current approach of solving the ODE in :math:`(S, C)`,
+   is that the solution is stable as :math:`S + C \rightarrow 0`.
+   (The current approach computes :math:`P = C / (S + C)`.
+
+Large Excess Mortality
+======================
+If case where *rate_case* is
+:ref:`option_table@rate_case@iota_pos_rho_zero`
+corresponds to
+``dev::eigen_ode2::Method::Case Three`` in the ODE solver.
+If excess mortality :math:`\chi` is unreasonably large,
+this can result in exponential overflow and infinity or nan.
+It is possible to redo the calculations in case three to properly
+handle this condition.
+
+rate_case
+=========
+It is now possible to use conditional expressions in the ODE solution
+(CppAD this will now work properly these conditionals
+and two levels of AD and revere mode).
+This change would remove the need for the
+:ref:`option_table@rate_case` option.
+Note that this will also work with checkpointing.
+
+Command Diagrams
+****************
+It would be good to give a data flow diagram for each command
+that corresponds to its
+:ref:`extra inputs tables<data_flow@Command Extra Input Tables>` and
+:ref:`output tables<data_flow@Command Output Tables>` .
+
+Real World Example
+******************
+It would be good to include a real world example.
+Since this is an open source program, we would need a data set
+that could be made distributed freely without any restriction on its use.
+
+Random Starting Point
+*********************
+Have an option to start at a random point from the prior for the fixed effects
+(instead of the mean of the fixed effects).
+This would better detect local minima and represent solution uncertainty.
+
+Windows Install
+***************
+Make and test a set of Windows install instructions for ``dismod_at`` .
+
+{xrst_end wish_list}

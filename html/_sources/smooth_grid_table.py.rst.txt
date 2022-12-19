@@ -1,0 +1,14 @@
+lines 5-16 of file: example/table/smooth_grid_table.py
+
+# {xrst_begin smooth_grid_table.py}
+# {xrst_comment_ch #}
+#
+# smooth_grid_table: Example and Test
+# ###################################
+#
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end smooth_grid_table.py}

@@ -1,0 +1,16 @@
+lines 5-18 of file: example/user/diff_constraint.py
+
+# {xrst_begin user_diff_constraint.py}
+# {xrst_comment_ch #}
+#
+# Fitting with Constraints on Differences in Age and Time
+# #######################################################
+#
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_diff_constraint.py}

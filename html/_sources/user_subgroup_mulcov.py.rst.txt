@@ -1,0 +1,105 @@
+lines 5-107 of file: example/user/subgroup_mulcov.py
+
+# {xrst_begin user_subgroup_mulcov.py}
+# {xrst_spell
+#     subgroups
+# }
+# {xrst_comment_ch #}
+#
+# Example Fitting With Subgroup Covariate Multipliers
+# ###################################################
+#
+# Node Table
+# **********
+# The following is a diagram of the node tree for this example:
+# ::
+#
+#          p1
+#         /  \
+#        c1  c2
+#
+# Subgroup Table
+# **************
+# The following is a diagram of the subgroup tree for this example:
+# ::
+#
+#            p1
+#           /  \
+#         g1   none
+#        /  \    \
+#       s1   s2  none
+#
+# Model Variables
+# ***************
+#
+# Parent Rates
+# ============
+# There is an iota
+# :ref:`parent rate<model_variables@Fixed Effects, theta@Parent Rates>`
+# corresponding to node p1.
+# This variable has a uniform prior.
+#
+# Group Covariate Multiplier
+# ==========================
+# There is a
+# :ref:`group covariate multiplier<model_variables@Fixed Effects, theta@Group Covariate Multipliers>`
+# that affects all the data in group g1.
+# This variable has a uniform prior.
+#
+# Child Rate Effects
+# ==================
+# There are two
+# :ref:`model_variables@Random Effects, u@Child Rate Effects`
+# one for the data corresponding to child c1,
+# the other for child c2.
+# These variables have gaussian priors with mean zero and standard deviation
+# 100 times the absolute true child rate effect.
+#
+# Subgroup Covariate Multiplier
+# =============================
+# There are two
+# :ref:`model_variables@Random Effects, u@Subgroup Covariate Multipliers`
+# one for the data corresponding to subgroup s1,
+# the other for subgroup s2.
+# These variables have gaussian priors with mean zero and standard deviation
+# 100 times the absolute true subgroup effect.
+#
+# Rate Table
+# **********
+# There is one entry in the rate table that
+# specifies the iota smoothing for the parent node p1.
+# There is another entry that specifies the iota smoothing
+# for the child nodes c1, c2.
+#
+# Mulcov Table
+# ************
+# There is one entry in the mulcov table for group g1 and
+# the two subgroups s1, s1 (that make up g1).
+# The group smoothing is used for the fixed effect corresponding to g1
+# and the subgroup smoothing is used for the s1, s2 random effects.
+#
+# Data Table
+# **********
+# Each child (c1, c2) and each subgroup (s1, s2, none)
+# have a corresponding data point that is simulated without any noise.
+#
+# Problem Parameters
+# ******************
+# {xrst_spell_off}
+# {xrst_code py}
+iota_parent_true      = 0.01 # value corresponding to parent with no effects
+group_effect_true     = 0.3  # value corresponding to group g1
+child_effect_true     = 0.2  # absolute value of child random effects
+subgroup_effect_true  = 0.1  # absoulte value of subgroup random effects
+meas_cv               = 0.1  # coefficient of variation for each data point
+# {xrst_code}
+# {xrst_spell_on}
+#
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_subgroup_mulcov.py}

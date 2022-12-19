@@ -1,0 +1,53 @@
+lines 6-56 of file: python/dismod_at/get_name_type.py
+
+# {xrst_begin get_name_type}
+# {xrst_spell
+#     tbl
+# }
+# {xrst_comment_ch #}
+#
+# Get Column Names and Types in a Table
+# #####################################
+#
+# Syntax
+# ******
+# ( *col_name* , *col_type* )
+#
+#     = ``dismod_at.get_name_type`` ( *connection* , *tbl_name* )
+#
+# connection
+# **********
+# is a :ref:`create_connection@connection` for this database.
+#
+# table_name
+# **********
+# is a ``str`` that specifies the name of the table.
+#
+# col_name
+# ********
+# is a list of strings containing the column names in the same order as they
+# appear in the table.
+#
+# col_type
+# ********
+# is a list of strings containing the column types in the same order as
+# the columns appear in the table.
+# The possible values for the column types are
+# ``integer`` , ``real`` , ``text`` , or
+# ``integer primary key`` .
+# Note that the types in the database are converted to lower case before
+# being returned in *col_type* .
+#
+# Primary Key
+# ***********
+# This routine assumes the primary key is an integer,  corresponds
+# to the first column, and has name *tbl_name* _ ``id`` .
+# {xrst_toc_hidden
+#    example/table/get_name_type.py
+# }
+# Example
+# *******
+# The file :ref:`get_name_type.py-name` is an example use of
+# ``get_name_type`` .
+#
+# {xrst_end get_name_type}

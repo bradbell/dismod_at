@@ -1,0 +1,14 @@
+lines 5-16 of file: example/table/nslist_pair_table.py
+
+# {xrst_begin nslist_pair_table.py}
+# {xrst_comment_ch #}
+#
+# nslist_pair_table: Example and Test
+# ###################################
+#
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end nslist_pair_table.py}
