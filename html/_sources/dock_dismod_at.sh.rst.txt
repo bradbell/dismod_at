@@ -1,4 +1,4 @@
-lines 6-282 of file: bin/dock_dismod_at.sh
+lines 6-283 of file: bin/dock_dismod_at.sh
 
 # {xrst_begin dock_dismod_at.sh}
 # {xrst_spell
@@ -156,8 +156,9 @@ lines 6-282 of file: bin/dock_dismod_at.sh
 #
 # For example, *name* could be
 # ``dismod_at.base`` ,
-# ``dismod_at.mixed`` , or
-# ``dismod_at.image`` .
+# ``dismod_at.mixed`` ,
+# ``dismod_at.image`` , or
+# ``at_cascade.image`` .
 # You can keep the old image, under a different name, using the commands
 #
 # | |tab| *driver* ``tag`` *name* *different_name*
