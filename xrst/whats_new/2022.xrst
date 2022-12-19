@@ -29,12 +29,18 @@ Changes and Additions to Dismod_at During 2022
 mm-dd
 *****
 
+12-19
+=====
+Advance the version of
+:ref:`dock_dismod_at.sh@Building Images@at_cascade_version` to 2022.12.19.
+This fixes a problem using older versions of python; e.g., 3.8.10.
+
 12-18
 =====
 #. Advance to cppad_mixed-20220518.
    This avoids a bug in ipopt which would crash when all the fixed
    effects had equal lower and upper bounds.
-#  Advance the dock_dismod_at.sh
+#. Advance the dock_dismod_at.sh
    :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
    to 20221218 and
    :ref:`dock_dismod_at.sh@Building Images@at_cascade_version`

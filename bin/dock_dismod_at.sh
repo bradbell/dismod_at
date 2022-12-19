@@ -93,7 +93,7 @@
 # {xrst_spell_off}
 # {xrst_code sh}
    dismod_at_version='20221218'
-   dismod_at_hash='288c27e763e636675ca68ba5a302e6aab3f41b3c'
+   dismod_at_hash='8fe88d91c49b71160170177be669582370a324de'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -102,8 +102,8 @@
 # This script can build the following version of the optional at_cascade image:
 # {xrst_spell_off}
 # {xrst_code sh}
-   at_cascade_version='2022.12.18'
-   at_cascade_hash='77904c5e24f8c7054da1ba86cd000d640aef4c66'
+   at_cascade_version='2022.12.19'
+   at_cascade_hash='250be52d0f6fff070e6b79913da221346e0ca68c'
 # {xrst_code}
 # {xrst_spell_on}
 #
