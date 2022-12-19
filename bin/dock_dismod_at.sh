@@ -159,8 +159,9 @@
 #
 # For example, *name* could be
 # ``dismod_at.base`` ,
-# ``dismod_at.mixed`` , or
-# ``dismod_at.image`` .
+# ``dismod_at.mixed`` ,
+# ``dismod_at.image`` , or
+# ``at_cascade.image`` .
 # You can keep the old image, under a different name, using the commands
 #
 # | |tab| *driver* ``tag`` *name* *different_name*
