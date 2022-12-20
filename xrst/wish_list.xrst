@@ -5,7 +5,6 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin wish_list}
 {xrst_spell
-   args
    auxillary
    checkpointing
    conditionals
@@ -13,7 +12,6 @@ $Id:$
    curred
    distributions
    eigen
-   kwargs
    lagrange
    minima
    onces
@@ -25,6 +23,13 @@ $Id:$
 
 Dismod_at Wish List
 ###################
+
+Empty Tables
+************
+Change :ref:`create_database-name` so that uses
+the empty list as the default value for every argument.
+In addition, change the routines that read the input tables
+to return an empty vector when a table is not in the database.
 
 Parallel Testing
 ****************
@@ -208,18 +213,6 @@ and the Sign function.
 This will result in a non-smooth the optimization problem.
 Perhaps the problem can be reformulated with auxillary variables
 to be a smooth problem ?
-
-create_database
-***************
-Make a version of :ref:`create_database-name` that uses
-keyword arguments and replaces the ones that are not present by
-default values. This could be done using the prototype
-
-   ``def create_database`` (* *args* , * * *kwargs* ) :
-
-where *args* are the positional arguments and
-*kwargs* are the keyword arguments.
-This would enable backward compatibility.
 
 ODE Solution
 ************
