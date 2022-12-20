@@ -15,27 +15,12 @@
 # Create a Dismod_at Database
 # ###########################
 #
-# Syntax
-# ******
-#
-# | ``create_database`` (
-# | |tab| *file_name* ,
-# | |tab| *age_list* ,
-# | |tab| *time_list* ,
-# | |tab| *integrand_table* ,
-# | |tab| *node_table* ,
-# | |tab| *subgroup_table* ,
-# | |tab| *weight_table* ,
-# | |tab| *covariate_table* ,
-# | |tab| *avgint_table* ,
-# | |tab| *data_table* ,
-# | |tab| *prior_table* ,
-# | |tab| *smooth_table* ,
-# | |tab| *nslist_table* ,
-# | |tab| *rate_table* ,
-# | |tab| *mulcov_table* ,
-# | |tab| *option_table*
-# | )
+# Prototype
+# *********
+# {xrst_literal
+#     # BEGIN_PROTOTYPE
+#     # END_PROTOTYPE
+# }
 #
 # Purpose
 # *******
@@ -484,24 +469,26 @@
 # and example and test of ``create_database`` .
 #
 # {xrst_end create_database}
+# BEGIN_PROTOTYPE
 def create_database(
    file_name,
    age_list,
    time_list,
-   integrand_table,
-   node_table,
-   subgroup_table,
-   weight_table,
-   covariate_table,
-   avgint_table,
-   data_table,
-   prior_table,
-   smooth_table,
-   nslist_table,
-   rate_table,
-   mulcov_table,
-   option_table
+   integrand_table = list(),
+   node_table      = list(),
+   subgroup_table  = list(),
+   weight_table    = list(),
+   covariate_table = list(),
+   avgint_table    = list(),
+   data_table      = list(),
+   prior_table     = list(),
+   smooth_table    = list(),
+   nslist_table    = list(),
+   rate_table      = list(),
+   mulcov_table    = list(),
+   option_table    = list(),
 ) :
+# END_PROTOTYPE
    import sys
    import dismod_at
    # ----------------------------------------------------------------------
