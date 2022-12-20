@@ -26,6 +26,7 @@
 # include "get_nslist_table.hpp"
 # include "get_nslist_pair.hpp"
 # include "get_subgroup_table.hpp"
+# include "get_node_cov_table.hpp"
 
 namespace dismod_at {
    // BEGIN STRUCT
@@ -43,6 +44,7 @@ namespace dismod_at {
       CppAD::vector<integrand_struct>   integrand_table;
       CppAD::vector<mulcov_struct>      mulcov_table;
       CppAD::vector<node_struct>        node_table;
+      CppAD::vector<node_cov_struct>    node_cov_table;
       CppAD::vector<prior_struct>       prior_table;
       CppAD::vector<rate_struct>        rate_table;
       CppAD::vector<smooth_struct>      smooth_table;

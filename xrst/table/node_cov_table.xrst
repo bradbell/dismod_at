@@ -12,7 +12,7 @@ Problem
 The data table only assigns one value for each covariate to each data point;
 see :ref:`data_table@Covariates` in the data table.
 This works fine for most cases.
-The problem is when a covariate muliplier affects a
+The problem is when a covariate multiplier affects a
 :ref:`mulcov_table@mulcov_type@rate_value` , and
 the covariate values changes with age or time , and
 the measurement if for an
@@ -21,7 +21,7 @@ the measurement if for an
 Solution
 ********
 This table attaches a bilinear function of age and time to
-each covaraite, node pair in this table.
+each covariate, node pair in this table.
 If a covariate appears in this table, the values in this table,
 instead of the data table, are used for that covariate.
 If a covariate is in this table, but there are no values for a specific node,
@@ -52,7 +52,7 @@ This column has type ``real`` and contains the time value for this row.
 
 cov_value
 *********
-This column has type ``real`` and contains the value of the covriate
+This column has type ``real`` and contains the value of the covariate
 at the specified age and time.
 
 Rectangular Grid
@@ -63,15 +63,20 @@ in *age* and *time*. Restricting to rows with a specific
 
 #. If an *age* appears, it appears once and only once with each *time* value.
 #. If an *time* appears, it appears once and only once with each *age* value.
-#. :ref:`bilinear-name` interpolation will be used to fill in values betwen
+#. :ref:`bilinear-name` interpolation will be used to fill in values between
    grid point.
-#. If a covariate is constant in age (time), for a speicfic covariate and node,
+#. If a covariate is constant in age (time), for a specific covariate and node,
    then only one age (time) point
    should be in the rectangular grid for that covariate and node.
 
+{xrst_toc_hidden
+   example/table/node_cov_table.py
+}
 Example
 *******
-The file :ref:`node_cov_tble.py-name`
+The file :ref:`node_cov_table.py-name`
 contains an example ``node_cov`` table.
 
-{xrst_end age_table}
+
+
+{xrst_end node_cov_table}

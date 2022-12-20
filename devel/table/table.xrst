@@ -20,6 +20,7 @@ Contents
    devel/table/check_table_id.cpp
    devel/table/check_zero_sum.cpp
    devel/table/create_table.cpp
+   devel/table/does_table_exist.cpp
    devel/table/exec_sql_cmd.cpp
    devel/table/get_age_table.cpp
    devel/table/get_avgint_table.cpp

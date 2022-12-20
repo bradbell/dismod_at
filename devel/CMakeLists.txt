@@ -32,6 +32,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
    table/check_table_id.cpp
    table/check_zero_sum.cpp
    table/create_table.cpp
+   table/does_table_exist
    table/exec_sql_cmd.cpp
    table/get_age_table.cpp
    table/get_avgint_table.cpp

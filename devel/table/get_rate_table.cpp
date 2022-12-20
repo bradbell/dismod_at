@@ -14,9 +14,8 @@ C++: Get the Rate Table Information
 Syntax
 ******
 
-   *rate_table* = ``get_rate_table`` ( *db* )
-
-*rate_name* = ``get_rate_name`` ( *rate_id* )
+| *rate_table* = ``get_rate_table`` ( *db* )
+| *rate_name*  = ``get_rate_name`` ( *rate_id* )
 
 get_rate_table
 **************

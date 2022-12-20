@@ -13,8 +13,8 @@ C++: Get the Node Covariate Table Information
 
 Syntax
 ******
-| # include <dismod_at/get_node_cov_table.hpp>
-| *node_cov_table* = get_node_cov_table( *db* , *n_covariate* , *n_node* )
+| ``# include <dismod_at/get_node_cov_table.hpp>``
+| *node_cov_table* = ``get_node_cov_table`` ( *db* )
 
 
 Prototype
@@ -27,14 +27,6 @@ Prototype
 db
 **
 This argument is an open connection to the database
-
-n_covariate
-***********
-is the number of covariates in the :ref:`covariate_table-name` .
-
-n_node
-******
-is the number of nodes in the :ref:`node_table-name` .
 
 node_cov_struct
 ***************
@@ -64,6 +56,13 @@ cov_value
 =========
 The covariate value corresponding to this row.
 
+node_cov_table
+**************
+If the node_cov table does not exist, the empty vector is returned.
+Otherwise,
+the *i*-th element of the return value,  *node_cov_table* [ *i* ],
+contains the information in the row of node_cov table  with
+:ref:`node_cov_table@node_cov_id` equal to *i*.
 
 {xrst_end get_node_cov_table}
 */
@@ -71,19 +70,24 @@ The covariate value corresponding to this row.
 # include <dismod_at/get_node_cov_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
+# include <dismod_at/does_table_exist.hpp>
 
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 // BEGIN_PROTOTYPE
-CppAD::vector<node_cov_struct> get_node_cov_table(
-   sqlite3* db          ,
-   int      n_covariate ,
-   int      n_node      )
+CppAD::vector<node_cov_struct> get_node_cov_table( sqlite3* db )
 // END_PROTOTYPE
-{
-   // n_node_cov
+{  //
+   // table_name
    std::string table_name  = "node_cov";
+   //
+   // node_cov_table
+   CppAD::vector<node_cov_struct> node_cov_table(0);
+   if( ! does_table_exist(db, table_name) )
+      return node_cov_table;
+   //
+   // n_node_cov
    size_t n_node_cov = check_table_id(db, table_name);
    //
    // covaraite_id
@@ -117,7 +121,7 @@ CppAD::vector<node_cov_struct> get_node_cov_table(
    assert( n_node_cov == cov_value.size() );
    //
    // node_cov_table
-   CppAD::vector<node_cov_struct> node_cov_table(n_node_cov);
+   node_cov_table.resize(n_node_cov);
    for(size_t i = 0; i < n_node_cov; ++i)
    {
       node_cov_table[i].covariate_id = covariate_id[i];
