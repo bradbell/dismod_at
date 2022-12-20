@@ -45,6 +45,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
    table/get_density_table.cpp
    table/get_integrand_table.cpp
    table/get_mulcov_table.cpp
+   table/get_node_cov_table.cpp
    table/get_node_table.cpp
    table/get_nslist_pair.cpp
    table/get_nslist_table.cpp

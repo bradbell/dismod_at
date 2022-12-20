@@ -1,0 +1,77 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin node_cov_table}
+
+The Node Covariate Table
+########################
+
+Problem
+*******
+The data table only assigns one value for each covariate to each data point;
+see :ref:`data_table@Covariates` in the data table.
+This works fine for most cases.
+The problem is when a covariate muliplier affects a
+:ref:`mulcov_table@mulcov_type@rate_value` , and
+the covariate values changes with age or time , and
+the measurement if for an
+:ref:`ode integrand <integrand_table@integrand_name@ODE>`.
+
+Solution
+********
+This table attaches a bilinear function of age and time to
+each covaraite, node pair in this table.
+If a covariate appears in this table, the values in this table,
+instead of the data table, are used for that covariate.
+If a covariate is in this table, but there are no values for a specific node,
+the values for the closest ancestor of the node are used.
+
+node_cov_id
+***********
+This column has type ``integer`` and is the primary key for the
+``node_cov`` table.
+Its initial value is zero, and it increments by one for each row.
+
+covariate_id
+************
+This is the :ref:`covariate_table@covariate_id` for the covariate
+corresponding to this row.
+
+node_id
+*******
+This is the :ref:`node_table@node_id` for the node corresponding to this row.
+
+age
+***
+This column has type ``real`` and contains the age value for this row.
+
+time
+****
+This column has type ``real`` and contains the time value for this row.
+
+cov_value
+*********
+This column has type ``real`` and contains the value of the covriate
+at the specified age and time.
+
+Rectangular Grid
+****************
+For each *covariate_id* , *node_id*, this file has a rectangular grid
+in *age* and *time*. Restricting to rows with a specific
+*covariate_id* and *node_id* :
+
+#. If an *age* appears, it appears once and only once with each *time* value.
+#. If an *time* appears, it appears once and only once with each *age* value.
+#. :ref:`bilinear-name` interpolation will be used to fill in values betwen
+   grid point.
+#. If a covariate is constant in age (time), for a speicfic covariate and node,
+   then only one age (time) point
+   should be in the rectangular grid for that covariate and node.
+
+Example
+*******
+The file :ref:`node_cov_tble.py-name`
+contains an example ``node_cov`` table.
+
+{xrst_end age_table}
