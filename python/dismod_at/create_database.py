@@ -468,11 +468,11 @@
 #     :widths: auto
 #
 #     Key,Value Type,Description
-#     node_id,int,identifies the node for the *i*-th row
-#     covariate_id,int,identifies the covariate for the *i*-th row
-#     age,float,age value corresponding to this rows covariate value
-#     time,float,time value corresponding to this rows covariate value
-#     cov_value,float,covariate value for this row
+#     ``'node_id'`` ,      int,identifies the node for the *i*-th row
+#     ``'covariate_id'`` , int,identifies the covariate for the *i*-th row
+#     ``'age'`` ,          float,age value corresponding to this row
+#     ``'time'`` ,         float,time corresponding to this row
+#     ``'cov_value'`` ,    float,covariate value for this row
 #
 # Contents
 # ********
