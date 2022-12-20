@@ -458,6 +458,22 @@
 # | |tab| *option_name* = *option_table* [ *i* ][ ``'name'`` ]
 # | |tab| *option_value* = *option_table* [ *i* ][ ``'value'`` ]
 #
+# node_cov_table
+# **************
+# This is a list of ``dict``
+# that define the rows of the :ref:`node_cov_table-name` .
+# The dictionary *node_cov_table* [ *i* ] has the following:
+#
+# .. csv-table::
+#     :widths: auto
+#
+#     Key,Value Type,Description
+#     node_id,int,identifies the node for the *i*-th row
+#     covariate_id,int,identifies the covariate for the *i*-th row
+#     age,float,age value corresponding to this rows covariate value
+#     time,float,time value corresponding to this rows covariate value
+#     cov_value,float,covariate value for this row
+#
 # Contents
 # ********
 # {xrst_toc_table
@@ -487,6 +503,7 @@ def create_database(
    rate_table      = list(),
    mulcov_table    = list(),
    option_table    = list(),
+   node_cov_table  = list(),
 ) :
 # END_PROTOTYPE
    import sys
@@ -1155,6 +1172,18 @@ def create_database(
       value = row['value']
       row_list.append( [ name, value ] )
    tbl_name = 'option'
+   dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+   # ----------------------------------------------------------------------
+   # create node_cov table
+   col_name = [ 'node_id', 'covariate_id', 'age',  'time', 'cov_value' ]
+   col_type = [ 'integer', 'integer',      'real', 'real', 'real' ]
+   row_list = []
+   for row_in in node_cov_table :
+      row_out = list()
+      for key in col_name :
+         row_out.append( row_in[key] )
+      row_list.append( row_out )
+   tbl_name = 'node_cov'
    dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
    # ----------------------------------------------------------------------
    # close the connection
