@@ -32,8 +32,10 @@ def node_cov_table() :
       'integer',      'integer', 'integer'
    ]
    row_list = [
-      [4,             3,          2],
-      [3,             2,          1],
+      [1,             0,          1],
+      [1,             1,          0],
+      [1,             2,          1],
+      [1,             3,          0],
    ]
    tbl_name = 'node_cov'
    dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

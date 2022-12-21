@@ -147,12 +147,18 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
    db_input.smooth_table      = get_smooth_table(db);
    db_input.covariate_table   = get_covariate_table(db);
    db_input.node_table        = get_node_table(db);
-   db_input.node_cov_table    = get_node_cov_table(db);
    db_input.weight_grid_table = get_weight_grid(db);
    db_input.option_table      = get_option_table(db);
    db_input.nslist_table      = get_nslist_table(db);
    db_input.nslist_pair_table = get_nslist_pair(db);
    db_input.subgroup_table    = get_subgroup_table(db);
+   //
+   // get_node_cov_table uses node_table and covariate_table
+   // to check for errors
+   {  size_t n_covariate      = db_input.covariate_table.size();
+      size_t n_node           = db_input.node_table.size();
+      db_input.node_cov_table = get_node_cov_table(db, n_covariate, n_node);
+   }
    //
    // get_mulcov_table uses subgroup table
    // to check for erros

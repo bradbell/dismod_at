@@ -18,7 +18,9 @@ namespace dismod_at {
    };
    // END_NODE_COV_STRUCT
 
-   extern CppAD::vector<node_cov_struct> get_node_cov_table(sqlite3*  db);
+   extern CppAD::vector<node_cov_struct> get_node_cov_table(
+      sqlite3* db, size_t n_covariate, size_t n_node
+   );
 }
 
 # endif
