@@ -7,6 +7,12 @@
 The Node Covariate Table
 ########################
 
+Warning
+*******
+This table is a temporary quick fix for the problem below.
+It is uncertain if the features it makes available will be supported
+by future versions of dismod_at.
+
 Problem
 *******
 The data table only assigns one value for each covariate to each data point;
@@ -35,48 +41,29 @@ Its initial value is zero, and it increments by one for each row.
 
 covariate_id
 ************
-This is the :ref:`covariate_table@covariate_id` for the covariate
-corresponding to this row.
+This column has type ``integer`` and is the
+:ref:`covariate_table@covariate_id` corresponding to this row.
 
 node_id
 *******
-This is the :ref:`node_table@node_id` for the node corresponding to this row.
+This column has type ``integer`` and is the
+:ref:`node_table@node_id` corresponding to this row.
 
-age
-***
-This column has type ``real`` and contains the age value for this row.
-
-time
-****
-This column has type ``real`` and contains the time value for this row.
-
-cov_value
+weight_id
 *********
-This column has type ``real`` and contains the value of the covariate
-at the specified age and time.
+This column has type ``integer`` and is the
+:ref:`weight_table@weight_id` corresponding to this row.
+As a quick fix, we use *weight_id* to identify an
+arbitrary bilinear functions of age and time.
 
-Rectangular Grid
-****************
-For each *covariate_id* , *node_id*, this file has a rectangular grid
-in *age* and *time*. Restricting to rows with a specific
-*covariate_id* and *node_id* :
-
-#. If an *age* appears, it appears once and only once with each *time* value.
-#. If an *time* appears, it appears once and only once with each *age* value.
-#. :ref:`bilinear-name` interpolation will be used to fill in values between
-   grid point.
-#. If a covariate is constant in age (time), for a specific covariate and node,
-   then only one age (time) point
-   should be in the rectangular grid for that covariate and node.
-
-{xrst_toc_hidden
-   example/table/node_cov_table.py
-}
 Example
 *******
 The file :ref:`node_cov_table.py-name`
 contains an example ``node_cov`` table.
 
+{xrst_toc_hidden
+   example/table/node_cov_table.py
+}
 
 
 {xrst_end node_cov_table}

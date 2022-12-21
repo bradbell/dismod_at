@@ -205,6 +205,7 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
    // node_cov_table
    DISMOD_AT_CHECK_PRIMARY_ID(node_cov, node_id, node);
    DISMOD_AT_CHECK_PRIMARY_ID(node_cov, covariate_id, covariate);
+   DISMOD_AT_CHECK_PRIMARY_ID(node_cov, weight_id, weight);
 
    // weight_grid table
    DISMOD_AT_CHECK_PRIMARY_ID(weight_grid, weight_id, weight);

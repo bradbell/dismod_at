@@ -33,7 +33,7 @@ then
    echo 'bin/check_all.sh: build_type in bin/run_cmake.sh is not release'
    exit 1
 fi
-#
+# -----------------------------------------------------------------------------
 # run bin/check_*.sh with exception of this file and bin/check_install.sh
 list=`ls bin/check_*.sh | sed \
    -e '/check_all.sh/d' -e '/check_install.sh/d'`
@@ -46,6 +46,10 @@ done
 echo_eval version.sh check
 #
 # build developer documentation
+if [ -e build/html ]
+then
+   echo_eval rm -r build/html
+fi
 echo_eval xrst \
    --group_list default dev \
    --local_toc \

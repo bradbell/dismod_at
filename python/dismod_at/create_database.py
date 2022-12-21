@@ -1175,8 +1175,8 @@ def create_database(
    dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
    # ----------------------------------------------------------------------
    # create node_cov table
-   col_name = [ 'node_id', 'covariate_id', 'age',  'time', 'cov_value' ]
-   col_type = [ 'integer', 'integer',      'real', 'real', 'real' ]
+   col_name = [ 'node_id', 'covariate_id', 'weight_id' ]
+   col_type = [ 'integer', 'integer',      'integer'   ]
    row_list = []
    for row_in in node_cov_table :
       row_out = list()

@@ -14,9 +14,7 @@ namespace dismod_at {
    struct node_cov_struct {
       int        covariate_id;
       int        node_id;
-      double     age;
-      double     time;
-      double     cov_value;
+      int        weight_id;
    };
    // END_NODE_COV_STRUCT
 

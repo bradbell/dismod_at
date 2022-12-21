@@ -26,14 +26,14 @@ def node_cov_table() :
    #
    # create the rate table
    col_name = [
-      'covariate_id', 'node_id', 'age',  'time', 'cov_value'
+      'covariate_id', 'node_id', 'weight_id'
    ]
    col_type = [
-      'integer',     'integer',  'real', 'real', 'real'
+      'integer',      'integer', 'integer'
    ]
    row_list = [
-      [2,             3,          10.0,   1980.0, 0.1 ],
-      [1,             2,          20.0,   1990.0, 0.2 ],
+      [4,             3,          2],
+      [3,             2,          1],
    ]
    tbl_name = 'node_cov'
    dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

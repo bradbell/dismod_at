@@ -44,17 +44,10 @@ node_id
 =======
 The :ref:`node_table@node_id` corresponding to this row corresponds to.
 
-age
-===
-The age corresponding to this row.
-
-time
-====
-The time corresponding to this row.
-
-cov_value
+weight_id
 =========
-The covariate value corresponding to this row.
+The :ref:`weight_table@weight_id` corresponding to this row corresponds to.
+
 
 node_cov_table
 **************
@@ -102,23 +95,12 @@ CppAD::vector<node_cov_struct> get_node_cov_table( sqlite3* db )
    get_table_column(db, table_name, column_name, node_id);
    assert( n_node_cov == node_id.size() );
    //
-   // age
-   column_name           =  "age";
-   CppAD::vector<double>     age;
-   get_table_column(db, table_name, column_name, age);
-   assert( n_node_cov == age.size() );
+   // weight_id
+   column_name = "weight_id";
+   CppAD::vector<int>    weight_id;
+   get_table_column(db, table_name, column_name, weight_id);
+   assert( n_node_cov == weight_id.size() );
    //
-   // time
-   column_name           =  "time";
-   CppAD::vector<double>     time;
-   get_table_column(db, table_name, column_name, time);
-   assert( n_node_cov == time.size() );
-   //
-   // cov_value
-   column_name           =  "cov_value";
-   CppAD::vector<double>     cov_value;
-   get_table_column(db, table_name, column_name, cov_value);
-   assert( n_node_cov == cov_value.size() );
    //
    // node_cov_table
    node_cov_table.resize(n_node_cov);
@@ -126,9 +108,7 @@ CppAD::vector<node_cov_struct> get_node_cov_table( sqlite3* db )
    {
       node_cov_table[i].covariate_id = covariate_id[i];
       node_cov_table[i].node_id      = node_id[i];
-      node_cov_table[i].age          = age[i];
-      node_cov_table[i].time         = time[i];
-      node_cov_table[i].cov_value    = cov_value[i];
+      node_cov_table[i].weight_id    = weight_id[i];
    }
 
    // The primary key values covariate_id and node_id get checked by
