@@ -10,16 +10,15 @@
    subsamples
 }
 
-Create a Subsampled Version of Average Integrand Case Table
-###########################################################
+Create a Subsampled Version of Average Integrand Table
+######################################################
 
-Syntax
-******
-
-| ``avgint_subset`` (
-| |tab| *avgint_table* , *avgint_cov_value* , *covariate_table* , *child_info4avgint* ,
-| |tab| ``avgint_subset_obj`` , *avgint_subset_cov_value*
-| )
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
 
 See Also
 ********
@@ -40,45 +39,31 @@ This routine subsamples the *avgint_table* , in the following way:
    :ref:`covariate_table@reference` value is subtracted
    from the value of the covariate in *avgint_table* .
 
+integrand_table
+***************
+This is the :ref:`get_integrand_table@integrand_table` .
+
 avgint_table
 ************
-This argument has prototype
-
-   ``const CppAD::vector<avgint_struct>&`` *avgint_table*
-
-and is the :ref:`get_avgint_table@avgint_table` .
+This is the :ref:`get_avgint_table@avgint_table` .
 
 avgint_cov_value
 ****************
-This argument has prototype
-
-   ``const CppAD::vector<double>&`` *avgint_cov_value*
-
-and is the :ref:`avgint_table<get_avgint_table@avgint_cov_value>`
+This is the :ref:`avgint_table<get_avgint_table@avgint_cov_value>`
 covariate values.
 
 covariate_table
 ***************
-This argument has prototype
-
-   ``const CppAD::vector<covariate_struct>&`` *covariate_table*
-
-and is the :ref:`get_covariate_table@covariate_table` .
+This is the :ref:`get_covariate_table@covariate_table` .
 
 child_info4avgint
 *****************
-This argument has prototype
-
-   ``const child_info&`` *child_info4avgint*
+This argument has the :ref:`child_info-name` .
 
 avgint_subset_obj
 *****************
-This argument has prototype
-
-   ``CppAD::vector<avgint_subset_struct>&`` *avgint_subset_obj*
-
-Its input size is zero and upon return
-its size is the number of rows in *avgint_table* that satisfy
+The input size of this argument is zero.
+Upon return its size is the number of rows in *avgint_table* that satisfy
 the purpose above.
 The structure has all the fields that are present in
 :ref:`get_avgint_table@avgint_struct` .
@@ -90,7 +75,7 @@ We use the notation *n_subset* = *avgint_subset_obj* . ``size`` () .
 subset_id
 =========
 We use the notation *subset_id* for an index between
-zero and *n_subset* ``-1`` ,
+zero and *n_subset* - 1 ,
 
 original_id
 ===========
@@ -103,25 +88,21 @@ The value of
    *avgint_subset_obj* [ *subset_id* ]. ``original_id``
 
 increases with *subset_id* ;
-i.e., for each *subset_id* less than *n_subset* ``-2`` ,
+i.e., for each *subset_id* less than *n_subset* - 2 ,
 
-| |tab| *avgint_subset_obj* [ *subset_id* ]. ``original_id <``
-| |tab| |tab| *avgint_subset_obj* [ *subset_id* +1]. ``original_id``
+| |tab| *avgint_subset_obj* [ *subset_id* ]. ``original_id`` <
+| |tab| |tab| *avgint_subset_obj* [ *subset_id* + 1]. ``original_id``
 
 avgint_subset_cov_value
 ***********************
-This argument has prototype
-
-   ``CppAD::vector<double>&`` *avgint_subset_cov_value*
-
-Its input size is zero and upon return
-its size is *n_subset* * *n_covariate* .
+The input size of this argument is zero.
+Upon return its size is *n_subset* * *n_covariate* .
 For each *subset_id* and
 :ref:`covariate_table@covariate_id` ,
 
 | *avgint_subset_cov_value* [ *subset_id* * *n_covariate* + *covariate_id* ]
-| = *avgint_cov_value* [ *original_id* * *n_covariate* + *covariate_id* ]
-| |tab| ``- reference`` ( *covariate_id* )
+| |tab|  = *avgint_cov_value* [ *original_id* * *n_covariate* + *covariate_id* ]
+| |tab| |tab| - reference ( *covariate_id* )
 
 where
 
@@ -135,14 +116,14 @@ Note that if the
 value is ``null`` in the covariate table,
 or the covariate value is ``null`` in :ref:`avgint_table-name` ,
 
-   *avgint_subset_cov_value* [ *subset_id* * *n_covariate* + *covariate_id* ] = 0
+*avgint_subset_cov_value* [ *subset_id* * *n_covariate* + *covariate_id* ] = 0
 
 Also note that
 
 | | *avgint_subset_cov_value* [ *subset_id* * *n_covariate* + *covariate_id* ] |
-| <= ``max_difference`` ( *covariate_id* )
+| <= max_difference ( *covariate_id* )
 
-where ``max_difference`` ( *covariate_id* ) is the
+where max_difference ( *covariate_id* ) is the
 maximum difference for the corresponding *covariate_id* .
 
 Contents
@@ -164,14 +145,16 @@ It returns true for success and false for failure.
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
+// BEGIN_PROTOTYPE
 void avgint_subset(
    const CppAD::vector<integrand_struct>& integrand_table         ,
    const CppAD::vector<avgint_struct>&    avgint_table            ,
    const CppAD::vector<double>&           avgint_cov_value        ,
    const CppAD::vector<covariate_struct>& covariate_table         ,
-   const child_info&                      child_info4avgint         ,
+   const child_info&                      child_info4avgint       ,
    CppAD::vector<avgint_subset_struct>&   avgint_subset_obj       ,
    CppAD::vector<double>&                 avgint_subset_cov_value )
+// END_PROTOTYPE
 {  assert( avgint_subset_obj.size() == 0 );
    assert( avgint_subset_cov_value.size() == 0 );
    if( avgint_table.size() == 0 )
