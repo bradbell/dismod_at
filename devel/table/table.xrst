@@ -7,10 +7,10 @@
 Dismod_at Developer Table Documentation
 #######################################
 
-{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 
 Contents
 ********
+{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 {xrst_toc_table
    devel/table/blob_table.cpp
    devel/table/check_child_nslist.cpp

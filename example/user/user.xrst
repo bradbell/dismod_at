@@ -112,8 +112,7 @@ Examples With Explanation
 
 .. list-table::
 
-   * - {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_1}
-       user_age_avg_split.py
+   * - user_age_avg_split.py
      - :ref:`user_age_avg_split.py-title`
    * - user_average_integrand.py
      - :ref:`user_average_integrand.py-title`
@@ -215,8 +214,6 @@ Examples With Explanation
      - :ref:`user_zsum_mulcov_meas.py-title`
    * - user_zsum_mulcov_rate.py
      - :ref:`user_zsum_mulcov_rate.py-title`
-
-{xrst_comment END_SORT_THIS_LINE_MINUS_2}
 
 More Examples
 *************

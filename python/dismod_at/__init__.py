@@ -8,10 +8,10 @@
 # Python Utilities
 # ################
 #
-# {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 #
 # Contents
 # ********
+# {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 # {xrst_toc_table
 #    python/dismod_at/average_integrand.py
 #    python/dismod_at/connection_file.py

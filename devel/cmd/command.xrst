@@ -26,7 +26,6 @@ The second is an ``end`` message and signifies that the command completed.
 
 {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 {xrst_toc_hidden
-   python/bin/dismodat.py.in
    devel/cmd/bnd_mulcov_command.cpp
    devel/cmd/data_density_command.cpp
    devel/cmd/depend_command.cpp
@@ -38,12 +37,13 @@ The second is an ``end`` message and signifies that the command completed.
    devel/cmd/sample_command.cpp
    devel/cmd/set_command.cpp
    devel/cmd/simulate_command.cpp
+   python/bin/dismodat.py.in
 }
 {xrst_comment END_SORT_THIS_LINE_MINUS_2}
 
 Commands
 ********
-{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2%}
+{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_5}
 
 .. csv-table::
    :widths: auto
@@ -64,6 +64,6 @@ Commands
    set_command,:ref:`set_command-title`
    simulate_command,:ref:`simulate_command-title`
 
-{xrst_comment END_SORT_THIS_LINE_MINUS_2%}
+{xrst_comment END_SORT_THIS_LINE_MINUS_2}
 
 {xrst_end command}
