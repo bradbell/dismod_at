@@ -67,6 +67,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
    table/put_table_row.cpp
    table/smooth_info.cpp
    table/weight_info.cpp
+   utility/map_node_cov.cpp
    utility/age_avg_grid.cpp
    utility/avgint_subset.cpp
    utility/bilinear_interp.cpp

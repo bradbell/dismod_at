@@ -7,11 +7,12 @@
 Dismod_at Developer Utility Documentation
 #########################################
 
-{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 
 Contents
 ********
+{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 {xrst_toc_table
+   devel/utility/map_node_cov.cpp
    include/dismod_at/a1_double.hpp
    devel/utility/pack_warm_start.cpp
    devel/utility/age_avg_grid.cpp
