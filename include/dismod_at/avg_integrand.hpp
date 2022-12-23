@@ -95,6 +95,7 @@ private:
 public:
    // avg_integrand
    avg_integrand(
+      size_t                                    n_covariate      ,
       double                                    ode_step_size    ,
       const std::string&                        rate_case        ,
       const CppAD::vector<double>&              age_avg_grid     ,

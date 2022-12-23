@@ -20,6 +20,7 @@ Syntax
 ******
 
 | ``avg_integrand`` *avgint_obj* (
+| |tab| *n_covariate* ,
 | |tab| *ode_step_size* ,
 | |tab| *rate_case* ,
 | |tab| *age_avg_grid* ,
@@ -38,6 +39,11 @@ Prototype
    // BEGIN_AVG_INTEGRAND_PROTOTYPE
    // END_AVG_INTEGRAND_PROTOTYPE
 }
+
+n_covariate
+***********
+is the number of covariates; i.e., the size of the
+:ref:`get_covariate_table@covariate_table` .
 
 ode_step_size
 *************
@@ -114,6 +120,7 @@ of using this routine.
 
 // BEGIN_AVG_INTEGRAND_PROTOTYPE
 avg_integrand::avg_integrand(
+      size_t                                    n_covariate      ,
       double                                    ode_step_size    ,
       const std::string&                        rate_case        ,
       const CppAD::vector<double>&              age_avg_grid     ,
@@ -136,6 +143,7 @@ w_info_vec_                ( w_info_vec )      ,
 double_time_line_object_   ( age_avg_grid )    ,
 a1_double_time_line_object_( age_avg_grid )    ,
 adjint_obj_(
+   n_covariate,
    rate_case,
    age_table,
    time_table,

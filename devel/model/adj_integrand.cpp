@@ -26,6 +26,7 @@ Syntax
 ******
 
 | ``adj_integrand`` *adjint_obj* (
+| |tab| *n_covariate*,
 | |tab| *rate_case* ,
 | |tab| *age_table* ,
 | |tab| *time_table* ,
@@ -55,6 +56,11 @@ Prototype
    // BEGIN_LINE_PROTOTYPE
    // END_LINE_PROTOTYPE
 }
+
+n_covariate
+***********
+is the number of covariates; i.e., the size of the
+:ref:`get_covariate_table@covariate_table` .
 
 rate_case
 *********
@@ -194,6 +200,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 // BEGIN_ADJ_INTEGRAND_PROTOTYPE
 adj_integrand::adj_integrand(
+   size_t                                    n_covariate      ,
    const std::string&                        rate_case        ,
    const CppAD::vector<double>&              age_table        ,
    const CppAD::vector<double>&              time_table       ,
@@ -211,6 +218,7 @@ subgroup_table_     (subgroup_table)  ,
 integrand_table_   (integrand_table)  ,
 s_info_vec_        (s_info_vec)       ,
 pack_object_       (pack_object)      ,
+node_cov_map_      (n_covariate)      ,
 double_rate_       (number_rate_enum) ,
 a1_double_rate_    (number_rate_enum)
 {  // set mulcov_pack_info_
@@ -282,6 +290,10 @@ CppAD::vector<Float> adj_integrand::line(
    CppAD::vector<Float>&                              mulcov           ,
    CppAD::vector< CppAD::vector<Float> >&             rate             )
 {  using CppAD::vector;
+   //
+   // node_id
+   // This will be an extra argument to adj_integrand::line
+   size_t node_id = 0;
    //
    // some temporaries
    pack_info::subvec_info info;
@@ -360,7 +372,7 @@ CppAD::vector<Float> adj_integrand::line(
    size_t n_line = line_age.size();
    //
    // vector of effects
-   vector<Float> effect(n_line), temp(n_line);
+   vector<Float> effect(n_line), temp_1(n_line), temp_2(n_line), weight_grid;
    //
    // Effect (for error reporting)
    vector< vector<Float> > effect_mul(number_rate_enum);
@@ -439,7 +451,9 @@ CppAD::vector<Float> adj_integrand::line(
             for(size_t k = 0; k < info.n_var; ++k)
                smooth_value[k] = pack_vec[info.offset + k];
             const smooth_info& s_info = s_info_vec_[smooth_id];
-            temp = grid2line(
+            //
+            // temp_1 = child random effect
+            temp_1 = grid2line(
                line_age,
                line_time,
                age_table_,
@@ -448,7 +462,7 @@ CppAD::vector<Float> adj_integrand::line(
                smooth_value
             );
             for(size_t k = 0; k < n_line; ++k)
-               effect[k] += temp[k];
+               effect[k] += temp_1[k];
          }
       }
       //
@@ -458,13 +472,14 @@ CppAD::vector<Float> adj_integrand::line(
       {  info        = pack_object_.group_rate_value_info(rate_id, j);
          if( info.group_id == group_id )
          {  smooth_id   = info.smooth_id;
-            double x_j  = x[ info.covariate_id ];
             // interpolate from smoothing grid to line
             smooth_value.resize(info.n_var);
             for(size_t k = 0; k < info.n_var; ++k)
                smooth_value[k] = pack_vec[info.offset + k];
             const smooth_info& s_info = s_info_vec_[smooth_id];
-            temp = grid2line(
+            //
+            // temp_1 = covariate multiplier fixed effect
+            temp_1 = grid2line(
                line_age,
                line_time,
                age_table_,
@@ -472,8 +487,34 @@ CppAD::vector<Float> adj_integrand::line(
                s_info,
                smooth_value
             );
+            //
+            // temp_2 = covariate value
+            size_t covariate_id = info.covariate_id;
+            if( node_cov_map_[covariate_id].size() == 0 )
+            {  for(size_t k = 0; k < n_line; ++k)
+                  temp_2[k] = x[ info.covariate_id ];
+            }
+            else
+            {  size_t weight_id   = node_cov_map_[covariate_id][node_id];
+               const weight_info& w_info = w_info_vec_[weight_id];
+               size_t n_age        = w_info.age_size();
+               size_t n_time       = w_info.time_size();
+               weight_grid.resize(n_age * n_time);
+               for(size_t i = 0; i < n_age; i++)
+               {  for(size_t ell = 0; ell < n_time; ++ell)
+                     weight_grid[i * n_time + ell] = w_info.weight(i, ell);
+               }
+               temp_2 = grid2line(
+                  line_age,
+                  line_time,
+                  age_table_,
+                  time_table_,
+                  w_info,
+                  weight_grid
+               );
+            }
             for(size_t k = 0; k < n_line; ++k)
-               effect[k] += temp[k] * x_j;
+               effect[k] += temp_1[k] * temp_2[k];
          }
       }
       //
@@ -486,13 +527,14 @@ CppAD::vector<Float> adj_integrand::line(
             assert( k < pack_object_.subgroup_size(group_id) );
             info  = pack_object_.subgroup_rate_value_info(rate_id, j, k);
             smooth_id   = info.smooth_id;
-            double x_j  = x[ info.covariate_id ];
             // interpolate from smoothing grid to line
             smooth_value.resize(info.n_var);
             for(size_t ell = 0; ell < info.n_var; ++ell)
                smooth_value[ell] = pack_vec[info.offset + ell];
             const smooth_info& s_info = s_info_vec_[smooth_id];
-            temp = grid2line(
+            //
+            // temp_1 = covariate multiplier random effect
+            temp_1 = grid2line(
                line_age,
                line_time,
                age_table_,
@@ -500,8 +542,34 @@ CppAD::vector<Float> adj_integrand::line(
                s_info,
                smooth_value
             );
+            //
+            // temp_2 = covariate value
+            size_t covariate_id = info.covariate_id;
+            if( node_cov_map_[covariate_id].size() == 0 )
+            {  for(size_t ell = 0; ell < n_line; ++ell)
+                  temp_2[ell] = x[ info.covariate_id ];
+            }
+            else
+            {  size_t weight_id   = node_cov_map_[covariate_id][node_id];
+               const weight_info& w_info = w_info_vec_[weight_id];
+               size_t n_age        = w_info.age_size();
+               size_t n_time       = w_info.time_size();
+               weight_grid.resize(n_age * n_time);
+               for(size_t i = 0; i < n_age; i++)
+               {  for(size_t ell = 0; ell < n_time; ++ell)
+                     weight_grid[i * n_time + ell] = w_info.weight(i, ell);
+               }
+               temp_2 = grid2line(
+                  line_age,
+                  line_time,
+                  age_table_,
+                  time_table_,
+                  w_info,
+                  weight_grid
+               );
+            }
             for(size_t ell = 0; ell < n_line; ++ell)
-               effect[ell] += temp[ell] * x_j;
+               effect[ell] += temp_1[ell] * temp_2[ell];
          }
       }
       //
@@ -676,7 +744,9 @@ CppAD::vector<Float> adj_integrand::line(
          for(size_t k = 0; k < info.n_var; ++k)
             smooth_value[k] = pack_vec[info.offset + k];
          const smooth_info& s_info = s_info_vec_[smooth_id];
-         temp = grid2line(
+         //
+         // temp_1 = covariate multiplier fixed effects
+         temp_1 = grid2line(
             line_age,
             line_time,
             age_table_,
@@ -685,7 +755,7 @@ CppAD::vector<Float> adj_integrand::line(
             smooth_value
          );
          for(size_t k = 0; k < n_line; ++k)
-            effect[k] += temp[k] * x_j;
+            effect[k] += temp_1[k] * x_j;
       }
    }
    //
@@ -703,7 +773,9 @@ CppAD::vector<Float> adj_integrand::line(
          for(size_t ell = 0; ell < info.n_var; ++ell)
             smooth_value[ell] = pack_vec[info.offset + ell];
          const smooth_info& s_info = s_info_vec_[smooth_id];
-         temp = grid2line(
+         //
+         // temp_1 = covariate multiplier random effects
+         temp_1 = grid2line(
             line_age,
             line_time,
             age_table_,
@@ -712,7 +784,7 @@ CppAD::vector<Float> adj_integrand::line(
             smooth_value
          );
          for(size_t ell = 0; ell < n_line; ++ell)
-            effect[ell] += temp[ell] * x_j;
+            effect[ell] += temp_1[ell] * x_j;
       }
    }
    // -----------------------------------------------------------------------

@@ -192,7 +192,9 @@ bool avg_integrand_xam(void)
       age_avg_grid[i] = age_ini + double(i) * ode_step_size;
    //
    // avgint_obj
+   size_t n_covariate = 0;
    dismod_at::avg_integrand avgint_obj(
+      n_covariate,
       ode_step_size,
       rate_case,
       age_table,

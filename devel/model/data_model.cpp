@@ -263,6 +263,7 @@ n_child_            ( child_info4data.child_size() )   ,
 subset_cov_value_   (subset_cov_value)              ,
 pack_object_        (pack_object)                   ,
 avgint_obj_(
+   n_covariate,
    ode_step_size,
    rate_case,
    age_avg_grid,

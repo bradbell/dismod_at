@@ -183,7 +183,9 @@ bool adj_integrand_xam(void)
    }
    //
    // adjust_object
+   size_t n_covariate = 0;
    dismod_at::adj_integrand adjint_obj(
+      n_covariate,
       rate_case,
       age_table,
       time_table,
