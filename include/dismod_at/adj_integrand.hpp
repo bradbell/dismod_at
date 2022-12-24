@@ -25,9 +25,8 @@ private:
    const CppAD::vector<integrand_struct>&     integrand_table_;
    const CppAD::vector<smooth_info>&          s_info_vec_;
    const pack_info&                           pack_object_;
-   //
-   const CppAD::vector<weight_info>             w_info_vec_;
-   const CppAD::vector< CppAD::vector<size_t> > node_cov_map_;
+   const CppAD::vector<weight_info>&          w_info_vec_;
+   const CppAD::vector< CppAD::vector<size_t> >& node_cov_map_;
 
    // Maps each mulcov_id to corresponding packing information.
    // Set by constructor and effectory const
@@ -57,11 +56,14 @@ private:
 public:
    // adj_integrand
    adj_integrand(
+      const CppAD::vector< CppAD::vector<size_t> >& node_cov_map ,
       size_t                                    n_covariate      ,
+      size_t                                    n_node           ,
+      const CppAD::vector<weight_info>&         w_info_vec       ,
       const std::string&                        rate_case        ,
       const CppAD::vector<double>&              age_table        ,
       const CppAD::vector<double>&              time_table       ,
-      const CppAD::vector<subgroup_struct>&      subgroup_table  ,
+      const CppAD::vector<subgroup_struct>&     subgroup_table   ,
       const CppAD::vector<integrand_struct>&    integrand_table  ,
       const CppAD::vector<mulcov_struct>&       mulcov_table     ,
       const CppAD::vector<smooth_info>&         s_info_vec       ,

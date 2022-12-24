@@ -184,8 +184,14 @@ bool adj_integrand_xam(void)
    //
    // adjust_object
    size_t n_covariate = 0;
+   size_t n_node      = 1;
+   vector< vector<size_t> > node_cov_map(n_covariate);
+   vector<dismod_at::weight_info>   w_info_vec(0); // not used
    dismod_at::adj_integrand adjint_obj(
+      node_cov_map,
       n_covariate,
+      n_node,
+      w_info_vec,
       rate_case,
       age_table,
       time_table,

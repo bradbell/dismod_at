@@ -17,16 +17,25 @@
 {xrst_spell
    adj
    adjint
+   refactored
 }
 
 Compute Adjusted Integrand On a Line
 ####################################
 
+2DO
+***
+This routine has a lot of very similar code and should be refactored
+so the similar operations are done in one place.
+
 Syntax
 ******
 
 | ``adj_integrand`` *adjint_obj* (
+| |tab| *node_cov_map*,
 | |tab| *n_covariate*,
+| |tab| *n_node*,
+| |tab| *w_info_vec*,
 | |tab| *rate_case* ,
 | |tab| *age_table* ,
 | |tab| *time_table* ,
@@ -57,10 +66,30 @@ Prototype
    // END_LINE_PROTOTYPE
 }
 
+node_cov_map
+************
+Is the mapping from (covariate_id, node_id) to weight_id; see
+:ref:`map_node_cov-name` .
+
 n_covariate
 ***********
 is the number of covariates; i.e., the size of the
 :ref:`get_covariate_table@covariate_table` .
+
+n_node
+******
+is the number of nodes; i.e., the size of the
+:ref:`get_node_table@node_table` .
+
+w_info_vec
+**********
+For each :ref:`weight_table@weight_id` ,
+
+   *w_info_vec* [ *weight_id*  ]
+
+is the corresponding :ref:`weight_info-name` information.
+In addition, the constant weight is included at the end of the vector; i.e.,
+at index *w_info_vec* . ``size`` () ``-1`` .
 
 rate_case
 *********
@@ -200,7 +229,10 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 // BEGIN_ADJ_INTEGRAND_PROTOTYPE
 adj_integrand::adj_integrand(
+   const CppAD::vector< CppAD::vector<size_t> >& node_cov_map ,
    size_t                                    n_covariate      ,
+   size_t                                    n_node           ,
+   const CppAD::vector<weight_info>&         w_info_vec       ,
    const std::string&                        rate_case        ,
    const CppAD::vector<double>&              age_table        ,
    const CppAD::vector<double>&              time_table       ,
@@ -218,7 +250,8 @@ subgroup_table_     (subgroup_table)  ,
 integrand_table_   (integrand_table)  ,
 s_info_vec_        (s_info_vec)       ,
 pack_object_       (pack_object)      ,
-node_cov_map_      (n_covariate)      ,
+node_cov_map_      (node_cov_map)     ,
+w_info_vec_        (w_info_vec)       ,
 double_rate_       (number_rate_enum) ,
 a1_double_rate_    (number_rate_enum)
 {  // set mulcov_pack_info_
