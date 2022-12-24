@@ -156,10 +156,12 @@ bool rate_mulcov(void)
    {  integrand_table[i].integrand = dismod_at::integrand_enum(i);
    }
    //
-   // node_table:    0
+   // n_node, node_table:
+   //                0
    //              1    2
    //                  3  4
-   CppAD::vector<dismod_at::node_struct> node_table(5);
+   size_t n_node = 5;
+   CppAD::vector<dismod_at::node_struct> node_table(n_node);
    node_table[0].parent = DISMOD_AT_NULL_INT;
    node_table[1].parent =  0;
    node_table[2].parent =  0;
@@ -175,6 +177,9 @@ bool rate_mulcov(void)
    covariate_table[0].covariate_name  = "sex";
    covariate_table[0].reference       = 0.0;
    covariate_table[0].max_difference  = 0.6;
+   //
+   // node_cov_map
+   vector< vector<size_t> > node_cov_map(n_covariate);
    //
    // data_table
    vector<dismod_at::data_struct> data_table(1);
@@ -278,11 +283,13 @@ bool rate_mulcov(void)
       ode_step_size, age_avg_split, age_table
    );
    dismod_at::data_model data_object(
+      node_cov_map,
+      n_covariate,
+      n_node,
       fit_simulated_data,
       meas_noise_effect,
       rate_case,
       bound_random,
-      n_covariate,
       ode_step_size,
       age_avg_grid,
       age_table,

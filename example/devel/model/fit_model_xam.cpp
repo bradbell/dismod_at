@@ -211,10 +211,12 @@ bool fit_model_xam(void)
       integrand_table[i].minimum_meas_cv = 0.0;
    }
    //
-   // node_table:    0
-   //                   2
-   //                  3  4
-   CppAD::vector<dismod_at::node_struct> node_table(4);
+   // n_node, node_table:
+   //                   0
+   //                   1
+   //                  2  3
+   size_t n_node = 4;
+   CppAD::vector<dismod_at::node_struct> node_table(n_node);
    node_table[0].parent = DISMOD_AT_NULL_INT;
    node_table[1].parent =  0;
    node_table[2].parent =  1;
@@ -244,6 +246,9 @@ bool fit_model_xam(void)
    // covariate table
    size_t n_covariate = 0;
    vector<dismod_at::covariate_struct> covariate_table(n_covariate);
+   //
+   // node_cov_map
+   vector< vector<size_t> > node_cov_map(n_covariate);
    //
    // data_table: data_id == rate_id
    dismod_at::integrand_enum integrand_vec[] = {
@@ -382,11 +387,13 @@ bool fit_model_xam(void)
       ode_step_size, age_avg_split, age_table
    );
    dismod_at::data_model data_object(
+      node_cov_map,
+      n_covariate,
+      n_node,
       fit_simulated_data,
       meas_noise_effect,
       rate_case,
       bound_random,
-      n_covariate,
       ode_step_size,
       age_avg_grid,
       age_table,

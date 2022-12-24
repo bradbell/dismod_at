@@ -151,10 +151,12 @@ bool avg_no_ode_xam(void)
       integrand_table[i].minimum_meas_cv = 0.0;
    }
    //
-   // node_table:    0
+   // n_node, node_table:
+   //                0
    //              1    2
    //                  3 4
-   CppAD::vector<dismod_at::node_struct> node_table(5);
+   size_t n_node = 5;
+   CppAD::vector<dismod_at::node_struct> node_table(n_node);
    node_table[0].parent = DISMOD_AT_NULL_INT;
    node_table[1].parent =  0;
    node_table[2].parent =  0;
@@ -164,9 +166,12 @@ bool avg_no_ode_xam(void)
    // parent_node_id
    size_t parent_node_id = 0;
    //
-   // covariate table
+   // n_covariate, covariate table
    size_t n_covariate = 0;
    vector<dismod_at::covariate_struct> covariate_table(n_covariate);
+   //
+   // node_cov_map
+   CppAD::vector< CppAD::vector<size_t> > node_cov_map(n_covariate);
    //
    // data_table
    vector<dismod_at::data_struct> data_table(3);
@@ -291,11 +296,13 @@ bool avg_no_ode_xam(void)
       ode_step_size, age_avg_split, age_table
    );
    dismod_at::data_model data_object(
+      node_cov_map,
+      n_covariate,
+      n_node,
       fit_simulated_data,
       meas_noise_effect,
       rate_case,
       bound_random,
-      n_covariate,
       ode_step_size,
       age_avg_grid,
       age_table,

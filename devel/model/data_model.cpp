@@ -234,11 +234,13 @@ data_model::~data_model(void)
 // BEGIN_DATA_MODEL_PROTOTYPE
 template <class SubsetStruct>
 data_model::data_model(
+   const CppAD::vector< CppAD::vector<size_t> >& node_cov_map  ,
+   size_t                                   n_covariate        ,
+   size_t                                   n_node             ,
    bool                                     fit_simulated_data ,
    const std::string&                       meas_noise_effect  ,
    const std::string&                       rate_case          ,
    double                                   bound_random       ,
-   size_t                                   n_covariate        ,
    double                                   ode_step_size      ,
    const CppAD::vector<double>&             age_avg_grid       ,
    const CppAD::vector<double>&             age_table          ,
@@ -289,6 +291,7 @@ avg_noise_obj_(
 )
 {  assert( bound_random >= 0.0 );
    assert( n_child_ == pack_object.child_size() );
+   assert( node_cov_map.size() == n_covariate );
    // ------------------------------------------------------------------------
    //
    using std::string;
@@ -1052,11 +1055,13 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 // ------------------------------------------------------------------------
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(SubsetStruct)       \
 template data_model::data_model(                                   \
+   const CppAD::vector< CppAD::vector<size_t> >& node_cov_map  ,  \
+   size_t                                   n_covariate        ,  \
+   size_t                                   n_node             ,  \
    bool                                     fit_simulated_data ,  \
    const std::string&                       meas_noise_effect  ,  \
    const std::string&                       rate_case          ,  \
    double                                   bound_random       ,  \
-   size_t                                   n_covariate        ,  \
    double                                   ode_step_size      ,  \
    const CppAD::vector<double>&             age_avg_grid       ,  \
    const CppAD::vector<double>&             age_table          ,  \

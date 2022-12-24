@@ -52,6 +52,7 @@
 # include <dismod_at/age_avg_grid.hpp>
 # include <dismod_at/child_data_in_fit.hpp>
 # include <dismod_at/get_bnd_mulcov_table.hpp>
+# include <dismod_at/map_node_cov.hpp>
 
 # define DISMOD_AT_TRACE 0
 
@@ -264,6 +265,9 @@ int main(int n_arg, const char** argv)
    // ---------------------------------------------------------------------
    // n_covariate
    size_t n_covariate = db_input.covariate_table.size();
+   //
+   // n_node
+   size_t n_node = db_input.node_table.size();
    // ---------------------------------------------------------------------
    // parent_node_id
    size_t parent_node_id   = db_input.node_table.size();
@@ -281,8 +285,7 @@ int main(int n_arg, const char** argv)
       }
    }
    else if( parent_node_name != "" )
-   {  size_t n_node  = db_input.node_table.size();
-      for(size_t node_id = 0; node_id < n_node; node_id++)
+   {  for(size_t node_id = 0; node_id < n_node; node_id++)
       {  if( db_input.node_table[node_id].node_name == parent_node_name )
             parent_node_id = node_id;
       }
@@ -440,6 +443,10 @@ int main(int n_arg, const char** argv)
       if( std::strcmp(argv[3], "asymptotic") == 0 && n_arg == 7 )
          fit_simulated_data = true;
    }
+   // node_cov_map
+   vector< vector<size_t> > node_cov_map = dismod_at::map_node_cov(
+      db_input.node_cov_table, n_covariate, n_node
+   );
    // =======================================================================
 # ifdef NDEBUG
    try { // BEGIN_TRY_BLOCK (when not debugging)
@@ -579,11 +586,13 @@ int main(int n_arg, const char** argv)
       //
       // avgint_object
       dismod_at::data_model avgint_object(
+         node_cov_map             ,
+         n_covariate              ,
+         n_node                   ,
          fit_simulated_data       ,
          meas_noise_effect        ,
          rate_case                ,
          bound_random             ,
-         n_covariate              ,
          ode_step_size            ,
          age_avg_grid             ,
          db_input.age_table       ,
@@ -662,11 +671,13 @@ int main(int n_arg, const char** argv)
       );
       // data_object
       dismod_at::data_model data_object(
+         node_cov_map             ,
+         n_covariate              ,
+         n_node                   ,
          fit_simulated_data       ,
          meas_noise_effect        ,
          rate_case                ,
          bound_random             ,
-         n_covariate              ,
          ode_step_size            ,
          age_avg_grid             ,
          db_input.age_table       ,

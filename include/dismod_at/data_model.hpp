@@ -65,11 +65,13 @@ private:
 public:
    template <class SubsetStruct>
    data_model(
+      const CppAD::vector< CppAD::vector<size_t> >& node_cov_map  ,
+      size_t                                   n_covariate        ,
+      size_t                                   n_node             ,
       bool                                     fit_simulated_data ,
       const std::string&                       meas_noise_effect  ,
       const std::string&                       rate_case          ,
       double                                   bound_random       ,
-      size_t                                   n_covariate        ,
       double                                   ode_step_size      ,
       const CppAD::vector<double>&             age_avg_grid       ,
       const CppAD::vector<double>&             age_table          ,

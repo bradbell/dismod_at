@@ -140,7 +140,8 @@ bool data_model_subset(void)
    {  integrand_table[i].integrand = dismod_at::integrand_enum(i);
    }
    //
-   // node_table:    0
+   // n_node, node_table:
+   //                0
    //              1    2
    //                  3  4
    size_t n_node = 5;
@@ -157,6 +158,9 @@ bool data_model_subset(void)
    // covariate table
    size_t n_covariate = 0;
    vector<dismod_at::covariate_struct> covariate_table(n_covariate);
+   //
+   // node_cov_map
+   vector< vector<size_t> > node_cov_map(n_covariate);
    //
    // data_table
    size_t n_data = n_node;
@@ -259,11 +263,13 @@ bool data_model_subset(void)
       ode_step_size, age_avg_split, age_table
    );
    dismod_at::data_model data_object(
+      node_cov_map,
+      n_covariate,
+      n_node,
       fit_simulated_data,
       meas_noise_effect,
       rate_case,
       bound_random,
-      n_covariate,
       ode_step_size,
       age_avg_grid,
       age_table,
