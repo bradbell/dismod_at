@@ -15,11 +15,13 @@ Syntax
 ******
 
 | ``data_model`` *data_object* (
+| |tab| *node_cov_map* ,
+| |tab| *n_covariate* ,
+| |tab| *n_node* ,
 | |tab| *fit_simulated_data* ,
 | |tab| *meas_noise_effect* ,
 | |tab| *rate_case* ,
 | |tab| *bound_random* ,
-| |tab| *n_covariate* ,
 | |tab| *ode_step_size* ,
 | |tab| *age_avg_grid* ,
 | |tab| *age_table* ,
@@ -46,6 +48,21 @@ data_object
 ***********
 This is the ``data_model`` object being constructed.
 
+node_cov_map
+************
+Is the mapping from (covariate_id, node_id) to weight_id; see
+:ref:`map_node_cov-name` .
+
+n_covariate
+***********
+is the number of covariates; i.e., the size of the
+:ref:`get_covariate_table@covariate_table` .
+
+n_node
+******
+is the number of nodes; i.e., the size of the
+:ref:`get_node_table@node_table` .
+
 fit_simulated_data
 ******************
 If this is true, we are fitting simulated data that comes from the
@@ -65,11 +82,6 @@ bound_random
 ************
 This is the
 :ref:`option_table@Optimize Random Only@bound_random` .
-
-n_covariate
-***********
-This is the number of covariates; i.e., number or rows in
-:ref:`covariate_table-name` .
 
 ode_step_size
 *************
@@ -265,7 +277,9 @@ n_child_            ( child_info4data.child_size() )   ,
 subset_cov_value_   (subset_cov_value)              ,
 pack_object_        (pack_object)                   ,
 avgint_obj_(
+   node_cov_map,
    n_covariate,
+   n_node,
    ode_step_size,
    rate_case,
    age_avg_grid,

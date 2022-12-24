@@ -95,7 +95,9 @@ private:
 public:
    // avg_integrand
    avg_integrand(
+      const CppAD::vector< CppAD::vector<size_t> >& node_cov_map ,
       size_t                                    n_covariate      ,
+      size_t                                    n_node           ,
       double                                    ode_step_size    ,
       const std::string&                        rate_case        ,
       const CppAD::vector<double>&              age_avg_grid     ,

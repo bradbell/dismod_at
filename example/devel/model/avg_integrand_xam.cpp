@@ -193,8 +193,12 @@ bool avg_integrand_xam(void)
    //
    // avgint_obj
    size_t n_covariate = 0;
+   size_t n_node = 0;
+   vector< vector<size_t> > node_cov_map(n_covariate);
    dismod_at::avg_integrand avgint_obj(
+      node_cov_map,
       n_covariate,
+      n_node,
       ode_step_size,
       rate_case,
       age_table,
