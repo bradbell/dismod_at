@@ -27,8 +27,12 @@ $Id:$
 Changes and Additions to Dismod_at During 2022
 ##############################################
 
-node_cov Branch
-***************
+mm-dd
+*****
+
+12-25
+=====
+Merge in the node_cov branch:
 
 #. Add the node_cov table as a quick fix for this covariate
    :ref:`node_cov_table@Problem` ; see
@@ -40,10 +44,8 @@ node_cov Branch
    :ref:`weight_grid_table@weight@Positive` .
 
 
-mm-dd
-*****
-
 12-20
+=====
 Change the create_database wish list entry to :ref:`wish_list@Empty Tables` .
 
 12-19
