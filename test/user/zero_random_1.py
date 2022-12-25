@@ -270,8 +270,8 @@ def example_db (file_name) :
    # avgint table: empty
    avgint_table = list()
    # ----------------------------------------------------------------------
-   # nslist_table:
-   nslist_table = dict()
+   # nslist_dict:
+   nslist_dict = dict()
    # ----------------------------------------------------------------------
    # subgroup_table
    subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
@@ -290,7 +290,7 @@ def example_db (file_name) :
       data_table,
       prior_table,
       smooth_table,
-      nslist_table,
+      nslist_dict,
       rate_table,
       mulcov_table,
       option_table

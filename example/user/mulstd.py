@@ -162,8 +162,8 @@ def example_db (file_name) :
    # avgint table: same order as list of integrands
    avgint_table = list()
    #
-   # nslist_table:
-   nslist_table = dict()
+   # nslist_dict:
+   nslist_dict = dict()
    # ----------------------------------------------------------------------
    # data table: same order as list of integrands
    data_table = list()
@@ -272,7 +272,7 @@ def example_db (file_name) :
       data_table,
       prior_table,
       smooth_table,
-      nslist_table,
+      nslist_dict,
       rate_table,
       mulcov_table,
       option_table

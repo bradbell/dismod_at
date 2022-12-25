@@ -160,9 +160,9 @@ def example_db (file_name) :
       }
    ]
    #
-   # nslist_table:
-   nslist_table = dict()
-   nslist_table['iota_nslist'] = [
+   # nslist_dict:
+   nslist_dict = dict()
+   nslist_dict['iota_nslist'] = [
       ('child_1', 'smooth_iota_child_1'),
       ('child_2', 'smooth_iota_child_2')
    ]
@@ -214,7 +214,7 @@ def example_db (file_name) :
       data_table,
       prior_table,
       smooth_table,
-      nslist_table,
+      nslist_dict,
       rate_table,
       mulcov_table,
       option_table

@@ -174,7 +174,7 @@ def example_db (file_name) :
    covariate_table = list()
    mulcov_table    = list()
    avgint_table    = list()
-   nslist_table = dict()
+   nslist_dict = dict()
    #
    # covariate table
    covariate_table = [
@@ -288,7 +288,7 @@ def example_db (file_name) :
       data_table,
       prior_table,
       smooth_table,
-      nslist_table,
+      nslist_dict,
       rate_table,
       mulcov_table,
       option_table

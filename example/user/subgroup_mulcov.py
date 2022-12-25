@@ -250,8 +250,8 @@ def example_db (file_name) :
    ]
    # weight table:
    weight_table = list()
-   # nslist_table
-   nslist_table = dict()
+   # nslist_dict
+   nslist_dict = dict()
    # option_table
    option_table = [
       { 'name':'parent_node_name',      'value':'p1'},
@@ -313,7 +313,7 @@ def example_db (file_name) :
       data_table,
       prior_table,
       smooth_table,
-      nslist_table,
+      nslist_dict,
       rate_table,
       mulcov_table,
       option_table

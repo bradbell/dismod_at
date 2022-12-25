@@ -795,9 +795,9 @@ def example_db (file_name) :
       }
    ]
    # ----------------------------------------------------------------------
-   # smooth table and nslist_table
+   # smooth table and nslist_dict
    smooth_table   = list()
-   nslist_table   = dict()
+   nslist_dict   = dict()
    #
    # smooth_mulcov
    for cov in [ 'sex', 'bmi', 'ms_2000' ] :
@@ -834,7 +834,7 @@ def example_db (file_name) :
          'fun':          fun[name]
       } )
    #
-   nslist_table['nslist_omega_child'] = list()
+   nslist_dict['nslist_omega_child'] = list()
    for node in node_list :
       name                 = 'smooth_omega_' + node
       smoothing            = { 'name': name }
@@ -844,7 +844,7 @@ def example_db (file_name) :
       smooth_table.append( smoothing )
       #
       if node != parent_node :
-         nslist_table['nslist_omega_child'].append( (node, name) )
+         nslist_dict['nslist_omega_child'].append( (node, name) )
    #
    # no standard deviation multipliers
    for dictionary in smooth_table :
@@ -1032,7 +1032,7 @@ def example_db (file_name) :
       data_table,
       prior_table,
       smooth_table,
-      nslist_table,
+      nslist_dict,
       rate_table,
       mulcov_table,
       option_table
