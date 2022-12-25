@@ -8,9 +8,6 @@
 # Example Using The Node Covariate Table
 # ######################################
 #
-# Under Construction
-# ******************
-#
 # Purpose
 # *******
 # This example demonstrates using the
@@ -52,6 +49,8 @@
 # *********************
 # There is one covariate multiplier in this example.
 # It multiples *normalized_age* and effects the rate iota.
+# Previous values for the covariate affect previous values for iota,
+# which in turn affects the value of prevalence at the measurement time.
 #
 # Simulated Data
 # **************
@@ -62,12 +61,14 @@
 # Rate Variables
 # **************
 # There is one non-zero rate for this example iota
-# and the no effect model for iota is constant and equal to 0.01.
+# and the no effect model for iota is constant and equal to
+# ``iota_no_effect`` .
 #
 # Covariate Multipliers Variables
 # *******************************
-# There is one covariate multiplier function for this example
-# and it is constant and affects iota.
+# There is one covariate multiplier for this example
+# and it is constant and affects iota
+# (but the value of the covariate, normalized age, is not constant).
 #
 # Source Code
 # ***********
@@ -80,8 +81,8 @@
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # BEGIN_TRUE_VALUE
-iota_no_effect = 0.05
-mulcov_true    = 1.0
+iota_no_effect = 0.03
+mulcov_true    = 0.9
 def iota_true(age, time) :
    normalized_age = age / 100.0
    effect         = mulcov_true * normalized_age
@@ -241,7 +242,7 @@ def example_db (file_name) :
       { 'name':'quasi_fixed',            'value':'true'         },
       { 'name':'derivative_test_fixed',  'value':'first-order'  },
       { 'name':'max_num_iter_fixed',     'value':'100'          },
-      { 'name':'print_level_fixed',      'value':'0'            },
+      { 'name':'print_level_fixed',      'value':'5'            },
       { 'name':'tolerance_fixed',        'value':'1e-8'         },
 
       { 'name':'derivative_test_random', 'value':'second-order' },
@@ -287,10 +288,25 @@ example_db(file_name)
 program = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
 dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
+dismod_at.db2csv_command( file_name )
 #
 # connect to database
 new             = False
 connection      = dismod_at.create_connection(file_name, new)
+var_table       = dismod_at.get_table_dict(connection, 'var')
+fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
+#
+assert len(var_table) == 2
+for (var_id, row_var) in enumerate(var_table) :
+   row_fit     = fit_var_table[var_id]
+   var_type    = row_var['var_type']
+   fit_value   = row_fit['fit_var_value']
+   if var_type == 'rate' :
+      assert fit_value == iota_no_effect
+   else :
+      assert var_type == 'mulcov_rate_value'
+      rel_error = fit_value / mulcov_true - 1.0
+      assert abs(rel_error) < 1e-3
 #
 # -----------------------------------------------------------------------------
 print('node_cov_table.py: OK')
