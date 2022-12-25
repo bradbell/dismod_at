@@ -10,7 +10,14 @@ C++: Get the Weight Grid Information
 
 Syntax
 ******
-*weight_grid* = ``get_weight_grid`` ( *db* )
+*weight_grid* = ``get_weight_grid`` ( *db* , *data_table*, *avgint_table* )
+
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
 
 Purpose
 *******
@@ -23,6 +30,16 @@ The argument *db* has prototype
    ``sqlite3`` * *db*
 
 and is an open connection to the database.
+
+data_table
+**********
+is the :ref:`get_data_table@data_table`
+(used to check its weights are positive).
+
+avgint_table
+************
+is the :ref:`get_avgint_table@avgint_table`
+(used to check its weights are positive).
 
 weight_grid_struct
 ******************
@@ -70,7 +87,8 @@ this function.
 */
 
 # include <cmath>
-
+# include <set>
+# include <cppad/utility/to_string.hpp>
 
 # include <dismod_at/get_weight_grid.hpp>
 # include <dismod_at/get_table_column.hpp>
@@ -79,8 +97,23 @@ this function.
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
-CppAD::vector<weight_grid_struct> get_weight_grid(sqlite3* db)
+// BEGIN_PROTOTYPE
+CppAD::vector<weight_grid_struct> get_weight_grid(
+   sqlite3*                            db           ,
+   const CppAD::vector<data_struct>&   data_table   ,
+   const CppAD::vector<avgint_struct>& avgint_table )
+// END_PROTOTYPE
 {  using std::string;
+   //
+   // positive_weight
+   std::set<int> positive_weight;
+   for(size_t data_id = 0; data_id < data_table.size(); ++data_id)
+      positive_weight.insert( data_table[data_id].weight_id );
+   for(size_t avgint_id = 0; avgint_id < avgint_table.size(); ++avgint_id)
+      positive_weight.insert( avgint_table[avgint_id].weight_id );
+   //
+   // itr
+   std::set<int>::const_iterator itr;
 
    string table_name  = "weight_grid";
    size_t n_grid      = check_table_id(db, table_name);
@@ -111,9 +144,12 @@ CppAD::vector<weight_grid_struct> get_weight_grid(sqlite3* db)
       weight_grid[i].age_id    = age_id[i];
       weight_grid[i].time_id   = time_id[i];
       weight_grid[i].weight    = weight[i];
-      if( weight[i] <= 0.0 )
-      {  string message = "weight is less than or equal zero.";
-         error_exit(message, table_name, i);
+      itr                      = positive_weight.find( weight_id[i] );
+      if( weight[i] <= 0.0 && itr != positive_weight.end() )
+      {  string msg = "weight is less that zero and ";
+         msg += "weight_id = " + CppAD::to_string( weight_id[i] );
+         msg += " is in avginte or data table";
+         error_exit(msg, table_name, i);
       }
    }
    return weight_grid;

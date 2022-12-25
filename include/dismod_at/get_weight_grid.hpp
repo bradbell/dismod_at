@@ -8,6 +8,8 @@
 # include <string>
 # include <sqlite3.h>
 # include <cppad/utility/vector.hpp>
+# include "get_data_table.hpp"
+# include "get_avgint_table.hpp"
 
 namespace dismod_at {
    struct weight_grid_struct {
@@ -16,7 +18,11 @@ namespace dismod_at {
       int    time_id;
       double weight;
    };
-   extern CppAD::vector<weight_grid_struct> get_weight_grid(sqlite3*  db);
+   extern CppAD::vector<weight_grid_struct> get_weight_grid(
+      sqlite3*                             db           ,
+      const CppAD::vector<data_struct>&    data_table   ,
+      const CppAD::vector<avgint_struct>&  avgint_table
+   );
 }
 
 # endif

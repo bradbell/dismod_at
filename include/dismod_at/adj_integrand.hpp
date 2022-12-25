@@ -25,8 +25,8 @@ private:
    const CppAD::vector<integrand_struct>&     integrand_table_;
    const CppAD::vector<smooth_info>&          s_info_vec_;
    const pack_info&                           pack_object_;
-   const CppAD::vector<weight_info>&          w_info_vec_;
    const CppAD::vector< CppAD::vector<size_t> >& node_cov_map_;
+   const CppAD::vector<weight_info>&             w_info_vec_;
 
    // Maps each mulcov_id to corresponding packing information.
    // Set by constructor and effectory const

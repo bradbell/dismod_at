@@ -68,6 +68,7 @@ bin/run_cmake.sh $flag >& cmake.log
 # ----------------------------------------------------------------------------
 #
 echo_eval cd build
+echo_eval make clean
 #
 echo 'make check >& check.log'
 make check >& ../check.log

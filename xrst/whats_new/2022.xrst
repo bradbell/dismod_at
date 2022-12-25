@@ -21,10 +21,23 @@ $Id:$
    stdout
    suitesparse
    tol
+   weightings
 }
 
 Changes and Additions to Dismod_at During 2022
 ##############################################
+
+node_cov Branch
+***************
+
+#. Add the node_cov table as a quick fix for this covariate
+   :ref:`node_cov_table@Problem` .
+
+#. Because the node_cov table uses :ref:`node_cov_table@weight_id`
+   to identify bilinear function, only weightings used by the
+   data and avgint tables need to be
+   :ref:`weight_grid_table@weight@Positive` .
+
 
 mm-dd
 *****

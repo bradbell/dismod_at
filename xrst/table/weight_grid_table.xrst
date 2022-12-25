@@ -42,7 +42,13 @@ This column has type ``real`` .
 For each row in the table, the value in this column
 is the weighting, at the corresponding age and time,
 and for the specified *weight_id* ,
-Each value in this column must be greater than zero.
+
+Positive
+========
+If the *weight_id* for a row appears in the
+:ref:`data table <data_table@weight_id>` or the
+:ref:`avgint table <avgint_table@weight_id>` ,
+the corresponding *weight* must be positive (greater than zero).
 
 Rectangular Grid
 ****************

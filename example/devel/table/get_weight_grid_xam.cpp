@@ -31,6 +31,14 @@ bool get_weight_grid_xam(void)
    bool     new_file  = true;
    sqlite3* db        = dismod_at::open_connection(file_name, new_file);
 
+   // data_table
+   vector<dismod_at::data_struct>   data_table;
+   //
+   // avgint_table
+   vector<dismod_at::avgint_struct> avgint_table(2);
+   avgint_table[0].weight_id = 0;
+   avgint_table[1].weight_id = 1;
+
    // sql commands
    const char* sql_cmd[] = {
    "create table weight("
@@ -73,7 +81,9 @@ bool get_weight_grid_xam(void)
    //
    // get the weight_grid table
    vector<dismod_at::weight_grid_struct>
-      weight_grid_table = dismod_at::get_weight_grid(db);
+      weight_grid_table = dismod_at::get_weight_grid(
+         db, data_table, avgint_table
+   );
    ok  &= weight_grid_table.size() == 5;
    //
    ok  &= weight_grid_table[0].weight_id == 0;
