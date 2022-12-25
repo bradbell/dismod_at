@@ -12,9 +12,6 @@ Contents
 ********
 {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 {xrst_toc_table
-   devel/utility/map_node_cov.cpp
-   include/dismod_at/a1_double.hpp
-   devel/utility/pack_warm_start.cpp
    devel/utility/age_avg_grid.cpp
    devel/utility/avgint_subset.cpp
    devel/utility/bilinear_interp.cpp
@@ -29,9 +26,11 @@ Contents
    devel/utility/get_str_map.cpp
    devel/utility/get_var_limits.cpp
    devel/utility/grid2line.cpp
+   devel/utility/map_node_cov.cpp
    devel/utility/n_random_const.cpp
    devel/utility/pack_info.xrst
    devel/utility/pack_prior.cpp
+   devel/utility/pack_warm_start.cpp
    devel/utility/random_effect.cpp
    devel/utility/random_number.xrst
    devel/utility/residual_density.cpp
@@ -39,9 +38,10 @@ Contents
    devel/utility/subset_data.cpp
    devel/utility/time_line_vec.cpp
    devel/utility/trap_ode2.cpp
+   include/dismod_at/a1_double.hpp
    include/dismod_at/balance_pair.hpp
-   include/dismod_at/remove_const.hpp
    include/dismod_at/min_max_vector.hpp
+   include/dismod_at/remove_const.hpp
 }
 {xrst_comment END_SORT_THIS_LINE_MINUS_2}
 
