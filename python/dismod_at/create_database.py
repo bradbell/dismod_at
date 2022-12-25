@@ -347,13 +347,13 @@
 # :ref:`smooth_grid_table@const_value` column in the
 # ``smooth_grid`` table.
 #
-# nslist_table
-# ************
+# nslist_dict
+# ***********
 # This is a ``dict`` that specifies the
 # :ref:`nslist_table-name` and the :ref:`nslist_pair_table-name` .
 # For each :ref:`nslist_table@nslist_name` ,
 #
-#     *nslist_table* [ *nslist_name* ] = [ ( *node_name* , *smooth_name* ), ... ]
+#     *nslist_dict* [ *nslist_name* ] = [ ( *node_name* , *smooth_name* ), ... ]
 #
 # Note that each pair above is a python ``tuple`` :
 #
@@ -497,7 +497,7 @@ def create_database(
    data_table      = list(),
    prior_table     = list(),
    smooth_table    = list(),
-   nslist_table    = list(),
+   nslict_dict     = dict(),
    rate_table      = list(),
    mulcov_table    = list(),
    option_table    = list(),
@@ -826,7 +826,7 @@ def create_database(
    col_name = [ 'nslist_name' ]
    col_type = [ 'text' ]
    row_list = list()
-   for nslist_name in nslist_table :
+   for nslist_name in nslict_dict  :
       row_list.append( [ nslist_name ] )
    tbl_name = 'nslist'
    dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
@@ -840,8 +840,8 @@ def create_database(
    col_type = [ 'integer',   'integer', 'integer'   ]
    row_list = list()
    tbl_name = 'nslist_pair'
-   for key in nslist_table :
-      pair_list = nslist_table[key]
+   for key in nslict_dict  :
+      pair_list = nslict_dict [key]
       nslist_id = global_nslist_name2id[key]
       for pair in pair_list :
          node_id   = global_node_name2id[ pair[0] ]

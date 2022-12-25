@@ -163,12 +163,6 @@ def example_db (file_name) :
          'smooth':    'smooth_mulcov'
       }
    ]
-   #
-   # avgint table: empty
-   avgint_table = list()
-   #
-   # nslist_table:
-   nslist_table = dict()
    # ----------------------------------------------------------------------
    # data table:
    age        = 50.0
@@ -262,25 +256,22 @@ def example_db (file_name) :
    # ----------------------------------------------------------------------
    # create database
    dismod_at.create_database(
-      file_name,
-      age_list,
-      time_list,
-      integrand_table,
-      node_table,
-      subgroup_table,
-      weight_table,
-      covariate_table,
-      avgint_table,
-      data_table,
-      prior_table,
-      smooth_table,
-      nslist_table,
-      rate_table,
-      mulcov_table,
-      option_table,
-      node_cov_table,
+      file_name       = file_name        ,
+      age_list        = age_list         ,
+      time_list       = time_list        ,
+      integrand_table = integrand_table  ,
+      node_table      = node_table       ,
+      subgroup_table  = subgroup_table   ,
+      weight_table    = weight_table     ,
+      covariate_table = covariate_table  ,
+      data_table      = data_table       ,
+      prior_table     = prior_table      ,
+      smooth_table    = smooth_table     ,
+      rate_table      = rate_table       ,
+      mulcov_table    = mulcov_table     ,
+      option_table    = option_table     ,
+      node_cov_table  = node_cov_table   ,
    )
-   # ----------------------------------------------------------------------
 # ===========================================================================
 file_name = 'example.db'
 example_db(file_name)
