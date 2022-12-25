@@ -12,6 +12,7 @@
 # (with the possible exception of the extra_seds commands).
 # The files in bin/devel.sh ignore_files are automatically in this list.
 # ignore_files='
+#  python/dismod_at/create_database.py
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
@@ -30,5 +31,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|^[.][.] list-table::|&\
-   :widths: auto|
+s|nslist_table|nslist_dict|g
