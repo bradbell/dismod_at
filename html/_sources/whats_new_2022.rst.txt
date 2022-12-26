@@ -1,4 +1,4 @@
-lines 6-245 of file: xrst/whats_new/2022.xrst
+lines 6-264 of file: xrst/whats_new/2022.xrst
 
 {xrst_begin whats_new_2022}
 {xrst_spell
@@ -18,6 +18,7 @@ lines 6-245 of file: xrst/whats_new/2022.xrst
    stdout
    suitesparse
    tol
+   weightings
 }
 
 Changes and Additions to Dismod_at During 2022
@@ -25,6 +26,24 @@ Changes and Additions to Dismod_at During 2022
 
 mm-dd
 *****
+
+12-25
+=====
+Merge in the node_cov branch:
+
+#. Add the node_cov table as a quick fix for this covariate
+   :ref:`node_cov_table@Problem` ; see
+   :ref:`node_cov_table.py-name`.
+#. Because the node_cov table uses :ref:`node_cov_table@weight_id`
+   to identify bilinear function, only weightings used by the
+   data and avgint tables need to be
+   :ref:`weight_grid_table@weight@Positive` .
+#. The column widths of some of the documentation tables were set to be equal
+   instead of adjusting to best fit the columns. This has been fixed.
+
+12-20
+=====
+Change the create_database wish list entry to :ref:`wish_list@Empty Tables` .
 
 12-19
 =====

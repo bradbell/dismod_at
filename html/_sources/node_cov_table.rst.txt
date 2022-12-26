@@ -1,0 +1,68 @@
+lines 5-70 of file: xrst/table/node_cov_table.xrst
+
+{xrst_begin node_cov_table}
+
+The Node Covariate Table
+########################
+
+Warning
+*******
+This table is a temporary quick fix for the problem below.
+It is uncertain if the features it makes available will be supported
+by future versions of dismod_at.
+
+Problem
+*******
+The data table only assigns one value for each covariate to each data point;
+see :ref:`data_table@Covariates` in the data table.
+This works fine for most cases.
+The problem is when a covariate multiplier affects a
+:ref:`mulcov_table@mulcov_type@rate_value` , and
+the covariate values changes with age or time , and
+the measurement is for an
+:ref:`ode integrand <integrand_table@integrand_name@ODE>`.
+
+Solution
+********
+This table attaches a bilinear function of age and time to
+each covariate, node pair in this table.
+If a covariate appears in this table, the values in this table,
+instead of the data table, are used for that covariate.
+For each *covariate_id* that appears in this table,
+and each *node_id* in the node table,
+there must be one an only one row for that covariate and node.
+
+node_cov_id
+***********
+This column has type ``integer`` and is the primary key for the
+``node_cov`` table.
+Its initial value is zero, and it increments by one for each row.
+
+covariate_id
+************
+This column has type ``integer`` and is the
+:ref:`covariate_table@covariate_id` corresponding to this row.
+
+node_id
+*******
+This column has type ``integer`` and is the
+:ref:`node_table@node_id` corresponding to this row.
+
+weight_id
+*********
+This column has type ``integer`` and is the
+:ref:`weight_table@weight_id` corresponding to this row.
+As a quick fix, we use *weight_id* to identify an
+arbitrary bilinear functions of age and time.
+
+Example
+*******
+The file :ref:`node_cov_table.py-name`
+contains an example ``node_cov`` table.
+
+{xrst_toc_hidden
+   example/table/node_cov_table.py
+}
+
+
+{xrst_end node_cov_table}

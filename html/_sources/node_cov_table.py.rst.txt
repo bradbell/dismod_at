@@ -1,0 +1,14 @@
+lines 5-16 of file: example/table/node_cov_table.py
+
+# {xrst_begin node_cov_table.py}
+# {xrst_comment_ch #}
+#
+# node_cov_table: Example and Test
+# ################################
+#
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end node_cov_table.py}

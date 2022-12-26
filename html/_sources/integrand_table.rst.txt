@@ -1,4 +1,4 @@
-lines 5-122 of file: xrst/table/integrand_table.xrst
+lines 5-123 of file: xrst/table/integrand_table.xrst
 
 {xrst_begin integrand_table}
 
@@ -61,6 +61,7 @@ Names
 =====
 
 .. list-table::
+   :widths: auto
 
    * - Integrand Name
      - Description

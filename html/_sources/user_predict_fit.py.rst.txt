@@ -1,4 +1,4 @@
-lines 5-94 of file: example/user/predict_fit.py
+lines 5-95 of file: example/user/predict_fit.py
 
 # {xrst_begin user_predict_fit.py}
 # {xrst_comment_ch #}
@@ -52,6 +52,7 @@ lines 5-94 of file: example/user/predict_fit.py
 # There are three model variables in this example:
 #
 # .. list-table::
+#     :widths: auto
 #
 #     * - *iota_north_america*
 #       - The true value for

@@ -1,8 +1,7 @@
-lines 6-309 of file: xrst/wish_list.xrst
+lines 6-303 of file: xrst/wish_list.xrst
 
 {xrst_begin wish_list}
 {xrst_spell
-   args
    auxillary
    checkpointing
    conditionals
@@ -10,7 +9,6 @@ lines 6-309 of file: xrst/wish_list.xrst
    curred
    distributions
    eigen
-   kwargs
    lagrange
    minima
    onces
@@ -23,6 +21,13 @@ lines 6-309 of file: xrst/wish_list.xrst
 Dismod_at Wish List
 ###################
 
+Empty Tables
+************
+Change :ref:`create_database-name` so that uses
+the empty list as the default value for every argument.
+In addition, change the routines that read the input tables
+to return an empty vector when a table is not in the database.
+
 Parallel Testing
 ****************
 It would be good to changes the dismod_at test so that
@@ -33,6 +38,7 @@ Binomial Distribution
 *********************
 
 .. list-table::
+   :widths: auto
 
    * - *n*
      - number of samples
@@ -205,18 +211,6 @@ and the Sign function.
 This will result in a non-smooth the optimization problem.
 Perhaps the problem can be reformulated with auxillary variables
 to be a smooth problem ?
-
-create_database
-***************
-Make a version of :ref:`create_database-name` that uses
-keyword arguments and replaces the ones that are not present by
-default values. This could be done using the prototype
-
-   ``def create_database`` (* *args* , * * *kwargs* ) :
-
-where *args* are the positional arguments and
-*kwargs* are the keyword arguments.
-This would enable backward compatibility.
 
 ODE Solution
 ************

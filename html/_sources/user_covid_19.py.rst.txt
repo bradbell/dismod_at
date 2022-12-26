@@ -1,4 +1,4 @@
-lines 5-203 of file: example/user/covid_19.py
+lines 5-204 of file: example/user/covid_19.py
 
 # {xrst_begin user_covid_19.py}
 # {xrst_spell
@@ -23,6 +23,7 @@ lines 5-203 of file: example/user/covid_19.py
 # Our example data has the following columns:
 #
 # .. list-table::
+#     :widths: auto
 #
 #     * - *day*
 #       - day that this row of data corresponds to

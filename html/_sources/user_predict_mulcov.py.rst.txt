@@ -1,4 +1,4 @@
-lines 5-88 of file: example/user/predict_mulcov.py
+lines 5-89 of file: example/user/predict_mulcov.py
 
 # {xrst_begin user_predict_mulcov.py}
 # {xrst_comment_ch #}
@@ -45,6 +45,7 @@ lines 5-88 of file: example/user/predict_mulcov.py
 # There are five model variables in this example:
 #
 # .. list-table::
+#     :widths: auto
 #
 #     * - *iota_reference*
 #       - There is one variable corresponding to the reference value for

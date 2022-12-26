@@ -1,4 +1,4 @@
-lines 5-141 of file: example/user/lasso_covariate.py
+lines 5-142 of file: example/user/lasso_covariate.py
 
 # {xrst_begin user_lasso_covariate.py}
 # {xrst_spell
@@ -44,6 +44,7 @@ lines 5-141 of file: example/user/lasso_covariate.py
 # The are three model variables in this example:
 #
 # .. list-table::
+#     :widths: auto
 #
 #     * - *iota_reference*
 #       - :ref:`iota<avg_integrand@Rate Functions@iota_i(a,t)>`

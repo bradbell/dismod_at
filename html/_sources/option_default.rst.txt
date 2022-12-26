@@ -1,4 +1,4 @@
-lines 5-124 of file: xrst/table/option_default.xrst
+lines 5-125 of file: xrst/table/option_default.xrst
 
 {xrst_begin option_default}
 {xrst_spell
@@ -24,6 +24,7 @@ Table
 *****
 
 .. list-table::
+   :widths: auto
 
    * - Option Name
      - Default

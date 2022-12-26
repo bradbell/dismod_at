@@ -1,0 +1,78 @@
+lines 5-80 of file: example/user/node_cov_table.py
+
+# {xrst_begin user_node_cov_table.py}
+# {xrst_comment_ch #}
+#
+# Example Using The Node Covariate Table
+# ######################################
+#
+# Purpose
+# *******
+# This example demonstrates using the
+# :ref:`node_cov_table-name` .
+#
+# True Value of Variables
+# ***********************
+# The values of the unknown variables that is used to
+# simulate the data are
+# {xrst_literal
+#     BEGIN_TRUE_VALUE
+#     END_TRUE_VALUE
+# }
+#
+# Integrand
+# *********
+# There is only one integrand in this example,
+# :ref:`avg_integrand@Integrand, I_i(a,t)@prevalence` .
+#
+# Node Tables
+# ***********
+# The node table for this example is
+# ::
+#
+#                   world
+#                  /     \
+#     north_america       south_america
+#
+# Subgroup Table
+# **************
+# For this example there is only one group (the world).
+#
+# Covariates
+# **********
+# There is one covariate in this example and it is, *normalized_age*
+# (age divided by 100).
+#
+# Covariate Multipliers
+# *********************
+# There is one covariate multiplier in this example.
+# It multiples *normalized_age* and effects the rate iota.
+# Previous values for the covariate affect previous values for iota,
+# which in turn affects the value of prevalence at the measurement time.
+#
+# Simulated Data
+# **************
+# The data is simulated using the true value for the variables,
+# and the covariate effects mentioned above. No noise is added to the data,
+# but it is modeled as having a ten percent coefficient of variation.
+#
+# Rate Variables
+# **************
+# There is one non-zero rate for this example iota
+# and the no effect model for iota is constant and equal to
+# ``iota_no_effect`` .
+#
+# Covariate Multipliers Variables
+# *******************************
+# There is one covariate multiplier for this example
+# and it is constant and affects iota
+# (but the value of the covariate, normalized age, is not constant).
+#
+# Source Code
+# ***********
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end user_node_cov_table.py}

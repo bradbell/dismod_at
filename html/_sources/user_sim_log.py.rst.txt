@@ -1,4 +1,4 @@
-lines 5-108 of file: example/user/sim_log.py
+lines 5-109 of file: example/user/sim_log.py
 
 # {xrst_begin user_sim_log.py}
 # {xrst_comment_ch #}
@@ -46,6 +46,7 @@ gamma_global      = meas_value_global * 0.25
 # ********
 #
 # .. list-table::
+#     :widths: auto
 #
 #     * - :math:`y`
 #       - is the measurement value, *meas_value_global*

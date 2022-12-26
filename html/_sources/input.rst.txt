@@ -1,4 +1,4 @@
-lines 5-34 of file: xrst/table/input.xrst
+lines 5-37 of file: xrst/table/input.xrst
 
 {xrst_begin input}
 
@@ -7,6 +7,7 @@ Tables That Are Only Used as Inputs
 
 Contents
 ********
+{xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 {xrst_toc_table
    xrst/table/age_table.xrst
    xrst/table/avgint_table.xrst
@@ -15,6 +16,7 @@ Contents
    xrst/table/density_table.xrst
    xrst/table/integrand_table.xrst
    xrst/table/mulcov_table.xrst
+   xrst/table/node_cov_table.xrst
    xrst/table/node_table.xrst
    xrst/table/nslist_pair_table.xrst
    xrst/table/nslist_table.xrst
@@ -28,5 +30,6 @@ Contents
    xrst/table/weight_grid_table.xrst
    xrst/table/weight_table.xrst
 }
+{xrst_comment END_SORT_THIS_LINE_MINUS_1}
 
 {xrst_end input}

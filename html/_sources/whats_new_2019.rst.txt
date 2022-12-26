@@ -743,8 +743,8 @@ to simplify the user examples.
 
 #. The :ref:`density_table-name` no longer needs to contain
    all possible entries and the user can choose the order of the entries.
-#. Add a wish list entry for keyword arguments in
-   :ref:`wish_list@create_database` .
+#. Add a create_database wish list entry for keyword arguments.
+   This has since been changed to :ref:`wish_list@Empty Tables` .
 
 04-25
 =====

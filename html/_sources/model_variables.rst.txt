@@ -1,4 +1,4 @@
-lines 5-182 of file: xrst/model/model_variable.xrst
+lines 5-183 of file: xrst/model/model_variable.xrst
 
 {xrst_begin model_variables}
 {xrst_spell
@@ -45,6 +45,7 @@ The :ref:`smooth_table@smooth_id` for one of these variables
 specifies its prior as follows:
 
 .. list-table::
+   :widths: auto
 
    * - :ref:`smooth_table@n_age`
      - number of age points used to represent the function
