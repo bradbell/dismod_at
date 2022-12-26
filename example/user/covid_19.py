@@ -25,6 +25,7 @@
 # Our example data has the following columns:
 #
 # .. list-table::
+#     :widths: auto
 #
 #     * - *day*
 #       - day that this row of data corresponds to

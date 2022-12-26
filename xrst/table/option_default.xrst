@@ -26,6 +26,7 @@ Table
 *****
 
 .. list-table::
+   :widths: auto
 
    * - Option Name
      - Default

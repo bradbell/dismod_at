@@ -94,6 +94,7 @@
 # (note that the parent rate for pini cannot change with age):
 #
 # .. list-table::
+#     :widths: auto
 #
 #     * - rate
 #       - (as,ts)
@@ -141,6 +142,7 @@
 # on the parent age grid and has the following values:
 #
 # .. list-table::
+#     :widths: auto
 #
 #     * - index
 #       - (as,ts)

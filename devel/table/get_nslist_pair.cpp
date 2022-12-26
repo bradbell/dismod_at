@@ -41,6 +41,7 @@ nslist_pair_struct
 This is a structure with the following fields
 
 .. list-table::
+   :widths: auto
 
    * - ``int``
      - ``density_id``

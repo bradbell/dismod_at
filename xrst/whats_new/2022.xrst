@@ -37,12 +37,12 @@ Merge in the node_cov branch:
 #. Add the node_cov table as a quick fix for this covariate
    :ref:`node_cov_table@Problem` ; see
    :ref:`node_cov_table.py-name`.
-
 #. Because the node_cov table uses :ref:`node_cov_table@weight_id`
    to identify bilinear function, only weightings used by the
    data and avgint tables need to be
    :ref:`weight_grid_table@weight@Positive` .
-
+#. The column widths of some of the documentation tables were set to be equal
+   instead of adjusting to best fit the columns. This has been fixed.
 
 12-20
 =====

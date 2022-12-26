@@ -50,6 +50,7 @@ Below is a list of the ``dismod_at`` output tables by table name:
 The ones that can be created directly by the user have yes under By User.
 
 .. list-table::
+   :widths: auto
 
    * - Table
      - Output By
@@ -124,6 +125,7 @@ Command Output Tables
 Below is a list commands and their corresponding output tables:
 
 .. list-table::
+   :widths: auto
 
    * - Command
      - Output Tables
@@ -175,6 +177,7 @@ Below is a list commands
 (that have extra input tables) and their corresponding extra input tables:
 
 .. list-table::
+   :widths: auto
 
    * - Command
      - Extra Input Tables

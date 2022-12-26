@@ -32,6 +32,7 @@ covariate_struct
 This is a structure with the following fields
 
 .. list-table::
+   :widths: auto
 
    * - Type
      - Field

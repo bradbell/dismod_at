@@ -47,6 +47,7 @@
 # There are five model variables in this example:
 #
 # .. list-table::
+#     :widths: auto
 #
 #     * - *iota_reference*
 #       - There is one variable corresponding to the reference value for

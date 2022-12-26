@@ -141,6 +141,7 @@ residual_struct
 This structure has the following fields:
 
 .. list-table::
+   :widths: auto
 
    * - Type
      - Field

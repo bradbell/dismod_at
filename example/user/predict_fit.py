@@ -54,6 +54,7 @@
 # There are three model variables in this example:
 #
 # .. list-table::
+#     :widths: auto
 #
 #     * - *iota_north_america*
 #       - The true value for

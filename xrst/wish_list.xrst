@@ -41,6 +41,7 @@ Binomial Distribution
 *********************
 
 .. list-table::
+   :widths: auto
 
    * - *n*
      - number of samples

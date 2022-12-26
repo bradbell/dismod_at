@@ -46,6 +46,7 @@
 # The are three model variables in this example:
 #
 # .. list-table::
+#     :widths: auto
 #
 #     * - *iota_reference*
 #       - :ref:`iota<avg_integrand@Rate Functions@iota_i(a,t)>`

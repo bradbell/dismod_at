@@ -123,6 +123,7 @@
 # The dictionary *weight_table* [ *i* ] has the following:
 #
 # .. list-table::
+#     :widths: auto
 #
 #     * - Key
 #       - Value Type
@@ -358,6 +359,7 @@
 # Note that each pair above is a python ``tuple`` :
 #
 # .. list-table::
+#     :widths: auto
 #
 #     * - Variable
 #       - Value Type
@@ -379,6 +381,7 @@
 # The dictionary *rate_table* [ *i* ] has the following:
 #
 # .. list-table::
+#     :widths: auto
 #
 #     * - Key
 #       - Value Type
@@ -409,6 +412,7 @@
 # The dictionary *mulcov_table* [ *i* ] has the following:
 #
 # .. list-table::
+#     :widths: auto
 #
 #     * - Key
 #       - Value Type

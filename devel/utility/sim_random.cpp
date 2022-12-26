@@ -36,6 +36,7 @@ for the distribution that we are simulating.
 The following table specifies the meaning of this choice:
 
 .. list-table::
+   :widths: auto
 
    * - ``uniform_enum``
      - not allowed

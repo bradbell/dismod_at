@@ -112,6 +112,7 @@ Examples With Explanation
 *************************
 
 .. list-table::
+   :widths: auto
 
    * - {xrst_comment ?????_SORT_THIS_LINE_PLUS_1}
        user_age_avg_split.py

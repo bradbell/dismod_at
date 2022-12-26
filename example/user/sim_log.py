@@ -48,6 +48,7 @@ gamma_global      = meas_value_global * 0.25
 # ********
 #
 # .. list-table::
+#     :widths: auto
 #
 #     * - :math:`y`
 #       - is the measurement value, *meas_value_global*
