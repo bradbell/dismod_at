@@ -43,7 +43,8 @@
 # Covariates
 # **********
 # There is one covariate in this example and it is, *normalized_age*
-# (age divided by 100).
+# (age divided by 100). The :ref:`option_table@splitting_covariate` is
+# null, so the values of *split_name* in the node_cov table do not matter.
 #
 # Covariate Multipliers
 # *********************
@@ -236,7 +237,7 @@ def example_db (file_name) :
       { 'name':'quasi_fixed',            'value':'true'         },
       { 'name':'derivative_test_fixed',  'value':'first-order'  },
       { 'name':'max_num_iter_fixed',     'value':'100'          },
-      { 'name':'print_level_fixed',      'value':'5'            },
+      { 'name':'print_level_fixed',      'value':'0'            },
       { 'name':'tolerance_fixed',        'value':'1e-8'         },
 
       { 'name':'derivative_test_random', 'value':'second-order' },
@@ -246,10 +247,12 @@ def example_db (file_name) :
    ]
    # ----------------------------------------------------------------------
    node_cov_table = list()
+   not_used       = 0.0
    for node_id in range( len(node_table) ) :
       row = {
          'node_id'      : node_id,
          'covariate_id' : 0,
+         'split_value'  : not_used,
           'weight_id'   : 0,
       }
       node_cov_table.append(row)
