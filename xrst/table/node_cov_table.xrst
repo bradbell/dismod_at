@@ -27,12 +27,14 @@ the measurement is for an
 Solution
 ********
 This table attaches a bilinear function of age and time to
-each covariate, node pair in this table.
+each covariate, node, and :ref:`option_table@splitting_covariate` value.
 If a covariate appears in this table, the values in this table,
 instead of the data table, are used for that covariate.
 For each *covariate_id* that appears in this table,
-and each *node_id* in the node table,
-there must be one an only one row for that covariate and node.
+each *node_id* in the node table,
+and each splitting covariate value in the data table,
+there must be one an only one row with that
+*covariate_id*, *node_id*, and splitting covariate value.
 
 node_cov_id
 ***********
@@ -44,11 +46,20 @@ covariate_id
 ************
 This column has type ``integer`` and is the
 :ref:`covariate_table@covariate_id` corresponding to this row.
+The covariate_id corresponding to the splitting covariate
+cannot appear in this column; i.e.,
+the splitting covariate value is constant with respect to age and time.
 
 node_id
 *******
 This column has type ``integer`` and is the
 :ref:`node_table@node_id` corresponding to this row.
+
+split_value
+***********
+This column has type ``real`` and is the value of the
+splitting corresponding to this row.
+This value is not used when the splitting covariate is ``null`` .
 
 weight_id
 *********

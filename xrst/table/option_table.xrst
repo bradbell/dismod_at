@@ -537,6 +537,15 @@ this initialization takes a long time.
    xrst/table/option_default.xrst
    example/table/option_table.py
 }
+
+splitting_covariate
+*******************
+If *option_name* is ``splitting_covariate`` ,
+the corresponding value is the name of the splitting covariate.
+The covariate values in :ref:`node_cov_table-name` can be different for each
+value of the splitting covariate.
+For example, the covariate values might be different for each value of sex.
+
 Example
 *******
 The files :ref:`option_table.py-name`

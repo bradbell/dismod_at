@@ -26,16 +26,17 @@ def node_cov_table() :
    #
    # create the rate table
    col_name = [
-      'covariate_id', 'node_id', 'weight_id'
+      'covariate_id', 'node_id', 'split_value', 'weight_id'
    ]
    col_type = [
-      'integer',      'integer', 'integer'
+      'integer',      'integer', 'real',        'integer'
    ]
+   # sex is our splitting covariate and -0.5 corresponds to female.
    row_list = [
-      [1,             0,          1],
-      [1,             1,          0],
-      [1,             2,          1],
-      [1,             3,          0],
+      [1,             0,          -0.5,         1],
+      [1,             1,          -0.5,         0],
+      [1,             2,          -0.5,         1],
+      [1,             3,          -0.5,         0],
    ]
    tbl_name = 'node_cov'
    dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
