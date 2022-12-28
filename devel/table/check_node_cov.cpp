@@ -17,7 +17,7 @@ Syntax
 
 Purpose
 *******
-Check for errors in the :ref:`node_cov_table-name` .
+Check for any errors in the :ref:`node_cov_table-name` .
 This includes checking for an invalid :ref:`option_table@splitting_covariate`
 option value.
 
@@ -141,8 +141,18 @@ void check_node_cov(
    for(size_t node_cov_id = 0; node_cov_id < n_node_cov; ++node_cov_id)
          covariate_id_set.insert( node_cov_table[node_cov_id].covariate_id );
    //
-   // covariate_id
+   // covariate_id_itr
    std::set<int>::const_iterator covariate_id_itr;
+   //
+   covariate_id_itr = covariate_id_set.find( int(split_covariate_id) );
+   if( covariate_id_itr != covariate_id_set.end() )
+   {  msg  = "splitting covariate_id = " + to_string(split_covariate_id);
+      msg += " appears in the node_cov table";
+      string table_name = "node_cov";
+      error_exit(msg, table_name);
+   }
+   //
+   // covariate_id
    for(
       covariate_id_itr =  covariate_id_set.begin();
       covariate_id_itr != covariate_id_set.end();
