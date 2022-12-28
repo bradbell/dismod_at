@@ -19,6 +19,7 @@ Contents
    devel/utility/child_data_in_fit.cpp
    devel/utility/child_info.cpp
    devel/utility/cohort_ode.cpp
+   devel/utility/cov2weight_map.cpp
    devel/utility/eigen_ode2.cpp
    devel/utility/error_exit.cpp
    devel/utility/fixed_effect.cpp

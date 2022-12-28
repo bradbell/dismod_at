@@ -75,6 +75,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
    utility/child_data_in_fit.cpp
    utility/child_info.cpp
    utility/cohort_ode.cpp
+   utility/cov2weight_map.cpp
    utility/eigen_ode2.cpp
    utility/error_exit.cpp
    utility/fixed_effect.cpp

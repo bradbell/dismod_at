@@ -30,11 +30,6 @@ This table attaches a bilinear function of age and time to
 each covariate, node, and :ref:`option_table@splitting_covariate` value.
 If a covariate appears in this table, the values in this table,
 instead of the data table, are used for that covariate.
-For each *covariate_id* that appears in this table,
-each *node_id* in the node table,
-and each splitting covariate value in the data table,
-there must be one an only one row with that
-*covariate_id*, *node_id*, and splitting covariate value.
 
 node_cov_id
 ***********
@@ -67,6 +62,15 @@ This column has type ``integer`` and is the
 :ref:`weight_table@weight_id` corresponding to this row.
 As a quick fix, we use *weight_id* to identify an
 arbitrary bilinear functions of age and time.
+
+Rectangular Grid
+****************
+For each *covariate_id* that appears in this table,
+each *node_id* in the node table,
+each splitting covariate value in the data table,
+and each splitting covariate value in the avgint table,
+there must be one an only one row with that
+*covariate_id*, *node_id*, and splitting covariate value.
 
 Example
 *******
