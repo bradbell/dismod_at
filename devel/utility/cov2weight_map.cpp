@@ -123,6 +123,12 @@ weight_id
 #. Otherwise, *weight_id* identifies the bilinear function
    of age and time for this covariate, node, and splitting covariate value.
 
+n_weight
+********
+{xrst_literal
+   // BEGIN_N_WEIGHT
+   // END_N_WEIGHT
+}
 
 {xrst_end cov2weight_map}
 */
@@ -231,3 +237,8 @@ size_t dismod_at::cov2weight_map::weight_id(
    size_t index = (n_node_ * covariate_id + node_id) * n_split + split_id;
    return weight_id_vec_[index];
 }
+// ---------------------------------------------------------------------------
+// BEGIN_N_WEIGHT
+size_t dismod_at::cov2weight_map::n_weight(void) const
+{  return n_weight_; }
+// END_N_WEIGHT

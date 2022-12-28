@@ -20,9 +20,7 @@ Syntax
 ******
 
 | ``avg_integrand`` *avgint_obj* (
-| |tab| *node_cov_map* ,
-| |tab| *n_covariate* ,
-| |tab| *n_node* ,
+| |tab| *cov2weight_obj* ,
 | |tab| *ode_step_size* ,
 | |tab| *rate_case* ,
 | |tab| *age_avg_grid* ,
@@ -42,20 +40,9 @@ Prototype
    // END_AVG_INTEGRAND_PROTOTYPE
 }
 
-node_cov_map
-************
-Is the mapping from (covariate_id, node_id) to weight_id; see
-:ref:`map_node_cov-name` .
-
-n_covariate
-***********
-is the number of covariates; i.e., the size of the
-:ref:`get_covariate_table@covariate_table` .
-
-n_node
-******
-is the number of nodes; i.e., the size of the
-:ref:`get_node_table@node_table` .
+cov2weight_obj
+**************
+Is the :ref:`cov2weight_map-name` .
 
 ode_step_size
 *************
@@ -132,9 +119,7 @@ of using this routine.
 
 // BEGIN_AVG_INTEGRAND_PROTOTYPE
 avg_integrand::avg_integrand(
-      const CppAD::vector< CppAD::vector<size_t> >& node_cov_map ,
-      size_t                                    n_covariate      ,
-      size_t                                    n_node           ,
+      const cov2weight_map&                     cov2weight_obj   ,
       double                                    ode_step_size    ,
       const std::string&                        rate_case        ,
       const CppAD::vector<double>&              age_avg_grid     ,
@@ -157,9 +142,7 @@ w_info_vec_                ( w_info_vec )      ,
 double_time_line_object_   ( age_avg_grid )    ,
 a1_double_time_line_object_( age_avg_grid )    ,
 adjint_obj_(
-   node_cov_map,
-   n_covariate,
-   n_node,
+   cov2weight_obj,
    w_info_vec,
    rate_case,
    age_table,
@@ -170,15 +153,7 @@ adjint_obj_(
    s_info_vec,
    pack_object
 )
-{
-# ifndef NDEBUG
-   assert( node_cov_map.size() == n_covariate );
-   for(size_t covariate_id = 0; covariate_id < n_covariate; ++covariate_id)
-   {  size_t size = node_cov_map[covariate_id].size();
-      assert( size == 0 || size == n_node );
-   }
-# endif
-}
+{ }
 /*
 ------------------------------------------------------------------------------
 {xrst_begin avg_integrand_rectangle dev}

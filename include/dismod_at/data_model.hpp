@@ -19,6 +19,7 @@
 # include "avg_integrand.hpp"
 # include "avg_noise_effect.hpp"
 # include "meas_noise_effect.hpp"
+# include "cov2weight_map.hpp"
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -65,10 +66,8 @@ private:
 public:
    template <class SubsetStruct>
    data_model(
-      const CppAD::vector< CppAD::vector<size_t> >& node_cov_map  ,
-      size_t                                   split_covariate_id ,
+      const cov2weight_map&                    cov2weight_obj     ,
       size_t                                   n_covariate        ,
-      size_t                                   n_node             ,
       bool                                     fit_simulated_data ,
       const std::string&                       meas_noise_effect  ,
       const std::string&                       rate_case          ,

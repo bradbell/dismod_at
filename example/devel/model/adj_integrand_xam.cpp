@@ -183,14 +183,21 @@ bool adj_integrand_xam(void)
    }
    //
    // adjust_object
-   size_t n_covariate = 0;
    size_t n_node      = 1;
-   vector< vector<size_t> > node_cov_map(n_covariate);
    vector<dismod_at::weight_info>   w_info_vec(0); // not used
-   dismod_at::adj_integrand adjint_obj(
-      node_cov_map,
-      n_covariate,
+   size_t n_weight = 0;
+   std::string splitting_covariate = "";
+   CppAD::vector<dismod_at::covariate_struct> covariate_table(0);
+   CppAD::vector<dismod_at::node_cov_struct> node_cov_table(0);
+   dismod_at::cov2weight_map cov2weight_obj(
       n_node,
+      n_weight,
+      splitting_covariate,
+      covariate_table,
+      node_cov_table
+   );
+   dismod_at::adj_integrand adjint_obj(
+      cov2weight_obj,
       w_info_vec,
       rate_case,
       age_table,

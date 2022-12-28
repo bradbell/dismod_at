@@ -11,6 +11,7 @@
 # include "pack_info.hpp"
 # include "a1_double.hpp"
 # include "weight_info.hpp"
+# include "cov2weight_map.hpp"
 
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
@@ -25,8 +26,8 @@ private:
    const CppAD::vector<integrand_struct>&     integrand_table_;
    const CppAD::vector<smooth_info>&          s_info_vec_;
    const pack_info&                           pack_object_;
-   const CppAD::vector< CppAD::vector<size_t> >& node_cov_map_;
-   const CppAD::vector<weight_info>&             w_info_vec_;
+   const cov2weight_map&                      cov2weight_obj_;
+   const CppAD::vector<weight_info>&          w_info_vec_;
 
    // Maps each mulcov_id to corresponding packing information.
    // Set by constructor and effectory const
@@ -56,9 +57,7 @@ private:
 public:
    // adj_integrand
    adj_integrand(
-      const CppAD::vector< CppAD::vector<size_t> >& node_cov_map ,
-      size_t                                    n_covariate      ,
-      size_t                                    n_node           ,
+      const cov2weight_map&                     cov2wight_obj    ,
       const CppAD::vector<weight_info>&         w_info_vec       ,
       const std::string&                        rate_case        ,
       const CppAD::vector<double>&              age_table        ,

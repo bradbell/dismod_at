@@ -52,7 +52,7 @@
 # include <dismod_at/age_avg_grid.hpp>
 # include <dismod_at/child_data_in_fit.hpp>
 # include <dismod_at/get_bnd_mulcov_table.hpp>
-# include <dismod_at/map_node_cov.hpp>
+# include <dismod_at/cov2weight_map.hpp>
 
 # define DISMOD_AT_TRACE 0
 
@@ -443,21 +443,16 @@ int main(int n_arg, const char** argv)
       if( std::strcmp(argv[3], "asymptotic") == 0 && n_arg == 7 )
          fit_simulated_data = true;
    }
-   // node_cov_map
-   vector< vector<size_t> > node_cov_map = dismod_at::map_node_cov(
-      db_input.node_cov_table, n_covariate, n_node
+   //
+   // cov2weight_obj
+   string splitting_covariate = option_map["splitting_covariate"];
+   dismod_at::cov2weight_map cov2weight_obj(
+      n_node                    ,
+      n_weight                  ,
+      splitting_covariate       ,
+      db_input.covariate_table  ,
+      db_input.node_cov_table
    );
-   // split_covariate_id
-   size_t split_covariate_id = n_covariate;
-   std::string splitting_covariate = option_map["splitting_covariate"];
-   if( splitting_covariate != "" )
-   {  for(size_t id = 0; id < n_covariate; ++id)
-         if(
-         db_input.covariate_table[id].covariate_name == splitting_covariate
-         )
-            split_covariate_id = id;
-      assert( split_covariate_id != n_covariate );
-   }
    // =======================================================================
 # ifdef NDEBUG
    try { // BEGIN_TRY_BLOCK (when not debugging)
@@ -597,10 +592,8 @@ int main(int n_arg, const char** argv)
       //
       // avgint_object
       dismod_at::data_model avgint_object(
-         node_cov_map             ,
-         split_covariate_id       ,
+         cov2weight_obj           ,
          n_covariate              ,
-         n_node                   ,
          fit_simulated_data       ,
          meas_noise_effect        ,
          rate_case                ,
@@ -683,10 +676,8 @@ int main(int n_arg, const char** argv)
       );
       // data_object
       dismod_at::data_model data_object(
-         node_cov_map             ,
-         split_covariate_id       ,
+         cov2weight_obj           ,
          n_covariate              ,
-         n_node                   ,
          fit_simulated_data       ,
          meas_noise_effect        ,
          rate_case                ,

@@ -15,10 +15,8 @@ Syntax
 ******
 
 | ``data_model`` *data_object* (
-| |tab| *node_cov_map* ,
-| |tab| *split_covariate_id* ,
+| |tab| *cov2weight_map* ,
 | |tab| *n_covariate* ,
-| |tab| *n_node* ,
 | |tab| *fit_simulated_data* ,
 | |tab| *meas_noise_effect* ,
 | |tab| *rate_case* ,
@@ -49,27 +47,15 @@ data_object
 ***********
 This is the ``data_model`` object being constructed.
 
-node_cov_map
-************
-Is the mapping from (covariate_id, node_id) to weight_id; see
-:ref:`map_node_cov-name` .
-
-split_covariate_id
-******************
-is the :ref:`covariate_table@covariate_id` corresponding to the
-:ref:`option_table@splitting_covariate` .
-If splitting_covariate is empty, *split_covariate_id* is equal
-to *n_covariate* .
+cov2weight_map
+**************
+Is the mapping from (covariate_id, node_id, split_value) to weight_id; see
+:ref:`cov2weight_map-name` .
 
 n_covariate
 ***********
 is the number of covariates; i.e., the size of the
 :ref:`get_covariate_table@covariate_table` .
-
-n_node
-******
-is the number of nodes; i.e., the size of the
-:ref:`get_node_table@node_table` .
 
 fit_simulated_data
 ******************
@@ -254,10 +240,8 @@ data_model::~data_model(void)
 // BEGIN_DATA_MODEL_PROTOTYPE
 template <class SubsetStruct>
 data_model::data_model(
-   const CppAD::vector< CppAD::vector<size_t> >& node_cov_map  ,
-   size_t                                   split_covariate_id ,
+   const cov2weight_map&                    cov2weight_obj     ,
    size_t                                   n_covariate        ,
-   size_t                                   n_node             ,
    bool                                     fit_simulated_data ,
    const std::string&                       meas_noise_effect  ,
    const std::string&                       rate_case          ,
@@ -286,9 +270,7 @@ n_child_            ( child_info4data.child_size() )   ,
 subset_cov_value_   (subset_cov_value)              ,
 pack_object_        (pack_object)                   ,
 avgint_obj_(
-   node_cov_map,
-   n_covariate,
-   n_node,
+   cov2weight_obj,
    ode_step_size,
    rate_case,
    age_avg_grid,
@@ -314,7 +296,6 @@ avg_noise_obj_(
 )
 {  assert( bound_random >= 0.0 );
    assert( n_child_ == pack_object.child_size() );
-   assert( node_cov_map.size() == n_covariate );
    // ------------------------------------------------------------------------
    //
    using std::string;
@@ -1078,10 +1059,8 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 // ------------------------------------------------------------------------
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(SubsetStruct)       \
 template data_model::data_model(                                   \
-   const CppAD::vector< CppAD::vector<size_t> >& node_cov_map  ,  \
-   size_t                                   split_covariate_id ,  \
+   const cov2weight_map&                    cov2weight_obj     ,  \
    size_t                                   n_covariate        ,  \
-   size_t                                   n_node             ,  \
    bool                                     fit_simulated_data ,  \
    const std::string&                       meas_noise_effect  ,  \
    const std::string&                       rate_case          ,  \

@@ -19,6 +19,7 @@ C++ avg_integrand: Example and Test
 # include <dismod_at/avg_integrand.hpp>
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/get_weight_table.hpp>
+# include <dismod_at/cov2weight_map.hpp>
 
 bool avg_integrand_xam(void)
 {  bool   ok = true;
@@ -192,13 +193,20 @@ bool avg_integrand_xam(void)
       age_avg_grid[i] = age_ini + double(i) * ode_step_size;
    //
    // avgint_obj
-   size_t n_covariate = 0;
    size_t n_node = 0;
-   vector< vector<size_t> > node_cov_map(n_covariate);
-   dismod_at::avg_integrand avgint_obj(
-      node_cov_map,
-      n_covariate,
+   size_t n_weight = 0;
+   std::string splitting_covariate = "";
+   CppAD::vector<dismod_at::covariate_struct> covariate_table(0);
+   CppAD::vector<dismod_at::node_cov_struct> node_cov_table(0);
+   dismod_at::cov2weight_map cov2weight_obj(
       n_node,
+      n_weight,
+      splitting_covariate,
+      covariate_table,
+      node_cov_table
+   );
+   dismod_at::avg_integrand avgint_obj(
+      cov2weight_obj,
       ode_step_size,
       rate_case,
       age_table,

@@ -27,6 +27,7 @@ Contents
 # include "adj_integrand.hpp"
 # include "time_line_vec.hpp"
 # include "weight_info.hpp"
+# include "cov2weight_map.hpp"
 
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
@@ -95,9 +96,7 @@ private:
 public:
    // avg_integrand
    avg_integrand(
-      const CppAD::vector< CppAD::vector<size_t> >& node_cov_map ,
-      size_t                                    n_covariate      ,
-      size_t                                    n_node           ,
+      const cov2weight_map&                     cov2weight_obj   ,
       double                                    ode_step_size    ,
       const std::string&                        rate_case        ,
       const CppAD::vector<double>&              age_avg_grid     ,

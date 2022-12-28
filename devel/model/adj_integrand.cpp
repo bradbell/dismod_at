@@ -32,9 +32,7 @@ Syntax
 ******
 
 | ``adj_integrand`` *adjint_obj* (
-| |tab| *node_cov_map*,
-| |tab| *n_covariate*,
-| |tab| *n_node*,
+| |tab| *cov2weight_obj*,
 | |tab| *w_info_vec*,
 | |tab| *rate_case* ,
 | |tab| *age_table* ,
@@ -66,20 +64,9 @@ Prototype
    // END_LINE_PROTOTYPE
 }
 
-node_cov_map
-************
-Is the mapping from (covariate_id, node_id) to weight_id; see
-:ref:`map_node_cov-name` .
-
-n_covariate
-***********
-is the number of covariates; i.e., the size of the
-:ref:`get_covariate_table@covariate_table` .
-
-n_node
-******
-is the number of nodes; i.e., the size of the
-:ref:`get_node_table@node_table` .
+cov2weight_obj
+**************
+is the :ref:`cov2weight_map-name` .
 
 w_info_vec
 **********
@@ -229,9 +216,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 // BEGIN_ADJ_INTEGRAND_PROTOTYPE
 adj_integrand::adj_integrand(
-   const CppAD::vector< CppAD::vector<size_t> >& node_cov_map ,
-   size_t                                    n_covariate      ,
-   size_t                                    n_node           ,
+   const cov2weight_map&                     cov2weight_obj   ,
    const CppAD::vector<weight_info>&         w_info_vec       ,
    const std::string&                        rate_case        ,
    const CppAD::vector<double>&              age_table        ,
@@ -250,7 +235,7 @@ subgroup_table_     (subgroup_table)  ,
 integrand_table_   (integrand_table)  ,
 s_info_vec_        (s_info_vec)       ,
 pack_object_       (pack_object)      ,
-node_cov_map_      (node_cov_map)     ,
+cov2weight_obj_    (cov2weight_obj)   ,
 w_info_vec_        (w_info_vec)       ,
 double_rate_       (number_rate_enum) ,
 a1_double_rate_    (number_rate_enum)
@@ -523,13 +508,15 @@ CppAD::vector<Float> adj_integrand::line(
             //
             // temp_2 = covariate value
             size_t covariate_id = info.covariate_id;
-            if( node_cov_map_[covariate_id].size() == 0 )
+            size_t weight_id = cov2weight_obj_.weight_id(
+               covariate_id, node_id, x
+            );
+            if( weight_id == cov2weight_obj_.n_weight() )
             {  for(size_t k = 0; k < n_line; ++k)
                   temp_2[k] = x[ info.covariate_id ];
             }
             else
-            {  size_t weight_id   = node_cov_map_[covariate_id][node_id];
-               const weight_info& w_info = w_info_vec_[weight_id];
+            {  const weight_info& w_info = w_info_vec_[weight_id];
                size_t n_age        = w_info.age_size();
                size_t n_time       = w_info.time_size();
                weight_grid.resize(n_age * n_time);
@@ -578,13 +565,15 @@ CppAD::vector<Float> adj_integrand::line(
             //
             // temp_2 = covariate value
             size_t covariate_id = info.covariate_id;
-            if( node_cov_map_[covariate_id].size() == 0 )
+            size_t weight_id = cov2weight_obj_.weight_id(
+               covariate_id, node_id, x
+            );
+            if( weight_id == cov2weight_obj_.n_weight() )
             {  for(size_t ell = 0; ell < n_line; ++ell)
                   temp_2[ell] = x[ info.covariate_id ];
             }
             else
-            {  size_t weight_id   = node_cov_map_[covariate_id][node_id];
-               const weight_info& w_info = w_info_vec_[weight_id];
+            {  const weight_info& w_info = w_info_vec_[weight_id];
                size_t n_age        = w_info.age_size();
                size_t n_time       = w_info.time_size();
                weight_grid.resize(n_age * n_time);

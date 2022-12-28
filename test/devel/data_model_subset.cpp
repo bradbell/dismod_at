@@ -10,6 +10,7 @@ Test computing data model values on a subset of data table.
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/age_avg_grid.hpp>
+# include <dismod_at/cov2weight_map.hpp>
 
 namespace {
    double check_avg(const dismod_at::data_struct& data_row)
@@ -159,8 +160,17 @@ bool data_model_subset(void)
    size_t n_covariate = 0;
    vector<dismod_at::covariate_struct> covariate_table(n_covariate);
    //
-   // node_cov_map
-   vector< vector<size_t> > node_cov_map(n_covariate);
+   // cov2weight_obj
+   size_t n_weight = 0;
+   std::string splitting_covariate = "";
+   CppAD::vector<dismod_at::node_cov_struct> node_cov_table(0);
+   dismod_at::cov2weight_map cov2weight_obj(
+      n_node,
+      n_weight,
+      splitting_covariate,
+      covariate_table,
+      node_cov_table
+   );
    //
    // data_table
    size_t n_data = n_node;
@@ -262,12 +272,9 @@ bool data_model_subset(void)
    vector<double> age_avg_grid = dismod_at::age_avg_grid(
       ode_step_size, age_avg_split, age_table
    );
-   size_t split_covariate_id = n_covariate;
    dismod_at::data_model data_object(
-      node_cov_map,
-      split_covariate_id,
+      cov2weight_obj,
       n_covariate,
-      n_node,
       fit_simulated_data,
       meas_noise_effect,
       rate_case,

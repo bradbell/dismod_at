@@ -41,6 +41,9 @@ public:
       size_t                       node_id       ,
       const CppAD::vector<double>& x
    ) const;
+   //
+   // n_weight
+   size_t n_weight(void) const;
 };
 
 } // END_DISMOD_AT_NAMESPACE
