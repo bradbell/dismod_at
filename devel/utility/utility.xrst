@@ -27,7 +27,6 @@ Contents
    devel/utility/get_str_map.cpp
    devel/utility/get_var_limits.cpp
    devel/utility/grid2line.cpp
-   devel/utility/map_node_cov.cpp
    devel/utility/n_random_const.cpp
    devel/utility/pack_info.xrst
    devel/utility/pack_prior.cpp

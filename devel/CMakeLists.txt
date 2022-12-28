@@ -83,7 +83,6 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
    utility/get_str_map.cpp
    utility/get_var_limits.cpp
    utility/grid2line.cpp
-   utility/map_node_cov.cpp
    utility/n_random_const.cpp
    utility/pack_info.cpp
    utility/pack_prior.cpp
