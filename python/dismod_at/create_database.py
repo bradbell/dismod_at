@@ -474,7 +474,7 @@
 #     Key,Value Type,Description
 #     ``'node_id'``,      int,identifies the node for the *i*-th row
 #     ``'covariate_id'``, int,identifies the covariate for the *i*-th row
-#     ``split_value``,    float,identifies the splitting covariate
+#     ``split_value``,    real,identifies the splitting covariate
 #     ``'weight_id'``,    int,identifies weighting for this (node, covariate)
 #
 # Contents
@@ -1179,7 +1179,7 @@ def create_database(
    # ----------------------------------------------------------------------
    # create node_cov table
    col_name = [ 'node_id', 'covariate_id', 'split_value', 'weight_id' ]
-   col_type = [ 'integer', 'integer',      'float',       'integer'   ]
+   col_type = [ 'integer', 'integer',      'real',        'integer'   ]
    row_list = []
    for row_in in node_cov_table :
       row_out = list()

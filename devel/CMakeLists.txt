@@ -27,6 +27,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
    table/blob_table.cpp
    table/check_child_nslist.cpp
    table/check_child_prior.cpp
+   table/check_node_cov.cpp
    table/check_pini_n_age.cpp
    table/check_rate_limit.cpp
    table/check_table_id.cpp
@@ -67,7 +68,6 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
    table/put_table_row.cpp
    table/smooth_info.cpp
    table/weight_info.cpp
-   utility/map_node_cov.cpp
    utility/age_avg_grid.cpp
    utility/avgint_subset.cpp
    utility/bilinear_interp.cpp
@@ -82,6 +82,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
    utility/get_str_map.cpp
    utility/get_var_limits.cpp
    utility/grid2line.cpp
+   utility/map_node_cov.cpp
    utility/n_random_const.cpp
    utility/pack_info.cpp
    utility/pack_prior.cpp

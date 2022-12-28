@@ -92,6 +92,7 @@ information.
 # include <dismod_at/check_child_prior.hpp>
 # include <dismod_at/check_child_nslist.hpp>
 # include <dismod_at/check_zero_sum.hpp>
+# include <dismod_at/check_node_cov.hpp>
 # include <dismod_at/null_int.hpp>
 # include <cppad/utility/to_string.hpp>
 # include <dismod_at/error_exit.hpp>
@@ -306,6 +307,15 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
    check_zero_sum(
       db                         ,
       db_input.rate_table        ,
+      db_input.option_table
+   );
+   check_node_cov(
+      db                         ,
+      db_input.data_cov_value    ,
+      db_input.avgint_cov_value  ,
+      db_input.covariate_table   ,
+      db_input.node_table        ,
+      db_input.node_cov_table    ,
       db_input.option_table
    );
    return;

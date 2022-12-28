@@ -107,6 +107,12 @@ CppAD::vector<node_cov_struct> get_node_cov_table(
    get_table_column(db, table_name, column_name, node_id_vec);
    assert( n_node_cov == node_id_vec.size() );
    //
+   // split_value
+   column_name = "split_value";
+   CppAD::vector<double> split_value_vec;
+   get_table_column(db, table_name, column_name, split_value_vec);
+   assert( n_node_cov == split_value_vec.size() );
+   //
    // weight_id
    column_name = "weight_id";
    CppAD::vector<int>    weight_id_vec;
@@ -120,6 +126,7 @@ CppAD::vector<node_cov_struct> get_node_cov_table(
    {
       node_cov_table[i].covariate_id = covariate_id_vec[i];
       node_cov_table[i].node_id      = node_id_vec[i];
+      node_cov_table[i].split_value  = split_value_vec[i];
       node_cov_table[i].weight_id    = weight_id_vec[i];
    }
    // The primary key values covariate_id and node_id get checked by
