@@ -10,7 +10,7 @@ then
 fi
 # -----------------------------------------------------------------------------
 cd include/dismod_at
-list=`ls *.hpp`
+list=$(ls *.hpp | sed -e '/^temp\./d' -e '/\/temp\./d')
 for file in $list
 do
    check=`echo $file | tr 'a-z' 'A-Z'`

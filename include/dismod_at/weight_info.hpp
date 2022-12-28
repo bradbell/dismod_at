@@ -5,7 +5,7 @@
 # ifndef DISMOD_AT_WEIGHT_INFO_HPP
 # define DISMOD_AT_WEIGHT_INFO_HPP
 
-# include <cppad/cppad.hpp>
+# include <cppad/utility/vector.hpp>
 # include "get_weight_table.hpp"
 # include "get_weight_grid.hpp"
 
