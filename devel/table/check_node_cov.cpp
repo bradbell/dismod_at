@@ -21,10 +21,6 @@ Check for errors in the :ref:`node_cov_table-name` .
 This includes checking for an invalid :ref:`option_table@splitting_covariate`
 option value.
 
-db
-**
-This is a dismod_at connection to the database
-
 data_cov_value
 **************
 is the :ref:`get_data_table@data_cov_value` .
@@ -60,7 +56,6 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 // BEGIN_PROTOTYPE
 void check_node_cov(
-   sqlite3*                                    db                 ,
    const CppAD::vector<double>&                data_cov_value     ,
    const CppAD::vector<double>&                avgint_cov_value   ,
    const CppAD::vector<covariate_struct>&      covariate_table    ,

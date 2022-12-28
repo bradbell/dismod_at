@@ -14,7 +14,6 @@
 
 namespace dismod_at {
    void check_node_cov(
-      sqlite3*                                    db                 ,
       const CppAD::vector<double>&                data_cov_value     ,
       const CppAD::vector<double>&                avgint_cov_value   ,
       const CppAD::vector<covariate_struct>&      covariate_table    ,

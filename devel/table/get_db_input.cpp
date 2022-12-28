@@ -310,7 +310,6 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
       db_input.option_table
    );
    check_node_cov(
-      db                         ,
       db_input.data_cov_value    ,
       db_input.avgint_cov_value  ,
       db_input.covariate_table   ,
