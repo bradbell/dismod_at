@@ -66,6 +66,7 @@ public:
    template <class SubsetStruct>
    data_model(
       const CppAD::vector< CppAD::vector<size_t> >& node_cov_map  ,
+      size_t                                   split_covariate_id ,
       size_t                                   n_covariate        ,
       size_t                                   n_node             ,
       bool                                     fit_simulated_data ,

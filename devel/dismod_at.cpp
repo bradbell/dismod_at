@@ -447,6 +447,17 @@ int main(int n_arg, const char** argv)
    vector< vector<size_t> > node_cov_map = dismod_at::map_node_cov(
       db_input.node_cov_table, n_covariate, n_node
    );
+   // split_covariate_id
+   size_t split_covariate_id = n_covariate;
+   std::string splitting_covariate = option_map["splitting_covariate"];
+   if( splitting_covariate != "" )
+   {  for(size_t id = 0; id < n_covariate; ++id)
+         if(
+         db_input.covariate_table[id].covariate_name == splitting_covariate
+         )
+            split_covariate_id = id;
+      assert( split_covariate_id != n_covariate );
+   }
    // =======================================================================
 # ifdef NDEBUG
    try { // BEGIN_TRY_BLOCK (when not debugging)
@@ -587,6 +598,7 @@ int main(int n_arg, const char** argv)
       // avgint_object
       dismod_at::data_model avgint_object(
          node_cov_map             ,
+         split_covariate_id       ,
          n_covariate              ,
          n_node                   ,
          fit_simulated_data       ,
@@ -672,6 +684,7 @@ int main(int n_arg, const char** argv)
       // data_object
       dismod_at::data_model data_object(
          node_cov_map             ,
+         split_covariate_id       ,
          n_covariate              ,
          n_node                   ,
          fit_simulated_data       ,

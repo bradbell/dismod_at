@@ -16,6 +16,7 @@ Syntax
 
 | ``data_model`` *data_object* (
 | |tab| *node_cov_map* ,
+| |tab| *split_covariate_id* ,
 | |tab| *n_covariate* ,
 | |tab| *n_node* ,
 | |tab| *fit_simulated_data* ,
@@ -52,6 +53,13 @@ node_cov_map
 ************
 Is the mapping from (covariate_id, node_id) to weight_id; see
 :ref:`map_node_cov-name` .
+
+split_covariate_id
+******************
+is the :ref:`covariate_table@covariate_id` corresponding to the
+:ref:`option_table@splitting_covariate` .
+If splitting_covariate is empty, *split_covariate_id* is equal
+to *n_covariate* .
 
 n_covariate
 ***********
@@ -247,6 +255,7 @@ data_model::~data_model(void)
 template <class SubsetStruct>
 data_model::data_model(
    const CppAD::vector< CppAD::vector<size_t> >& node_cov_map  ,
+   size_t                                   split_covariate_id ,
    size_t                                   n_covariate        ,
    size_t                                   n_node             ,
    bool                                     fit_simulated_data ,
@@ -1070,6 +1079,7 @@ CppAD::vector< residual_struct<Float> > data_model::like_all(
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(SubsetStruct)       \
 template data_model::data_model(                                   \
    const CppAD::vector< CppAD::vector<size_t> >& node_cov_map  ,  \
+   size_t                                   split_covariate_id ,  \
    size_t                                   n_covariate        ,  \
    size_t                                   n_node             ,  \
    bool                                     fit_simulated_data ,  \

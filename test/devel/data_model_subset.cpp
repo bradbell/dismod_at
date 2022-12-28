@@ -262,8 +262,10 @@ bool data_model_subset(void)
    vector<double> age_avg_grid = dismod_at::age_avg_grid(
       ode_step_size, age_avg_split, age_table
    );
+   size_t split_covariate_id = n_covariate;
    dismod_at::data_model data_object(
       node_cov_map,
+      split_covariate_id,
       n_covariate,
       n_node,
       fit_simulated_data,
