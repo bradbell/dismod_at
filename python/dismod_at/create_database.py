@@ -472,10 +472,10 @@
 #     :widths: auto
 #
 #     Key,Value Type,Description
-#     ``'node_id'``,      int,identifies the node for the *i*-th row
-#     ``'covariate_id'``, int,identifies the covariate for the *i*-th row
-#     ``split_value``,    real,identifies the splitting covariate
-#     ``'weight_id'``,    int,identifies weighting for this (node, covariate)
+#     ``'node_name'``,      str,identifies the node for the *i*-th row
+#     ``'covariate_name'``, str,identifies the covariate for the *i*-th row
+#     ``split_value``,      float,value of the splitting covariate
+#     ``'weight_name'``,    str,identifies weighting for this row
 #
 # Contents
 # ********
@@ -1182,9 +1182,12 @@ def create_database(
    col_type = [ 'integer', 'integer',      'real',        'integer'   ]
    row_list = []
    for row_in in node_cov_table :
-      row_out = list()
-      for key in col_name :
-         row_out.append( row_in[key] )
+      row_out = [
+         global_node_name2id[ row_in['node_name'] ]           ,
+         global_covariate_name2id[ row_in['covariate_name'] ] ,
+         row_in['split_value']                                ,
+         global_weight_name2id[ row_in['weight_name'] ]       ,
+      ]
       row_list.append( row_out )
    tbl_name = 'node_cov'
    dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)

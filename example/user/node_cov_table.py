@@ -42,14 +42,14 @@
 #
 # Covariates
 # **********
-# There is one covariate in this example and it is, *normalized_age*
+# There is one covariate in this example and it is, *normalized_income*
 # (age divided by 100). The :ref:`option_table@splitting_covariate` is
-# null, so the values of *split_name* in the node_cov table do not matter.
+# null, so the values of *split_value* in the node_cov table do not matter.
 #
 # Covariate Multipliers
 # *********************
 # There is one covariate multiplier in this example.
-# It multiples *normalized_age* and effects the rate iota.
+# It multiples *normalized_income* and effects the rate iota.
 # Previous values for the covariate affect previous values for iota,
 # which in turn affects the value of prevalence at the measurement time.
 #
@@ -82,11 +82,14 @@
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # BEGIN_TRUE_VALUE
-iota_no_effect = 0.03
-mulcov_true    = 0.9
-def iota_true(age, time) :
-   normalized_age = age / 100.0
-   effect         = mulcov_true * normalized_age
+iota_no_effect     = 0.03
+mulcov_true        = 0.9
+def normalized_income(age, node_name) :
+   if node_name == 'north_america' :
+      return age / 100.0
+   return 0.1 * age / 100.0
+def iota_true(age, time, node_name) :
+   effect  = mulcov_true * normalized_income(age, node_name)
    return iota_no_effect * math.exp(effect)
 # END_TRUE_VALUE
 # ------------------------------------------------------------------------
@@ -119,9 +122,10 @@ def example_db (file_name) :
       return (iota_no_effect,  None, None)
    def fun_mulcov(a, t) :
       return ('mulcov_value_prior', None, None)
-   def fun_weight(a, t) :
-      normalized_age = a / 100.0
-      return normalized_age
+   def fun_weight_north_america(a, t) :
+      return normalized_income(a, 'north_america')
+   def fun_weight_other(a, t) :
+      return normalized_income(a, '')
    # ----------------------------------------------------------------------
    # age table
    age_list    = [    0.0,  50.0,   100.0 ]
@@ -144,20 +148,25 @@ def example_db (file_name) :
    #
    # weight table:
    weight_table = [ {
-      'name'    : 'normalized_age',
+      'name'    : 'normalized_income_north_america',
       'age_id'  : [0, 2],
       'time_id' : [0, 2],
-      'fun'     : fun_weight,
+      'fun'     : fun_weight_north_america,
+      },{
+      'name'    : 'normalized_income_other',
+      'age_id'  : [0, 2],
+      'time_id' : [0, 2],
+      'fun'     : fun_weight_other,
    } ]
    #
    # covariate table:
-   covariate_table = [ {'name':'normalized_age', 'reference':0.0} ]
+   covariate_table = [ {'name':'normalized_income', 'reference':0.0} ]
    #
    # mulcov table
    # income has been scaled the same as sex so man use same smoothing
    mulcov_table = [
       {  # income effects north american incidence
-         'covariate': 'normalized_age',
+         'covariate': 'normalized_income',
          'type':      'rate_value',
          'effected':  'iota',
          'group':     'world',
@@ -168,28 +177,29 @@ def example_db (file_name) :
    # data table:
    age        = 50.0
    time       = 2000.0
+   fun        = lambda age, time : iota_true(age, time, 'north_america')
    meas_value = dismod_at.average_integrand(
-      rate           = { 'iota' : iota_true },
+      rate           = { 'iota' : fun },
       integrand_name = 'prevalence',
       grid           =  { 'age': [age], 'time' : [time] },
       abs_tol        = 1e-5,
    )
    meas_std = meas_value / 10.0
    row = {
-      'node':            'world',
-      'subgroup':        'world',
-      'density':         'gaussian',
-      'weight':          '',
-      'hold_out':         False,
-      'time_lower':       time,
-      'time_upper':       time,
-      'age_lower':        age,
-      'age_upper':        age,
-      'normalized_age' :  age / 100.0,
-      'integrand':        'prevalence',
-      'meas_value':       meas_value,
-      'meas_std':         meas_std,
-      'density':          'gaussian',
+      'node':              'north_america',
+      'subgroup':          'world',
+      'density':           'gaussian',
+      'weight':            '',
+      'hold_out':           False,
+      'time_lower':         time,
+      'time_upper':         time,
+      'age_lower':          age,
+      'age_upper':          age,
+      'normalized_income':  normalized_income(age, 'north_america'),
+      'integrand':          'prevalence',
+      'meas_value':         meas_value,
+      'meas_std':           meas_std,
+      'density':            'gaussian',
    }
    data_table = [ row ]
    #
@@ -248,14 +258,17 @@ def example_db (file_name) :
    # ----------------------------------------------------------------------
    node_cov_table = list()
    not_used       = 0.0
-   for node_id in range( len(node_table) ) :
+   for node_id in range( len( node_table ) ) :
       row = {
-         'node_id'      : node_id,
-         'covariate_id' : 0,
-         'split_value'  : not_used,
-          'weight_id'   : 0,
+         'node_name'      : node_table[node_id]['name'],
+         'covariate_name' : 'normalized_income',
+         'split_value'    : not_used,
       }
-      node_cov_table.append(row)
+      if row['node_name'] == 'north_america' :
+         row['weight_name'] = 'normalized_income_north_america'
+      else :
+         row['weight_name'] = 'normalized_income_other'
+      node_cov_table.append( row )
    # ----------------------------------------------------------------------
    # create database
    dismod_at.create_database(
@@ -300,7 +313,9 @@ for (var_id, row_var) in enumerate(var_table) :
    else :
       assert var_type == 'mulcov_rate_value'
       rel_error = fit_value / mulcov_true - 1.0
-      assert abs(rel_error) < 1e-3
+      if abs(rel_error) > 1e-3 :
+         print('rel_error = ' , rel_error)
+         assert False
 #
 # -----------------------------------------------------------------------------
 print('node_cov_table.py: OK')
