@@ -43,6 +43,7 @@ Syntax
 | |tab| *pack_object*
 | );
 | *adj_line* = *adjint_obj* . ``line`` (
+| |tab| *node_id* ,
 | |tab| *line_age* ,
 | |tab| *line_time* ,
 | |tab| *integrand_id* ,
@@ -119,6 +120,10 @@ pack_object
 ***********
 This is the :ref:`pack_info-name` information corresponding to
 the :ref:`model_variables-name` .
+
+node_id
+*******
+identifies the node for this adjustment.
 
 line_age
 ********
@@ -296,6 +301,7 @@ a1_double_rate_    (number_rate_enum)
 // BEGIN_LINE_PROTOTYPE
 template <class Float>
 CppAD::vector<Float> adj_integrand::line(
+   size_t                                             node_id          ,
    const CppAD::vector<double>&                       line_age         ,
    const CppAD::vector<double>&                       line_time        ,
    size_t                                             integrand_id     ,
@@ -308,10 +314,6 @@ CppAD::vector<Float> adj_integrand::line(
    CppAD::vector<Float>&                              mulcov           ,
    CppAD::vector< CppAD::vector<Float> >&             rate             )
 {  using CppAD::vector;
-   //
-   // node_id
-   // This will be an extra argument to adj_integrand::line
-   size_t node_id = 0;
    //
    // some temporaries
    pack_info::subvec_info info;
@@ -511,7 +513,7 @@ CppAD::vector<Float> adj_integrand::line(
             size_t weight_id = cov2weight_obj_.weight_id(
                covariate_id, node_id, x
             );
-            if( weight_id == cov2weight_obj_.n_weight() )
+            if( weight_id == cov2weight_obj_.n_weight() || (! need_ode) )
             {  for(size_t k = 0; k < n_line; ++k)
                   temp_2[k] = x[ info.covariate_id ];
             }
@@ -568,7 +570,7 @@ CppAD::vector<Float> adj_integrand::line(
             size_t weight_id = cov2weight_obj_.weight_id(
                covariate_id, node_id, x
             );
-            if( weight_id == cov2weight_obj_.n_weight() )
+            if( weight_id == cov2weight_obj_.n_weight() || (! need_ode) )
             {  for(size_t ell = 0; ell < n_line; ++ell)
                   temp_2[ell] = x[ info.covariate_id ];
             }
@@ -817,9 +819,10 @@ CppAD::vector<Float> adj_integrand::line(
    return result;
 }
 
-# define DISMOD_AT_INSTANTIATE_ADJ_INTEGTAND_LINE(Float)                    \
-   template                                                                \
-   CppAD::vector<Float> adj_integrand::line(                               \
+# define DISMOD_AT_INSTANTIATE_ADJ_INTEGTAND_LINE(Float)                  \
+   template                                                               \
+   CppAD::vector<Float> adj_integrand::line(                              \
+      size_t                                        node_id          ,    \
       const CppAD::vector<double>&                  line_age         ,    \
       const CppAD::vector<double>&                  line_time        ,    \
       size_t                                        integrand_id     ,    \
@@ -830,9 +833,10 @@ CppAD::vector<Float> adj_integrand::line(
       const CppAD::vector<Float>&                   pack_vec         ,    \
       CppAD::vector<Float>&                         mulcov           ,    \
       CppAD::vector< CppAD::vector<Float> >&        rate                  \
-   );                                                                      \
+   );                                                                     \
 \
-   CppAD::vector<Float> adj_integrand::line(                               \
+   CppAD::vector<Float> adj_integrand::line(                              \
+      size_t                                        node_id          ,    \
       const CppAD::vector<double>&                  line_age         ,    \
       const CppAD::vector<double>&                  line_time        ,    \
       size_t                                        integrand_id     ,    \
@@ -842,6 +846,7 @@ CppAD::vector<Float> adj_integrand::line(
       const CppAD::vector<double>&                  x                ,    \
       const CppAD::vector<Float>&                   pack_vec         )    \
    {  return line(                                                        \
+         node_id,                                                        \
          line_age,                                                       \
          line_time,                                                      \
          integrand_id,                                                   \
@@ -852,7 +857,7 @@ CppAD::vector<Float> adj_integrand::line(
          pack_vec,                                                       \
          Float ## _mulcov_,                                              \
          Float ## _rate_                                                 \
-      );                                                                  \
+      );                                                                 \
    }
 
 // instantiations

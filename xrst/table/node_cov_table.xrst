@@ -7,13 +7,16 @@
 The Node Covariate Table
 ########################
 
-Future Improvements
-*******************
-This table is a temporary quick fix for the problem below.
-It uses the existing :ref:`weight_tabel-name` to represent an arbitrary
+Improvements
+************
+This table is a quick fix for the problem below.
+It uses the existing :ref:`weight_table-name` to represent an arbitrary
 bilinear function.
-A better fix would separate the covariate grid from the covaraite
-values so that the grid does not need to be repeated when only values change.
+A better fix would separate the covariate grid from the covariate
+values so that:
+
+#. The grid does not need to be repeated when only values change.
+#. weights are not used for purposes other than weighting.
 
 Problem
 *******
@@ -36,10 +39,8 @@ when all the following conditions hold:
 
 #. The covariate appears in this table .
 #. The multiplier type is :ref:`mulcov_table@mulcov_type@rate_value` .
-#. The data or avgint integrand is an
-   :ref:`integrand_table@integrand_name@ODE` integrand.
 
-If any of the conditions above do not hold,
+If the conditions above do not hold,
 the :ref:`data table <data_table@Covariates>` in the data and avgint tables
 are used to compute covariate multiplier effects.
 

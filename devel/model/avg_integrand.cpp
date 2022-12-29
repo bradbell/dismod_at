@@ -392,6 +392,7 @@ Float avg_integrand::rectangle(
       // line_adj
       line_adj.resize(n_line);
       line_adj = adjint_obj_.line(
+         node_id,
          line_age_,
          line_time_,
          integrand_id,
@@ -746,6 +747,7 @@ void avg_integrand::add_cohort(
    // line_adj
    line_adj.resize(n_line);
    line_adj = adjint_obj_.line(
+      node_id,
       line_age_,
       line_time_,
       integrand_id,

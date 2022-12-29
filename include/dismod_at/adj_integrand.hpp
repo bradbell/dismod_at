@@ -43,6 +43,7 @@ private:
    // template version of line
    template <class Float>
    CppAD::vector<Float> line(
+      size_t                                    node_id          ,
       const CppAD::vector<double>&              line_age         ,
       const CppAD::vector<double>&              line_time        ,
       size_t                                    integrand_id     ,
@@ -70,6 +71,7 @@ public:
    );
    // double version of line
    CppAD::vector<double> line(
+      size_t                                    node_id          ,
       const CppAD::vector<double>&              line_age         ,
       const CppAD::vector<double>&              line_time        ,
       size_t                                    integrand_id     ,
@@ -81,6 +83,7 @@ public:
    );
    // a1_double version of line
    CppAD::vector<a1_double> line(
+      size_t                                    node_id          ,
       const CppAD::vector<double>&              line_age         ,
       const CppAD::vector<double>&              line_time        ,
       size_t                                    integrand_id     ,
