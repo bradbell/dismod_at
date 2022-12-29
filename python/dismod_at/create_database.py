@@ -462,11 +462,11 @@
 # | |tab| *option_name* = *option_table* [ *i* ][ ``'name'`` ]
 # | |tab| *option_value* = *option_table* [ *i* ][ ``'value'`` ]
 #
-# node_cov_table
-# **************
+# rate_eff_cov_table
+# ******************
 # This is a list of ``dict``
-# that define the rows of the :ref:`node_cov_table-name` .
-# The dictionary *node_cov_table* [ *i* ] has the following:
+# that define the rows of the :ref:`rate_eff_cov_table-name` .
+# The dictionary *rate_eff_cov_table* [ *i* ] has the following:
 #
 # .. csv-table::
 #     :widths: auto
@@ -506,7 +506,7 @@ def create_database(
    rate_table      = list(),
    mulcov_table    = list(),
    option_table    = list(),
-   node_cov_table  = list(),
+   rate_eff_cov_table  = list(),
 ) :
 # END_PROTOTYPE
    import sys
@@ -1177,11 +1177,11 @@ def create_database(
    tbl_name = 'option'
    dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
    # ----------------------------------------------------------------------
-   # create node_cov table
+   # create rate_eff_cov table
    col_name = [ 'node_id', 'covariate_id', 'split_value', 'weight_id' ]
    col_type = [ 'integer', 'integer',      'real',        'integer'   ]
    row_list = []
-   for row_in in node_cov_table :
+   for row_in in rate_eff_cov_table :
       row_out = [
          global_node_name2id[ row_in['node_name'] ]           ,
          global_covariate_name2id[ row_in['covariate_name'] ] ,
@@ -1189,7 +1189,7 @@ def create_database(
          global_weight_name2id[ row_in['weight_name'] ]       ,
       ]
       row_list.append( row_out )
-   tbl_name = 'node_cov'
+   tbl_name = 'rate_eff_cov'
    dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
    # ----------------------------------------------------------------------
    # close the connection

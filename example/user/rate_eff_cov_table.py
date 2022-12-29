@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# {xrst_begin user_node_cov_table.py}
+# {xrst_begin user_rate_eff_cov_table.py}
 # {xrst_comment_ch #}
 #
 # Example Using The Node Covariate Table
@@ -11,7 +11,7 @@
 # Purpose
 # *******
 # This example demonstrates using the
-# :ref:`node_cov_table-name` .
+# :ref:`rate_eff_cov_table-name` .
 #
 # True Value of Variables
 # ***********************
@@ -78,7 +78,7 @@
 #     END PYTHON
 # }
 #
-# {xrst_end user_node_cov_table.py}
+# {xrst_end user_rate_eff_cov_table.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # BEGIN_TRUE_VALUE
@@ -97,7 +97,7 @@ import sys
 import os
 import copy
 import math
-test_program = 'example/user/node_cov_table.py'
+test_program = 'example/user/rate_eff_cov_table.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
    usage  = 'python3 ' + test_program + '\n'
    usage += 'where python3 is the python 3 program on your system\n'
@@ -265,7 +265,7 @@ def example_db (file_name) :
       { 'name':'tolerance_random',       'value':'1e-10'        },
    ]
    # ----------------------------------------------------------------------
-   node_cov_table = list()
+   rate_eff_cov_table = list()
    not_used       = 0.0
    for node_id in range( len( node_table ) ) :
       for sex_name in sex_name2value :
@@ -281,7 +281,7 @@ def example_db (file_name) :
             'split_value'    : split_value,
             'weight_name'    : weight_name,
          }
-         node_cov_table.append( row )
+         rate_eff_cov_table.append( row )
    # ----------------------------------------------------------------------
    # create database
    dismod_at.create_database(
@@ -299,7 +299,7 @@ def example_db (file_name) :
       rate_table      = rate_table       ,
       mulcov_table    = mulcov_table     ,
       option_table    = option_table     ,
-      node_cov_table  = node_cov_table   ,
+      rate_eff_cov_table  = rate_eff_cov_table   ,
    )
 # ===========================================================================
 file_name = 'example.db'
@@ -331,6 +331,6 @@ for (var_id, row_var) in enumerate(var_table) :
          assert False
 #
 # -----------------------------------------------------------------------------
-print('node_cov_table.py: OK')
+print('rate_eff_cov_table.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON

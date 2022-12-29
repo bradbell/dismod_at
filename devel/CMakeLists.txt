@@ -27,7 +27,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
    table/blob_table.cpp
    table/check_child_nslist.cpp
    table/check_child_prior.cpp
-   table/check_node_cov.cpp
+   table/check_rate_eff_cov.cpp
    table/check_pini_n_age.cpp
    table/check_rate_limit.cpp
    table/check_table_id.cpp
@@ -47,7 +47,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
    table/get_density_table.cpp
    table/get_integrand_table.cpp
    table/get_mulcov_table.cpp
-   table/get_node_cov_table.cpp
+   table/get_rate_eff_cov_table.cpp
    table/get_node_table.cpp
    table/get_nslist_pair.cpp
    table/get_nslist_table.cpp

@@ -2,20 +2,20 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# {xrst_begin node_cov_table.py}
+# {xrst_begin rate_eff_cov_table.py}
 # {xrst_comment_ch #}
 #
-# node_cov_table: Example and Test
-# ################################
+# rate_eff_cov_table: Example and Test
+# ####################################
 #
 # {xrst_literal
 #     BEGIN PYTHON
 #     END PYTHON
 # }
 #
-# {xrst_end node_cov_table.py}
+# {xrst_end rate_eff_cov_table.py}
 # BEGIN PYTHON
-def node_cov_table() :
+def rate_eff_cov_table() :
    import dismod_at
    import copy
    #
@@ -38,7 +38,7 @@ def node_cov_table() :
       [1,             2,          -0.5,         1],
       [1,             3,          -0.5,         0],
    ]
-   tbl_name = 'node_cov'
+   tbl_name = 'rate_eff_cov'
    dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
    # ----------------------------------------------------------------------
    # include primary key in test
@@ -51,5 +51,5 @@ def node_cov_table() :
    assert row_list == check_list
    # ----------------------------------------------------------------------
    connection.close()
-   print('node_cov_table: OK')
+   print('rate_eff_cov_table: OK')
 # END PYTHON

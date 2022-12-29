@@ -542,7 +542,7 @@ splitting_covariate
 *******************
 If *option_name* is ``splitting_covariate`` ,
 the corresponding value is the name of the splitting covariate.
-The covariate values in :ref:`node_cov_table-name` can be different for each
+The covariate values in :ref:`rate_eff_cov_table-name` can be different for each
 value of the splitting covariate.
 For example, the covariate values might be different for each value of sex.
 

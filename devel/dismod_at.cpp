@@ -451,7 +451,7 @@ int main(int n_arg, const char** argv)
       n_weight                  ,
       splitting_covariate       ,
       db_input.covariate_table  ,
-      db_input.node_cov_table
+      db_input.rate_eff_cov_table
    );
    // =======================================================================
 # ifdef NDEBUG

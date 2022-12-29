@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin check_node_cov dev}
+{xrst_begin check_rate_eff_cov dev}
 
 Check Only One Smoothing for Each Rate in zero_sum_child_rate
 #############################################################
@@ -17,7 +17,7 @@ Syntax
 
 Purpose
 *******
-Check for any errors in the :ref:`node_cov_table-name` .
+Check for any errors in the :ref:`rate_eff_cov_table-name` .
 This includes checking for an invalid :ref:`option_table@splitting_covariate`
 option value.
 
@@ -37,30 +37,30 @@ node_table
 **********
 is the :ref:`get_node_table@node_table` .
 
-node_cov_table
-**************
-is the :ref:`get_node_cov_table@node_cov_table` .
+rate_eff_cov_table
+******************
+is the :ref:`get_rate_eff_cov_table@rate_eff_cov_table` .
 
 option_table
 ************
 is the :ref:`get_option_table@option_table` .
 
-{xrst_end check_node_cov}
+{xrst_end check_rate_eff_cov}
 */
 # include <set>
 # include <cppad/utility/to_string.hpp>
-# include <dismod_at/check_node_cov.hpp>
+# include <dismod_at/check_rate_eff_cov.hpp>
 # include <dismod_at/error_exit.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 // BEGIN_PROTOTYPE
-void check_node_cov(
+void check_rate_eff_cov(
    const CppAD::vector<double>&                data_cov_value     ,
    const CppAD::vector<double>&                avgint_cov_value   ,
    const CppAD::vector<covariate_struct>&      covariate_table    ,
    const CppAD::vector<node_struct>&           node_table         ,
-   const CppAD::vector<node_cov_struct>&       node_cov_table     ,
+   const CppAD::vector<rate_eff_cov_struct>&   rate_eff_cov_table ,
    const CppAD::vector<option_struct>&         option_table       )
 // END_PROTOTYPE
 {  using std::string;
@@ -73,8 +73,8 @@ void check_node_cov(
    // n_node
    size_t n_node = node_table.size();
    //
-   // n_node_cov
-   size_t n_node_cov = node_cov_table.size();
+   // n_rate_eff_cov
+   size_t n_rate_eff_cov = rate_eff_cov_table.size();
    //
    // n_covariate
    size_t n_covariate = covariate_table.size();
@@ -138,8 +138,8 @@ void check_node_cov(
    //
    // covariate_id_set
    std::set<int> covariate_id_set;
-   for(size_t node_cov_id = 0; node_cov_id < n_node_cov; ++node_cov_id)
-         covariate_id_set.insert( node_cov_table[node_cov_id].covariate_id );
+   for(size_t rate_eff_cov_id = 0; rate_eff_cov_id < n_rate_eff_cov; ++rate_eff_cov_id)
+         covariate_id_set.insert( rate_eff_cov_table[rate_eff_cov_id].covariate_id );
    //
    // covariate_id_itr
    std::set<int>::const_iterator covariate_id_itr;
@@ -147,8 +147,8 @@ void check_node_cov(
    covariate_id_itr = covariate_id_set.find( int(split_covariate_id) );
    if( covariate_id_itr != covariate_id_set.end() )
    {  msg  = "splitting covariate_id = " + to_string(split_covariate_id);
-      msg += " appears in the node_cov table";
-      string table_name = "node_cov";
+      msg += " appears in the rate_eff_cov table";
+      string table_name = "rate_eff_cov";
       error_exit(msg, table_name);
    }
    //
@@ -172,21 +172,21 @@ void check_node_cov(
          for(size_t node_id = 0; node_id < n_node; ++node_id)
             found_node_id[node_id] = false;
          //
-         for(size_t node_cov_id = 0; node_cov_id < n_node_cov; ++node_cov_id)
+         for(size_t rate_eff_cov_id = 0; rate_eff_cov_id < n_rate_eff_cov; ++rate_eff_cov_id)
          {  // match
             bool match = true;
-            match &= node_cov_table[node_cov_id].covariate_id == covariate_id;
+            match &= rate_eff_cov_table[rate_eff_cov_id].covariate_id == covariate_id;
             if( splitting_covariate != "" ) match &=
-               node_cov_table[node_cov_id].split_value == split_value;
+               rate_eff_cov_table[rate_eff_cov_id].split_value == split_value;
             //
             // found_node_id
             if( match )
-            {  int node_id = node_cov_table[node_cov_id].node_id;
+            {  int node_id = rate_eff_cov_table[rate_eff_cov_id].node_id;
                if( node_id < 0 || n_node <= size_t(node_id) )
                {  msg  = "node_id " + to_string( node_id );
                   msg += " is not a valid node table node_id";
-                  string table_name = "node_cov";
-                  error_exit(msg, table_name, node_cov_id);
+                  string table_name = "rate_eff_cov";
+                  error_exit(msg, table_name, rate_eff_cov_id);
                }
                if( found_node_id[node_id] )
                {  msg  = "node_id " + to_string( node_id );
@@ -196,8 +196,8 @@ void check_node_cov(
                      msg += " and split_value " + to_string(split_value);
                   else
                      msg += " and there is no splitting covariate";
-                  string table_name = "node_cov";
-                  error_exit(msg, table_name, node_cov_id);
+                  string table_name = "rate_eff_cov";
+                  error_exit(msg, table_name, rate_eff_cov_id);
                }
                found_node_id[node_id] = true;
             }
@@ -213,7 +213,7 @@ void check_node_cov(
                   msg += " and split_value " + to_string(split_value);
                else
                   msg += " and there is no splitting covariate";
-               string table_name = "node_cov";
+               string table_name = "rate_eff_cov";
                error_exit(msg, table_name);
             }
          }

@@ -32,17 +32,19 @@ mm-dd
 
 12-29
 =====
-Merge in the node_cov branch.
-This fixed some bugs when using the :ref:`node_cov_table-name` .
+#. Merge in the node_cov branch.
+   This fixed some bugs in the implementation of the
+   :ref:`rate_eff_cov_table-name`  features.
+#. Change the name of the node_cov table rate_eff_table
 
 12-25
 =====
 Merge in the node_cov branch:
 
 #. Add the node_cov table as a quick fix for this covariate
-   :ref:`node_cov_table@Problem` ; see
-   :ref:`node_cov_table.py-name`.
-#. Because the node_cov table uses :ref:`node_cov_table@weight_id`
+   :ref:`rate_eff_cov_table@Problem` ; see
+   :ref:`rate_eff_cov_table.py-name`.
+#. Because the node_cov table uses :ref:`rate_eff_cov_table@weight_id`
    to identify bilinear function, only weightings used by the
    data and avgint tables need to be
    :ref:`weight_grid_table@weight@Positive` .

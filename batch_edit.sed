@@ -26,7 +26,7 @@
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#  s|node_cov|rate_cov|
+#  s|node_cov|rate_eff_cov|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -38,4 +38,18 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|node_cov|rate_cov|g
+s|NODE_COV|RATE_EFF_COV|g
+s|node_cov|rate_eff_cov|g
+s|\(rate_eff_cov_struct>&*\)     |\1 |
+s|\(rate_eff_cov_table\)     |\1 |
+# ----------------------------------------------
+/^rate_eff_cov_id$/ b one
+/^rate_eff_cov_table$/ b one
+/^rate_eff_cov_struct$/ b one
+b end
+#
+: one
+N
+s|\n\(.\)|\n\1\1\1\1\1|
+# ----------------------------------------------
+: end

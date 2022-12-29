@@ -18,7 +18,7 @@ Contents
    xrst/table/density_table.xrst
    xrst/table/integrand_table.xrst
    xrst/table/mulcov_table.xrst
-   xrst/table/node_cov_table.xrst
+   xrst/table/rate_eff_cov_table.xrst
    xrst/table/node_table.xrst
    xrst/table/nslist_pair_table.xrst
    xrst/table/nslist_table.xrst

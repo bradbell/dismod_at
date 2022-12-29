@@ -92,7 +92,7 @@ information.
 # include <dismod_at/check_child_prior.hpp>
 # include <dismod_at/check_child_nslist.hpp>
 # include <dismod_at/check_zero_sum.hpp>
-# include <dismod_at/check_node_cov.hpp>
+# include <dismod_at/check_rate_eff_cov.hpp>
 # include <dismod_at/null_int.hpp>
 # include <cppad/utility/to_string.hpp>
 # include <dismod_at/error_exit.hpp>
@@ -126,7 +126,7 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
    assert( db_input.smooth_table.size() == 0 );
    assert( db_input.covariate_table.size() == 0 );
    assert( db_input.node_table.size() == 0 );
-   assert( db_input.node_cov_table.size() == 0 );
+   assert( db_input.rate_eff_cov_table.size() == 0 );
    assert( db_input.mulcov_table.size() == 0 );
    assert( db_input.option_table.size() == 0 );
    assert( db_input.nslist_table.size() == 0 );
@@ -153,11 +153,11 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
    db_input.nslist_pair_table = get_nslist_pair(db);
    db_input.subgroup_table    = get_subgroup_table(db);
    //
-   // get_node_cov_table uses node_table and covariate_table
+   // get_rate_eff_cov_table uses node_table and covariate_table
    // to check for errors
    {  size_t n_covariate      = db_input.covariate_table.size();
       size_t n_node           = db_input.node_table.size();
-      db_input.node_cov_table = get_node_cov_table(db, n_covariate, n_node);
+      db_input.rate_eff_cov_table = get_rate_eff_cov_table(db, n_covariate, n_node);
    }
    //
    // get_mulcov_table uses subgroup table
@@ -212,10 +212,10 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
    // prior table
    DISMOD_AT_CHECK_PRIMARY_ID(prior, density_id, density);
 
-   // node_cov_table
-   DISMOD_AT_CHECK_PRIMARY_ID(node_cov, node_id, node);
-   DISMOD_AT_CHECK_PRIMARY_ID(node_cov, covariate_id, covariate);
-   DISMOD_AT_CHECK_PRIMARY_ID(node_cov, weight_id, weight);
+   // rate_eff_cov_table
+   DISMOD_AT_CHECK_PRIMARY_ID(rate_eff_cov, node_id, node);
+   DISMOD_AT_CHECK_PRIMARY_ID(rate_eff_cov, covariate_id, covariate);
+   DISMOD_AT_CHECK_PRIMARY_ID(rate_eff_cov, weight_id, weight);
 
    // weight_grid table
    DISMOD_AT_CHECK_PRIMARY_ID(weight_grid, weight_id, weight);
@@ -309,12 +309,12 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
       db_input.rate_table        ,
       db_input.option_table
    );
-   check_node_cov(
+   check_rate_eff_cov(
       db_input.data_cov_value    ,
       db_input.avgint_cov_value  ,
       db_input.covariate_table   ,
       db_input.node_table        ,
-      db_input.node_cov_table    ,
+      db_input.rate_eff_cov_table    ,
       db_input.option_table
    );
    return;

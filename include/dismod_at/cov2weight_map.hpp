@@ -7,7 +7,7 @@
 
 # include <cppad/utility/vector.hpp>
 # include "get_covariate_table.hpp"
-# include "get_node_cov_table.hpp"
+# include "get_rate_eff_cov_table.hpp"
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
@@ -32,7 +32,7 @@ public:
       size_t                                      n_weight            ,
       const std::string&                          splitting_covariate ,
       const CppAD::vector<covariate_struct>&      covariate_table     ,
-      const CppAD::vector<node_cov_struct>&       node_cov_table
+      const CppAD::vector<rate_eff_cov_struct>&   rate_eff_cov_table
    );
    //
    // weight_id

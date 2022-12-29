@@ -38,7 +38,7 @@ FOREACH(user_case
    metropolis
    mulstd
    no_children
-   node_cov_table
+   rate_eff_cov_table
    one_function
    plot_curve
    plot_data_fit

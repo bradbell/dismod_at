@@ -2,10 +2,10 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin node_cov_table}
+{xrst_begin rate_eff_cov_table}
 
-The Node Covariate Table
-########################
+The Rate Effect Covariate Table
+###############################
 
 Improvements
 ************
@@ -44,10 +44,10 @@ If the conditions above do not hold,
 the :ref:`data table <data_table@Covariates>` in the data and avgint tables
 are used to compute covariate multiplier effects.
 
-node_cov_id
-***********
+rate_eff_cov_id
+***************
 This column has type ``integer`` and is the primary key for the
-``node_cov`` table.
+``rate_eff_cov`` table.
 Its initial value is zero, and it increments by one for each row.
 
 covariate_id
@@ -87,12 +87,12 @@ there must be one an only one row with that
 
 Example
 *******
-The file :ref:`node_cov_table.py-name`
-contains an example ``node_cov`` table.
+The file :ref:`rate_eff_cov_table.py-name`
+contains an example ``rate_eff_cov`` table.
 
 {xrst_toc_hidden
-   example/table/node_cov_table.py
+   example/table/rate_eff_cov_table.py
 }
 
 
-{xrst_end node_cov_table}
+{xrst_end rate_eff_cov_table}

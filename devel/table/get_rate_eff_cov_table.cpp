@@ -3,7 +3,7 @@
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
-{xrst_begin get_node_cov_table dev}
+{xrst_begin get_rate_eff_cov_table dev}
 {xrst_spell
    hpp
 }
@@ -13,8 +13,8 @@ C++: Get the Node Covariate Table Information
 
 Syntax
 ******
-| ``# include <dismod_at/get_node_cov_table.hpp>``
-| *node_cov_table* = ``get_node_cov_table`` ( *db* , *n_covariate, *n_node* )
+| ``# include <dismod_at/get_rate_eff_cov_table.hpp>``
+| *rate_eff_cov_table* = ``get_rate_eff_cov_table`` ( *db* , *n_covariate, *n_node* )
 
 
 Prototype
@@ -35,12 +35,12 @@ in the covariate table (node table).
 This is used to check that for each *covariate_id* in this table,
 there is a row with every *node_id* between zero and *n_node* - 1.
 
-node_cov_struct
-***************
+rate_eff_cov_struct
+*******************
 {xrst_literal
-   include/dismod_at/get_node_cov_table.hpp
-   // BEGIN_NODE_COV_STRUCT
-   // END_NODE_COV_STRUCT
+   include/dismod_at/get_rate_eff_cov_table.hpp
+   // BEGIN_RATE_EFF_COV_STRUCT
+   // END_RATE_EFF_COV_STRUCT
 }
 
 covariate_id
@@ -56,20 +56,20 @@ weight_id
 The :ref:`weight_table@weight_id` corresponding to this row corresponds to.
 
 
-node_cov_table
-**************
-If the node_cov table does not exist, the empty vector is returned.
+rate_eff_cov_table
+******************
+If the rate_eff_cov table does not exist, the empty vector is returned.
 Otherwise,
-the *i*-th element of the return value,  *node_cov_table* [ *i* ],
-contains the information in the row of node_cov table  with
-:ref:`node_cov_table@node_cov_id` equal to *i*.
+the *i*-th element of the return value,  *rate_eff_cov_table* [ *i* ],
+contains the information in the row of rate_eff_cov table  with
+:ref:`rate_eff_cov_table@rate_eff_cov_id` equal to *i*.
 
-{xrst_end get_node_cov_table}
+{xrst_end get_rate_eff_cov_table}
 */
 
 # include <set>
 # include <cppad/utility/to_string.hpp>
-# include <dismod_at/get_node_cov_table.hpp>
+# include <dismod_at/get_rate_eff_cov_table.hpp>
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
 # include <dismod_at/does_table_exist.hpp>
@@ -79,60 +79,60 @@ contains the information in the row of node_cov table  with
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 // BEGIN_PROTOTYPE
-CppAD::vector<node_cov_struct> get_node_cov_table(
+CppAD::vector<rate_eff_cov_struct> get_rate_eff_cov_table(
    sqlite3* db, size_t n_covariate, size_t n_node
 )
 // END_PROTOTYPE
 {  //
    // table_name
-   std::string table_name  = "node_cov";
+   std::string table_name  = "rate_eff_cov";
    //
-   // node_cov_table
-   CppAD::vector<node_cov_struct> node_cov_table(0);
+   // rate_eff_cov_table
+   CppAD::vector<rate_eff_cov_struct> rate_eff_cov_table(0);
    if( ! does_table_exist(db, table_name) )
-      return node_cov_table;
+      return rate_eff_cov_table;
    //
-   // n_node_cov
-   size_t n_node_cov = check_table_id(db, table_name);
+   // n_rate_eff_cov
+   size_t n_rate_eff_cov = check_table_id(db, table_name);
    //
    // covariate_id
    std::string column_name = "covariate_id";
    CppAD::vector<int>    covariate_id_vec;
    get_table_column(db, table_name, column_name, covariate_id_vec);
-   assert( n_node_cov == covariate_id_vec.size() );
+   assert( n_rate_eff_cov == covariate_id_vec.size() );
    //
    // node_id
    column_name = "node_id";
    CppAD::vector<int>    node_id_vec;
    get_table_column(db, table_name, column_name, node_id_vec);
-   assert( n_node_cov == node_id_vec.size() );
+   assert( n_rate_eff_cov == node_id_vec.size() );
    //
    // split_value
    column_name = "split_value";
    CppAD::vector<double> split_value_vec;
    get_table_column(db, table_name, column_name, split_value_vec);
-   assert( n_node_cov == split_value_vec.size() );
+   assert( n_rate_eff_cov == split_value_vec.size() );
    //
    // weight_id
    column_name = "weight_id";
    CppAD::vector<int>    weight_id_vec;
    get_table_column(db, table_name, column_name, weight_id_vec);
-   assert( n_node_cov == weight_id_vec.size() );
+   assert( n_rate_eff_cov == weight_id_vec.size() );
    //
    //
-   // node_cov_table
-   node_cov_table.resize(n_node_cov);
-   for(size_t i = 0; i < n_node_cov; ++i)
+   // rate_eff_cov_table
+   rate_eff_cov_table.resize(n_rate_eff_cov);
+   for(size_t i = 0; i < n_rate_eff_cov; ++i)
    {
-      node_cov_table[i].covariate_id = covariate_id_vec[i];
-      node_cov_table[i].node_id      = node_id_vec[i];
-      node_cov_table[i].split_value  = split_value_vec[i];
-      node_cov_table[i].weight_id    = weight_id_vec[i];
+      rate_eff_cov_table[i].covariate_id = covariate_id_vec[i];
+      rate_eff_cov_table[i].node_id      = node_id_vec[i];
+      rate_eff_cov_table[i].split_value  = split_value_vec[i];
+      rate_eff_cov_table[i].weight_id    = weight_id_vec[i];
    }
    // The primary key values covariate_id and node_id get checked by
-   // the calling routine. Other constraints are checked by check_node_cov.
+   // the calling routine. Other constraints are checked by check_rate_eff_cov.
    //
-   return node_cov_table;
+   return rate_eff_cov_table;
 }
 
 } // END_DISMOD_AT_NAMESPACE

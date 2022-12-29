@@ -188,13 +188,13 @@ bool adj_integrand_xam(void)
    size_t n_weight = 0;
    std::string splitting_covariate = "";
    CppAD::vector<dismod_at::covariate_struct> covariate_table(0);
-   CppAD::vector<dismod_at::node_cov_struct> node_cov_table(0);
+   CppAD::vector<dismod_at::rate_eff_cov_struct> rate_eff_cov_table(0);
    dismod_at::cov2weight_map cov2weight_obj(
       n_node,
       n_weight,
       splitting_covariate,
       covariate_table,
-      node_cov_table
+      rate_eff_cov_table
    );
    dismod_at::adj_integrand adjint_obj(
       cov2weight_obj,
