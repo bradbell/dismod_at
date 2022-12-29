@@ -1,0 +1,14 @@
+lines 5-16 of file: example/table/rate_eff_cov_table.py
+
+# {xrst_begin rate_eff_cov_table.py}
+# {xrst_comment_ch #}
+#
+# rate_eff_cov_table: Example and Test
+# ####################################
+#
+# {xrst_literal
+#     BEGIN PYTHON
+#     END PYTHON
+# }
+#
+# {xrst_end rate_eff_cov_table.py}

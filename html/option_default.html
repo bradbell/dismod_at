@@ -210,7 +210,7 @@
 <li class="toctree-l3"><a class="reference internal" href="user_lasso_covariate.py.html">user_lasso_covariate.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_mulstd.py.html">user_mulstd.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_no_children.py.html">user_no_children.py</a></li>
-<li class="toctree-l3"><a class="reference internal" href="user_node_cov_table.py.html">user_node_cov_table.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_rate_eff_cov_table.py.html">user_rate_eff_cov_table.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_one_function.py.html">user_one_function.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_plot_curve.py.html">user_plot_curve.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_plot_data_fit.py.html">user_plot_data_fit.py</a></li>
@@ -265,8 +265,8 @@
 <li class="toctree-l5"><a class="reference internal" href="mulcov_table.py.html">mulcov_table.py</a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="node_cov_table.html">node_cov_table</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="node_cov_table.py.html">node_cov_table.py</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="rate_eff_cov_table.html">rate_eff_cov_table</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="rate_eff_cov_table.py.html">rate_eff_cov_table.py</a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="node_table.html">node_table</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -627,27 +627,31 @@ in the option table.</p>
 <td><p>iota_pos_rho_zero</p></td>
 <td><p><a class="reference internal" href="option_table.html#option-table-rate-case"><span class="std std-ref">rate_case</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tolerance_fixed</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">splitting_covariate</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
+<td><p><a class="reference internal" href="option_table.html#option-table-splitting-covariate"><span class="std std-ref">splitting_covariate</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tolerance_fixed</span></code></p></td>
 <td><p>1e-8</p></td>
 <td><p><a class="reference internal" href="option_table.html#option-table-optimize-fixed-and-random-tolerance"><span class="std std-ref">tolerance</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tolerance_random</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">tolerance_random</span></code></p></td>
 <td><p>1e-8</p></td>
 <td><p><a class="reference internal" href="option_table.html#option-table-optimize-fixed-and-random-tolerance"><span class="std std-ref">tolerance</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">trace_init_fit_model</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">trace_init_fit_model</span></code></p></td>
 <td><p>false</p></td>
 <td><p><a class="reference internal" href="option_table.html#option-table-trace-init-fit-model"><span class="std std-ref">trace_int_fit_model</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">warn_on_stderr</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">warn_on_stderr</span></code></p></td>
 <td><p>true</p></td>
 <td><p><a class="reference internal" href="option_table.html#option-table-warn-on-stderr"><span class="std std-ref">warn_on_stderr</span></a></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">zero_sum_child_rate</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">zero_sum_child_rate</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
 <td><p><a class="reference internal" href="option_table.html#option-table-zero-sum-constraints-zero-sum-child-rate"><span class="std std-ref">zero_sum_child_rate</span></a></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">zero_sum_mulcov_group</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">zero_sum_mulcov_group</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">null</span></code></p></td>
 <td><p><a class="reference internal" href="option_table.html#option-table-zero-sum-constraints-zero-sum-mulcov-group"><span class="std std-ref">zero_sum_mulcov_group</span></a></p></td>
 </tr>

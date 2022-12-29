@@ -43,7 +43,7 @@
 <meta content="group" name="keywords" />
 <meta content="subsmooth" name="keywords" />
 <meta content="option_table" name="keywords" />
-<meta content="node_cov_table" name="keywords" />
+<meta content="rate_eff_cov_table" name="keywords" />
 <meta content="contents" name="keywords" />
 <meta content="example" name="keywords" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="create_database.py" href="create_database.py.html" /><link rel="prev" title="create_connection" href="create_connection.html" />
@@ -250,7 +250,7 @@
 <li class="toctree-l3"><a class="reference internal" href="user_lasso_covariate.py.html">user_lasso_covariate.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_mulstd.py.html">user_mulstd.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_no_children.py.html">user_no_children.py</a></li>
-<li class="toctree-l3"><a class="reference internal" href="user_node_cov_table.py.html">user_node_cov_table.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_rate_eff_cov_table.py.html">user_rate_eff_cov_table.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_one_function.py.html">user_one_function.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_plot_curve.py.html">user_plot_curve.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_plot_data_fit.py.html">user_plot_data_fit.py</a></li>
@@ -305,8 +305,8 @@
 <li class="toctree-l5"><a class="reference internal" href="mulcov_table.py.html">mulcov_table.py</a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="node_cov_table.html">node_cov_table</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="node_cov_table.py.html">node_cov_table.py</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="rate_eff_cov_table.html">rate_eff_cov_table</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="rate_eff_cov_table.py.html">rate_eff_cov_table.py</a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="node_table.html">node_table</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -571,7 +571,7 @@
    <span class="n">rate_table</span>      <span class="o">=</span> <span class="nb">list</span><span class="p">(),</span>
    <span class="n">mulcov_table</span>    <span class="o">=</span> <span class="nb">list</span><span class="p">(),</span>
    <span class="n">option_table</span>    <span class="o">=</span> <span class="nb">list</span><span class="p">(),</span>
-   <span class="n">node_cov_table</span>  <span class="o">=</span> <span class="nb">list</span><span class="p">(),</span>
+   <span class="n">rate_eff_cov_table</span>  <span class="o">=</span> <span class="nb">list</span><span class="p">(),</span>
 <span class="p">)</span> <span class="p">:</span>
 </pre></div>
 </div>
@@ -1174,33 +1174,33 @@ The <em>i</em>-th row of the table will have</p>
 <div class="line">      <em>option_value</em> = <em>option_table</em> [ <em>i</em> ][ <code class="docutils literal notranslate"><span class="pre">'value'</span></code> ]</div>
 </div>
 </section>
-<section id="node-cov-table">
-<span id="create-database-node-cov-table"></span><span id="index-40"></span><h3>node_cov_table<a class="headerlink" href="#node-cov-table" title="Permalink to this headline">#</a></h3>
+<section id="rate-eff-cov-table">
+<span id="create-database-rate-eff-cov-table"></span><span id="index-40"></span><h3>rate_eff_cov_table<a class="headerlink" href="#rate-eff-cov-table" title="Permalink to this headline">#</a></h3>
 <p>This is a list of <code class="docutils literal notranslate"><span class="pre">dict</span></code>
-that define the rows of the <a class="reference internal" href="node_cov_table.html#node-cov-table-name"><span class="std std-ref">node_cov_table</span></a> .
-The dictionary <em>node_cov_table</em> [ <em>i</em> ] has the following:</p>
+that define the rows of the <a class="reference internal" href="rate_eff_cov_table.html#rate-eff-cov-table-name"><span class="std std-ref">rate_eff_cov_table</span></a> .
+The dictionary <em>rate_eff_cov_table</em> [ <em>i</em> ] has the following:</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="colwidths-auto docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p>Key</p></td>
 <td><p>Value Type</p></td>
 <td><p>Description</p></td>
-<td></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'node_id'</span></code></p></td>
-<td><p>int</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'node_name'</span></code></p></td>
+<td><p>str</p></td>
 <td><p>identifies the node for the <em>i</em>-th row</p></td>
-<td></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'covariate_id'</span></code></p></td>
-<td><p>int</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'covariate_name'</span></code></p></td>
+<td><p>str</p></td>
 <td><p>identifies the covariate for the <em>i</em>-th row</p></td>
-<td></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'weight_id'</span></code></p></td>
-<td><p>int</p></td>
-<td><p>identifies weighting for this (node</p></td>
-<td><p>covariate)</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">split_value</span></code></p></td>
+<td><p>float</p></td>
+<td><p>value of the splitting covariate</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'weight_name'</span></code></p></td>
+<td><p>str</p></td>
+<td><p>identifies weighting for this row</p></td>
 </tr>
 </tbody>
 </table>
@@ -1341,7 +1341,7 @@ and example and test of <code class="docutils literal notranslate"><span class="
 </ul>
 </li>
 <li><a class="reference internal" href="#option-table">option_table</a></li>
-<li><a class="reference internal" href="#node-cov-table">node_cov_table</a></li>
+<li><a class="reference internal" href="#rate-eff-cov-table">rate_eff_cov_table</a></li>
 <li><a class="reference internal" href="#contents">Contents</a></li>
 <li><a class="reference internal" href="#example">Example</a></li>
 </ul>

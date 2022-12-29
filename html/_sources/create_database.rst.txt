@@ -1,4 +1,4 @@
-lines 5-489 of file: python/dismod_at/create_database.py
+lines 5-490 of file: python/dismod_at/create_database.py
 
 # {xrst_begin create_database}
 # {xrst_spell
@@ -460,19 +460,20 @@ lines 5-489 of file: python/dismod_at/create_database.py
 # | |tab| *option_name* = *option_table* [ *i* ][ ``'name'`` ]
 # | |tab| *option_value* = *option_table* [ *i* ][ ``'value'`` ]
 #
-# node_cov_table
-# **************
+# rate_eff_cov_table
+# ******************
 # This is a list of ``dict``
-# that define the rows of the :ref:`node_cov_table-name` .
-# The dictionary *node_cov_table* [ *i* ] has the following:
+# that define the rows of the :ref:`rate_eff_cov_table-name` .
+# The dictionary *rate_eff_cov_table* [ *i* ] has the following:
 #
 # .. csv-table::
 #     :widths: auto
 #
 #     Key,Value Type,Description
-#     ``'node_id'`` ,      int,identifies the node for the *i*-th row
-#     ``'covariate_id'`` , int,identifies the covariate for the *i*-th row
-#     ``'weight_id'``,     int,identifies weighting for this (node, covariate)
+#     ``'node_name'``,      str,identifies the node for the *i*-th row
+#     ``'covariate_name'``, str,identifies the covariate for the *i*-th row
+#     ``split_value``,      float,value of the splitting covariate
+#     ``'weight_name'``,    str,identifies weighting for this row
 #
 # Contents
 # ********

@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<meta content="user_node_cov_table.py, example, using, the, node, covariate, table" name="keywords" />
+<meta content="user_rate_eff_cov_table.py, example, using, the, node, covariate, table" name="keywords" />
 <meta content="purpose" name="keywords" />
 <meta content="true, value, of, variables" name="keywords" />
 <meta content="integrand" name="keywords" />
@@ -18,7 +18,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="user_one_function.py" href="user_one_function.py.html" /><link rel="prev" title="user_no_children.py" href="user_no_children.py.html" />
 
     <meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
-        <title>user_node_cov_table.py - dismod_at documentation</title>
+        <title>user_rate_eff_cov_table.py - dismod_at documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -219,7 +219,7 @@
 <li class="toctree-l3"><a class="reference internal" href="user_lasso_covariate.py.html">user_lasso_covariate.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_mulstd.py.html">user_mulstd.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_no_children.py.html">user_no_children.py</a></li>
-<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">user_node_cov_table.py</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">user_rate_eff_cov_table.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_one_function.py.html">user_one_function.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_plot_curve.py.html">user_plot_curve.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_plot_data_fit.py.html">user_plot_data_fit.py</a></li>
@@ -274,8 +274,8 @@
 <li class="toctree-l5"><a class="reference internal" href="mulcov_table.py.html">mulcov_table.py</a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="node_cov_table.html">node_cov_table</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="node_cov_table.py.html">node_cov_table.py</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="rate_eff_cov_table.html">rate_eff_cov_table</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="rate_eff_cov_table.py.html">rate_eff_cov_table.py</a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="node_table.html">node_table</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -517,35 +517,38 @@
           <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
 <span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
 <span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span></p>
-<section id="user-node-cov-table-py">
-<span id="user-node-cov-table-py-name"></span><h1>user_node_cov_table.py<a class="headerlink" href="#user-node-cov-table-py" title="Permalink to this headline">#</a></h1>
-<a href="_sources/user_node_cov_table.py.rst.txt">View page source</a><section id="example-using-the-node-covariate-table">
-<span id="user-node-cov-table-py-title"></span><span id="index-0"></span><h2>Example Using The Node Covariate Table<a class="headerlink" href="#example-using-the-node-covariate-table" title="Permalink to this headline">#</a></h2>
+<section id="user-rate-eff-cov-table-py">
+<span id="user-rate-eff-cov-table-py-name"></span><h1>user_rate_eff_cov_table.py<a class="headerlink" href="#user-rate-eff-cov-table-py" title="Permalink to this headline">#</a></h1>
+<a href="_sources/user_rate_eff_cov_table.py.rst.txt">View page source</a><section id="example-using-the-node-covariate-table">
+<span id="user-rate-eff-cov-table-py-title"></span><span id="index-0"></span><h2>Example Using The Node Covariate Table<a class="headerlink" href="#example-using-the-node-covariate-table" title="Permalink to this headline">#</a></h2>
 <section id="purpose">
-<span id="user-node-cov-table-py-purpose"></span><span id="index-1"></span><h3>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">#</a></h3>
+<span id="user-rate-eff-cov-table-py-purpose"></span><span id="index-1"></span><h3>Purpose<a class="headerlink" href="#purpose" title="Permalink to this headline">#</a></h3>
 <p>This example demonstrates using the
-<a class="reference internal" href="node_cov_table.html#node-cov-table-name"><span class="std std-ref">node_cov_table</span></a> .</p>
+<a class="reference internal" href="rate_eff_cov_table.html#rate-eff-cov-table-name"><span class="std std-ref">rate_eff_cov_table</span></a> .</p>
 </section>
 <section id="true-value-of-variables">
-<span id="user-node-cov-table-py-true-value-of-variables"></span><span id="index-2"></span><h3>True Value of Variables<a class="headerlink" href="#true-value-of-variables" title="Permalink to this headline">#</a></h3>
+<span id="user-rate-eff-cov-table-py-true-value-of-variables"></span><span id="index-2"></span><h3>True Value of Variables<a class="headerlink" href="#true-value-of-variables" title="Permalink to this headline">#</a></h3>
 <p>The values of the unknown variables that is used to
 simulate the data are</p>
-<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">iota_no_effect</span> <span class="o">=</span> <span class="mf">0.03</span>
-<span class="n">mulcov_true</span>    <span class="o">=</span> <span class="mf">0.9</span>
-<span class="k">def</span> <span class="nf">iota_true</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span> <span class="p">:</span>
-   <span class="n">normalized_age</span> <span class="o">=</span> <span class="n">age</span> <span class="o">/</span> <span class="mf">100.0</span>
-   <span class="n">effect</span>         <span class="o">=</span> <span class="n">mulcov_true</span> <span class="o">*</span> <span class="n">normalized_age</span>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="n">iota_no_effect</span>     <span class="o">=</span> <span class="mf">0.03</span>
+<span class="n">mulcov_true</span>        <span class="o">=</span> <span class="mf">0.9</span>
+<span class="k">def</span> <span class="nf">normalized_income</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">node_name</span><span class="p">,</span> <span class="n">sex</span><span class="p">)</span> <span class="p">:</span>
+   <span class="k">if</span> <span class="n">node_name</span> <span class="o">==</span> <span class="s1">&#39;north_america&#39;</span> <span class="ow">and</span> <span class="n">sex</span> <span class="o">==</span> <span class="s1">&#39;male&#39;</span> <span class="p">:</span>
+      <span class="k">return</span> <span class="n">age</span> <span class="o">/</span> <span class="mf">100.0</span>
+   <span class="k">return</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">age</span> <span class="o">/</span> <span class="mf">100.0</span>
+<span class="k">def</span> <span class="nf">iota_true</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">node_name</span><span class="p">,</span> <span class="n">sex</span><span class="p">)</span> <span class="p">:</span>
+   <span class="n">effect</span>  <span class="o">=</span> <span class="n">mulcov_true</span> <span class="o">*</span> <span class="n">normalized_income</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">node_name</span><span class="p">,</span> <span class="n">sex</span><span class="p">)</span>
    <span class="k">return</span> <span class="n">iota_no_effect</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">effect</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="integrand">
-<span id="user-node-cov-table-py-integrand"></span><span id="index-3"></span><h3>Integrand<a class="headerlink" href="#integrand" title="Permalink to this headline">#</a></h3>
+<span id="user-rate-eff-cov-table-py-integrand"></span><span id="index-3"></span><h3>Integrand<a class="headerlink" href="#integrand" title="Permalink to this headline">#</a></h3>
 <p>There is only one integrand in this example,
 <a class="reference internal" href="avg_integrand.html#avg-integrand-integrand-i-i-a-t-prevalence"><span class="std std-ref">prevalence</span></a> .</p>
 </section>
 <section id="node-tables">
-<span id="user-node-cov-table-py-node-tables"></span><span id="index-4"></span><h3>Node Tables<a class="headerlink" href="#node-tables" title="Permalink to this headline">#</a></h3>
+<span id="user-rate-eff-cov-table-py-node-tables"></span><span id="index-4"></span><h3>Node Tables<a class="headerlink" href="#node-tables" title="Permalink to this headline">#</a></h3>
 <p>The node table for this example is</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>              <span class="n">world</span>
              <span class="o">/</span>     \
@@ -554,47 +557,51 @@ simulate the data are</p>
 </div>
 </section>
 <section id="subgroup-table">
-<span id="user-node-cov-table-py-subgroup-table"></span><span id="index-5"></span><h3>Subgroup Table<a class="headerlink" href="#subgroup-table" title="Permalink to this headline">#</a></h3>
-<p>For this example there is only one group (the world).</p>
+<span id="user-rate-eff-cov-table-py-subgroup-table"></span><span id="index-5"></span><h3>Subgroup Table<a class="headerlink" href="#subgroup-table" title="Permalink to this headline">#</a></h3>
+<p>For this example there is only one subgroup (the world).</p>
 </section>
 <section id="covariates">
-<span id="user-node-cov-table-py-covariates"></span><span id="index-6"></span><h3>Covariates<a class="headerlink" href="#covariates" title="Permalink to this headline">#</a></h3>
-<p>There is one covariate in this example and it is, <em>normalized_age</em>
-(age divided by 100).</p>
+<span id="user-rate-eff-cov-table-py-covariates"></span><span id="index-6"></span><h3>Covariates<a class="headerlink" href="#covariates" title="Permalink to this headline">#</a></h3>
+<p>There are two covariates in this example, <em>sex</em> and <em>normalized_income</em> .
+Sex is used as the <a class="reference internal" href="option_table.html#option-table-splitting-covariate"><span class="std std-ref">splitting_covariate</span></a> .
+Normalized income changes with age, node, and sex.</p>
 </section>
 <section id="covariate-multipliers">
-<span id="user-node-cov-table-py-covariate-multipliers"></span><span id="index-7"></span><h3>Covariate Multipliers<a class="headerlink" href="#covariate-multipliers" title="Permalink to this headline">#</a></h3>
+<span id="user-rate-eff-cov-table-py-covariate-multipliers"></span><span id="index-7"></span><h3>Covariate Multipliers<a class="headerlink" href="#covariate-multipliers" title="Permalink to this headline">#</a></h3>
 <p>There is one covariate multiplier in this example.
-It multiples <em>normalized_age</em> and effects the rate iota.
+It multiples <em>normalized_income</em> and effects the rate iota.
 Previous values for the covariate affect previous values for iota,
 which in turn affects the value of prevalence at the measurement time.</p>
 </section>
 <section id="simulated-data">
-<span id="user-node-cov-table-py-simulated-data"></span><span id="index-8"></span><h3>Simulated Data<a class="headerlink" href="#simulated-data" title="Permalink to this headline">#</a></h3>
+<span id="user-rate-eff-cov-table-py-simulated-data"></span><span id="index-8"></span><h3>Simulated Data<a class="headerlink" href="#simulated-data" title="Permalink to this headline">#</a></h3>
 <p>The data is simulated using the true value for the variables,
 and the covariate effects mentioned above. No noise is added to the data,
 but it is modeled as having a ten percent coefficient of variation.</p>
 </section>
 <section id="rate-variables">
-<span id="user-node-cov-table-py-rate-variables"></span><span id="index-9"></span><h3>Rate Variables<a class="headerlink" href="#rate-variables" title="Permalink to this headline">#</a></h3>
+<span id="user-rate-eff-cov-table-py-rate-variables"></span><span id="index-9"></span><h3>Rate Variables<a class="headerlink" href="#rate-variables" title="Permalink to this headline">#</a></h3>
 <p>There is one non-zero rate for this example iota
 and the no effect model for iota is constant and equal to
 <code class="docutils literal notranslate"><span class="pre">iota_no_effect</span></code> .</p>
 </section>
 <section id="covariate-multipliers-variables">
-<span id="user-node-cov-table-py-covariate-multipliers-variables"></span><span id="index-10"></span><h3>Covariate Multipliers Variables<a class="headerlink" href="#covariate-multipliers-variables" title="Permalink to this headline">#</a></h3>
+<span id="user-rate-eff-cov-table-py-covariate-multipliers-variables"></span><span id="index-10"></span><h3>Covariate Multipliers Variables<a class="headerlink" href="#covariate-multipliers-variables" title="Permalink to this headline">#</a></h3>
 <p>There is one covariate multiplier for this example
 and it is constant and affects iota
 (but the value of the covariate, normalized age, is not constant).</p>
 </section>
 <section id="source-code">
-<span id="user-node-cov-table-py-source-code"></span><span id="index-11"></span><h3>Source Code<a class="headerlink" href="#source-code" title="Permalink to this headline">#</a></h3>
+<span id="user-rate-eff-cov-table-py-source-code"></span><span id="index-11"></span><h3>Source Code<a class="headerlink" href="#source-code" title="Permalink to this headline">#</a></h3>
 <div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="c1"># BEGIN_TRUE_VALUE</span>
-<span class="n">iota_no_effect</span> <span class="o">=</span> <span class="mf">0.03</span>
-<span class="n">mulcov_true</span>    <span class="o">=</span> <span class="mf">0.9</span>
-<span class="k">def</span> <span class="nf">iota_true</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span> <span class="p">:</span>
-   <span class="n">normalized_age</span> <span class="o">=</span> <span class="n">age</span> <span class="o">/</span> <span class="mf">100.0</span>
-   <span class="n">effect</span>         <span class="o">=</span> <span class="n">mulcov_true</span> <span class="o">*</span> <span class="n">normalized_age</span>
+<span class="n">iota_no_effect</span>     <span class="o">=</span> <span class="mf">0.03</span>
+<span class="n">mulcov_true</span>        <span class="o">=</span> <span class="mf">0.9</span>
+<span class="k">def</span> <span class="nf">normalized_income</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">node_name</span><span class="p">,</span> <span class="n">sex</span><span class="p">)</span> <span class="p">:</span>
+   <span class="k">if</span> <span class="n">node_name</span> <span class="o">==</span> <span class="s1">&#39;north_america&#39;</span> <span class="ow">and</span> <span class="n">sex</span> <span class="o">==</span> <span class="s1">&#39;male&#39;</span> <span class="p">:</span>
+      <span class="k">return</span> <span class="n">age</span> <span class="o">/</span> <span class="mf">100.0</span>
+   <span class="k">return</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">age</span> <span class="o">/</span> <span class="mf">100.0</span>
+<span class="k">def</span> <span class="nf">iota_true</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">node_name</span><span class="p">,</span> <span class="n">sex</span><span class="p">)</span> <span class="p">:</span>
+   <span class="n">effect</span>  <span class="o">=</span> <span class="n">mulcov_true</span> <span class="o">*</span> <span class="n">normalized_income</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">node_name</span><span class="p">,</span> <span class="n">sex</span><span class="p">)</span>
    <span class="k">return</span> <span class="n">iota_no_effect</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">effect</span><span class="p">)</span>
 <span class="c1"># END_TRUE_VALUE</span>
 <span class="c1"># ------------------------------------------------------------------------</span>
@@ -602,7 +609,7 @@ and it is constant and affects iota
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">math</span>
-<span class="n">test_program</span> <span class="o">=</span> <span class="s1">&#39;example/user/node_cov_table.py&#39;</span>
+<span class="n">test_program</span> <span class="o">=</span> <span class="s1">&#39;example/user/rate_eff_cov_table.py&#39;</span>
 <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">test_program</span>  <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span> <span class="p">:</span>
    <span class="n">usage</span>  <span class="o">=</span> <span class="s1">&#39;python3 &#39;</span> <span class="o">+</span> <span class="n">test_program</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
    <span class="n">usage</span> <span class="o">+=</span> <span class="s1">&#39;where python3 is the python 3 program on your system</span><span class="se">\n</span><span class="s1">&#39;</span>
@@ -627,9 +634,10 @@ and it is constant and affects iota
       <span class="k">return</span> <span class="p">(</span><span class="n">iota_no_effect</span><span class="p">,</span>  <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
    <span class="k">def</span> <span class="nf">fun_mulcov</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="p">:</span>
       <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;mulcov_value_prior&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-   <span class="k">def</span> <span class="nf">fun_weight</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="p">:</span>
-      <span class="n">normalized_age</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="mf">100.0</span>
-      <span class="k">return</span> <span class="n">normalized_age</span>
+   <span class="k">def</span> <span class="nf">fun_weight_north_america_male</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="p">:</span>
+      <span class="k">return</span> <span class="n">normalized_income</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;north_america&#39;</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span><span class="p">)</span>
+   <span class="k">def</span> <span class="nf">fun_weight_other</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="p">:</span>
+      <span class="k">return</span> <span class="n">normalized_income</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
    <span class="c1"># ----------------------------------------------------------------------</span>
    <span class="c1"># age table</span>
    <span class="n">age_list</span>    <span class="o">=</span> <span class="p">[</span>    <span class="mf">0.0</span><span class="p">,</span>  <span class="mf">50.0</span><span class="p">,</span>   <span class="mf">100.0</span> <span class="p">]</span>
@@ -652,20 +660,28 @@ and it is constant and affects iota
    <span class="c1">#</span>
    <span class="c1"># weight table:</span>
    <span class="n">weight_table</span> <span class="o">=</span> <span class="p">[</span> <span class="p">{</span>
-      <span class="s1">&#39;name&#39;</span>    <span class="p">:</span> <span class="s1">&#39;normalized_age&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;name&#39;</span>    <span class="p">:</span> <span class="s1">&#39;normalized_income_north_america_male&#39;</span><span class="p">,</span>
       <span class="s1">&#39;age_id&#39;</span>  <span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
       <span class="s1">&#39;time_id&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
-      <span class="s1">&#39;fun&#39;</span>     <span class="p">:</span> <span class="n">fun_weight</span><span class="p">,</span>
+      <span class="s1">&#39;fun&#39;</span>     <span class="p">:</span> <span class="n">fun_weight_north_america_male</span><span class="p">,</span>
+      <span class="p">},{</span>
+      <span class="s1">&#39;name&#39;</span>    <span class="p">:</span> <span class="s1">&#39;normalized_income_other&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;age_id&#39;</span>  <span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+      <span class="s1">&#39;time_id&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+      <span class="s1">&#39;fun&#39;</span>     <span class="p">:</span> <span class="n">fun_weight_other</span><span class="p">,</span>
    <span class="p">}</span> <span class="p">]</span>
    <span class="c1">#</span>
    <span class="c1"># covariate table:</span>
-   <span class="n">covariate_table</span> <span class="o">=</span> <span class="p">[</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;normalized_age&#39;</span><span class="p">,</span> <span class="s1">&#39;reference&#39;</span><span class="p">:</span><span class="mf">0.0</span><span class="p">}</span> <span class="p">]</span>
+   <span class="n">covariate_table</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;normalized_income&#39;</span><span class="p">,</span> <span class="s1">&#39;reference&#39;</span><span class="p">:</span><span class="mf">0.0</span><span class="p">},</span>
+      <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span>               <span class="s1">&#39;reference&#39;</span><span class="p">:</span><span class="mf">0.0</span><span class="p">},</span>
+   <span class="p">]</span>
    <span class="c1">#</span>
    <span class="c1"># mulcov table</span>
    <span class="c1"># income has been scaled the same as sex so man use same smoothing</span>
    <span class="n">mulcov_table</span> <span class="o">=</span> <span class="p">[</span>
       <span class="p">{</span>  <span class="c1"># income effects north american incidence</span>
-         <span class="s1">&#39;covariate&#39;</span><span class="p">:</span> <span class="s1">&#39;normalized_age&#39;</span><span class="p">,</span>
+         <span class="s1">&#39;covariate&#39;</span><span class="p">:</span> <span class="s1">&#39;normalized_income&#39;</span><span class="p">,</span>
          <span class="s1">&#39;type&#39;</span><span class="p">:</span>      <span class="s1">&#39;rate_value&#39;</span><span class="p">,</span>
          <span class="s1">&#39;effected&#39;</span><span class="p">:</span>  <span class="s1">&#39;iota&#39;</span><span class="p">,</span>
          <span class="s1">&#39;group&#39;</span><span class="p">:</span>     <span class="s1">&#39;world&#39;</span><span class="p">,</span>
@@ -673,31 +689,36 @@ and it is constant and affects iota
       <span class="p">}</span>
    <span class="p">]</span>
    <span class="c1"># ----------------------------------------------------------------------</span>
+   <span class="c1"># sex_name2value</span>
+   <span class="n">sex_name2value</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;female&#39;</span> <span class="p">:</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span> <span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span> <span class="p">:</span> <span class="o">+</span><span class="mf">0.5</span> <span class="p">}</span>
+   <span class="c1"># ----------------------------------------------------------------------</span>
    <span class="c1"># data table:</span>
-   <span class="n">age</span>        <span class="o">=</span> <span class="mf">50.0</span>
-   <span class="n">time</span>       <span class="o">=</span> <span class="mf">2000.0</span>
+   <span class="n">age</span>  <span class="o">=</span> <span class="mf">50.0</span>
+   <span class="n">time</span> <span class="o">=</span> <span class="mf">2000.0</span>
+   <span class="n">fun</span>  <span class="o">=</span> <span class="k">lambda</span> <span class="n">age</span><span class="p">,</span> <span class="n">time</span> <span class="p">:</span> <span class="n">iota_true</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="s1">&#39;north_america&#39;</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span><span class="p">)</span>
    <span class="n">meas_value</span> <span class="o">=</span> <span class="n">dismod_at</span><span class="o">.</span><span class="n">average_integrand</span><span class="p">(</span>
-      <span class="n">rate</span>           <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;iota&#39;</span> <span class="p">:</span> <span class="n">iota_true</span> <span class="p">},</span>
+      <span class="n">rate</span>           <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;iota&#39;</span> <span class="p">:</span> <span class="n">fun</span> <span class="p">},</span>
       <span class="n">integrand_name</span> <span class="o">=</span> <span class="s1">&#39;prevalence&#39;</span><span class="p">,</span>
       <span class="n">grid</span>           <span class="o">=</span>  <span class="p">{</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">age</span><span class="p">],</span> <span class="s1">&#39;time&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="n">time</span><span class="p">]</span> <span class="p">},</span>
       <span class="n">abs_tol</span>        <span class="o">=</span> <span class="mf">1e-5</span><span class="p">,</span>
    <span class="p">)</span>
    <span class="n">meas_std</span> <span class="o">=</span> <span class="n">meas_value</span> <span class="o">/</span> <span class="mf">10.0</span>
    <span class="n">row</span> <span class="o">=</span> <span class="p">{</span>
-      <span class="s1">&#39;node&#39;</span><span class="p">:</span>            <span class="s1">&#39;world&#39;</span><span class="p">,</span>
-      <span class="s1">&#39;subgroup&#39;</span><span class="p">:</span>        <span class="s1">&#39;world&#39;</span><span class="p">,</span>
-      <span class="s1">&#39;density&#39;</span><span class="p">:</span>         <span class="s1">&#39;gaussian&#39;</span><span class="p">,</span>
-      <span class="s1">&#39;weight&#39;</span><span class="p">:</span>          <span class="s1">&#39;&#39;</span><span class="p">,</span>
-      <span class="s1">&#39;hold_out&#39;</span><span class="p">:</span>         <span class="kc">False</span><span class="p">,</span>
-      <span class="s1">&#39;time_lower&#39;</span><span class="p">:</span>       <span class="n">time</span><span class="p">,</span>
-      <span class="s1">&#39;time_upper&#39;</span><span class="p">:</span>       <span class="n">time</span><span class="p">,</span>
-      <span class="s1">&#39;age_lower&#39;</span><span class="p">:</span>        <span class="n">age</span><span class="p">,</span>
-      <span class="s1">&#39;age_upper&#39;</span><span class="p">:</span>        <span class="n">age</span><span class="p">,</span>
-      <span class="s1">&#39;normalized_age&#39;</span> <span class="p">:</span>  <span class="n">age</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">,</span>
-      <span class="s1">&#39;integrand&#39;</span><span class="p">:</span>        <span class="s1">&#39;prevalence&#39;</span><span class="p">,</span>
-      <span class="s1">&#39;meas_value&#39;</span><span class="p">:</span>       <span class="n">meas_value</span><span class="p">,</span>
-      <span class="s1">&#39;meas_std&#39;</span><span class="p">:</span>         <span class="n">meas_std</span><span class="p">,</span>
-      <span class="s1">&#39;density&#39;</span><span class="p">:</span>          <span class="s1">&#39;gaussian&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;node&#39;</span><span class="p">:</span>              <span class="s1">&#39;north_america&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;subgroup&#39;</span><span class="p">:</span>          <span class="s1">&#39;world&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;density&#39;</span><span class="p">:</span>           <span class="s1">&#39;gaussian&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;weight&#39;</span><span class="p">:</span>            <span class="s1">&#39;&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;hold_out&#39;</span><span class="p">:</span>           <span class="kc">False</span><span class="p">,</span>
+      <span class="s1">&#39;time_lower&#39;</span><span class="p">:</span>         <span class="n">time</span><span class="p">,</span>
+      <span class="s1">&#39;time_upper&#39;</span><span class="p">:</span>         <span class="n">time</span><span class="p">,</span>
+      <span class="s1">&#39;age_lower&#39;</span><span class="p">:</span>          <span class="n">age</span><span class="p">,</span>
+      <span class="s1">&#39;age_upper&#39;</span><span class="p">:</span>          <span class="n">age</span><span class="p">,</span>
+      <span class="s1">&#39;normalized_income&#39;</span><span class="p">:</span>  <span class="n">normalized_income</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="s1">&#39;north_america&#39;</span><span class="p">,</span> <span class="s1">&#39;male&#39;</span><span class="p">),</span>
+      <span class="s1">&#39;sex&#39;</span><span class="p">:</span>                <span class="n">sex_name2value</span><span class="p">[</span><span class="s1">&#39;male&#39;</span><span class="p">],</span>
+      <span class="s1">&#39;integrand&#39;</span><span class="p">:</span>          <span class="s1">&#39;prevalence&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;meas_value&#39;</span><span class="p">:</span>         <span class="n">meas_value</span><span class="p">,</span>
+      <span class="s1">&#39;meas_std&#39;</span><span class="p">:</span>           <span class="n">meas_std</span><span class="p">,</span>
+      <span class="s1">&#39;density&#39;</span><span class="p">:</span>            <span class="s1">&#39;gaussian&#39;</span><span class="p">,</span>
    <span class="p">}</span>
    <span class="n">data_table</span> <span class="o">=</span> <span class="p">[</span> <span class="n">row</span> <span class="p">]</span>
    <span class="c1">#</span>
@@ -737,31 +758,42 @@ and it is constant and affects iota
    <span class="c1"># ----------------------------------------------------------------------</span>
    <span class="c1"># option_table</span>
    <span class="n">option_table</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;splitting_covariate&#39;</span><span class="p">,</span>    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;sex&#39;</span>          <span class="p">},</span>
+      <span class="c1">#</span>
       <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;parent_node_name&#39;</span><span class="p">,</span>       <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;world&#39;</span>        <span class="p">},</span>
       <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;ode_step_size&#39;</span><span class="p">,</span>          <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;5.0&#39;</span>          <span class="p">},</span>
       <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;random_seed&#39;</span><span class="p">,</span>            <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;0&#39;</span>            <span class="p">},</span>
       <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;rate_case&#39;</span><span class="p">,</span>              <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;iota_pos_rho_zero&#39;</span> <span class="p">},</span>
-
+      <span class="c1">#</span>
       <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;quasi_fixed&#39;</span><span class="p">,</span>            <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;true&#39;</span>         <span class="p">},</span>
       <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;derivative_test_fixed&#39;</span><span class="p">,</span>  <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;first-order&#39;</span>  <span class="p">},</span>
       <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;max_num_iter_fixed&#39;</span><span class="p">,</span>     <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;100&#39;</span>          <span class="p">},</span>
-      <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;print_level_fixed&#39;</span><span class="p">,</span>      <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;5&#39;</span>            <span class="p">},</span>
+      <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;print_level_fixed&#39;</span><span class="p">,</span>      <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;0&#39;</span>            <span class="p">},</span>
       <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;tolerance_fixed&#39;</span><span class="p">,</span>        <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;1e-8&#39;</span>         <span class="p">},</span>
-
+      <span class="c1">#</span>
       <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;derivative_test_random&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;second-order&#39;</span> <span class="p">},</span>
       <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;max_num_iter_random&#39;</span><span class="p">,</span>    <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;100&#39;</span>          <span class="p">},</span>
       <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;print_level_random&#39;</span><span class="p">,</span>     <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;0&#39;</span>            <span class="p">},</span>
-      <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;tolerance_random&#39;</span><span class="p">,</span>       <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;1e-10&#39;</span>        <span class="p">}</span>
+      <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;tolerance_random&#39;</span><span class="p">,</span>       <span class="s1">&#39;value&#39;</span><span class="p">:</span><span class="s1">&#39;1e-10&#39;</span>        <span class="p">},</span>
    <span class="p">]</span>
    <span class="c1"># ----------------------------------------------------------------------</span>
-   <span class="n">node_cov_table</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-   <span class="k">for</span> <span class="n">node_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="nb">len</span><span class="p">(</span><span class="n">node_table</span><span class="p">)</span> <span class="p">)</span> <span class="p">:</span>
-      <span class="n">row</span> <span class="o">=</span> <span class="p">{</span>
-         <span class="s1">&#39;node_id&#39;</span>      <span class="p">:</span> <span class="n">node_id</span><span class="p">,</span>
-         <span class="s1">&#39;covariate_id&#39;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-          <span class="s1">&#39;weight_id&#39;</span>   <span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-      <span class="p">}</span>
-      <span class="n">node_cov_table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+   <span class="n">rate_eff_cov_table</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+   <span class="n">not_used</span>       <span class="o">=</span> <span class="mf">0.0</span>
+   <span class="k">for</span> <span class="n">node_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="nb">len</span><span class="p">(</span> <span class="n">node_table</span> <span class="p">)</span> <span class="p">)</span> <span class="p">:</span>
+      <span class="k">for</span> <span class="n">sex_name</span> <span class="ow">in</span> <span class="n">sex_name2value</span> <span class="p">:</span>
+         <span class="n">node_name</span>      <span class="o">=</span> <span class="n">node_table</span><span class="p">[</span><span class="n">node_id</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+         <span class="n">split_value</span>    <span class="o">=</span> <span class="n">sex_name2value</span><span class="p">[</span><span class="n">sex_name</span><span class="p">]</span>
+         <span class="k">if</span> <span class="n">node_name</span> <span class="o">==</span> <span class="s1">&#39;north_america&#39;</span> <span class="ow">and</span> <span class="n">sex_name</span> <span class="o">==</span> <span class="s1">&#39;male&#39;</span> <span class="p">:</span>
+            <span class="n">weight_name</span> <span class="o">=</span> <span class="s1">&#39;normalized_income_north_america_male&#39;</span>
+         <span class="k">else</span> <span class="p">:</span>
+            <span class="n">weight_name</span> <span class="o">=</span> <span class="s1">&#39;normalized_income_other&#39;</span>
+         <span class="n">row</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;node_name&#39;</span>      <span class="p">:</span> <span class="n">node_name</span><span class="p">,</span>
+            <span class="s1">&#39;covariate_name&#39;</span> <span class="p">:</span> <span class="s1">&#39;normalized_income&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;split_value&#39;</span>    <span class="p">:</span> <span class="n">split_value</span><span class="p">,</span>
+            <span class="s1">&#39;weight_name&#39;</span>    <span class="p">:</span> <span class="n">weight_name</span><span class="p">,</span>
+         <span class="p">}</span>
+         <span class="n">rate_eff_cov_table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">row</span> <span class="p">)</span>
    <span class="c1"># ----------------------------------------------------------------------</span>
    <span class="c1"># create database</span>
    <span class="n">dismod_at</span><span class="o">.</span><span class="n">create_database</span><span class="p">(</span>
@@ -779,7 +811,7 @@ and it is constant and affects iota
       <span class="n">rate_table</span>      <span class="o">=</span> <span class="n">rate_table</span>       <span class="p">,</span>
       <span class="n">mulcov_table</span>    <span class="o">=</span> <span class="n">mulcov_table</span>     <span class="p">,</span>
       <span class="n">option_table</span>    <span class="o">=</span> <span class="n">option_table</span>     <span class="p">,</span>
-      <span class="n">node_cov_table</span>  <span class="o">=</span> <span class="n">node_cov_table</span>   <span class="p">,</span>
+      <span class="n">rate_eff_cov_table</span>  <span class="o">=</span> <span class="n">rate_eff_cov_table</span>   <span class="p">,</span>
    <span class="p">)</span>
 <span class="c1"># ===========================================================================</span>
 <span class="n">file_name</span> <span class="o">=</span> <span class="s1">&#39;example.db&#39;</span>
@@ -806,10 +838,12 @@ and it is constant and affects iota
    <span class="k">else</span> <span class="p">:</span>
       <span class="k">assert</span> <span class="n">var_type</span> <span class="o">==</span> <span class="s1">&#39;mulcov_rate_value&#39;</span>
       <span class="n">rel_error</span> <span class="o">=</span> <span class="n">fit_value</span> <span class="o">/</span> <span class="n">mulcov_true</span> <span class="o">-</span> <span class="mf">1.0</span>
-      <span class="k">assert</span> <span class="nb">abs</span><span class="p">(</span><span class="n">rel_error</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-3</span>
+      <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">rel_error</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-3</span> <span class="p">:</span>
+         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;rel_error = &#39;</span> <span class="p">,</span> <span class="n">rel_error</span><span class="p">)</span>
+         <span class="k">assert</span> <span class="kc">False</span>
 <span class="c1">#</span>
 <span class="c1"># -----------------------------------------------------------------------------</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;node_cov_table.py: OK&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;rate_eff_cov_table.py: OK&#39;</span><span class="p">)</span>
 <span class="c1"># -----------------------------------------------------------------------------</span>
 </pre></div>
 </div>
@@ -874,7 +908,7 @@ and it is constant and affects iota
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">user_node_cov_table.py</a><ul>
+<li><a class="reference internal" href="#">user_rate_eff_cov_table.py</a><ul>
 <li><a class="reference internal" href="#example-using-the-node-covariate-table">Example Using The Node Covariate Table</a><ul>
 <li><a class="reference internal" href="#purpose">Purpose</a></li>
 <li><a class="reference internal" href="#true-value-of-variables">True Value of Variables</a></li>

@@ -53,6 +53,7 @@
 <meta content="random_seed" name="keywords" />
 <meta content="compress_interval" name="keywords" />
 <meta content="trace_init_fit_model" name="keywords" />
+<meta content="splitting_covariate" name="keywords" />
 <meta content="example" name="keywords" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="option_default" href="option_default.html" /><link rel="prev" title="nslist_table.py" href="nslist_table.py.html" />
 
@@ -258,7 +259,7 @@
 <li class="toctree-l3"><a class="reference internal" href="user_lasso_covariate.py.html">user_lasso_covariate.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_mulstd.py.html">user_mulstd.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_no_children.py.html">user_no_children.py</a></li>
-<li class="toctree-l3"><a class="reference internal" href="user_node_cov_table.py.html">user_node_cov_table.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_rate_eff_cov_table.py.html">user_rate_eff_cov_table.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_one_function.py.html">user_one_function.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_plot_curve.py.html">user_plot_curve.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_plot_data_fit.py.html">user_plot_data_fit.py</a></li>
@@ -313,8 +314,8 @@
 <li class="toctree-l5"><a class="reference internal" href="mulcov_table.py.html">mulcov_table.py</a></li>
 </ul>
 </li>
-<li class="toctree-l4 has-children"><a class="reference internal" href="node_cov_table.html">node_cov_table</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="node_cov_table.py.html">node_cov_table.py</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="rate_eff_cov_table.html">rate_eff_cov_table</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="rate_eff_cov_table.py.html">rate_eff_cov_table.py</a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="node_table.html">node_table</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -1091,8 +1092,16 @@ is printed on standard output.
 This gives one an indication of progress for large problems where
 this initialization takes a long time.</p>
 </section>
+<section id="splitting-covariate">
+<span id="option-table-splitting-covariate"></span><span id="index-50"></span><h3>splitting_covariate<a class="headerlink" href="#splitting-covariate" title="Permalink to this headline">#</a></h3>
+<p>If <em>option_name</em> is <code class="docutils literal notranslate"><span class="pre">splitting_covariate</span></code> ,
+the corresponding value is the name of the splitting covariate.
+The covariate values in <a class="reference internal" href="rate_eff_cov_table.html#rate-eff-cov-table-name"><span class="std std-ref">rate_eff_cov_table</span></a> can be different for each
+value of the splitting covariate.
+For example, the covariate values might be different for each value of sex.</p>
+</section>
 <section id="example">
-<span id="option-table-example"></span><span id="index-50"></span><h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">#</a></h3>
+<span id="option-table-example"></span><span id="index-51"></span><h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">#</a></h3>
 <p>The files <a class="reference internal" href="option_table.py.html#option-table-py-name"><span class="std std-ref">option_table.py</span></a>
 contains an example <code class="docutils literal notranslate"><span class="pre">option</span></code> table.</p>
 <div class="toctree-wrapper compound">
@@ -1227,6 +1236,7 @@ contains an example <code class="docutils literal notranslate"><span class="pre"
 <li><a class="reference internal" href="#random-seed">random_seed</a></li>
 <li><a class="reference internal" href="#compress-interval">compress_interval</a></li>
 <li><a class="reference internal" href="#trace-init-fit-model">trace_init_fit_model</a></li>
+<li><a class="reference internal" href="#splitting-covariate">splitting_covariate</a></li>
 <li><a class="reference internal" href="#example">Example</a></li>
 </ul>
 </li>

@@ -1,6 +1,6 @@
-lines 5-80 of file: example/user/node_cov_table.py
+lines 5-81 of file: example/user/rate_eff_cov_table.py
 
-# {xrst_begin user_node_cov_table.py}
+# {xrst_begin user_rate_eff_cov_table.py}
 # {xrst_comment_ch #}
 #
 # Example Using The Node Covariate Table
@@ -9,7 +9,7 @@ lines 5-80 of file: example/user/node_cov_table.py
 # Purpose
 # *******
 # This example demonstrates using the
-# :ref:`node_cov_table-name` .
+# :ref:`rate_eff_cov_table-name` .
 #
 # True Value of Variables
 # ***********************
@@ -36,17 +36,18 @@ lines 5-80 of file: example/user/node_cov_table.py
 #
 # Subgroup Table
 # **************
-# For this example there is only one group (the world).
+# For this example there is only one subgroup (the world).
 #
 # Covariates
 # **********
-# There is one covariate in this example and it is, *normalized_age*
-# (age divided by 100).
+# There are two covariates in this example, *sex* and *normalized_income* .
+# Sex is used as the :ref:`option_table@splitting_covariate` .
+# Normalized income changes with age, node, and sex.
 #
 # Covariate Multipliers
 # *********************
 # There is one covariate multiplier in this example.
-# It multiples *normalized_age* and effects the rate iota.
+# It multiples *normalized_income* and effects the rate iota.
 # Previous values for the covariate affect previous values for iota,
 # which in turn affects the value of prevalence at the measurement time.
 #
@@ -75,4 +76,4 @@ lines 5-80 of file: example/user/node_cov_table.py
 #     END PYTHON
 # }
 #
-# {xrst_end user_node_cov_table.py}
+# {xrst_end user_rate_eff_cov_table.py}

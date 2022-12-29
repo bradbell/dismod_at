@@ -3,19 +3,21 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<meta content="node_cov_table, the, node, covariate, table" name="keywords" />
-<meta content="warning" name="keywords" />
+<meta content="rate_eff_cov_table, the, rate, effect, covariate, table" name="keywords" />
+<meta content="improvements" name="keywords" />
 <meta content="problem" name="keywords" />
 <meta content="solution" name="keywords" />
-<meta content="node_cov_id" name="keywords" />
+<meta content="rate_eff_cov_id" name="keywords" />
 <meta content="covariate_id" name="keywords" />
 <meta content="node_id" name="keywords" />
+<meta content="split_value" name="keywords" />
 <meta content="weight_id" name="keywords" />
+<meta content="rectangular, grid" name="keywords" />
 <meta content="example" name="keywords" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="node_cov_table.py" href="node_cov_table.py.html" /><link rel="prev" title="mulcov_table.py" href="mulcov_table.py.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="rate_eff_cov_table.py" href="rate_eff_cov_table.py.html" /><link rel="prev" title="mulcov_table.py" href="mulcov_table.py.html" />
 
     <meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
-        <title>node_cov_table - dismod_at documentation</title>
+        <title>rate_eff_cov_table - dismod_at documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -216,7 +218,7 @@
 <li class="toctree-l3"><a class="reference internal" href="user_lasso_covariate.py.html">user_lasso_covariate.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_mulstd.py.html">user_mulstd.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_no_children.py.html">user_no_children.py</a></li>
-<li class="toctree-l3"><a class="reference internal" href="user_node_cov_table.py.html">user_node_cov_table.py</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_rate_eff_cov_table.py.html">user_rate_eff_cov_table.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_one_function.py.html">user_one_function.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_plot_curve.py.html">user_plot_curve.py</a></li>
 <li class="toctree-l3"><a class="reference internal" href="user_plot_data_fit.py.html">user_plot_data_fit.py</a></li>
@@ -271,8 +273,8 @@
 <li class="toctree-l5"><a class="reference internal" href="mulcov_table.py.html">mulcov_table.py</a></li>
 </ul>
 </li>
-<li class="toctree-l4 current has-children current-page"><a class="current reference internal" href="#">node_cov_table</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l5"><a class="reference internal" href="node_cov_table.py.html">node_cov_table.py</a></li>
+<li class="toctree-l4 current has-children current-page"><a class="current reference internal" href="#">rate_eff_cov_table</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="rate_eff_cov_table.py.html">rate_eff_cov_table.py</a></li>
 </ul>
 </li>
 <li class="toctree-l4 has-children"><a class="reference internal" href="node_table.html">node_table</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -514,18 +516,24 @@
           <p class="hidden"><span class="math notranslate nohighlight">\(\newcommand{\B}[1]{ {\bf #1} }\)</span>
 <span class="math notranslate nohighlight">\(\newcommand{\R}[1]{ {\rm #1} }\)</span>
 <span class="math notranslate nohighlight">\(\newcommand{\W}[1]{ \; #1 \; }\)</span></p>
-<section id="node-cov-table">
-<span id="node-cov-table-name"></span><h1>node_cov_table<a class="headerlink" href="#node-cov-table" title="Permalink to this headline">#</a></h1>
-<a href="_sources/node_cov_table.rst.txt">View page source</a><section id="the-node-covariate-table">
-<span id="node-cov-table-title"></span><span id="index-0"></span><h2>The Node Covariate Table<a class="headerlink" href="#the-node-covariate-table" title="Permalink to this headline">#</a></h2>
-<section id="warning">
-<span id="node-cov-table-warning"></span><span id="index-1"></span><h3>Warning<a class="headerlink" href="#warning" title="Permalink to this headline">#</a></h3>
-<p>This table is a temporary quick fix for the problem below.
-It is uncertain if the features it makes available will be supported
-by future versions of dismod_at.</p>
+<section id="rate-eff-cov-table">
+<span id="rate-eff-cov-table-name"></span><h1>rate_eff_cov_table<a class="headerlink" href="#rate-eff-cov-table" title="Permalink to this headline">#</a></h1>
+<a href="_sources/rate_eff_cov_table.rst.txt">View page source</a><section id="the-rate-effect-covariate-table">
+<span id="rate-eff-cov-table-title"></span><span id="index-0"></span><h2>The Rate Effect Covariate Table<a class="headerlink" href="#the-rate-effect-covariate-table" title="Permalink to this headline">#</a></h2>
+<section id="improvements">
+<span id="rate-eff-cov-table-improvements"></span><span id="index-1"></span><h3>Improvements<a class="headerlink" href="#improvements" title="Permalink to this headline">#</a></h3>
+<p>This table is a quick fix for the problem below.
+It uses the existing <a class="reference internal" href="weight_table.html#weight-table-name"><span class="std std-ref">weight_table</span></a> to represent an arbitrary
+bilinear function.
+A better fix would separate the covariate grid from the covariate
+values so that:</p>
+<ol class="arabic simple">
+<li><p>The grid does not need to be repeated when only values change.</p></li>
+<li><p>weights are not used for purposes other than weighting.</p></li>
+</ol>
 </section>
 <section id="problem">
-<span id="node-cov-table-problem"></span><span id="index-2"></span><h3>Problem<a class="headerlink" href="#problem" title="Permalink to this headline">#</a></h3>
+<span id="rate-eff-cov-table-problem"></span><span id="index-2"></span><h3>Problem<a class="headerlink" href="#problem" title="Permalink to this headline">#</a></h3>
 <p>The data table only assigns one value for each covariate to each data point;
 see <a class="reference internal" href="data_table.html#data-table-covariates"><span class="std std-ref">Covariates</span></a> in the data table.
 This works fine for most cases.
@@ -536,42 +544,65 @@ the measurement is for an
 <a class="reference internal" href="integrand_table.html#integrand-table-integrand-name-ode"><span class="std std-ref">ode integrand</span></a>.</p>
 </section>
 <section id="solution">
-<span id="node-cov-table-solution"></span><span id="index-3"></span><h3>Solution<a class="headerlink" href="#solution" title="Permalink to this headline">#</a></h3>
+<span id="rate-eff-cov-table-solution"></span><span id="index-3"></span><h3>Solution<a class="headerlink" href="#solution" title="Permalink to this headline">#</a></h3>
 <p>This table attaches a bilinear function of age and time to
-each covariate, node pair in this table.
-If a covariate appears in this table, the values in this table,
-instead of the data table, are used for that covariate.
-For each <em>covariate_id</em> that appears in this table,
-and each <em>node_id</em> in the node table,
-there must be one an only one row for that covariate and node.</p>
+each covariate, node, and <a class="reference internal" href="option_table.html#option-table-splitting-covariate"><span class="std std-ref">splitting_covariate</span></a> value.
+The covariate values in this table are used,
+to compute covariate multiplier effects,
+when all the following conditions hold:</p>
+<ol class="arabic simple">
+<li><p>The covariate appears in this table .</p></li>
+<li><p>The multiplier type is <a class="reference internal" href="mulcov_table.html#mulcov-table-mulcov-type-rate-value"><span class="std std-ref">rate_value</span></a> .</p></li>
+</ol>
+<p>If the conditions above do not hold,
+the <a class="reference internal" href="data_table.html#data-table-covariates"><span class="std std-ref">data table</span></a> in the data and avgint tables
+are used to compute covariate multiplier effects.</p>
 </section>
-<section id="node-cov-id">
-<span id="node-cov-table-node-cov-id"></span><span id="index-4"></span><h3>node_cov_id<a class="headerlink" href="#node-cov-id" title="Permalink to this headline">#</a></h3>
+<section id="rate-eff-cov-id">
+<span id="rate-eff-cov-table-rate-eff-cov-id"></span><span id="index-4"></span><h3>rate_eff_cov_id<a class="headerlink" href="#rate-eff-cov-id" title="Permalink to this headline">#</a></h3>
 <p>This column has type <code class="docutils literal notranslate"><span class="pre">integer</span></code> and is the primary key for the
-<code class="docutils literal notranslate"><span class="pre">node_cov</span></code> table.
+<code class="docutils literal notranslate"><span class="pre">rate_eff_cov</span></code> table.
 Its initial value is zero, and it increments by one for each row.</p>
 </section>
 <section id="covariate-id">
-<span id="node-cov-table-covariate-id"></span><span id="index-5"></span><h3>covariate_id<a class="headerlink" href="#covariate-id" title="Permalink to this headline">#</a></h3>
+<span id="rate-eff-cov-table-covariate-id"></span><span id="index-5"></span><h3>covariate_id<a class="headerlink" href="#covariate-id" title="Permalink to this headline">#</a></h3>
 <p>This column has type <code class="docutils literal notranslate"><span class="pre">integer</span></code> and is the
-<a class="reference internal" href="covariate_table.html#covariate-table-covariate-id"><span class="std std-ref">covariate_id</span></a> corresponding to this row.</p>
+<a class="reference internal" href="covariate_table.html#covariate-table-covariate-id"><span class="std std-ref">covariate_id</span></a> corresponding to this row.
+The covariate_id corresponding to the splitting covariate
+cannot appear in this column; i.e.,
+the splitting covariate value is constant with respect to age and time.</p>
 </section>
 <section id="node-id">
-<span id="node-cov-table-node-id"></span><span id="index-6"></span><h3>node_id<a class="headerlink" href="#node-id" title="Permalink to this headline">#</a></h3>
+<span id="rate-eff-cov-table-node-id"></span><span id="index-6"></span><h3>node_id<a class="headerlink" href="#node-id" title="Permalink to this headline">#</a></h3>
 <p>This column has type <code class="docutils literal notranslate"><span class="pre">integer</span></code> and is the
 <a class="reference internal" href="node_table.html#node-table-node-id"><span class="std std-ref">node_id</span></a> corresponding to this row.</p>
 </section>
+<section id="split-value">
+<span id="rate-eff-cov-table-split-value"></span><span id="index-7"></span><h3>split_value<a class="headerlink" href="#split-value" title="Permalink to this headline">#</a></h3>
+<p>This column has type <code class="docutils literal notranslate"><span class="pre">real</span></code> and is the value of the
+splitting corresponding to this row.
+This value is not used when the splitting covariate is <code class="docutils literal notranslate"><span class="pre">null</span></code> .</p>
+</section>
 <section id="weight-id">
-<span id="node-cov-table-weight-id"></span><span id="index-7"></span><h3>weight_id<a class="headerlink" href="#weight-id" title="Permalink to this headline">#</a></h3>
+<span id="rate-eff-cov-table-weight-id"></span><span id="index-8"></span><h3>weight_id<a class="headerlink" href="#weight-id" title="Permalink to this headline">#</a></h3>
 <p>This column has type <code class="docutils literal notranslate"><span class="pre">integer</span></code> and is the
 <a class="reference internal" href="weight_table.html#weight-table-weight-id"><span class="std std-ref">weight_id</span></a> corresponding to this row.
 As a quick fix, we use <em>weight_id</em> to identify an
 arbitrary bilinear functions of age and time.</p>
 </section>
+<section id="rectangular-grid">
+<span id="rate-eff-cov-table-rectangular-grid"></span><span id="index-9"></span><h3>Rectangular Grid<a class="headerlink" href="#rectangular-grid" title="Permalink to this headline">#</a></h3>
+<p>For each <em>covariate_id</em> that appears in this table,
+each <em>node_id</em> in the node table,
+each splitting covariate value in the data table,
+and each splitting covariate value in the avgint table,
+there must be one an only one row with that
+<em>covariate_id</em>, <em>node_id</em>, and splitting covariate value.</p>
+</section>
 <section id="example">
-<span id="node-cov-table-example"></span><span id="index-8"></span><h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">#</a></h3>
-<p>The file <a class="reference internal" href="node_cov_table.py.html#node-cov-table-py-name"><span class="std std-ref">node_cov_table.py</span></a>
-contains an example <code class="docutils literal notranslate"><span class="pre">node_cov</span></code> table.</p>
+<span id="rate-eff-cov-table-example"></span><span id="index-10"></span><h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">#</a></h3>
+<p>The file <a class="reference internal" href="rate_eff_cov_table.py.html#rate-eff-cov-table-py-name"><span class="std std-ref">rate_eff_cov_table.py</span></a>
+contains an example <code class="docutils literal notranslate"><span class="pre">rate_eff_cov</span></code> table.</p>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -583,12 +614,12 @@ contains an example <code class="docutils literal notranslate"><span class="pre"
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="node_cov_table.py.html">
+          <a class="next-page" href="rate_eff_cov_table.py.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">node_cov_table.py</div>
+                <div class="title">rate_eff_cov_table.py</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -635,15 +666,17 @@ contains an example <code class="docutils literal notranslate"><span class="pre"
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">node_cov_table</a><ul>
-<li><a class="reference internal" href="#the-node-covariate-table">The Node Covariate Table</a><ul>
-<li><a class="reference internal" href="#warning">Warning</a></li>
+<li><a class="reference internal" href="#">rate_eff_cov_table</a><ul>
+<li><a class="reference internal" href="#the-rate-effect-covariate-table">The Rate Effect Covariate Table</a><ul>
+<li><a class="reference internal" href="#improvements">Improvements</a></li>
 <li><a class="reference internal" href="#problem">Problem</a></li>
 <li><a class="reference internal" href="#solution">Solution</a></li>
-<li><a class="reference internal" href="#node-cov-id">node_cov_id</a></li>
+<li><a class="reference internal" href="#rate-eff-cov-id">rate_eff_cov_id</a></li>
 <li><a class="reference internal" href="#covariate-id">covariate_id</a></li>
 <li><a class="reference internal" href="#node-id">node_id</a></li>
+<li><a class="reference internal" href="#split-value">split_value</a></li>
 <li><a class="reference internal" href="#weight-id">weight_id</a></li>
+<li><a class="reference internal" href="#rectangular-grid">Rectangular Grid</a></li>
 <li><a class="reference internal" href="#example">Example</a></li>
 </ul>
 </li>

@@ -79,7 +79,7 @@ http://sqlitebrowser.org/.
    example/user/lasso_covariate.py
    example/user/mulstd.py
    example/user/no_children.py
-   example/user/node_cov_table.py
+   example/user/rate_eff_cov_table.py
    example/user/one_function.py
    example/user/plot_curve.py
    example/user/plot_data_fit.py
@@ -172,8 +172,8 @@ Examples With Explanation
      - :ref:`user_mulstd.py-title`
    * - user_no_children.py
      - :ref:`user_no_children.py-title`
-   * - user_node_cov_table.py
-     - :ref:`user_node_cov_table.py-title`
+   * - user_rate_eff_cov_table.py
+     - :ref:`user_rate_eff_cov_table.py-title`
    * - user_one_function.py
      - :ref:`user_one_function.py-title`
    * - user_plot_curve.py
