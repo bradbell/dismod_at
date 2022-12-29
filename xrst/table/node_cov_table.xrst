@@ -7,11 +7,13 @@
 The Node Covariate Table
 ########################
 
-Warning
-*******
+Future Improvements
+*******************
 This table is a temporary quick fix for the problem below.
-It is uncertain if the features it makes available will be supported
-by future versions of dismod_at.
+It uses the existing :ref:`weight_tabel-name` to represent an arbitrary
+bilinear function.
+A better fix would separate the covariate grid from the covaraite
+values so that the grid does not need to be repeated when only values change.
 
 Problem
 *******

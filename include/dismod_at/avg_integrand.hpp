@@ -80,6 +80,7 @@ private:
    // add_cohort
    template <class Float>
    void add_cohort(
+      size_t                       node_id              ,
       double                       time_ini             ,
       double                       time_lower           ,
       double                       time_upper           ,

@@ -436,6 +436,7 @@ Float avg_integrand::rectangle(
       //
       // add_cohort
       add_cohort(
+         node_id,
          time_ini,
          time_lower,
          time_upper,
@@ -467,7 +468,7 @@ Float avg_integrand::rectangle(
       assert( time_line.size() > 0 );
       double time_max = time_line[ time_line.size() - 1 ].time;
 
-      // check if this cohort has alread been added
+      // check if this cohort has already been added
       if( ! time_line_vec<Float>::near_equal(time_max, time_upper) )
       {
          // initial time for this cohort
@@ -475,6 +476,7 @@ Float avg_integrand::rectangle(
          //
          // add_cohort
          add_cohort(
+            node_id,
             time_ini,
             time_lower,
             time_upper,
@@ -532,6 +534,7 @@ Float avg_integrand::rectangle(
 
       // add_cohort
       add_cohort(
+         node_id,
          time_ini,
          time_lower,
          time_upper,
@@ -567,6 +570,7 @@ Syntax
 ******
 
 | *avg* = *avgint_obj* . ``add_cohort`` (
+| |tab| *node_id* ,
 | |tab| *time_ini* ,
 | |tab| *time_lower* ,
 | |tab| *time_upper* ,
@@ -674,6 +678,7 @@ is a temporary vector that is re-sized and over written
 // BEGIN_ADD_COHORT_PROTOTYPE
 template <class Float>
 void avg_integrand::add_cohort(
+   size_t                       node_id                          ,
    double                       time_ini                         ,
    double                       time_lower                       ,
    double                       time_upper                       ,
@@ -833,11 +838,12 @@ void avg_integrand::add_cohort(
          pack_vec,                                          \
          Float ## _time_line_object_,                       \
          Float ## _line_adj_                                \
-      );                                                     \
-   }                                                          \
+      );                                                    \
+   }                                                        \
 \
-   template                                                   \
-   void avg_integrand::add_cohort(                            \
+   template                                                  \
+   void avg_integrand::add_cohort(                           \
+      size_t                       node_id              ,    \
       double                       time_ini             ,    \
       double                       time_lower           ,    \
       double                       time_upper           ,    \
