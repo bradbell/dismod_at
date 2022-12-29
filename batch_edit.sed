@@ -15,10 +15,18 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
+#  devel/table/check_node_cov.cpp
+#  devel/table/get_node_cov_table.cpp
+#  example/table/node_cov_table.py
+#  example/user/node_cov_table.py
+#  include/dismod_at/check_node_cov.hpp
+#  include/dismod_at/get_node_cov_table.hpp
+#  xrst/table/node_cov_table.xrst
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
+#  s|node_cov|rate_cov|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -30,7 +38,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|^[.][.] list-table::|&\
-   :widths: auto|
-s|^# [.][.] list-table::|&\
-#     :widths: auto|
+s|node_cov|rate_cov|g

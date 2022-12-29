@@ -30,6 +30,11 @@ Changes and Additions to Dismod_at During 2022
 mm-dd
 *****
 
+12-29
+=====
+Merge in the node_cov branch.
+This fixed some bugs when using the :ref:`node_cov_table-name` .
+
 12-25
 =====
 Merge in the node_cov branch:
