@@ -228,7 +228,9 @@ bool avg_integrand_xam(void)
    // -----------------------------------------------------------------------
    // Sincidence
    size_t integrand_id = 0;
+   size_t node_id = 0;
    Float avg = avgint_obj.rectangle(
+      node_id,
       age_lower,
       age_upper,
       time_lower,
@@ -248,6 +250,7 @@ bool avg_integrand_xam(void)
    // susceptible
    integrand_id = 1;
    avg = avgint_obj.rectangle(
+      node_id,
       age_lower,
       age_upper,
       time_lower,

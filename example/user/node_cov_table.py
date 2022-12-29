@@ -38,7 +38,7 @@
 #
 # Subgroup Table
 # **************
-# For this example there is only one group (the world).
+# For this example there is only one subgroup (the world).
 #
 # Covariates
 # **********

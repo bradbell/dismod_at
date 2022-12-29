@@ -60,6 +60,7 @@ private:
    // template version of rectangle
    template <class Float>
    Float rectangle(
+      size_t                           node_id          ,
       double                           age_lower        ,
       double                           age_upper        ,
       double                           time_lower       ,
@@ -111,6 +112,7 @@ public:
    );
    // double version of rectangle
    double rectangle(
+      size_t                           node_id          ,
       double                           age_lower        ,
       double                           age_upper        ,
       double                           time_lower       ,
@@ -125,6 +127,7 @@ public:
    );
    // a1_double version of rectangle
    a1_double rectangle(
+      size_t                           node_id          ,
       double                           age_lower        ,
       double                           age_upper        ,
       double                           time_lower       ,

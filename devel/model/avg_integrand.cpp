@@ -165,6 +165,7 @@ Syntax
 ******
 
 | *avg* = *avgint_obj* . ``rectangle`` (
+| |tab| *node_id*,
 | |tab| *age_lower* ,
 | |tab| *age_upper* ,
 | |tab| *time_lower* ,
@@ -184,6 +185,10 @@ Prototype
    // BEGIN_RECTANGLE_PROTOTYPE
    // END_RECTANGLE_PROTOTYPE
 }
+
+node_id
+*******
+is the node for this average integrand.
 
 age_lower
 *********
@@ -257,6 +262,7 @@ of using this routine.
 // BEGIN_RECTANGLE_PROTOTYPE
 template <class Float>
 Float avg_integrand::rectangle(
+   size_t                           node_id          ,
    double                           age_lower        ,
    double                           age_upper        ,
    double                           time_lower       ,
@@ -783,6 +789,7 @@ void avg_integrand::add_cohort(
 # define DISMOD_AT_INSTANTIATE_AVG_INTEGRAND_RECTANGLE(Float)  \
    template                                                   \
    Float avg_integrand::rectangle(                            \
+      size_t                           node_id          ,    \
       double                           age_lower        ,    \
       double                           age_upper        ,    \
       double                           time_lower       ,    \
@@ -798,7 +805,8 @@ void avg_integrand::add_cohort(
       CppAD::vector<Float>&            line_adj              \
    );                                                         \
 \
-   Float avg_integrand::rectangle(                            \
+   Float avg_integrand::rectangle(                           \
+      size_t                           node_id          ,    \
       double                           age_lower        ,    \
       double                           age_upper        ,    \
       double                           time_lower       ,    \
@@ -811,6 +819,7 @@ void avg_integrand::add_cohort(
       const CppAD::vector<double>&     x                ,    \
       const CppAD::vector<Float>&      pack_vec         )    \
    {  return rectangle(                                      \
+         node_id,                                           \
          age_lower,                                         \
          age_upper,                                         \
          time_lower,                                        \

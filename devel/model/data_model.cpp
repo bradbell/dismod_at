@@ -653,6 +653,7 @@ Float data_model::average(
    double age_upper    = data_item.age_upper;
    double time_lower   = data_item.time_lower;
    double time_upper   = data_item.time_upper;
+   size_t node_id      = size_t( data_item.node_id );
    size_t weight_id    = size_t( data_item.weight_id );
    size_t integrand_id = size_t( data_item.integrand_id );
    size_t subgroup_id  = size_t( data_item.subgroup_id );
@@ -663,6 +664,7 @@ Float data_model::average(
    //
    // compute average integrand
    Float result = avgint_obj_.rectangle(
+      node_id,
       age_lower,
       age_upper,
       time_lower,
