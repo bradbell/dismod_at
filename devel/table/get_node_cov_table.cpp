@@ -130,55 +130,7 @@ CppAD::vector<node_cov_struct> get_node_cov_table(
       node_cov_table[i].weight_id    = weight_id_vec[i];
    }
    // The primary key values covariate_id and node_id get checked by
-   // the calling routine.
-   //
-   // node_covariate_id
-   std::set<int> node_covariate_id;
-   for(size_t i = 0; i < n_node_cov; ++i)
-      node_covariate_id.insert( covariate_id_vec[i] );
-
-   // msg
-   std::string msg;
-
-   // covariate_id
-   std::set<int>::const_iterator itr;
-   for(itr = node_covariate_id.begin(); itr != node_covariate_id.end(); ++itr)
-   {  int covariate_id = *itr;
-
-      // found_node_id
-      CppAD::vector<bool> found_node_id(n_node);
-      for(size_t i = 0; i < n_node; ++i)
-         found_node_id[i] = false;
-      //
-      // found_node_id
-      for(size_t i = 0; i < n_node_cov; ++i)
-      {  if( covariate_id_vec[i] == covariate_id )
-         {  int node_id = node_id_vec[i];
-            if( node_id < 0 || n_node <= size_t(node_id) )
-            {  msg  = "node_id " + CppAD::to_string( node_id );
-               msg += " is not a valid node table node_id";
-               size_t node_cov_id = i;
-               error_exit(msg, table_name, node_cov_id);
-            }
-            if( found_node_id[node_id] )
-            {  msg  = "node_id " + CppAD::to_string( node_id );
-               msg += " appears more than one with covariae_id";
-               msg += CppAD::to_string( covariate_id );
-               size_t node_cov_id = i;
-               error_exit(msg, table_name, node_cov_id);
-            }
-            found_node_id[node_id] = true;
-         }
-      }
-      for(size_t node_id = 0; node_id < n_node; ++node_id)
-      {  if( ! found_node_id[node_id] )
-         {  msg  = "covariate_id " + CppAD::to_string(covariate_id);
-            msg += " appread in this table but not with node_id ";
-            msg += CppAD::to_string(node_id);
-            error_exit(msg, table_name);
-         }
-      }
-   }
+   // the calling routine. Other constraints are checked by check_node_cov.
    //
    return node_cov_table;
 }

@@ -194,6 +194,8 @@ void check_node_cov(
                   msg += to_string( covariate_id );
                   if( splitting_covariate != "" )
                      msg += " and split_value " + to_string(split_value);
+                  else
+                     msg += " and there is no splitting covariate";
                   string table_name = "node_cov";
                   error_exit(msg, table_name, node_cov_id);
                }
@@ -209,6 +211,8 @@ void check_node_cov(
                msg += to_string(node_id);
                if( splitting_covariate != "" )
                   msg += " and split_value " + to_string(split_value);
+               else
+                  msg += " and there is no splitting covariate";
                string table_name = "node_cov";
                error_exit(msg, table_name);
             }

@@ -1183,6 +1183,7 @@ def db2csv_command(database_file_arg) :
       [ "quasi_fixed",                       "true"],
       [ "random_seed",                       "0"],
       [ "rate_case",                         "iota_pos_rho_zero"],
+      [ "splitting_covariate",               ""],
       [ "tolerance_fixed",                   "1e-8"],
       [ "tolerance_random",                  "1e-8"],
       [ "trace_init_fit_model",              "false"],

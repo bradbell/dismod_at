@@ -42,9 +42,9 @@
 #
 # Covariates
 # **********
-# There is one covariate in this example and it is, *normalized_income*
-# (age divided by 100). The :ref:`option_table@splitting_covariate` is
-# null, so the values of *split_value* in the node_cov table do not matter.
+# There are two covariates in this example, *sex* and *normalized_income* .
+# Sex is used as the :ref:`option_table@splitting_covariate` .
+# Normalized income changes with age, node, and sex.
 #
 # Covariate Multipliers
 # *********************
@@ -84,12 +84,12 @@
 # BEGIN_TRUE_VALUE
 iota_no_effect     = 0.03
 mulcov_true        = 0.9
-def normalized_income(age, node_name) :
-   if node_name == 'north_america' :
+def normalized_income(age, node_name, sex) :
+   if node_name == 'north_america' and sex == 'male' :
       return age / 100.0
    return 0.1 * age / 100.0
-def iota_true(age, time, node_name) :
-   effect  = mulcov_true * normalized_income(age, node_name)
+def iota_true(age, time, node_name, sex) :
+   effect  = mulcov_true * normalized_income(age, node_name, sex)
    return iota_no_effect * math.exp(effect)
 # END_TRUE_VALUE
 # ------------------------------------------------------------------------
@@ -122,10 +122,10 @@ def example_db (file_name) :
       return (iota_no_effect,  None, None)
    def fun_mulcov(a, t) :
       return ('mulcov_value_prior', None, None)
-   def fun_weight_north_america(a, t) :
-      return normalized_income(a, 'north_america')
+   def fun_weight_north_america_male(a, t) :
+      return normalized_income(a, 'north_america', 'male')
    def fun_weight_other(a, t) :
-      return normalized_income(a, '')
+      return normalized_income(a, '', '')
    # ----------------------------------------------------------------------
    # age table
    age_list    = [    0.0,  50.0,   100.0 ]
@@ -148,10 +148,10 @@ def example_db (file_name) :
    #
    # weight table:
    weight_table = [ {
-      'name'    : 'normalized_income_north_america',
+      'name'    : 'normalized_income_north_america_male',
       'age_id'  : [0, 2],
       'time_id' : [0, 2],
-      'fun'     : fun_weight_north_america,
+      'fun'     : fun_weight_north_america_male,
       },{
       'name'    : 'normalized_income_other',
       'age_id'  : [0, 2],
@@ -160,7 +160,10 @@ def example_db (file_name) :
    } ]
    #
    # covariate table:
-   covariate_table = [ {'name':'normalized_income', 'reference':0.0} ]
+   covariate_table = [
+      {'name':'normalized_income', 'reference':0.0},
+      {'name':'sex',               'reference':0.0},
+   ]
    #
    # mulcov table
    # income has been scaled the same as sex so man use same smoothing
@@ -174,10 +177,13 @@ def example_db (file_name) :
       }
    ]
    # ----------------------------------------------------------------------
+   # sex_name2value
+   sex_name2value = { 'female' : -0.5, 'both' : 0.0, 'male' : +0.5 }
+   # ----------------------------------------------------------------------
    # data table:
-   age        = 50.0
-   time       = 2000.0
-   fun        = lambda age, time : iota_true(age, time, 'north_america')
+   age  = 50.0
+   time = 2000.0
+   fun  = lambda age, time : iota_true(age, time, 'north_america', 'male')
    meas_value = dismod_at.average_integrand(
       rate           = { 'iota' : fun },
       integrand_name = 'prevalence',
@@ -195,7 +201,8 @@ def example_db (file_name) :
       'time_upper':         time,
       'age_lower':          age,
       'age_upper':          age,
-      'normalized_income':  normalized_income(age, 'north_america'),
+      'normalized_income':  normalized_income(age, 'north_america', 'male'),
+      'sex':                sex_name2value['male'],
       'integrand':          'prevalence',
       'meas_value':         meas_value,
       'meas_std':           meas_std,
@@ -239,36 +246,42 @@ def example_db (file_name) :
    # ----------------------------------------------------------------------
    # option_table
    option_table = [
+      { 'name':'splitting_covariate',    'value':'sex'          },
+      #
       { 'name':'parent_node_name',       'value':'world'        },
       { 'name':'ode_step_size',          'value':'5.0'          },
       { 'name':'random_seed',            'value':'0'            },
       { 'name':'rate_case',              'value':'iota_pos_rho_zero' },
-
+      #
       { 'name':'quasi_fixed',            'value':'true'         },
       { 'name':'derivative_test_fixed',  'value':'first-order'  },
       { 'name':'max_num_iter_fixed',     'value':'100'          },
       { 'name':'print_level_fixed',      'value':'0'            },
       { 'name':'tolerance_fixed',        'value':'1e-8'         },
-
+      #
       { 'name':'derivative_test_random', 'value':'second-order' },
       { 'name':'max_num_iter_random',    'value':'100'          },
       { 'name':'print_level_random',     'value':'0'            },
-      { 'name':'tolerance_random',       'value':'1e-10'        }
+      { 'name':'tolerance_random',       'value':'1e-10'        },
    ]
    # ----------------------------------------------------------------------
    node_cov_table = list()
    not_used       = 0.0
    for node_id in range( len( node_table ) ) :
-      row = {
-         'node_name'      : node_table[node_id]['name'],
-         'covariate_name' : 'normalized_income',
-         'split_value'    : not_used,
-      }
-      if row['node_name'] == 'north_america' :
-         row['weight_name'] = 'normalized_income_north_america'
-      else :
-         row['weight_name'] = 'normalized_income_other'
-      node_cov_table.append( row )
+      for sex_name in sex_name2value :
+         node_name      = node_table[node_id]['name']
+         split_value    = sex_name2value[sex_name]
+         if node_name == 'north_america' and sex_name == 'male' :
+            weight_name = 'normalized_income_north_america_male'
+         else :
+            weight_name = 'normalized_income_other'
+         row = {
+            'node_name'      : node_name,
+            'covariate_name' : 'normalized_income',
+            'split_value'    : split_value,
+            'weight_name'    : weight_name,
+         }
+         node_cov_table.append( row )
    # ----------------------------------------------------------------------
    # create database
    dismod_at.create_database(
