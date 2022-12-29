@@ -61,6 +61,7 @@ bool get_option_table_xam(void)
       "quasi_fixed",                      "false",
       "random_seed",                      "123",
       "rate_case",                        "iota_zero_rho_zero",
+      "splitting_covariate",              "",
       "tolerance_fixed",                  "1e-7",
       "tolerance_random",                 "1e-7",
       "trace_init_fit_model",             "false",
