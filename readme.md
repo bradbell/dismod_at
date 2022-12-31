@@ -1,12 +1,7 @@
-# Title
-dismod_at: Estimating Disease Rates as Functions of Age and Time
+# dismod_at: Estimating Disease Rates as Functions of Age and Time
 
-# License
-<pre>
-# SPDX-License-Identifier: AGPL-3.0-or-later
-# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
-</pre>
+## Documentation
+https://dismod-at.readthedocs.io
 
-# Documentation
-https://bradbell.github.io/dismod_at
+## Git Repository
+https://github.com/bradbell/dismod_at
