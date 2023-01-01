@@ -57,8 +57,8 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 $begin smooth_info_ctor$$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section smooth_info: Constructor$$
 
@@ -323,8 +323,8 @@ $spell
 $$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section smooth_info: Age and Time Information$$
 
@@ -417,8 +417,8 @@ $spell
 $$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section smooth_info: Prior Information$$
 
@@ -536,8 +536,8 @@ $spell
 $$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section smooth_info: Standard Deviation Multipliers$$
 
@@ -585,8 +585,8 @@ $spell
 $$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section smooth_info: Testing Constructor$$
 $spell

@@ -5,8 +5,8 @@
 # $begin rate_table.py$$ $newlinech #$$
 #
 # $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section rate_table: Example and Test$$
 #

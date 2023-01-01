@@ -20,9 +20,9 @@ $href%http://bradbell.github.io/omhelp%omhelp%$$.
 
 $head Current Documentation$$
 The current version of the documentation is built using the sphinx
-$href%http://bradbell.github.io/xrst/html/purpose.html%xrst%$$ wrapper.
+$href%https://xrst.readthedocs.io%xrst%$$ wrapper.
 Use this link to get the
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 
 $pre
 

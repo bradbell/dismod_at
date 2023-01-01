@@ -16,8 +16,8 @@ $spell
 $$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section Variable Pack Info: Constructor$$
 
@@ -458,8 +458,8 @@ $spell
 $$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section Variable Pack Info: Sizes$$
 
@@ -605,8 +605,8 @@ $spell
 $$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section Variable Pack Info: Smoothing Standard Deviation Multipliers$$
 
@@ -683,8 +683,8 @@ $spell
 $$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section Variable Pack Info: Node Rates$$
 
@@ -785,8 +785,8 @@ $spell
 $$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section Variable Pack Info: Group Measurement Covariate Multipliers$$
 
@@ -922,8 +922,8 @@ $spell
 $$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section Variable Pack Info: Group Rate Covariate Multipliers$$
 
@@ -1033,8 +1033,8 @@ $spell
 $$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section Variable Pack Info: Subgroup Rate Covariate Multipliers$$
 
@@ -1172,8 +1172,8 @@ $spell
 $$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section Variable Pack Info: Subgroup Measurement Covariate Multipliers$$
 

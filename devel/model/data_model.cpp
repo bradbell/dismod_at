@@ -25,8 +25,8 @@ $spell
 $$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section Data Model: Constructor$$
 
@@ -460,8 +460,8 @@ $spell
 $$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section Set Value Necessary for Likelihood (not for Average Integrand)$$
 
@@ -578,8 +578,8 @@ $spell
    CppAD
 $$
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section Data Model: Compute One Average Integrand$$
 
@@ -702,8 +702,8 @@ $spell
    xam
 $$
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section One Weighted Residual and Log-Likelihood for any Integrands$$
 
@@ -926,8 +926,8 @@ $spell
 $$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section All the Weighted Residuals and Log-Likelihoods$$
 

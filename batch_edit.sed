@@ -30,9 +30,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|$section|$nospell\
-$bold This is old dismod documentation:$$ Here is a link to its\
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.\
-$$\
-&|
-#
+s|This is old dismod documentation:[$]|This is dismod_at-20221105 documentation:$|
+s|http://bradbell.github.io/dismod_at|https://dismod-at.readthedocs.io|

@@ -32,8 +32,8 @@ $spell
 $$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section Fit Model Constructor$$
 
@@ -328,8 +328,8 @@ $spell
 $$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section Run optimization to determine the optimal fixed and random effects$$
 
@@ -608,8 +608,8 @@ $spell
 $$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section Get Solution Corresponding to Previous Fit$$
 
@@ -704,8 +704,8 @@ $spell
 $$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section Compute Hessian Of Random Effects Objective$$
 
@@ -798,8 +798,8 @@ $spell
 $$
 
 $nospell
-$bold This is old dismod documentation:$$ Here is a link to its
-$href%http://bradbell.github.io/dismod_at%current documentation%$$.
+$bold This is dismod_at-20221105 documentation:$$ Here is a link to its
+$href%https://dismod-at.readthedocs.io%current documentation%$$.
 $$
 $section Sample From Posterior Distribution for a Fit$$
 
