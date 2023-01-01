@@ -12,7 +12,8 @@ fi
 echo_eval xrst \
    --local_toc \
    --group_list default dev \
-   --html_theme sphinx_rtd_theme
+   --html_theme sphinx_rtd_theme \
+   --index_page_name dismod_at
 #
 echo 'run_xrst.sh: OK'
 exit 0
