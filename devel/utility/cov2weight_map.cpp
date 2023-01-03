@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin cov2weight_map dev}
@@ -168,8 +168,8 @@ n_weight_( n_weight )
    if( split_covariate_id_ == n_covariate_ )
       split_value_set.insert(0.0); // value is not used
    else
-   {  for(size_t rate_eff_cov_id = 0; rate_eff_cov_id < n_rate_eff_cov; ++rate_eff_cov_id)
-         split_value_set.insert( rate_eff_cov_table[rate_eff_cov_id].split_value );
+   {  for(size_t rec_id = 0; rec_id < n_rate_eff_cov; ++rec_id)
+         split_value_set.insert( rate_eff_cov_table[rec_id].split_value );
    }
    //
    // split_value_vec_
@@ -184,15 +184,15 @@ n_weight_( n_weight )
    weight_id_vec_.resize( n_weight_id );
    for(size_t index = 0; index < n_weight_id; ++index )
       weight_id_vec_[index] = n_weight_;
-   for(size_t rate_eff_cov_id = 0; rate_eff_cov_id < n_rate_eff_cov; ++rate_eff_cov_id)
-   {  int covariate_id    = rate_eff_cov_table[rate_eff_cov_id].covariate_id;
-      int node_id         = rate_eff_cov_table[rate_eff_cov_id].node_id;
-      int weight_id       = rate_eff_cov_table[rate_eff_cov_id].weight_id;
+   for(size_t rec_id = 0; rec_id < n_rate_eff_cov; ++rec_id)
+   {  int covariate_id    = rate_eff_cov_table[rec_id].covariate_id;
+      int node_id         = rate_eff_cov_table[rec_id].node_id;
+      int weight_id       = rate_eff_cov_table[rec_id].weight_id;
       assert( size_t( covariate_id ) < n_covariate_ );
       assert( size_t( node_id )      < n_node_ );
       assert( size_t( weight_id )    < n_weight_ );
       //
-      double split_value  = rate_eff_cov_table[rate_eff_cov_id].split_value;
+      double split_value  = rate_eff_cov_table[rec_id].split_value;
       size_t split_id = n_split;
       for(size_t i = 0; i < n_split; ++i)
       {  if( split_value_vec_[i] == split_value )

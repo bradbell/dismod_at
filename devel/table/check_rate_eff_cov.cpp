@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin check_rate_eff_cov dev}
@@ -190,7 +190,7 @@ void check_rate_eff_cov(
                }
                if( found_node_id[node_id] )
                {  msg  = "node_id " + to_string( node_id );
-                  msg += " appears more than one with covariae_id ";
+                  msg += " appears more than once with covariae_id ";
                   msg += to_string( covariate_id );
                   if( splitting_covariate != "" )
                      msg += " and split_value " + to_string(split_value);
