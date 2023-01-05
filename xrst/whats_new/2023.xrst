@@ -1,0 +1,25 @@
+$Id:$
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin whats_new_2023}
+{xrst_spell
+   mm
+   dd
+}
+
+Changes and Additions to Dismod_at During 2023
+##############################################
+
+mm-dd
+*****
+
+01-05
+=====
+The program used to crash when the
+:ref:`rate_eff_cov_table-name` was empty and the
+:ref:`option_table@splitting_covariate` was not null.
+This has been fixed and the program now reports an error in this case.
+
+{xrst_end whats_new_2023}

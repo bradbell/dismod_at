@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin option_table}
 {xrst_spell
@@ -542,9 +542,12 @@ splitting_covariate
 *******************
 If *option_name* is ``splitting_covariate`` ,
 the corresponding value is the name of the splitting covariate.
-The covariate values in :ref:`rate_eff_cov_table-name` can be different for each
+The covariate values in :ref:`rate_eff_cov_table-name`
+can be different for each
 value of the splitting covariate.
 For example, the covariate values might be different for each value of sex.
+If the *splitting_covariate* is not ``null``  ,
+the rate_eff_cov table must be non-empty.
 
 Example
 *******

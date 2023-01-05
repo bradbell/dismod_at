@@ -74,6 +74,8 @@ split_value_vec\_
 -----------------
 This vector contains all the :ref:`split values<rate_eff_cov_table@split_value>`
 that appear in rate_eff_cov table.
+In the special case where the splitting covariate is empty,
+or the rate_eff_cov table is empty, this contains the single value zero.
 
 weight_id_vec\_
 ---------------
@@ -162,6 +164,7 @@ n_weight_( n_weight )
    //
    // n_rate_eff_cov
    size_t n_rate_eff_cov = rate_eff_cov_table.size();
+   assert( (splitting_covariate=="") || (0 < n_rate_eff_cov) );
    //
    // split_value_set
    std::set<double> split_value_set;
@@ -213,6 +216,9 @@ size_t dismod_at::cov2weight_map::weight_id(
    const CppAD::vector<double>& x            ) const
 // END_WEIGHT_ID
 {  //
+   // check if rate_eff_cov table is empty
+
+
    // n_split
    size_t n_split = split_value_vec_.size();
    //

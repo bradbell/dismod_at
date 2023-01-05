@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin release_notes}
 
@@ -15,6 +15,7 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of dismod_at.
 {xrst_toc_hidden
+   xrst/whats_new/2023.xrst
    xrst/whats_new/2022.xrst
    xrst/whats_new/2021.xrst
    xrst/whats_new/2020.xrst
@@ -27,10 +28,11 @@ assist you in learning about changes between various versions of dismod_at.
 
 This Year
 *********
-:ref:`whats_new_2022-name`
+:ref:`whats_new_2023-name`
 
 Previous years
 **************
+:ref:`2021<whats_new_2022-name>`
 :ref:`2021<whats_new_2021-name>`
 :ref:`2020<whats_new_2020-name>` ,
 :ref:`2019<whats_new_2019-name>` ,

@@ -102,6 +102,11 @@ void check_rate_eff_cov(
          option_id           = i;
       }
    }
+   if( splitting_covariate != "" && rate_eff_cov_table.size() == 0 )
+   {  msg  = "splitting_covariate not null and rate_eff_cov table is empty";
+      string table_name = "option";
+      error_exit(msg, table_name, option_id);
+   }
    //
    // split_covariate_id
    size_t split_covariate_id = n_covariate;
