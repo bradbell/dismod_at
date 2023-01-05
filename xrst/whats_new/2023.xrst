@@ -17,9 +17,13 @@ mm-dd
 
 01-05
 =====
-The program used to crash when the
-:ref:`rate_eff_cov_table-name` was empty and the
-:ref:`option_table@splitting_covariate` was not null.
-This has been fixed and the program now reports an error in this case.
+#. The program used to crash when the
+   :ref:`rate_eff_cov_table-name` was empty and the
+   :ref:`option_table@splitting_covariate` was not null.
+   This has been fixed and the program now reports an error in this case.
+#. The dock_dismod_at.sh
+   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version` advanced to
+   dismod_at-20230105 and the at_cascade version advanced to
+   at_cascade-2023.1.5.
 
 {xrst_end whats_new_2023}

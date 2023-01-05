@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin dock_dismod_at.sh}
 # {xrst_spell
@@ -92,8 +92,8 @@
 # This script will build the following version of dismod_at image:
 # {xrst_spell_off}
 # {xrst_code sh}
-   dismod_at_version='20221218'
-   dismod_at_hash='8fe88d91c49b71160170177be669582370a324de'
+   dismod_at_version='20230105'
+   dismod_at_hash='42505baf449ebb3a23c60fbb386a8aa5e84dd4f1'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -102,8 +102,8 @@
 # This script can build the following version of the optional at_cascade image:
 # {xrst_spell_off}
 # {xrst_code sh}
-   at_cascade_version='2022.12.19'
-   at_cascade_hash='250be52d0f6fff070e6b79913da221346e0ca68c'
+   at_cascade_version='2023.1.5'
+   at_cascade_hash='e6a3b2145e8d2f5a375e69a6f5a7831fdacda282'
 # {xrst_code}
 # {xrst_spell_on}
 #
