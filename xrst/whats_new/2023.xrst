@@ -17,8 +17,13 @@ mm-dd
 
 03-09
 =====
-The :ref:`rate_eff_cov_table-name` only worked properly for covariates
-that had reference value zero. This has been fixed.
+#. The :ref:`rate_eff_cov_table-name` only worked properly for covariates
+   that had reference value zero. This has been fixed.
+#. The dock_dismod_at.sh
+   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version` advanced to
+   dismod_at-20230309 and the at_cascade version advanced to
+   at_cascade-2023.3.8.
+
 
 01-05
 =====
