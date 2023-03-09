@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # ifndef DISMOD_AT_DATA_MODEL_HPP
 # define DISMOD_AT_DATA_MODEL_HPP
@@ -9,6 +9,7 @@
 # include <cppad/utility/vector.hpp>
 # include "subset_data.hpp"
 # include "get_integrand_table.hpp"
+# include "get_covariate_table.hpp"
 # include "get_subgroup_table.hpp"
 # include "get_density_table.hpp"
 # include "get_prior_table.hpp"
@@ -76,6 +77,7 @@ public:
       const CppAD::vector<double>&             age_avg_grid       ,
       const CppAD::vector<double>&             age_table          ,
       const CppAD::vector<double>&             time_table         ,
+      const CppAD::vector<covariate_struct>&   covariate_table    ,
       const CppAD::vector<subgroup_struct>&    subgroup_table     ,
       const CppAD::vector<integrand_struct>&   integrand_table    ,
       const CppAD::vector<mulcov_struct>&      mulcov_table       ,

@@ -15,6 +15,11 @@ Changes and Additions to Dismod_at During 2023
 mm-dd
 *****
 
+03-09
+=====
+The :ref:`rate_eff_cov_table-name` only worked properly for covariates
+that had reference value zero. This has been fixed.
+
 01-05
 =====
 #. The program used to crash when the

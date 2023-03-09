@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin data_model_ctor dev}
@@ -25,6 +25,7 @@ Syntax
 | |tab| *age_avg_grid* ,
 | |tab| *age_table* ,
 | |tab| *time_table* ,
+| |tab| *covariate_table* ,
 | |tab| *subgroup_table* ,
 | |tab| *integrand_table* ,
 | |tab| *prior_table* ,
@@ -92,6 +93,10 @@ This is the :ref:`get_age_table@age_table` .
 time_table
 **********
 This is the :ref:`get_time_table@time_table` .
+
+covariate_table
+***************
+This is the :ref:`get_covariate_table@covariate_table` .
 
 subgroup_table
 **************
@@ -250,6 +255,7 @@ data_model::data_model(
    const CppAD::vector<double>&             age_avg_grid       ,
    const CppAD::vector<double>&             age_table          ,
    const CppAD::vector<double>&             time_table         ,
+   const CppAD::vector<covariate_struct>&   covariate_table    ,
    const CppAD::vector<subgroup_struct>&    subgroup_table     ,
    const CppAD::vector<integrand_struct>&   integrand_table    ,
    const CppAD::vector<mulcov_struct>&      mulcov_table       ,
@@ -276,6 +282,7 @@ avgint_obj_(
    age_avg_grid,
    age_table,
    time_table,
+   covariate_table,
    subgroup_table,
    integrand_table,
    mulcov_table,
@@ -1071,6 +1078,7 @@ template data_model::data_model(                                   \
    const CppAD::vector<double>&             age_avg_grid       ,  \
    const CppAD::vector<double>&             age_table          ,  \
    const CppAD::vector<double>&             time_table         ,  \
+   const CppAD::vector<covariate_struct>&   covariate_table    ,  \
    const CppAD::vector<subgroup_struct>&    subgroup_table     ,  \
    const CppAD::vector<integrand_struct>&   integrand_table    ,  \
    const CppAD::vector<mulcov_struct>&      mulcov_table       ,  \

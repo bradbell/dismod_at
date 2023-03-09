@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/mixed/exception.hpp>
 # include <dismod_at/adj_integrand.hpp>
@@ -37,6 +37,7 @@ Syntax
 | |tab| *rate_case* ,
 | |tab| *age_table* ,
 | |tab| *time_table* ,
+| |tab| *covariate_table* ,
 | |tab| *subgroup_table* ,
 | |tab| *integrand_table* ,
 | |tab| *s_info_vec* ,
@@ -95,6 +96,11 @@ time_table
 **********
 This argument is the :ref:`time_table-name` .
 A reference to *time_table* is used by *adjint_obj* .
+
+covariate_table
+***************
+This argument is the :ref:`covariate_table-name` .
+A reference to *covariate_table* is used by *adjint_obj* .
 
 subgroup_table
 **************
@@ -226,6 +232,7 @@ adj_integrand::adj_integrand(
    const std::string&                        rate_case        ,
    const CppAD::vector<double>&              age_table        ,
    const CppAD::vector<double>&              time_table       ,
+   const CppAD::vector<covariate_struct>&    covariate_table  ,
    const CppAD::vector<subgroup_struct>&     subgroup_table   ,
    const CppAD::vector<integrand_struct>&    integrand_table  ,
    const CppAD::vector<mulcov_struct>&       mulcov_table     ,
@@ -236,6 +243,7 @@ adj_integrand::adj_integrand(
 rate_case_         (rate_case)        ,
 age_table_         (age_table)        ,
 time_table_        (time_table)       ,
+covariate_table_    (covariate_table) ,
 subgroup_table_     (subgroup_table)  ,
 integrand_table_   (integrand_table)  ,
 s_info_vec_        (s_info_vec)       ,
@@ -392,7 +400,7 @@ CppAD::vector<Float> adj_integrand::line(
    size_t n_line = line_age.size();
    //
    // vector of effects
-   vector<Float> effect(n_line), temp_1(n_line), temp_2(n_line), weight_grid;
+   vector<Float> effect(n_line), temp_1(n_line), temp_2(n_line), cov_grid;
    //
    // Effect (for error reporting)
    vector< vector<Float> > effect_mul(number_rate_enum);
@@ -521,10 +529,12 @@ CppAD::vector<Float> adj_integrand::line(
             {  const weight_info& w_info = w_info_vec_[weight_id];
                size_t n_age        = w_info.age_size();
                size_t n_time       = w_info.time_size();
-               weight_grid.resize(n_age * n_time);
+               double reference    = covariate_table_[covariate_id].reference;
+               cov_grid.resize(n_age * n_time);
                for(size_t i = 0; i < n_age; i++)
                {  for(size_t ell = 0; ell < n_time; ++ell)
-                     weight_grid[i * n_time + ell] = w_info.weight(i, ell);
+                     cov_grid[i * n_time + ell] =
+                        w_info.weight(i, ell) - reference;
                }
                temp_2 = grid2line(
                   line_age,
@@ -532,7 +542,7 @@ CppAD::vector<Float> adj_integrand::line(
                   age_table_,
                   time_table_,
                   w_info,
-                  weight_grid
+                  cov_grid
                );
             }
             for(size_t k = 0; k < n_line; ++k)
@@ -578,10 +588,12 @@ CppAD::vector<Float> adj_integrand::line(
             {  const weight_info& w_info = w_info_vec_[weight_id];
                size_t n_age        = w_info.age_size();
                size_t n_time       = w_info.time_size();
-               weight_grid.resize(n_age * n_time);
+               double reference    = covariate_table_[covariate_id].reference;
+               cov_grid.resize(n_age * n_time);
                for(size_t i = 0; i < n_age; i++)
                {  for(size_t ell = 0; ell < n_time; ++ell)
-                     weight_grid[i * n_time + ell] = w_info.weight(i, ell);
+                     cov_grid[i * n_time + ell] =
+                        w_info.weight(i, ell) - reference;
                }
                temp_2 = grid2line(
                   line_age,
@@ -589,7 +601,7 @@ CppAD::vector<Float> adj_integrand::line(
                   age_table_,
                   time_table_,
                   w_info,
-                  weight_grid
+                  cov_grid
                );
             }
             for(size_t ell = 0; ell < n_line; ++ell)

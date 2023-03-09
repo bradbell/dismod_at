@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_rate_eff_cov_table.py}
 # {xrst_comment_ch #}
@@ -84,12 +84,14 @@
 # BEGIN_TRUE_VALUE
 iota_no_effect     = 0.03
 mulcov_true        = 0.9
+reference_income   = 0.05
 def normalized_income(age, node_name, sex) :
    if node_name == 'north_america' and sex == 'male' :
       return age / 100.0
    return 0.1 * age / 100.0
 def iota_true(age, time, node_name, sex) :
-   effect  = mulcov_true * normalized_income(age, node_name, sex)
+   diff    = normalized_income(age, node_name, sex) - reference_income
+   effect  = mulcov_true * diff
    return iota_no_effect * math.exp(effect)
 # END_TRUE_VALUE
 # ------------------------------------------------------------------------
@@ -161,7 +163,7 @@ def example_db (file_name) :
    #
    # covariate table:
    covariate_table = [
-      {'name':'normalized_income', 'reference':0.0},
+      {'name':'normalized_income', 'reference':reference_income},
       {'name':'sex',               'reference':0.0},
    ]
    #

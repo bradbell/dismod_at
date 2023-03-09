@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # ifndef DISMOD_AT_ADJ_INTEGRAND_HPP
 # define DISMOD_AT_ADJ_INTEGRAND_HPP
 
 # include <cppad/utility/vector.hpp>
 # include "get_integrand_table.hpp"
+# include "get_covariate_table.hpp"
 # include "get_subgroup_table.hpp"
 # include "pack_info.hpp"
 # include "a1_double.hpp"
@@ -22,6 +23,7 @@ private:
    const std::string&                         rate_case_;
    const CppAD::vector<double>&               age_table_;
    const CppAD::vector<double>&               time_table_;
+   const CppAD::vector<covariate_struct>&     covariate_table_;
    const CppAD::vector<subgroup_struct>&      subgroup_table_;
    const CppAD::vector<integrand_struct>&     integrand_table_;
    const CppAD::vector<smooth_info>&          s_info_vec_;
@@ -63,6 +65,7 @@ public:
       const std::string&                        rate_case        ,
       const CppAD::vector<double>&              age_table        ,
       const CppAD::vector<double>&              time_table       ,
+      const CppAD::vector<covariate_struct>&    covariate_table  ,
       const CppAD::vector<subgroup_struct>&     subgroup_table   ,
       const CppAD::vector<integrand_struct>&    integrand_table  ,
       const CppAD::vector<mulcov_struct>&       mulcov_table     ,

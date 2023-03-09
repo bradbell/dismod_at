@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/mixed/exception.hpp>
 # include <dismod_at/avg_integrand.hpp>
@@ -26,6 +26,7 @@ Syntax
 | |tab| *age_avg_grid* ,
 | |tab| *age_table* ,
 | |tab| *time_table* ,
+| |tab| *covariate_table* ,
 | |tab| *subgroup_table* ,
 | |tab| *integrand_table* ,
 | |tab| *w_info_vec* ,
@@ -72,6 +73,11 @@ time_table
 **********
 This argument is the :ref:`time_table-name` .
 A reference to *time_table* is used by *avgint_obj* .
+
+covariate_table
+***************
+This argument is the :ref:`covariate_table-name` .
+A reference to *covariate_table* is used by *avgint_obj* .
 
 subgroup_table
 **************
@@ -125,6 +131,7 @@ avg_integrand::avg_integrand(
       const CppAD::vector<double>&              age_avg_grid     ,
       const CppAD::vector<double>&              age_table        ,
       const CppAD::vector<double>&              time_table       ,
+      const CppAD::vector<covariate_struct>&    covariate_table  ,
       const CppAD::vector<subgroup_struct>&     subgroup_table   ,
       const CppAD::vector<integrand_struct>&    integrand_table  ,
       const CppAD::vector<mulcov_struct>&       mulcov_table     ,
@@ -147,6 +154,7 @@ adjint_obj_(
    rate_case,
    age_table,
    time_table,
+   covariate_table,
    subgroup_table,
    integrand_table,
    mulcov_table,

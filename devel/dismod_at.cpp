@@ -1,7 +1,7 @@
 // $Id:$
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/mixed/exception.hpp>
@@ -602,6 +602,7 @@ int main(int n_arg, const char** argv)
          age_avg_grid             ,
          db_input.age_table       ,
          db_input.time_table      ,
+         db_input.covariate_table ,
          db_input.subgroup_table  ,
          db_input.integrand_table ,
          db_input.mulcov_table    ,
@@ -686,6 +687,7 @@ int main(int n_arg, const char** argv)
          age_avg_grid             ,
          db_input.age_table       ,
          db_input.time_table      ,
+         db_input.covariate_table ,
          db_input.subgroup_table  ,
          db_input.integrand_table ,
          db_input.mulcov_table    ,
