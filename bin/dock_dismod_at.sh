@@ -102,8 +102,8 @@
 # This script can build the following version of the optional at_cascade image:
 # {xrst_spell_off}
 # {xrst_code sh}
-   at_cascade_version='2023.3.8'
-   at_cascade_hash='4ee4525f3b6a52d99e26646d144d01a06e79a8db'
+   at_cascade_version='2023.3.20'
+   at_cascade_hash='cdf486ea1e5740e1838eb1e5dade71a6226fcd2a'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -494,8 +494,8 @@ WORKDIR /home
 RUN git clone https://github.com/bradbell/at_cascade.git at_cascade.git && \
 cd at_cascade.git && \
 git checkout --quiet $at_cascade_hash && \
-grep "Version $at_cascade_version\$" at_cascade.xrst > /dev/null && \
-sed -i bin/check_all.sh -e '/run_xrst.sh/d'
+grep "at_cascade-$at_cascade_version\$" at_cascade.xrst > /dev/null && \
+sed -i bin/check_all.sh -e '/check_xrst.sh/d'
 
 RUN if [ ! -e $dir/dismod_at.release ] ; \
 then echo 'Cannot find $dir/dismod_at.release' ; exit 1; fi
