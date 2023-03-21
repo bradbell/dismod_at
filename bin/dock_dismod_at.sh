@@ -477,6 +477,10 @@ cd ..
 # Restore run_cmake.sh to its original state
 Run git checkout bin/run_cmake.sh
 
+# Set the correct PATH and PYTHONPATH so dismod_at is findable
+ENV PYTHONPATH=/home/prefix
+ENV PATH="$PATH:/home/prefix/dismod_at/bin"
+
 WORKDIR /home/work
 EOF
 # ----------------------------------------------------------------------------
@@ -504,9 +508,10 @@ ln -s $dir/dismod_at.release $dir/dismod_at
 
 # 2. Test debug
 WORKDIR /home/at_cascade.git
+# ENV PYTHONPATH=$dir:/home/at_cascade.git
+ENV PYTHONPATH=$dir/dismod_at/lib/python3.8/site-packages:/home/at_cascade.git
+ENV PATH="$PATH:$dir/dismod_at/bin"
 RUN \
-export PATH="\$PATH:$dir/dismod_at/bin" && \
-export PYTHONPATH=\$(find -L $dir/dismod_at -name site-packages) && \
 if [ -e $dir/dismod_at ] ; then rm $dir/dismod_at ; fi && \
 ln -s $dir/dismod_at.debug $dir/dismod_at && \
 bin/check_all.sh
@@ -519,8 +524,6 @@ pip3 install --force-reinstall dist/at_cascade-$at_cascade_version.tar.gz \
 # 4. Test release
 WORKDIR /home/at_cascade.git
 RUN \
-export PATH="\$PATH:$dir/dismod_at/bin" && \
-export PYTHONPATH=\$(find -L $dir/dismod_at -name site-packages) && \
 if [ -e $dir/dismod_at ] ; then rm $dir/dismod_at ; fi && \
 ln -s $dir/dismod_at.release $dir/dismod_at && \
 bin/check_all.sh
