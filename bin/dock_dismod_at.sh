@@ -438,9 +438,10 @@ bin/get_cppad_mixed.sh
 # Restore run_cmake.sh to its original state
 Run git checkout bin/run_cmake.sh
 EOF
-# ----------------------------------------------------------------------------
 elif [ "$image_name" == 'dismod_at.image' ]
 then
+dir='/home/prefix'
+site_packages="$dir/dismod_at/lib/python3.8/site-packages"
 cat << EOF > Dockerfile
 # -----------------------------------------------------------------------------
 FROM dismod_at.mixed
@@ -449,37 +450,46 @@ WORKDIR /home/dismod_at.git
 # LD_LIBRARY_PATH
 ENV LD_LIBRARY_PATH=''
 
-# 1. Get source corresponding to dismod_at-$dismod_at_version
-# 2. Check that the corresponding hash is $dismod_at_hash
+# PYTHONPATH
+ENV PYTHONPATH="$site_packages"
+
+# PATH
+# must escape PATH variable so it gets interpreted in the image
+ENV PATH="\$PATH:$dir/dismod_at/bin"
+
+# 1. Get source corresponding to dismod_at hash
+# 2. Check the corresponding dismod_at version
 # 3. Change install prefix to /home/prefix/dismod_at
 RUN git checkout master && \
 git pull && \
 git checkout --quiet $dismod_at_hash  && \
-sed -i bin/run_cmake.sh -e 's|\$HOME/|/home/|g' && \
-grep "$dismod_at_version" CMakeLists.txt > /dev/null
+grep "$dismod_at_version" CMakeLists.txt > /dev/null &&\
+sed -i bin/run_cmake.sh -e 's|\$HOME/|/home/|g'
 
-# Install debug version of dismod_at
+# 1. Change build_type to debug
+# 2. Build, check, and install debug version
+# 3. Check install location
 RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='debug'|" && \
 bin/run_cmake.sh && \
 cd build && \
 make check && \
 make install install_python && \
+ls "$site_packages/dismod_at" > /dev/null && \
 cd ..
 
-# Install release version of dismod_at
+# 1. Change build_type to release
+# 2. Build, check, and install release version
+# 3. Check install location
 RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='release'|" && \
 bin/run_cmake.sh && \
 cd build && \
 make check && \
 make install install_python && \
+ls "$site_packages/dismod_at" > /dev/null && \
 cd ..
 
 # Restore run_cmake.sh to its original state
 Run git checkout bin/run_cmake.sh
-
-# Set the correct PATH and PYTHONPATH so dismod_at is findable
-ENV PYTHONPATH=/home/prefix
-ENV PATH="$PATH:/home/prefix/dismod_at/bin"
 
 WORKDIR /home/work
 EOF
@@ -490,10 +500,9 @@ dir='/home/prefix'
 cat << EOF > Dockerfile
 FROM dismod_at.image
 
-# LD_LIBRARY_PATH
-ENV LD_LIBRARY_PATH=''
-
-# 1. Get source corresponding to at_cascasde-$at_cascade_version
+# 1. Get source corresponding to at_cascade hash
+# 2. Check the corresponding at_cascade version
+# 3. Remove building the documentaiton from check_all.sh
 WORKDIR /home
 RUN git clone https://github.com/bradbell/at_cascade.git at_cascade.git && \
 cd at_cascade.git && \
@@ -501,34 +510,26 @@ git checkout --quiet $at_cascade_hash && \
 grep "at_cascade-$at_cascade_version\$" at_cascade.xrst > /dev/null && \
 sed -i bin/check_all.sh -e '/check_xrst.sh/d'
 
-RUN if [ ! -e $dir/dismod_at.release ] ; \
-then echo 'Cannot find $dir/dismod_at.release' ; exit 1; fi
-RUN if [ -e $dir/dismod_at ] ; then rm $dir/dismod_at ; fi && \
-ln -s $dir/dismod_at.release $dir/dismod_at
-
-# 2. Test debug
+# Test using debug version of dismod_at
 WORKDIR /home/at_cascade.git
-# ENV PYTHONPATH=$dir:/home/at_cascade.git
-ENV PYTHONPATH=$dir/dismod_at/lib/python3.8/site-packages:/home/at_cascade.git
-ENV PATH="$PATH:$dir/dismod_at/bin"
 RUN \
 if [ -e $dir/dismod_at ] ; then rm $dir/dismod_at ; fi && \
 ln -s $dir/dismod_at.debug $dir/dismod_at && \
 bin/check_all.sh
 
-# 3. Install debug
+# Install in /home/prefix/dismod_at.debug
 RUN python3 -m build && \
 pip3 install --force-reinstall dist/at_cascade-$at_cascade_version.tar.gz \
    --prefix=$dir/dismod_at
 
-# 4. Test release
+# Test using release version of dismod_at
 WORKDIR /home/at_cascade.git
 RUN \
 if [ -e $dir/dismod_at ] ; then rm $dir/dismod_at ; fi && \
 ln -s $dir/dismod_at.release $dir/dismod_at && \
 bin/check_all.sh
 
-# 5. Install release
+# Install in /home/prefix/dismod_at.release
 RUN python3 -m build && \
 pip3 install --force-reinstall dist/at_cascade-$at_cascade_version.tar.gz \
    --prefix=$dir/dismod_at
