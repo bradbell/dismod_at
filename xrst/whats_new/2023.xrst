@@ -15,6 +15,13 @@ Changes and Additions to Dismod_at During 2023
 mm-dd
 *****
 
+03-22
+=====
+Modify the ``PATH`` and ``PYTHONPATH`` environment variables,
+in the :ref:`dock_dismod_at.sh-name` dismod_at and at_cascade images,
+so that the dismod_at executable and the dismod_at, at_cascade python
+libraries are in the system path.
+
 03-20
 =====
 Advance :ref:`dock_dismod_at.sh@Building Images@at_cascade_version`
