@@ -15,6 +15,13 @@ Changes and Additions to Dismod_at During 2023
 mm-dd
 *****
 
+03-27
+=====
+Change the :ref:`user_jump_at_age.py-name` example to estimate
+iota from prevalence (instead of Sincidence which directly measures iota).
+This is a better example because it requires an age point just before
+and just after the jump.
+
 03-22
 =====
 Modify the ``PATH`` and ``PYTHONPATH`` environment variables,

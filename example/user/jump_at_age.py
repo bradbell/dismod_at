@@ -1,8 +1,13 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_jump_at_age.py}
+# {xrst_spell
+#     apx
+#     exp
+#     interpolated
+# }
 # {xrst_comment_ch #}
 #
 # Zero Rate Until a Jump at a Known Age
@@ -23,10 +28,10 @@
 # {xrst_spell_off}
 # {xrst_code py}
 iota_near_zero  = 1e-10
-iota_after_20   = 1e-1
+iota_after_20   = 1e-2
 iota_eta        = 1e-5
 time_table      = [ 2020.0, 2000.0 ]
-age_table       = [ 100.0, 70.0, 40.0, 20.0, 0.0 ]
+age_table       = [ 100.0, 70.0, 40.0, 20.01, 19.99, 0.0 ]
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -52,6 +57,8 @@ age_table       = [ 100.0, 70.0, 40.0, 20.0, 0.0 ]
 # *iota* is modeled .
 # You can changed the order of ``age_table``
 # and it will not affect the results.
+# Note that the age table has a point just before and after the jump
+# because iota is interpolated linear between age points.
 #
 # time_table
 # ==========
@@ -80,16 +87,30 @@ age_table       = [ 100.0, 70.0, 40.0, 20.0, 0.0 ]
 # with value ``iota_near_zero`` for ages less than or equal 20,
 # and ``iota_after_20`` for ages greater than 20.
 #
+# Prevalence
+# **********
+# There is no remission or other cause mortality in this example; i.e.,
+# *rho* and *omega* are zero.
+# We approximation prevalence for ages less that 20 as zero.
+# {xrst_code py}
+def prevalence_apx(age) :
+   import math
+   if age < 20.0 :
+      return 0.0
+   result = 1.0 - math.exp( - iota_after_20 * (age - 20 ) )
+   return result
+# {xrst_code}
+#
 # Simulated Data
 # **************
 # For this example, the simulated data is all
-# :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence` ; i.e.
-# direct measurements of the value of *iota* .
-# There is no noise simulated with the data; i.e., it is equal to the
-# 'true' value of *iota* .
-# On the other hand, its is modeled as if there is a 10% coefficient
-# of variation in the data; i.e., as if there were measurement noise with
-# standard deviation equal to 10% of the measurement value.
+# :ref:`avg_integrand@Integrand, I_i(a,t)@prevalence` .
+# There is no noise simulated with the data; i.e., it is equal to
+# the approximation described above.
+# On the other hand, its is modeled as if it had standard deviation
+# {xrst_code py}
+meas_std = 0.01
+# {xrst_code}
 # There is a measured value for each age in the ``age_table``
 # that is greater than 20.
 #
@@ -136,7 +157,7 @@ def iota_true(age) :
 def example_db (file_name) :
    #
    def fun_iota_parent(a, t) :
-      if a <= 20.5 :
+      if a <= 20 :
          return ('prior_up_to_20', 'prior_none', 'prior_difference')
       else :
          return ('prior_after_20', 'prior_difference', 'prior_difference')
@@ -149,7 +170,7 @@ def example_db (file_name) :
    #
    # integrand table
    integrand_table = [
-      { 'name':'Sincidence' }
+      { 'name':'prevalence' }
    ]
    #
    # node table: world
@@ -186,12 +207,12 @@ def example_db (file_name) :
    # Sincidence data
    data_age_list  = [ age for age in age_table if age > 20.0 ]
    for age in data_age_list :
-      meas_value = iota_true(age)
+      meas_value          = prevalence_apx(age)
       row['age_lower']    = age
       row['age_upper']    = age
-      row['integrand']    = 'Sincidence'
+      row['integrand']    = 'prevalence'
       row['meas_value']   = meas_value
-      row['meas_std']     = meas_value * 0.1
+      row['meas_std']     = meas_std
       row['eta']          = iota_eta
       data_table.append( copy.copy(row) )
    #
@@ -252,7 +273,7 @@ def example_db (file_name) :
       { 'name':'random_seed',            'value':'0'                 },
       { 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 
-      { 'name':'quasi_fixed',            'value':'true'              },
+      { 'name':'quasi_fixed',            'value':'false'              },
       { 'name':'derivative_test_fixed',  'value':'first-order'       },
       { 'name':'max_num_iter_fixed',     'value':'200'               },
       { 'name':'print_level_fixed',      'value':'0'                 },
@@ -293,7 +314,7 @@ example_db(file_name)
 #
 program = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
-dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
+dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
 # -----------------------------------------------------------------------
 # connect to database
 new             = False
@@ -318,9 +339,9 @@ for var_id in range( len(var_table) ) :
    value_true = iota_true(age)
    rate       = 'iota'
    max_err = max(max_err, abs( value / value_true - 1.0 ) )
-   if( abs(value / value_true - 1.0) > 1e-7 ) :
-      print(rate, age, value / value_true - 1.0 )
-assert max_err <= 1e-7
+   if( abs(value / value_true - 1.0) > 1e-3 ) :
+      print(rate, age, value, value / value_true - 1.0 )
+assert max_err <= 1e-3
 # -----------------------------------------------------------------------------
 print('jump_at_age.py: OK')
 # -----------------------------------------------------------------------------
