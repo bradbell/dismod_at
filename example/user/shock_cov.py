@@ -2,25 +2,20 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# {xrst_begin user_rate_eff_cov_table.py}
+# {xrst_begin user_shock_cov.py}
+# {xrst_spell
+#     exp
+# }
 # {xrst_comment_ch #}
 #
-# Example Using The Node Covariate Table
-# ######################################
+# Example Fitting a Covariate with a Shock
+# ########################################
 #
 # Purpose
 # *******
-# This example demonstrates using the
-# :ref:`rate_eff_cov_table-name` .
-#
-# True Value of Variables
-# ***********************
-# The values of the unknown variables that is used to
-# simulate the data are
-# {xrst_literal
-#     BEGIN_TRUE_VALUE
-#     END_TRUE_VALUE
-# }
+# This example demonstrates fitting a covariate multiplier
+# where the covariate has a shock. To be more specific, a spike at
+# a certain age, time, node, and sex.
 #
 # Integrand
 # *********
@@ -42,16 +37,34 @@
 #
 # Covariates
 # **********
-# There are two covariates in this example, *sex* and *normalized_income* .
-# Sex is used as the :ref:`option_table@splitting_covariate` .
-# Normalized income changes with age, node, and sex.
+# There are two covariates in this example, *sex* and *shock* .
+# Sex has the following values
+# {xrst_code py}
+sex_name2value = { 'female' : -0.5, 'both' : 0.0, 'male' : +0.5 }
+# {xrst_code}
+# Shock is defined by the following function
+# {xrst_code py}
+def shock_fun(age, time, node_name, sex) :
+   shock = 0.0
+   if (node_name, sex) == ('north_america', 'male') :
+      if 0 <= age and age <= 40 and 1920 <= time and time <= 1960 :
+         age_factor  = 1.0 - abs( age - 20.0 ) / 20.0
+         time_factor = 1.0 - abs(time - 1940.0 ) / 20.0
+         shock       = age_factor * time_factor
+   return shock
+# {xrst_code}
 #
 # Covariate Multipliers
 # *********************
 # There is one covariate multiplier in this example.
-# It multiples *normalized_income* and effects the rate iota.
-# Previous values for the covariate affect previous values for iota,
-# which in turn affects the value of prevalence at the measurement time.
+# It multiples *shock* and effects the rate iota as follows:
+# {xrst_code py}
+mulcov_true      = 1.0
+iota_no_effect   = 0.01
+def iota_true(age, time, node_name, sex) :
+   effect = mulcov_true * shock_fun(age, time, node_name, sex)
+   return iota_no_effect * math.exp(effect)
+# {xrst_code}
 #
 # Simulated Data
 # **************
@@ -65,12 +78,6 @@
 # and the no effect model for iota is constant and equal to
 # ``iota_no_effect`` .
 #
-# Covariate Multipliers Variables
-# *******************************
-# There is one covariate multiplier for this example
-# and it is constant and affects iota
-# (but the value of the covariate, normalized age, is not constant).
-#
 # Source Code
 # ***********
 # {xrst_literal
@@ -78,28 +85,15 @@
 #     END PYTHON
 # }
 #
-# {xrst_end user_rate_eff_cov_table.py}
+# {xrst_end user_shock_cov.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
-# BEGIN_TRUE_VALUE
-iota_no_effect     = 0.03
-mulcov_true        = 0.9
-reference_income   = 0.05
-def normalized_income(age, node_name, sex) :
-   if node_name == 'north_america' and sex == 'male' :
-      return age / 100.0
-   return 0.1 * age / 100.0
-def iota_true(age, time, node_name, sex) :
-   diff    = normalized_income(age, node_name, sex) - reference_income
-   effect  = mulcov_true * diff
-   return iota_no_effect * math.exp(effect)
-# END_TRUE_VALUE
-# ------------------------------------------------------------------------
+#
 import sys
 import os
 import copy
 import math
-test_program = 'example/user/rate_eff_cov_table.py'
+test_program = 'example/user/shock_cov.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
    usage  = 'python3 ' + test_program + '\n'
    usage += 'where python3 is the python 3 program on your system\n'
@@ -118,22 +112,22 @@ if not os.path.exists('build/example/user') :
    os.makedirs('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
-# Note that the a, t values are not used for this example
 def example_db (file_name) :
    def fun_no_effect_iota(a, t) :
       return (iota_no_effect,  None, None)
    def fun_mulcov(a, t) :
       return ('mulcov_value_prior', None, None)
    def fun_weight_north_america_male(a, t) :
-      return normalized_income(a, 'north_america', 'male')
+      return shock_fun(a, t, 'north_america', 'male')
    def fun_weight_other(a, t) :
-      return normalized_income(a, '', '')
+      return shock_fun(a, t, '', '')
    # ----------------------------------------------------------------------
    # age table
-   age_list    = [    0.0,  50.0,   100.0 ]
+   age_list    = list( range(0, 101, 20) )
    #
    # time table
-   time_list   = [ 1985.0, 2000.0, 2015.0 ]
+   time_list   = list( range(1920, 2021, 20) )
+   #
    #
    # integrand table
    integrand_table = [ { 'name':'prevalence' } ]
@@ -150,28 +144,28 @@ def example_db (file_name) :
    #
    # weight table:
    weight_table = [ {
-      'name'    : 'normalized_income_north_america_male',
-      'age_id'  : [0, 2],
-      'time_id' : [0, 2],
+      'name'    : 'shock_north_america_male',
+      'age_id'  : range( len( age_list ) ),
+      'time_id' : range( len( time_list ) ),
       'fun'     : fun_weight_north_america_male,
       },{
-      'name'    : 'normalized_income_other',
-      'age_id'  : [0, 2],
-      'time_id' : [0, 2],
+      'name'    : 'shock_other',
+      'age_id'  : range( len( age_list ) ),
+      'time_id' : range( len( time_list ) ),
       'fun'     : fun_weight_other,
    } ]
    #
    # covariate table:
    covariate_table = [
-      {'name':'normalized_income', 'reference':reference_income},
-      {'name':'sex',               'reference':0.0},
+      {'name':'shock', 'reference':0.0},
+      {'name':'sex',   'reference':0.0},
    ]
    #
    # mulcov table
    # income has been scaled the same as sex so man use same smoothing
    mulcov_table = [
       {  # income effects north american incidence
-         'covariate': 'normalized_income',
+         'covariate': 'shock',
          'type':      'rate_value',
          'effected':  'iota',
          'group':     'world',
@@ -179,38 +173,38 @@ def example_db (file_name) :
       }
    ]
    # ----------------------------------------------------------------------
-   # sex_name2value
-   sex_name2value = { 'female' : -0.5, 'both' : 0.0, 'male' : +0.5 }
-   # ----------------------------------------------------------------------
    # data table:
-   age  = 50.0
-   time = 2000.0
-   fun  = lambda age, time : iota_true(age, time, 'north_america', 'male')
-   meas_value = dismod_at.average_integrand(
-      rate           = { 'iota' : fun },
-      integrand_name = 'prevalence',
-      grid           =  { 'age': [age], 'time' : [time] },
-      abs_tol        = 1e-5,
-   )
-   meas_std = meas_value / 10.0
-   row = {
-      'node':              'north_america',
-      'subgroup':          'world',
-      'density':           'gaussian',
-      'weight':            '',
-      'hold_out':           False,
-      'time_lower':         time,
-      'time_upper':         time,
-      'age_lower':          age,
-      'age_upper':          age,
-      'normalized_income':  normalized_income(age, 'north_america', 'male'),
-      'sex':                sex_name2value['male'],
-      'integrand':          'prevalence',
-      'meas_value':         meas_value,
-      'meas_std':           meas_std,
-      'density':            'gaussian',
-   }
-   data_table = [ row ]
+   data_table = list()
+   for node_name in [ 'north_america' ] :
+      for sex in [ 'male' ] :
+         for age in age_list :
+            for time in time_list :
+               fun  = lambda age, time : \
+                  iota_true(age, time, node_name, sex)
+               meas_value = dismod_at.average_integrand(
+                  rate           = { 'iota' : fun },
+                  integrand_name = 'prevalence',
+                  grid           =  { 'age': [age], 'time' : [time] },
+                  abs_tol        = 1e-6,
+               )
+               row = {
+                  'node':              node_name,
+                  'subgroup':          'world',
+                  'density':           'gaussian',
+                  'weight':            '',
+                  'hold_out':           False,
+                  'time_lower':         time,
+                  'time_upper':         time,
+                  'age_lower':          age,
+                  'age_upper':          age,
+                  'shock':              shock_fun(age, time, node_name, sex),
+                  'sex':                sex_name2value[sex],
+                  'integrand':          'prevalence',
+                  'meas_value':         meas_value,
+                  'meas_std':           1e-3,
+                  'density':            'gaussian',
+               }
+               data_table.append( row )
    #
    # ----------------------------------------------------------------------
    # prior_table
@@ -228,8 +222,8 @@ def example_db (file_name) :
    smooth_table = [
       { # smooth_iota
          'name':                     'smooth_iota',
-         'age_id':                   [ 0 ],
-         'time_id':                  [ 0 ],
+         'age_id':                   range( len( age_list ) ) ,
+         'time_id':                  range( len( age_list ) ) ,
          'fun':                      fun_no_effect_iota,
       },{ # smooth_mulcov
          'name':                     'smooth_mulcov',
@@ -251,7 +245,7 @@ def example_db (file_name) :
       { 'name':'splitting_covariate',    'value':'sex'          },
       #
       { 'name':'parent_node_name',       'value':'world'        },
-      { 'name':'ode_step_size',          'value':'5.0'          },
+      { 'name':'ode_step_size',          'value':'0.5'          },
       { 'name':'random_seed',            'value':'0'            },
       { 'name':'rate_case',              'value':'iota_pos_rho_zero' },
       #
@@ -273,12 +267,12 @@ def example_db (file_name) :
          node_name      = node_table[node_id]['name']
          split_value    = sex_name2value[sex_name]
          if node_name == 'north_america' and sex_name == 'male' :
-            weight_name = 'normalized_income_north_america_male'
+            weight_name = 'shock_north_america_male'
          else :
-            weight_name = 'normalized_income_other'
+            weight_name = 'shock_other'
          row = {
             'node_name'      : node_name,
-            'covariate_name' : 'normalized_income',
+            'covariate_name' : 'shock',
             'split_value'    : split_value,
             'weight_name'    : weight_name,
          }
@@ -317,7 +311,6 @@ connection      = dismod_at.create_connection(file_name, new)
 var_table       = dismod_at.get_table_dict(connection, 'var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 #
-assert len(var_table) == 2
 for (var_id, row_var) in enumerate(var_table) :
    row_fit     = fit_var_table[var_id]
    var_type    = row_var['var_type']
@@ -332,6 +325,6 @@ for (var_id, row_var) in enumerate(var_table) :
          assert False
 #
 # -----------------------------------------------------------------------------
-print('rate_eff_cov_table.py: OK')
+print('shock_cov.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON

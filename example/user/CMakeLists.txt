@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build check_example_user
 SET(depends "")
@@ -38,18 +38,19 @@ FOREACH(user_case
    metropolis
    mulstd
    no_children
-   rate_eff_cov_table
    one_function
    plot_curve
    plot_data_fit
    plot_rate_fit
    predict_fit
    predict_mulcov
+   rate_eff_cov_table
    re_scale
    residual
    sample_asy
    sample_asy_sim
    sample_sim
+   shock_cov
    sim_log
    subgroup_mulcov
    sum_residual

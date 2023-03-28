@@ -15,6 +15,10 @@ Changes and Additions to Dismod_at During 2023
 mm-dd
 *****
 
+03-28
+=====
+Add the :ref:`user_shock_cov.py-title` example.
+
 03-27
 =====
 Change the :ref:`user_jump_at_age.py-name` example to estimate
