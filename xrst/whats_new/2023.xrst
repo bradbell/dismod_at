@@ -15,6 +15,10 @@ Changes and Additions to Dismod_at During 2023
 mm-dd
 *****
 
+03-31
+=====
+Add the :ref:`wish_list@Information Matrix` wish list item.
+
 03-28
 =====
 Add the :ref:`user_shock_cov.py-title` example.

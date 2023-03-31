@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin wish_list}
 {xrst_spell
@@ -23,6 +23,13 @@ $Id:$
 
 Dismod_at Wish List
 ###################
+
+Information Matrix
+******************
+If :ref:`option_table@Optimize Fixed Only@quasi_fixed` is false,
+the :ref:`hes_fixed_table-name` could be computed without much extra work.
+In this case a subsequent :ref:`sample_command@asymptotic` sample command
+could use made faster by using this Hessian.
 
 Empty Tables
 ************
