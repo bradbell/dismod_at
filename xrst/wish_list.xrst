@@ -24,6 +24,15 @@ $Id:$
 Dismod_at Wish List
 ###################
 
+Speed Up Simple Commands
+************************
+All of the :ref:`commands<command-title>` ,
+except for the old2new and set option commands,
+read in all of the dismod_at :ref:`input-name` tables.
+The routine that reads the input tables could be made smarter to only read
+the tables necessary for the requested command.
+This would save time when the input tables are large.
+
 Information Matrix
 ******************
 If :ref:`option_table@Optimize Fixed Only@quasi_fixed` is false,
