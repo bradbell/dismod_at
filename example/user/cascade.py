@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_cascade.py}
 # {xrst_spell
@@ -561,6 +561,7 @@ dismod_at.system_command_prc(
 #
 # check coverage of true values by posterior samples standard deviation
 connection.close()
+new          = False
 connection   = dismod_at.create_connection(file_name, new)
 sample_table = dismod_at.get_table_dict(connection, 'sample')
 sample_array = numpy.zeros( (number_sample, n_var), dtype = numpy.double )
@@ -627,6 +628,7 @@ predict_std  = numpy.std(predict_array, axis=0, ddof = 1)
 shutil.copyfile(file_name, 'fit_n11.db')
 file_name = 'fit_n11.db'
 connection.close()
+new              = False
 connection       = dismod_at.create_connection(file_name, new)
 #
 # get last id from certain tables

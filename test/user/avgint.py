@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # This tests for a bug in the average integrand when the first (last) entry in
 # the age (time) table was not the minimum (maximum) entry.
@@ -241,6 +241,7 @@ for command in [ 'init', 'fit' ] :
       sys.exit('The dismod_at ' + command + ' command failed')
 #
 # get variable and fit_var tables
+new                   = False
 connection            = dismod_at.create_connection(file_name, new)
 var_table             = dismod_at.get_table_dict(connection, 'var')
 fit_var_table         = dismod_at.get_table_dict(connection, 'fit_var')

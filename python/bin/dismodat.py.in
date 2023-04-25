@@ -2,7 +2,7 @@
 # $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin dismodat.py}
 # {xrst_comment_ch #}
@@ -166,6 +166,7 @@ cmd += 'null,'               # table_name
 cmd += 'null,'               # row_id
 cmd += str(end_time) + ','   # unix_time
 cmd += '"' + message + '")'  # message
+new        = False
 connection = dismod_at.create_connection(database_file_arg, new)
 dismod_at.sql_command(connection, cmd)
 connection.close()
