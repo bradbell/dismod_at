@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 '''
 {xrst_begin plot_rate_fit}
@@ -91,8 +91,9 @@ def check4table(cursor, table_name) :
 def plot_rate_fit(database, pdf_file, plot_title, rate_set) :
    #
    # tables
-   new        = False
-   connection = dismod_at.create_connection(database, new)
+   connection = dismod_at.create_connection(
+      database, new = False, readonly = False
+   )
    tables     = dict()
    for name in [
       'age',

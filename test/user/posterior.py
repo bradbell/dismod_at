@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 omega_world_mean  = 1e-2
 number_sample     = 2
@@ -184,8 +184,9 @@ if flag != 0 :
    sys.exit('The dismod_at fit command failed')
 # -----------------------------------------------------------------------
 # connect to database
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
+connection      = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 # -----------------------------------------------------------------------
 # check the zero random effects solution
 #

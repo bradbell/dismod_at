@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_hes_fixed_math.py}
 # {xrst_spell
@@ -597,8 +597,9 @@ dismod_at.system_command_prc(
 )
 # -----------------------------------------------------------------------
 # get tables
-new           = False
-connection    = dismod_at.create_connection(file_name, new)
+connection    = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 var_table     = dismod_at.get_table_dict(connection, 'var')
 node_table    = dismod_at.get_table_dict(connection, 'node')
 rate_table    = dismod_at.get_table_dict(connection, 'rate')
@@ -626,8 +627,9 @@ def optimal_random_effect(fixed_effect) :
    var_id = node_name2var_id['world']
    sql_cmd  = 'UPDATE start_var SET start_var_value = ' + str(fixed_effect)
    sql_cmd += ' WHERE start_var_id == ' + str(var_id)
-   new           = False
-   connection    = dismod_at.create_connection(file_name, new)
+   connection    = dismod_at.create_connection(
+      file_name, new = False, readonly = False
+   )
    dismod_at.sql_command(connection, sql_cmd)
    connection.close()
    #
@@ -635,8 +637,9 @@ def optimal_random_effect(fixed_effect) :
    dismod_at.system_command_prc([ program, file_name, 'fit', 'random' ])
    #
    # retrieve the optimal random effects
-   new           = False
-   connection    = dismod_at.create_connection(file_name, new)
+   connection    = dismod_at.create_connection(
+      file_name, new = False, readonly = False
+   )
    fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
    #
    var_id        = node_name2var_id['child_0']

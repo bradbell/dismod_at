@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Test case where age and time tables are not in order
 # ---------------------------------------------------------------------------
@@ -267,8 +267,9 @@ for command in [ 'init', 'fit' ] :
       sys.exit('The dismod_at ' + command + ' command failed')
 # -----------------------------------------------------------------------
 # connect to database
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
+connection      = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 # -----------------------------------------------------------------------
 # Results for fitting with no noise
 var_table     = dismod_at.get_table_dict(connection, 'var')

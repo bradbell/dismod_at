@@ -317,8 +317,9 @@ dismod_at.system_command_prc([ program, file_name, 'init' ])
 dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
 # -----------------------------------------------------------------------
 # connect to database
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
+connection      = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 # -----------------------------------------------------------------------
 # Results for fitting with no noise
 var_table     = dismod_at.get_table_dict(connection, 'var')

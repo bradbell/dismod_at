@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Test a case where there is not data and fit does not agree with mean.
 # ------------------------------------------------------------------------
@@ -186,8 +186,9 @@ os.chdir('build/test/user')
 dismod_at.system_command_prc( [program, file_name, 'fit', 'both' ] )
 # -----------------------------------------------------------------------
 # connect to database
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
+connection      = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 # -----------------------------------------------------------------------
 # Results for fitting with no noise
 age_table       = dismod_at.get_table_dict(connection, 'age')

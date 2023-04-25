@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_data_sim.py}
 # {xrst_comment_ch #}
@@ -360,8 +360,9 @@ program = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
 # -----------------------------------------------------------------------
 # read database
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
+connection      = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 var_table       = dismod_at.get_table_dict(connection, 'var')
 rate_table      = dismod_at.get_table_dict(connection, 'rate')
 integrand_table = dismod_at.get_table_dict(connection, 'integrand')
@@ -418,8 +419,9 @@ for meas_noise_effect in meas_noise_effect_list :
    dismod_at.system_command_prc([ program, file_name, 'simulate', '1' ])
    #
    # check results in data_sim table
-   new               = False
-   connection        = dismod_at.create_connection(file_name, new)
+   connection        = dismod_at.create_connection(
+      file_name, new = False, readonly = False
+   )
    density_table     = dismod_at.get_table_dict(connection, 'density')
    data_table        = dismod_at.get_table_dict(connection, 'data')
    data_subset_table = dismod_at.get_table_dict(connection, 'data_subset')

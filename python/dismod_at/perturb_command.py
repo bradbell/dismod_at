@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin perturb_command}
 # {xrst_spell
@@ -72,8 +72,9 @@ import math
 def get_limit_var_table(database) :
    #
    # table
-   new        = False
-   connection = dismod_at.create_connection(database, new)
+   connection = dismod_at.create_connection(
+      database, new = False, readonly = False
+   )
    table = dict()
    for tbl_name in [
       'node',
@@ -197,8 +198,9 @@ def perturb_command(database, tbl_name, sigma_str) :
    limit_var_table = get_limit_var_table(database)
    #
    # connection
-   new        = False
-   connection = dismod_at.create_connection(database, new)
+   connection = dismod_at.create_connection(
+      database, new = False, readonly = False
+   )
    #
    # table
    table = dismod_at.get_table_dict(connection, tbl_name)

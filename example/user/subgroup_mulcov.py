@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_subgroup_mulcov.py}
 # {xrst_spell
@@ -338,8 +338,9 @@ dismod_at.system_command_prc( [ program, file_name, 'fit', 'both' ] )
 # ---------------------------------------------------------------------------
 #
 # read var table and supporting information including the fit
-new              = False
-connection       = dismod_at.create_connection(file_name, new)
+connection       = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 subgroup_table   = dismod_at.get_table_dict(connection, 'subgroup')
 node_table       = dismod_at.get_table_dict(connection, 'node')
 var_table        = dismod_at.get_table_dict(connection, 'var')

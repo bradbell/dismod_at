@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # 2DO: IHME database uses x_0, x_1, ... for covariate names and hides the
 #      real covariate name in c_covariate_name. db_simlify.py could be
@@ -519,8 +519,9 @@ def setup() :
       shutil.copyfile(previous_database, temp_database)
    else :
       assert False
-   new             = False
-   temp_connection = dismod_at.create_connection(temp_database, new)
+   temp_connection = dismod_at.create_connection(
+      temp_database, new = False, readonly = False
+   )
    #
 setup()
 # ===========================================================================

@@ -31,26 +31,25 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|new\( *\)= *False;|new\1= False| 
-/^ *new *= *True$/b one
-/^ *new *= *False$/b one
- b skip
-:one
-N
-/create_connection/b skip
-s|\(.*\)\n\(.*\)|\2\n\1|
-#
-: skip
-# ...........................................................................
-##s|new\( *\)= *False;|new\1= False| 
+##s|new\( *\)= *False;|new\1= False|
 ##/^ *new *= *True$/b one
 ##/^ *new *= *False$/b one
-##b skip
+## b skip
 ##:one
 ##N
-###                 \1           \2    \3        \4
-##s|^ *new *= *\([TF][a-z]*\)\n\( *\)\([^(]*\)(\([^,]*\), *new)|\2\3(\
-##\2   \4, new = \1\
-##\2)|
+##/create_connection/b skip
+##s|\(.*\)\n\(.*\)|\2\n\1|
 ###
 ##: skip
+# ...........................................................................
+/^ *new *= *True$/b one
+/^ *new *= *False$/b one
+b skip
+:one
+N
+#                 \1           \2    \3        \4
+s|^ *new *= *\([TF][a-z]*\)\n\( *\)\([^(]*\)(\([^,]*\), *new)|\2\3(\
+\2   \4, new = \1, readonly = False\
+\2)|
+#
+: skip

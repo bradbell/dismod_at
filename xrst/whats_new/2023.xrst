@@ -7,6 +7,7 @@ $Id:$
 {xrst_spell
    mm
    dd
+   readonly
 }
 
 Changes and Additions to Dismod_at During 2023
@@ -14,6 +15,22 @@ Changes and Additions to Dismod_at During 2023
 
 mm-dd
 *****
+
+04-25
+=====
+In the examples, move the assignment to ``new`` from just before a call to
+``dismod_at.create_connection`` to inside the call.
+In addition, add the ``readonly`` argument. For example,
+in :ref:`user_censor.py-name` the text ::
+
+   new          = False
+   connection   = dismod_at.create_connection(root_node_database, new)
+
+was changed to ::
+
+   connection   = dismod_at.create_connection(
+      root_node_database, new = False, readonly = False
+   )
 
 04-06
 =====

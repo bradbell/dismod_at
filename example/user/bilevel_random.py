@@ -364,8 +364,9 @@ dismod_at.system_command_prc( [ program, file_name, 'fit', 'both' ] )
 # ---------------------------------------------------------------------------
 #
 # read var table and supporting information including the fit
-new              = False
-connection       = dismod_at.create_connection(file_name, new)
+connection       = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 subgroup_table   = dismod_at.get_table_dict(connection, 'subgroup')
 node_table       = dismod_at.get_table_dict(connection, 'node')
 age_table        = dismod_at.get_table_dict(connection, 'age')
@@ -417,8 +418,9 @@ dismod_at.system_command_prc(
 )
 #
 # compute sample standard deviation and check for coverate
-new          = False
-connection   = dismod_at.create_connection(file_name, new)
+connection   = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 sample_table    = dismod_at.get_table_dict(connection, 'sample')
 sample_array    = numpy.zeros( (number_sample, n_var), dtype = numpy.double )
 for sample_id in range( len(sample_table) ) :

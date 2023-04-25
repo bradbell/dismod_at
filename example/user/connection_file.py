@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 """
 {xrst_begin user_connection_file.py}
@@ -42,8 +42,9 @@ os.chdir('build/example/user')
 #
 # connection
 database   = 'example.db'
-new        = True
-connection = dismod_at.create_connection(database , new)
+connection = dismod_at.create_connection(
+   database , new = True, readonly = False
+)
 #
 # file_name
 file_name  = dismod_at.connection_file(connection)

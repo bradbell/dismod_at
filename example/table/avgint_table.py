@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin avgint_table.py}
 # {xrst_comment_ch #}
@@ -21,8 +21,9 @@ def avgint_table() :
    import collections
    #
    file_name      = 'example.db'
-   new            = True
-   connection     = dismod_at.create_connection(file_name, new)
+   connection     = dismod_at.create_connection(
+      file_name, new = True, readonly = False
+   )
    #
    col_name2type = collections.OrderedDict([
       # required columns

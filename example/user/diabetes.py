@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_diabetes.py}
 # {xrst_spell
@@ -1043,8 +1043,9 @@ def example_db (file_name) :
    return
 # -----------------------------------------------------------------------
 def create_truth_var_table() :
-   new             = False
-   connection      = dismod_at.create_connection(file_name, new)
+   connection      = dismod_at.create_connection(
+      file_name, new = False, readonly = False
+   )
    var_table       = dismod_at.get_table_dict(connection, 'var')
    rate_table      = dismod_at.get_table_dict(connection, 'rate')
    covariate_table = dismod_at.get_table_dict(connection, 'covariate')
@@ -1094,8 +1095,9 @@ create_truth_var_table()
 dismod_at.system_command_prc([ program, file_name, 'predict', 'truth_var' ])
 # -----------------------------------------------------------------------------
 # add data to data table
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
+connection      = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 predict_table   = dismod_at.get_table_dict(connection, 'predict')
 avgint_table    = dismod_at.get_table_dict(connection, 'avgint')
 density_table   = dismod_at.get_table_dict(connection, 'density')
@@ -1163,8 +1165,9 @@ dismod_at.system_command_prc([ program, file_name, 'init' ])
 create_truth_var_table()
 #
 # drop the start_var table created by init
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
+connection      = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 command = 'DROP TABLE start_var'
 dismod_at.sql_command(connection, command)
 #
@@ -1214,8 +1217,9 @@ dismod_at.system_command_prc(cmd)
 # -----------------------------------------------------------------------------
 # compare truth and fit
 file_name      = 'example.db'
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
+connection      = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 var_table       = dismod_at.get_table_dict(connection, 'var')
 truth_var_table = dismod_at.get_table_dict(connection, 'truth_var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')

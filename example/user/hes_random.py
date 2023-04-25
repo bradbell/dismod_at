@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_hes_random.py}
 # {xrst_spell
@@ -295,8 +295,9 @@ dismod_at.system_command_prc(
 )
 # -----------------------------------------------------------------------
 # get tables
-new               = False
-connection        = dismod_at.create_connection(file_name, new)
+connection        = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 var_table         = dismod_at.get_table_dict(connection, 'var')
 node_table        = dismod_at.get_table_dict(connection, 'node')
 rate_table        = dismod_at.get_table_dict(connection, 'rate')

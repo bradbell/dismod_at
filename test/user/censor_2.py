@@ -218,8 +218,9 @@ system_command([ program, file_name, 'init' ])
 system_command([ program, file_name, 'fit', 'fixed' ])
 #
 # connect to database
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
+connection      = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 var_table       = dismod_at.get_table_dict(connection, 'var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 #
@@ -248,8 +249,9 @@ system_command([ program, file_name, 'simulate', '1' ])
 system_command([ program, file_name, 'fit', 'fixed', '0' ])
 #
 # check result of the second fit fixed
-new              = False
-connection       = dismod_at.create_connection(file_name, new)
+connection       = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 fit_var_table    = dismod_at.get_table_dict(connection, 'fit_var')
 second_estimate  = fit_var_table[0]['fit_var_value']
 if abs( 1.0 - second_estimate / iota_true ) > 1e-1 :

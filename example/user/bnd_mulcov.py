@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_bnd_mulcov.py}
 # {xrst_comment_ch #}
@@ -303,8 +303,9 @@ dismod_at.system_command_prc(
 dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
 # -----------------------------------------------------------------------
 # read database
-new                   = False
-connection            = dismod_at.create_connection(file_name, new)
+connection            = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 var_table             = dismod_at.get_table_dict(connection, 'var')
 fit_var_table         = dismod_at.get_table_dict(connection, 'fit_var')
 bnd_mulcov_table      = dismod_at.get_table_dict(connection, 'bnd_mulcov')

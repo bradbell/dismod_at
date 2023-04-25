@@ -493,8 +493,9 @@ dismod_at.system_command_prc( [ program, file_name, 'init' ] )
 dismod_at.system_command_prc( [ program, file_name, 'fit', 'both' ] )
 #
 # check e1
-new              = False
-connection       = dismod_at.create_connection(file_name, new)
+connection       = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 rate_table       = dismod_at.get_table_dict(connection, 'rate')
 node_table       = dismod_at.get_table_dict(connection, 'node')
 age_table        = dismod_at.get_table_dict(connection, 'age')
@@ -561,8 +562,9 @@ dismod_at.system_command_prc(
 #
 # check coverage of true values by posterior samples standard deviation
 connection.close()
-new          = False
-connection   = dismod_at.create_connection(file_name, new)
+connection   = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 sample_table = dismod_at.get_table_dict(connection, 'sample')
 sample_array = numpy.zeros( (number_sample, n_var), dtype = numpy.double )
 for sample_id in range( len(sample_table) ) :
@@ -628,8 +630,9 @@ predict_std  = numpy.std(predict_array, axis=0, ddof = 1)
 shutil.copyfile(file_name, 'fit_n11.db')
 file_name = 'fit_n11.db'
 connection.close()
-new              = False
-connection       = dismod_at.create_connection(file_name, new)
+connection       = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 #
 # get last id from certain tables
 sqlcmd           = 'SELECT COUNT(prior_id) FROM prior'

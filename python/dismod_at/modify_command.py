@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin modify_command}
 # {xrst_spell
@@ -141,8 +141,9 @@ def modify_command(database, arg_list) :
       return expression_out
    # -------------------------------------------------------------------------
    # get the original value for the table
-   new                  = False
-   connection           = dismod_at.create_connection(database, new)
+   connection           = dismod_at.create_connection(
+      database, new = False, readonly = False
+   )
    (col_name, col_type) = dismod_at.get_name_type(connection, table_name)
    table_dict           = dismod_at.get_table_dict(connection, table_name)
    if not column_name in col_name :

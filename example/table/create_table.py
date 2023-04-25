@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin create_table.py}
 # {xrst_comment_ch #}
@@ -19,8 +19,9 @@ def create_table() :
    import dismod_at
    #
    file_name      = 'example.db'
-   new            = True
-   connection     = dismod_at.create_connection(file_name, new)
+   connection     = dismod_at.create_connection(
+      file_name, new = True, readonly = False
+   )
    cursor         = connection.cursor()
    #
    inverted_exclamation = chr( 10 * 16 + 1 ) # 00a1

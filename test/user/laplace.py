@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 iota_parent        = 1e-2   # true value of iota for parent
 iota_random_effect = 0.5;   # true positive random effect value
@@ -222,8 +222,9 @@ for command in [ 'init', 'fit' ] :
       sys.exit('The dismod_at ' + command + ' command failed')
 # -----------------------------------------------------------------------
 # connect to database
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
+connection      = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 #
 # get solution from fit_var table
 node_table     = dismod_at.get_table_dict(connection, 'node')

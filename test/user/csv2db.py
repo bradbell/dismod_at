@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 import sys
 import os
@@ -99,8 +99,9 @@ def exec_shell_cmd(cmd) :
 exec_shell_cmd( 'init' )
 #
 # connect to database
-new        = False
-connection = dismod_at.create_connection(database, new)
+connection = dismod_at.create_connection(
+   database, new = False, readonly = False
+)
 #
 # get variable and fit_var tables
 var_table         = dismod_at.get_table_dict(connection, 'var')

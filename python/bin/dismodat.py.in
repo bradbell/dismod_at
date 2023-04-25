@@ -80,8 +80,9 @@ if command_arg == 'csv2db' :
    dismod_at.csv2db_command(database_file_arg, configure_csv, measure_csv)
 # ---------------------------------------------------------------------------
 # connection
-new           = False
-connection    = dismod_at.create_connection(database_file_arg, new)
+connection    = dismod_at.create_connection(
+   database_file_arg, new = False, readonly = False
+)
 # ---------------------------------------------------------------------------
 # create log table if it does not yet exist
 cmd  = 'create table if not exists log('
@@ -166,8 +167,9 @@ cmd += 'null,'               # table_name
 cmd += 'null,'               # row_id
 cmd += str(end_time) + ','   # unix_time
 cmd += '"' + message + '")'  # message
-new        = False
-connection = dismod_at.create_connection(database_file_arg, new)
+connection = dismod_at.create_connection(
+   database_file_arg, new = False, readonly = False
+)
 dismod_at.sql_command(connection, cmd)
 connection.close()
 # ---------------------------------------------------------------------------

@@ -217,8 +217,9 @@ def example_db (file_name) :
 # ===========================================================================
 file_name  = 'example.db'
 example_db(file_name)
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
+connection      = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 #
 # Test that density table does not need entries that are not used
 # (last entry is log_students so can delete without changing density ids)
@@ -241,8 +242,9 @@ for command in [ 'init', 'fit' ] :
       sys.exit('The dismod_at ' + command + ' command failed')
 #
 # get variable and fit_var tables
-new                   = False
-connection            = dismod_at.create_connection(file_name, new)
+connection            = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 var_table             = dismod_at.get_table_dict(connection, 'var')
 fit_var_table         = dismod_at.get_table_dict(connection, 'fit_var')
 fit_data_subset_dict = dismod_at.get_table_dict(connection, 'fit_data_subset')

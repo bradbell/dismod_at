@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin create_database}
 # {xrst_spell
@@ -522,8 +522,9 @@ def create_database(
          data_extra_columns = row['value'].split()
    # ----------------------------------------------------------------------
    # create database
-   new            = True
-   connection     = dismod_at.create_connection(file_name, new)
+   connection     = dismod_at.create_connection(
+      file_name, new = True, readonly = False
+   )
    # ----------------------------------------------------------------------
    # create age table
    col_name = [ 'age' ]

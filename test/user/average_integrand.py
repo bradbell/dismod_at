@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # BEGIN PYTHON
 import math
@@ -240,8 +240,9 @@ dismod_at.system_command_prc([
 dismod_at.system_command_prc([ program, file_name, 'predict', 'truth_var' ])
 #
 #
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
+connection      = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 data_table      = dismod_at.get_table_dict(connection, 'data')
 avgint_table    = dismod_at.get_table_dict(connection, 'avgint')
 predict_table   = dismod_at.get_table_dict(connection, 'predict')

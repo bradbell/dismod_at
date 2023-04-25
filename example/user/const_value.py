@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_const_value.py}
 # {xrst_comment_ch #}
@@ -320,8 +320,9 @@ program = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
 # -----------------------------------------------------------------------
 # read database
-new           = False
-connection    = dismod_at.create_connection(file_name, new)
+connection    = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 var_table     = dismod_at.get_table_dict(connection, 'var')
 rate_table    = dismod_at.get_table_dict(connection, 'rate')
 node_table    = dismod_at.get_table_dict(connection, 'node')
@@ -357,8 +358,9 @@ system_command_prc([ program, file_name, 'set', 'scale_var', 'truth_var' ])
 system_command_prc([ program, file_name, 'fit', 'both', '0' ])
 # -----------------------------------------------------------------------
 # check fit results
-new             = False
-connection      = dismod_at.create_connection(file_name, new)
+connection      = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 truth_var_table = dismod_at.get_table_dict(connection, 'truth_var')
 connection.close()
