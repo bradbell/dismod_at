@@ -233,7 +233,7 @@ def create_database() :
    # ----------------------------------------------------------------------
    #
    # connection
-   new        = False;
+   new        = False
    connection = dismod_at.create_connection(file_name, new)
    #
    # age_table

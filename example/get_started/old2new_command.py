@@ -47,8 +47,8 @@ os.chdir('build/example/get_started')
 get_started_db.get_started_db()
 # -----------------------------------------------------------------------
 # connect to database
-new            = False
 file_name      = 'get_started.db'
+new            = False
 connection     = dismod_at.create_connection(file_name, new)
 subgroup_table = dismod_at.get_table_dict(connection, 'subgroup')
 #

@@ -35,8 +35,8 @@ os.chdir('build/test/user')
 get_started_db.get_started_db()
 # -----------------------------------------------------------------------
 # In option table add row specifying parent_node_id
-new            = False
 file_name      = 'get_started.db'
+new            = False
 connection     = dismod_at.create_connection(file_name, new)
 option_table   = dismod_at.get_table_dict(connection, 'option')
 node_table     = dismod_at.get_table_dict(connection, 'node')

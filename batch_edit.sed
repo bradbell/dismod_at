@@ -15,13 +15,6 @@
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
-#  devel/table/check_node_cov.cpp
-#  devel/table/get_node_cov_table.cpp
-#  example/table/node_cov_table.py
-#  example/user/node_cov_table.py
-#  include/dismod_at/check_node_cov.hpp
-#  include/dismod_at/get_node_cov_table.hpp
-#  xrst/table/node_cov_table.xrst
 # '
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
@@ -38,18 +31,26 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|NODE_COV|RATE_EFF_COV|g
-s|node_cov|rate_eff_cov|g
-s|\(rate_eff_cov_struct>&*\)     |\1 |
-s|\(rate_eff_cov_table\)     |\1 |
-# ----------------------------------------------
-/^rate_eff_cov_id$/ b one
-/^rate_eff_cov_table$/ b one
-/^rate_eff_cov_struct$/ b one
-b end
-#
-: one
+s|new\( *\)= *False;|new\1= False| 
+/^ *new *= *True$/b one
+/^ *new *= *False$/b one
+ b skip
+:one
 N
-s|\n\(.\)|\n\1\1\1\1\1|
-# ----------------------------------------------
-: end
+/create_connection/b skip
+s|\(.*\)\n\(.*\)|\2\n\1|
+#
+: skip
+# ...........................................................................
+##s|new\( *\)= *False;|new\1= False| 
+##/^ *new *= *True$/b one
+##/^ *new *= *False$/b one
+##b skip
+##:one
+##N
+###                 \1           \2    \3        \4
+##s|^ *new *= *\([TF][a-z]*\)\n\( *\)\([^(]*\)(\([^,]*\), *new)|\2\3(\
+##\2   \4, new = \1\
+##\2)|
+###
+##: skip

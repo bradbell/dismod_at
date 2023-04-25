@@ -41,8 +41,8 @@ if not os.path.exists('build/example/user') :
 os.chdir('build/example/user')
 #
 # connection
-new        = True
 database   = 'example.db'
+new        = True
 connection = dismod_at.create_connection(database , new)
 #
 # file_name
