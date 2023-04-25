@@ -279,7 +279,7 @@ dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
 #
 # get second fit information
 connection      = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 node_table      = dismod_at.get_table_dict(connection, 'node')
 rate_table      = dismod_at.get_table_dict(connection, 'rate')

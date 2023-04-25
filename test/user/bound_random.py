@@ -249,7 +249,7 @@ for command in [ 'init', 'fit' ] :
 # -----------------------------------------------------------------------
 # connect to database
 connection      = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 # -----------------------------------------------------------------------
 # check the solution

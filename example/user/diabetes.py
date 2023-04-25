@@ -1218,7 +1218,7 @@ dismod_at.system_command_prc(cmd)
 # compare truth and fit
 file_name      = 'example.db'
 connection      = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 var_table       = dismod_at.get_table_dict(connection, 'var')
 truth_var_table = dismod_at.get_table_dict(connection, 'truth_var')

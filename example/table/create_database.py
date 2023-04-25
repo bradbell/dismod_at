@@ -234,7 +234,7 @@ def create_database() :
    #
    # connection
    connection = dismod_at.create_connection(
-      file_name, new = False, readonly = False
+      file_name, new = False, readonly = True
    )
    #
    # age_table

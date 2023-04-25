@@ -289,7 +289,7 @@ dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
 #
 # connect to database and get density table
 connection      = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 node_table      = dismod_at.get_table_dict(connection, 'node')
 var_table       = dismod_at.get_table_dict(connection, 'var')

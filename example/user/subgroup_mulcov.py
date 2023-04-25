@@ -339,7 +339,7 @@ dismod_at.system_command_prc( [ program, file_name, 'fit', 'both' ] )
 #
 # read var table and supporting information including the fit
 connection       = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 subgroup_table   = dismod_at.get_table_dict(connection, 'subgroup')
 node_table       = dismod_at.get_table_dict(connection, 'node')

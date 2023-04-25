@@ -78,7 +78,7 @@ dismod_at.system_command_prc( system_cmd )
 # -----------------------------------------------------------------------
 # get data table
 connection = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 data_table = dismod_at.get_table_dict( connection, 'data')
 connection.close()

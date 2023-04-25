@@ -269,7 +269,7 @@ system_command_prc([ program, file_name, 'fit', 'both', '0' ])
 # -----------------------------------------------------------------------
 # check fit results
 connection      = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 truth_var_table = dismod_at.get_table_dict(connection, 'truth_var')

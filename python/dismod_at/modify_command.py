@@ -144,8 +144,10 @@ def modify_command(database, arg_list) :
    connection           = dismod_at.create_connection(
       database, new = False, readonly = False
    )
-   (col_name, col_type) = dismod_at.get_name_type(connection, table_name)
-   table_dict           = dismod_at.get_table_dict(connection, table_name)
+   (col_name, col_type) = \
+      dismod_at.get_name_type(connection, table_name)
+   table_dict           = \
+      dismod_at.get_table_dict(connection, table_name)
    if not column_name in col_name :
       msg  = column_name + ' is not a column in table ' + table_name + '\n'
       msg += 'of database ' + database

@@ -332,7 +332,7 @@ dismod_at.system_command_prc([ program, file_name, 'init' ])
 #
 # Tables that are the same for both types of sampling
 connection    = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 var_table     = dismod_at.get_table_dict(connection, 'var')
 node_table    = dismod_at.get_table_dict(connection, 'node')
@@ -357,7 +357,7 @@ for variables in [ 'fixed' , 'both' ] :
    # -----------------------------------------------------------------------
    # sample_table
    connection      = dismod_at.create_connection(
-      file_name, new = False, readonly = False
+      file_name, new = False, readonly = True
    )
    sample_table  = dismod_at.get_table_dict(connection, 'sample')
    #

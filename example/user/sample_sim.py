@@ -421,7 +421,7 @@ dismod_at.system_command_prc(
 )
 #
 connection   = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 sample_table = dismod_at.get_table_dict(connection, 'sample')
 #

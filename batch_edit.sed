@@ -12,6 +12,7 @@
 # (with the possible exception of the extra_seds commands).
 # The files in bin/devel.sh ignore_files are automatically in this list.
 # ignore_files='
+#  python/dismod_at/create_connection.py
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
@@ -19,7 +20,6 @@
 # list of sed commands that map old file and directory names to new names.
 # The characters @s, @d, @n get converted to a space, dollar sign, new line.
 # move_seds='
-#  s|node_cov|rate_eff_cov|
 # '
 # list of files that get edited by the extra_seds command
 # extra_files='
@@ -31,25 +31,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-##s|new\( *\)= *False;|new\1= False|
-##/^ *new *= *True$/b one
-##/^ *new *= *False$/b one
-## b skip
-##:one
-##N
-##/create_connection/b skip
-##s|\(.*\)\n\(.*\)|\2\n\1|
-###
-##: skip
-# ...........................................................................
-/^ *new *= *True$/b one
-/^ *new *= *False$/b one
-b skip
-:one
-N
-#                 \1           \2    \3        \4
-s|^ *new *= *\([TF][a-z]*\)\n\( *\)\([^(]*\)(\([^,]*\), *new)|\2\3(\
-\2   \4, new = \1, readonly = False\
-\2)|
-#
-: skip
+s|new = False, readonly = False|new = False, readonly = True|

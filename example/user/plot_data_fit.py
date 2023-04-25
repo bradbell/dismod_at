@@ -330,7 +330,7 @@ assert n_fit_dict['prevalence'] == 0
 # -----------------------------------------------------------------------
 # connect to database
 connection      = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 # -----------------------------------------------------------------------
 # get variable and fit_var tables

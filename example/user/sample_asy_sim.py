@@ -260,7 +260,7 @@ dismod_at.system_command_prc(
 # -----------------------------------------------------------------------
 # connect to database
 connection      = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 #
 # read tables
@@ -308,7 +308,7 @@ dismod_at.system_command_prc(
    [ program, file_name, 'sample', 'asymptotic', 'both', str(number_sample) ]
 )
 connection      = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 sample_table    = dismod_at.get_table_dict(connection, 'sample')
 hes_fixed_table = dismod_at.get_table_dict(connection, 'hes_fixed')

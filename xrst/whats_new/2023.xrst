@@ -32,6 +32,8 @@ was changed to ::
       root_node_database, new = False, readonly = False
    )
 
+Where possible, ``readonly`` was set to ``True`` .
+
 04-06
 =====
 Add the :ref:`wish_list@Speed Up Simple Commands` wish list item.

@@ -242,7 +242,7 @@ dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
 #
 # read database
 connection      = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 age_table       = dismod_at.get_table_dict(connection, 'age')
 rate_table      = dismod_at.get_table_dict(connection, 'rate')

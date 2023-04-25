@@ -820,7 +820,7 @@ def db2csv_command(database_file_arg) :
    file_name    = database_file_arg
    database_dir = os.path.split(database_file_arg)[0]
    connection   = dismod_at.create_connection(
-      file_name, new = False, readonly = False
+      file_name, new = False, readonly = True
    )
    cursor       = connection.cursor()
    # -------------------------------------------------------------------------

@@ -291,7 +291,7 @@ dismod_at.system_command_prc([ program, file_name, 'predict', 'fit_var' ])
 # -----------------------------------------------------------------------
 # connect to database
 connection      = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 predict_table  = dismod_at.get_table_dict(connection, 'predict')
 avgint_table   = dismod_at.get_table_dict(connection, 'avgint')

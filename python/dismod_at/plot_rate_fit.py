@@ -92,7 +92,7 @@ def plot_rate_fit(database, pdf_file, plot_title, rate_set) :
    #
    # tables
    connection = dismod_at.create_connection(
-      database, new = False, readonly = False
+      database, new = False, readonly = True
    )
    tables     = dict()
    for name in [

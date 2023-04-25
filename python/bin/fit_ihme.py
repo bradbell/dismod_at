@@ -520,7 +520,7 @@ def setup() :
    else :
       assert False
    temp_connection = dismod_at.create_connection(
-      temp_database, new = False, readonly = False
+      temp_database, new = False, readonly = True
    )
    #
 setup()

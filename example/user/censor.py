@@ -289,7 +289,7 @@ dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed', '0' ])
 #
 # check result of the second fit fixed
 connection       = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 fit_var_table    = dismod_at.get_table_dict(connection, 'fit_var')
 second_estimate  = fit_var_table[0]['fit_var_value']

@@ -494,7 +494,7 @@ dismod_at.system_command_prc( [ program, file_name, 'fit', 'both' ] )
 #
 # check e1
 connection       = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 rate_table       = dismod_at.get_table_dict(connection, 'rate')
 node_table       = dismod_at.get_table_dict(connection, 'node')
@@ -563,7 +563,7 @@ dismod_at.system_command_prc(
 # check coverage of true values by posterior samples standard deviation
 connection.close()
 connection   = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 sample_table = dismod_at.get_table_dict(connection, 'sample')
 sample_array = numpy.zeros( (number_sample, n_var), dtype = numpy.double )

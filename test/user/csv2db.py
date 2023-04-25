@@ -100,7 +100,7 @@ exec_shell_cmd( 'init' )
 #
 # connect to database
 connection = dismod_at.create_connection(
-   database, new = False, readonly = False
+   database, new = False, readonly = True
 )
 #
 # get variable and fit_var tables

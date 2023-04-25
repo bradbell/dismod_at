@@ -128,7 +128,7 @@ def plot_data_fit(
    #
    # tables
    connection = dismod_at.create_connection(
-      database, new = False, readonly = False
+      database, new = False, readonly = True
    )
    tables     = dict()
    for name in [

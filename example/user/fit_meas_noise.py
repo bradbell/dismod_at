@@ -363,7 +363,7 @@ for meas_noise_effect in [
    # -----------------------------------------------------------------------
    # check fit results
    connection   = dismod_at.create_connection(
-      file_name, new = False, readonly = False
+      file_name, new = False, readonly = True
    )
    fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
    connection.close()

@@ -278,7 +278,7 @@ exec_shell_cmd( 'predict fit_var' )
 #
 # connect to database
 connection = dismod_at.create_connection(
-   database, new = False, readonly = False
+   database, new = False, readonly = True
 )
 #
 # get variable and fit_var tables

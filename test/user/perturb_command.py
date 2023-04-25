@@ -187,7 +187,7 @@ dismod_at.system_command_prc( [program, file_name, 'fit', 'both' ] )
 # -----------------------------------------------------------------------
 # connect to database
 connection      = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 # -----------------------------------------------------------------------
 # Results for fitting with no noise

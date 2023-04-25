@@ -419,7 +419,7 @@ dismod_at.system_command_prc(
 #
 # compute sample standard deviation and check for coverate
 connection   = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 sample_table    = dismod_at.get_table_dict(connection, 'sample')
 sample_array    = numpy.zeros( (number_sample, n_var), dtype = numpy.double )

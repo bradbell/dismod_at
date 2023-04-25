@@ -272,7 +272,7 @@ assert stdout == check
 # -----------------------------------------------------------------------
 # read database
 connection            = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 node_table            = dismod_at.get_table_dict(connection, 'node')
 age_table             = dismod_at.get_table_dict(connection, 'age')

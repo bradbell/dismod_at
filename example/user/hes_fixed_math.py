@@ -598,7 +598,7 @@ dismod_at.system_command_prc(
 # -----------------------------------------------------------------------
 # get tables
 connection    = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 var_table     = dismod_at.get_table_dict(connection, 'var')
 node_table    = dismod_at.get_table_dict(connection, 'node')
@@ -638,7 +638,7 @@ def optimal_random_effect(fixed_effect) :
    #
    # retrieve the optimal random effects
    connection    = dismod_at.create_connection(
-      file_name, new = False, readonly = False
+      file_name, new = False, readonly = True
    )
    fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
    #

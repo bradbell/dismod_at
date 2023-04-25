@@ -43,7 +43,7 @@ if flag != 0 :
 # -----------------------------------------------------------------------
 # connect to database
 connection   = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 avgint_table = dismod_at.get_table_dict(connection, 'avgint')
 data_table   = dismod_at.get_table_dict(connection, 'data')

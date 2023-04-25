@@ -73,7 +73,7 @@ def get_limit_var_table(database) :
    #
    # table
    connection = dismod_at.create_connection(
-      database, new = False, readonly = False
+      database, new = False, readonly = True
    )
    table = dict()
    for tbl_name in [

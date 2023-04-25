@@ -58,7 +58,7 @@ dismod_at.system_command_prc( [program, file_name, 'fit', 'both'] )
 # -----------------------------------------------------------------------
 # connect to database
 connection = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 var_table     = dismod_at.get_table_dict(connection, 'var')
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
@@ -88,7 +88,7 @@ for system_cmd in system_cmd_list :
    dismod_at.system_command_prc( system_cmd )
 #
 connection      = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 truth_var_table = dismod_at.get_table_dict(connection, 'truth_var')
 start_var_table = dismod_at.get_table_dict(connection, 'start_var')

@@ -296,7 +296,7 @@ dismod_at.system_command_prc(
 # -----------------------------------------------------------------------
 # get tables
 connection        = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 var_table         = dismod_at.get_table_dict(connection, 'var')
 node_table        = dismod_at.get_table_dict(connection, 'node')

@@ -264,7 +264,7 @@ dismod_at.system_command_prc([ program, database, 'fit', 'fixed' ])
 # read tables
 #
 connection = dismod_at.create_connection(
-   database, new = False, readonly = False
+   database, new = False, readonly = True
 )
 #
 name_list = [

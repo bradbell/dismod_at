@@ -468,7 +468,7 @@ dismod_at.system_command_prc(
 # -----------------------------------------------------------------------
 # result tables
 connection    = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 log_dict      = dismod_at.get_table_dict(connection, 'log')

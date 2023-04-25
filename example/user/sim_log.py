@@ -318,7 +318,7 @@ system_command([ program, file_name, 'simulate', str(number_simulate) ])
 # check simulated data
 from math import log
 connection         = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 data_sim_table     = dismod_at.get_table_dict(connection, 'data_sim')
 data_table         = dismod_at.get_table_dict(connection, 'data')

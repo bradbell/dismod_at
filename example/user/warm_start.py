@@ -202,7 +202,7 @@ dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
 #
 # trace_fixed table
 connection        = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 trace_fixed_table = dismod_at.get_table_dict(connection, 'trace_fixed')
 connection.close()
@@ -216,7 +216,7 @@ dismod_at.system_command_prc(
 # -----------------------------------------------------------------------
 # read database
 connection        = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 var_table         = dismod_at.get_table_dict(connection, 'var')
 rate_table        = dismod_at.get_table_dict(connection, 'rate')

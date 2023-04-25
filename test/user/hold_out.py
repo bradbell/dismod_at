@@ -189,7 +189,7 @@ dismod_at.system_command_prc(
 # -----------------------------------------------------------------------
 # read database
 connection            = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 var_table             = dismod_at.get_table_dict(connection, 'var')
 data_table            = dismod_at.get_table_dict(connection, 'data')
@@ -229,7 +229,7 @@ dismod_at.system_command_prc(
 #
 # data_subset_table
 connection            = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 data_subset_table     = dismod_at.get_table_dict(connection, 'data_subset')
 connection.close()

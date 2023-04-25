@@ -243,7 +243,7 @@ for command in [ 'init', 'fit' ] :
 #
 # get variable and fit_var tables
 connection            = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   file_name, new = False, readonly = True
 )
 var_table             = dismod_at.get_table_dict(connection, 'var')
 fit_var_table         = dismod_at.get_table_dict(connection, 'fit_var')
