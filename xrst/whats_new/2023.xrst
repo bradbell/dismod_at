@@ -16,6 +16,12 @@ Changes and Additions to Dismod_at During 2023
 mm-dd
 *****
 
+04-26
+=====
+The dock_dismod_at.sh
+:ref:`dock_dismod_at.sh@Building Images@dismod_at_version` advanced to
+dismod_at-20230425 and the at_cascade version advanced to at_cascade-2023.4.26.
+
 04-25
 =====
 In the examples, move the assignment to ``new`` from just before a call to
