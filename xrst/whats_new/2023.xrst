@@ -16,6 +16,11 @@ Changes and Additions to Dismod_at During 2023
 mm-dd
 *****
 
+05-03
+=====
+Replace the Binomial Distribution wish list item by the follow page:
+:ref:`binomial-name` .
+
 04-26
 =====
 The dock_dismod_at.sh

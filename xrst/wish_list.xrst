@@ -53,64 +53,6 @@ It would be good to changes the dismod_at test so that
 they did not use the same file name (e.g., example.db) and could be
 run in parallel.
 
-Binomial Distribution
-*********************
-
-.. list-table::
-   :widths: auto
-
-   * - *n*
-     - number of samples
-   * - *p*
-     - probability of success for each sample
-   * - *k*
-     - number of success events
-   * - *r*
-     - rate of success; i.e., :math:`k / n`
-   * - *mu*
-     - mean value for rate of success
-   * - *sigma*
-     - standard deviation for rate of success
-
-The mean of :math:`k` is :math:`n p`
-and its variance is :math:`n p (1-p)`.
-It follows that :math:`p = \mu` and
-
-.. math::
-
-   n = \mu ( 1 - \mu ) / \sigma^2
-
-The probability mass function for :math:`k` is
-
-.. math::
-
-   \B{p} (k | n, p) = \frac{ n! }{ k! (n -k)! }  p^k (1-p)^{n-k}
-
-It follows that
-
-.. math::
-
-   \B{p} ( r | \mu , \sigma )
-   =
-      \mu^{n r} (1 - \mu)^{ n(1-r) }
-      \frac{ \Gamma(n+1) }{ \Gamma( n r ) \Gamma[ n (1 - r) ] }
-
-where
-
-.. math::
-
-   n( \mu , \sigma )  = \mu ( 1 - \mu ) / \sigma^2
-
-This representation of the density for :math:`r` is smooth respect to
-:math:`\mu` and hence can be included in dismod_at.
-Note that, in dismod_at, the standard deviation for a data point is fixed
-and hence the number of samples :math:`n` depends on :math:`\mu`.
-This density is only defined for :math:`0 \leq \mu \leq 1`
-and is zero at the end points.
-If :math:`\mu` is a dismod_at rate and :math:`r`
-is a direct measurement of a :math:`\mu`, it will help to constrain
-the rate to the feasible region.
-
 Speed
 *****
 The CppADCodeGen package (and CppAD JIT) compiles CppAD code.

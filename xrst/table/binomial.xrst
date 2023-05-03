@@ -1,0 +1,78 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin binomial}
+
+Binomial Distribution
+#####################
+In some cases, the dismod_at
+measured value :ref:`data_table@meas_value` is closely
+approximated by a binomial distribution.
+In this section we derive an approximation for the corresponding
+measurement standard deviation :ref:`data_table@meas_std` .
+
+Notation
+********
+
+.. list-table::
+   :widths: auto
+
+   * - *n*
+     - number of samples
+   * - *p*
+     - probability of success for each sample
+   * - *k*
+     - number of success events
+   * - *r*
+     - success ratio; i.e., r = k / n
+   * - :math:`\sigma`
+     - approximate standard deviation of the success ratio *r*
+
+Approximation
+*************
+The variance of :math:`k` is given by
+
+.. math::
+
+   \B{V} [ k ] =  n p (1 - p)
+
+Converting from :math:`k` to :math:`r` we have
+
+.. math::
+
+   \B{V} [ r ] =  p (1 - p) / n
+
+When the data is binomial, we measure *k* and know *n*,
+but we do not know *p* .
+Using a uniform prior on *p*, the expected value of *p* given *k* is
+
+.. math::
+
+   \B{E} [ p | k ] = (k + 1) / (n + 2)
+
+See
+`Estimation of Parameters <https://en.wikipedia.org/wiki/Binomial_distribution#Estimation_of_parameters>`_
+for a binomial distribution.
+Using this approximation for *p*,
+the corresponding approximation for the variance give the number of
+success events *k* is
+
+.. math::
+
+   \B{V} [ r ] \approx  \frac{ (k + 1) (n + 1 - k) }{ n ( n + 2 ) }
+
+If *r* is the dismod_at measured value :ref:`data_table@meas_value` ,
+the corresponding standard deviation :ref:`data_table@meas_std`
+is the square root of the variance approximation above; i.e.,
+
+.. math::
+
+   \sigma =  \sqrt{ \frac{ (k + 1) (n + 1 - k) }{ n ( n + 2 ) } }
+
+In some cases *r / T* is the dismod_at measured value,
+where *T* is the total time for the experiment.
+In this case the corresponding standard deviation is
+:math:`\sigma / T` .
+
+{xrst_end binomial}
