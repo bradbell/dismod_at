@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin censor_density}
 {xrst_spell
@@ -250,5 +250,64 @@ one can obtain a formula for :math:`\overline{\underline{y}} - \mu`
 in a manner similar to calculation of the
 :ref:`censor_density@Gaussian@Difference Between Means`
 for the Gaussian case.
+
+Log Gaussian
+************
+Suppose that
+:math:`\log(y + \eta )` has a Gaussian distribution with mean
+:math:`\log( \mu + \eta )` and standard deviation :math:`\delta` ,
+and we are censoring the distribution at the value :math:`\log( c + \eta)` .
+For this case
+
+.. math::
+
+   G( y , \mu , \delta )
+   & =
+   \sqrt{ \frac{1}{ 2 \pi \delta^2 } }
+   \exp \left[ - \frac{1}{2} \left(
+      \frac{ \log(y + \eta) - \log( \mu + \eta) } {\delta}
+   \right)^2 \right]
+   \\
+   G ( \underline{y} , \mu , \delta , c )
+   & =
+   \left\{ \begin{array}{ll}
+   \left[ 1 - \R{erf}\left(
+      \sqrt{2}^{-1} [ \log( \mu + \eta )  - \log( c + \eta )] / \delta
+   \right) \right] / 2
+   & \R{if} \; \underline{y} = c
+   \\
+   G( \underline{y} , \mu , \delta )  & \R{otherwise}
+   \end{array} \right.
+
+Log Laplace
+***********
+Suppose that
+:math:`\log(y + \eta )` has a Laplace distribution with mean
+:math:`\log( \mu + \eta )` and standard deviation :math:`\delta` ,
+and we are censoring the distribution at the value :math:`\log( c + \eta)` .
+For this case
+
+.. math::
+
+   L( y , \mu , \delta )
+   & =
+   \sqrt{ \frac{1}{2 \delta^2 } }
+   \exp \left[ - \sqrt{2} \left|
+      \frac{\log(y + \eta) - \log(\mu + \eta)}{\delta}
+   \right| \right]
+   \\
+   L ( \underline{y} , \mu , \delta , c )
+   & =
+   \left\{ \begin{array}{ll}
+      (1 / 2 )
+      \exp \left(
+      - [ \log( \mu + \eta ) - \log( c + \eta) ] \sqrt{2} / \delta
+      \right)
+      & \R{if} \; \underline{y} = c
+      \\
+      L( \underline{y} , \mu , \delta )
+      & \R{otherwise}
+   \end{array} \right.
+
 
 {xrst_end censor_density}

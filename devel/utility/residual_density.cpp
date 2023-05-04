@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin residual_density dev}
@@ -339,45 +339,8 @@ residual_struct<Float> residual_density(
       }
       break;
 
-      case cen_gaussian_enum:
-      case cen_log_gaussian_enum:
-      assert( ! diff );
-      if( CppAD::isnan(z) )
-         censor = y <= 0.0;
-      else
-         censor = z <= 0.0;
-      if( censor )
-      {  Float c = 0.0;
-         if( d_id == cen_log_gaussian_enum )
-            c = d_eta;
-         Float erfc_value = CppAD::erfc( (mu - c) / ( sigma * r2 ) );
-         logden_smooth    = log(erfc_value / 2.0 );
-         logden_sub_abs   = 0.0;
-      }
-      else
-      {  logden_smooth  = - log( sigma * sqrt( pi2 ) ) - wres * wres / 2.0;
-         logden_sub_abs = 0.0;
-      }
-      break;
-
       case laplace_enum:
       case log_laplace_enum:
-      {  logden_smooth  = - log( sigma * r2 );
-         logden_sub_abs = r2 * wres;
-      }
-      break;
-
-      case cen_laplace_enum:
-      case cen_log_laplace_enum:
-      assert( ! diff );
-      if( y <= 0 )
-      {  Float c = 0.0;
-         if( d_id == cen_log_laplace_enum )
-            c = d_eta;
-         logden_smooth = - (mu - c) * r2 / sigma - std::log(2.0);
-         logden_sub_abs = 0.0;
-      }
-      else
       {  logden_smooth  = - log( sigma * r2 );
          logden_sub_abs = r2 * wres;
       }
@@ -388,6 +351,70 @@ residual_struct<Float> residual_density(
       {  Float  r       = 1.0 + wres * wres / ( d_nu - 2.0 );
          logden_smooth  =  - log( r ) * (d_nu + 1.0) / 2.0;
          logden_sub_abs = 0.0;
+      }
+      break;
+
+      case cen_gaussian_enum:
+      assert( ! diff );
+      if( CppAD::isnan(z) )
+         censor = y <= 0.0;
+      else
+         censor = z <= 0.0;
+      if( censor )
+      {  Float c = 0.0;
+         Float erfc_value = CppAD::erfc( (mu - c) / ( sigma * r2 ) );
+         logden_smooth    = log(erfc_value / 2.0 );
+         logden_sub_abs   = 0.0;
+      }
+      else
+      {  logden_smooth  = - log( sigma * sqrt( pi2 ) ) - wres * wres / 2.0;
+         logden_sub_abs = 0.0;
+      }
+      break;
+
+      case cen_log_gaussian_enum:
+      assert( ! diff );
+      if( CppAD::isnan(z) )
+         censor = y <= 0.0;
+      else
+         censor = z <= 0.0;
+      if( censor )
+      {  Float c = 0.0;
+         Float erfc_value =
+            CppAD::erfc( (log(mu + d_eta) - log(c + d_eta)) / ( sigma * r2 ) );
+         logden_smooth    = log(erfc_value / 2.0 );
+         logden_sub_abs   = 0.0;
+      }
+      else
+      {  logden_smooth  = - log( sigma * sqrt( pi2 ) ) - wres * wres / 2.0;
+         logden_sub_abs = 0.0;
+      }
+      break;
+
+      case cen_laplace_enum:
+      assert( ! diff );
+      if( y <= 0 )
+      {  Float c = 0.0;
+         logden_smooth = - (mu - c) * r2 / sigma - std::log(2.0);
+         logden_sub_abs = 0.0;
+      }
+      else
+      {  logden_smooth  = - log( sigma * r2 );
+         logden_sub_abs = r2 * wres;
+      }
+      break;
+
+      case cen_log_laplace_enum:
+      assert( ! diff );
+      if( y <= 0 )
+      {  Float c = 0.0;
+         logden_smooth =
+            - (log(mu + d_eta) - log(c + d_eta)) * r2 / sigma - std::log(2.0);
+         logden_sub_abs = 0.0;
+      }
+      else
+      {  logden_smooth  = - log( sigma * r2 );
+         logden_sub_abs = r2 * wres;
       }
       break;
 

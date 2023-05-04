@@ -16,6 +16,14 @@ Changes and Additions to Dismod_at During 2023
 mm-dd
 *****
 
+05-04
+=====
+Add the
+:ref:`censor_density@Log Gaussian` and :ref:`censor_density@Log Laplace`
+to the discussion of censored densities.
+In addition, correct the evaluation of these densities
+when they are censored.
+
 05-03
 =====
 Replace the Binomial Distribution wish list item by the follow page:
