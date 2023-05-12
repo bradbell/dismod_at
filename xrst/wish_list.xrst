@@ -24,21 +24,13 @@ $Id:$
 Dismod_at Wish List
 ###################
 
-Speed Up Simple Commands
-************************
-All of the :ref:`commands<command-title>` ,
-except for the old2new and set option commands,
-read in all of the dismod_at :ref:`input-name` tables.
-The routine that reads the input tables could be made smarter to only read
-the tables necessary for the requested command.
-This would save time when the input tables are large.
-
-Information Matrix
-******************
-If :ref:`option_table@Optimize Fixed Only@quasi_fixed` is false,
-the :ref:`hes_fixed_table-name` could be computed without much extra work.
-In this case a subsequent :ref:`sample_command@asymptotic` sample command
-could use made faster by using this Hessian.
+Batch Command
+*************
+Add a batch command that combines multiple commands in a file.
+In some cases, dismod_at would not need to re-initialize and could save
+a considerable amount of time. For example, when executing a
+:ref:`sample_command-name` or :ref:`predict_command-name` after a
+:ref:`fit_command-name` .
 
 Empty Tables
 ************

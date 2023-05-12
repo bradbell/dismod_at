@@ -16,6 +16,13 @@ Changes and Additions to Dismod_at During 2023
 mm-dd
 *****
 
+05-12
+=====
+Add the :ref:`wish_list@Batch Command` wish list item,
+and remove the Information Matrix and Speed Up Simple Commands items.
+Combining commands is a better and more general solution to
+the problem of having to reinitialize the dismod_at model for each command.
+
 05-04
 =====
 #. Add the
@@ -58,11 +65,11 @@ Where possible, ``readonly`` was set to ``True`` .
 
 04-06
 =====
-Add the :ref:`wish_list@Speed Up Simple Commands` wish list item.
+Add the Speed Up Simple Commands wish list item.
 
 03-31
 =====
-Add the :ref:`wish_list@Information Matrix` wish list item.
+Add the Information Matrix wish list item.
 
 03-28
 =====
