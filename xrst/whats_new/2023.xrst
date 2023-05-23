@@ -8,6 +8,7 @@ $Id:$
    mm
    dd
    readonly
+   nslict
 }
 
 Changes and Additions to Dismod_at During 2023
@@ -15,6 +16,11 @@ Changes and Additions to Dismod_at During 2023
 
 mm-dd
 *****
+
+05-23
+=====
+The create_database :ref:`create_database@nslist_dict` argument was misspelled as nslict_dict.
+This has been fixed.
 
 05-12
 =====

@@ -502,7 +502,7 @@ def create_database(
    data_table      = list(),
    prior_table     = list(),
    smooth_table    = list(),
-   nslict_dict     = dict(),
+   nslist_dict     = dict(),
    rate_table      = list(),
    mulcov_table    = list(),
    option_table    = list(),
@@ -832,7 +832,7 @@ def create_database(
    col_name = [ 'nslist_name' ]
    col_type = [ 'text' ]
    row_list = list()
-   for nslist_name in nslict_dict  :
+   for nslist_name in nslist_dict  :
       row_list.append( [ nslist_name ] )
    tbl_name = 'nslist'
    dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
@@ -846,8 +846,8 @@ def create_database(
    col_type = [ 'integer',   'integer', 'integer'   ]
    row_list = list()
    tbl_name = 'nslist_pair'
-   for key in nslict_dict  :
-      pair_list = nslict_dict [key]
+   for key in nslist_dict  :
+      pair_list = nslist_dict [key]
       nslist_id = global_nslist_name2id[key]
       for pair in pair_list :
          node_id   = global_node_name2id[ pair[0] ]
