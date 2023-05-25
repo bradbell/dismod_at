@@ -5,11 +5,16 @@
 # Build check_example_user
 SET(depends "")
 #
+# This list below is result of ls ./*.py in this directory
+# and removing covid_19.py diabetes.py, speed.py,
+# and the .py at end of each entry.
+#
 # BEGIN_SORT_THIS_LINE_PLUS_2
 FOREACH(user_case
    age_avg_split
    average_integrand
    bilevel_random
+   binomial
    bnd_mulcov
    cascade
    censor

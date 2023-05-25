@@ -54,6 +54,7 @@ http://sqlitebrowser.org/.
 {xrst_toc_hidden
    example/user/age_avg_split.py
    example/user/bilevel_random.py
+   example/user/binomial.py
    example/user/bnd_mulcov.py
    example/user/cascade.py
    example/user/censor.py
@@ -122,6 +123,8 @@ Examples With Explanation
      - :ref:`user_average_integrand.py-title`
    * - user_bilevel_random.py
      - :ref:`user_bilevel_random.py-title`
+   * - user_binomial.py
+     - :ref:`user_binomial.py-title`
    * - user_bnd_mulcov.py
      - :ref:`user_bnd_mulcov.py-title`
    * - user_cascade.py
