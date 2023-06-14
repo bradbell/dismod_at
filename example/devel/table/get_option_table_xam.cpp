@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_option_table_xam.cpp dev}
@@ -54,6 +54,8 @@ bool get_option_table_xam(void)
       "max_num_iter_random",              "50",
       "method_random",                    "ipopt_random",
       "ode_step_size",                    "20.0",
+      "other_database",                   "",
+      "other_input_table",                "",
       "parent_node_id",                   "1",
       "parent_node_name",                 "north_america",
       "print_level_fixed",                "5",

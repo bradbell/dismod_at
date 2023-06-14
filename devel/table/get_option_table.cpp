@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_option_table dev}
@@ -95,6 +95,30 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
 {  using std::string;
    using CppAD::to_string;
    //
+   // input_table_list, input_table_list_size
+   const char* input_table_list[] = {
+      "age",
+      "avgint",
+      "covariate",
+      "data",
+      "density",
+      "integrand",
+      "mulcov",
+      "rate_eff_cov",
+      "node",
+      "nlist_pair",
+      "prior",
+      "rate",
+      "smooth",
+      "smooth_grid",
+      "subgroup",
+      "time",
+      "weight",
+      "weight_grid"
+   };
+   size_t input_table_list_size = \
+      sizeof(input_table_list) / sizeof(input_table_list[0]);
+   //
    // for error messaging
    string msg;
    //
@@ -119,6 +143,8 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
       { "meas_noise_effect",                "add_std_scale_all"  },
       { "method_random",                    "ipopt_random"       },
       { "ode_step_size",                    "10.0"               },
+      { "other_database",                   ""                   },
+      { "other_input_table",                ""                   },
       { "parent_node_id",                   ""                   },
       { "parent_node_name",                 ""                   },
       { "print_level_fixed",                "0"                  },
@@ -160,6 +186,8 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
    // values in table
    size_t  derivative_test_fixed_level = 0;
    bool    quasi_fixed                 = true;
+   bool    other_database              = false;
+   bool    other_input_table           = false;
    for(size_t option_id = 0; option_id < n_in_table; option_id++)
    {  // option_value_split
       CppAD::vector<string> option_value_split = split_space(
@@ -431,10 +459,40 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
             error_exit(msg, table_name, option_id);
          }
       }
+      // other_database
+      if( name_vec[match] == "other_database" )
+         other_database = true;
+      //
+      // other_input_table
+      if( name_vec[match] == "other_input_table" )
+      {  size_t size = sizeof(input_table_list) / sizeof(input_table_list[0]);
+         other_input_table = 0 < size;
+         for(size_t i = 0; i < option_value_split.size(); ++i)
+         {  const string& table_tmp = option_value_split[i];
+            if( table_tmp == "option" )
+            {  msg  = table_tmp + " table name cannot appear in the ";
+               msg  += "other_input_table list";
+               error_exit(msg, table_tmp, option_id);
+            }
+            bool  found = false;
+            for(size_t j = 0; j < input_table_list_size; ++j)
+               found = found || table_tmp == input_table_list[j];
+            if( ! found )
+            {  msg  = table_tmp + " in option_value list";
+               msg += " is not a valid input table name";
+               error_exit(msg, table_name, option_id);
+            }
+         }
+      }
    }
    if( quasi_fixed && (derivative_test_fixed_level > 1 ) )
    {  msg  = "quasi_fixed option is true and derivative_test_fixed";
       msg += " is second-order or only-second-order";
+      error_exit(msg, table_name);
+   }
+   if( other_input_table and not other_database )
+   {  msg  = "other_input_table option is non-empty and other_database";
+      msg += " is not specified";
       error_exit(msg, table_name);
    }
    //

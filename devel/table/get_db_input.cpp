@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_db_input dev}
@@ -65,9 +65,9 @@ The return value has prototype
 
 where ``db_input_struct`` is defined by
 {xrst_literal
-   include/dismod_at/get_db_input.hpp
-   // BEGIN STRUCT
-   // END STRUCT
+include/dismod_at/get_db_input.hpp
+// BEGIN STRUCT
+// END STRUCT
 }
 
 Each *name* _ ``table`` above is defined by the corresponding
@@ -83,6 +83,7 @@ information.
 -----------------------------------------------------------------------------
 */
 # include <limits>
+# include <dismod_at/configure.hpp>
 # include <dismod_at/min_max_vector.hpp>
 # include <dismod_at/get_db_input.hpp>
 # include <dismod_at/get_age_table.hpp>
@@ -96,6 +97,7 @@ information.
 # include <dismod_at/null_int.hpp>
 # include <cppad/utility/to_string.hpp>
 # include <dismod_at/error_exit.hpp>
+# include <dismod_at/open_connection.hpp>
 
 # define DISMOD_AT_CHECK_PRIMARY_ID(in_table, in_name, primary_table)\
 for(size_t row_id = 0; row_id < db_input.in_table ## _table.size(); row_id++) \
@@ -112,12 +114,20 @@ for(size_t row_id = 0; row_id < db_input.in_table ## _table.size(); row_id++) \
    } \
 }
 
+# define DISMOD_AT_SET_DB_TMP(table_name) \
+   if( other_input_table.find( #table_name ) != std::string::npos ) \
+      db_tmp = db_other; \
+   else \
+      db_tmp = db;
+
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 void get_db_input(sqlite3* db, db_input_struct& db_input)
 {  using CppAD::vector;
    using CppAD::to_string;
    //
+   // check db_input
+   assert( db_input.option_table.size() == 0 );
    assert( db_input.age_table.size() == 0 );
    assert( db_input.time_table.size() == 0 );
    assert( db_input.rate_table.size() == 0 );
@@ -128,7 +138,6 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
    assert( db_input.node_table.size() == 0 );
    assert( db_input.rate_eff_cov_table.size() == 0 );
    assert( db_input.mulcov_table.size() == 0 );
-   assert( db_input.option_table.size() == 0 );
    assert( db_input.nslist_table.size() == 0 );
    assert( db_input.nslist_pair_table.size() == 0 );
    assert( db_input.subgroup_table.size() == 0 );
@@ -140,44 +149,85 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
    assert( db_input.avgint_table.size() == 0 );
    assert( db_input.weight_grid_table.size() == 0 );
    //
-   db_input.age_table         = get_age_table(db);
-   db_input.time_table        = get_time_table(db);
-   db_input.rate_table        = get_rate_table(db);
-   db_input.density_table     = get_density_table(db);
-   db_input.weight_table      = get_weight_table(db);
-   db_input.smooth_table      = get_smooth_table(db);
-   db_input.covariate_table   = get_covariate_table(db);
-   db_input.node_table        = get_node_table(db);
+   // option table
    db_input.option_table      = get_option_table(db);
-   db_input.nslist_table      = get_nslist_table(db);
-   db_input.nslist_pair_table = get_nslist_pair(db);
-   db_input.subgroup_table    = get_subgroup_table(db);
+   //
+   // db_other
+   sqlite3* db_other = DISMOD_AT_NULL_PTR;
+   for(size_t i = 0; i < db_input.option_table.size(); ++i)
+   if(  db_input.option_table[i].option_name == "other_database" )
+   {  bool   new_file = false;
+      std::string database = db_input.option_table[i].option_value;
+      if( database != "" )
+      {  db_other = dismod_at::open_connection(database, new_file);
+         assert( db_other != DISMOD_AT_NULL_PTR );
+      }
+   }
+   //
+   // other_input_table
+   std::string other_input_table = "";
+   if( db_other != DISMOD_AT_NULL_PTR )
+   for(size_t i = 0; i < db_input.option_table.size(); ++i)
+   if(  db_input.option_table[i].option_name == "other_input_table" )
+   {  other_input_table = db_input.option_table[i].option_value;
+   }
+   //
+   sqlite3* db_tmp;
+   //
+   DISMOD_AT_SET_DB_TMP(age)
+   db_input.age_table         = get_age_table(db_tmp);
+   DISMOD_AT_SET_DB_TMP(time)
+   db_input.time_table        = get_time_table(db_tmp);
+   DISMOD_AT_SET_DB_TMP(rate)
+   db_input.rate_table        = get_rate_table(db_tmp);
+   DISMOD_AT_SET_DB_TMP(density)
+   db_input.density_table     = get_density_table(db_tmp);
+   DISMOD_AT_SET_DB_TMP(weight)
+   db_input.weight_table      = get_weight_table(db_tmp);
+   DISMOD_AT_SET_DB_TMP(smooth)
+   db_input.smooth_table      = get_smooth_table(db_tmp);
+   DISMOD_AT_SET_DB_TMP(covariate)
+   db_input.covariate_table   = get_covariate_table(db_tmp);
+   DISMOD_AT_SET_DB_TMP(node)
+   db_input.node_table        = get_node_table(db_tmp);
+   DISMOD_AT_SET_DB_TMP(nlist)
+   db_input.nslist_table      = get_nslist_table(db_tmp);
+   DISMOD_AT_SET_DB_TMP(nlist_pair)
+   db_input.nslist_pair_table = get_nslist_pair(db_tmp);
+   DISMOD_AT_SET_DB_TMP(subgroup)
+   db_input.subgroup_table    = get_subgroup_table(db_tmp);
    //
    // get_rate_eff_cov_table uses node_table and covariate_table
    // to check for errors
    {  size_t n_covariate      = db_input.covariate_table.size();
       size_t n_node           = db_input.node_table.size();
-      db_input.rate_eff_cov_table = get_rate_eff_cov_table(db, n_covariate, n_node);
+      DISMOD_AT_SET_DB_TMP(rate_eff_cov)
+      db_input.rate_eff_cov_table =
+         get_rate_eff_cov_table(db_tmp, n_covariate, n_node);
    }
    //
    // get_mulcov_table uses subgroup table
    // to check for erros
-   db_input.mulcov_table = get_mulcov_table(db, db_input.subgroup_table);
+   DISMOD_AT_SET_DB_TMP(mulcov)
+   db_input.mulcov_table = get_mulcov_table(db_tmp, db_input.subgroup_table);
    //
    // get_prior_table uses density_table
    // to check for errors
-   db_input.prior_table = get_prior_table(db, db_input.density_table);
+   DISMOD_AT_SET_DB_TMP(prior)
+   db_input.prior_table = get_prior_table(db_tmp, db_input.density_table);
    //
    // get_smooth_grid_table uses density_table and prior_table
    // to check for errors
+   DISMOD_AT_SET_DB_TMP(smooth_grid)
    db_input.smooth_grid_table = get_smooth_grid(
-      db, db_input.density_table, db_input.prior_table
+      db_tmp, db_input.density_table, db_input.prior_table
    );
    //
    // get_integrand_table uses mulcov_table and option_table
    // to check for errors
+   DISMOD_AT_SET_DB_TMP(integrand)
    db_input.integrand_table  = get_integrand_table(
-      db, db_input.mulcov_table, db_input.option_table
+      db_tmp, db_input.mulcov_table, db_input.option_table
    );
    //
    // get_data_table and get_avgint_table use this information
@@ -187,18 +237,21 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
    double age_max          = max_vector( db_input.age_table );
    double time_min         = min_vector( db_input.time_table );
    double time_max         = max_vector( db_input.time_table );
+   DISMOD_AT_SET_DB_TMP(data)
    get_data_table(
-      db, db_input.density_table,
+      db_tmp, db_input.density_table,
       n_covariate, age_min, age_max, time_min, time_max,
       db_input.data_table, db_input.data_cov_value
    );
+   DISMOD_AT_SET_DB_TMP(avgint)
    get_avgint_table(
-      db, n_covariate, age_min, age_max, time_min, time_max,
+      db_tmp, n_covariate, age_min, age_max, time_min, time_max,
       db_input.avgint_table, db_input.avgint_cov_value
    );
    // get_weight_grid_table checks if weight_id is in the data or avgint table.
+   DISMOD_AT_SET_DB_TMP(weight)
    db_input.weight_grid_table = get_weight_grid(
-      db, db_input.data_table, db_input.avgint_table
+      db_tmp, db_input.data_table, db_input.avgint_table
    );
    //
    // -----------------------------------------------------------------------

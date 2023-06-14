@@ -17,6 +17,10 @@ Changes and Additions to Dismod_at During 2023
 mm-dd
 *****
 
+06-14
+=====
+Add the :ref:`option_table@Other Database` options.
+
 05-25
 =====
 Add the :ref:`user_binomial.py-name` example.

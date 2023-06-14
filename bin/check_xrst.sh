@@ -15,6 +15,21 @@ index_page_name=$(\
    sed -e 's|^ *--index_page_name *||' \
 )
 #
+# build
+if [ ! -e build ]
+then
+   if [ -e build.debug ]
+   then
+      ln -s build.release build
+   else
+      if [ ! -e build.release ]
+      then
+         mkdir build.release
+      fi
+      ln -s build.release build
+   fi
+fi
+#
 # build/html
 if [ -e build/html ]
 then
