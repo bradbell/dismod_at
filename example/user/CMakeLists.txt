@@ -44,6 +44,7 @@ FOREACH(user_case
    mulstd
    no_children
    one_function
+   other_database
    plot_curve
    plot_data_fit
    plot_rate_fit

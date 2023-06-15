@@ -686,7 +686,8 @@ def db2csv_command(database_file_arg) :
       first_digit = int( math.floor( math.log10( abs(x) ) ) )
       return round(x, n_digits - first_digit - 1)
    # -------------------------------------------------------------------------
-   def check4table(cursor, table_name) :
+   def check4table(table_name) :
+      cursor  = table_name2cursor(table_name)
       cmd     = "SELECT * FROM sqlite_master WHERE type='table' AND name="
       cmd    += "'" + table_name + "';"
       info    = cursor.execute(cmd).fetchall()
@@ -697,7 +698,8 @@ def db2csv_command(database_file_arg) :
          result = True
       return result
    # -------------------------------------------------------------------------
-   def check_table_columns(connection, table_name, table_columns) :
+   def check_table_columns(table_name, table_columns) :
+      connection = table_name2connection(table_name)
       if len( table_name ) == 0 :
          return True
       (col_name, col_type) = dismod_at.get_name_type(connection, table_name)
@@ -817,12 +819,41 @@ def db2csv_command(database_file_arg) :
             result.add(child_node_id)
       return result
    # -------------------------------------------------------------------------
-   file_name    = database_file_arg
-   database_dir = os.path.split(database_file_arg)[0]
-   connection   = dismod_at.create_connection(
+   # table_name2connection, table_name2cursor
+   #
+   file_name          = database_file_arg
+   database_dir       = os.path.split(database_file_arg)[0]
+   primary_connection = dismod_at.create_connection(
       file_name, new = False, readonly = True
    )
-   cursor       = connection.cursor()
+   primary_cursor     = primary_connection.cursor()
+   option_table       = dismod_at.get_table_dict(primary_connection, 'option')
+   #
+   other_connection       = None
+   other_cursor           = None
+   other_input_table_list = None
+   for row in option_table :
+      if row['option_name'] == 'other_database' :
+         other_database   = row['option_value']
+         other_connection = dismod_at.create_connection(
+            other_database, new = False, readonly = True
+         )
+         other_cursor = other_connection.cursor()
+      if row['option_name'] == 'other_input_table' :
+         other_input_table_list = row['option_value'].split(' ')
+   #
+   def table_name2connection(table_name) :
+      if other_connection != None and other_input_table_list != None :
+         if table_name in other_input_table_list :
+            return other_connection
+      return primary_connection
+   #
+   # table_name2cursor
+   def table_name2cursor(table_name) :
+      if other_connection != None and other_input_table_list != None :
+         if table_name in other_input_table_list :
+            return other_cursor
+      return primary_cursor
    # -------------------------------------------------------------------------
    required_table_list  = [
       'age',
@@ -850,24 +881,24 @@ def db2csv_command(database_file_arg) :
       'weight'
    ]
    for table in required_table_list :
-      if not check4table( cursor, table ):
+      if not check4table(table):
          msg  = 'db2csv_command: the required table ' + table + '\n'
          msg += 'is missing from file ' + file_name + '\n'
          assert False, msg
    #
    have_table = dict()
-   have_table['depend_var']      = check4table(cursor, 'depend_var')
-   have_table['truth_var']       = check4table(cursor, 'truth_var')
-   have_table['sample']          = check4table(cursor, 'sample')
-   have_table['data_sim']        = check4table(cursor, 'data_sim')
-   have_table['prior_sim']       = check4table(cursor, 'prior_sim')
-   have_table['fit_var']         = check4table(cursor, 'fit_var')
-   have_table['fit_data_subset'] = check4table(cursor, 'fit_data_subset')
-   have_table['predict']         = check4table(cursor, 'predict')
-   have_table['hes_fixed']       = check4table(cursor, 'hes_fixed')
-   have_table['hes_random']      = check4table(cursor, 'hes_random')
-   have_table['trace_fixed']     = check4table(cursor, 'trace_fixed')
-   have_table['mixed_info']      = check4table(cursor, 'mixed_info')
+   have_table['depend_var']      = check4table('depend_var')
+   have_table['truth_var']       = check4table('truth_var')
+   have_table['sample']          = check4table('sample')
+   have_table['data_sim']        = check4table('data_sim')
+   have_table['prior_sim']       = check4table('prior_sim')
+   have_table['fit_var']         = check4table('fit_var')
+   have_table['fit_data_subset'] = check4table('fit_data_subset')
+   have_table['predict']         = check4table('predict')
+   have_table['hes_fixed']       = check4table('hes_fixed')
+   have_table['hes_random']      = check4table('hes_random')
+   have_table['trace_fixed']     = check4table('trace_fixed')
+   have_table['mixed_info']      = check4table('mixed_info')
    # ----------------------------------------------------------------------
    # check pairs of tables that should come togeather
    table_pair_list = [
@@ -892,6 +923,7 @@ def db2csv_command(database_file_arg) :
    # ----------------------------------------------------------------------
    # table_data
    for table in table_list :
+      connection        = table_name2connection(table)
       table_data[table] = dismod_at.get_table_dict(connection, table)
    # ----------------------------------------------------------------------
    # check tables that are supposed to be the same length
@@ -920,12 +952,12 @@ def db2csv_command(database_file_arg) :
    # age, time
    for table_name in [ 'age', 'time' ] :
       table_columns = [ (table_name, 'real') ]
-      check_table_columns(connection, table_name, table_columns)
+      check_table_columns(table_name, table_columns)
    #
    # integrand, density
    for table_name in [ 'integrand', 'density' ]:
       table_columns = [ (table_name + '_name', 'text') ]
-      check_table_columns(connection, table_name, table_columns)
+      check_table_columns(table_name, table_columns)
    #
    # covariate
    table_name    = 'covariate'
@@ -934,12 +966,12 @@ def db2csv_command(database_file_arg) :
       ('reference',       'real'),
       ('max_difference',  'real'),
    ]
-   check_table_columns(connection, table_name, table_columns)
+   check_table_columns(table_name, table_columns)
    #
    # option
    table_name    = 'option'
    table_columns = [ ('option_name', 'text'), ('option_value', 'text') ]
-   check_table_columns(connection, table_name, table_columns)
+   check_table_columns(table_name, table_columns)
    #
    # mulcov
    table_name    = 'mulcov'
@@ -952,7 +984,7 @@ def db2csv_command(database_file_arg) :
       ('group_smooth_id',     'integer'),
       ('subgroup_smooth_id',  'integer'),
    ]
-   check_table_columns(connection, table_name, table_columns)
+   check_table_columns(table_name, table_columns)
    #
    # node
    table_name    = 'node'
@@ -960,7 +992,7 @@ def db2csv_command(database_file_arg) :
       ('node_name',  'text'),
       ('parent',     'integer'),
    ]
-   check_table_columns(connection, table_name, table_columns)
+   check_table_columns(table_name, table_columns)
    #
    # subgroup
    table_name    = 'subgroup'
@@ -969,7 +1001,7 @@ def db2csv_command(database_file_arg) :
       ('group_id',       'integer'),
       ('group_name',        'text'),
    ]
-   check_table_columns(connection, table_name, table_columns)
+   check_table_columns(table_name, table_columns)
    #
    # prior
    table_name    = 'prior'
@@ -983,7 +1015,7 @@ def db2csv_command(database_file_arg) :
       ('eta',               'real'),
       ('nu',                'real'),
    ]
-   check_table_columns(connection, table_name, table_columns)
+   check_table_columns(table_name, table_columns)
    #
    # rate
    table_name    = 'rate'
@@ -993,7 +1025,7 @@ def db2csv_command(database_file_arg) :
       ('child_smooth_id',    'integer'),
       ('child_nslist_id',    'integer'),
    ]
-   check_table_columns(connection, table_name, table_columns)
+   check_table_columns(table_name, table_columns)
    #
    # smooth
    table_name    = 'smooth'
@@ -1005,7 +1037,7 @@ def db2csv_command(database_file_arg) :
       ('mulstd_dage_prior_id',   'integer'),
       ('mulstd_dtime_prior_id',  'integer'),
    ]
-   check_table_columns(connection, table_name, table_columns)
+   check_table_columns(table_name, table_columns)
    #
    # smooth_grid
    table_name    = 'smooth_grid'
@@ -1018,7 +1050,7 @@ def db2csv_command(database_file_arg) :
       ('dtime_prior_id',         'integer'),
       ('const_value',            'real'),
    ]
-   check_table_columns(connection, table_name, table_columns)
+   check_table_columns(table_name, table_columns)
    #
    # weight
    table_name    = 'weight'
@@ -1027,7 +1059,7 @@ def db2csv_command(database_file_arg) :
       ('n_age',                  'integer'),
       ('n_time',                 'integer'),
    ]
-   check_table_columns(connection, table_name, table_columns)
+   check_table_columns(table_name, table_columns)
    #
    # weight_grid
    table_name    = 'weight_grid'
@@ -1037,7 +1069,7 @@ def db2csv_command(database_file_arg) :
       ('time_id',                'integer'),
       ('weight',                 'real'),
    ]
-   check_table_columns(connection, table_name, table_columns)
+   check_table_columns(table_name, table_columns)
    #
    # avgint
    table_name    = 'avgint'
@@ -1051,7 +1083,7 @@ def db2csv_command(database_file_arg) :
       ('time_lower',      'real'),
       ('time_upper',      'real'),
    ]
-   check_table_columns(connection, table_name, table_columns)
+   check_table_columns(table_name, table_columns)
    #
    # data
    table_name     = 'data'
@@ -1062,7 +1094,7 @@ def db2csv_command(database_file_arg) :
       ('eta',           'real'),
       ('nu',            'real'),
    ]
-   check_table_columns(connection, table_name, table_columns)
+   check_table_columns(table_name, table_columns)
    # ----------------------------------------------------------------------
    # parent_node_id
    parent_node_id     = None
@@ -1110,6 +1142,7 @@ def db2csv_command(database_file_arg) :
    simulate_index     = None
    #
    # search for the last fit command in the log table
+   connection = table_name2connection('log')
    log_data  = dismod_at.get_table_dict(connection, 'log')
    for i in range( len(log_data) ) :
       log_id        = len(log_data) - i - 1
@@ -1176,6 +1209,9 @@ def db2csv_command(database_file_arg) :
       [ "max_num_iter_random",               "100"],
       [ "meas_noise_effect",                 "add_std_scale_all"],
       [ "method_random",                     "ipopt_random"],
+      [ "ode_step_size",                     "10.0"],
+      [ "other_database",                    ""],
+      [ "other_input_table",                 ""],
       [ "ode_step_size",                     "10.0"],
       [ "parent_node_id",                    ""],
       [ "parent_node_name",                  ""],
