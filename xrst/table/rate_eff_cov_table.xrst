@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin rate_eff_cov_table}
 
@@ -43,6 +43,12 @@ when all the following conditions hold:
 If the conditions above do not hold,
 the :ref:`data table <data_table@Covariates>` in the data and avgint tables
 are used to compute covariate multiplier effects.
+
+Optional
+********
+This table is optional.
+The case where there is not ``rate_eff_cov`` table in the database
+is the same as when the table has not entries.
 
 rate_eff_cov_id
 ***************

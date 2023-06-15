@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_rate_eff_cov_table dev}
@@ -23,6 +23,12 @@ Prototype
    // BEGIN_PROTOTYPE
    // END_PROTOTYPE
 }
+
+Optional
+********
+This table is optional.
+The case where there is not ``rate_eff_cov`` table in the database
+is the same as when the table has not entries.
 
 db
 **
