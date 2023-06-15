@@ -84,6 +84,7 @@ http://sqlitebrowser.org/.
    example/user/mulstd.py
    example/user/no_children.py
    example/user/one_function.py
+   example/user/other_database.py
    example/user/plot_curve.py
    example/user/plot_data_fit.py
    example/user/plot_rate_fit.py
@@ -183,6 +184,8 @@ Examples With Explanation
      - :ref:`user_rate_eff_cov_table.py-title`
    * - user_one_function.py
      - :ref:`user_one_function.py-title`
+   * - user_other_database.py
+     - :ref:`user_other_database.py-title`
    * - user_plot_curve.py
      - :ref:`user_plot_curve.py-title`
    * - user_plot_data_fit.py
