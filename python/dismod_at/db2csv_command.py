@@ -835,12 +835,14 @@ def db2csv_command(database_file_arg) :
    for row in option_table :
       if row['option_name'] == 'other_database' :
          other_database   = row['option_value']
-         other_connection = dismod_at.create_connection(
-            other_database, new = False, readonly = True
-         )
-         other_cursor = other_connection.cursor()
-      if row['option_name'] == 'other_input_table' :
-         other_input_table_list = row['option_value'].split(' ')
+         if other_database != None :
+            other_connection = dismod_at.create_connection(
+               other_database, new = False, readonly = True
+            )
+            other_cursor = other_connection.cursor()
+         if row['option_name'] == 'other_input_table' :
+            if row['option_value'] != None :
+               other_input_table_list = row['option_value'].split(' ')
    #
    def table_name2connection(table_name) :
       if other_connection != None and other_input_table_list != None :

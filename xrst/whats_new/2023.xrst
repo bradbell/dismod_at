@@ -19,8 +19,11 @@ mm-dd
 
 06-15
 =====
-Add documentation of the fact that the rate_eff_cov table is
-:ref:`rate_eff_cov_table@Optional` .
+#. Add documentation of the fact that the rate_eff_cov table is
+   :ref:`rate_eff_cov_table@Optional` .
+#. Fix :ref:`db2csv_command-name` when
+   :ref:`option_table@Other Database@other_database` or
+   :ref:`option_table@Other Database@other_input_table` is null.
 
 06-14
 =====
