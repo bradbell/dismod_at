@@ -90,11 +90,31 @@ def check4table(cursor, table_name) :
 # ----------------------------------------------------------------------------
 def plot_rate_fit(database, pdf_file, plot_title, rate_set) :
    #
-   # tables
+   # connection
    connection = dismod_at.create_connection(
       database, new = False, readonly = True
    )
+   #
+   # tables
    tables     = dict()
+   tables['option'] = dismod_at.get_table_dict(connection, 'option')
+   #
+   # other_connection, other_input_table_list
+   other_connection       = None
+   other_database         = None
+   other_input_table_list = None
+   for row in tables['option'] :
+      if row['option_name'] == 'other_database' :
+         other_database = row['option_value']
+      if row['option_name'] == 'other_input_table' :
+         other_input_table = row['option_value']
+         other_input_table_list = other_input_table.split(' ')
+   if other_database != None and other_input_table_list != None :
+      other_connection = dismod_at.create_connection(
+         other_database, new = False, readonly = True
+      )
+   #
+   # tables
    for name in [
       'age',
       'fit_var',
@@ -106,10 +126,16 @@ def plot_rate_fit(database, pdf_file, plot_title, rate_set) :
       'var',
 
    ] :
-      tables[name] = dismod_at.get_table_dict(connection, name)
+      if name in other_input_table_list :
+         tables[name] = dismod_at.get_table_dict(other_connection, name)
+      else :
+         tables[name] = dismod_at.get_table_dict(connection, name)
+   assert 'sample' not in other_input_table_list
    if check4table(connection, 'sample') :
       tables['sample'] = dismod_at.get_table_dict(connection, 'sample')
    connection.close()
+   if other_connection != None :
+      other_connection.close()
    #
    # parent_node_id
    parent_node_id = get_parent_node_id(tables)

@@ -19,7 +19,11 @@ mm-dd
 
 06-17
 =====
-The :ref:`perturb_command-name` and :ref:`db2csv_command-name`
+The routines
+:ref:`perturb_command-name` ,
+:ref:`db2csv_command-name`  ,
+:ref:`plot_rate_fit-name`  , and
+:ref:`plot_data_fit-name`  ,
 did not handle the
 :ref:`option_table@Other Database@other_database` options correctly.
 This has been fixed.
