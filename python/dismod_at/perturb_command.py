@@ -71,11 +71,30 @@ import math
 # -----------------------------------------------------------------------------
 def get_limit_var_table(database) :
    #
-   # table
+   # connection
    connection = dismod_at.create_connection(
       database, new = False, readonly = True
    )
+   #
+   # table['option']
    table = dict()
+   table['option'] = dismod_at.get_table_dict(connection, 'option')
+   #
+   # other_connection, other_input_table_list
+   other_connection       = None
+   other_database         = None
+   other_input_table_list = None
+   for row in table['option'] :
+      if row['option_name'] == 'other_database' :
+         other_database = row['option_value']
+      if row['option_name'] == 'other_input_table' :
+         other_input_table = row['option_value']
+         other_input_table_list = other_input_table.split(' ')
+   if other_database != None and other_input_table_list != None :
+      other_connection = dismod_at.create_connection(
+         other_database, new = False, readonly = True
+      )
+   #
    for tbl_name in [
       'node',
       'option',
@@ -84,8 +103,13 @@ def get_limit_var_table(database) :
       'smooth_grid',
       'var',
    ] :
-      table[tbl_name] = dismod_at.get_table_dict(connection, tbl_name)
+      if tbl_name in other_input_table_list :
+         table[tbl_name] = dismod_at.get_table_dict(other_connection, tbl_name)
+      else :
+         table[tbl_name] = dismod_at.get_table_dict(connection, tbl_name)
    connection.close()
+   if other_connection != None :
+      other_connection.close()
    #
    # parent_node_id
    parent_node_id   = None

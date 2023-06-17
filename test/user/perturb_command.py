@@ -6,6 +6,7 @@
 # ------------------------------------------------------------------------
 iota_mean     = 0.01
 # ------------------------------------------------------------------------
+import shutil
 import sys
 import os
 import subprocess
@@ -117,6 +118,9 @@ def example_db (file_name) :
       { 'name':'random_seed',            'value':'0'                 },
       { 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 
+      { 'name':'other_database',         'value':'other.db'          },
+      { 'name':'other_input_table',      'value':'node'              },
+
       { 'name':'quasi_fixed',            'value':'true'              },
       { 'name':'derivative_test_fixed',  'value':'none'              },
       { 'name':'max_num_iter_fixed',     'value':'50'                },
@@ -126,7 +130,8 @@ def example_db (file_name) :
       { 'name':'derivative_test_random', 'value':'second-order'      },
       { 'name':'max_num_iter_random',    'value':'50'                },
       { 'name':'print_level_random',     'value':'0'                 },
-      { 'name':'tolerance_random',       'value':'1e-10'             }
+      { 'name':'tolerance_random',       'value':'1e-10'             },
+
    ]
    #
    # This entry used to fail on fit both because there are no child iota rates
@@ -166,28 +171,32 @@ def example_db (file_name) :
    n_smooth  = len( smooth_table )
    return
 # ===========================================================================
+#
+# file_name, example.db, program
 file_name      = 'example.db'
 example_db(file_name)
 program        = '../../devel/dismod_at'
 #
-dismod_at.system_command_prc( [program, file_name, 'init' ] )
+# other.db
+shutil.copyfile('example.db', 'other.db')
 #
-os.chdir('../../..')
-dismod_at.system_command_prc( [
-   'python/bin/dismodat.py', 'build/test/user/example.db',
-   'perturb', 'start_var', '.2'
-] )
-dismod_at.system_command_prc( [
-   'python/bin/dismodat.py', 'build/test/user/example.db',
-   'perturb', 'scale_var', '.2'
-] )
-os.chdir('build/test/user')
-
-dismod_at.system_command_prc( [program, file_name, 'fit', 'both' ] )
+# example.db
+connection = dismod_at.create_connection('example.db', new = False)
+command = 'DROP TABLE node'
+dismod_at.sql_command(connection, command)
+connection.close()
+# -----------------------------------------------------------------------
+#
+dismod_at.system_command_prc( [program, 'example.db', 'init' ] )
+#
+dismod_at.perturb_command('example.db', 'start_var', '.2')
+dismod_at.perturb_command('example.db', 'scale_var', '.2')
+#
+dismod_at.system_command_prc( [program, 'example.db', 'fit', 'both' ] )
 # -----------------------------------------------------------------------
 # connect to database
 connection      = dismod_at.create_connection(
-   file_name, new = False, readonly = True
+   'example.db', new = False, readonly = True
 )
 # -----------------------------------------------------------------------
 # Results for fitting with no noise
@@ -197,6 +206,7 @@ var_table       = dismod_at.get_table_dict(connection, 'var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 start_var_table = dismod_at.get_table_dict(connection, 'start_var')
 scale_var_table = dismod_at.get_table_dict(connection, 'scale_var')
+connection.close()
 #
 n_age  = len( age_table )
 n_time = len( time_table )
