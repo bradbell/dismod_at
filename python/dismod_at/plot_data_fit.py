@@ -138,14 +138,14 @@ def plot_data_fit(
    # other_connection, other_input_table_list
    other_connection       = None
    other_database         = None
-   other_input_table_list = None
+   other_input_table_list = list()
    for row in tables['option'] :
       if row['option_name'] == 'other_database' :
          other_database = row['option_value']
       if row['option_name'] == 'other_input_table' :
          other_input_table = row['option_value']
          other_input_table_list = other_input_table.split(' ')
-   if other_database != None and other_input_table_list != None :
+   if other_database != None :
       other_connection = dismod_at.create_connection(
          other_database, new = False, readonly = True
       )

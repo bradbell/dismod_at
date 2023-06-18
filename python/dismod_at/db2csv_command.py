@@ -831,7 +831,7 @@ def db2csv_command(database_file_arg) :
    #
    other_connection       = None
    other_cursor           = None
-   other_input_table_list = None
+   other_input_table_list = list()
    for row in option_table :
       if row['option_name'] == 'other_database' :
          other_database   = row['option_value']
@@ -845,14 +845,14 @@ def db2csv_command(database_file_arg) :
             other_input_table_list = row['option_value'].split(' ')
    #
    def table_name2connection(table_name) :
-      if other_connection != None and other_input_table_list != None :
+      if other_connection != None :
          if table_name in other_input_table_list :
             return other_connection
       return primary_connection
    #
    # table_name2cursor
    def table_name2cursor(table_name) :
-      if other_connection != None and other_input_table_list != None :
+      if other_connection != None :
          if table_name in other_input_table_list :
             return other_cursor
       return primary_cursor
