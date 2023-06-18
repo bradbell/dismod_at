@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin whats_new_2020}
 {xrst_spell
@@ -499,10 +499,8 @@ wish list item.
 01-08
 =====
 
-#. Add documentation for the arguments
-   :ref:`dock_dismod_at.sh@Run New Container@database` and
-   :ref:`dock_dismod_at.sh@Run New Container@command` under
-   running a new container.
+#. Add documentation for the database and command arguments
+   under running a new container.
 #. Advance the dock_dismod_at.sh
    :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
    to 2020010.

@@ -28,6 +28,10 @@ mm-dd
    was advanced to 20230618,
    and the :ref:`dock_dismod_at.sh@Building Images@at_cascade_version`
    was advanced to 2023.6.18 .
+#. The dock_dismod_at.sh script was changed so that it just builds
+   (does not run) the dismod_at image.
+   In addition, the testing of the debug version of
+   at_cascade was removed because it is slow.
 
 06-17
 =====

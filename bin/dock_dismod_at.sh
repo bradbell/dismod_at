@@ -9,9 +9,9 @@
 #     dockerfile
 #     get get
 #     podman
-#     ps
 #     rm
 #     rmi
+#     cp
 # }
 # {xrst_comment_ch #}
 #
@@ -21,11 +21,36 @@
 # Syntax
 # ******
 #
-# | ./ ``dock_dismod_at.sh image base``
-# | ./ ``dock_dismod_at.sh image mixed``
-# | ./ ``dock_dismod_at.sh image dismod_at``
-# | ./ ``dock_dismod_at.sh image at_cascade``
-# | ./ ``dock_dismod_at.sh`` *build_type* *database* *command*  ...
+# Build Images
+# ============
+#
+# | ``./dock_dismod_at.sh image base``
+# | ``./dock_dismod_at.sh image mixed``
+# | ``./dock_dismod_at.sh image dismod_at``
+# | ``./dock_dismod_at.sh image at_cascade``
+#
+# Run Container
+# =============
+#
+# | *driver* ``run -it --name`` *container_name* ``dismod_at.image bash``
+# | *driver* ``run -it --name`` *container_name* ``at_cascade.image bash``
+#
+# Resume Container
+# ================
+#
+# | *driver* ``start`` *container_name*
+# | *driver* ``exec -it`` *container_name* ``bash``
+#
+# Copy Files
+# ==========
+#
+# | *driver* ``cp`` *file_name* |space| *container_name*\ ``:/home/work``
+# | *driver* ``cp`` *container_name*\ ``:/home/work/``\ *file_name* |space| .
+#
+# Remove Container
+# ================
+# | *driver* stop *container_name*
+# | *driver* rm *container_name*
 #
 # OCI
 # ***
@@ -41,7 +66,7 @@
    driver='podman'
 # {xrst_code}
 # {xrst_spell_on}
-# Below we referee to the value of this shell variable as *driver* .
+# Above and below we refer to the value of this shell variable as *driver* .
 #
 # Logging Output
 # **************
@@ -49,7 +74,7 @@
 # standard output and standard error to a file.
 # For example,
 #
-#     ./ ``dock_dismod_at.sh image base >&`` *log_file*
+#     ``./dock_dismod_at.sh image base >&`` *log_file*
 #
 # will redirect standard output and standard error to *log_file* .
 # If you do this, you will not see the progress during execution.
@@ -62,8 +87,7 @@
 #
 # Purpose
 # *******
-# This bash script will create or run a dismod_at OCI image
-# and can be run from any directory.
+# This bash script will create a dismod_at or at_cascade OCI image.
 # Using this script is an  alternative to going through the steps required to
 # :ref:`install_dismod_at<install_unix-name>` .
 # You can use the following link to get a get a copy of the dismod_at.sh
@@ -195,125 +219,35 @@
 #    You system clock may be out of date (reporting an old day or time).
 #    Try fixing the system clock.
 #
-# Run New Container
-# *****************
-# Once ``dismod_at.image`` has been created, you use the
-# *build_type* syntax to run dismod_at in a container.
-#
-# Removing Containers
-# ===================
-# The dismod_at container for a particular *user* will be named
-# ``dismod_at.`` *user* .
-# If such a container already exists,
-# you will be prompted with the corresponding *container_id* .
-# The command
-#
-#     *driver* ``rm`` *container_id*
-#
-# will remove the container.
-# If the container is still running, you will need to use
-#
-#     *driver* ``rm --force`` *container_id*
-#
-# build_type
-# ==========
-# The *build_type* syntax will run the correspond
-# :ref:`command-name` in the OCI image.
-# The argument *build_type* must be either ``debug`` or
-# ``release`` .
-# The ``release`` version should be much faster.
-# The ``debug`` version will do more extensive error checking.
-#
-# database
-# ========
-# The second argument *database* must be a dismod_at database
-# in the current working directory.
-# This the first argument to the corresponding dismod_at command.
-#
-# command
-# =======
-# The third argument *command* must be one of the dismod_at commands.
-# This is the second argument in the corresponding dismod_at command.
-# The rest of the arguments ... are
-# the same as the corresponding arguments for the :ref:`command-name` .
-#
-# Other Arguments
-# ===============
-# The other arguments to ``dock_dismod_at.sh`` are the same as in the
-# syntax for the :ref:`command-name` ,
-# except that ``dismod_at`` or ``dismodat.py``
-# have been replaced by ``dock_dismod_at.sh`` *build_type* .
-#
-# Debugging
-# *********
-# Some times an error occurs during the running of a container
-# and you would like to go inside the container and execute commands.
-# The following instructions are useful for this:
-#
-# Determine Container Id
-# ======================
-#
-#     *driver* ``ps -a``
-#
-# If *driver* is podman, the following might work better
-#
-#     ``podman ps --all --storage``
-#
-# Start Container
-# ===============
-# If a container status is ``Exited`` , you can start it using:
-#
-#     ``driver`` *start* ``container_id``
-#
-# Run Container
-# =============
-# If a container status is ``Up`` , you can run it using:
-#
-#     *driver* ``exec -it`` *container_id* ``bash``
-#
-# You will be in the container until you ``exit``
-# the ``bash`` shell that is run by the command above.
-#
-# Stop Container
-# ==============
-# If a container status is ``Up`` , you can stop it using:
-#
-#     ``driver`` *stop* ``container_id``
-#
 # {xrst_end dock_dismod_at.sh}
 # ---------------------------------------------------------------------------
-if [ "$1" == 'image' ]
+ok='true'
+if [ "$1" != 'image' ]
 then
-   if [ "$2" != 'base' ] \
-   && [ "$2" != 'mixed' ] \
-   && [ "$2" != 'dismod_at' ] \
-   && [ "$2" != 'at_cascade' ]
-   then
-      echo 'usage: dock_dismod_at.sh image base'
-      echo 'usage: dock_dismod_at.sh image mixed'
-      echo 'usage: dock_dismod_at.sh image dismod_at'
-      echo 'usage: dock_dismod_at.sh image at_cascade'
-      echo 'usage: dock_dismod_at.sh debug database command ...'
-      echo 'usage: dock_dismod_at.sh release database command ...'
-      exit 1
-   fi
-else
-   if [ "$1" != 'debug' ] && [ "$1" != 'release' ]
-   then
-      echo 'usage: dock_dismod_at.sh image base'
-      echo 'usage: dock_dismod_at.sh image mixed'
-      echo 'usage: dock_dismod_at.sh image dismod_at'
-      echo 'usage: dock_dismod_at.sh image at_cascade'
-      echo 'usage: dock_dismod_at.sh debug   database command ...'
-      echo 'usage: dock_dismod_at.sh release database command ...'
-      exit 1
-   fi
+   ok='false'
+fi
+if [ "$2" != 'base' ] \
+&& [ "$2" != 'mixed' ] \
+&& [ "$2" != 'dismod_at' ] \
+&& [ "$2" != 'at_cascade' ]
+then
+   ok='false'
+fi
+if [ "$ok" != 'true' ]
+then
+   echo 'usage: dock_dismod_at.sh image base'
+   echo 'usage: dock_dismod_at.sh image mixed'
+   echo 'usage: dock_dismod_at.sh image dismod_at'
+   echo 'usage: dock_dismod_at.sh image at_cascade'
+   exit 1
 fi
 # ---------------------------------------------------------------------------
 if ! $driver ps > /dev/null
 then
+   echo "Cannot run $dirver ps"
+   if [ "$dirver" == 'docker' ]
+   then
 cat << EOF
-Cannot run docker ps
 If docker deamon is not running perhaps one of the following will start it:
    sudo systemctl start docker
    sudo service docker start
@@ -322,56 +256,55 @@ If it is a premission problem perhaps one of the following will get permission:
    sudo usermod -aG docker $USER
 then log out and long back on this system.
 EOF
+   fi
    exit 1
 fi
 # ---------------------------------------------------------------------------
 # Build images
 # ----------------------------------------------------------------------------
-if [ "$1" == 'image' ]
+if [ "$2" == 'base' ]
 then
-   if [ "$2" == 'base' ]
-   then
-      image_name='dismod_at.base'
-   elif [ "$2" == 'mixed' ]
-   then
-      image_name='dismod_at.mixed'
-   elif [ "$2" == 'dismod_at' ]
-   then
-      image_name='dismod_at.image'
-   elif [ "$2" == 'at_cascade' ]
-   then
-      image_name='at_cascade.image'
-   else
-      'dock_dismod_at.sh: program error'
-      exit 1
-   fi
-   if [ -e 'Dockerfile' ]
-   then
-      echo 'dock_dismod_at.sh Error'
-      echo "Must first remove ./Dockerfile"
-      exit 1
-   fi
-   if $driver ps -a | grep "$image_name" > /dev/null
-   then
-      echo 'dock_dismod_at.sh Error'
-      echo 'Must first remove following OCI containers:'
-      $driver ps -a | head -1
-      $driver ps -a | grep "$image_name"
-      echo 'Use the following command for each container_id above:'
-      echo "$driver rm contain_id"
-      exit 1
-   fi
-   if $driver images | grep "$image_name " > /dev/null
-   then
-      echo 'dock_dismod_at.sh Error'
-      echo 'Must first remove following images:'
-      $driver images | head -1
-      $driver images | grep "$image_name "
-      echo 'Use the following command for each image above:'
-      echo "$driver rmi image_id"
-      exit 1
-   fi
-   echo 'Creating Dockerfile'
+   image_name='dismod_at.base'
+elif [ "$2" == 'mixed' ]
+then
+   image_name='dismod_at.mixed'
+elif [ "$2" == 'dismod_at' ]
+then
+   image_name='dismod_at.image'
+elif [ "$2" == 'at_cascade' ]
+then
+   image_name='at_cascade.image'
+else
+   'dock_dismod_at.sh: program error'
+   exit 1
+fi
+if [ -e 'Dockerfile' ]
+then
+   echo 'dock_dismod_at.sh Error'
+   echo "Must first remove ./Dockerfile"
+   exit 1
+fi
+if $driver ps -a | grep "$image_name" > /dev/null
+then
+   echo 'dock_dismod_at.sh Error'
+   echo 'Must first remove following OCI containers:'
+   $driver ps -a | head -1
+   $driver ps -a | grep "$image_name"
+   echo 'Use the following command for each container_id above:'
+   echo "$driver rm contain_id"
+   exit 1
+fi
+if $driver images | grep "$image_name " > /dev/null
+then
+   echo 'dock_dismod_at.sh Error'
+   echo 'Must first remove following images:'
+   $driver images | head -1
+   $driver images | grep "$image_name "
+   echo 'Use the following command for each image above:'
+   echo "$driver rmi image_id"
+   exit 1
+fi
+echo 'Creating Dockerfile'
 # ----------------------------------------------------------------------------
 if [ "$image_name" == 'dismod_at.base' ]
 then
@@ -499,11 +432,11 @@ then
 dir='/home/prefix'
 cat << EOF > Dockerfile
 FROM dismod_at.image
+WORKDIR /home
 
 # 1. Get source corresponding to at_cascade hash
 # 2. Check the corresponding at_cascade version
 # 3. Remove building the documentaiton from check_all.sh
-WORKDIR /home
 RUN git clone https://github.com/bradbell/at_cascade.git at_cascade.git && \
 cd at_cascade.git && \
 git checkout --quiet $at_cascade_hash && \
@@ -515,7 +448,7 @@ WORKDIR /home/at_cascade.git
 RUN \
 if [ -e $dir/dismod_at ] ; then rm $dir/dismod_at ; fi && \
 ln -s $dir/dismod_at.debug $dir/dismod_at && \
-bin/check_all.sh
+echo "skip debug version of bin/check_all.sh"
 
 # Install in /home/prefix/dismod_at.debug
 RUN python3 -m build && \
@@ -533,6 +466,8 @@ bin/check_all.sh
 RUN python3 -m build && \
 pip3 install --force-reinstall dist/at_cascade-$at_cascade_version.tar.gz \
    --prefix=$dir/dismod_at
+#
+WORKDIR /home/work
 EOF
 # ----------------------------------------------------------------------------
 else
@@ -540,141 +475,8 @@ else
    exit 1
 fi
 #
-   echo "Creating $image_name"
-   $driver build --tag $image_name .
-   #
-   echo "dock_dismod_at.sh $1 $2: OK"
-   exit 0
-fi
-# ---------------------------------------------------------------------------
-# Run dismod_at in Docker container
-# ----------------------------------------------------------------------------
-build_type="$1"
-database="$2"
-cmd="$3"
-shift # so that $* are the argument database command ...
-# ----------------------------------------------------------------------------
-# check cmd
-dismod_at_cmd='init fit set depend sample predict old2new'
-dismodat_py_cmd='db2csv csv2db modify'
-program=''
-for check in $dismod_at_cmd
-do
-   if [ "$check" == "$cmd" ]
-   then
-      program='dismod_at'
-   fi
-done
-for check in $dismodat_py_cmd
-do
-   if [ "$check" == "$cmd" ]
-   then
-      program='dismodat.py'
-   fi
-done
-if [ "$program" == '' ]
-then
-   echo 'dock_dismod_at.sh Error'
-   echo "$cmd is not a valid dismod_at command"
-   exit 1
-fi
-# ----------------------------------------------------------------------------
-if [ ! -f "$database" ]
-then
-   echo 'dock_dismod_at.sh Error'
-   echo "cannot find the database $database"
-   exit 1
-fi
-container_name="dismod_at.$USER"
-# check that the previous dismod_at container has been deleted
-if $driver ps -a | grep " $container_name\$" > /dev/null
-then
-   echo 'dock_dismod_at.sh Error'
-   echo 'Must first remove following containers:'
-   $driver ps -a | head -1
-   $driver ps -a | grep " $container_name\$"
-   echo 'Use the following command for each container_id above:'
-   echo "$driver rm contain_id"
-   exit 1
-fi
+echo "Creating $image_name"
+$driver build --tag $image_name .
 #
-# create a new dismod_at container
-echo "echo 'exit 0' | \\"
-echo "$driver run -i --name $container_name dismod_at.image bash"
-echo 'exit 0' | $driver run -i --name "$container_name" dismod_at.image bash
-#
-# get the id for the new container
-container_id=`$driver ps -a -q --filter "name=$container_name"`
-#
-# copy the database to the container
-echo "$driver cp $database $container_id:/home/work/$database"
-$driver cp "$database"  "$container_id:/home/work/$database"
-#
-# create a temporary directory
-temporary_dir=`mktemp`
-rm $temporary_dir
-mkdir $temporary_dir
-#
-# copy work.sh to the container
-cat << EOF > "$temporary_dir/work.sh"
-#! /bin/bash -e
-#
-# prefix for install
-prefix='/home/prefix/dismod_at'
-#
-# Add to executable path
-PATH="\$prefix/bin:\$PATH"
-#
-# Add to python path
-export PYTHONPATH=\`find -L \$prefix -name site-packages\`
-#
-# Set debug or release
-if [ -e \$prefix ]
-then
-   rm \$prefix
-fi
-ln -s \$prefix.$build_type \$prefix
-#
-# execute the dismod_at command
-$program $*
-#
-# done
-exit 0
-EOF
-chmod +x $temporary_dir/work.sh
-echo "$driver cp $temporary_dir/work.sh $container_id:/home/work/work.sh"
-$driver cp "$temporary_dir/work.sh" "$container_id:/home/work/work.sh"
-#
-# start up the container
-echo "$driver start $container_id"
-$driver start $container_id
-#
-# execute work.sh
-echo "$driver exec -it $container_id ./work.sh"
-$driver exec -it $container_id ./work.sh
-#
-# copy the result back to temporary directory
-echo "$driver cp $container_id:/home/work $temporary_dir/work"
-$driver cp $container_id:/home/work "$temporary_dir/work"
-#
-# remove the container
-echo "$driver rm --force $container_id"
-$driver rm --force $container_id
-#
-# copy the results from temporary directory to working directory
-for file in `ls $temporary_dir/work/*`
-do
-   name=`echo $file | sed -e 's|.*/||'`
-   if [ "$name" != 'work.sh' ]
-   then
-      echo "cp $file $name"
-      cp $file $name
-   fi
-done
-#
-# remove the temporary directory
-echo "rm -r $temporary_dir"
-rm -r $temporary_dir
-# ----------------------------------------------------------------------------
-echo 'dock_dismod_at.sh: OK'
+echo "dock_dismod_at.sh $1 $2: OK"
 exit 0

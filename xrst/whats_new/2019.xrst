@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin whats_new_2019}
 {xrst_spell
@@ -447,7 +447,7 @@ by constraints on other cause mortality).
    and
    :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
    This avoids having to rebuild the entire image every time.
-#. Extra :ref:`dock_dismod_at.sh@Debugging` instructions were
+#. Extra Debugging instructions were
    added to the ``dock_dismod_at.sh`` command.
 #. Advance to cppad-20190725. This fixes a warning when
    :ref:`dock_dismod_at.sh@Building Images` using
