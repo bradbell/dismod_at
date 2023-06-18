@@ -115,7 +115,7 @@ for(size_t row_id = 0; row_id < db_input.in_table ## _table.size(); row_id++) \
 }
 
 # define DISMOD_AT_SET_DB_TMP(table_name) \
-   if( other_input_table.find( #table_name ) != std::string::npos ) \
+   if( other_input_table.find( " " #table_name " " ) != std::string::npos ) \
       db_tmp = db_other; \
    else \
       db_tmp = db;
@@ -170,6 +170,7 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
    for(size_t i = 0; i < db_input.option_table.size(); ++i)
    if(  db_input.option_table[i].option_name == "other_input_table" )
    {  other_input_table = db_input.option_table[i].option_value;
+      other_input_table = " " + other_input_table + " ";
    }
    //
    sqlite3* db_tmp;

@@ -119,7 +119,7 @@ def example_db (file_name) :
       { 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 
       { 'name':'other_database',         'value':'other.db'          },
-      { 'name':'other_input_table',      'value':'node'              },
+      { 'name':'other_input_table',      'value':'node rate_eff_cov' },
 
       { 'name':'quasi_fixed',            'value':'true'              },
       { 'name':'derivative_test_fixed',  'value':'none'              },
@@ -183,6 +183,13 @@ shutil.copyfile('example.db', 'other.db')
 # example.db
 connection = dismod_at.create_connection('example.db', new = False)
 command = 'DROP TABLE node'
+dismod_at.sql_command(connection, command)
+connection.close()
+#
+# other.db
+# This tests for a bug where rate_eff_cov in other_input_table matched rate
+connection = dismod_at.create_connection('other.db', new = False)
+command = 'DROP TABLE rate'
 dismod_at.sql_command(connection, command)
 connection.close()
 # -----------------------------------------------------------------------
