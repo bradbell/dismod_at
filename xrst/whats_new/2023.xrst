@@ -19,8 +19,15 @@ mm-dd
 
 06-18
 =====
-If ``rate_eff_cov`` was in the :ref:`option_table@Other Database@other_input_table` option,
-dismod_at would use the other database for the ``rate`` table. This has been fixed.
+#. If ``rate_eff_cov`` was in the
+   :ref:`option_table@Other Database@other_input_table` option,
+   dismod_at would use the other database for the ``rate`` table.
+   This has been fixed.
+#. The dock_dismod_at.sh
+   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+   was advanced to 20230618,
+   and the :ref:`dock_dismod_at.sh@Building Images@at_cascade_version`
+   was advanced to 2023.6.18 .
 
 06-17
 =====

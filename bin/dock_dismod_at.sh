@@ -92,8 +92,8 @@
 # This script will build the following version of dismod_at image:
 # {xrst_spell_off}
 # {xrst_code sh}
-   dismod_at_version='20230504'
-   dismod_at_hash='bfc990b3b6c9a459e86d81954cc51fb5f0cc0587'
+   dismod_at_version='20230618'
+   dismod_at_hash='830fe9622ab05e74feef9bd96621d44fdb460382'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -102,8 +102,8 @@
 # This script can build the following version of the optional at_cascade image:
 # {xrst_spell_off}
 # {xrst_code sh}
-   at_cascade_version='2023.5.4'
-   at_cascade_hash='8b118cdb1d3a82eab1feaff5c3d99b85240880cc'
+   at_cascade_version='2023.6.18'
+   at_cascade_hash='0c083c64c83cd097f6392b4a0da4c278b7a6af2b'
 # {xrst_code}
 # {xrst_spell_on}
 #
