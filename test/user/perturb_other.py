@@ -2,7 +2,11 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
+# perturb_command:
 # Test a case where there is not data and fit does not agree with mean.
+#
+# other_database:
+# Test case where rate_eff_cov, but not rate, is in other_input_table list
 # ------------------------------------------------------------------------
 iota_mean     = 0.01
 # ------------------------------------------------------------------------
@@ -10,7 +14,7 @@ import shutil
 import sys
 import os
 import subprocess
-test_program = 'test/user/perturb_command.py'
+test_program = 'test/user/perturb_other.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
    usage  = 'python3 ' + test_program + '\n'
    usage += 'where python3 is the python 3 program on your system\n'
@@ -237,6 +241,6 @@ for var_id in range( n_var ) :
    max_err = max(max_err, abs( value / iota_mean - 1.0 ) )
 assert abs(value / iota_mean - 1.0 ) <= 1e-10
 # -----------------------------------------------------------------------------
-print('perturb_command.py: OK')
+print('perturb_other.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON
