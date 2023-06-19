@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # test install of python module and executable
 # ---------------------------------------------------------------------------
@@ -83,13 +83,14 @@ cat << EOF > create_db.py
 import get_started_db
 get_started_db.get_started_db()
 EOF
-echo_eval $python3_executable create_db.py
-#
-# test running dismod_at
-echo_eval dismod_at get_started.db init
-#
-# test running dismodat.py
-echo_eval dismodat.py get_started.db db2csv
+cat << EOF > run.sh
+$python3_executable create_db.py
+dismod_at get_started.db init
+dismodat.py get_started.db db2csv
+EOF
+chmod +x run.sh
+cat run.sh
+./run.sh
 #
 if ! podman images | grep '^localhost/dismod_at.image' > /dev/null
 then
@@ -101,16 +102,28 @@ fi
 # Test that OCI image gives the same result
 echo_eval mkdir podman
 echo_eval cd podman
-echo_eval cp ../../../bin/dock_dismod_at.sh dock_dismod_at.sh
-echo_eval cp ../get_started_db.py ../create_db.py .
-echo_eval $python3_executable create_db.py
-echo_eval ./dock_dismod_at.sh debug    get_started.db init
-echo_eval ./dock_dismod_at.sh release  get_started.db db2csv
+cat ../run.sh
+if podman ps -a | grep test_container > /dev/null
+then
+   podman rm -f test_container
+fi
+echo 'exit 0' | podman run -it --name test_container dismod_at.image bash
+list='get_started_db.py create_db.py run.sh'
+for file in $list
+do
+   podman cp ../$file test_container:/home/work
+done
+podman start test_container
+echo './run.sh ; exit 0' | podman exec -it test_container bash
 list='age_avg.csv  data.csv  option.csv  variable.csv'
 for file in $list
 do
-   # check that both version gave the same result
-   echo_eval diff $file ../$file
+   podman cp test_container:/home/work/$file $file
+   if ! diff ../$file $file
+   then
+      echo "docker image results for $file are different"
+      exit 1
+   fi
 done
 # -----------------------------------------------------------------------------
 echo 'check_install.sh: OK'
