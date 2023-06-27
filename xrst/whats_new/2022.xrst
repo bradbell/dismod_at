@@ -58,7 +58,7 @@ Change the create_database wish list entry to :ref:`wish_list@Empty Tables` .
 12-19
 =====
 Advance the version of
-:ref:`dock_dismod_at.sh@Building Images@at_cascade_version` to 2022.12.19.
+:ref:`dock_dismod_at.sh@at_cascade_version` to 2022.12.19.
 This fixes a problem using older versions of python; e.g., 3.8.10.
 
 12-18
@@ -67,9 +67,9 @@ This fixes a problem using older versions of python; e.g., 3.8.10.
    This avoids a bug in ipopt which would crash when all the fixed
    effects had equal lower and upper bounds.
 #. Advance the dock_dismod_at.sh
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+   :ref:`dock_dismod_at.sh@dismod_at_version`
    to 20221218 and
-   :ref:`dock_dismod_at.sh@Building Images@at_cascade_version`
+   :ref:`dock_dismod_at.sh@at_cascade_version`
    to 2022.12.18.
    You should build the new mixed, dismod_at and at_cascade image.
 
@@ -113,7 +113,7 @@ Add the Binomial Distribution wish list item
 10-14
 =====
 Advance the dock_dismod_at.sh
-:ref:`dock_dismod_at.sh@Building Images@at_cascade_version`
+:ref:`dock_dismod_at.sh@at_cascade_version`
 to 2022.10.14
 You should build the new at_cascade image.
 
@@ -126,9 +126,9 @@ You should build the new at_cascade image.
 08-27
 =====
 Advance the dock_dismod_at.sh
-:ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+:ref:`dock_dismod_at.sh@dismod_at_version`
 to 20220826 and
-:ref:`dock_dismod_at.sh@Building Images@at_cascade_version`
+:ref:`dock_dismod_at.sh@at_cascade_version`
 to 2022.8.27.
 You should build the new dismod_at image before the at_cascade image.
 
@@ -165,7 +165,7 @@ to dock_dismod_at.sh.
 05-01
 =====
 Advance the dock_dismod_at.sh
-:ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+:ref:`dock_dismod_at.sh@dismod_at_version`
 to 20220421.
 You should rebuild all the images for this update.
 

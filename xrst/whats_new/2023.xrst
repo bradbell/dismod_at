@@ -19,9 +19,12 @@ mm-dd
 
 06-26
 =====
-If :ref:`option_table@Other Database@other_database` is a relative path,
-it is now relative to the directory where the
-directory where :ref:`command@Primary Database` is located.
+#. If :ref:`option_table@Other Database@other_database` is a relative path,
+   it is now relative to the directory where the
+   directory where :ref:`command@Primary Database` is located.
+#. Advance dock_dismod_at.s
+   :ref:`dock_dismod_at.sh@dismod_at_version` to 20230626 and
+   :ref:`dock_dismod_at.sh@at_cascade_version` to 2023.6.26.
 
 06-18
 =====
@@ -30,9 +33,9 @@ directory where :ref:`command@Primary Database` is located.
    dismod_at would use the other database for the ``rate`` table.
    This has been fixed.
 #. The dock_dismod_at.sh
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+   :ref:`dock_dismod_at.sh@dismod_at_version`
    was advanced to 20230618,
-   and the :ref:`dock_dismod_at.sh@Building Images@at_cascade_version`
+   and the :ref:`dock_dismod_at.sh@at_cascade_version`
    was advanced to 2023.6.18 .
 #. The dock_dismod_at.sh script was changed so that it just builds
    (does not run) the dismod_at image.
@@ -87,7 +90,7 @@ the problem of having to reinitialize the dismod_at model for each command.
    In addition, correct the evaluation of these densities
    when they are censored.
 #. Advance the dock_dismod_at.sh
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version` to
+   :ref:`dock_dismod_at.sh@dismod_at_version` to
    dismod_at-20230504 and the at_cascade version to at_cascade-2023.5.3.
 
 05-03
@@ -98,7 +101,7 @@ Replace the Binomial Distribution wish list item by the follow page:
 04-26
 =====
 The dock_dismod_at.sh
-:ref:`dock_dismod_at.sh@Building Images@dismod_at_version` advanced to
+:ref:`dock_dismod_at.sh@dismod_at_version` advanced to
 dismod_at-20230425 and the at_cascade version advanced to at_cascade-2023.4.26.
 
 04-25
@@ -147,7 +150,7 @@ libraries are in the system path.
 
 03-20
 =====
-Advance :ref:`dock_dismod_at.sh@Building Images@at_cascade_version`
+Advance :ref:`dock_dismod_at.sh@at_cascade_version`
 to 2023.03.20.
 
 03-09
@@ -155,7 +158,7 @@ to 2023.03.20.
 #. The :ref:`rate_eff_cov_table-name` only worked properly for covariates
    that had reference value zero. This has been fixed.
 #. The dock_dismod_at.sh
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version` advanced to
+   :ref:`dock_dismod_at.sh@dismod_at_version` advanced to
    dismod_at-20230309 and the at_cascade version advanced to
    at_cascade-2023.3.8.
 
@@ -167,7 +170,7 @@ to 2023.03.20.
    :ref:`option_table@splitting_covariate` was not null.
    This has been fixed and the program now reports an error in this case.
 #. The dock_dismod_at.sh
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version` advanced to
+   :ref:`dock_dismod_at.sh@dismod_at_version` advanced to
    dismod_at-20230105 and the at_cascade version advanced to
    at_cascade-2023.1.5.
 

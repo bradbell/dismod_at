@@ -391,7 +391,7 @@ by constraints on other cause mortality).
 =====
 
 #. Advance the dock_dismod_at.sh
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+   :ref:`dock_dismod_at.sh@dismod_at_version`
    to 20190912.
 #. If :ref:`option_table@Zero Sum Constraints@zero_sum_child_rate`
    is chosen for a rate, the simulated prior values for that
@@ -475,7 +475,7 @@ This fixes a problem installing the CppAD binary library on the Mac.
 07-13
 =====
 There was a mistake in the value of *dismod_at_hash* for
-:ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+:ref:`dock_dismod_at.sh@dismod_at_version`
 20190710 of ``dock_dismod_at.sh`` . This has been fixed.
 
 07-10
@@ -487,11 +487,10 @@ There was a mistake in the value of *dismod_at_hash* for
    To be specific, one is less likely to an error message indicating
    that the Hessian w.r.t. the random effects is not positive definite.
 #. There is a new
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+   :ref:`dock_dismod_at.sh@dismod_at_version`
    in dock_dismod_at.sh.
    In addition, there are new instructions to help with one of the possible
-   :ref:`dock_dismod_at.sh@Building Images@Errors`
-   during the ``dock_dismod_at.sh build`` command.
+   errors during the ``dock_dismod_at.sh build`` command.
 
 07-06
 =====
@@ -538,10 +537,10 @@ The ``build`` option for ``dock_dismod_at.sh`` was not updating
 the docker image when the remote repository changed.
 This has been fixed by adding a ``git pull``
 and checkout of a particular
-:ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+:ref:`dock_dismod_at.sh@dismod_at_version`
 in the Dockerfile created by dock_dismod_at.sh.
 In addition, more detection and discussion was added for
-:ref:`dock_dismod_at.sh@Building Images@Removing Containers` .
+removing containers.
 
 06-24
 =====

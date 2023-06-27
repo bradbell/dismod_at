@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin whats_new_2021}
 {xrst_spell
@@ -111,10 +111,10 @@ and not all zero.
 11-27
 =====
 
-#. Add the :ref:`dock_dismod_at.sh@OCI@driver` option
+#. Add the :ref:`dock_dismod_at.sh@driver` setting
    to dock_dismod_at.sh so it can use either docker or podman.
 #. Advance the dock_dismod_at.sh
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+   :ref:`dock_dismod_at.sh@dismod_at_version`
    to 20211121.
    This requires re-running
 

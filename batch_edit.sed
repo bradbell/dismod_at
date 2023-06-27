@@ -12,7 +12,6 @@
 # (with the possible exception of the extra_seds commands).
 # The files in bin/devel.sh ignore_files are automatically in this list.
 # ignore_files='
-#  python/dismod_at/create_connection.py
 # '
 # list of files and or directories that are moved to new names
 # move_paths='
@@ -31,4 +30,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|new = False, readonly = False|new = False, readonly = True|
+s|:ref:`dock_dismod_at.sh@Building Images@dismod_at_version`|:ref:`dock_dismod_at.sh@dismod_at_version`|
+s|:ref:`dock_dismod_at.sh@Building Images@at_cascade_version`|:ref:`dock_dismod_at.sh@at_cascade_version`|

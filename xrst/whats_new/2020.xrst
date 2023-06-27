@@ -149,7 +149,7 @@ so that ipopt and all its libraries also get built for debugging.
    should create them (to help diagnose the problem).
    This required advancing to cppad_mixed-20200702.
 #. Advance the dock_dismod_at.sh
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+   :ref:`dock_dismod_at.sh@dismod_at_version`
    to 20200702.
    This will require building a new
    :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
@@ -176,7 +176,7 @@ the sample table does not exist after the command when this happens.
 06-24
 =====
 Advance to the dock_dismod_at.sh
-:ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+:ref:`dock_dismod_at.sh@dismod_at_version`
 to 20200620
 This will require building a new
 :ref:`dock_dismod_at.sh@Building Images@dismod_at.base`
@@ -291,7 +291,7 @@ asymptotic sampling method.
    :ref:`user_hes_fixed_math.py@Scaling Fixed Effects`
    to the ``hes_fixed_math.py`` example.
 #. Advance to the dock_dismod_at.sh
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+   :ref:`dock_dismod_at.sh@dismod_at_version`
    to 20200325.
    This will require building a new
    :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
@@ -354,7 +354,7 @@ in the debug build.
 =====
 
 #. Advance the dock_dismod_at.sh
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+   :ref:`dock_dismod_at.sh@dismod_at_version`
    to 20200318.
    This will require building a new
    :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
@@ -377,7 +377,7 @@ in the debug build.
 =====
 
 #. Advance the dock_dismod_at.sh
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+   :ref:`dock_dismod_at.sh@dismod_at_version`
    to 20200315.
    This will require building a new
    :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
@@ -411,7 +411,7 @@ in the debug build.
    :ref:`prior_table@eta@Scaling Fixed Effects` .
    This has been fixed.
 #. Advance the dock_dismod_at.sh
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+   :ref:`dock_dismod_at.sh@dismod_at_version`
    to 20200309.
    This will require building a new
    :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
@@ -454,7 +454,7 @@ To be specific, the forward index comes before the current index; e.g.,
 02-20
 =====
 Advance the dock_dismod_at.sh
-:ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+:ref:`dock_dismod_at.sh@dismod_at_version`
 to 20200218.
 This will require building a new
 :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
@@ -481,7 +481,7 @@ has been improved.
    This has been changed so that the user gets an informative error message
    when they are outside the valid limits.
 #. Advance the dock_dismod_at.sh
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+   :ref:`dock_dismod_at.sh@dismod_at_version`
    to 20200213.
    This will require building a new
    :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
@@ -502,7 +502,7 @@ wish list item.
 #. Add documentation for the database and command arguments
    under running a new container.
 #. Advance the dock_dismod_at.sh
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at_version`
+   :ref:`dock_dismod_at.sh@dismod_at_version`
    to 2020010.
    of ``dock_dismod_at.sh`` .
    This will require building a new
