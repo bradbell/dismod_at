@@ -54,6 +54,7 @@ Example
 '''
 # ----------------------------------------------------------------------------
 import sys
+import os
 import numpy
 import math
 import dismod_at
@@ -110,6 +111,9 @@ def plot_rate_fit(database, pdf_file, plot_title, rate_set) :
          other_input_table = row['option_value']
          other_input_table_list = other_input_table.split(' ')
    if other_database != None :
+      if not os.path.isabs( other_database ) :
+         database_dir   = os.path.dirname( database )
+         other_database = os.path.join( database_dir, other_database )
       other_connection = dismod_at.create_connection(
          other_database, new = False, readonly = True
       )

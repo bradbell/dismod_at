@@ -65,13 +65,13 @@ import os
 import csv
 import copy
 import math
-test_program = 'example/user/other_database.py'
-if sys.argv[0] != test_program  or len(sys.argv) != 1 :
-   usage  = 'python3 ' + test_program + '\n'
+source_file = 'example/user/other_database.py'
+if sys.argv[0] != source_file  or len(sys.argv) != 1 :
+   usage  = 'python3 ' + source_file + '\n'
    usage += 'where python3 is the python 3 program on your system\n'
    usage += 'and working directory is the dismod_at distribution directory\n'
    sys.exit(usage)
-print(test_program)
+print(source_file)
 #
 # import dismod_at
 local_dir = os.getcwd() + '/python'
@@ -79,10 +79,8 @@ if( os.path.isdir( local_dir + '/dismod_at' ) ) :
    sys.path.insert(0, local_dir)
 import dismod_at
 #
-# change into the build/example/user directory
-if not os.path.exists('build/example/user') :
-   os.makedirs('build/example/user')
-os.chdir('build/example/user')
+# work_directory
+work_directory = 'build/example/user'
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
@@ -215,16 +213,17 @@ def example_db (file_name) :
    return
 # ===========================================================================
 #
-# example.db
-file_name = 'example.db'
-example_db(file_name)
+# example_db, example.db
+database = f'{work_directory}/example.db'
+example_db(database)
 #
-# other.db
-shutil.copyfile(file_name, 'other.db')
+# other_db, other.db
+other_db = f'{work_directory}/other.db'
+shutil.copyfile(database, other_db)
 #
 # example.db
 connection = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+   database, new = False, readonly = False
 )
 for table_name in other_input_table.split() :
    command    = 'DROP TABLE ' + table_name
@@ -233,16 +232,16 @@ command    = 'VACUUM;'
 dismod_at.sql_command(connection, command)
 connection.close()
 #
-assert os.stat(file_name).st_size < os.stat('other.db').st_size
+assert os.stat(database).st_size < os.stat(other_db).st_size
 #
 #
-program = '../../devel/dismod_at'
-dismod_at.system_command_prc([ program, file_name, 'init' ])
-dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
+program = 'build/devel/dismod_at'
+dismod_at.system_command_prc([ program, database, 'init' ])
+dismod_at.system_command_prc([ program, database, 'fit', 'fixed' ])
 # -----------------------------------------------------------------------
 # read database
 connection            = dismod_at.create_connection(
-   file_name, new = False, readonly = True
+   database, new = False, readonly = True
 )
 var_table             = dismod_at.get_table_dict(connection, 'var')
 fit_var_table         = dismod_at.get_table_dict(connection, 'fit_var')
@@ -260,7 +259,7 @@ for var_id in range( len(var_table) ) :
    assert abs(rel_error) < 1e-6
 #
 # Test db2csv
-dismod_at.db2csv_command(file_name)
+dismod_at.db2csv_command(database)
 # -----------------------------------------------------------------------------
 print('other_database.py: OK')
 # -----------------------------------------------------------------------------

@@ -68,6 +68,7 @@
 import dismod_at
 import random
 import math
+import os
 # -----------------------------------------------------------------------------
 def get_limit_var_table(database) :
    #
@@ -91,6 +92,9 @@ def get_limit_var_table(database) :
          other_input_table = row['option_value']
          other_input_table_list = other_input_table.split(' ')
    if other_database != None :
+      if not os.path.isabs( other_database ) :
+         database_dir   = os.path.dirname( database )
+         other_database = os.path.join( database_dir, other_database )
       other_connection = dismod_at.create_connection(
          other_database, new = False, readonly = True
       )

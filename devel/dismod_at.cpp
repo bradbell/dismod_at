@@ -3,56 +3,58 @@
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 // SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
-
-# include <cppad/mixed/exception.hpp>
-# include <dismod_at/depend_command.hpp>
-# include <dismod_at/fit_command.hpp>
-# include <dismod_at/init_command.hpp>
-# include <dismod_at/old2new_command.hpp>
-# include <dismod_at/predict_command.hpp>
-# include <dismod_at/sample_command.hpp>
-# include <dismod_at/set_command.hpp>
-# include <dismod_at/simulate_command.hpp>
-# include <dismod_at/hold_out_command.hpp>
-# include <dismod_at/bnd_mulcov_command.hpp>
-# include <dismod_at/data_density_command.hpp>
-
 # include <map>
 # include <cassert>
 # include <string>
-# include <iostream>
+# include <filesystem>
+
 # include <cppad/utility/vector.hpp>
+# include <cppad/mixed/exception.hpp>
 # include <cppad/mixed/manage_gsl_rng.hpp>
-# include <dismod_at/min_max_vector.hpp>
+
+// BEGIN_SORT_THIS_LINE_PLUS_1
+# include <cppad/utility/to_string.hpp>
+# include <dismod_at/age_avg_grid.hpp>
 # include <dismod_at/avgint_subset.hpp>
+# include <dismod_at/bnd_mulcov_command.hpp>
+# include <dismod_at/child_data_in_fit.hpp>
 # include <dismod_at/child_info.hpp>
+# include <dismod_at/configure.hpp>
+# include <dismod_at/cov2weight_map.hpp>
+# include <dismod_at/create_table.hpp>
+# include <dismod_at/data_density_command.hpp>
+# include <dismod_at/depend.hpp>
+# include <dismod_at/depend_command.hpp>
+# include <dismod_at/error_exit.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
+# include <dismod_at/fit_command.hpp>
 # include <dismod_at/fit_model.hpp>
+# include <dismod_at/get_bnd_mulcov_table.hpp>
 # include <dismod_at/get_column_max.hpp>
+# include <dismod_at/get_data_sim_table.hpp>
+# include <dismod_at/get_data_subset.hpp>
 # include <dismod_at/get_db_input.hpp>
 # include <dismod_at/get_integrand_table.hpp>
 # include <dismod_at/get_option_table.hpp>
-# include <dismod_at/get_sample_table.hpp>
-# include <dismod_at/get_data_sim_table.hpp>
-# include <dismod_at/get_data_subset.hpp>
+# include <dismod_at/get_prior_mean.hpp>
 # include <dismod_at/get_prior_sim_table.hpp>
+# include <dismod_at/get_sample_table.hpp>
 # include <dismod_at/get_table_column.hpp>
+# include <dismod_at/hold_out_command.hpp>
+# include <dismod_at/init_command.hpp>
+# include <dismod_at/log_message.hpp>
+# include <dismod_at/min_max_vector.hpp>
+# include <dismod_at/null_int.hpp>
+# include <dismod_at/old2new_command.hpp>
 # include <dismod_at/open_connection.hpp>
 # include <dismod_at/pack_info.hpp>
-# include <dismod_at/sim_random.hpp>
-# include <cppad/utility/to_string.hpp>
-# include <dismod_at/log_message.hpp>
-# include <dismod_at/error_exit.hpp>
 # include <dismod_at/pack_prior.hpp>
-# include <dismod_at/create_table.hpp>
-# include <dismod_at/null_int.hpp>
-# include <dismod_at/configure.hpp>
-# include <dismod_at/depend.hpp>
-# include <dismod_at/get_prior_mean.hpp>
-# include <dismod_at/age_avg_grid.hpp>
-# include <dismod_at/child_data_in_fit.hpp>
-# include <dismod_at/get_bnd_mulcov_table.hpp>
-# include <dismod_at/cov2weight_map.hpp>
+# include <dismod_at/predict_command.hpp>
+# include <dismod_at/sample_command.hpp>
+# include <dismod_at/set_command.hpp>
+# include <dismod_at/sim_random.hpp>
+# include <dismod_at/simulate_command.hpp>
+// END_SORT_THIS_LINE_MINUS_1
 
 # define DISMOD_AT_TRACE 0
 
@@ -168,6 +170,15 @@ int main(int n_arg, const char** argv)
    // set error_exit database so it can log fatal errors
    assert( db != DISMOD_AT_NULL_PTR );
    dismod_at::error_exit(db);
+   //
+   // current_directory
+   // Change into directory where database is located because all other
+   // paths are relative to this directory.
+   std::filesystem::path database_path = database_arg;
+   assert( database_path.has_filename() );
+   database_path.remove_filename();
+   if( ! database_path.empty() )
+      std::filesystem::current_path( database_path );
    // --------------- log start of this command -----------------------------
    message = "begin";
    for(int i_arg = 2; i_arg < n_arg; i_arg++)

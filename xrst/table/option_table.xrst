@@ -449,6 +449,8 @@ other_database
 ==============
 If *option_name* is ``other_database`` , the corresponding *option_value* is
 the name of a database where some of the input tables are specified.
+If this is a relative path, it is now relative to the directory where the
+directory where :ref:`command@Primary Database` is located.
 
 other_input_table
 =================

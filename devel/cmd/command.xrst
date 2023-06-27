@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin command}
 {xrst_spell
@@ -10,6 +10,13 @@ $Id:$
 
 The dismod_at Commands
 ######################
+
+Primary Database
+****************
+Each of the dismod_at commands specifies a database; e.g., see
+:ref:`set_command@database` for the set command.
+This is referred to as the primary database
+(in contrast to the `option_table@Other Database@other_database` ).
 
 Data Flow
 *********

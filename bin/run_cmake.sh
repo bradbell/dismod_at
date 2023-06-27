@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 #
 # {xrst_begin run_cmake.sh}
@@ -95,7 +95,7 @@ specific_compiler=''
 # ***************
 # Extra C++ flags used during compilation:
 # {xrst_code sh}
-extra_cxx_flags='-std=c++11 -Wpedantic -Wall -Wshadow -Wconversion'
+extra_cxx_flags='-std=c++17 -Wpedantic -Wall -Wshadow -Wconversion'
 # {xrst_code}
 # An alternative might be ``-Wall`` .
 #

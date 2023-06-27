@@ -17,6 +17,12 @@ Changes and Additions to Dismod_at During 2023
 mm-dd
 *****
 
+06-26
+=====
+If :ref:`option_table@Other Database@other_database` is a relative path,
+it is now relative to the directory where the
+directory where :ref:`command@Primary Database` is located.
+
 06-18
 =====
 #. If ``rate_eff_cov`` was in the

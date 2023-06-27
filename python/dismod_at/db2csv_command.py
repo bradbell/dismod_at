@@ -818,11 +818,13 @@ def db2csv_command(database_file_arg) :
             # update result
             result.add(child_node_id)
       return result
+   #
+   # database_dir
+   database_dir       = os.path.split(database_file_arg)[0]
    # -------------------------------------------------------------------------
    # table_name2connection, table_name2cursor
    #
    file_name          = database_file_arg
-   database_dir       = os.path.split(database_file_arg)[0]
    primary_connection = dismod_at.create_connection(
       file_name, new = False, readonly = True
    )
@@ -836,6 +838,8 @@ def db2csv_command(database_file_arg) :
       if row['option_name'] == 'other_database' :
          other_database   = row['option_value']
          if other_database != None :
+            if not os.path.isabs( other_database ) :
+               other_database = os.path.join( database_dir, other_database )
             other_connection = dismod_at.create_connection(
                other_database, new = False, readonly = True
             )
