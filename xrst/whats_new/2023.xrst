@@ -19,9 +19,9 @@ mm-dd
 
 06-28
 =====
-#. Advance dock_dismod_at.sh
-   :ref:`dock_dismod_at.sh@dismod_at_version` to 20230628 and
-   :ref:`dock_dismod_at.sh@at_cascade_version` to 2023.6.28.
+Advance dock_dismod_at.sh
+:ref:`dock_dismod_at.sh@dismod_at_version` to 20230628 and
+:ref:`dock_dismod_at.sh@at_cascade_version` to 2023.6.28.
 
 06-27
 =====
