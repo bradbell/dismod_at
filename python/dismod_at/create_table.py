@@ -1,7 +1,7 @@
 # $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin create_table}
 # {xrst_spell
@@ -52,14 +52,13 @@
 # to the table.
 # Each row is itself a list containing the data for one row of the
 # table in the same order as *col_name* .
-# Note that the primary key column is not included in *row_list* .
-# Also note that the value in each column gets converted to unicode
-# before being written to the database.
-# Note that the special value
 #
-#     *row_list* [ *i* ][ *j* ] == ``None``
-#
-# gets converted to ``null`` in the table.
+# #.  The primary key column is not included in *row_list* .
+# #.  The value in each column gets converted to unicode
+#     before being written to the database.
+# #.  The special value ``None``
+#     gets converted to ``null`` in the database.
+# #.  If a column has type real, its values cannot be nan.
 #
 # tbl_name_id
 # ***********
@@ -86,6 +85,7 @@
 # {xrst_end create_table}
 # ---------------------------------------------------------------------------
 def create_table(connection, tbl_name, col_name, col_type, row_list) :
+   import math
    import dismod_at
    import copy
    primary_key = tbl_name + '_id'
@@ -107,6 +107,14 @@ def create_table(connection, tbl_name, col_name, col_type, row_list) :
    quote_text = True
    for i in range( len(row_list) ) :
       row_cpy     = copy.copy(row_list[i])
+      for j in range( len(row_cpy) ) :
+         if col_type[j] == 'real' :
+            if row_cpy[j] != None :
+               if math.isnan( float(row_cpy[j]) ) :
+                  name = col_name[j]
+                  msg  = f'create_table: row_list[{i}][{j}] is nan and the '
+                  msg += f'column type is real (the column name is {name} ).'
+                  assert False, msg
       row_cpy.insert(0, i)
       value_tuple = dismod_at.unicode_tuple(row_cpy, quote_text)
       cmd = 'insert into ' + tbl_name + ' values ' + value_tuple

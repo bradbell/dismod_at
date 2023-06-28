@@ -17,6 +17,15 @@ Changes and Additions to Dismod_at During 2023
 mm-dd
 *****
 
+06-27
+=====
+If nan appeared for a real value in :ref:`create_table@row_list` ,
+one would get the following error message::
+
+   sqlite3.OperationalError: no such column: nan
+
+The error message for this case was improved.
+
 06-26
 =====
 #. If :ref:`option_table@Other Database@other_database` is a relative path,
