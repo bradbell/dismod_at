@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_data_table dev}
@@ -254,6 +254,11 @@ void get_data_table(
       get_table_column(db, table_name, column_name, nu);
       assert( n_data == nu.size() );
 
+      column_name           =  "sample_size";
+      CppAD::vector<int>     sample_size;
+      get_table_column(db, table_name, column_name, sample_size);
+      assert( n_data == sample_size.size() );
+
       column_name           =  "age_lower";
       CppAD::vector<double>     age_lower;
       get_table_column(db, table_name, column_name, age_lower);
@@ -294,6 +299,7 @@ void get_data_table(
          data_table[i].meas_std      = meas_std[i];
          data_table[i].eta           = eta[i];
          data_table[i].nu            = nu[i];
+         data_table[i].sample_size   = sample_size[i];
          data_table[i].age_lower     = age_lower[i];
          data_table[i].age_upper     = age_upper[i];
          data_table[i].time_lower    = time_lower[i];
@@ -314,7 +320,7 @@ void get_data_table(
          data_cov_value[ i * n_covariate + j ] = x_j[i];
    }
 
-   // check for erorr conditions
+   // check for error conditions
    // (primary key conditions checked by calling routine)
    string msg;
    for(size_t data_id = 0; data_id < n_data; data_id++)
@@ -397,7 +403,15 @@ void get_data_table(
          error_exit(msg, table_name, data_id);
       }
       if( students && nu <= 2.0 )
-      {  msg = "nu is less than or equal two";
+      {  msg = "density is students or log_students and nu <= 2.0";
+         error_exit(msg, table_name, data_id);
+      }
+      //
+      int sample_size       = data_table[data_id].sample_size;
+      bool sample_size_null = sample_size == DISMOD_AT_NULL_INT;
+      bool binomial         = density_table[density_id] == binomial_enum;
+      if( binomial && sample_size_null )
+      {  msg = "densityy is binomial and sample_size is null";
          error_exit(msg, table_name, data_id);
       }
    }

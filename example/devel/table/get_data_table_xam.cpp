@@ -20,6 +20,7 @@ C++ get_data_table: Example and Test
 # include <dismod_at/get_data_table.hpp>
 # include <dismod_at/exec_sql_cmd.hpp>
 # include <dismod_at/open_connection.hpp>
+# include <dismod_at/null_int.hpp>
 
 bool get_data_table_xam(void)
 {
@@ -50,6 +51,7 @@ bool get_data_table_xam(void)
       " meas_std       real,"
       " eta            real,"
       " nu             real,"
+      " sample_size    integer,"
       " age_lower      real,"
       " age_upper      real,"
       " time_lower     real,"
@@ -69,6 +71,7 @@ bool get_data_table_xam(void)
       "1e-5,"                    // meas_std
       "null,"                    // eta
       "null,"                    // nu
+      "null,"                    // sample_size
       "10.0,"                    // age_lower
       "90.0,"                    // age_upper
       "2000,"                    // time_lower
@@ -106,6 +109,7 @@ bool get_data_table_xam(void)
    ok  &= data_table[0].meas_std          == 1e-5;
    ok  &= std::isnan( data_table[0].eta );
    ok  &= std::isnan( data_table[0].nu  );
+   ok  &= data_table[0].sample_size == DISMOD_AT_NULL_INT;
    ok  &= data_table[0].age_lower         == 10.0;
    ok  &= data_table[0].age_upper         == 90.0;
    ok  &= data_table[0].time_lower        == 2000.0;

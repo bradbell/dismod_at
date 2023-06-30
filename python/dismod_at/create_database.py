@@ -1090,6 +1090,7 @@ def create_database(
       'meas_std',
       'eta',
       'nu',
+      'sample_size',
    ]
    for j in range( len(covariate_table) ) :
       col_name.append( 'x_%s' % j )
@@ -1110,6 +1111,7 @@ def create_database(
       'real',                 # meas_std
       'real',                 # eta
       'real',                 # nu
+      'integer',              # sample_size
    ]
    for j in range( len(covariate_table) )  :
       col_type.append( 'real' )
@@ -1124,7 +1126,7 @@ def create_database(
          row.append( data[name] )
       #
       # columns that have null for default value
-      for key in [ 'meas_std', 'eta', 'nu' ] :
+      for key in [ 'meas_std', 'eta', 'nu', 'sample_size' ] :
          if not key in data :
             data[key] = None
       #
@@ -1159,7 +1161,8 @@ def create_database(
          data['meas_value'],
          data['meas_std'],
          data['eta'],
-         data['nu']
+         data['nu'],
+         data['sample_size'],
       ]
       for j in range( len(covariate_table) ) :
          row.append( data[ covariate_table[j]['name'] ] )

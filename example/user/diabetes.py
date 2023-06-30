@@ -1141,6 +1141,7 @@ for predict_id in range( len(predict_table) ) :
    row['meas_value'] = meas_value
    row['eta']        = eta
    row['nu']         = None
+   row['sample_size'] = None
    #
    # values in same order as col_name
    row_value = list()

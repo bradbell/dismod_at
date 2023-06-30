@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_prior_table dev}
@@ -198,8 +198,18 @@ CppAD::vector<prior_struct> get_prior_table(
       prior_table[i].eta        = eta[i];
       prior_table[i].nu         = nu[i];
       //
-      // check values using ok so that nan returns correct result
-      bool ok = mean[i] <= prior_table[i].upper;
+      // ok
+      bool ok;
+      //
+      // check density
+      ok =  density_table[ density_id[i] ] != binomial_enum;
+      if( ! ok )
+      {  msg = "cannot use binomial density in prior table";
+         error_exit(msg, table_name, i);
+      }
+      //
+      // check mean
+      ok = mean[i] <= prior_table[i].upper;
       if(  ! ok )
       {  msg = "mean greater than upper limit";
          error_exit(msg, table_name, i);
@@ -209,11 +219,15 @@ CppAD::vector<prior_struct> get_prior_table(
       {  msg = "mean less than lower limit";
          error_exit(msg, table_name, i);
       }
+      //
+      // check std
       ok = density_table[density_id[i]] == uniform_enum || std[i] > 0.0;
       if( ! ok )
       {  msg = "std <= 0 and density is not uniform";
          error_exit(msg, table_name, i);
       }
+      //
+      // check ets
       switch( density_table[density_id[i]]  )
       {  case log_gaussian_enum:
          case log_laplace_enum:
@@ -224,6 +238,8 @@ CppAD::vector<prior_struct> get_prior_table(
          default:
          ok = true;
       }
+      //
+      // check nu
       if( ! ok )
       {  msg = "This is a log density and eta not greater than zero.";
          error_exit(msg, table_name, i);
