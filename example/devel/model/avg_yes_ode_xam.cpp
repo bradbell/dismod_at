@@ -53,16 +53,11 @@ bool avg_yes_ode_xam(void)
    }
    size_t n_time_table = time_table.size();
    //
-   // density_table
-   vector<dismod_at::density_enum> density_table(7);
-   density_table[0] = dismod_at::uniform_enum;
-   density_table[1] = dismod_at::gaussian_enum;
-   density_table[2] = dismod_at::laplace_enum;
-   density_table[3] = dismod_at::students_enum;
-   density_table[4] = dismod_at::log_gaussian_enum;
-   density_table[5] = dismod_at::log_laplace_enum;
-   density_table[6] = dismod_at::log_students_enum;
-
+   // density table
+   size_t n_density = dismod_at::number_density_enum;
+   vector<dismod_at::density_enum> density_table(n_density);
+   for(size_t density_id = 0; density_id < n_density; ++density_id)
+      density_table[density_id] = dismod_at::density_enum(density_id);
    // age and time smoothing grid indices
    size_t n_age_si   = 3;
    size_t n_time_si  = 2;

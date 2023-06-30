@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_prior_table_xam.cpp dev}
@@ -30,19 +30,14 @@ bool get_prior_table_xam(void)
    bool     new_file  = true;
    sqlite3* db        = dismod_at::open_connection(file_name, new_file);
    //
-   // density_table
-   vector<dismod_at::density_enum> density_table(7);
-   density_table[0] = dismod_at::uniform_enum;
-   density_table[1] = dismod_at::gaussian_enum;
-   density_table[2] = dismod_at::laplace_enum;
-   density_table[3] = dismod_at::students_enum;
-   density_table[4] = dismod_at::log_gaussian_enum;
-   density_table[5] = dismod_at::log_laplace_enum;
-   density_table[6] = dismod_at::log_students_enum;
-
+   // density table
+   size_t n_density = dismod_at::number_density_enum;
+   vector<dismod_at::density_enum> density_table(n_density);
+   for(size_t density_id = 0; density_id < n_density; ++density_id)
+      density_table[density_id] = dismod_at::density_enum(density_id);
+   //
    // sql commands
-   // assume that density_id for uniform density is 0.
-   const char* sql_cmd[] = {
+   std::string sql_cmd =
       "create table prior("
          " prior_id      integer primary key,"
          " prior_name    text unique,"
@@ -52,28 +47,32 @@ bool get_prior_table_xam(void)
          " mean         real,"
          " std          real,"
          " eta          real,"
-         " nu           real)",
-   "insert into prior values(0, 'none', 0, null, null, 0.0, null, null, null)",
-   "insert into prior values(1, 'rate', 1, 0.0,  1.0,  0.1, 1e-4, 1e-5, 5.0)"
-   };
-   size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
-   for(size_t i = 0; i < n_command; i++)
-      dismod_at::exec_sql_cmd(db, sql_cmd[i]);
-
-
+         " nu           real)";
+   dismod_at::exec_sql_cmd(db, sql_cmd.c_str());
+   //
+   sql_cmd  = "insert into prior values(0, 'none', ";
+   sql_cmd += std::to_string( size_t(dismod_at::uniform_enum) );
+   sql_cmd += ", null, null, 0.0, null, null, null)",
+   dismod_at::exec_sql_cmd(db, sql_cmd.c_str());
+   //
+   sql_cmd  = "insert into prior values(1, 'rate', ";
+   sql_cmd += std::to_string( size_t(dismod_at::gaussian_enum) );
+   sql_cmd += ", 0.0,  1.0,  0.1, 1e-4, 1e-5, 5.0)";
+   dismod_at::exec_sql_cmd(db, sql_cmd.c_str());
+   //
    // get the prior table
    vector<dismod_at::prior_struct> prior_table =
          dismod_at::get_prior_table(db, density_table);
    ok  &= prior_table.size() == 2;
    //
    ok  &= prior_table[0].prior_name  == "none";
-   ok  &= prior_table[0].density_id == 0;
+   ok  &= prior_table[0].density_id == size_t( dismod_at::uniform_enum );
    ok  &= prior_table[0].lower      == std::atof("-inf");
    ok  &= prior_table[0].upper      == std::atof("+inf");
    ok  &= prior_table[0].mean       == 0.0;
    //
    ok  &= prior_table[1].prior_name  == "rate";
-   ok  &= prior_table[1].density_id == 1;
+   ok  &= prior_table[1].density_id == size_t( dismod_at::gaussian_enum );
    ok  &= prior_table[1].lower      == 0.0;
    ok  &= prior_table[1].upper      == 1.0;
    ok  &= prior_table[1].mean       == 0.1;

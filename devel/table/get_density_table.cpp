@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_density_table dev}
@@ -114,19 +114,22 @@ this function.
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 // density names in scame order as enum type in get_density.hpp
+// BEGIN_SORT_THIS_LINE_PLUS_2
 const char* density_enum2name[] = {
-   "uniform",
-   "gaussian",
+   "binomial",
    "cen_gaussian",
-   "log_gaussian",
-   "cen_log_gaussian",
-   "laplace",
    "cen_laplace",
-   "log_laplace",
+   "cen_log_gaussian",
    "cen_log_laplace",
+   "gaussian",
+   "laplace",
+   "log_gaussian",
+   "log_laplace",
+   "log_students",
    "students",
-   "log_students"
+   "uniform"
 };
+// END_SORT_THIS_LINE_MINUS_2
 
 
 CppAD::vector<density_enum> get_density_table(sqlite3* db)
@@ -140,17 +143,20 @@ CppAD::vector<density_enum> get_density_table(sqlite3* db)
    // check density names in same order as enum type in get_density_table.hpp
 # ifndef NDEBUG
    const char** enum2name = density_enum2name;
-   assert( string("uniform")          == enum2name[uniform_enum] );
-   assert( string("gaussian")         == enum2name[gaussian_enum] );
+   // BEGIN_SORT_THIS_LINE_PLUS_1
+   assert( string("binomial")         == enum2name[binomial_enum] );
    assert( string("cen_gaussian")     == enum2name[cen_gaussian_enum] );
-   assert( string("log_gaussian")     == enum2name[log_gaussian_enum] );
-   assert( string("cen_log_gaussian") == enum2name[cen_log_gaussian_enum] );
-   assert( string("laplace")          == enum2name[laplace_enum] );
    assert( string("cen_laplace")      == enum2name[cen_laplace_enum] );
-   assert( string("log_laplace")      == enum2name[log_laplace_enum] );
+   assert( string("cen_log_gaussian") == enum2name[cen_log_gaussian_enum] );
    assert( string("cen_log_laplace")  == enum2name[cen_log_laplace_enum] );
-   assert( string("students")         == enum2name[students_enum] );
+   assert( string("gaussian")         == enum2name[gaussian_enum] );
+   assert( string("laplace")          == enum2name[laplace_enum] );
+   assert( string("log_gaussian")     == enum2name[log_gaussian_enum] );
+   assert( string("log_laplace")      == enum2name[log_laplace_enum] );
    assert( string("log_students")     == enum2name[log_students_enum] );
+   assert( string("students")         == enum2name[students_enum] );
+   assert( string("uniform")          == enum2name[uniform_enum] );
+   // END_SORT_THIS_LINE_MINUS_1
 # endif
    //
    vector<bool> found(number_density_enum);

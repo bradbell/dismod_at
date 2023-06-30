@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin child_data_in_fit_xam.cpp dev}
@@ -34,10 +34,11 @@ bool child_data_in_fit_xam(void)
    size_t n_covariate = 0;
    vector<dismod_at::covariate_struct> covariate_table(n_covariate);
    //
-   // density_table
-   vector<dismod_at::density_enum> density_table(2);
-   density_table[0] = dismod_at::uniform_enum;
-   density_table[1] = dismod_at::gaussian_enum;
+   // density table
+   size_t n_density = dismod_at::number_density_enum;
+   vector<dismod_at::density_enum> density_table(n_density);
+   for(size_t density_id = 0; density_id < n_density; ++density_id)
+      density_table[density_id] = dismod_at::density_enum(density_id);
    //
    // integrand_table
    vector<dismod_at::integrand_struct> integrand_table(1);

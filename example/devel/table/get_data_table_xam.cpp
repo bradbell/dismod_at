@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_data_table_xam.cpp dev}
@@ -31,16 +31,11 @@ bool get_data_table_xam(void)
    bool     new_file  = true;
    sqlite3* db        = dismod_at::open_connection(file_name, new_file);
    //
-   // density_table
-   vector<dismod_at::density_enum> density_table(7);
-   density_table[0] = dismod_at::uniform_enum;
-   density_table[1] = dismod_at::gaussian_enum;
-   density_table[2] = dismod_at::laplace_enum;
-   density_table[3] = dismod_at::students_enum;
-   density_table[4] = dismod_at::log_gaussian_enum;
-   density_table[5] = dismod_at::log_laplace_enum;
-   density_table[6] = dismod_at::log_students_enum;
-
+   // density table
+   size_t n_density = dismod_at::number_density_enum;
+   vector<dismod_at::density_enum> density_table(n_density);
+   for(size_t density_id = 0; density_id < n_density; ++density_id)
+      density_table[density_id] = dismod_at::density_enum(density_id);
    // sql commands
    const char* sql_cmd[] = {
    "create table data("
