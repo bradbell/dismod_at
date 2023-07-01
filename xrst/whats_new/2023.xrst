@@ -17,6 +17,14 @@ Changes and Additions to Dismod_at During 2023
 mm-dd
 *****
 
+07-01
+=====
+#. **API Change:** Change the average_integrand rate argument name to :ref:`average_integrand@rate_fun` .
+
+#. Improve the documentation for average_integrand.
+   In addition, fix a call to the rate ``pini`` rate function
+   that passed an ``int`` for age (it should only use ``float`` ).
+
 06-28
 =====
 Advance dock_dismod_at.sh
