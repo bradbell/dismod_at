@@ -1,7 +1,7 @@
 """
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin average_integrand}
 {xrst_spell
@@ -16,10 +16,14 @@ Compute The Average Integrand
 
 Syntax
 ******
-
-| *avg_integrand* = ``dismod_at.average_integrand`` (
-| |tab| *rate* , *integrand_name* , *grid* , *abs_tol*
-| )
+{xrst_literal
+   # BEGIN_AVERAGE_INTEGRAND
+   # END_AVERAGE_INTEGRAND
+}
+{xrst_literal
+   # BEGIN_RETURN
+   # END_RETURN
+}
 
 Purpose
 *******
@@ -27,21 +31,21 @@ The :ref:`predict_command-name` is a much faster way to calculate these values.
 This routine is easier to use and provides independent testing of the
 dismod_at integrators.
 
-rate
-****
+rate_fun
+********
 This is a dictionary and it's possible keys are the
 :ref:`rate names<rate_table@rate_name>` .
 If a *key* is a key in the dictionary,
 
-   *value* = *rate* [ *key* ]( *age* , *time* )
+   *value* = *rate_fun* [ *key* ]( *age* , *time* )
 
 returns a float equal to the value of the specified rate
-at the specified age and time.
+at the specified age and time (where *age* and *time* are floats).
 Note that *age* will always be zero when evaluating
 
-   *value* = *rate* [ ``'pini'`` ]( *age* , *time* )
+   *value* = *rate_fun* [ ``'pini'`` ]( *age* , *time* )
 
-If a rate name is not in the dictionary, the corresponding rate is zero.
+If a rate name is not in the *rate_fun*, the corresponding rate is zero.
 
 integrand_name
 **************
@@ -73,13 +77,14 @@ abs_tol
 *******
 This float is an absolute error bound, that the integrator will achieve.
 
-avg_integrand
-*************
-This is the calculated value for the
+avg
+***
+The return value *avg* is the corresponding
 :ref:`average integrand<avg_integrand@Average Integrand, A_i>` .
 {xrst_toc_hidden
    example/user/average_integrand.py
 }
+
 Example
 *******
 The file :ref:`user_average_integrand.py-name` contains an example and test of this routine.
@@ -154,7 +159,7 @@ def SC_fun(a, t, rate, abs_tol) :
       return [ [ -(iota + omega) , rho ], [ iota, -(rho + omega + chi) ] ]
    #
    # S(-a), C(-a)
-   Cini = rate['pini'](0, t - a)
+   Cini = rate['pini'](0.0, t - a)
    Sini = 1.0 - Cini
    #
    # Special case where scipy.integrate.ode chokes: a == 0.0
@@ -224,8 +229,15 @@ def integrand_fun(a, t, rate, integrand_name, abs_tol) :
    msg += ' is not a valid integrand name'
    assert False, msg
 #
-# average_integrand
-def average_integrand(rate, integrand_name, grid, abs_tol) :
+# BEGIN_AVERAGE_INTEGRAND
+# avg =
+def average_integrand(rate_fun, integrand_name, grid, abs_tol) :
+   assert type(rate_fun) == dict
+   assert type(integrand_name) == str
+   assert type(grid) == dict
+   assert type(abs_tol) == float
+   # END_AVERAGE_INTEGRAND
+   #
    import scipy.integrate
    #
    # zero_fun
@@ -235,8 +247,8 @@ def average_integrand(rate, integrand_name, grid, abs_tol) :
    # rate_extended
    rate_extended = dict()
    for key in ['pini', 'iota', 'rho', 'chi', 'omega'] :
-      if key in rate :
-         rate_extended[key] = rate[key]
+      if key in rate_fun :
+         rate_extended[key] = rate_fun[key]
       else :
          rate_extended[key] = zero_fun
    #
@@ -250,6 +262,9 @@ def average_integrand(rate, integrand_name, grid, abs_tol) :
          a, t, rate_extended, integrand_name, abs_tol
       )
    #
-   avg = trapezoidal_average_2d(func, age_grid, time_grid)
+   avg = float( trapezoidal_average_2d(func, age_grid, time_grid) )
    #
+   # BEGIN_RETURN
+   assert type(avg) == float
    return avg
+   # END_RETURN

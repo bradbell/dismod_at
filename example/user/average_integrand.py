@@ -132,9 +132,9 @@ n_data             = 10
 random_seed        = int( time.time() )
 # ---------------------------------------------------------------------------
 def average_integrand(integrand_name, grid) :
-   rate    = { 'iota' : iota_true }
-   abs_tol = 1e-6
-   return dismod_at.average_integrand(rate, integrand_name, grid, abs_tol)
+   rate_fun  = { 'iota' : iota_true }
+   abs_tol   = 1e-6
+   return dismod_at.average_integrand(rate_fun, integrand_name, grid, abs_tol)
 # ---------------------------------------------------------------------------
 def example_db (file_name) :
    # note that the a, t values are not used for this case

@@ -182,7 +182,7 @@ def example_db (file_name) :
                fun  = lambda age, time : \
                   iota_true(age, time, node_name, sex)
                meas_value = dismod_at.average_integrand(
-                  rate           = { 'iota' : fun },
+                  rate_fun       = { 'iota' : fun },
                   integrand_name = 'prevalence',
                   grid           =  { 'age': [age], 'time' : [time] },
                   abs_tol        = 1e-6,

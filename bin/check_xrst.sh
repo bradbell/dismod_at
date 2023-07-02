@@ -15,6 +15,14 @@ index_page_name=$(\
    sed -e 's|^ *--index_page_name *||' \
 )
 #
+# number_jobs
+if [ $(nproc) == '1' ] || [ $(nproc) == '2' ]
+then
+   number_jobs=1
+else
+   let number_jobs="$(nproc) - 1"
+fi
+#
 # build
 if [ ! -e build ]
 then
@@ -37,6 +45,7 @@ then
 fi
 echo_eval xrst \
    --local_toc \
+   --number_jobs $number_jobs \
    --group_list default dev \
    --html_theme sphinx_rtd_theme \
    --index_page_name $index_page_name
