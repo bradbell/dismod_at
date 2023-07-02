@@ -5,7 +5,6 @@
 /*
 {xrst_begin residual_density dev}
 {xrst_spell
-   bool
    enum
    fabs
    logden
@@ -15,12 +14,12 @@
 Compute Weighted Residual and Log-Density
 #########################################
 
-Syntax
-******
-
-| *residual* = ``residual_density`` (
-| |tab| *z* , *y* , *mu* , *delta* , *d_id* , *d_eta* , *d_nu* , *index* , *diff* , *prior*
-| )
+Prototype
+*********
+{xrst_literal
+   // BEGIN_RESIDUAL_DENSITY
+   // END_RESIDUAL_DENSITY
+}
 
 Float
 *****
@@ -29,10 +28,6 @@ The type *Float* must be ``double`` or
 
 z
 *
-This argument has prototype
-
-   ``const`` *Float* & ``z``
-
 #. If *diff* is true, *z* is not nan and *prior* is true.
    In this case *z* specifies the first random variable in the difference.
 #. If *diff* is false and *z* is not nan,
@@ -43,44 +38,28 @@ This argument has prototype
 
 y
 *
-This argument has prototype
-
-   ``const`` *Float* & ``y``
-
-If *diff* is true,
-*y* specifies the second random variable in the difference.
-If *diff* is false and *z* is nan,
-*y* is used both for measurement value
-and for calculating log-density standard deviations.
-If *diff* is false and *z* is not nan,
-*y* is only used for calculating log-density standard deviations.
+#. If *diff* is true,
+   *y* specifies the second random variable in the difference.
+#. If *diff* is false and *z* is nan,
+   *y* is used both for measurement value
+   and for calculating log-density standard deviations.
+#. If *diff* is false and *z* is not nan,
+   *y* is only used for calculating log-density standard deviations.
 
 mu
 **
-This argument has prototype
-
-   ``const`` *Float* & ``mu``
-
-If *diff* is true, it is the central value for the difference.
-Otherwise, it is the central value for *y* .
+If *diff* is true, it is the mean value for the difference.
+Otherwise, it is the mean value for *y* .
 
 delta
 *****
-This argument has prototype
-
-   ``const`` *Float* & ``delta``
-
-It is either the standard deviation.
+It is the standard deviation.
 For log data densities it is in log space.
 For all other cases (linear data densities or priors) it is in the
 same space as *y* .
 
 d_id
 ****
-This argument has prototype
-
-   ``density_enum`` *d_id*
-
 If *prior* is true, this refers to the
 :ref:`prior_table@density_id` in a prior table.
 Otherwise, it refers to the
@@ -101,11 +80,7 @@ Otherwise it is not used.
 
 index
 *****
-This argument has prototype
-
-   ``size_t`` *index*
-
-and is an identifying index for the residual.
+This is an identifying index for the residual.
 For example, when computing the prior residuals it could be
 ``3`` times :ref:`var_table@var_id`
 plus zero for value priors,
@@ -114,14 +89,10 @@ plus two for time difference prior.
 
 diff
 ****
-This argument has prototype
-
-   ``bool`` *diff*
-
 If *diff* is true,
-this calculation is for the difference of the
+the residual is for the difference of the
 random variables :math:`z` and :math:`y`.
-Otherwise it is just for the random variable :math:`y`.
+Otherwise the residual is for the random variable :math:`y`.
 
 prior
 *****
@@ -132,9 +103,6 @@ If it is a data density, *diff* must be false.
 
 residual
 ********
-The return value has prototype
-
-   ``residual_struct<`` *Float* > *residual*
 
 residual_struct
 ===============
@@ -239,6 +207,8 @@ namespace {
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
+// BEGIN_RESIDUAL_DENSITY
+// residual =
 template <class Float>
 residual_struct<Float> residual_density(
    const Float&       z          ,
@@ -251,6 +221,7 @@ residual_struct<Float> residual_density(
    size_t             index      ,
    bool               diff       ,
    bool               prior      )
+// END_RESIDUAL_DENSITY
 {
 
 # ifndef NDEBUG
