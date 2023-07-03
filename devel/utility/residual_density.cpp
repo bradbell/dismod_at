@@ -55,8 +55,8 @@ delta
 *****
 It is the standard deviation.
 For log data densities it is in log space.
-For all other cases (linear data densities or priors) it is in the
-same space as *y* .
+For all other cases, linear densities, it is in the same space as *y*
+and *mu* .
 
 d_id
 ****
@@ -237,7 +237,6 @@ residual_struct<Float> residual_density(
    double pi2 = 8.0 * std::atan(1.0);
 
    Float wres  = nan;
-   Float sigma = nan;
    switch( d_id )
    {
       case uniform_enum:
@@ -251,14 +250,13 @@ residual_struct<Float> residual_density(
       case students_enum:
       print_forward_if_not_positive("delta", delta);
       assert( delta > 0.0 );
-      sigma = delta;
       if( diff )
-         wres  = ( z - y - mu) / sigma;
+         wres  = ( z - y - mu) / delta;
       else
       {  if( CppAD::isnan(z) )
-            wres = (y - mu) / sigma;
+            wres = (y - mu) / delta;
          else
-            wres = (z - mu) / sigma;
+            wres = (z - mu) / delta;
       }
       break;
 
@@ -272,21 +270,18 @@ residual_struct<Float> residual_density(
       assert( diff || mu + d_eta + tiny > 0.0 );
       if( diff )
       {  assert(prior);
-         sigma = delta;
-         wres  = ( log( z + d_eta ) - log( y + d_eta ) - mu ) / sigma;
+         wres  = ( log( z + d_eta ) - log( y + d_eta ) - mu ) / delta;
       }
       else if( prior )
       {  print_forward_if_not_positive("mu + eta", mu + d_eta + tiny);
-         sigma = log( 1.0 + delta / (mu + d_eta) );
-         wres  = ( log( y + d_eta ) - log( mu + d_eta ) ) / sigma;
+         wres  = ( log( y + d_eta ) - log( mu + d_eta ) ) / delta;
       }
       else // data case
       {  print_forward_if_not_positive("mu + eta", mu + d_eta + tiny);
-         sigma = delta;
          if( CppAD::isnan(z) )
-            wres  = ( log( y + d_eta ) - log( mu + d_eta ) ) / sigma;
+            wres  = ( log( y + d_eta ) - log( mu + d_eta ) ) / delta;
          else
-            wres  = ( log( z + d_eta ) - log( mu + d_eta ) ) / sigma;
+            wres  = ( log( z + d_eta ) - log( mu + d_eta ) ) / delta;
       }
       break;
 
@@ -305,14 +300,14 @@ residual_struct<Float> residual_density(
 
       case gaussian_enum:
       case log_gaussian_enum:
-      {  logden_smooth  = - log( sigma * sqrt( pi2 ) ) - wres * wres / 2.0;
+      {  logden_smooth  = - log( delta * sqrt( pi2 ) ) - wres * wres / 2.0;
          logden_sub_abs = 0.0;
       }
       break;
 
       case laplace_enum:
       case log_laplace_enum:
-      {  logden_smooth  = - log( sigma * r2 );
+      {  logden_smooth  = - log( delta * r2 );
          logden_sub_abs = r2 * wres;
       }
       break;
@@ -333,12 +328,12 @@ residual_struct<Float> residual_density(
          censor = z <= 0.0;
       if( censor )
       {  Float c = 0.0;
-         Float erfc_value = CppAD::erfc( (mu - c) / ( sigma * r2 ) );
+         Float erfc_value = CppAD::erfc( (mu - c) / ( delta * r2 ) );
          logden_smooth    = log(erfc_value / 2.0 );
          logden_sub_abs   = 0.0;
       }
       else
-      {  logden_smooth  = - log( sigma * sqrt( pi2 ) ) - wres * wres / 2.0;
+      {  logden_smooth  = - log( delta * sqrt( pi2 ) ) - wres * wres / 2.0;
          logden_sub_abs = 0.0;
       }
       break;
@@ -352,12 +347,12 @@ residual_struct<Float> residual_density(
       if( censor )
       {  Float c = 0.0;
          Float erfc_value =
-            CppAD::erfc( (log(mu + d_eta) - log(c + d_eta)) / ( sigma * r2 ) );
+            CppAD::erfc( (log(mu + d_eta) - log(c + d_eta)) / ( delta * r2 ) );
          logden_smooth    = log(erfc_value / 2.0 );
          logden_sub_abs   = 0.0;
       }
       else
-      {  logden_smooth  = - log( sigma * sqrt( pi2 ) ) - wres * wres / 2.0;
+      {  logden_smooth  = - log( delta * sqrt( pi2 ) ) - wres * wres / 2.0;
          logden_sub_abs = 0.0;
       }
       break;
@@ -366,11 +361,11 @@ residual_struct<Float> residual_density(
       assert( ! diff );
       if( y <= 0 )
       {  Float c = 0.0;
-         logden_smooth = - (mu - c) * r2 / sigma - std::log(2.0);
+         logden_smooth = - (mu - c) * r2 / delta - std::log(2.0);
          logden_sub_abs = 0.0;
       }
       else
-      {  logden_smooth  = - log( sigma * r2 );
+      {  logden_smooth  = - log( delta * r2 );
          logden_sub_abs = r2 * wres;
       }
       break;
@@ -380,11 +375,11 @@ residual_struct<Float> residual_density(
       if( y <= 0 )
       {  Float c = 0.0;
          logden_smooth =
-            - (log(mu + d_eta) - log(c + d_eta)) * r2 / sigma - std::log(2.0);
+            - (log(mu + d_eta) - log(c + d_eta)) * r2 / delta - std::log(2.0);
          logden_sub_abs = 0.0;
       }
       else
-      {  logden_smooth  = - log( sigma * r2 );
+      {  logden_smooth  = - log( delta * r2 );
          logden_sub_abs = r2 * wres;
       }
       break;

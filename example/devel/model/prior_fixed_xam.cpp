@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin prior_fixed_xam.cpp dev}
@@ -362,7 +362,7 @@ bool prior_fixed_xam(void)
    double relerr = 1.0 - logden / check;
    ok   &= count_laplace == count_abs;
    ok   &= fabs( relerr ) < eps;
-# if DISMOD_AT_PRIOR_DENSITY_XAM_TRACE
+# if DISMOD_AT_PRIOR_FIXED_XAM_TRACE
    cout << endl;
    cout << "count_laplace = " << count_laplace << endl;
    cout << "count_abs     = " << count_abs << endl;
