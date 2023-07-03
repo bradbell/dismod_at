@@ -26,43 +26,43 @@ Float
 The type *Float* must be ``double`` or
 :ref:`a1_double-name` .
 
+residual_type
+*************
+
+.. csv-table::
+   :widths: auto
+
+   ``simulated_data_enum`` , residual for the simulated data *z*
+   ``real_data_enum`` , residual for the real data *y*
+   ``value_prior_enum`` , residual for the variable value *y*
+   ``difference_prior_enum`` , residual for the variable difference *z* - *y*
+
 z
 *
-#. If *diff* is true, *z* is not nan and *prior* is true.
-   In this case *z* specifies the first random variable in the difference.
-#. If *diff* is false and *z* is not nan,
-   *prior* must be false and
-   *z* is a simulated value for the measurement *y* .
-#. If *diff* is false and *z* is nan,
-   the likelihood is for the single random variable *y* .
+is either simulated data, first variable in a variable difference, or nan;
+see *residual_type* cases above.
 
 y
 *
-#. If *diff* is true,
-   *y* specifies the second random variable in the difference.
-#. If *diff* is false and *z* is nan,
-   *y* is used both for measurement value
-   and for calculating log-density standard deviations.
-#. If *diff* is false and *z* is not nan,
-   *y* is only used for calculating log-density standard deviations.
+is either the real data, second variable in a variable difference, or nan;
+see *residual_type* cases above.
 
 mu
 **
-If *diff* is true, it is the mean value for the difference.
-Otherwise, it is the mean value for *y* .
+is the mean value for the residual.
 
 delta
 *****
-It is the standard deviation.
+It is the standard deviation for the residual.
 For log data densities it is in log space.
-For all other cases, linear densities, it is in the same space as *y*
-and *mu* .
+For all other cases, linear densities; i.e., it is in the same space as *mu* .
 
 d_id
 ****
-If *prior* is true, this refers to the
+Is the density id for this residual.
+If this is a prior residual, *d_id* is the corresponding
 :ref:`prior_table@density_id` in a prior table.
-Otherwise, it refers to the
+Otherwise, it is the corresponding
 :ref:`data_table@density_id` in a data table.
 
 d_eta
@@ -81,25 +81,7 @@ Otherwise it is not used.
 index
 *****
 This is an identifying index for the residual.
-For example, when computing the prior residuals it could be
-``3`` times :ref:`var_table@var_id`
-plus zero for value priors,
-plus one for age difference prior, and
-plus two for time difference prior.
-
-diff
-****
-If *diff* is true,
-the residual is for the difference of the
-random variables :math:`z` and :math:`y`.
-Otherwise the residual is for the random variable :math:`y`.
-
-prior
-*****
-If *prior* is true,
-this a prior density.
-Otherwise, it is a data density.
-If it is a data density, *diff* must be false.
+It is only copied to the output structure and is not used in any other way.
 
 residual
 ********
@@ -135,44 +117,29 @@ This structure has the following fields:
 
 wres
 ====
-If *diff* is false, *wres* is the value of
+If this is a real data residual or a value prior residual::
 
-.. math::
+   wres = R(y, mu, delta, d)
 
-   R(y, \mu, \delta, d)
+If this is a simulated data residual::
 
-see :ref:`weighted residual function<statistic@Weighted Residual Function, R>` .
-If *diff* is true, *wres* is the value of
+   wres = R(z, mu, delta, d)
 
-.. math::
+If this is a difference prior residual::
 
-   R(z, y, \mu, \delta, d)
+   wres = R(z, y, mu, delta, d)
+
+See :ref:`statistic@Weighted Residual Function, R` .
 
 Log Density
 ===========
-If *diff* is false, the log-density function
+If this is a difference residual, the log-density function is
 
-.. math::
-
-   D(y, \mu, \delta, d)
-
-is equal to
-
-   *logden_smooth* ``- fabs`` ( *logden_sub_abs* ))
+   *logden_smooth* - fabs( *logden_sub_abs* ))
 
 see :ref:`log-density function<statistic@Log-Density Function, D>` .
-If *diff* is true, the log-density function
-
-.. math::
-
-   D(z, y, \mu, \delta, d)
-
-is equal to
-
-   *logden_smooth* ``- fabs`` ( *logden_sub_abs* ))
-
 Both *logden_smooth* and *logden_sub_abs*
-are smooth functions of :math:`\mu` and :math:`\delta`.
+are smooth functions of *mu* and *delta* .
 This expresses the log-density
 in terms of smooth functions (for optimization purposes).
 
@@ -211,25 +178,51 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 // residual =
 template <class Float>
 residual_struct<Float> residual_density(
-   const Float&       z          ,
-   const Float&       y          ,
-   const Float&       mu         ,
-   const Float&       delta      ,
-   density_enum       d_id       ,
-   const Float&       d_eta      ,
-   const Float&       d_nu       ,
-   size_t             index      ,
-   bool               diff       ,
-   bool               prior      )
+   residual_enum      residual_type  ,
+   const Float&       z              ,
+   const Float&       y              ,
+   const Float&       mu             ,
+   const Float&       delta          ,
+   density_enum       d_id           ,
+   const Float&       d_eta          ,
+   const Float&       d_nu           ,
+   size_t             index          )
 // END_RESIDUAL_DENSITY
 {
 
-# ifndef NDEBUG
-   if( diff )
-      assert(prior);
-   if( diff )
-      assert( ! CppAD::isnan(z) );
-# endif
+   // prior, diff
+   // initialize to avoid compiler warning
+   bool prior = false, diff = false;
+   switch( residual_type )
+   {
+      default:
+      assert( false );
+      break;
+
+      case simulated_data_enum:
+      prior = false;
+      diff  = false;
+      assert( ! CppAD::isnan( z ) );
+      break;
+
+      case real_data_enum:
+      prior = false;
+      diff  = false;
+      assert( CppAD::isnan( z ) );
+      break;
+
+      case value_prior_enum:
+      prior = true;
+      diff  = false;
+      assert( CppAD::isnan( z ) );
+      break;
+
+      case difference_prior_enum:
+      prior = true;
+      diff  = true;
+      assert( ! CppAD::isnan( z ) );
+      break;
+   }
 
    Float tiny = 10.0 / std::numeric_limits<double>::max();;
    double nan = std::numeric_limits<double>::quiet_NaN();
@@ -398,18 +391,17 @@ residual_struct<Float> residual_density(
 }
 
 // instantiation macro
-# define DISMOD_AT_INSTANTIATE_RESIDUAL_DENSITY(Float)        \
-   template residual_struct<Float> residual_density(         \
-      const Float&       z            ,                     \
-      const Float&       y            ,                     \
-      const Float&       mu           ,                     \
-      const Float&       delta        ,                     \
-      density_enum       d_id         ,                     \
-      const Float&       d_eta        ,                     \
-      const Float&       d_nu         ,                     \
-      size_t             id           ,                     \
-      bool               diff         ,                     \
-      bool               prior                              \
+# define DISMOD_AT_INSTANTIATE_RESIDUAL_DENSITY(Float)      \
+   template residual_struct<Float> residual_density(        \
+      residual_enum      residual_type    ,                 \
+      const Float&       z                ,                 \
+      const Float&       y                ,                 \
+      const Float&       mu               ,                 \
+      const Float&       delta            ,                 \
+      density_enum       d_id             ,                 \
+      const Float&       d_eta            ,                 \
+      const Float&       d_nu             ,                 \
+      size_t             index                              \
    );
 
 // instantiations

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # ifndef DISMOD_AT_RESIDUAL_DENSITY_HPP
 # define DISMOD_AT_RESIDUAL_DENSITY_HPP
@@ -10,6 +10,12 @@
 
 namespace dismod_at {
 
+   enum residual_enum {
+      real_data_enum        ,
+      simulated_data_enum   ,
+      value_prior_enum      ,
+      difference_prior_enum
+   };
 
    template <class Float>
    struct residual_struct {
@@ -22,16 +28,15 @@ namespace dismod_at {
 
    template <class Float>
    residual_struct<Float> residual_density(
-      const Float&       z           ,
-      const Float&       y           ,
-      const Float&       mu          ,
-      const Float&       delta       ,
-      density_enum       d_id        ,
-      const Float&       d_eta       ,
-      const Float&       d_nu        ,
-      size_t             index       ,
-      bool               diff        ,
-      bool               prior
+      residual_enum      residual_type  ,
+      const Float&       z              ,
+      const Float&       y              ,
+      const Float&       mu             ,
+      const Float&       delta          ,
+      density_enum       d_id           ,
+      const Float&       d_eta          ,
+      const Float&       d_nu           ,
+      size_t             index
    );
 }
 

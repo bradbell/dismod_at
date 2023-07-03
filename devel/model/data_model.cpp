@@ -896,16 +896,17 @@ residual_struct<Float> data_model::like_one(
       default:
       assert(false);
    }
-   //
-   bool diff  = false;
-   bool prior = false;
-# ifndef NDEBUG
+   residual_enum residual_type;
    if( fit_simulated_data_ )
-      assert( ! std::isnan(data_sim_value) );
+   {  assert( ! std::isnan(data_sim_value) );
+      residual_type = simulated_data_enum;
+   }
    else
-      assert( std::isnan(data_sim_value) );
-# endif
+   {  assert( std::isnan(data_sim_value) );
+      residual_type = real_data_enum;
+   }
    struct residual_struct<Float> residual = residual_density(
+      residual_type,
       Float(data_sim_value),
       Float(meas_value),
       avg,
@@ -913,9 +914,7 @@ residual_struct<Float> data_model::like_one(
       density,
       Float(eta),
       Float(nu),
-      subset_id,
-      diff,
-      prior
+      subset_id
    );
    //
    return residual;

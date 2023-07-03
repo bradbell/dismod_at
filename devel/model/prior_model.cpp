@@ -143,21 +143,25 @@ residual_struct<Float> prior_model::log_prior(
 {  assert ( 0 <= prior.density_id  );
    assert ( size_t(prior.density_id) < density_table_.size()  );
    //
-   // denisty
+   // density
    density_enum density = density_table_[prior.density_id];
    //
    // sigam: transformed standard deviation
    double sigma = prior.std;
    if( ! difference && log_density(density) ) sigma =
-   log( prior.mean + prior.eta + prior.std ) - log( prior.mean + prior.eta );
+      log(prior.mean + prior.eta + prior.std) - log(prior.mean + prior.eta);
    //
    Float        mu      = Float(prior.mean);
    Float        delta   = mulstd * Float(sigma);
    Float        eta     = Float(prior.eta);
    Float        nu      = Float(prior.nu);
-   bool prior_density = true;
+   residual_enum residual_type;
+   if( difference )
+      residual_type = difference_prior_enum;
+   else
+      residual_type = value_prior_enum;
    return residual_density(
-      z, y, mu, delta, density, eta, nu, index, difference, prior_density
+      residual_type, z, y, mu, delta, density, eta, nu, index
    );
 }
 /*
