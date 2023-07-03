@@ -897,18 +897,21 @@ residual_struct<Float> data_model::like_one(
       assert(false);
    }
    residual_enum residual_type;
+   double        y;
    if( fit_simulated_data_ )
    {  assert( ! std::isnan(data_sim_value) );
       residual_type = simulated_data_enum;
+      y             = std::numeric_limits<double>::quiet_NaN();
    }
    else
    {  assert( std::isnan(data_sim_value) );
       residual_type = real_data_enum;
+      y             = meas_value;
    }
    struct residual_struct<Float> residual = residual_density(
       residual_type,
       Float(data_sim_value),
-      Float(meas_value),
+      Float(y),
       avg,
       delta_out,
       density,

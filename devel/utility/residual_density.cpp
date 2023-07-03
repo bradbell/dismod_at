@@ -44,7 +44,8 @@ see *residual_type* cases above.
 
 y
 *
-is either the real data, second variable in a variable difference, or nan;
+is either the real data, the variable in a value prior,
+second variable in a variable difference prior, or nan;
 see *residual_type* cases above.
 
 mu
@@ -202,24 +203,28 @@ residual_struct<Float> residual_density(
       case simulated_data_enum:
       prior = false;
       diff  = false;
+      assert( CppAD::isnan(y) );
       assert( ! CppAD::isnan( z ) );
       break;
 
       case real_data_enum:
       prior = false;
       diff  = false;
+      assert( ! CppAD::isnan(y) );
       assert( CppAD::isnan( z ) );
       break;
 
       case value_prior_enum:
       prior = true;
       diff  = false;
+      assert( ! CppAD::isnan(y) );
       assert( CppAD::isnan( z ) );
       break;
 
       case difference_prior_enum:
       prior = true;
       diff  = true;
+      assert( ! CppAD::isnan(y) );
       assert( ! CppAD::isnan( z ) );
       break;
    }
