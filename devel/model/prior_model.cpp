@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin prior_model_ctor dev}
@@ -142,10 +142,17 @@ residual_struct<Float> prior_model::log_prior(
    bool                  difference ) const // is this a difference residual
 {  assert ( 0 <= prior.density_id  );
    assert ( size_t(prior.density_id) < density_table_.size()  );
-
+   //
+   // denisty
    density_enum density = density_table_[prior.density_id];
+   //
+   // sigam: transformed standard deviation
+   double sigma = prior.std;
+   if( ! difference && log_density(density) ) sigma =
+   log( prior.mean + prior.eta + prior.std ) - log( prior.mean + prior.eta );
+   //
    Float        mu      = Float(prior.mean);
-   Float        delta   = mulstd * Float(prior.std);
+   Float        delta   = mulstd * Float(sigma);
    Float        eta     = Float(prior.eta);
    Float        nu      = Float(prior.nu);
    bool prior_density = true;
