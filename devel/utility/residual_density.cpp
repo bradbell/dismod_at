@@ -37,6 +37,9 @@ residual_type
    ``value_prior_enum`` , residual for the variable value *y*
    ``difference_prior_enum`` , residual for the variable difference *z* - *y*
 
+The difference prior cannot be used with a censored density; see
+*d_enum* below.
+
 z
 *
 is either simulated data, first variable in a variable difference, or nan;
@@ -58,10 +61,10 @@ It is the standard deviation for the residual.
 For log data densities it is in log space.
 For all other cases, linear densities; i.e., it is in the same space as *mu* .
 
-d_id
-****
-Is the density id for this residual.
-If this is a prior residual, *d_id* is the corresponding
+d_enum
+******
+Is the density for this residual.
+If this is a prior residual, *d_enum* is the corresponding
 :ref:`prior_table@density_id` in a prior table.
 Otherwise, it is the corresponding
 :ref:`data_table@density_id` in a data table.
@@ -74,8 +77,8 @@ Otherwise it is not used.
 
 d_nu
 ****
-If the density *d_id* corresponds to
-``students`` or ``log_students`` ,
+If the density *d_enum* is
+``students_enum``  or ``log_students_enum`` ,
 *nu* specifies the degrees of freedom in the Students-t distribution.
 Otherwise it is not used.
 
@@ -184,16 +187,14 @@ residual_struct<Float> residual_density(
    const Float&       y              ,
    const Float&       mu             ,
    const Float&       delta          ,
-   density_enum       d_id           ,
+   density_enum       d_enum         ,
    const Float&       d_eta          ,
    const Float&       d_nu           ,
    size_t             index          )
 // END_RESIDUAL_DENSITY
 {
 
-   // prior, diff
-   // initialize to avoid compiler warning
-   bool prior = false, diff = false;
+# ifndef NDEBUG
    switch( residual_type )
    {
       default:
@@ -201,42 +202,42 @@ residual_struct<Float> residual_density(
       break;
 
       case simulated_data_enum:
-      prior = false;
-      diff  = false;
       assert( CppAD::isnan(y) );
       assert( ! CppAD::isnan( z ) );
       break;
 
       case real_data_enum:
-      prior = false;
-      diff  = false;
       assert( ! CppAD::isnan(y) );
       assert( CppAD::isnan( z ) );
       break;
 
       case value_prior_enum:
-      prior = true;
-      diff  = false;
       assert( ! CppAD::isnan(y) );
       assert( CppAD::isnan( z ) );
       break;
 
       case difference_prior_enum:
-      prior = true;
-      diff  = true;
       assert( ! CppAD::isnan(y) );
       assert( ! CppAD::isnan( z ) );
+      assert( ! censored_density(d_enum) );
       break;
    }
+# endif
 
-   Float tiny = 10.0 / std::numeric_limits<double>::max();;
+   // nan, r2, pi
    double nan = std::numeric_limits<double>::quiet_NaN();
    double r2  = std::sqrt(2.0);
    double pi2 = 8.0 * std::atan(1.0);
 
+   // wres
    Float wres  = nan;
-   switch( d_id )
+   switch( d_enum )
    {
+      default:
+      assert( false );
+      break;
+
+
       case uniform_enum:
       wres = 0.0;
       break;
@@ -246,15 +247,25 @@ residual_struct<Float> residual_density(
       case laplace_enum:
       case cen_laplace_enum:
       case students_enum:
-      print_forward_if_not_positive("delta", delta);
       assert( delta > 0.0 );
-      if( diff )
-         wres  = ( z - y - mu) / delta;
-      else
-      {  if( CppAD::isnan(z) )
-            wres = (y - mu) / delta;
-         else
-            wres = (z - mu) / delta;
+      print_forward_if_not_positive("delta", delta);
+      switch( residual_type )
+      {  default:
+         assert(false);
+         break;
+
+         case real_data_enum:
+         case value_prior_enum:
+         wres = (y - mu) / delta;
+         break;
+
+         case simulated_data_enum:
+         wres = (z - mu) / delta;
+         break;
+
+         case difference_prior_enum:
+         wres  = (z - y - mu) / delta;
+         break;
       }
       break;
 
@@ -263,34 +274,48 @@ residual_struct<Float> residual_density(
       case log_students_enum:
       case cen_log_gaussian_enum:
       case cen_log_laplace_enum:
-      print_forward_if_not_positive("delta", delta);
       assert( delta > 0.0 );
-      assert( diff || mu + d_eta + tiny > 0.0 );
-      if( diff )
-      {  assert(prior);
-         wres  = ( log( z + d_eta ) - log( y + d_eta ) - mu ) / delta;
-      }
-      else if( prior )
-      {  print_forward_if_not_positive("mu + eta", mu + d_eta + tiny);
-         wres  = ( log( y + d_eta ) - log( mu + d_eta ) ) / delta;
-      }
-      else // data case
-      {  print_forward_if_not_positive("mu + eta", mu + d_eta + tiny);
-         if( CppAD::isnan(z) )
-            wres  = ( log( y + d_eta ) - log( mu + d_eta ) ) / delta;
-         else
-            wres  = ( log( z + d_eta ) - log( mu + d_eta ) ) / delta;
-      }
-      break;
+      print_forward_if_not_positive("delta", delta);
+      switch( residual_type )
+      {  default:
+         assert(false);
+         break;
 
-      default:
-      assert(false);
+         case real_data_enum:
+         case value_prior_enum:
+         wres  = ( log( y + d_eta ) - log( mu + d_eta ) ) / delta;
+         break;
+
+         case simulated_data_enum:
+         wres  = ( log( z + d_eta ) - log( mu + d_eta ) ) / delta;
+         break;
+
+         case difference_prior_enum:
+         wres  = ( log( z + d_eta ) - log( y + d_eta ) - mu ) / delta;
+         break;
+      }
    }
+
+   // censor
+   bool  censor = false;
+   if( censored_density(d_enum) )
+   {  if( residual_type == simulated_data_enum )
+         censor = z <= 0;
+      else
+      {  assert( residual_type != difference_prior_enum );
+         censor = y <= 0;
+      }
+   }
+
+   // logden_smooth, log_den_sub_abs
    Float logden_smooth  = nan;
    Float logden_sub_abs = nan;
-   bool  censor;
-   switch( d_id )
+   switch( d_enum )
    {
+      default:
+      assert(false);
+      break;
+
       case uniform_enum:
       logden_smooth  = 0.0;
       logden_sub_abs = 0.0;
@@ -298,16 +323,14 @@ residual_struct<Float> residual_density(
 
       case gaussian_enum:
       case log_gaussian_enum:
-      {  logden_smooth  = - log( delta * sqrt( pi2 ) ) - wres * wres / 2.0;
-         logden_sub_abs = 0.0;
-      }
+      logden_smooth  = - log( delta * sqrt( pi2 ) ) - wres * wres / 2.0;
+      logden_sub_abs = 0.0;
       break;
 
       case laplace_enum:
       case log_laplace_enum:
-      {  logden_smooth  = - log( delta * r2 );
-         logden_sub_abs = r2 * wres;
-      }
+      logden_smooth  = - log( delta * r2 );
+      logden_sub_abs = r2 * wres;
       break;
 
       case students_enum:
@@ -319,11 +342,6 @@ residual_struct<Float> residual_density(
       break;
 
       case cen_gaussian_enum:
-      assert( ! diff );
-      if( CppAD::isnan(z) )
-         censor = y <= 0.0;
-      else
-         censor = z <= 0.0;
       if( censor )
       {  Float c = 0.0;
          Float erfc_value = CppAD::erfc( (mu - c) / ( delta * r2 ) );
@@ -337,11 +355,6 @@ residual_struct<Float> residual_density(
       break;
 
       case cen_log_gaussian_enum:
-      assert( ! diff );
-      if( CppAD::isnan(z) )
-         censor = y <= 0.0;
-      else
-         censor = z <= 0.0;
       if( censor )
       {  Float c = 0.0;
          Float erfc_value =
@@ -356,8 +369,7 @@ residual_struct<Float> residual_density(
       break;
 
       case cen_laplace_enum:
-      assert( ! diff );
-      if( y <= 0 )
+      if( censor )
       {  Float c = 0.0;
          logden_smooth = - (mu - c) * r2 / delta - std::log(2.0);
          logden_sub_abs = 0.0;
@@ -369,8 +381,7 @@ residual_struct<Float> residual_density(
       break;
 
       case cen_log_laplace_enum:
-      assert( ! diff );
-      if( y <= 0 )
+      if( censor )
       {  Float c = 0.0;
          logden_smooth =
             - (log(mu + d_eta) - log(c + d_eta)) * r2 / delta - std::log(2.0);
@@ -381,16 +392,13 @@ residual_struct<Float> residual_density(
          logden_sub_abs = r2 * wres;
       }
       break;
-
-      default:
-      assert(false);
    }
    //
    residual_struct<Float> residual;
    residual.wres           = wres;
    residual.logden_smooth  = logden_smooth;
    residual.logden_sub_abs = logden_sub_abs;
-   residual.density        = d_id;
+   residual.density        = d_enum;
    residual.index          = index;
    return residual;
 }
@@ -403,7 +411,7 @@ residual_struct<Float> residual_density(
       const Float&       y                ,                 \
       const Float&       mu               ,                 \
       const Float&       delta            ,                 \
-      density_enum       d_id             ,                 \
+      density_enum       d_enum           ,                 \
       const Float&       d_eta            ,                 \
       const Float&       d_nu             ,                 \
       size_t             index                              \
