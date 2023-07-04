@@ -27,6 +27,15 @@ namespace {
       ok &= residual.index   == index;
       return ok;
    }
+
+   double approx_log_binomial(double n, double k, double p)
+   {  double n_fac      = n * log(n) - n + 1.0 ;
+      double k_fac      = k * log(k) - k + 1.0 ;
+      double n_k_fac    = (n - k) * log(n-k) - (n-k) + 1.0 ;
+      double n_choose_k = n_fac - k_fac - n_k_fac;
+      double approx     = n_choose_k + log(p) * k + log(1.0-p) * (n-k);
+      return approx;
+   }
 }
 
 bool residual_density_xam(void)
@@ -41,13 +50,15 @@ bool residual_density_xam(void)
    size_t                  index;
 
    dismod_at::density_enum d_id;
-   double z              = 3.0;
-   double y              = 2.5;
-   double mu             = 2.0;
+   double z              = 0.3;
+   double y              = 0.2;
+   double mu             = 0.3;
    double delta          = 1.5;
    double d_eta          = nan;
    double d_nu           = 3.0;
-   double d_sample_size  = 100;
+   // must choose sample_size and mu so that binomial makes sense; i.e.,
+   // so that 0 < mu < 1 and  0 <= y < 1.
+   double d_sample_size  = 2;
 
    // -----------------------------------------------------------------------
    dismod_at::residual_enum residual_type = dismod_at::difference_prior_enum;
@@ -139,6 +150,16 @@ bool residual_density_xam(void)
    ok         &= residual.logden_sub_abs == 0.0;
    ok         &= residual.density        == d_id;
    ok         &= residual.index          == index;
+
+   // binomial
+   d_id        = dismod_at::binomial_enum;
+   residual    = residual_density(
+      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, d_sample_size, ++index
+   );
+   wres        = (y - mu) / delta;
+   smooth      = approx_log_binomial(d_sample_size, y * d_sample_size, mu);
+   sub_abs     = 0.0;
+   ok         &= check( residual, wres, smooth, sub_abs, d_id, index );
 
    // gaussian
    d_id        = dismod_at::gaussian_enum;

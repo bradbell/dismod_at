@@ -187,6 +187,8 @@ namespace {
       //
       // approximately log( k! )
       Float log_k_fac = k * log(k) - k + 1.0;
+      Float zero      = 0.0;
+      log_k_fac       = CppAD::CondExpEq(k, zero, zero, log_k_fac);
       //
       // approximately (n/k)
       return log_n_fac - log_n_k_fac - log_k_fac;
@@ -344,11 +346,13 @@ residual_struct<Float> residual_density(
 
       case binomial_enum:
       {  // k = B(n, p), y = k / n
-         Float n = d_sample_size;
-         Float p = mu;
-         Float k = n * y;
-         logden_smooth = log_n_choose_k(n, k) + log(p) * k + (1.0-p) * (n-k);
+         Float n       = d_sample_size;
+         Float p       = mu;
+         Float k       = n * y;
+         Float term    = log_n_choose_k(n, k);
+         logden_smooth = term + log(p) * k + log(1.0-p) * (n-k);
       }
+      break;
 
       case gaussian_enum:
       case log_gaussian_enum:
