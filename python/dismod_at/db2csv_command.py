@@ -1099,6 +1099,7 @@ def db2csv_command(database_file_arg) :
       ('meas_std',      'real'),
       ('eta',           'real'),
       ('nu',            'real'),
+      ('sample_size',   'integer'),
    ]
    check_table_columns(table_name, table_columns)
    # ----------------------------------------------------------------------
@@ -1539,6 +1540,7 @@ def db2csv_command(database_file_arg) :
       'density',
       'eta',
       'nu',
+      'ss',
       'meas_std',
       'meas_stdcv',
       'meas_delta',
@@ -1575,15 +1577,11 @@ def db2csv_command(database_file_arg) :
       row_out['meas_std']    = convert2output( row_in['meas_std'] )
       row_out['eta']         = convert2output( subset_row['eta'] )
       row_out['nu']          = convert2output( subset_row['nu'] )
+      row_out['ss']          = convert2output( subset_row['sample_size'] )
       row_out['meas_value']  = convert2output( row_in['meas_value'] )
       row_out['child']       = node_id2child( row_in['node_id'] )
       row_out['d_out']       = row_in['hold_out']
       row_out['s_out']       = subset_row['hold_out']
-      #
-      meas_cv     = minimum_meas_cv[ row_in['integrand_id' ] ]
-      meas_stdcv  =  meas_cv * abs( row_in['meas_value'] )
-      meas_stdcv  = max( row_in['meas_std'], meas_stdcv)
-      row_out['meas_stdcv'] = convert2output( meas_stdcv )
       #
       # integrand
       row_out['integrand'] = table_lookup(
@@ -1628,6 +1626,7 @@ def db2csv_command(database_file_arg) :
       row_out['time_lo'] = convert2output(time_lower)
       row_out['time_up'] = convert2output(time_upper)
       #
+      # covariates
       covariate_id = 0
       for row in table_data['covariate'] :
          field_in  = 'x_' + str(covariate_id)
@@ -1640,6 +1639,7 @@ def db2csv_command(database_file_arg) :
                 convert2output(row_in[field_in] - reference)
          covariate_id += 1
       #
+      # avgint, residual, meas_delta
       if have_table['fit_var'] :
          row                 = table_data['fit_data_subset'][subset_id]
          row_out['avgint']   = convert2output( row['avg_integrand'] )
@@ -1653,10 +1653,29 @@ def db2csv_command(database_file_arg) :
                row['weighted_residual']
             )
             row_out['meas_delta'] = convert2output(meas_delta)
+      #
+      # meas_std, meas_stdcv
+      if row_in['meas_std'] == None :
+         assert row_out['density'] == 'binomial'
+         if have_table['fit_var'] :
+            n        = int( row_in['sample_size'] )
+            p        = float( row_out['avgint'] )
+            variance = n * p * (1.0 - p)
+            meas_std = math.sqrt( variance ) / (n * n)
+            row_out['meas_std']   = convert2output( meas_std )
+            row_out['meas_stdcv'] = row_out['meas_std']
+      else :
+         meas_cv     = minimum_meas_cv[ row_in['integrand_id' ] ]
+         meas_stdcv  =  meas_cv * abs( row_in['meas_value'] )
+         meas_stdcv  = max( row_in['meas_std'], meas_stdcv)
+         row_out['meas_stdcv'] = convert2output( meas_stdcv )
+      #
+      # sim_value
       if simulate_index != None :
          data_sim_id =  n_subset * simulate_index + subset_id
          sim_value = table_data['data_sim'][data_sim_id]['data_sim_value']
          row_out['sim_value'] = convert2output( sim_value )
+      #
       csv_writer.writerow(row_out)
       subset_id += 1
    csv_file.close()

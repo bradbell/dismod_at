@@ -325,6 +325,12 @@ void get_data_table(
    string msg;
    for(size_t data_id = 0; data_id < n_data; data_id++)
    {
+      // density
+      density_enum density = density_table[ data_table[data_id].density_id ];
+      //
+      // meas_std
+      double meas_std = data_table[data_id].meas_std;
+      //
       // ------------------------------------------------------------
       int subgroup_id = data_table[data_id].subgroup_id;
       if( subgroup_id == DISMOD_AT_NULL_INT )
@@ -367,14 +373,12 @@ void get_data_table(
       {  msg = "time_lower is greater than time_upper";
          error_exit(msg, table_name, data_id);
       }
-      int density_id = data_table[data_id].density_id;
-      if( density_table[density_id] == uniform_enum )
+      if( density == uniform_enum )
       {  msg = "density_id corresponds to the uniform distribution";
          error_exit(msg, table_name, data_id);
       }
-      double meas_std = data_table[data_id].meas_std;
-      if( meas_std <= 0.0 )
-      {  msg = "meas_std is less than or equal zero";
+      if( density != binomial_enum && meas_std <= 0.0 )
+      {  msg = "meas_std is not positive and density is not binomial";
          error_exit(msg, table_name, data_id);
       }
       double meas_value = data_table[data_id].meas_value;
@@ -385,19 +389,19 @@ void get_data_table(
       //
       double eta       = data_table[data_id].eta;
       bool eta_null    = std::isnan(eta);
-      if( log_density( density_table[density_id] ) && eta_null )
+      if( log_density( density ) && eta_null )
       {  msg = "density is a log density and eta is null";
          error_exit(msg, table_name, data_id);
       }
-      if( log_density( density_table[density_id] ) && eta < 0.0 )
+      if( log_density( density ) && eta < 0.0 )
       {  msg = "eta is less than zero";
          error_exit(msg, table_name, data_id);
       }
       //
       double nu        = data_table[data_id].nu;
       bool nu_null     = std::isnan(nu);
-      bool students    = density_table[density_id] == students_enum;
-      students        |= density_table[density_id] == log_students_enum;
+      bool students    = density == students_enum;
+      students        |= density == log_students_enum;
       if( students && nu_null )
       {  msg = "density is students or log_students and nu is null";
          error_exit(msg, table_name, data_id);
@@ -409,9 +413,17 @@ void get_data_table(
       //
       int sample_size       = data_table[data_id].sample_size;
       bool sample_size_null = sample_size == DISMOD_AT_NULL_INT;
-      bool binomial         = density_table[density_id] == binomial_enum;
+      bool binomial         = density == binomial_enum;
       if( binomial && sample_size_null )
       {  msg = "densityy is binomial and sample_size is null";
+         error_exit(msg, table_name, data_id);
+      }
+      if( binomial && sample_size <= 0 )
+      {  msg = "densityy is binomial and sample_size is <= 0";
+         error_exit(msg, table_name, data_id);
+      }
+      if( binomial && ! std::isnan(meas_std) )
+      {  msg = "densityy is binomial and meas_std is not null";
          error_exit(msg, table_name, data_id);
       }
    }

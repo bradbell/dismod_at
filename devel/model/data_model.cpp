@@ -569,7 +569,8 @@ void data_model::replace_like(
    size_t n_subset = subset_data_obj_.size();
    assert( subset_data_obj.size() == n_subset );
    //
-   // replace density_id, hold_out, meas_value, meas_std, eta, nu
+   // replace density_id, hold_out, meas_value, meas_std, eta, nu, sample_size,
+   // data_sim_value
    for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
    {  subset_data_obj_[subset_id].density =
          subset_data_obj[subset_id].density;
@@ -583,6 +584,8 @@ void data_model::replace_like(
          subset_data_obj[subset_id].eta;
       subset_data_obj_[subset_id].nu =
          subset_data_obj[subset_id].nu;
+      subset_data_obj_[subset_id].sample_size =
+         subset_data_obj[subset_id].sample_size;
       subset_data_obj_[subset_id].data_sim_value =
          subset_data_obj[subset_id].data_sim_value;
       //

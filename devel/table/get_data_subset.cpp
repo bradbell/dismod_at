@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_data_subset dev}
@@ -62,11 +62,11 @@ This is a structure with the following fields
      - ``density_id``
      - The :ref:`data_subset_table@density_id`
        for this measurement.
-   * - ``int``
+   * - ``double``
      - ``eta``
      - The :ref:`data_subset_table@eta`
        for this measurement.
-   * - ``int``
+   * - ``double``
      - ``nu``
      - The :ref:`data_subset_table@nu`
        for this measurement.
@@ -110,17 +110,22 @@ CppAD::vector<data_subset_struct> get_data_subset(sqlite3* db)
    column_name             =  "density_id";
    CppAD::vector<int>          density_id;
    get_table_column(db, table_name, column_name, density_id);
-   assert( hold_out.size() == n_data_subset );
+   assert( density_id.size() == n_data_subset );
 
    column_name             =  "eta";
    CppAD::vector<double>       eta;
    get_table_column(db, table_name, column_name, eta);
-   assert( hold_out.size() == n_data_subset );
+   assert( eta.size() == n_data_subset );
 
    column_name             =  "nu";
    CppAD::vector<double>       nu;
    get_table_column(db, table_name, column_name, nu);
-   assert( hold_out.size() == n_data_subset );
+   assert( nu.size() == n_data_subset );
+
+   column_name             =  "sample_size";
+   CppAD::vector<int>          sample_size;
+   get_table_column(db, table_name, column_name, sample_size);
+   assert( sample_size.size() == n_data_subset );
 
    CppAD::vector<data_subset_struct> data_subset_table(n_data_subset);
    for(size_t i = 0; i < n_data_subset; i++)
@@ -129,6 +134,7 @@ CppAD::vector<data_subset_struct> get_data_subset(sqlite3* db)
       data_subset_table[i].density_id  = density_id[i];
       data_subset_table[i].eta         = eta[i];
       data_subset_table[i].nu          = nu[i];
+      data_subset_table[i].sample_size = sample_size[i];
    }
    return data_subset_table;
 }

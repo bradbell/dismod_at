@@ -566,6 +566,7 @@ def create_database(
    col_type = [  'text'        ]
    row_list = [
       ['uniform'],
+      ['binomial'],
       ['gaussian'],
       ['laplace'],
       ['students'],

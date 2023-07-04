@@ -349,8 +349,8 @@ residual_struct<Float> residual_density(
          Float n       = d_sample_size;
          Float p       = mu;
          Float k       = n * y;
-         Float term    = log_n_choose_k(n, k);
-         logden_smooth = term + log(p) * k + log(1.0-p) * (n-k);
+         Float log_n_k = log_n_choose_k(n, k);
+         logden_smooth = log_n_k + log(p) * k + log(1.0-p) * (n-k);
       }
       break;
 

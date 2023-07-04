@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <gsl/gsl_statistics_double.h>
@@ -11,6 +11,7 @@
 # include <dismod_at/get_data_subset.hpp>
 # include <dismod_at/data_density_command.hpp>
 # include <dismod_at/error_exit.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
@@ -132,8 +133,10 @@ void data_density_command(
       {  size_t data_id = data_subset_table[subset_id].data_id;
          data_subset_table[subset_id].density_id =
             data_table[data_id].density_id;
-         data_subset_table[subset_id].eta = data_table[data_id].eta;
-         data_subset_table[subset_id].nu  = data_table[data_id].nu;
+         data_subset_table[subset_id].eta          = data_table[data_id].eta;
+         data_subset_table[subset_id].nu           = data_table[data_id].nu;
+         data_subset_table[subset_id].sample_size  = \
+            data_table[data_id].sample_size;
       }
    }
    else
@@ -208,7 +211,7 @@ void data_density_command(
    //
    // write new data_subset table
    string table_name = "data_subset";
-   size_t n_col      = 5;
+   size_t n_col      = 6;
    vector<string> col_name(n_col), col_type(n_col);
    vector<string> row_value(n_col * n_subset);
    vector<bool>   col_unique(n_col);
@@ -233,23 +236,36 @@ void data_density_command(
    col_type[4]       = "real";
    col_unique[4]     = false;
    //
+   col_name[5]       = "sample_size";
+   col_type[5]       = "integer";
+   col_unique[5]     = false;
+   //
    for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-   {  int data_id    = data_subset_table[subset_id].data_id;
-      int hold_out   = data_subset_table[subset_id].hold_out;
-      int density_id = data_subset_table[subset_id].density_id;
-      double eta     = data_subset_table[subset_id].eta;
-      double nu      = data_subset_table[subset_id].nu;
+   {  int data_id     = data_subset_table[subset_id].data_id;
+      int hold_out    = data_subset_table[subset_id].hold_out;
+      int density_id  = data_subset_table[subset_id].density_id;
+      double eta      = data_subset_table[subset_id].eta;
+      double nu       = data_subset_table[subset_id].nu;
+      int sample_size = data_subset_table[subset_id].sample_size;
+      //
       string eta_str = "";
       if( ! std::isnan( eta ) )
          eta_str = to_string( eta );
+      //
       string nu_tmp = "";
       if( ! std::isnan( nu ) )
          nu_tmp = to_string( nu );
+      //
+      string sample_size_str = "";
+      if( sample_size != DISMOD_AT_NULL_INT )
+         sample_size_str = to_string( sample_size );
+      //
       row_value[n_col * subset_id + 0] = to_string( data_id );
       row_value[n_col * subset_id + 1] = to_string( hold_out );
       row_value[n_col * subset_id + 2] = to_string( density_id );
       row_value[n_col * subset_id + 3] = eta_str;
       row_value[n_col * subset_id + 4] = nu_tmp;
+      row_value[n_col * subset_id + 5] = sample_size_str;
    }
    create_table(
       db, table_name, col_name, col_type, col_unique, row_value
