@@ -236,6 +236,24 @@ arguments to the ``data_model`` constructor and are passed through
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/error_exit.hpp>
 
+namespace {
+   template <class Float>
+   void print_forward_if_positive(
+      const char* name    ,
+      const Float& value  )
+   {  std::string lable = "data_model::like_one: ";
+      lable      += name;
+      lable      += " = ";
+      double tiny = std::numeric_limits<double>::min();
+      CppAD::PrintFor(tiny - value, lable.c_str(), value, "\n");
+   }
+   void print_forward_if_positive(
+      const char* name    ,
+      const double& value )
+   {  assert( value <= 0.0 );
+   }
+}
+
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 // destructor
@@ -834,6 +852,7 @@ residual_struct<Float> data_model::like_one(
    double age_upper    = subset_data_obj_[subset_id].age_upper;
    double time_lower   = subset_data_obj_[subset_id].time_lower;
    double time_upper   = subset_data_obj_[subset_id].time_upper;
+   size_t sample_size  = size_t( subset_data_obj_[subset_id].sample_size );
    size_t weight_id    = size_t( subset_data_obj_[subset_id].weight_id );
    size_t subgroup_id  = size_t( subset_data_obj_[subset_id].subgroup_id );
    size_t integrand_id = size_t( subset_data_obj_[subset_id].integrand_id );
@@ -853,25 +872,44 @@ residual_struct<Float> data_model::like_one(
       pack_vec
    );
    //
-   assert( meas_std  > 0.0 );
-   double meas_cv = minimum_meas_cv_[integrand_id];
-   double Delta   = std::max(meas_std, meas_cv * std::fabs(meas_value) );
+   // density
    density_enum density = data_info_[subset_id].density;
    //
+   // Delta
+   Float Delta;
+   if( density == binomial_enum )
+   {  // The binomial distribution does not yet support noise effects
+      print_forward_if_positive("std_effect", std_effect);
+      //
+      // The average integrand models binomial counts divided by sample size
+      Delta = sqrt( avg / double(sample_size) );
+   }
+   else
+   {  double meas_cv = minimum_meas_cv_[integrand_id];
+      Delta          = std::max(meas_std, meas_cv * std::fabs(meas_value) );
+   }
+   assert( Delta  > 0.0 );
+   //
    // transformed standard deviation
-   double sigma = Delta;
+   Float sigma = Delta;
    if( log_density(density) )
       sigma = log( meas_value + eta + Delta ) - log( meas_value + eta );
    //
    // Compute the adusted standard deviation, delta_out
    switch( meas_noise_effect_ )
-   {  // add_std
+   {
+      default:
+      assert(false);
+      // --------------------------------------------------------------------
+      // add_std
       case add_std_scale_all_enum:
       delta_out  = sigma * (1.0  + std_effect);
       break;
+
       case add_std_scale_none_enum:
       delta_out  = sigma + std_effect;
       break;
+
       case add_std_scale_log_enum:
       if( log_density(density) )
          delta_out  = sigma * (1.0  + std_effect);
@@ -883,18 +921,17 @@ residual_struct<Float> data_model::like_one(
       case add_var_scale_all_enum:
       delta_out  = sigma * sqrt(1.0  + std_effect);
       break;
+
       case add_var_scale_none_enum:
       delta_out  = sqrt( sigma * sigma + std_effect );
       break;
+
       case add_var_scale_log_enum:
       if( log_density(density) )
          delta_out  = sigma * sqrt(1.0  + std_effect);
       else
          delta_out  = sqrt( sigma * sigma + std_effect );
       break;
-      // -----------------------------------------------------------------
-      default:
-      assert(false);
    }
    residual_enum residual_type;
    double        y;
@@ -917,6 +954,7 @@ residual_struct<Float> data_model::like_one(
       density,
       Float(eta),
       Float(nu),
+      Float(sample_size),
       subset_id
    );
    //

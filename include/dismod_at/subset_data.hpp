@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # ifndef DISMOD_AT_SUBSET_DATA_HPP
 # define DISMOD_AT_SUBSET_DATA_HPP
@@ -32,7 +32,8 @@ namespace dismod_at {
       double       meas_std;
       double       eta;
       double       nu;
-      // value that depends data_sim table
+      int          sample_size;
+      // value that depends on data_sim table
       double       data_sim_value;
    };
    extern void subset_data(
@@ -44,8 +45,8 @@ namespace dismod_at {
       const CppAD::vector<double>&              data_cov_value          ,
       const CppAD::vector<covariate_struct>&    covariate_table         ,
       const child_info&                         child_info4data         ,
-      CppAD::vector<subset_data_struct>&       subset_data_obj         ,
-      CppAD::vector<double>&                   subset_data_cov_value
+      CppAD::vector<subset_data_struct>&        subset_data_obj         ,
+      CppAD::vector<double>&                    subset_data_cov_value
    );
 }
 

@@ -41,12 +41,13 @@ bool residual_density_xam(void)
    size_t                  index;
 
    dismod_at::density_enum d_id;
-   double z          = 3.0;
-   double y          = 2.5;
-   double mu         = 2.0;
-   double delta      = 1.5;
-   double d_eta      = nan;
-   double d_nu       = 3.0;
+   double z              = 3.0;
+   double y              = 2.5;
+   double mu             = 2.0;
+   double delta          = 1.5;
+   double d_eta          = nan;
+   double d_nu           = 3.0;
+   double d_sample_size  = 100;
 
    // -----------------------------------------------------------------------
    dismod_at::residual_enum residual_type = dismod_at::difference_prior_enum;
@@ -54,7 +55,7 @@ bool residual_density_xam(void)
    d_id        = dismod_at::uniform_enum;
    index       = 1;
    residual    = residual_density(
-      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, index
+      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, d_sample_size, index
    );
    ok         &= residual.wres           == 0.0;
    ok         &= residual.logden_smooth  == 0.0;
@@ -65,7 +66,7 @@ bool residual_density_xam(void)
    // gaussian
    d_id        = dismod_at::gaussian_enum;
    residual    = residual_density(
-      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, ++index
+      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, d_sample_size, ++index
    );
    wres        = (z - y - mu) / delta;
    smooth      = - log(delta * sqrt(2.0 * pi) ) - wres * wres / 2.0;
@@ -75,7 +76,7 @@ bool residual_density_xam(void)
    // laplace
    d_id        = dismod_at::laplace_enum;
    residual    = residual_density(
-      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, ++index
+      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, d_sample_size, ++index
    );
    wres        = (z - y - mu) / delta;
    smooth      = - log(delta * sqrt(2.0) );
@@ -85,7 +86,7 @@ bool residual_density_xam(void)
    // students
    d_id        = dismod_at::students_enum;
    residual    = residual_density(
-      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, ++index
+      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, d_sample_size, ++index
    );
    wres        = (z - y - mu) / delta;
    smooth      = - log(1.0 + wres * wres /(d_nu - 2.0) ) * (d_nu + 1.0) / 2.0;
@@ -96,7 +97,7 @@ bool residual_density_xam(void)
    d_id        = dismod_at::log_gaussian_enum;
    d_eta       = 0.5;
    residual    = residual_density(
-      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, ++index
+      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, d_sample_size, ++index
    );
    wres        = ( log(z + d_eta) - log(y + d_eta) - mu ) / delta;
    smooth      = - log(delta * sqrt(2.0 * pi) ) - wres * wres / 2.0;
@@ -107,7 +108,7 @@ bool residual_density_xam(void)
    d_id        = dismod_at::log_laplace_enum;
    d_eta       = 3.0;
    residual    = residual_density(
-      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, ++index
+      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, d_sample_size, ++index
    );
    wres        = ( log(z + d_eta) - log(y + d_eta) - mu) / delta;
    smooth      = - log(delta * sqrt(2.0) );
@@ -117,7 +118,7 @@ bool residual_density_xam(void)
    // log-students
    d_id        = dismod_at::log_students_enum;
    residual    = residual_density(
-      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, ++index
+      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, d_sample_size, ++index
    );
    wres        = ( log(z + d_eta) - log(y + d_eta) - mu) / delta;
    smooth      = - log(1.0 + wres * wres /(d_nu - 2.0) ) * (d_nu + 1.0) / 2.0;
@@ -131,7 +132,7 @@ bool residual_density_xam(void)
    // uniform
    d_id        = dismod_at::uniform_enum;
    residual    = residual_density(
-      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, ++index
+      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, d_sample_size, ++index
    );
    ok         &= residual.wres           == 0.0;
    ok         &= residual.logden_smooth  == 0.0;
@@ -142,7 +143,7 @@ bool residual_density_xam(void)
    // gaussian
    d_id        = dismod_at::gaussian_enum;
    residual    = residual_density(
-      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, ++index
+      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, d_sample_size, ++index
    );
    wres        = (y - mu) / delta;
    smooth      = - log(delta * sqrt(2.0 * pi) ) - wres * wres / 2.0;
@@ -152,7 +153,7 @@ bool residual_density_xam(void)
    // laplace
    d_id        = dismod_at::laplace_enum;
    residual    = residual_density(
-      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, ++index
+      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, d_sample_size, ++index
    );
    wres        = (y - mu) / delta;
    smooth      = - log(delta * sqrt(2.0) );
@@ -162,7 +163,7 @@ bool residual_density_xam(void)
    // students
    d_id        = dismod_at::students_enum;
    residual    = residual_density(
-      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, ++index
+      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, d_sample_size, ++index
    );
    wres        = (y - mu) / delta;
    smooth      = - log(1.0 + wres * wres /(d_nu - 2.0) ) * (d_nu + 1.0) / 2.0;
@@ -173,7 +174,7 @@ bool residual_density_xam(void)
    d_id        = dismod_at::log_gaussian_enum;
    d_eta       = 0.5;
    residual    = residual_density(
-      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, ++index
+      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, +d_sample_size, +index
    );
    wres        = ( log(y + d_eta) - log(mu + d_eta) ) / delta;
    smooth      = - log(delta * sqrt(2.0 * pi) ) - wres * wres / 2.0;
@@ -184,7 +185,7 @@ bool residual_density_xam(void)
    d_id        = dismod_at::log_laplace_enum;
    d_eta       = 3.0;
    residual    = residual_density(
-      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, ++index
+      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, d_sample_size, ++index
    );
    wres        = ( log(y + d_eta) - log(mu + d_eta) ) / delta;
    smooth      = - log(delta * sqrt(2.0) );
@@ -194,7 +195,7 @@ bool residual_density_xam(void)
    // log-students
    d_id        = dismod_at::log_students_enum;
    residual    = residual_density(
-      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, ++index
+      residual_type, z, y, mu, delta, d_id, d_eta, d_nu, d_sample_size, ++index
    );
    wres        = ( log(y + d_eta) - log(mu + d_eta) ) / delta;
    smooth      = - log(1.0 + wres * wres /(d_nu - 2.0) ) * (d_nu + 1.0) / 2.0;

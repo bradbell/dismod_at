@@ -36,6 +36,7 @@ namespace dismod_at {
       density_enum       d_id           ,
       const Float&       d_eta          ,
       const Float&       d_nu           ,
+      const Float&       d_sample_size  ,
       size_t             index
    );
 }

@@ -151,17 +151,19 @@ residual_struct<Float> prior_model::log_prior(
    if( ! difference && log_density(density) ) sigma =
       log(prior.mean + prior.eta + prior.std) - log(prior.mean + prior.eta);
    //
-   Float        mu      = Float(prior.mean);
-   Float        delta   = mulstd * Float(sigma);
-   Float        eta     = Float(prior.eta);
-   Float        nu      = Float(prior.nu);
+   // residual_density
+   Float        mu        = Float(prior.mean);
+   Float        delta     = mulstd * Float(sigma);
+   Float        eta       = Float(prior.eta);
+   Float        nu        = Float(prior.nu);
+   Float        not_used  = Float( std::numeric_limits<double>::quiet_NaN() );
    residual_enum residual_type;
    if( difference )
       residual_type = difference_prior_enum;
    else
       residual_type = value_prior_enum;
    return residual_density(
-      residual_type, z, y, mu, delta, density, eta, nu, index
+      residual_type, z, y, mu, delta, density, eta, nu, not_used, index
    );
 }
 /*

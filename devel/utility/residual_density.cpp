@@ -172,7 +172,25 @@ namespace {
    void print_forward_if_not_positive(
       const char* name    ,
       const double& value )
-   { }
+   {  assert( value > 0.0 );
+   }
+
+   template <class Float>
+   Float log_n_choose_k(const Float& n, const Float& k)
+   {  // https://en.wikipedia.org/wiki/Stirling%27s_approximation
+      //
+      // approximately log( n! )
+      Float log_n_fac = n * log(n) - n + 1.0;
+      //
+      // approximately log( (n-k) ! )
+      Float log_n_k_fac = (n-k) * log(n - k) - (n - k) + 1.0;
+      //
+      // approximately log( k! )
+      Float log_k_fac = k * log(k) - k + 1.0;
+      //
+      // approximately (n/k)
+      return log_n_fac - log_n_k_fac - log_k_fac;
+   }
 }
 
 
@@ -190,6 +208,7 @@ residual_struct<Float> residual_density(
    density_enum       d_enum         ,
    const Float&       d_eta          ,
    const Float&       d_nu           ,
+   const Float&       d_sample_size  ,
    size_t             index          )
 // END_RESIDUAL_DENSITY
 {
@@ -214,12 +233,14 @@ residual_struct<Float> residual_density(
       case value_prior_enum:
       assert( ! CppAD::isnan(y) );
       assert( CppAD::isnan( z ) );
+      assert( d_enum != binomial_enum );
       break;
 
       case difference_prior_enum:
       assert( ! CppAD::isnan(y) );
       assert( ! CppAD::isnan( z ) );
       assert( ! censored_density(d_enum) );
+      assert( d_enum != binomial_enum );
       break;
    }
 # endif
@@ -247,6 +268,7 @@ residual_struct<Float> residual_density(
       case laplace_enum:
       case cen_laplace_enum:
       case students_enum:
+      case binomial_enum:
       assert( delta > 0.0 );
       print_forward_if_not_positive("delta", delta);
       switch( residual_type )
@@ -309,7 +331,7 @@ residual_struct<Float> residual_density(
 
    // logden_smooth, log_den_sub_abs
    Float logden_smooth  = nan;
-   Float logden_sub_abs = nan;
+   Float logden_sub_abs = 0.0;
    switch( d_enum )
    {
       default:
@@ -318,13 +340,19 @@ residual_struct<Float> residual_density(
 
       case uniform_enum:
       logden_smooth  = 0.0;
-      logden_sub_abs = 0.0;
       break;
+
+      case binomial_enum:
+      {  // k = B(n, p), y = k / n
+         Float n = d_sample_size;
+         Float p = mu;
+         Float k = n * y;
+         logden_smooth = log_n_choose_k(n, k) + log(p) * k + (1.0-p) * (n-k);
+      }
 
       case gaussian_enum:
       case log_gaussian_enum:
       logden_smooth  = - log( delta * sqrt( pi2 ) ) - wres * wres / 2.0;
-      logden_sub_abs = 0.0;
       break;
 
       case laplace_enum:
@@ -337,7 +365,6 @@ residual_struct<Float> residual_density(
       case log_students_enum:
       {  Float  r       = 1.0 + wres * wres / ( d_nu - 2.0 );
          logden_smooth  =  - log( r ) * (d_nu + 1.0) / 2.0;
-         logden_sub_abs = 0.0;
       }
       break;
 
@@ -346,11 +373,9 @@ residual_struct<Float> residual_density(
       {  Float c = 0.0;
          Float erfc_value = CppAD::erfc( (mu - c) / ( delta * r2 ) );
          logden_smooth    = log(erfc_value / 2.0 );
-         logden_sub_abs   = 0.0;
       }
       else
       {  logden_smooth  = - log( delta * sqrt( pi2 ) ) - wres * wres / 2.0;
-         logden_sub_abs = 0.0;
       }
       break;
 
@@ -360,11 +385,9 @@ residual_struct<Float> residual_density(
          Float erfc_value =
             CppAD::erfc( (log(mu + d_eta) - log(c + d_eta)) / ( delta * r2 ) );
          logden_smooth    = log(erfc_value / 2.0 );
-         logden_sub_abs   = 0.0;
       }
       else
       {  logden_smooth  = - log( delta * sqrt( pi2 ) ) - wres * wres / 2.0;
-         logden_sub_abs = 0.0;
       }
       break;
 
@@ -372,7 +395,6 @@ residual_struct<Float> residual_density(
       if( censor )
       {  Float c = 0.0;
          logden_smooth = - (mu - c) * r2 / delta - std::log(2.0);
-         logden_sub_abs = 0.0;
       }
       else
       {  logden_smooth  = - log( delta * r2 );
@@ -385,7 +407,6 @@ residual_struct<Float> residual_density(
       {  Float c = 0.0;
          logden_smooth =
             - (log(mu + d_eta) - log(c + d_eta)) * r2 / delta - std::log(2.0);
-         logden_sub_abs = 0.0;
       }
       else
       {  logden_smooth  = - log( delta * r2 );
@@ -414,6 +435,7 @@ residual_struct<Float> residual_density(
       density_enum       d_enum           ,                 \
       const Float&       d_eta            ,                 \
       const Float&       d_nu             ,                 \
+      const Float&       d_sample_size    ,                 \
       size_t             index                              \
    );
 
