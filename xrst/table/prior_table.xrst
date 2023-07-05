@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin prior_table}
 {xrst_spell
@@ -39,6 +39,8 @@ density_id
 This column has type ``integer`` and its value is the
 :ref:`density_table-name` primary key that identifies the
 density function for this prior.
+A prior *density_id* cannot correspond to a
++:ref:`density_table@density_name@binomial` density.
 
 lower
 *****

@@ -132,10 +132,9 @@ i.e., the measurement of the integrand, node,  etc.
 meas_std
 ********
 This column has type ``real`` ,
-has same units at the data,
-and must be a positive number.
-In some cases is it not obvious what the *meas_std* should be; e.g see
-:ref:`binomial-name` .
+has same units at the data.
+It must be positive unless the density is
+:ref:`density_table@density_name@binomial` in which case it must be null.
 
 This is not the only contribution to the standard deviation
 used in the data likelihood; see
@@ -178,6 +177,12 @@ null
 If *density_id* does not correspond to
 ``students`` or ``log_students`` ,
 *nu* can be ``null`` .
+
+sample_size
+***********
+This is the number of samples for a binomial distribution.
+If the corresponding density is not binomial, *sample_size* must
+be null.
 
 age_lower
 *********

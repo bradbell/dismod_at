@@ -70,6 +70,10 @@ This is a structure with the following fields
      - ``nu``
      - The :ref:`data_subset_table@nu`
        for this measurement.
+   * - ``int``
+     - ``sample_size``
+     - The :ref:`data_subset_table@sample_size`
+       for this measurement.
 
 {xrst_toc_hidden
    example/devel/table/get_data_subset_xam.cpp

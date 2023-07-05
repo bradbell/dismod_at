@@ -1,7 +1,7 @@
 // $Id:$
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin sim_random dev}
@@ -39,6 +39,8 @@ The following table specifies the meaning of this choice:
    :widths: auto
 
    * - ``uniform_enum``
+     - not allowed
+   * - ``binomial_enum``
      - not allowed
    * - ``gaussian_enum``
      - :ref:`statistic@Log-Density Function, D@Gaussian`
@@ -151,7 +153,7 @@ double sim_random(
    double nu           )
 {  gsl_rng* rng = CppAD::mixed::get_gsl_rng();
    //
-   assert( density != uniform_enum );
+   assert( density != uniform_enum && density != binomial_enum );
    assert( delta > 0.0 );
    // -----------------------------------------------------------------------
    // linear Gaussian

@@ -235,10 +235,11 @@
 #     meas_std,float,standard deviation
 #     eta,float,offset in log-transform
 #     nu,float,Student's-t degrees of freedom
+#     sample_size,int,sample size for a binomial distribution
 #
-# meas_std, eta, nu
-# =================
-# The columns keys ``meas_std`` , ``eta`` , and ``nu``
+# meas_std, eta, nu, sample_size
+# ==============================
+# The columns keys ``meas_std`` , ``eta`` , ``nu`` , and ``sample_size``
 # are optional. If they are not present, the value ``null`` is used
 # for the corresponding row of the data table.
 #

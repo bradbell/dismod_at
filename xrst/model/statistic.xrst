@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin statistic}
 {xrst_spell
@@ -48,7 +48,7 @@ this is the standard deviation for :math:`\log( y + \eta )`
 or :math:`\log( z + \eta )  - \log ( y + \eta )`.
 Note that :math:`\delta` has a different definition for different cases:
 
-#. For data cases, :math:`\delta` is the
+#. For data cases, other than binomial, :math:`\delta` is the
    :ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>` :math:`\delta_i( \theta )`.
 #. For priors cases, :math:`\delta` is the transformed standard deviation;
    e.g.,
@@ -169,6 +169,30 @@ If the density is ``uniform`` ,
 the log-density function for values :math:`D(y, \mu, \delta, d)`,
 and for differences :math:`D(z, y, \mu, \delta, d)`,
 are both defined by :math:`D = 0`.
+
+Binomial
+========
+The :ref:`density_table@density_name@binomial`
+density can only used for the likelihood of data values
+(not for variable priors).
+The corresponding
+log-density function :math:`D(y, \mu, \delta, d)` is defined by
+
+.. math::
+
+   D
+   =
+   \log \left[ {n \choose k} \mu^k (1- \mu )^{n-k} \right]
+
+Here :math:`n` is the sample size for this data value :math:`y` ,
+:math:`k = n y` is the success count, and
+:math:`\mu` is the :ref:`average integrand <avg_integrand-name>`
+corresponding to :math:`y` .
+The standard deviation for :math:`k` is :math:`\sqrt{n \mu (1 - \mu)}` .
+Dividing by :math:`n` and dropping the :math:`(1 - \mu)` term,
+the weight residuals for this distribution are computed using
+:math:`\delta = \sqrt{\mu / n}` .
+
 
 Gaussian
 ========

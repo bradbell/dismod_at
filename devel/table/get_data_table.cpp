@@ -140,6 +140,9 @@ This is a structure with the following fields
    * - ``double``
      - ``nu``
      - The :ref:`data_table@nu` for this measurement
+   * - ``int``
+     - ``sample_size``
+     - The :ref:`data_table@sample_size` for this measurement
    * - ``double``
      - ``age_lower``
      - The :ref:`data_table@age_lower` for this measurement

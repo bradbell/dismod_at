@@ -8,6 +8,7 @@
 #     ihme
 #     ij
 #     stdcv
+#     ss
 # }
 # {xrst_comment_ch #}
 #
@@ -450,15 +451,23 @@
 # is the data_subset table
 # :ref:`data_subset_table@nu` for this row.
 #
+# ss
+# ==
+# is the data_subset table
+# :ref:`data_subset_table@sample_size` for this row.
+#
 # meas_std
 # ========
 # is the data table
 # :ref:`data_table@meas_std` .
+# Except in the binomial case, where it is an approximation for the
+# standard deviation of the binomial counts divided by the sample size.
 #
 # meas_stdcv
 # ==========
 # is the minimum cv standard deviation used to define the likelihood; see
 # :ref:`Delta<data_like@Notation@Minimum CV Standard Deviation, Delta_i>` .
+# In the binomial case it is equal to *meas_std*.
 #
 # meas_delta
 # ==========

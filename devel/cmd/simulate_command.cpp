@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <dismod_at/simulate_command.hpp>
@@ -143,6 +143,14 @@ void simulate_command(
       //
       // density corresponding to this data point
       density_enum density = subset_data_obj[subset_id].density;
+      assert( density != uniform_enum );
+      if( density == binomial_enum )
+      {  msg           = "dismod_at simulate command: ";
+         msg          += "simulating binomial data not yet implemented";
+         table_name    = "data";
+         size_t row_id = subset_data_obj[subset_id].original_id;
+         error_exit(msg, table_name, row_id);
+      }
       //
       // data table information
       double eta          = subset_data_obj[subset_id].eta;
@@ -231,6 +239,7 @@ void simulate_command(
             int density_id = prior_table[prior_id[k]].density_id;
             density_enum density = density_table[density_id];
             //
+            assert( density != binomial_enum );
             if( density == uniform_enum )
                sim_str[k] = "null";
             else

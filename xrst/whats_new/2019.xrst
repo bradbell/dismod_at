@@ -83,7 +83,7 @@ The ``zero_sum_random`` option was changed to
 A warning is printed when ``zero_sum_random`` is used and
 this change is made automatically.
 In addition, the ``old2new`` command will make this change to the
-:ref:`old2new_command@option Table` .
+option table.
 
 11-28
 =====

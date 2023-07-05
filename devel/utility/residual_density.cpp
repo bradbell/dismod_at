@@ -82,6 +82,12 @@ If the density *d_enum* is
 *nu* specifies the degrees of freedom in the Students-t distribution.
 Otherwise it is not used.
 
+d_sample_size
+*************
+If the density *d_enum* is ``binomial_enum`` ,
+*sample_size* specifies the number of samples in the binomial distribution.
+Otherwise it is not used.
+
 index
 *****
 This is an identifying index for the residual.

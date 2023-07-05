@@ -55,8 +55,8 @@
 #
 # Binomial Density
 # ****************
-# A binomial density is used to model the data.
-# This is really the density for a binomial divided by its sample size.
+# Use a :ref:`density_table@density_name@binomial` density is used to
+# model the data.
 #
 # Source Code
 # ***********

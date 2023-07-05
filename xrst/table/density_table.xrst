@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin density_table}
 {xrst_spell
@@ -35,6 +35,22 @@ with a link to the corresponding meaning:
 uniform
 =======
 :ref:`statistic@Log-Density Function, D@Uniform`
+
+binomial
+========
+:ref:`statistic@Log-Density Function, D@Binomial` .
+This density is special because it can only be used in the data table.
+The data table :ref:`data_table@meas_std` must be null and the
+:ref:`data_table@sample_size` must not be null.
+
+.. csv-table:: Binomial Notation
+   :widths: auto
+
+   :math:`n`,:ref:`data_table@sample_size` in the data table
+   :math:`k`,counts in a binomial sample (need not be an integer)
+   :math:`y=k/n`,:ref:`data_table@meas_value` in the data table
+   :math:`\mu`,:ref:`average integrand<avg_integrand-name>` is model mean for y.
+   :math:`\sqrt{\mu / n}`,approximation used for meas_value standard deviation
 
 gaussian
 ========

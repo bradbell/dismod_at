@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # devel
 # BEGIN_SORT_THIS_LINE_PLUS_2
@@ -27,8 +27,8 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
    table/blob_table.cpp
    table/check_child_nslist.cpp
    table/check_child_prior.cpp
-   table/check_rate_eff_cov.cpp
    table/check_pini_n_age.cpp
+   table/check_rate_eff_cov.cpp
    table/check_rate_limit.cpp
    table/check_table_id.cpp
    table/check_zero_sum.cpp
@@ -47,13 +47,13 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
    table/get_density_table.cpp
    table/get_integrand_table.cpp
    table/get_mulcov_table.cpp
-   table/get_rate_eff_cov_table.cpp
    table/get_node_table.cpp
    table/get_nslist_pair.cpp
    table/get_nslist_table.cpp
    table/get_option_table.cpp
    table/get_prior_sim_table.cpp
    table/get_prior_table.cpp
+   table/get_rate_eff_cov_table.cpp
    table/get_rate_table.cpp
    table/get_sample_table.cpp
    table/get_smooth_grid.cpp
@@ -63,6 +63,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
    table/get_time_table.cpp
    table/get_weight_grid.cpp
    table/get_weight_table.cpp
+   table/is_column_in_table.cpp
    table/log_message.cpp
    table/open_connection.cpp
    table/put_table_row.cpp
