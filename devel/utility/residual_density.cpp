@@ -180,13 +180,13 @@ namespace {
    {  // https://en.wikipedia.org/wiki/Stirling%27s_approximation
       //
       // approximately log( n! )
-      Float log_n_fac = n * log(n) - n + 1.0;
+      Float log_n_fac = n * log(n) - n;
       //
       // approximately log( (n-k) ! )
-      Float log_n_k_fac = (n-k) * log(n - k) - (n - k) + 1.0;
+      Float log_n_k_fac = (n-k) * log(n - k) - (n - k);
       //
       // approximately log( k! )
-      Float log_k_fac = k * log(k) - k + 1.0;
+      Float log_k_fac = k * log(k) - k;
       Float zero      = 0.0;
       log_k_fac       = CppAD::CondExpEq(k, zero, zero, log_k_fac);
       //

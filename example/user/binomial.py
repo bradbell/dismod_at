@@ -53,24 +53,10 @@
 #  # END_SAMPLE_SIZE
 # }
 #
-# Noise Covariate
-# ***************
-# The fitting is done using the measured prevalence to
-# approximate the measurement standard deviation.
-# This is incorrect and would lead to a biased fit.
-# We use a measurement noise covariate multiplier
-# to increase the standard deviation
-# for simulated data that corresponds to small counts in the
-# binomial distribution.
-# This uses the
-# :ref:`data_like@Adjusted Standard Deviation, delta_i(theta)@add_std_scale_all`
-# measurement noise model.
-# Simulation testing indicates that this
-# decreases the bias in the fit.
-# The measurement noise covariate is the ``max(3 - count, 0)``
-# where count is the binomial simulated count for the
-# corresponding simulated data point.
-#
+# Binomial Density
+# ****************
+# A binomial density is used to model the data.
+# This is really the density for a binomial divided by its sample size.
 #
 # Source Code
 # ***********
@@ -85,7 +71,6 @@
 # values used to simulate data
 import numpy
 iota_true          = 2e-4
-sample_size_min    = 0.5 / ( 1.0 - numpy.exp( - iota_true * 10.0 ) )
 n_children         = 2
 n_data             = 50
 random_seed        = 0
@@ -93,6 +78,11 @@ if random_seed == 0 :
    import time
    random_seed = int( time.time() )
 numpy.random.seed( int(random_seed) )
+#
+# sample_size_min, sample_size_max
+# prevalence is 1.0 - exp( -iota_true * age )
+sample_size_min  = 0.5 / ( 1.0 - numpy.exp( - iota_true * 50.0 ) )
+sample_size_max  = 100.0 * sample_size_min
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -118,11 +108,11 @@ os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 # BEGIN_SAMPLE_SIZE
 def next_sample_size() :
-   log_sample_size = numpy.random.uniform(
+   sample_size = numpy.random.uniform(
       low  = numpy.log( sample_size_min ) ,
-      high = numpy.log( 10.0 * sample_size_min ) ,
+      high = numpy.log( sample_size_max ) ,
    )
-   sample_size = round( numpy.exp( log_sample_size ) )
+   sample_size = numpy.exp( round( sample_size ) )
    return sample_size
 # END_SAMPLE_SIZE
 # ------------------------------------------------------------------------
@@ -236,10 +226,10 @@ def example_db (file_name) :
       { 'name':'ode_step_size',          'value':'10.0'              },
       { 'name':'meas_noise_effect',      'value':'add_std_scale_all' },
 
-      { 'name':'quasi_fixed',            'value':'true'         },
+      { 'name':'quasi_fixed',            'value':'false'        },
       { 'name':'derivative_test_fixed',  'value':'first-order'  },
       { 'name':'max_num_iter_fixed',     'value':'100'          },
-      { 'name':'print_level_fixed',      'value':'5'            },
+      { 'name':'print_level_fixed',      'value':'0'            },
       { 'name':'tolerance_fixed',        'value':'1e-10'        },
 
       { 'name':'derivative_test_random', 'value':'second-order' },
@@ -308,8 +298,9 @@ for (var_id, var_row) in enumerate(var_table) :
       #
       fit_var_value = fit_var_table[var_id]['fit_var_value']
       rel_error     = 1. - fit_var_value / iota_true
-      print( f'This test not yet working: rel_error = {rel_error}')
-      # assert abs(rel_error) < 0.1
+      if abs(rel_error) >= 0.1 :
+         print( f'binomial.py: rel_error = {rel_error}')
+      assert abs(rel_error) < 0.1
 connection.close()
 print('binomial.py: OK')
 # -----------------------------------------------------------------------------

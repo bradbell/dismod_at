@@ -1660,8 +1660,8 @@ def db2csv_command(database_file_arg) :
          if have_table['fit_var'] :
             n        = int( row_in['sample_size'] )
             p        = float( row_out['avgint'] )
-            variance = n * p * (1.0 - p)
-            meas_std = math.sqrt( variance ) / (n * n)
+            variance = n * p
+            meas_std = math.sqrt( variance / (n * n) )
             row_out['meas_std']   = convert2output( meas_std )
             row_out['meas_stdcv'] = row_out['meas_std']
       else :

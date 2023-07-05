@@ -29,9 +29,9 @@ namespace {
    }
 
    double approx_log_binomial(double n, double k, double p)
-   {  double n_fac      = n * log(n) - n + 1.0 ;
-      double k_fac      = k * log(k) - k + 1.0 ;
-      double n_k_fac    = (n - k) * log(n-k) - (n-k) + 1.0 ;
+   {  double n_fac      = n * log(n) - n;
+      double k_fac      = k * log(k) - k;
+      double n_k_fac    = (n - k) * log(n-k) - (n-k);
       double n_choose_k = n_fac - k_fac - n_k_fac;
       double approx     = n_choose_k + log(p) * k + log(1.0-p) * (n-k);
       return approx;
