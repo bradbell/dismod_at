@@ -158,8 +158,8 @@
 # This script will build the following version of dismod_at image:
 # {xrst_spell_off}
 # {xrst_code sh}
-   dismod_at_version='20230628'
-   dismod_at_hash='7b88bac7895f0c49b3586e5676fc00e0a41aeff6'
+   dismod_at_version='20230706'
+   dismod_at_hash='18f607f8dbbef292a094403d3a4a1ff511327734'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -168,8 +168,8 @@
 # This script can build the following version of the optional at_cascade image:
 # {xrst_spell_off}
 # {xrst_code sh}
-   at_cascade_version='2023.6.28'
-   at_cascade_hash='98c53cf11c1dd6da44762866dbba34862a7d8613'
+   at_cascade_version='2023.7.6'
+   at_cascade_hash='aa2de29984be6f9be71b875c7cd96f77a5d2c755'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -352,6 +352,10 @@ git pull && \
 git checkout --quiet $dismod_at_hash  && \
 grep "$dismod_at_version" CMakeLists.txt > /dev/null &&\
 sed -i bin/run_cmake.sh -e 's|\$HOME/|/home/|g'
+
+# Drop column command started with sqlite-3.35.0. This version of ubuntu
+# uses sqlite-3.31.1 so remove test of old2new_command.
+Run sed -i example/get_started/CMakeLists.txt -e 's| old2new | |'
 
 # 1. Change build_type to debug
 # 2. Build, check, and install debug version
