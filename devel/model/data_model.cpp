@@ -859,8 +859,16 @@ residual_struct<Float> data_model::like_one(
    size_t weight_id    = size_t( subset_data_obj_[subset_id].weight_id );
    size_t subgroup_id  = size_t( subset_data_obj_[subset_id].subgroup_id );
    size_t integrand_id = size_t( subset_data_obj_[subset_id].integrand_id );
-   //
    double data_sim_value   = subset_data_obj_[subset_id].data_sim_value;
+   //
+   // density
+   density_enum density = data_info_[subset_id].density;
+   if( density == binomial_enum && avg <= 0.0 )
+   {  int data_id = subset_data_obj_[subset_id].original_id;
+      std::string msg = "like_one: density = binomial, average integrand = ";
+      msg += CppAD::to_string(avg) + " data_id = " + CppAD::to_string(data_id);
+      error_exit(msg);
+   }
    //
    // average noise effect
    Float std_effect = avg_noise_obj_.rectangle(
@@ -875,9 +883,6 @@ residual_struct<Float> data_model::like_one(
       pack_vec
    );
    //
-   // density
-   density_enum density = data_info_[subset_id].density;
-   //
    // Delta
    Float Delta;
    if( density == binomial_enum )
@@ -891,7 +896,6 @@ residual_struct<Float> data_model::like_one(
    {  double meas_cv = minimum_meas_cv_[integrand_id];
       Delta          = std::max(meas_std, meas_cv * std::fabs(meas_value) );
    }
-   assert( Delta  > 0.0 );
    //
    // transformed standard deviation
    Float sigma = Delta;

@@ -50,15 +50,20 @@ bool residual_density_xam(void)
    size_t                  index;
 
    dismod_at::density_enum d_id;
-   double z              = 0.3;
-   double y              = 0.2;
-   double mu             = 0.3;
+   double z              = 0.2;
+   double y              = 0.3;
    double delta          = 1.5;
    double d_eta          = nan;
    double d_nu           = 3.0;
+   //
+   // choose mu such that 0 < mu < 1 and y != mu
+   double mu             = 0.4;
+   //
+   // choose sample_size so that:
+   // 1: exp(1) <= y * sample_size
+   // 2: exp(1) <= sample_size - y * sample_size
    // must choose sample_size and mu so that binomial makes sense; i.e.,
-   // so that 0 < mu < 1 and  0 <= y < 1.
-   double d_sample_size  = 2;
+   double d_sample_size  = 10;
 
    // -----------------------------------------------------------------------
    dismod_at::residual_enum residual_type = dismod_at::difference_prior_enum;

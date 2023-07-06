@@ -184,15 +184,17 @@ log-density function :math:`D(y, \mu, \delta, d)` is defined by
    =
    \log \left[ {n \choose k} \mu^k (1- \mu )^{n-k} \right]
 
-Here :math:`n` is the sample size for this data value :math:`y` ,
-:math:`k = n y` is the success count, and
-:math:`\mu` is the :ref:`average integrand <avg_integrand-name>`
-corresponding to :math:`y` .
-The standard deviation for :math:`k` is :math:`\sqrt{n \mu (1 - \mu)}` .
-Dividing by :math:`n` and dropping the :math:`(1 - \mu)` term,
-the weight residuals for this distribution are computed using
-:math:`\delta = \sqrt{\mu / n}` .
-
+#. Here :math:`n` is the sample size for this data value :math:`y` ,
+   :math:`k = n y` is the success count, and
+   :math:`\mu` is the :ref:`average integrand <avg_integrand-name>`
+   corresponding to :math:`y` .
+#. The standard deviation for :math:`k` is :math:`\sqrt{n \mu (1 - \mu)}` .
+   Dividing by :math:`n` and dropping the :math:`(1 - \mu)` term,
+   the weight residuals for this distribution are computed using
+   :math:`\delta = \sqrt{\mu / n}` .
+#. If the average integrand for binomial data is zero, you will get
+   a message saying that the corresponding standard deviation is
+   not greater than zero.
 
 Gaussian
 ========

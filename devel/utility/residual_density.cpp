@@ -164,6 +164,7 @@ there is no absolute value term for this residual.
 # include <cppad/cppad.hpp>
 # include <dismod_at/residual_density.hpp>
 # include <dismod_at/a1_double.hpp>
+# include <dismod_at/error_exit.hpp>
 
 namespace {
    template <class Float>
@@ -173,7 +174,7 @@ namespace {
    {  std::string lable = "residual_density: ";
       lable += name;
       lable += " = ";
-      CppAD::PrintFor(value, lable.c_str(), value, "\n");
+      CppAD::PrintFor(value, lable.c_str(), value, " is not greater than 0\n");
    }
    void print_forward_if_not_positive(
       const char* name    ,
@@ -181,23 +182,51 @@ namespace {
    {  assert( value > 0.0 );
    }
 
+   // apx_log_factorial
    template <class Float>
-   Float log_n_choose_k(const Float& n, const Float& k)
-   {  // https://en.wikipedia.org/wiki/Stirling%27s_approximation
+   Float apx_log_factorial(const Float n)
+   {  //
+      // stirling
+      // https://en.wikipedia.org/wiki/Stirling%27s_approximation
+      Float stirling = n * log(n) - n;
       //
-      // approximately log( n! )
-      Float log_n_fac = n * log(n) - n;
+      // note that n = e, stirling = zero
+      Float e        = exp(1.0);
+      Float zero     = 0.0;
+      return CppAD::CondExpLe(n, e, zero, stirling);
+   }
+   // apx_log
+   template <class Float>
+   Float apx_log(const Float x)
+   {  //
+      // small
+      Float small = std::numeric_limits<double>::min() * 1e+20;
       //
-      // approximately log( (n-k) ! )
-      Float log_n_k_fac = (n-k) * log(n - k) - (n - k);
+      // log_x
+      // approximation for small <= x
+      Float log_x = log(x);
       //
-      // approximately log( k! )
-      Float log_k_fac = k * log(k) - k;
-      Float zero      = 0.0;
-      log_k_fac       = CppAD::CondExpEq(k, zero, zero, log_k_fac);
+      // quadratic
+      // approximation for x <= small
+      Float term      = (x - small) / small;
+      Float quadratic = log(small) + term - 0.5 * term * term;
       //
-      // approximately (n/k)
-      return log_n_fac - log_n_k_fac - log_k_fac;
+      return CppAD::CondExpLe(x, small, quadratic, log_x);
+   }
+   // log_binomial_density
+   template <class Float>
+   Float log_binomial_denisty(const Float& n, const Float& k, const Float& p)
+   {  //
+      // log_n_choose_k
+      // log(n!) - log(k!) - log( (n-k)! )
+      Float log_n_fac      = apx_log_factorial(n);
+      Float log_k_fac      = apx_log_factorial(k);
+      Float log_n_k_fac    = apx_log_factorial(n-k);
+      Float log_n_choose_k = log_n_fac - log_k_fac - log_n_k_fac;
+      //
+      Float log_p_k   = apx_log(p) * k;
+      Float log_q_n_k = apx_log(1.0 - p) * (n - k);
+      return log_n_choose_k + log_p_k + log_q_n_k;
    }
 }
 
@@ -252,6 +281,12 @@ residual_struct<Float> residual_density(
       break;
    }
 # endif
+   if( d_enum != uniform_enum && delta <= 0.0)
+   {  std::string msg = "residual_density: delta = ";
+      msg += CppAD::to_string(delta);
+      msg += " is not greater than 0";
+      error_exit(msg);
+   }
 
    // nan, r2, pi
    double nan = std::numeric_limits<double>::quiet_NaN();
@@ -277,7 +312,6 @@ residual_struct<Float> residual_density(
       case cen_laplace_enum:
       case students_enum:
       case binomial_enum:
-      assert( delta > 0.0 );
       print_forward_if_not_positive("delta", delta);
       switch( residual_type )
       {  default:
@@ -304,7 +338,6 @@ residual_struct<Float> residual_density(
       case log_students_enum:
       case cen_log_gaussian_enum:
       case cen_log_laplace_enum:
-      assert( delta > 0.0 );
       print_forward_if_not_positive("delta", delta);
       switch( residual_type )
       {  default:
@@ -355,8 +388,7 @@ residual_struct<Float> residual_density(
          Float n       = d_sample_size;
          Float p       = mu;
          Float k       = n * y;
-         Float log_n_k = log_n_choose_k(n, k);
-         logden_smooth = log_n_k + log(p) * k + log(1.0-p) * (n-k);
+         logden_smooth = log_binomial_denisty(n, k, p);
       }
       break;
 
