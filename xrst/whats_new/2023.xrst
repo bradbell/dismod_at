@@ -19,13 +19,17 @@ mm-dd
 
 07-05
 =====
-**API Change:**
-The :ref:`data_table@sample_size` column was added to the data table.
-The values in this column should be null except for rows that use the
-:ref:`density_table@density_name@binomial` density.
-The :ref:`old2new_command-name` was changed so that it adds the sample_size
-column to the data table with the value null for every row.
-(The previous functionality of the old2new command was removed.)
+**API Change:** :
+
+#. The :ref:`data_table@sample_size` column was added to the data table.
+   The values in this column should be null except for rows that use the
+   :ref:`density_table@density_name@binomial` density.
+#. The :ref:`old2new_command-name` was changed so that it adds the sample_size
+   column to the data table with the value null for every row.
+   (The previous functionality of the old2new command was removed.)
+#. Advance dock_dismod_at.sh
+   :ref:`dock_dismod_at.sh@dismod_at_version` to 20230706 and
+   :ref:`dock_dismod_at.sh@at_cascade_version` to 2023.7.6.
 
 07-01
 =====
