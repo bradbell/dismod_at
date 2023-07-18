@@ -4,4 +4,4 @@
 https://dismod-at.readthedocs.io
 
 ## Git Repository
-https://github.com/bradbell/dismod_at
+https://github.com/encryptedcommerce/dismod_at
