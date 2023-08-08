@@ -40,23 +40,35 @@
 #
 # Data
 # ****
+#
+# Integrand
+# =========
 # All of the data is for the prevalence integrand.
 # Since *iota* is constant, and the other rates are zero,
 # the true prevalence is :math:`1 - \exp( - iota * age )` .
+#
+# meas_value
+# ==========
 # The prevalence data is simulate using a
 # binomial distribution divided by its sample size.
 # The mean of the binomial distribution
 # is the sample size times the true prevalence.
+#
+# Sample Size
+# ===========
 # The sample size for each data point is chosen as follows:
 # {xrst_literal
 #  # BEGIN_SAMPLE_SIZE
 #  # END_SAMPLE_SIZE
 # }
 #
-# Binomial Density
-# ****************
-# Use a :ref:`density_table@density_name@binomial` density is used to
-# model the data.
+# Density
+# =======
+# If the count, corresponding to the measured value, is greater than or equal
+# a threshold, a Gaussian approximation is used, otherwise the
+# :ref:`density_table@density_name@binomial` density is used.
+# Note that the approximation seems to work well even when the
+# threshold is zero.
 #
 # Source Code
 # ***********
@@ -149,12 +161,11 @@ def example_db (file_name) :
    #
    # values that are the same for all data rows
    row = {
-      'density':     'binomial',
+      'integrand':  'prevalence',
       'weight':      '',
       'hold_out':     False,
       'time_lower':   2000.,
       'time_upper':   2000.,
-      'meas_std':     None,
    }
    # values that change between rows:
    for data_id in range( n_data ) :
@@ -169,8 +180,17 @@ def example_db (file_name) :
       count               = binomial(sample_size, meas_mean)
       meas_value          = count / sample_size
       row['sample_size']  = sample_size
-      row['integrand']    = 'prevalence'
       row['meas_value']   = meas_value
+      threshold = 5
+      if threshold <= count :
+         row['density']  = 'gaussian'
+         k               = count
+         n               = sample_size
+         meas_std        = numpy.sqrt( (k + 1)*(n + 1 - k) / n ) / (n + 2)
+         row['meas_std'] = meas_std
+      else :
+         row['density']  = 'binomial'
+         row['meas_std'] = None
       data_table.append( copy.copy(row) )
    #
    # ----------------------------------------------------------------------

@@ -30,7 +30,11 @@ Syntax
 Purpose
 *******
 This command is used to change the density used for an integrand
-during subsequent fits..
+during subsequent fits. .
+If :ref:`data_table@density_id`
+corresponds to :ref:`density_table@density_name@binomial`,
+the corresponding :ref:`data_table@meas_std` is null and
+hence the density can't be changed.
 
 database
 ********
@@ -49,7 +53,8 @@ the density for.
 density_name
 ************
 This is the :ref:`density_table@density_name`
-that we are using for the new density.
+that we are using for the new density,
+except when the original density is binomial.
 
 eta_factor
 **********
@@ -153,12 +158,15 @@ void data_density_command(
          msg       += " is not a in the integrand table";
          error_exit(msg);
       }
-      // density_id
-      size_t density_id = density_table.size();
+      // binomial_id, density_id
+      size_t binomial_id = density_table.size();
+      size_t density_id  = density_table.size();
       for(size_t id = 0; id < density_table.size(); ++id)
       {  string name = density_enum2name[ density_table[id] ];
          if( name == density_name )
             density_id = id;
+         if( name == "binomial" )
+            binomial_id = id;
       }
       if( density_id == density_table.size() )
       {  string msg = "data_density_command: " + density_name;
@@ -197,7 +205,8 @@ void data_density_command(
       // data_subset_table
       for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
       {  size_t data_id = data_subset_table[subset_id].data_id;
-         if( data_table[data_id].integrand_id == int(integrand_id) )
+         if( data_table[data_id].density_id   != int(binomial_id)
+         &&  data_table[data_id].integrand_id == int(integrand_id) )
          {  data_subset_table[subset_id].density_id =  int( density_id );
             data_subset_table[subset_id].eta        = eta;
             data_subset_table[subset_id].nu         = nu;

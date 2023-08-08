@@ -29,8 +29,8 @@ Notation
    * - :math:`\sigma`
      - approximate standard deviation of the success ratio *r*
 
-Approximation
-*************
+Variance
+********
 The variance of :math:`k` is given by
 
 .. math::
@@ -54,13 +54,17 @@ Using a uniform prior on *p*, the expected value of *p* given *k* is
 See
 `Estimation of Parameters <https://en.wikipedia.org/wiki/Binomial_distribution#Estimation_of_parameters>`_
 for a binomial distribution.
-Using this approximation for *p*,
+
+Approximation
+*************
+Using this :math:`\B{E} [ p | k ] = (k + 1) / (n + 2)`
+as an approximation for *p*,
 the corresponding approximation for the variance give the number of
 success events *k* is
 
 .. math::
 
-   \B{V} [ r ] \approx  \frac{ (k + 1) (n + 1 - k) }{ n ( n + 2 ) }
+   \B{V} [ r ] \approx  \frac{ (k + 1) (n + 1 - k) }{ n ( n + 2 )^2 }
 
 If *r* is the dismod_at measured value :ref:`data_table@meas_value` ,
 the corresponding standard deviation :ref:`data_table@meas_std`
@@ -68,11 +72,16 @@ is the square root of the variance approximation above; i.e.,
 
 .. math::
 
-   \sigma =  \sqrt{ \frac{ (k + 1) (n + 1 - k) }{ n ( n + 2 ) } }
+   \sigma =  \frac{1}{n + 2} \sqrt{ \frac{ (k + 1) (n + 1 - k) }{ n } }
 
 In some cases *r / T* is the dismod_at measured value,
 where *T* is the total time for the experiment.
 In this case the corresponding standard deviation is
 :math:`\sigma / T` .
+
+Example
+=======
+The :ref:`user_binomial.py-name` file contains an example and test
+of standard deviation approximation above.
 
 {xrst_end binomial}

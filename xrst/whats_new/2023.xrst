@@ -17,6 +17,19 @@ Changes and Additions to Dismod_at During 2023
 mm-dd
 *****
 
+08-08
+=====
+#. There was a bug in the :ref:`data_density_command-name` when the
+   original data density was binomial
+   (a binomial density it cannot be changed).
+   This has been fixed.
+#. The :ref:`binomial@Approximation` for the standard deviation
+   corresponding to the binomial distribution was of by a factor of
+   :math:`\sqrt{ 1 / n}` where *n* is the sample size.
+   This has been fixed. In addition, the
+   :ref:`user_binomial.py-name` example was modified to demonstrate
+   that this works well.
+
 07-06
 =====
 Advance dock_dismod_at.sh
