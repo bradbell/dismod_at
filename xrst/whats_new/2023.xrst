@@ -17,6 +17,12 @@ Changes and Additions to Dismod_at During 2023
 mm-dd
 *****
 
+08-09
+=====
+Advance dock_dismod_at.sh
+:ref:`dock_dismod_at.sh@dismod_at_version` to 20230808 and
+:ref:`dock_dismod_at.sh@at_cascade_version` to 2023.8.9.
+
 08-08
 =====
 #. There was a bug in the :ref:`data_density_command-name` when the
