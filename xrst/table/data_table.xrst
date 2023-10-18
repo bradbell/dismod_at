@@ -140,7 +140,7 @@ This is not the only contribution to the standard deviation
 used in the data likelihood; see
 :ref:`minimum cv standard deviation<data_like@Notation@Minimum CV Standard Deviation, Delta_i>` :math:`\Delta`,
 adjusted standard deviation
-:ref:`sigms<data_like@Adjusted Standard Deviation, sigma_i(theta)>`
+:ref:`sigma<data_like@Adjusted Standard Deviation, sigma_i(theta)>`
 :math:`\sigma`, and transformed standard deviation
 :ref:`delta<data_like@Transformed Standard Deviation, delta_i(theta)>`
 :math:`\delta ( \theta )`.
