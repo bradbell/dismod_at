@@ -399,7 +399,7 @@ RUN git clone https://github.com/bradbell/at_cascade.git at_cascade.git && \
 cd at_cascade.git && \
 git checkout --quiet $at_cascade_hash && \
 grep "at_cascade-$at_cascade_version\$" at_cascade.xrst > /dev/null && \
-sed -i bin/check_all.sh -e '/check_xrst.sh/d'
+sed -i bin/check_all.sh -e '/run_xrst.sh/d'
 
 # Test using debug version of dismod_at
 WORKDIR /home/at_cascade.git

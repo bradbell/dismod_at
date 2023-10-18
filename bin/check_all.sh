@@ -42,6 +42,9 @@ do
    $script
 done
 #
+# run_xrst.sh
+echo_eval bin/run_xrst.sh
+#
 # check version number
 echo_eval version.sh check
 # ----------------------------------------------------------------------------

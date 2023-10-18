@@ -3,9 +3,9 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
-if [ "$0" != "bin/check_xrst.sh" ]
+if [ "$0" != "bin/run_xrst.sh" ]
 then
-   echo "bin/check_xrst.sh: must be executed from its parent directory"
+   echo "bin/run_xrst.sh: must be executed from its parent directory"
    exit 1
 fi
 # -----------------------------------------------------------------------------
@@ -50,5 +50,5 @@ echo_eval xrst \
    --html_theme sphinx_rtd_theme \
    --index_page_name $index_page_name
 #
-echo 'check_xrst.sh: OK'
+echo 'run_xrst.sh: OK'
 exit 0
