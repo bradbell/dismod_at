@@ -18,13 +18,13 @@
 # which we denote by :math:`y_i1` for :math:`i = 0 , \ldots , N-1`.
 # We model :math:`y_i` as independent and Gaussian with mean equal
 # to the true value of iota :math:`\iota`,
-# and standard deviation :math:`\sigma_i`.
+# and standard deviation :math:`\delta_i`.
 # The negative log likelihood, up to a constant w.r.t :math:`\iota`, is
 #
 # .. math::
 #
 #  f( \iota ) =
-#  \frac{1}{2} \sum_{i=0}^{N-1} \left( \frac{y_i - \iota}{\sigma_i} \right)^2
+#  \frac{1}{2} \sum_{i=0}^{N-1} \left( \frac{y_i - \iota}{\delta_i} \right)^2
 #
 # Optimal Solution
 # ****************
@@ -33,7 +33,7 @@
 # .. math::
 #
 #  0 = f'( \hat{\iota} ) =
-#     - \sum_{i=1}^{N-1} \frac{y_i - \hat{\iota} }{\sigma_i^2}
+#     - \sum_{i=1}^{N-1} \frac{y_i - \hat{\iota} }{\delta_i^2}
 #
 # Weighted Residuals
 # ******************
@@ -41,7 +41,7 @@
 #
 # .. math::
 #
-#  r_i = \frac{y_i - \hat{\iota}}{\sigma_i}
+#  r_i = \frac{y_i - \hat{\iota}}{\delta_i}
 #
 # If :math:`\hat{\iota}` were the true value for :math:`\iota`,
 # the weighted residuals would be mean zero and variance one.
@@ -49,19 +49,19 @@
 #
 # .. math::
 #
-#  0 = \sum_{i=1}^{N-1} \frac{y_i - \hat{\iota} }{\sigma_i^2}
+#  0 = \sum_{i=1}^{N-1} \frac{y_i - \hat{\iota} }{\delta_i^2}
 #
 # .. math::
 #
-#  0 = \sum_{i=1}^{N-1} \frac{r_i}{\sigma_i}
+#  0 = \sum_{i=1}^{N-1} \frac{r_i}{\delta_i}
 #
-# Note that if :math:`\sigma_i` were the same for all :math:`i`,
+# Note that if :math:`\delta_i` were the same for all :math:`i`,
 # the sum of the weighted residuals :math:`\sum_i r_i` would be zero.
 #
 # CV Standard Deviations
 # **********************
 # We consider the case were we a coefficient of variation :math:`\lambda`
-# is used to model the measurement noise; :math:`\sigma_i = \lambda y_i`.
+# is used to model the measurement noise; :math:`\delta_i = \lambda y_i`.
 # In this case
 #
 # .. math::
@@ -74,7 +74,7 @@
 #
 # .. math::
 #
-#  w_i = \sigma_i^{-1} / \sum_{i=0}^{N-1} \sigma_i^{-1}
+#  w_i = \delta_i^{-1} / \sum_{i=0}^{N-1} \delta_i^{-1}
 #
 # The corresponding weighted average of the weighted residuals is zero; i.e,
 #
@@ -283,17 +283,17 @@ table = table_list['fit_var']
 assert len(table) == 1
 iota_hat = table[0]['fit_var_value']
 #
-# y, sigma
+# y, delta
 table = table_list['data']
 assert len(table) == 2
 y     = numpy.array( [ table[0]['meas_value'], table[1]['meas_value'] ] )
-sigma = numpy.array( [ table[0]['meas_std'],   table[1]['meas_std']   ] )
+delta = numpy.array( [ table[0]['meas_std'],   table[1]['meas_std']   ] )
 #
 # weighted residuals
-r = (y - iota_hat) / sigma
+r = (y - iota_hat) / delta
 #
 # w
-w = (1.0 / sigma) / numpy.sum( 1. / sigma)
+w = (1.0 / delta) / numpy.sum( 1. / delta)
 #
 # weighted average of weighted residuals
 avg = numpy.sum( w * r )

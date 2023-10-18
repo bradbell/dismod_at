@@ -336,10 +336,10 @@ bool prior_random_xam(void)
                {  double v0    = var;
                   index        = info.offset + i * n_time + j + 1;
                   double v1    = pack_vec[index];
-                  double sigma = std_t;
+                  double delta = std_t;
                   wres    = log(v1 + eta_t) - log(v0 + eta_t) - mean_t;
-                  wres   /= sigma;
-                  check  -= log(sigma * sqrt_2pi);
+                  wres   /= delta;
+                  check  -= log(delta * sqrt_2pi);
                   check  -= wres * wres / 2.0;
                }
             }

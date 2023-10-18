@@ -317,7 +317,7 @@ bool like_all_xam(void)
       Float  wres       = residual_vec[data_id].wres;
       Float  loglike    = residual_vec[data_id].logden_smooth;
       loglike          -= fabs( residual_vec[data_id].logden_sub_abs );
-      double delta      = data_table[data_id].meas_std;
+      double Delta      = data_table[data_id].meas_std;
       double y          = data_table[data_id].meas_value;
       double eta        = 1e-4;
       size_t density_id = data_table[data_id].density_id;
@@ -325,9 +325,9 @@ bool like_all_xam(void)
       // check wres
       Float check;
       if( dismod_at::log_density( density_table[density_id] ) )
-         check = (log(y+eta) - log(avg+eta)) / log(1.0 + delta/(y+eta));
+         check = (log(y+eta) - log(avg+eta)) / log(1.0 + Delta/(y+eta));
       else
-         check = (y - avg) / delta;
+         check = (y - avg) / Delta;
       ok  &= fabs( 1.0 - wres / check ) <= eps;
       /*
       if( data_id == 0 )
@@ -339,28 +339,28 @@ bool like_all_xam(void)
       // check loglike
       double pi =  3.14159265358979323846264338327950288;
       switch( density_table[density_id] )
-      {  double sigma;
+      {  double delta;
 
          case dismod_at::uniform_enum:
          check = 0.0;
          break;
 
          case dismod_at::gaussian_enum:
-         check = - log( delta * sqrt(2.0 * pi) ) - wres * wres / 2.0;
+         check = - log( Delta * sqrt(2.0 * pi) ) - wres * wres / 2.0;
          break;
 
          case dismod_at::laplace_enum:
-         check = - log( delta * sqrt(2.0) ) - sqrt(2.0) * fabs(wres);
+         check = - log( Delta * sqrt(2.0) ) - sqrt(2.0) * fabs(wres);
          break;
 
          case dismod_at::log_gaussian_enum:
-         sigma = log(1.0 + delta / (y + eta) );
-         check = - log( sigma * sqrt(2.0 * pi) ) - wres * wres / 2.0;
+         delta = log(1.0 + Delta / (y + eta) );
+         check = - log( delta * sqrt(2.0 * pi) ) - wres * wres / 2.0;
          break;
 
          case dismod_at::log_laplace_enum:
-         sigma = log(1.0 + delta / (y + eta) );
-         check = - log( sigma * sqrt(2.0) ) - sqrt(2.0) * fabs(wres);
+         delta = log(1.0 + Delta / (y + eta) );
+         check = - log( delta * sqrt(2.0) ) - sqrt(2.0) * fabs(wres);
          break;
 
          default:

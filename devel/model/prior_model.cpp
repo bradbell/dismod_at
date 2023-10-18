@@ -146,14 +146,15 @@ residual_struct<Float> prior_model::log_prior(
    // density
    density_enum density = density_table_[prior.density_id];
    //
-   // sigam: transformed standard deviation
-   double sigma = prior.std;
-   if( ! difference && log_density(density) ) sigma =
+   // delta_dbl
+   // transformed standard deviation
+   double delta_dbl = prior.std;
+   if( ! difference && log_density(density) ) delta_dbl =
       log(prior.mean + prior.eta + prior.std) - log(prior.mean + prior.eta);
    //
    // residual_density
    Float        mu        = Float(prior.mean);
-   Float        delta     = mulstd * Float(sigma);
+   Float        delta     = mulstd * Float(delta_dbl);
    Float        eta       = Float(prior.eta);
    Float        nu        = Float(prior.nu);
    Float        not_used  = Float( std::numeric_limits<double>::quiet_NaN() );

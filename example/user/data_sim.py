@@ -171,30 +171,30 @@ def gamma_true(meas_noise_effect) :
       assert False
    return result
 # ---------------------------------------------------------------------------
-# adj_sigma
-def adj_sigma(meas_noise_effect, Delta, E) :
+# adjusted_std
+def adjusted_std(meas_noise_effect, Delta, E) :
    # add_std
    if meas_noise_effect == 'add_std_scale_all' :
-      delta = Delta * (1.0 + E)
+      sigma = Delta * (1.0 + E)
    elif meas_noise_effect == 'add_std_scale_none' :
-      delta = Delta + E
+      sigma = Delta + E
    elif meas_noise_effect == 'add_std_scale_log' :
       if log_density(density) :
-         delta = Delta * (1.0 + E)
+         sigma = Delta * (1.0 + E)
       else :
-         delta = Delta + E
+         sigma = Delta + E
    # add var
    elif meas_noise_effect == 'add_var_scale_all' :
-      delta = Delta * math.sqrt(1.0 + E)
+      sigma = Delta * math.sqrt(1.0 + E)
    elif meas_noise_effect == 'add_var_scale_none' :
-      delta = math.sqrt( Delta * Delta + E )
+      sigma = math.sqrt( Delta * Delta + E )
    else :
       assert meas_noise_effect == 'add_var_scale_log'
       if log_density(density) :
-         delta = Delta * math.sqrt(1.0 + E)
+         sigma = Delta * math.sqrt(1.0 + E)
       else :
-         delta = math.sqrt( Delta * Delta + E )
-   return delta
+         sigma = math.sqrt( Delta * Delta + E )
+   return sigma
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
@@ -461,7 +461,7 @@ for meas_noise_effect in meas_noise_effect_list :
       E         = gamma_true(meas_noise_effect)
       #
       # sigma
-      sigma = adj_sigma(meas_noise_effect, Delta, E)
+      sigma = adjusted_std(meas_noise_effect, Delta, E)
       #
       # delta
       delta = sigma

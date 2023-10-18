@@ -40,15 +40,15 @@
 #
 # Likelihood
 # **********
-# We define :math:`h(y, \mu , \sigma)`
-# to be the log-density for a :math:`\B{N}( \mu, \sigma^2 )` distribution;
+# We define :math:`h( y, \mu , \delta )`
+# to be the log-density for a :math:`\B{N}( \mu, \delta^2 )` distribution;
 # i.e.,
 #
 # .. math::
 #
-#  h(y, \mu, \sigma) =
-#     - \frac{ ( y - \mu )^2 }{ \sigma^2 }
-#     - \log \left( \sigma \sqrt{ 2 \pi } \right)
+#  h( y, \mu, \delta ) =
+#     - \frac{ ( y - \mu )^2 }{ \delta^2 }
+#     - \log \left( \delta \sqrt{ 2 \pi } \right)
 #
 # The total log-likelihood for
 # :ref:`fit fixed<fit_command@variables@fixed>` is
@@ -128,11 +128,11 @@ random_seed = int( time.time() )
 # ---------------------------------------------------------------------------
 #
 # no need to include sqrt{2 \pi} term (it does not depend on model variables)
-def h(y, mu, sigma ) :
-   if sigma <= 0.0 :
+def h(y, mu, delta ) :
+   if delta <= 0.0 :
       return - float("inf")
-   res = (y - mu ) / sigma
-   return - res * res - math.log( sigma )
+   res = (y - mu ) / delta
+   return - res * res - math.log( delta )
 #
 def log_f_fixed(x) :
    iota_n = x[0]
