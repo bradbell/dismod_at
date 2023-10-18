@@ -37,6 +37,10 @@ mm-dd
    possible values for :ref:`option_table@meas_noise_effect` in the
    option table (now the addition is done before the log scaling).
 
+#. Advance dock_dismod_at.sh
+   :ref:`dock_dismod_at.sh@dismod_at_version` to 20231018 and
+   :ref:`dock_dismod_at.sh@at_cascade_version` to 2023.10.7.
+
 08-09
 =====
 Advance dock_dismod_at.sh
