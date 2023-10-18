@@ -467,12 +467,12 @@ If *option_name* = ``meas_noise_effect`` ,
 :ref:`average noise effect<data_like@Measurement Noise Covariates@Average Noise Effect, E_i(theta)>`
 changes the measurement noise.
 The possible *option_value* are:
-:ref:`data_like@Adjusted Standard Deviation, delta_i(theta)@add_std_scale_all` ,
-:ref:`data_like@Adjusted Standard Deviation, delta_i(theta)@add_std_scale_none` ,
-:ref:`data_like@Adjusted Standard Deviation, delta_i(theta)@add_std_scale_log` ,
-:ref:`data_like@Adjusted Standard Deviation, delta_i(theta)@add_var_scale_all` ,
-:ref:`data_like@Adjusted Standard Deviation, delta_i(theta)@add_var_scale_none` ,
-:ref:`data_like@Adjusted Standard Deviation, delta_i(theta)@add_var_scale_log` .
+:ref:`data_like@Adjusted Standard Deviation, sigma_i(theta)@add_std_scale_all` ,
+:ref:`data_like@Adjusted Standard Deviation, sigma_i(theta)@add_std_scale_none` ,
+:ref:`data_like@Adjusted Standard Deviation, sigma_i(theta)@add_std_scale_log` ,
+:ref:`data_like@Adjusted Standard Deviation, sigma_i(theta)@add_var_scale_all` ,
+:ref:`data_like@Adjusted Standard Deviation, sigma_i(theta)@add_var_scale_none` ,
+:ref:`data_like@Adjusted Standard Deviation, sigma_i(theta)@add_var_scale_log` .
 
 warn_on_stderr
 **************

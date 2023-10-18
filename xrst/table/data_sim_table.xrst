@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin data_sim_table}
 {xrst_spell
@@ -108,30 +108,21 @@ and this *data_id* .
 
 sigma
 =====
-We use :math:`\sigma` to denote the
-:ref:`transformed standard deviation<data_like@Notation@Transformed Standard Deviation, sigma_i>`
-corresponding to the data table and this *data_id* ; i.e.,
-
-.. math::
-
-   \sigma = \left\{ \begin{array}{ll}
-      \log( y + \eta + \Delta ) - \log(y + \eta) & \R{if \; log \; density}
-      \\
-      \Delta                                     & \R{otherwise}
-   \end{array} \right.
-
+We use :math:`\sigma` to denote the adjusted standard deviation
+:ref:`sigma<data_like@Adjusted Standard Deviation, sigma_i(theta)>`
+corresponding to the data table and this *data_id* .
 Note that :math:`\sigma` does not depend on simulated noise
 :math:`e` defined below (because it is defined using :math:`y`
 instead of :math:`z`).
 
 delta
 =====
-We use :math:`\delta` to denote the
-:ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>`
+We use :math:`\delta` to denote the transformed standard deviation
+:ref:`delta<data_like@Transformed Standard Deviation, delta_i(theta)>`
 corresponding to the truth_var table
 value for the model variables,
 the values in the data table, and this *data_id* .
-Note that :math:`\sigma` does not depend on simulated noise
+Note that :math:`\delta` does not depend on simulated noise
 :math:`e` defined below.
 
 e

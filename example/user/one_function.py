@@ -69,7 +69,7 @@ income_mulcov_type = "meas_value"
 # model with the following parameters:
 # {xrst_spell_off}
 # {xrst_code py}
-prevalence_sigma  = 0.1
+prevalence_delta  = 0.1
 prevalence_eta    = 1e-6
 # {xrst_code}
 # {xrst_spell_on}
@@ -137,26 +137,26 @@ def Prevalence(age) :
 # ***************
 # Once we have simulated a measurement value,
 # we can solve for :math:`\Delta` are follows; see
-# :ref:`sigma<data_like@Notation@Transformed Standard Deviation, sigma_i>` :
+# :ref:`delta<data_like@Transformed Standard Deviation, delta_i(theta)>` :
 #
 # .. math::
 #
-#  \sigma = \log( y + \eta + \Delta ) - \log(y + \eta )
+#  \delta = \log( y + \eta + \Delta ) - \log(y + \eta )
 #
 # .. math::
 #
-#  \exp ( \sigma ) = \frac{ y + \eta + \Delta }{ y + \eta }
+#  \exp ( \delta ) = \frac{ y + \eta + \Delta }{ y + \eta }
 #
 # .. math::
 #
-#  \exp ( \sigma ) ( y + \eta ) = y + \eta + \Delta
+#  \exp ( \delta ) ( y + \eta ) = y + \eta + \Delta
 #
 # .. math::
 #
-#  \Delta = [ \exp ( \sigma ) - 1 ] ( y + \eta )
+#  \Delta = [ \exp ( \delta ) - 1 ] ( y + \eta )
 #
 # For this case there are no measurement noise covariates so
-# :math:`\sigma` is the standard deviation for the simulated data.
+# :math:`\delta` is the standard deviation for the simulated data.
 # Furthermore, the
 # :ref:`option_table@minimum_meas_cv` is zero,
 # so :math:`\Delta` is the *meas_std* .
@@ -287,10 +287,10 @@ def example_db (file_name) :
       income        = (data_id % n_income)  / float(n_income - 1)
       income_effect = (income - income_reference) * income_multiplier
       eta           = prevalence_eta
-      sigma         = prevalence_sigma
-      log_noise     = random.gauss(0, sigma)
+      delta         = prevalence_delta
+      log_noise     = random.gauss(0, delta)
       y             = exp(log_noise) * Prevalence(age) * exp(income_effect)
-      Delta         = ( exp(sigma) - 1 ) * ( y + eta )
+      Delta         = ( exp(delta) - 1 ) * ( y + eta )
       row['age_lower']  = age
       row['age_upper']  = age
       row['income']     = income

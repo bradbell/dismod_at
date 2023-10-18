@@ -806,8 +806,8 @@ This can be calculated using :ref:`data_model_average-name` .
 delta_out
 *********
 The input value of *delta_out* does not matter.
-Upon return it is the adjusted standard deviation
-:ref:`delta<data_like@Adjusted Standard Deviation, delta_i(theta)>`
+Upon return it is the transformed standard deviation
+:ref:`delta<data_like@Transformed Standard Deviation, delta_i(theta)>`
 for this data point.
 
 residual

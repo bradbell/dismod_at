@@ -15,7 +15,8 @@
 # Purpose
 # *******
 # This example explains the :ref:`data_sim_table-name` by showing that the
-# :ref:`Adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>`
+# transformed standard deviation
+# :ref:`delta<data_like@Transformed Standard Deviation, delta_i(theta)>`
 # for the simulated data is the same as for the original data.
 #
 # Random Effects
@@ -94,8 +95,8 @@
 #
 # sigma
 # =====
-# This is the transformed standard deviation corresponding to :math:`y`; see
-# :ref:`sigma<data_like@Notation@Transformed Standard Deviation, sigma_i>` .
+# This is the adjusted standard deviation corresponding to :math:`y`; see
+# :ref:`sigma<data_like@Adjusted Standard Deviation, sigma_i(theta)>` .
 #
 # E
 # =

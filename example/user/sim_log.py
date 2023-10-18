@@ -66,29 +66,27 @@ gamma_global      = meas_value_global * 0.25
 #     * - :math:`z_i`
 #       - *i*-th simulate data for :math:`i = 1, \ldots , n`
 #
-# sigma
+# delta
 # *****
-# The :ref:`transformed standard deviation<data_like@Notation@Transformed Standard Deviation, sigma_i>`
+# The transformed standard deviation
+# :ref:`delta<data_like@Transformed Standard Deviation, delta_i(theta)>`
 # is given by
 #
 # .. math::
 #
-#  \sigma = \log( y + \eta + \Delta ) - \log(y + \eta)
+#  \delta = \log( y + \eta + \sigma ) - \log(y + \eta)
 #
-# {xrst_code py}
-
-#
-# {xrst_code}
-# delta
+# sigma
 # *****
 # For this example we use the
-# :ref:`data_like@Adjusted Standard Deviation, delta_i(theta)@add_std_scale_none`
-# option in the definition of the
-# :ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>` :math:`\delta`; i.e.,
+# :ref:`data_like@Adjusted Standard Deviation, sigma_i(theta)@add_std_scale_none`
+# option in the definition of the adjusted standard deviation
+# :ref:`sigma<data_like@Adjusted Standard Deviation, sigma_i(theta)>`
+# :math:`\sigma`; i.e.,
 #
 # .. math::
 #
-#  \delta = \sigma + \gamma
+#  \sigma = \Delta + \gamma
 #
 # Simulations
 # ***********

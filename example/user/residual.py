@@ -40,27 +40,26 @@ minimum_meas_cv = 0.10
 # :ref:`data_table@meas_std` is above and below the bound specified
 # by :ref:`integrand_table@minimum_meas_cv` are included.
 #
-# Delta
-# =====
+# Capital Delta
+# =============
 # We use the notation
 # :ref:`Delta<data_like@Notation@Minimum CV Standard Deviation, Delta_i>` for
 # the standard deviation adjusted by the minimum measurement cv.
 #
-# sigma
-# =====
+# Lower delta
+# ===========
 # We use the notation
-# :ref:`sigma<data_like@Notation@Transformed Standard Deviation, sigma_i>` for
-# the transformed standard deviation.
-# There are no measurement noise covariate multipliers, so the
-# adjusted standard deviation is also equal to :math:`\sigma`.
+# :ref:`delta<data_like@Transformed Standard Deviation, delta_i(theta)>`
+# for the transformed standard deviation.
 #
 # Gaussian Residuals
 # ==================
-# In the Gaussian case, :math:`\sigma = \Delta` and
+# There are no measurement noise covariate multipliers, so
+# :math:`\delta = \Delta` and the residual is
 #
 # .. math::
 #
-#  (y - \mu) / \sigma
+#  (y - \mu) / \delta
 #
 # where :math:`y` is the measured value and :math:`\mu` is the
 # model value for the
@@ -68,10 +67,11 @@ minimum_meas_cv = 0.10
 #
 # Log-Gaussian Residuals
 # ======================
+# There are no measurement noise covariate multipliers, so
 #
 # .. math::
 #
-#  \sigma = \log ( y + \eta + \Delta ) - \log( y + \eta )
+#  \delta = \log ( y + \eta + \Delta ) - \log( y + \eta )
 #
 # where :math:`y` is the measured value
 # and :math:`\eta` is the offset in the log transform.
@@ -79,7 +79,7 @@ minimum_meas_cv = 0.10
 #
 # .. math::
 #
-#  \frac{ \log ( y + \eta ) - \log ( \mu + \eta ) } { \sigma }
+#  \frac{ \log ( y + \eta ) - \log ( \mu + \eta ) } { \delta }
 #
 # where :math:`\mu` is the model value for the average integrand.
 #
@@ -99,13 +99,13 @@ minimum_meas_cv = 0.10
 #
 # .. math::
 #
-#  \sigma = \log ( \mu + \eta + \delta ) - \log( \mu + \eta )
+#  \delta = \log ( \mu + \eta + \sigma ) - \log( \mu + \eta )
 #
 # The residual is
 #
 # .. math::
 #
-#  \frac{ \log ( y + \eta ) - \log ( \mu + \eta ) } { \sigma }
+#  \frac{ \log ( y + \eta ) - \log ( \mu + \eta ) } { \delta }
 #
 # where :math:`y` is the :ref:`fit_var_table@fit_var_value`
 # for the model variable.
@@ -345,8 +345,8 @@ for data_subset_id in range(n_subset) :
       log_y_eta_plus  = math.log(meas_value + eta + Delta)
       log_y_eta       = math.log(meas_value + eta)
       log_mu_eta      = math.log(avg_integrand + eta)
-      sigma           = log_y_eta_plus - log_y_eta
-      check           = (log_y_eta - log_mu_eta) / sigma
+      delta           = log_y_eta_plus - log_y_eta
+      check           = (log_y_eta - log_mu_eta) / delta
    relerr = residual / check - 1.0
    assert abs(relerr) <= eps99
 #
@@ -363,9 +363,9 @@ for var_id in range(n_var) :
    value     = fit_row['fit_var_value']
    residual  = fit_row['residual_value']
    mu        = omega_mean
-   delta     = fun_omega_value_std()
-   sigma     = math.log(mu + eta + delta) - math.log(mu + eta)
-   check     = (math.log(value + eta) - math.log(mu + eta)) / sigma
+   sigma     = fun_omega_value_std()
+   delta     = math.log(mu + eta + sigma) - math.log(mu + eta)
+   check     = (math.log(value + eta) - math.log(mu + eta)) / delta
    relerr    = residual / check - 1.0
    assert abs(relerr) <= eps99
    #

@@ -474,8 +474,9 @@
 # If the previous fit command had a
 # :ref:`db2csv_command@simulate_index` ,
 # this column is empty.
-# We use *delta* to denote the
-# :ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>` for this row.
+# We use *delta* to denote the transformed standard deviation
+# :ref:`delta<data_like@Transformed Standard Deviation, delta_i(theta)>`
+# for this row.
 # If the density for this row is
 # :ref:`density_table@Notation@Linear`
 #

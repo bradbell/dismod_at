@@ -49,7 +49,9 @@ or :math:`\log( z + \eta )  - \log ( y + \eta )`.
 Note that :math:`\delta` has a different definition for different cases:
 
 #. For data cases, other than binomial, :math:`\delta` is the
-   :ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>` :math:`\delta_i( \theta )`.
+   transformed standard deviation
+   :ref:`delta<data_like@Transformed Standard Deviation, delta_i(theta)>`
+   :math:`\delta_i( \theta )`.
 #. For priors cases, :math:`\delta` is the transformed standard deviation;
    e.g.,
    :ref:`fixed_value@sigma_j` ,

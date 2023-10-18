@@ -139,8 +139,11 @@ It must be positive unless the density is
 This is not the only contribution to the standard deviation
 used in the data likelihood; see
 :ref:`minimum cv standard deviation<data_like@Notation@Minimum CV Standard Deviation, Delta_i>` :math:`\Delta`,
-:ref:`transformed standard deviation<data_like@Notation@Transformed Standard Deviation, sigma_i>` :math:`\sigma`, and
-:ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>` :math:`\delta ( \theta )`.
+adjusted standard deviation
+:ref:`sigms<data_like@Adjusted Standard Deviation, sigma_i(theta)>`
+:math:`\sigma`, and transformed standard deviation
+:ref:`delta<data_like@Transformed Standard Deviation, delta_i(theta)>`
+:math:`\delta ( \theta )`.
 
 eta
 ***
