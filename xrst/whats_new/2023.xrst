@@ -17,6 +17,20 @@ Changes and Additions to Dismod_at During 2023
 mm-dd
 *****
 
+10-10
+=====
+**API Change:**  Add the average noise effect
+:ref:`E_i(theta)<data_like@Measurement Noise Covariates@Average Noise Effect, E_i(theta)>`
+before transforming the standard deviation.
+This changes the definition of the adjusted standard deviation
+:ref:`sigma_i(theta)<data_like@Adjusted Standard Deviation, sigma_i(theta)>`
+and the transformed standard deviation
+:ref:`delta_i(theta)<data_like@Transformed Standard Deviation, delta_i(theta)>` .
+This switched the roles of sigma and delta in many places in the
+examples and documentation.
+One notable case is that the db2csv *meas_delta* column was changed
+to the :ref:`db2csv_command@data.csv@meas_sigma` column.
+
 08-09
 =====
 Advance dock_dismod_at.sh
