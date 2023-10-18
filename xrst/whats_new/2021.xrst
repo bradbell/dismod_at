@@ -788,13 +788,7 @@ are next to the corresponding lower and upper limits.
    was extended to apply to all densities, not just
    :ref:`density_table@Notation@Log Scaled` densities.
    In addition, the definition was move from the :ref:`statistic-name` section
-   to a place where the different cases are easier to understand; see
-   *sigma* in
-   transformed standard deviation sigma_i ,
-   :ref:`fixed_value<fixed_value@sigma_j>` ,
-   :ref:`random_value<random_value@sigma_j>` ,
-   :ref:`smooth_dage<smooth_dage@sigma_ij>` ,
-   :ref:`smooth_dtime<smooth_dtime@sigma_ij>` .
+   to a place where the different cases are easier to understand.
 #. In the definition of the value prior for the random effects
    :ref:`random_value@V_j^u` the term
 

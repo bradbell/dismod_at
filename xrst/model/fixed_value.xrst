@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin fixed_value}
 {xrst_spell
@@ -40,9 +40,9 @@ We use :math:`\mu_j` to denote the
 :ref:`prior_table@mean`
 corresponding to *prior_id* .
 
-epsilon_j
-*********
-We use :math:`\varepsilon_j` to denote the
+sigma_j
+*******
+We use :math:`\sigma_j` to denote the
 :ref:`prior_table@std`
 corresponding to *prior_id* .
 
@@ -61,18 +61,18 @@ In an abuse of notation, we include
 :ref:`eta<prior_table@nu>` in *d_j* ; see
 :ref:`statistic@Notation@d` .
 
-sigma_j
+delta_j
 *******
-We use :math:`\sigma_j` to denote the transformed standard deviation
+We use :math:`\delta_j` to denote the transformed standard deviation
 corresponding to *prior_id*
 
 .. math::
 
-   \sigma_j = \left\{ \begin{array}{ll}
-      \log ( \mu_j + \eta_j + \varepsilon_j ) - \log( \mu_j + \eta_j )
+   \delta_j = \left\{ \begin{array}{ll}
+      \log ( \mu_j + \eta_j + \sigma_j ) - \log( \mu_j + \eta_j )
          & \R{if \; log \; density}
       \\
-      \varepsilon_j & \R{otherwise}
+      \sigma_j & \R{otherwise}
    \end{array} \right.
 
 V_j^theta
@@ -84,7 +84,7 @@ The value density for the *j*-th component of :math:`\theta` is
    V_j^\theta ( \theta )
    =
    \exp \left[ D \left(
-      \theta_j \W{,} \mu_j \W{,} \lambda_j \sigma_j \W{,} d_j
+      \theta_j \W{,} \mu_j \W{,} \lambda_j \delta_j \W{,} d_j
    \right) \right]
 
 where :math:`D` is the

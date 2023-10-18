@@ -98,17 +98,17 @@ If the density is
 :ref:`density_table@Notation@Log Scaled` and for a
 :ref:`statistic@Weighted Residual Function, R@Value` ,
 
-   *sigma* = ``log`` ( *mean* + *eta* + *std* ) ``- log`` ( *mean* + *eta* )
+   *delta* = ``log`` ( *mean* + *eta* + *std* ) ``- log`` ( *mean* + *eta* )
 
 is the standard deviation for the
 log of the random variable plus *eta* ; see
-:ref:`fixed_value<fixed_value@sigma_j>` and
-:ref:`random_value<random_value@sigma_j>`  definitions of *sigma* .
+:ref:`fixed_value<fixed_value@delta_j>` and
+:ref:`random_value<random_value@delta_j>`  definitions of *delta* .
 Using the notation ``~=`` for approximately equal,
 and taking the derivative of the log at the midpoint for the difference,
 we get
 
-   *sigma* ~= *std* / ( *mean* + *eta* + *std* /2 )
+   *delta* ~= *std* / ( *mean* + *eta* + *std* /2 )
 
 If this density is used for a
 :ref:`statistic@Weighted Residual Function, R@Difference` ,

@@ -111,19 +111,19 @@ def example_db (file_name) :
       'time_upper':   1995.0,
       'eta':          eta
    }
-   sigma = meas_std
+   delta = meas_std
    mu    = iota_true
    if density_name in [ 'cen_log_gaussian', 'cen_log_laplace' ] :
-      sigma  = math.log(iota_true + eta + meas_std)
-      sigma -= math.log(iota_true + eta)
+      delta  = math.log(iota_true + eta + meas_std)
+      delta -= math.log(iota_true + eta)
       mu     = math.log(iota_true + eta )
-   scale = sigma / math.sqrt(2.0)
+   scale = delta / math.sqrt(2.0)
    for data_id in range( n_data ) :
       # simulate the data for distribution without censoring
       if density_name in [ 'cen_laplace', 'cen_log_laplace' ] :
          meas_value  = numpy.random.laplace(mu, scale)
       else :
-         meas_value  = numpy.random.normal(mu, sigma)
+         meas_value  = numpy.random.normal(mu, delta)
       # check for log transform case
       if density_name in [ 'cen_log_gaussian', 'cen_log_laplace' ] :
          meas_value = math.exp(meas_value) - eta
@@ -131,11 +131,10 @@ def example_db (file_name) :
       meas_value        = max(meas_value, 0.0)
       row['meas_value'] = meas_value
       #
-      delta    = meas_std
+      Delta    = meas_std
       if density_name in [ 'cen_log_gaussian', 'cen_log_laplace' ] :
-         # sigma = log(meas_value + eta + delta) - log(meas_value + eta)
-         delta = (math.exp(sigma) - 1.0) * (meas_value + eta)
-      row['meas_std'] = delta
+         Delta = (math.exp(delta) - 1.0) * (meas_value + eta)
+      row['meas_std'] = Delta
       #
       data_table.append( copy.copy(row) )
    #

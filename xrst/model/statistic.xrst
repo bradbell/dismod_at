@@ -48,14 +48,16 @@ this is the standard deviation for :math:`\log( y + \eta )`
 or :math:`\log( z + \eta )  - \log ( y + \eta )`.
 Note that :math:`\delta` has a different definition for different cases:
 
-#. For data cases, other than binomial, :math:`\delta` is the
-   transformed standard deviation
+#. For data cases, other than binomial, :math:`\delta` is define by
+   the transformed standard deviation
    :ref:`delta<data_like@Transformed Standard Deviation, delta_i(theta)>`
    :math:`\delta_i( \theta )`.
-#. For priors cases, :math:`\delta` is the transformed standard deviation;
-   e.g.,
-   :ref:`fixed_value@sigma_j` ,
-   :ref:`random_value@sigma_j` ,
+#. For value prior cases, :math:`\delta` is defined by
+   the transformed standard deviation
+   :ref:`fixed_value@delta_j` ,
+   :ref:`random_value@delta_j` ,
+#. For difference prior cases, :math:`\delta` is the same as
+   the prior table standard deviation
    :ref:`smooth_dage@sigma_ij` ,
    :ref:`smooth_dtime@sigma_ij` .
 
