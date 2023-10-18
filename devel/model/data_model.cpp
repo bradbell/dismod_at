@@ -897,12 +897,9 @@ residual_struct<Float> data_model::like_one(
       Delta          = std::max(meas_std, meas_cv * std::fabs(meas_value) );
    }
    //
-   // transformed standard deviation
+   // sigma
+   // the adusted standard deviation
    Float sigma = Delta;
-   if( log_density(density) )
-      sigma = log( meas_value + eta + Delta ) - log( meas_value + eta );
-   //
-   // Compute the adusted standard deviation, delta_out
    switch( meas_noise_effect_ )
    {
       default:
@@ -910,36 +907,42 @@ residual_struct<Float> data_model::like_one(
       // --------------------------------------------------------------------
       // add_std
       case add_std_scale_all_enum:
-      delta_out  = sigma * (1.0  + std_effect);
+      sigma  = Delta * (1.0  + std_effect);
       break;
 
       case add_std_scale_none_enum:
-      delta_out  = sigma + std_effect;
+      sigma  = Delta + std_effect;
       break;
 
       case add_std_scale_log_enum:
       if( log_density(density) )
-         delta_out  = sigma * (1.0  + std_effect);
+         sigma  = Delta * (1.0  + std_effect);
       else
-         delta_out  = sigma + std_effect;
+         sigma  = Delta + std_effect;
       break;
       // -----------------------------------------------------------------
       // add_var
       case add_var_scale_all_enum:
-      delta_out  = sigma * sqrt(1.0  + std_effect);
+      sigma  = Delta * sqrt(1.0  + std_effect);
       break;
 
       case add_var_scale_none_enum:
-      delta_out  = sqrt( sigma * sigma + std_effect );
+      sigma  = sqrt( Delta * Delta + std_effect );
       break;
 
       case add_var_scale_log_enum:
       if( log_density(density) )
-         delta_out  = sigma * sqrt(1.0  + std_effect);
+         sigma  = Delta * sqrt(1.0  + std_effect);
       else
-         delta_out  = sqrt( sigma * sigma + std_effect );
+         sigma  = sqrt( Delta * Delta + std_effect );
       break;
    }
+   //
+   // delta_out
+   // transformed standard deviation
+   delta_out = sigma;
+   if( log_density(density) )
+      delta_out = log( meas_value + eta + sigma ) - log( meas_value + eta );
    residual_enum residual_type;
    double        y;
    if( fit_simulated_data_ )

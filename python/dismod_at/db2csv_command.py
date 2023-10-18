@@ -658,7 +658,7 @@ def db2csv_command(database_file_arg) :
    table_data     = dict()
    parent_node_id = None
    # -------------------------------------------------------------------------
-   def adjusted_meas_std(density, eta, meas_value, avgint, residual) :
+   def transformed__meas_std(density, eta, meas_value, avgint, residual) :
       from math import log
       #
       if residual == None or residual == 0.0 :
@@ -682,12 +682,7 @@ def db2csv_command(database_file_arg) :
       assert delta >= 0.0
       if delta > log( sys.float_info.max ) :
          return None
-      #
-      # delta = log(meas_value + eta + delta) - log(meas_value + eta)
-      meas_delta = (meas_value + eta) * (math.exp(delta) - 1.0)
-      if meas_delta > log( sys.float_info.max ) :
-         return None
-      return meas_delta
+      return delta
    # -------------------------------------------------------------------------
    def round_to(x, n_digits) :
       if x == None or x == 0.0:
@@ -1654,7 +1649,7 @@ def db2csv_command(database_file_arg) :
          row_out['avgint']   = convert2output( row['avg_integrand'] )
          row_out['residual'] = convert2output( row['weighted_residual'] )
          if not fit_simulate_index :
-            meas_delta = adjusted_meas_std(
+            meas_delta = transformed__meas_std(
                row_out['density']       ,
                subset_row['eta']        ,
                row_in['meas_value']     ,

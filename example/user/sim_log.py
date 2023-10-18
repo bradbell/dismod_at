@@ -331,8 +331,8 @@ for row in data_sim_table :
    meas_value     = data_table[data_id]['meas_value']
    Delta          = data_table[data_id]['meas_std']
    eta            = data_table[data_id]['eta']
-   sigma          = log(meas_value + eta + Delta) - log(meas_value + eta)
-   delta          = sigma + gamma_global
+   sigma          = Delta + gamma_global
+   delta          = log(meas_value + eta + sigma) - log(meas_value + eta)
    residual       = (log(data_sim_value + eta) - log(iota_true + eta) )/delta
    residual_list.append( residual )
 residual_array  = numpy.array( residual_list )

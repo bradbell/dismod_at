@@ -170,29 +170,29 @@ def gamma_true(meas_noise_effect) :
       assert False
    return result
 # ---------------------------------------------------------------------------
-# delta_effect
-def delta_effect(meas_noise_effect, sigma, E) :
+# adj_sigma
+def adj_sigma(meas_noise_effect, Delta, E) :
    # add_std
    if meas_noise_effect == 'add_std_scale_all' :
-      delta = sigma * (1.0 + E)
+      delta = Delta * (1.0 + E)
    elif meas_noise_effect == 'add_std_scale_none' :
-      delta = sigma + E
+      delta = Delta + E
    elif meas_noise_effect == 'add_std_scale_log' :
       if log_density(density) :
-         delta = sigma * (1.0 + E)
+         delta = Delta * (1.0 + E)
       else :
-         delta = sigma + E
+         delta = Delta + E
    # add var
    elif meas_noise_effect == 'add_var_scale_all' :
-      delta = sigma * math.sqrt(1.0 + E)
+      delta = Delta * math.sqrt(1.0 + E)
    elif meas_noise_effect == 'add_var_scale_none' :
-      delta = math.sqrt( sigma * sigma + E )
+      delta = math.sqrt( Delta * Delta + E )
    else :
       assert meas_noise_effect == 'add_var_scale_log'
       if log_density(density) :
-         delta = sigma * math.sqrt(1.0 + E)
+         delta = Delta * math.sqrt(1.0 + E)
       else :
-         delta = math.sqrt( sigma * sigma + E )
+         delta = math.sqrt( Delta * Delta + E )
    return delta
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
@@ -458,11 +458,14 @@ for meas_noise_effect in meas_noise_effect_list :
       # Values that do not depend on simulated data
       y         = meas_value
       E         = gamma_true(meas_noise_effect)
+      #
+      # sigma
+      sigma = adj_sigma(meas_noise_effect, Delta, E)
+      #
+      # delta
+      delta = sigma
       if log_density(density) :
-         sigma  = math.log(y + eta + Delta) - math.log(y + eta)
-      else :
-         sigma  = Delta
-      delta     = delta_effect(meas_noise_effect, sigma, E)
+         delta  = math.log(y + eta + sigma) - math.log(y + eta)
       #
       # residual
       z  = data_sim_value  # simulated data withoout censoring

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # 1. Check meas_std, meas_stdcv, and meas_delta in data.csv
 # ---------------------------------------------------------------------------
@@ -282,17 +282,17 @@ for row in reader :
    result = float( row['meas_stdcv'] )
    assert abs( 1.0 - result / meas_stdcv) < 1e-4
    #
+   # sigma
+   sigma = sqrt( meas_stdcv * meas_stdcv + gamma_noise)
+   #
    # meas_delta
-   result = float( row['meas_delta'] )
    if row['density'] == 'gaussian' :
-      delta       = sqrt( meas_stdcv * meas_stdcv + gamma_noise)
-      meas_delta  = delta
+      meas_delta  = sigma
    else :
       assert row['density'] == 'log_gaussian'
-      sigma   = log(meas_value + eta + meas_stdcv) - log(meas_value + eta)
-      delta   = sqrt( sigma * sigma + gamma_noise)
-      # delta = log(meas_value + eta + meas_delta) - log(meas_value + eta)
-      meas_delta  = (meas_value + eta) * (exp(delta) - 1.0)
+      meas_delta = log(meas_value + eta + sigma) - log(meas_value + eta)
+   #
+   result = float( row['meas_delta'] )
    assert abs( 1.0 - result / meas_delta) < 1e-4
 # -----------------------------------------------------------------------
 # mixed_info.csv
