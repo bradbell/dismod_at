@@ -148,7 +148,7 @@ def example_db (file_name) :
    # option_table
    option_table = [
       { 'name':'parent_node_name',  'value':'north_america' },
-      { 'name':'meas_noise_effect', 'value':'add_var_scale_log' },
+      { 'name':'meas_noise_effect', 'value':'add_var_scale_none' },
       { 'name':'print_level_fixed', 'value':'0' },
    ]
    # ----------------------------------------------------------------------

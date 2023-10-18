@@ -195,19 +195,6 @@ the adjusted standard deviation is
 
    \sigma_i ( \theta ) = \Delta_i + E_i (\theta)
 
-add_std_scale_log
-=================
-If *meas_noise_effect* is ``add_std_scale_log``
-(add standard deviations and only scale log density cases)
-the adjusted standard deviation is
-
-.. math::
-
-   \sigma_i ( \theta ) = \left\{ \begin{array}{ll}
-      \Delta_i [ 1 + E_i (\theta) ] & \R{if \; log \; density} \\
-      \Delta_i + E_i (\theta)       & \R{otherwise}
-   \end{array} \right.
-
 add_std_scale_all
 =================
 If :ref:`option_table@meas_noise_effect` is
@@ -228,19 +215,6 @@ the adjusted standard deviation is
 .. math::
 
    \sigma_i ( \theta ) = \sqrt{ \Delta_i^2 + E_i (\theta) }
-
-add_var_scale_log
-=================
-If *meas_noise_effect* is ``add_var_scale_log``
-(add variances and only scale log density cases)
-the adjusted standard deviation is
-
-.. math::
-
-   \sigma_i ( \theta ) = \left\{ \begin{array}{ll}
-      \Delta_i \sqrt{ 1 + E_i (\theta) } & \R{if \; log \; density} \\
-      \sqrt{ \Delta_i^2 + E_i (\theta) } & \R{otherwise}
-   \end{array} \right.
 
 add_var_scale_all
 =================

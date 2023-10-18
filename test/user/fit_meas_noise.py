@@ -108,10 +108,8 @@ def example_db (file_name, meas_noise_effect) :
    }
    delta_dict = {
       'add_std_scale_none' : data_std + gamma_true ,
-      'add_std_scale_log'  : data_std + gamma_true ,
       'add_std_scale_all'  : data_std * ( 1.0 +  gamma_true ) ,
       'add_var_scale_none' : math.sqrt( data_std * data_std + gamma_true ),
-      'add_var_scale_log'  : math.sqrt( data_std * data_std + gamma_true ),
       'add_var_scale_all'  : data_std * math.sqrt( 1.0 + gamma_true ),
    }
    delta = delta_dict[meas_noise_effect]
@@ -207,10 +205,8 @@ def example_db (file_name, meas_noise_effect) :
 # ===========================================================================
 for meas_noise_effect in [
    'add_std_scale_none' ,
-   'add_std_scale_log' ,
    'add_std_scale_all' ,
    'add_var_scale_none' ,
-   'add_var_scale_log' ,
    'add_var_scale_all' ,
 ] :
    print(meas_noise_effect)

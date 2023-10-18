@@ -250,11 +250,9 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
       {  bool ok = false;
          ok     |= option_value[option_id] == "add_std_scale_all";
          ok     |= option_value[option_id] == "add_std_scale_none";
-         ok     |= option_value[option_id] == "add_std_scale_log";
          //
          ok     |= option_value[option_id] == "add_var_scale_all";
          ok     |= option_value[option_id] == "add_var_scale_none";
-         ok     |= option_value[option_id] == "add_var_scale_log";
          if( ! ok )
          {  msg = "option table: meas_noise_effect = '";
             msg += option_value[option_id] + "'";

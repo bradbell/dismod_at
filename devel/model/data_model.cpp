@@ -331,15 +331,11 @@ avg_noise_obj_(
       meas_noise_effect_ = add_std_scale_all_enum;
    else if( meas_noise_effect == "add_std_scale_none" )
       meas_noise_effect_ = add_std_scale_none_enum;
-   else if( meas_noise_effect == "add_std_scale_log" )
-      meas_noise_effect_ = add_std_scale_log_enum;
    // add_var
    else if( meas_noise_effect == "add_var_scale_all" )
       meas_noise_effect_ = add_var_scale_all_enum;
    else if( meas_noise_effect == "add_var_scale_none" )
       meas_noise_effect_ = add_var_scale_none_enum;
-   else if( meas_noise_effect == "add_var_scale_log" )
-      meas_noise_effect_ = add_var_scale_log_enum;
    else
       assert(false);
    //
@@ -914,12 +910,6 @@ residual_struct<Float> data_model::like_one(
       sigma  = Delta + std_effect;
       break;
 
-      case add_std_scale_log_enum:
-      if( log_density(density) )
-         sigma  = Delta * (1.0  + std_effect);
-      else
-         sigma  = Delta + std_effect;
-      break;
       // -----------------------------------------------------------------
       // add_var
       case add_var_scale_all_enum:
@@ -930,12 +920,6 @@ residual_struct<Float> data_model::like_one(
       sigma  = sqrt( Delta * Delta + std_effect );
       break;
 
-      case add_var_scale_log_enum:
-      if( log_density(density) )
-         sigma  = Delta * sqrt(1.0  + std_effect);
-      else
-         sigma  = sqrt( Delta * Delta + std_effect );
-      break;
    }
    //
    // delta_out

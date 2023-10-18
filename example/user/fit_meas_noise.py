@@ -97,10 +97,8 @@ meas_std           = iota_true * 0.5
 def gamma_true() :
    gamma_dict = {
       'add_std_scale_none' : scale_gamma_true * meas_std ,
-      'add_std_scale_log'  : scale_gamma_true ,
       'add_std_scale_all'  : scale_gamma_true ,
       'add_var_scale_none' : scale_gamma_true * meas_std * meas_std ,
-      'add_var_scale_log'  : scale_gamma_true ,
       'add_var_scale_all'  : scale_gamma_true ,
    }
    return gamma_dict[meas_noise_effect]

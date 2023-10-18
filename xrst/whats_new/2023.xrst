@@ -19,17 +19,23 @@ mm-dd
 
 10-10
 =====
-**API Change:**  Add the average noise effect
-:ref:`E_i(theta)<data_like@Measurement Noise Covariates@Average Noise Effect, E_i(theta)>`
-before transforming the standard deviation.
-This changes the definition of the adjusted standard deviation
-:ref:`sigma_i(theta)<data_like@Adjusted Standard Deviation, sigma_i(theta)>`
-and the transformed standard deviation
-:ref:`delta_i(theta)<data_like@Transformed Standard Deviation, delta_i(theta)>` .
-This switched the roles of sigma and delta in many places in the
-examples and documentation.
-One notable case is that the db2csv *meas_delta* column was changed
-to the :ref:`db2csv_command@data.csv@meas_sigma` column.
+**API Change:**
+
+#. Add the average noise effect
+   :ref:`E_i(theta)<data_like@Measurement Noise Covariates@Average Noise Effect, E_i(theta)>`
+   before transforming the standard deviation.
+   This changes the definition of the adjusted standard deviation
+   :ref:`sigma_i(theta)<data_like@Adjusted Standard Deviation, sigma_i(theta)>`
+   and the transformed standard deviation
+   :ref:`delta_i(theta)<data_like@Transformed Standard Deviation, delta_i(theta)>` .
+   This switched the roles of sigma and delta in many places in the
+   examples and documentation.
+   One notable case is that the db2csv *meas_delta* column was changed
+   to the :ref:`db2csv_command@data.csv@meas_sigma` column.
+
+#. Remove ``add_std_scale_log`` and ``add_var_scale_log`` from the
+   possible values for :ref:`option_table@meas_noise_effect` in the
+   option table (now the addition is done before the log scaling).
 
 08-09
 =====

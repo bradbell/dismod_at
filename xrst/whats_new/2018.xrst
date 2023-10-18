@@ -40,8 +40,8 @@ mm-dd
 
 12-19
 =====
-The
-:ref:`data_like@Adjusted Standard Deviation, sigma_i(theta)@add_var_scale_log` would sometimes fail to converge
+The add_var_scale_log noise covariate option
+would sometimes fail to converge
 when the initial value of corresponding covariate multiplier
 :ref:`data_like@Measurement Noise Covariates@gamma_j (a, t)` was zero.
 This was because the derivative of the object w.r.t. this

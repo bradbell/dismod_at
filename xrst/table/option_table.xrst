@@ -469,10 +469,8 @@ changes the measurement noise.
 The possible *option_value* are:
 :ref:`data_like@Adjusted Standard Deviation, sigma_i(theta)@add_std_scale_all` ,
 :ref:`data_like@Adjusted Standard Deviation, sigma_i(theta)@add_std_scale_none` ,
-:ref:`data_like@Adjusted Standard Deviation, sigma_i(theta)@add_std_scale_log` ,
 :ref:`data_like@Adjusted Standard Deviation, sigma_i(theta)@add_var_scale_all` ,
-:ref:`data_like@Adjusted Standard Deviation, sigma_i(theta)@add_var_scale_none` ,
-:ref:`data_like@Adjusted Standard Deviation, sigma_i(theta)@add_var_scale_log` .
+:ref:`data_like@Adjusted Standard Deviation, sigma_i(theta)@add_var_scale_none` .
 
 warn_on_stderr
 **************

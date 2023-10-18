@@ -178,22 +178,13 @@ def adjusted_std(meas_noise_effect, Delta, E) :
       sigma = Delta * (1.0 + E)
    elif meas_noise_effect == 'add_std_scale_none' :
       sigma = Delta + E
-   elif meas_noise_effect == 'add_std_scale_log' :
-      if log_density(density) :
-         sigma = Delta * (1.0 + E)
-      else :
-         sigma = Delta + E
    # add var
    elif meas_noise_effect == 'add_var_scale_all' :
       sigma = Delta * math.sqrt(1.0 + E)
    elif meas_noise_effect == 'add_var_scale_none' :
       sigma = math.sqrt( Delta * Delta + E )
    else :
-      assert meas_noise_effect == 'add_var_scale_log'
-      if log_density(density) :
-         sigma = Delta * math.sqrt(1.0 + E)
-      else :
-         sigma = math.sqrt( Delta * Delta + E )
+      assert False
    return sigma
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
@@ -373,8 +364,8 @@ node_table      = dismod_at.get_table_dict(connection, 'node')
 # truth table:
 # -----------------------------------------------------------------------
 meas_noise_effect_list = [
-   'add_std_scale_all', 'add_std_scale_none', 'add_std_scale_log',
-   'add_var_scale_all', 'add_var_scale_none', 'add_var_scale_log',
+   'add_std_scale_all', 'add_std_scale_none',
+   'add_var_scale_all', 'add_var_scale_none',
 ]
 for meas_noise_effect in meas_noise_effect_list :
    dismod_at.system_command_prc([ program, file_name,
