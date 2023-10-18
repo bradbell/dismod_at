@@ -2,7 +2,7 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# 1. Check meas_std, meas_stdcv, and meas_delta in data.csv
+# 1. Check meas_std, meas_stdcv, and meas_sigma in data.csv
 # ---------------------------------------------------------------------------
 #
 iota_true       = 1e-1
@@ -285,15 +285,8 @@ for row in reader :
    # sigma
    sigma = sqrt( meas_stdcv * meas_stdcv + gamma_noise)
    #
-   # meas_delta
-   if row['density'] == 'gaussian' :
-      meas_delta  = sigma
-   else :
-      assert row['density'] == 'log_gaussian'
-      meas_delta = log(meas_value + eta + sigma) - log(meas_value + eta)
-   #
-   result = float( row['meas_delta'] )
-   assert abs( 1.0 - result / meas_delta) < 1e-4
+   result = float( row['meas_sigma'] )
+   assert abs( 1.0 - result / sigma) < 1e-4
 # -----------------------------------------------------------------------
 # mixed_info.csv
 data_file = open('build/test/user/mixed_info.csv', 'r')

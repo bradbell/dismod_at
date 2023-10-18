@@ -1,7 +1,7 @@
 #! /bin/python3
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 #
 import csv
@@ -66,8 +66,18 @@ def weighted_average_residual(data_table) :
    for row in data_table :
       integrand = row['integrand']
       residual  = row['residual']
+      density   = row['density']
       if residual != '' :
-         delta = row['meas_delta']
+         sigma = row['meas_sigma']
+         #
+         # delta
+         delta  = sigma
+         is_log = density.startswith('log_') or density.startswith('cen_log_')
+         if( is_log )
+            meas_value = row['meas_value']
+            eta        = row['eta']
+            delta      = log(meas_value + eta + sigma) - log(meas_value + eta)
+         #
          weight = 1.0 / float( delta )
          if integrand not in avg_res :
             avg_res[integrand]    = 0.0

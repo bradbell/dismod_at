@@ -338,7 +338,7 @@ Add the :ref:`replace_table-name` utility.
    This fixes a problem with simulating data that has
    :ref:`mulcov_table@mulcov_type@meas_noise` covariate multipliers.
 #. Change the definition of
-   :ref:`db2csv_command@data.csv@meas_delta` in data.csv so that
+   meas_delta in data.csv so that
    it is still in data units
    even when the adjusted standard deviation is in log of data space.
 #. Correct the title in the :ref:`user_hes_random.py-name` example.
@@ -692,7 +692,7 @@ on the msys and cygwin systems.
 
 05-06
 =====
-If a :ref:`db2csv_command@data.csv@meas_delta` ,
+If a meas_delta ,
 in the ``data.csv`` created by ``db2csv`` command,
 is greater than the maximum python ``float`` , report it as empty.
 

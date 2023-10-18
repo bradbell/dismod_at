@@ -520,7 +520,7 @@ the :ref:`data table<data_table@meas_std>`
 
 06-26
 =====
-The :ref:`db2csv_command@data.csv@meas_delta` column
+The meas_delta column
 of the data.csv file output by the db2csv command has values when
 the previous fit corresponding to simulated data
 (not the measured value and standard deviation).
@@ -644,7 +644,7 @@ This problem has been fixed.
 The :ref:`db2csv_command@data.csv` file columns
 ``Delta`` and ``delta`` have been changed to
 :ref:`db2csv_command@data.csv@meas_stdcv` and
-:ref:`db2csv_command@data.csv@meas_delta` respectively.
+meas_delta respectively.
 The change of names was motivated by a problem using sqlite
 when two column names that only differed by case; i.e.,
 ``Delta`` and ``delta`` .
@@ -835,7 +835,7 @@ A discussion was added at the top of the
 =====
 
 #. There was a bug in the db2csv computation of the adjusted standard deviation
-   :ref:`db2csv_command@data.csv@meas_delta` for the log
+   meas_delta for the log
    :ref:`db2csv_command@data.csv@density` cases.
    This has been fixed.
 #. Remove the Ode Grid section from the documentation.
@@ -878,7 +878,7 @@ A discussion was added at the top of the
    was moved to be next to *Delta* .
    This makes comparisons between these columns easier.
 #. Add the adjusted standard deviation column
-   :ref:`db2csv_command@data.csv@meas_delta` to the ``data.csv``
+   meas_delta to the ``data.csv``
    file written by the ``db2csv`` command.
 #. The discussion of data
    :ref:`weighted residuals<data_like@Weighted Residual and Likelihood>`

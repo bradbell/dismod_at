@@ -30,5 +30,4 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|:ref:`.*data_like@Notation@Transformed Standard Deviation, sigma_i>*`|transformed standard deviation sigma_i|
-s|@Adjusted Standard Deviation, delta_i|@Adjusted Standard Deviation, sigma_i|
+s|:ref:`db2csv_command@data.csv@meas_delta`|meas_delta|

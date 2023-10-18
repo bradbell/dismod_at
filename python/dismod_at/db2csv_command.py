@@ -469,27 +469,23 @@
 # :ref:`Delta<data_like@Notation@Minimum CV Standard Deviation, Delta_i>` .
 # In the binomial case it is equal to *meas_std*.
 #
-# meas_delta
+# meas_sigma
 # ==========
 # If the previous fit command had a
 # :ref:`db2csv_command@simulate_index` ,
 # this column is empty.
-# We use *delta* to denote the transformed standard deviation
-# :ref:`delta<data_like@Transformed Standard Deviation, delta_i(theta)>`
+# We use *sigma* to denote the adjusted standard deviation
+# :ref:`sigma<data_like@Adjusted Standard Deviation, sigma_i(theta)>`
 # for this row.
-# If the density for this row is
-# :ref:`density_table@Notation@Linear`
 #
-#     *meas_delta* = *delta*
-#
-# Otherwise, the density is log scaled and
-#
-#     *delta* = ``log`` ( *meas_value* + *eta* + *meas_delta* ) ``- log`` ( *meas_value* + *eta* )
-#
-# The value *delta* is computed by dividing by the residual,
-# which is plus infinity and not valid when the residual is zero.
-# This value is reported as empty if the calculation for *meas_delta*
-# is greater than the maximum python ``float`` value.
+# The transformed standard deviation
+# :ref:`delta<data_like@Transformed Standard Deviation, delta_i(theta)>`
+# is computed by dividing by the residual.
+# This results in plus infinity and not valid when the residual is zero.
+# If this calculation for *delta*
+# is greater than the maximum python ``float`` value,
+# *meas_sigma* is reported as empty .
+# Otherwise the transformation is inverted to get the value of *sigma* .
 #
 # meas_value
 # ==========
@@ -659,8 +655,9 @@ def db2csv_command(database_file_arg) :
    table_data     = dict()
    parent_node_id = None
    # -------------------------------------------------------------------------
-   def transformed__meas_std(density, eta, meas_value, avgint, residual) :
+   def adjusted_meas_std(density, eta, meas_value, avgint, residual) :
       from math import log
+      from math import exp
       #
       if residual == None or residual == 0.0 :
          return None
@@ -674,6 +671,8 @@ def db2csv_command(database_file_arg) :
          assert delta >= 0.0
          if delta > log( sys.float_info.max ) :
             return None
+         #
+         # sigma
          return delta
       #
       # log case
@@ -683,7 +682,11 @@ def db2csv_command(database_file_arg) :
       assert delta >= 0.0
       if delta > log( sys.float_info.max ) :
          return None
-      return delta
+
+      #
+      # sigma
+      sigma = (exp(delta) - 1.0) * (meas_value + eta)
+      return sigma
    # -------------------------------------------------------------------------
    def round_to(x, n_digits) :
       if x == None or x == 0.0:
@@ -1548,7 +1551,7 @@ def db2csv_command(database_file_arg) :
       'ss',
       'meas_std',
       'meas_stdcv',
-      'meas_delta',
+      'meas_sigma',
       'meas_value',
       'avgint',
       'residual'
@@ -1644,20 +1647,20 @@ def db2csv_command(database_file_arg) :
                 convert2output(row_in[field_in] - reference)
          covariate_id += 1
       #
-      # avgint, residual, meas_delta
+      # avgint, residual, meas_sigma
       if have_table['fit_var'] :
          row                 = table_data['fit_data_subset'][subset_id]
          row_out['avgint']   = convert2output( row['avg_integrand'] )
          row_out['residual'] = convert2output( row['weighted_residual'] )
          if not fit_simulate_index :
-            meas_delta = transformed__meas_std(
+            meas_sigma = adjusted_meas_std(
                row_out['density']       ,
                subset_row['eta']        ,
                row_in['meas_value']     ,
                row['avg_integrand']     ,
                row['weighted_residual']
             )
-            row_out['meas_delta'] = convert2output(meas_delta)
+            row_out['meas_sigma'] = convert2output(meas_sigma)
       #
       # meas_std, meas_stdcv
       if row_in['meas_std'] == None :
