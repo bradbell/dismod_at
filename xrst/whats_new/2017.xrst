@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin whats_new_2017}
 {xrst_spell
@@ -99,7 +99,7 @@ This has been fixed.
 =====
 
 #. Fix the definition of the
-   :ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>`
+   :ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, sigma_i(theta)>`
    for the measurement values
    (the definition for log an linear cases is the same).
 #. Fix the definition of the
@@ -504,7 +504,7 @@ the user should see no difference.
 The noise covariate multipliers effect
 used to scale the measurement standard deviation.
 Now it is directly added to the measurement standard deviation; see
-:ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>` .
+:ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, sigma_i(theta)>` .
 This makes the :ref:`mulcov_table@mulcov_type@meas_noise`
 covariate multipliers more difficult to use because they have units.
 On the other hand, it is more flexible for
@@ -653,7 +653,7 @@ integrand table (for all data points corresponding to an integrand); see
 04-18
 =====
 Change the definition of adjusted standard deviation for data in the
-:ref:`Gaussian and Laplace<data_like@Adjusted Standard Deviation, delta_i(theta)>`
+:ref:`Gaussian and Laplace<data_like@Adjusted Standard Deviation, sigma_i(theta)>`
 case (it is now different from the Log-Gaussian and Log-Laplace case).
 (This has since been changed back.)
 

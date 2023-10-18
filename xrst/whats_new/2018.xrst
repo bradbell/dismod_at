@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin whats_new_2018}
 {xrst_spell
@@ -41,7 +41,7 @@ mm-dd
 12-19
 =====
 The
-:ref:`data_like@Adjusted Standard Deviation, delta_i(theta)@add_var_scale_log` would sometimes fail to converge
+:ref:`data_like@Adjusted Standard Deviation, sigma_i(theta)@add_var_scale_log` would sometimes fail to converge
 when the initial value of corresponding covariate multiplier
 :ref:`data_like@Measurement Noise Covariates@gamma_j (a, t)` was zero.
 This was because the derivative of the object w.r.t. this
@@ -57,9 +57,9 @@ how the new definition affects the
 Add options for how the measurement noise effect
 :ref:`option_table@meas_noise_effect` is defined.
 The gives the choice of
-:ref:`adding variances or standard deviations<data_like@Adjusted Standard Deviation, delta_i(theta)@Add Variance or Standard Deviation>` .
+:ref:`adding variances or standard deviations<data_like@Adjusted Standard Deviation, sigma_i(theta)@Add Variance or Standard Deviation>` .
 It also gives the choice to
-:ref:`scale<data_like@Adjusted Standard Deviation, delta_i(theta)@Scaling>`
+:ref:`scale<data_like@Adjusted Standard Deviation, sigma_i(theta)@Scaling>`
 the added standard deviations for non-log densities.
 
 12-14
@@ -675,7 +675,7 @@ make this clearer.
 03-21
 =====
 In the definition of
-:ref:`delta_i<data_like@Adjusted Standard Deviation, delta_i(theta)>` ,
+:ref:`delta_i<data_like@Adjusted Standard Deviation, sigma_i(theta)>` ,
 The text
 :math:`delta_i ( \theta )` was changed to :math:`\delta_i ( \theta )`.
 
@@ -933,7 +933,7 @@ Improve the documentation for the
    the corresponding :ref:`smooth_table@n_age`
    ( :ref:`smooth_table@n_time` ) in smooth table.
 #. The definition of the
-   :ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>`
+   :ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, sigma_i(theta)>`
    for the log transformed densities was changed so that the standard deviation
    effect multiplies
    :ref:`Delta<data_like@Notation@Minimum CV Standard Deviation, Delta_i>` .

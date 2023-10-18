@@ -30,27 +30,5 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-/^   \/\/ inverse density table$/! b one
-: loop_1
-N
-/\n *\/\//! b loop_1
-s|.*\n *\(\/\/.*\)$|   \1|
-b end
-#
-: one
-/^   \/\/ density_table$/! b two
-: loop_2
-N
-/\n *\/\//! b loop_2
-s|.*\n *\(\/\/.*\)$|   // density table\
-   size_t n_density = dismod_at::number_density_enum;\
-   vector<dismod_at::density_enum> density_table(n_density);\
-   for(size_t density_id = 0; density_id < n_density; ++density_id)\
-      density_table[density_id] = dismod_at::density_enum(density_id);\
-   \1|
-b end
-#
-: two
-s|density_enum2id\[\(.*\)\];|size_t( \1 );|
-#
-: end
+s|:ref:`.*data_like@Notation@Transformed Standard Deviation, sigma_i>*`|transformed standard deviation sigma_i|
+s|@Adjusted Standard Deviation, delta_i|@Adjusted Standard Deviation, sigma_i|

@@ -328,12 +328,12 @@ Add the :ref:`replace_table-name` utility.
 
 #. **API Change** :
    The
-   :ref:`transformed standard deviation<data_like@Notation@Transformed Standard Deviation, sigma_i>`
+   transformed standard deviation sigma_i
    is now computed before the standard deviation adjustment, hence :math:`\sigma`
    no longer depends on the :ref:`model_variables-name` .
    As a consequence for
    :ref:`density_table@Notation@Log Scaled` densities, the
-   :ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>`
+   :ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, sigma_i(theta)>`
    is now in log of the data space (it used be have the same units as the data).
    This fixes a problem with simulating data that has
    :ref:`mulcov_table@mulcov_type@meas_noise` covariate multipliers.
@@ -656,7 +656,7 @@ These replacements use the original measurements
 instead of the simulated measurements
 :ref:`data_sim_table@data_sim_value`
 to define the corresponding
-:ref:`transformed standard deviation<data_like@Notation@Transformed Standard Deviation, sigma_i>` .
+transformed standard deviation sigma_i .
 
 #. Add the :ref:`user_sim_log.py-name` example to highlight this change.
 #. Adapt the :ref:`user_data_sim.py-name` examples to this change.
@@ -769,8 +769,8 @@ are next to the corresponding lower and upper limits.
 #. The bug fix of the value of *data_sim_stdcv* on 01-09
    was corrected (better testing show it was incorrect).
 #. Add following :ref:`option_table@meas_noise_effect` cases:
-   :ref:`data_like@Adjusted Standard Deviation, delta_i(theta)@add_std_scale_none` ,
-   :ref:`data_like@Adjusted Standard Deviation, delta_i(theta)@add_var_scale_none` .
+   :ref:`data_like@Adjusted Standard Deviation, sigma_i(theta)@add_std_scale_none` ,
+   :ref:`data_like@Adjusted Standard Deviation, sigma_i(theta)@add_var_scale_none` .
 
 01-09
 =====
@@ -790,7 +790,7 @@ are next to the corresponding lower and upper limits.
    In addition, the definition was move from the :ref:`statistic-name` section
    to a place where the different cases are easier to understand; see
    *sigma* in
-   :ref:`data_like<data_like@Notation@Transformed Standard Deviation, sigma_i>` ,
+   transformed standard deviation sigma_i ,
    :ref:`fixed_value<fixed_value@sigma_j>` ,
    :ref:`random_value<random_value@sigma_j>` ,
    :ref:`smooth_dage<smooth_dage@sigma_ij>` ,

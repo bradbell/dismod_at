@@ -504,7 +504,7 @@ effects when *max_num_iter_fix* is ``-1`` .
 Add discussion of relation ship between the
 measurement standard deviation *meas_std* and the
 adjusted standard deviation
-:ref:`delta(theta)<data_like@Adjusted Standard Deviation, delta_i(theta)>`
+:ref:`delta(theta)<data_like@Adjusted Standard Deviation, sigma_i(theta)>`
 to the
 :ref:`data_table@meas_std` documentation.
 
@@ -656,7 +656,7 @@ when two column names that only differed by case; i.e.,
    :ref:`density_table@Notation@Log Scaled` data that has
    :ref:`mulcov_table@mulcov_type@meas_noise` covariates which
    adjust the measurement standard deviation; see
-   :ref:`delta_i<data_like@Adjusted Standard Deviation, delta_i(theta)>` .
+   :ref:`delta_i<data_like@Adjusted Standard Deviation, sigma_i(theta)>` .
 #. The value *Delta* , is now referred to as the
    :ref:`minimum cv standard deviation<data_like@Notation@Minimum CV Standard Deviation, Delta_i>` .
 #. The *sim_stdcv* column has been added

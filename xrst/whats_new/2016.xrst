@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin whats_new_2016}
 {xrst_spell
@@ -540,7 +540,7 @@ there are no random effects.
    This simplifies the weighted residuals and avoids the condition where the
    :ref:`mean_value<mulcov_table@mulcov_type@meas_value>` covariate multipliers
    affect the
-   :ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, delta_i(theta)>` .
+   :ref:`adjusted standard deviation<data_like@Adjusted Standard Deviation, sigma_i(theta)>` .
 #. Add the Lagrange multipliers
    :ref:`fit_var_table@lagrange_value` ,
    ``lagrange_dage`` and ``lagrange_dtime`` to the fit_var table.

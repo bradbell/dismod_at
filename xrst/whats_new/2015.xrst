@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin whats_new_2015}
 {xrst_spell
@@ -352,7 +352,7 @@ This is represented by
    of Gaussian density for the measured values.
 #. A large reduction in memory, and an increase in speed,
    was accomplished by making the
-   :ref:`transformed standard deviation<data_like@Notation@Transformed Standard Deviation, sigma_i>`
+   transformed standard deviation sigma_i
    depend the data and not on the :ref:`model_variables-name` .
    To be specific, ``valgrind --tool=massif`` reported the following
    reduction for the maximum memory required by ``simulated.py`` :
