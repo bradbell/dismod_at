@@ -158,8 +158,8 @@
 # This script will build the following version of dismod_at image:
 # {xrst_spell_off}
 # {xrst_code sh}
-   dismod_at_version='20231018'
-   dismod_at_hash='9d01556d43c423f586753ffa2871438b11209bd6'
+   dismod_at_version='20231020'
+   dismod_at_hash='072d67500b2e802c40de08d2c0376953fcf041d9'
 # {xrst_code}
 # {xrst_spell_on}
 #

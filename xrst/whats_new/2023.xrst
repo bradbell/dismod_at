@@ -18,12 +18,15 @@ Changes and Additions to Dismod_at During 2023
 mm-dd
 *****
 
-10-19
+10-20
 =====
-Improve the documentation for :ref:`system_command_prc-name` .
-In addition, make the following change :
-If an error is detected, include the *command* in
-*file_stderr* , *result* .stderr , and the assert error message .
+#. Improve the documentation for :ref:`system_command_prc-name` .
+   In addition, make the following change :
+   If an error is detected, include the *command* in
+   *file_stderr* , *result* .stderr , and the assert error message .
+#. Advance dock_dismod_at.sh
+   :ref:`dock_dismod_at.sh@dismod_at_version` to 202310.20 .
+
 
 10-18
 =====
