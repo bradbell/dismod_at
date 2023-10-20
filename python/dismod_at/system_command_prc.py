@@ -1,7 +1,7 @@
 # $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin system_command_prc}
 # {xrst_spell
@@ -45,56 +45,56 @@
 #
 # return_stdout
 # *************
-# If this argument is true, the command's standard output will be returned.
-# If this argument is false and *file_stdout* is not None,
-# standard error will be written to a file during the command execution.
-# Otherwise, standard output will be printed during the command execution.
+# #.  If this argument is true, the command's standard output will be returned.
+# #.  If this argument is false and *file_stdout* is not None,
+#     standard output will be written to a file during the command execution.
+# #.  Otherwise, standard output will be printed during the command execution.
 #
 # return_stderr
 # *************
-# If this argument is true, the command's standard error will be returned.
-# If this argument is false and *file_stderr* is not None,
-# standard error will be written to a file during the command execution.
-# Otherwise, if an error occurs, an assertion is generated with
-# the commands standard error as the corresponding message.
+# #.  If this argument is true, the command's standard error will be returned.
+# #.  If this argument is false and *file_stderr* is not None,
+#     standard error will be written to a file during the command execution.
+# #.  Otherwise, if an error occurs, an assertion is generated with
+#     the *command* and its standard error in the corresponding message.
 #
 # file_stdout
 # ***********
 # If *return_stdout* is true, this argument must be None.
-# If this argument is not None, it is a file object that is opened for writing
+# If this argument is not None, it is a file object that is open for writing
 # and standard output will be written to this file.
 #
 # file_stderr
 # ***********
 # If *return_stderr* is true, this argument must be None.
-# If this argument is not None, it is a file object that is opened for writing
+# If this argument is not None, it is a file object that is open for writing
 # and standard error will be written to this file.
 #
 # write_command
 # *************
 # If *write_command* is true (false) the command will
-# (will not) be written to *file_stdout* .
-# If *file_stdout* is None, *write_command* must be false.
+# (will not) be written to *file_stdout* and *file_stderr* .
+# If both *file_stdout* and *file_stderr* are None,
+# *write_command* must be false.
 #
 # result
 # ******
 #
 # #. If *return_stdout* and *return stderr* are both false,
 #    *result* is ``None`` .
+#
 # #. If *return_stdout* is true and *return_stderr* is false,
 #    *result* is a ``str`` with the contents of standard output.
-# #. If *return_stderr* is true and *return_stdout* is false,
-#    *result.stderr*
-#    is an ``str`` with the contents of standard error,
-#    and *result.returncode*
-#    is an ``int`` with the command's return code..
-# #. If both *return_stderr* and *return_stdout* are true,
-#    *result.stderr*
-#    is an ``str`` with the contents of standard error,
-#    *result.stdout*
-#    is an ``str`` with the contents of standard output,
-#    and *result.returncode*
-#    is an ``int`` with the command's return code..
+#
+# #. If *return_stderr* is true :
+#
+#    *  *result.returncode* is an ``int`` with the command's return code.
+#
+#    *   *result.stderr* is an ``str`` with the contents of standard error.
+#        If the return code is non-zero, the *command* is included.
+#
+#    *   If *return_stdout* is also true,
+#        *result.stdout* is an ``str`` with the contents of standard output.
 #
 # Example
 # *******
@@ -118,6 +118,9 @@ def system_command_prc(
    import sys
    import subprocess
    #
+   #
+   if write_command :
+      assert (file_stdout is not None) or (file_stderr is not None)
    if file_stdout is not None :
       assert not return_stdout
    if file_stderr is not None :
@@ -125,17 +128,8 @@ def system_command_prc(
    if file_stdout is None :
       assert not write_command
    #
-   # capture_stderr
-   capture_stderr = return_stderr or (file_stderr is not None)
-   #
    # command_str
-   command_str = ''
-   for arg in command :
-      if ' ' in arg :
-         command_str += f" '{arg}'"
-      else :
-         command_str += f' {arg}'
-   command_str = command_str[1:]
+   command_str = ' '.join(command)
    #
    # print
    if print_command :
@@ -143,8 +137,12 @@ def system_command_prc(
    #
    # write
    if write_command :
-      file_stdout.write(command_str + '\n')
-      file_stdout.flush()
+      if file_stdout is not None :
+         file_stdout.write( f'command = {command_str}\n' )
+         file_stdout.flush()
+      if file_stderr is not None :
+         file_stderr.write( f'command = {command_str}\n' )
+         file_stderr.flush()
    #
    # stdout
    if return_stdout :
@@ -166,6 +164,17 @@ def system_command_prc(
       encoding = 'utf-8' ,
    )
    #
+   # returncode
+   returncode = subprocess_return.returncode
+   #
+   # subprocess_return.stderr
+   if returncode != 0 :
+      error_msg  = 'system_command_prc failed:\n'
+      error_msg += f'returncode = {returncode}\n'
+      error_msg += f'command = {command_str}\nmessage = \n'
+      error_msg += subprocess_return.stderr
+      subprocess_return.stderr = error_msg
+   #
    # result
    if return_stderr :
       result = subprocess_return
@@ -174,17 +183,11 @@ def system_command_prc(
    else :
       result = None
    #
+   # capture_stderr
+   capture_stderr = return_stderr or (file_stderr is not None)
    if capture_stderr :
       return result
-   #
-   # return_stderr is false so check the command return code
-   returncode = subprocess_return.returncode
-   if returncode != 0 :
-      # print error messages
-      msg  = f'system_command_prc failed: returncode = {returncode}\n'
-      msg += subprocess_return.stderr
-      #
-      # raise an exception
-      assert False, msg
+   else :
+      assert returncode == 0, subprocess_return.stderr
    #
    return result

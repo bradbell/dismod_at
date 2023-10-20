@@ -9,6 +9,7 @@ $Id:$
    dd
    readonly
    nslict
+   stderr
 }
 
 Changes and Additions to Dismod_at During 2023
@@ -17,7 +18,14 @@ Changes and Additions to Dismod_at During 2023
 mm-dd
 *****
 
-10-10
+10-19
+=====
+Improve the documentation for :ref:`system_command_prc-name` .
+In addition, make the following change :
+If an error is detected, include the *command* in
+*file_stderr* , *result* .stderr , and the assert error message .
+
+10-18
 =====
 **API Change:**
 

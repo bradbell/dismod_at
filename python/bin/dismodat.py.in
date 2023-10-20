@@ -44,7 +44,7 @@ import time
 # import dismod_at
 sandbox = 'python/dismod_at'
 if os.path.isdir(sandbox) :
-   print('using ' + sandbox)
+   print( f'using dismod_at sandbox {sandbox}' )
    sys.path.insert(0,  os.path.join( os.getcwd(), 'python' ) )
 import dismod_at
 # ---------------------------------------------------------------------------
