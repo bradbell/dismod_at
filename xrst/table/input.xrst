@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin input}
 
@@ -18,12 +18,12 @@ Contents
    xrst/table/density_table.xrst
    xrst/table/integrand_table.xrst
    xrst/table/mulcov_table.xrst
-   xrst/table/rate_eff_cov_table.xrst
    xrst/table/node_table.xrst
    xrst/table/nslist_pair_table.xrst
    xrst/table/nslist_table.xrst
    xrst/table/option_table.xrst
    xrst/table/prior_table.xrst
+   xrst/table/rate_eff_cov_table.xrst
    xrst/table/rate_table.xrst
    xrst/table/smooth_grid_table.xrst
    xrst/table/smooth_table.xrst
