@@ -39,8 +39,8 @@
 # ---------------------------------------------------------------------------
 # CppAD mixed version information
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='2ec261882ed72aad2ca30b178f7b47aeeef6aaa5'
-version='20231121'
+hash_key='dac712e32423a31d5100bee9e6938f26db99f788'
+version='20231201'
 # --------------------------------------------------------------------------
 name='bin/get_cppad_mixed.sh'
 if [ $0 != $name ]
@@ -79,12 +79,12 @@ cmd=`grep '^cmake_libdir=' bin/run_cmake.sh`
 eval $cmd
 # ---------------------------------------------------------------------------
 export LD_LIBRARY_PATH=''
-export PKG_CONFIG_PATH="$LD_LIBRARY_PATH/pkgconfig"
+export PKG_CONFIG_PATH=''
 # ---------------------------------------------------------------------------
 # set build link to build.debug or build.release depending on build_type
 if echo "$dismod_at_prefix" | grep '/dismod_at$' > /dev/null
 then
-   bin/build_type.sh example_install.sh $dismod_at_prefix $build_type
+   bin/build_type.sh get_cppad_mixed.sh $dismod_at_prefix $build_type
 fi
 # ---------------------------------------------------------------------------
 # cd into external
