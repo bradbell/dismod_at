@@ -43,11 +43,12 @@
 # There are many incidence data points.
 # The first Sincidence data value is zero and it is held out using
 # the data table :ref:`data_table@hold_out` equal to one.
-# The other two Sincidence data are
+# The other Sincidence data are
 # the true value for incidence and have the data table hold_out
 # equal to zero.
-# The :ref:`hold_out_command-name` is used to randomly select one of these
-# two points to be held out.
+# There are four data points for each node, except the root node n0.
+# The :ref:`hold_out_command-name` is used to randomly select a subset of these
+# points to be held out using max_fit equal to two time the number of nodes.
 #
 # Model
 # *****
@@ -73,8 +74,8 @@
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # values used to simulate data
-iota_true   = 0.01
-n_node      = 10
+iota_true    = 0.01
+n_child_node = 10
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -119,7 +120,7 @@ def example_db (file_name) :
    #
    # node table:
    node_table = [ { 'name':'n0', 'parent':'' } ]
-   for node_id in range(1, n_node) :
+   for node_id in range(1, n_child_node+1, 1) :
       node_table.append( { 'name':f'n{node_id}', 'parent':'n0' } )
    #
    # weight table:
@@ -169,11 +170,11 @@ def example_db (file_name) :
    data_table.append( copy.copy(row) )
    #
    # Sincidence data points with value iota_true and data_table hold_out 0
-   # Note that only every other child node has data
+   # Note that every child node has four data points.
    row['integrand']  = 'Sincidence'
    row['hold_out']   = False
    row['meas_value'] = iota_true
-   for node_id in range(0, n_node, 2) :
+   for node_id in range(1, n_child_node + 1, 1) :
       row['node'] = f'n{node_id}'
       for k in range(4) :
          data_table.append( copy.copy(row) )
@@ -262,7 +263,7 @@ program = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
 #
 integrand = 'Sincidence'
-max_fit   = 2 * n_node
+max_fit   = 2 * n_child_node
 dismod_at.system_command_prc(
    [ program, file_name, 'hold_out', integrand, str(max_fit) ]
 )
@@ -289,7 +290,7 @@ assert len(fit_var_table) == 1
 assert len(data_subset_table) == len(data_table)
 assert len(fit_data_subset_table) == len(data_table)
 #
-# check that max_fit Sincidence values are no held out
+# check that max_fit Sincidence values are not held out
 count_fit = 0
 for subset_row in data_subset_table :
    data_id         = subset_row['data_id']

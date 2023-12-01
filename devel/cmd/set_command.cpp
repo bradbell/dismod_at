@@ -1,7 +1,7 @@
 // $Id:$
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-23 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <dismod_at/set_command.hpp>
@@ -21,13 +21,13 @@ Directly Setting Table Values
 
 Syntax
 ******
-
-   ``dismod_at`` *database* ``set option`` *name* *value*
-
-{xrst_comment The syntax cases below are implementd in the dismod_at main program
+{xrst_comment
+   Only the first syntax below is implemented in this file.
+   The rest are implemented in the dismod_at main program.
 }
 
-| ``dismod_at`` *database* ``set avgint data``
+| ``dismod_at`` *database* ``set`` ``option``  *name*   *value*
+| ``dismod_at`` *database* ``set`` ``avgint``  ``data``
 | ``dismod_at`` *database* ``set`` *table_out* *source*
 | ``dismod_at`` *database* ``set`` *table_out* *source* *sample_index*
 

@@ -18,6 +18,14 @@ Changes and Additions to Dismod_at During 2023
 mm-dd
 *****
 
+11-30
+=====
+#. There was a bug in the hold_out command when
+   :ref:`hold_out_command@cov_name` was present.
+   This has been fixed.
+#. The discussion about balancing
+   :ref:`hold_out_command@Balancing@Covariates` was improved.
+
 10-20
 =====
 #. Improve the documentation for :ref:`system_command_prc-name` .

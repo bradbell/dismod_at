@@ -22,6 +22,13 @@
 # *****
 # There are Three nodes, ``europe`` , ``germany`` and ``italy`` .
 #
+# random_seed
+# ***********
+# If this is zero, the clock is used to seed the random number generator:
+# {xrst_code py}
+random_seed = 1234
+# {xrst_code}
+#
 # alpha_true
 # **********
 # True value of the covariate multiplier used to simulate data:
@@ -191,9 +198,9 @@ def example_db (file_name) :
       'subgroup':     'world',
       'meas_std':    iota_avg / 10.0,
    }
-   n_repeat = 20
+   n_repeat = 10
    for i in range(n_repeat) :
-      # sample twice from germany so that original data is not balenced
+      # sample twice as often from germany so that original data not balenced
       for node in [ "germany", "germany", "italy" ] :
          for sex in [ -0.5, +0.5 ] :
             meas_value = iota_true(node, sex)
@@ -246,6 +253,7 @@ def example_db (file_name) :
    option_table = [
       { 'name':'rate_case',              'value':'iota_pos_rho_zero'   },
       { 'name':'parent_node_name',       'value':'europe'              },
+      { 'name':'random_seed',            'value':str(random_seed)      },
 
       { 'name':'quasi_fixed',            'value':'false'               },
       { 'name':'max_num_iter_fixed',     'value':'50'                  },
@@ -295,13 +303,15 @@ cov_value_2    = '+0.5'
 program = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
 command = [ program, file_name, 'hold_out', integrand_name, max_fit ]
-# If you do not balance the covariates the rel_error test for alpha will fail
 if True :
+   # If you change True above to False, you will do not balance the
+   # sex covariter and the rel_error test for alpha will fail
    command += [ cov_name, cov_value_1, cov_value_2 ]
 dismod_at.system_command_prc(command)
 dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
 # -----------------------------------------------------------------------
-# read database
+#
+# var_table, fit_var_table
 connection            = dismod_at.create_connection(
    file_name, new = False, readonly = True
 )
@@ -309,12 +319,9 @@ var_table             = dismod_at.get_table_dict(connection, 'var')
 fit_var_table         = dismod_at.get_table_dict(connection, 'fit_var')
 connection.close()
 #
-# There are two variables in this model, iota and alpha
+# check var_table and fit_var_table
 assert len(var_table) == 2
 assert len(fit_var_table) == 2
-#
-# check variable values
-count  = 0
 for var_id in range( len(var_table) ) :
    var_type       = var_table[var_id]['var_type']
    fit_var_value  = fit_var_table[var_id]['fit_var_value']
@@ -327,6 +334,27 @@ for var_id in range( len(var_table) ) :
       assert var_type == 'rate'
       rel_error = 1.0 - fit_var_value / iota_avg
       assert abs(rel_error) < 0.1
+#
+# data_table, data_subset_table, integrand_table
+connection            = dismod_at.create_connection(
+   file_name, new = False, readonly = True
+)
+data_table            = dismod_at.get_table_dict(connection, 'data')
+data_subset_table     = dismod_at.get_table_dict(connection, 'data_subset')
+integrand_table       = dismod_at.get_table_dict(connection, 'integrand')
+connection.close()
+#
+# hold_in_count
+hold_in_count = 0
+for subset_row in data_subset_table :
+   data_id        = subset_row['data_id']
+   data_row       = data_table[data_id]
+   integrand_id   = data_row['integrand_id']
+   integrand_name = integrand_table[integrand_id]['integrand_name']
+   assert integrand_name == 'Sincidence'
+   if data_row['hold_out'] == 0 and subset_row['hold_out'] == 0 :
+      hold_in_count += 1
+assert hold_in_count == int(max_fit)
 #
 # -----------------------------------------------------------------------------
 print('hold_out_2.py: OK')
