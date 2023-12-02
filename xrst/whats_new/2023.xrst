@@ -18,6 +18,16 @@ Changes and Additions to Dismod_at During 2023
 mm-dd
 *****
 
+12-01
+=====
+#. Advance dismod_at to use cppad_mixed-20231201.
+#. Advance dock_dismod_at.sh
+   :ref:`dock_dismod_at.sh@dismod_at_version` to 20231201, and
+   :ref:`dock_dismod_at.sh@at_cascade_version` to 2023.11.30.
+#. Add the :ref:`dock_dismod_at.sh@build_type` option to
+   dock_dismod_at.sh (instead of building both debug and release
+   versions in the same image).
+
 11-30
 =====
 #. There was a bug in the hold_out command when

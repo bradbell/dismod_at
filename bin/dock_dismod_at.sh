@@ -1,8 +1,12 @@
-#! /bin/bash -e
+#! /usr/bin/env bash
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
+#
+# exit on error or undefined variable
+set -e -u
+#
 # {xrst_begin dock_dismod_at.sh}
 # {xrst_spell
 #     busybox
@@ -72,7 +76,7 @@
 # driver
 # ******
 # The *driver* program, determined by this setting, can be either
-# docker or podman:
+# ``docker`` or ``podman`` :
 # {xrst_spell_off}
 # {xrst_code sh}
    driver='podman'
@@ -81,6 +85,19 @@
 # Above and below we refer to the value of this shell variable as *driver* .
 # Both docker and podman create Open Container Initiative
 # `OCI <https://opencontainers.org/>`_ images and containers.
+#
+# build_type
+# **********
+# The *build_type* , determined by this setting, can be either
+# ``debug`` or ``release`` :
+# The debug version is much slower but does much more error checking.
+# {xrst_code sh}
+   build_type='release'
+# {xrst_code}
+# The same base image, ``dismod_at.base`` can be used for both
+# debug and release builds.
+# All the other images names depend on the build type and have the build type
+# at the end of the name.
 #
 # Logging Output
 # **************
@@ -158,8 +175,8 @@
 # This script will build the following version of dismod_at image:
 # {xrst_spell_off}
 # {xrst_code sh}
-   dismod_at_version='20231020'
-   dismod_at_hash='072d67500b2e802c40de08d2c0376953fcf041d9'
+   dismod_at_version='20231201'
+   dismod_at_hash='51ba87c0e9fc311d23eb9325e1dd93e4b8517cc9'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -168,19 +185,21 @@
 # This script can build the following version of the optional at_cascade image:
 # {xrst_spell_off}
 # {xrst_code sh}
-   at_cascade_version='2023.10.7'
-   at_cascade_hash='0f291969003b0c92749cd19643eb405a39d42769'
+   at_cascade_version='2023.11.30'
+   at_cascade_hash='76ed17ae2a3bcd4977d8c22cecc25b9bbd3ad283'
 # {xrst_code}
 # {xrst_spell_on}
 #
 # {xrst_end dock_dismod_at.sh}
 # ---------------------------------------------------------------------------
 ok='true'
-if [ "$1" != 'image' ]
+if [ "$#" != 2 ]
 then
    ok='false'
-fi
-if [ "$2" != 'base' ] \
+elif [ "$1" != 'image' ]
+then
+   ok='false'
+elif [ "$2" != 'base' ] \
 && [ "$2" != 'mixed' ] \
 && [ "$2" != 'dismod_at' ] \
 && [ "$2" != 'at_cascade' ]
@@ -218,16 +237,16 @@ fi
 # ----------------------------------------------------------------------------
 if [ "$2" == 'base' ]
 then
-   image_name='dismod_at.base'
+   image_name="dismod_at.base"
 elif [ "$2" == 'mixed' ]
 then
-   image_name='dismod_at.mixed'
+   image_name="dismod_at.mixed.$build_type"
 elif [ "$2" == 'dismod_at' ]
 then
-   image_name='dismod_at.image'
+   image_name="dismod_at.image.$build_type"
 elif [ "$2" == 'at_cascade' ]
 then
-   image_name='at_cascade.image'
+   image_name="at_cascade.image.$build_type"
 else
    'dock_dismod_at.sh: program error'
    exit 1
@@ -260,7 +279,7 @@ then
 fi
 echo 'Creating Dockerfile'
 # ----------------------------------------------------------------------------
-if [ "$image_name" == 'dismod_at.base' ]
+if [ "$2" == 'base' ]
 then
 cat << EOF > Dockerfile
 # -----------------------------------------------------------------------------
@@ -292,12 +311,12 @@ numpy \
 scipy \
 build
 
-# 1. Get dismod git repository as /home/dismod_at.git
+# Get dismod git repository as /home/dismod_at.git
 WORKDIR /home
 RUN git clone https://github.com/bradbell/dismod_at.git dismod_at.git
 EOF
 # ----------------------------------------------------------------------------
-elif [ "$image_name" == 'dismod_at.mixed' ]
+elif [ "$2" == 'mixed' ]
 then
 cat << EOF > Dockerfile
 FROM dismod_at.base
@@ -314,24 +333,20 @@ grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
 mkdir /home/prefix && \
 sed -i bin/run_cmake.sh -e 's|\$HOME/|/home/|g'
 
-# debug install debug version of eigen and ipopt
-RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='debug'|" && \
-bin/get_cppad_mixed.sh
-
-# release install release version of eigen and ipopt
-RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='release'|" && \
+# set build_type
+RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='$build_type'|" && \
 bin/get_cppad_mixed.sh
 
 # Restore run_cmake.sh to its original state
 Run git checkout bin/run_cmake.sh
 EOF
-elif [ "$image_name" == 'dismod_at.image' ]
+# -----------------------------------------------------------------------------
+elif [ "$2" == 'dismod_at' ]
 then
 dir='/home/prefix'
 site_packages="$dir/dismod_at/lib/python3.8/site-packages"
 cat << EOF > Dockerfile
-# -----------------------------------------------------------------------------
-FROM dismod_at.mixed
+FROM dismod_at.mixed.$build_type
 WORKDIR /home/dismod_at.git
 
 # LD_LIBRARY_PATH
@@ -357,21 +372,10 @@ sed -i bin/run_cmake.sh -e 's|\$HOME/|/home/|g'
 # uses sqlite-3.31.1 so remove test of old2new_command.
 Run sed -i example/get_started/CMakeLists.txt -e 's| old2new | |'
 
-# 1. Change build_type to debug
-# 2. Build, check, and install debug version
+# 1. Set build_type
+# 2. Build, check, and install
 # 3. Check install location
-RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='debug'|" && \
-bin/run_cmake.sh && \
-cd build && \
-make check && \
-make install install_python && \
-ls "$site_packages/dismod_at" > /dev/null && \
-cd ..
-
-# 1. Change build_type to release
-# 2. Build, check, and install release version
-# 3. Check install location
-RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='release'|" && \
+RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='$build_type'|" && \
 bin/run_cmake.sh && \
 cd build && \
 make check && \
@@ -385,11 +389,11 @@ Run git checkout bin/run_cmake.sh
 WORKDIR /home/work
 EOF
 # ----------------------------------------------------------------------------
-elif [ "$image_name" == 'at_cascade.image' ]
+elif [ "$2" == 'at_cascade' ]
 then
 dir='/home/prefix'
 cat << EOF > Dockerfile
-FROM dismod_at.image
+FROM dismod_at.image.$build_type
 WORKDIR /home
 
 # 1. Get source corresponding to at_cascade hash
@@ -401,26 +405,15 @@ git checkout --quiet $at_cascade_hash && \
 grep "at_cascade-$at_cascade_version\$" at_cascade.xrst > /dev/null && \
 sed -i bin/check_all.sh -e '/run_xrst.sh/d'
 
-# Test using debug version of dismod_at
 WORKDIR /home/at_cascade.git
+
+# Test at_cascade using this build_type for dismod_at
 RUN \
 if [ -e $dir/dismod_at ] ; then rm $dir/dismod_at ; fi && \
-ln -s $dir/dismod_at.debug $dir/dismod_at && \
-echo "skip debug version of bin/check_all.sh"
-
-# Install in /home/prefix/dismod_at.debug
-RUN python3 -m build && \
-pip3 install --force-reinstall dist/at_cascade-$at_cascade_version.tar.gz \
-   --prefix=$dir/dismod_at
-
-# Test using release version of dismod_at
-WORKDIR /home/at_cascade.git
-RUN \
-if [ -e $dir/dismod_at ] ; then rm $dir/dismod_at ; fi && \
-ln -s $dir/dismod_at.release $dir/dismod_at && \
+ln -s $dir/dismod_at.$build_type $dir/dismod_at && \
 bin/check_all.sh
 
-# Install in /home/prefix/dismod_at.release
+# Install at_cascade below /home/prefix/dismod_at.$build_type
 RUN python3 -m build && \
 pip3 install --force-reinstall dist/at_cascade-$at_cascade_version.tar.gz \
    --prefix=$dir/dismod_at
@@ -436,5 +429,5 @@ fi
 echo "Creating $image_name"
 $driver build --tag $image_name .
 #
-echo "dock_dismod_at.sh $1 $2: OK"
+echo "dock_dismod_at.sh: OK: created $driver image: $image_name"
 exit 0
