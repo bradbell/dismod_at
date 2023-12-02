@@ -20,10 +20,32 @@ $Id:$
    truncates
    truncation
    ubuntu
+   misspecification
+   bootstrapping
 }
 
 Dismod_at Wish List
 ###################
+
+Bootstrapping
+*************
+Sampling using the :ref:`sample_command@simulate` method
+has the following advantages:
+
+#. It does not have the :ref:`sample_command@asymptotic` problem
+   of failing when the information matrix is singular.
+#. It takes all the constraints into account when computing the
+   posterior distribution.
+
+This sampling method is difficult to use because it has the following problem:
+The model for the variance of the data is often larger than the true variance
+(extra data variance results in extra variance in the posterior predictions
+and is often used to account for model misspecification).
+This often causes the fitting of the simulated data to fail.
+
+`Bootstrapping <https://en.wikipedia.org/wiki/Bootstrapping_(statistics)>`_
+samples from the actual data, instead of using simulated data,
+would have the advantages without the problem mentioned above.
 
 dock_dismod_at.sh
 *****************

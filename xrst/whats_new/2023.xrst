@@ -28,6 +28,7 @@ mm-dd
    dock_dismod_at.sh (instead of building both debug and release
    versions in the same image).
 #. Add the :ref:`wish_list@dock_dismod_at.sh` wish list entry.
+#. Add the :ref:`wish_list@Bootstrapping` wish list entry.
 
 11-30
 =====
