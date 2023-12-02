@@ -92,11 +92,16 @@ chmod +x run.sh
 cat run.sh
 ./run.sh
 #
-if ! podman images | grep '^localhost/dismod_at.image' > /dev/null
+dismod_at_image='dismod_at.image.release'
+if ! podman images | grep "^localhost/$dismod_at_image" > /dev/null
 then
-   echo 'podman cannot find dismod_at.image, skipping its test'
-   echo 'check_install.sh: OK'
-   exit 0
+   dismod_at_image='dismod_at.image.debug'
+   if ! podman images | grep "^localhost/$dismod_at_image" > /dev/null
+   then
+      echo 'podman cannot find dismod_at.image, skipping its test'
+      echo 'check_install.sh: OK'
+      exit 0
+   fi
 fi
 # -----------------------------------------------------------------------------
 # Test that OCI image gives the same result
@@ -107,14 +112,14 @@ if podman ps -a | grep test_container > /dev/null
 then
    podman rm -f test_container
 fi
-echo 'exit 0' | podman run -it --name test_container dismod_at.image bash
+echo 'exit 0' | podman run -i --name test_container $dismod_at_image bash
 list='get_started_db.py create_db.py run.sh'
 for file in $list
 do
    podman cp ../$file test_container:/home/work
 done
 podman start test_container
-echo './run.sh ; exit 0' | podman exec -it test_container bash
+echo './run.sh ; exit 0' | podman exec -i test_container bash
 list='age_avg.csv  data.csv  option.csv  variable.csv'
 for file in $list
 do
