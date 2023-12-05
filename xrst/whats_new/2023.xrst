@@ -5,10 +5,10 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin whats_new_2023}
 {xrst_spell
-   dd
    mm
-   nslict
+   dd
    readonly
+   nslict
    stderr
 }
 
@@ -17,6 +17,10 @@ Changes and Additions to Dismod_at During 2023
 
 mm-dd
 *****
+
+12-05
+=====
+Add the :ref:`wish_list@Command Documentation` wish list item.
 
 12-01
 =====
@@ -53,12 +57,18 @@ mm-dd
 **API Change:**
 
 #. Add the average noise effect
-   :ref:`E_i(theta)<data_like@Measurement Noise Covariates@Average Noise Effect, E_i(theta)>`
+   :ref:`E_i(theta)<
+      data_like@Measurement Noise Covariates@Average Noise Effect, E_i(theta)
+   >`
    before transforming the standard deviation.
    This changes the definition of the adjusted standard deviation
-   :ref:`sigma_i(theta)<data_like@Adjusted Standard Deviation, sigma_i(theta)>`
+   :ref:`sigma_i(theta)<
+      data_like@Adjusted Standard Deviation, sigma_i(theta)
+   >`
    and the transformed standard deviation
-   :ref:`delta_i(theta)<data_like@Transformed Standard Deviation, delta_i(theta)>` .
+   :ref:`delta_i(theta)<
+      data_like@Transformed Standard Deviation, delta_i(theta)
+   >` .
    This switched the roles of sigma and delta in many places in the
    examples and documentation.
    One notable case is that the db2csv *meas_delta* column was changed

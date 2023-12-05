@@ -6,7 +6,6 @@ $Id:$
 {xrst_begin wish_list}
 {xrst_spell
    auxillary
-   bootstrapping
    checkpointing
    conditionals
    cppadcg
@@ -15,17 +14,26 @@ $Id:$
    eigen
    lagrange
    minima
-   misspecification
    onces
    optimizer
    reformulated
    truncates
    truncation
    ubuntu
+   misspecification
+   bootstrapping
 }
 
 Dismod_at Wish List
 ###################
+
+Command Documentation
+*********************
+#. There should be one section in the documentation for all the
+   dismod_at commands and it should split into those commands that use
+   ``dismod_at`` and those that use ``dismodat.py`` .
+#. There does not seem to be any documentation for the dismodat.py
+   plot command. This should be fixed.
 
 Bootstrapping
 *************
