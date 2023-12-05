@@ -10,12 +10,12 @@ set -e -u
 # {xrst_begin dock_dismod_at.sh}
 # {xrst_spell
 #     busybox
+#     cp
 #     dockerfile
 #     get get
 #     podman
 #     rm
 #     rmi
-#     cp
 # }
 # {xrst_comment_ch #}
 #

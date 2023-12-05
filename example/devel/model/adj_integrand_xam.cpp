@@ -4,9 +4,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin adj_integrand_xam.cpp dev}
-{xrst_spell
-   adj
-}
 
 C++ adj_integrand: Example and Test
 ###################################

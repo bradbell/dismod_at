@@ -4,9 +4,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_table_column_xam.cpp dev}
-{xrst_spell
-   xam
-}
 
 C++ get_table_column_xam: Example and Test
 ##########################################

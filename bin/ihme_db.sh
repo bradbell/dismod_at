@@ -8,7 +8,6 @@
 # {xrst_spell
 #     cmake
 #     dir
-#     ihme
 # }
 # {xrst_comment_ch #}
 #

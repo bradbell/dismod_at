@@ -7,7 +7,6 @@
 {xrst_spell
    mtexcess
    mtother
-   trapezoidal
 }
 
 Using the Trapezoidal ODE Solver

@@ -7,7 +7,6 @@
 {xrst_spell
    cd
    cmake
-   devel
 }
 
 Run C++ Examples

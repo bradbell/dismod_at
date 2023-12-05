@@ -24,7 +24,6 @@ $Id:$
    scipy
    suitesparse
    txt
-   unix
 }
 
 Installing dismod_at in Unix

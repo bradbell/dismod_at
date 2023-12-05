@@ -3,9 +3,6 @@
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin unicode_tuple.py}
-# {xrst_spell
-#     tuple
-# }
 # {xrst_comment_ch #}
 #
 # unicode_tuple: Example and Test

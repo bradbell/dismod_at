@@ -7,7 +7,6 @@
 # {xrst_spell
 #     iterable
 #     iterate
-#     tuple
 # }
 # {xrst_comment_ch #}
 #

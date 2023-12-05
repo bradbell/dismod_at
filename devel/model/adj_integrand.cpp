@@ -15,7 +15,6 @@
 /*
 {xrst_begin adj_integrand dev}
 {xrst_spell
-   adj
    adjint
    refactored
 }

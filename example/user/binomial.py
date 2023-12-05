@@ -3,8 +3,6 @@
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_binomial.py}
-# {xrst_spell
-# }
 # {xrst_comment_ch #}
 #
 # Fitting Binomial Data Example

@@ -4,9 +4,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin bilinear_interp_xam.cpp dev}
-{xrst_spell
-   interp
-}
 
 C++ bilinear_interp: Example and Test
 #####################################

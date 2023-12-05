@@ -4,9 +4,6 @@
 # ----------------------------------------------------------------------------
 """
 {xrst_begin user_system_command_prc.py}
-{xrst_spell
-   prc
-}
 
 Example Using system_command_prc
 ################################

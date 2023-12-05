@@ -6,7 +6,6 @@
 {xrst_begin ran_con_rcv dev}
 {xrst_spell
    enum
-   rcv
 }
 
 Matrix Representation of Random Constraints

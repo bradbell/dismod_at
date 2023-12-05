@@ -5,9 +5,7 @@
 /*
 {xrst_begin exec_sql_cmd dev}
 {xrst_spell
-   cmd
    optionally
-   sql
 }
 
 C++: Execution of an SQL Command

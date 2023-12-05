@@ -4,10 +4,6 @@
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin manage_gsl_rng dev}
-{xrst_spell
-   gsl
-   rng
-}
 
 Set, Get, And Free A GSL Random Number Generator
 ################################################

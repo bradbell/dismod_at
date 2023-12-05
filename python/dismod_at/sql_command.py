@@ -4,9 +4,6 @@
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin sql_command}
-# {xrst_spell
-#     sql
-# }
 # {xrst_comment_ch #}
 #
 # Execute an SQL command

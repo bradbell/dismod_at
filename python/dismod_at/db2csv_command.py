@@ -7,8 +7,8 @@
 #     dir
 #     ihme
 #     ij
-#     stdcv
 #     ss
+#     stdcv
 # }
 # {xrst_comment_ch #}
 #

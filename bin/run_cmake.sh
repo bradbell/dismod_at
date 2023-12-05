@@ -6,7 +6,6 @@
 #
 # {xrst_begin run_cmake.sh}
 # {xrst_spell
-#     cmake
 #     colons
 #     compilers
 #     cxx

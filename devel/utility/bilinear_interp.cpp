@@ -5,7 +5,6 @@
 /*
 {xrst_begin bilinear_interp dev}
 {xrst_spell
-   interp
    interpolant
    interpolating
 }

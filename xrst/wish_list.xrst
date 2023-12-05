@@ -6,6 +6,7 @@ $Id:$
 {xrst_begin wish_list}
 {xrst_spell
    auxillary
+   bootstrapping
    checkpointing
    conditionals
    cppadcg
@@ -14,14 +15,13 @@ $Id:$
    eigen
    lagrange
    minima
+   misspecification
    onces
    optimizer
    reformulated
    truncates
    truncation
    ubuntu
-   misspecification
-   bootstrapping
 }
 
 Dismod_at Wish List
