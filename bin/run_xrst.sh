@@ -2,6 +2,12 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
+# -----------------------------------------------------------------------------
+# bash function that echos and executes a command
+echo_eval() {
+	echo $*
+	eval $*
+}
 # ----------------------------------------------------------------------------
 if [ "$0" != "bin/run_xrst.sh" ]
 then
