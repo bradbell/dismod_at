@@ -278,6 +278,8 @@ then
    exit 1
 fi
 echo 'Creating Dockerfile'
+#
+prefix='/home/prefix/dismod_at'
 # ----------------------------------------------------------------------------
 if [ "$2" == 'base' ]
 then
@@ -347,7 +349,7 @@ EOF
 elif [ "$2" == 'dismod_at' ]
 then
 dir='/home/prefix'
-site_packages="$dir/dismod_at/lib/python3.8/site-packages"
+site_packages="$prefix/lib/python3.8/site-packages"
 cat << EOF > Dockerfile
 FROM dismod_at.mixed.$build_type
 WORKDIR /home/dismod_at.git
@@ -360,7 +362,7 @@ ENV PYTHONPATH="$site_packages"
 
 # PATH
 # must escape PATH variable so it gets interpreted in the image
-ENV PATH="\$PATH:$dir/dismod_at/bin"
+ENV PATH="\$PATH:$prefix/bin"
 
 # 1. Get source corresponding to dismod_at hash
 # 2. Check the corresponding dismod_at version
@@ -396,7 +398,6 @@ EOF
 # ----------------------------------------------------------------------------
 elif [ "$2" == 'at_cascade' ]
 then
-dir='/home/prefix'
 cat << EOF > Dockerfile
 FROM dismod_at.image.$build_type
 WORKDIR /home
@@ -415,15 +416,15 @@ WORKDIR /home/at_cascade.git
 
 # Test at_cascade using this build_type for dismod_at
 RUN \
-if [ -e $dir/dismod_at ] ; then rm $dir/dismod_at ; fi && \
-ln -s $dir/dismod_at.$build_type $dir/dismod_at && \
+if [ -e $prefix ] ; then rm $prefix ; fi && \
+ln -s $prefix.$build_type $prefix && \
 bin/check_all.sh
 
 # Install at_cascade below /home/prefix/dismod_at.$build_type
 RUN \
 python3 -m build && \
 pip3 install --force-reinstall dist/at_cascade-$at_cascade_version.tar.gz \
-   --prefix=$dir/dismod_at
+   --prefix=$prefix
 #
 WORKDIR /home/work
 EOF
