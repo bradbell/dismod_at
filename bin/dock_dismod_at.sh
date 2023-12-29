@@ -289,7 +289,8 @@ cat << EOF > Dockerfile
 # -----------------------------------------------------------------------------
 FROM ubuntu:20.04
 RUN  apt-get update
-RUN  DEBIAN_FRONTEND=noninteractive apt-get install -y  \
+RUN  \
+DEBIAN_FRONTEND=noninteractive apt-get install -y  \
 cmake \
 git \
 gfortran \
@@ -327,14 +328,16 @@ WORKDIR /home/dismod_at.git
 # 3. Change install prefix to /home/prefix/dismod_at
 # 4. Get cppad_mixed library and dependencies
 
-RUN git pull && \
+RUN \
+git pull && \
 git checkout --quiet $dismod_at_hash  && \
 grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
 mkdir /home/prefix && \
 sed -i bin/run_cmake.sh -e 's|\$HOME/|/home/|g'
 
 # set build_type
-RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='$build_type'|" && \
+RUN \
+sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='$build_type'|" && \
 bin/get_cppad_mixed.sh
 
 # Restore run_cmake.sh to its original state
@@ -362,7 +365,8 @@ ENV PATH="\$PATH:$dir/dismod_at/bin"
 # 1. Get source corresponding to dismod_at hash
 # 2. Check the corresponding dismod_at version
 # 3. Change install prefix to /home/prefix/dismod_at
-RUN git checkout master && \
+RUN \
+git checkout master && \
 git pull && \
 git checkout --quiet $dismod_at_hash  && \
 grep "$dismod_at_version" CMakeLists.txt > /dev/null &&\
@@ -375,7 +379,8 @@ Run sed -i example/get_started/CMakeLists.txt -e 's| old2new | |'
 # 1. Set build_type
 # 2. Build, check, and install
 # 3. Check install location
-RUN sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='$build_type'|" && \
+RUN \
+sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='$build_type'|" && \
 bin/run_cmake.sh && \
 cd build && \
 make check && \
@@ -399,7 +404,8 @@ WORKDIR /home
 # 1. Get source corresponding to at_cascade hash
 # 2. Check the corresponding at_cascade version
 # 3. Remove building the documentaiton from check_all.sh
-RUN git clone https://github.com/bradbell/at_cascade.git at_cascade.git && \
+RUN \
+git clone https://github.com/bradbell/at_cascade.git at_cascade.git && \
 cd at_cascade.git && \
 git checkout --quiet $at_cascade_hash && \
 grep "at_cascade-$at_cascade_version\$" at_cascade.xrst > /dev/null && \
@@ -414,7 +420,8 @@ ln -s $dir/dismod_at.$build_type $dir/dismod_at && \
 bin/check_all.sh
 
 # Install at_cascade below /home/prefix/dismod_at.$build_type
-RUN python3 -m build && \
+RUN \
+python3 -m build && \
 pip3 install --force-reinstall dist/at_cascade-$at_cascade_version.tar.gz \
    --prefix=$dir/dismod_at
 #
