@@ -121,7 +121,6 @@ fi
 #
 # run.sh
 cat << EOF > run.sh
-source $prefix/bin/activate
 python3 create_db.py
 dismod_at get_started.db init
 dismodat.py get_started.db db2csv

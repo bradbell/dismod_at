@@ -292,8 +292,9 @@ cat << EOF > Dockerfile
 # -----------------------------------------------------------------------------
 FROM ubuntu:23.04
 RUN  apt-get update
+WORKDIR /home
 #
-# install packages
+# apt-get packages
 RUN  \
 DEBIAN_FRONTEND=noninteractive apt-get install -y  \
 cmake \
@@ -310,17 +311,27 @@ python3-venv \
 vim \
 wget
 #
-# python virtual environment
+# activate-python-virtualenv-in-dockerfile
+# https://stackoverflow.com/questions/48561981
+RUN python3 -m venv $prefix
+ENV VIRTUAL_ENV     $prefix
+ENV PATH            $prefix/bin:\$PATH
+#
+# pip packages
+RUN pip3 install matplotlib numpy scipy build
+#
+# 1. Get source corresponding to dismod_at-$dismod_at_version
+# 2. Check that the corresponding hash is $dismod_at_hash
+# 3. Change some settings in bin/run_cmake.sh
 RUN \
-python3 -m venv $prefix && \
-$prefix/bin/pip3 install matplotlib numpy scipy build
-#
-# Get dismod git repository as /home/dismod_at.git
-WORKDIR /home
-RUN git clone https://github.com/bradbell/dismod_at.git dismod_at.git
-#
-# activate virtual environment when using this image
-CMD . $prefix/bin/activate && bash
+git clone https://github.com/bradbell/dismod_at.git dismod_at.git && \
+cd dismod_at.git && \
+git checkout --quiet $dismod_at_hash  && \
+grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
+sed -i bin/run_cmake.sh \
+   -e 's|^dismod_at_prefix=.*|dismod_at_prefix='$prefix'|' \
+   -e "s|^build_type=.*|build_type='$build_type'|" \
+   -e "s|^python3_executable=.*|python3_executable='$prefix/bin/python3'|"
 EOF
 # ----------------------------------------------------------------------------
 elif [ "$2" == 'mixed' ]
@@ -328,22 +339,6 @@ then
 cat << EOF > Dockerfile
 FROM dismod_at.base
 WORKDIR /home/dismod_at.git
-
-# 1. Get source corresponding to dismod_at-$dismod_at_version
-# 2. Check that the corresponding hash is $dismod_at_hash
-# 3. Change some settings in bin/run_cmake.sh
-# 4. Get cppad_mixed library and dependencies
-
-RUN \
-git pull && \
-git checkout --quiet $dismod_at_hash  && \
-grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
-sed -i bin/run_cmake.sh \
-   -e 's|^dismod_at_prefix=.*|dismod_at_prefix='$prefix'|' \
-   -e "s|^build_type=.*|build_type='$build_type'|" \
-   -e "s|^python3_executable=.*|python3_executable='$prefix/bin/python3'|"
-
-# get_cppad_mixed
 RUN bin/get_cppad_mixed.sh
 EOF
 # -----------------------------------------------------------------------------
@@ -361,20 +356,7 @@ ENV LD_LIBRARY_PATH=''
 # must escape PATH variable so it gets interpreted in the image
 ENV PATH="\$PATH:$prefix/bin"
 
-# 1. Get source corresponding to dismod_at hash
-# 2. Check the corresponding dismod_at version
-RUN \
-git checkout master && \
-git pull && \
-git checkout --quiet $dismod_at_hash  && \
-grep "$dismod_at_version" CMakeLists.txt > /dev/null
-
-# Drop column command started with sqlite-3.35.0. This version of ubuntu
-# uses sqlite-3.31.1 so remove test of old2new_command.
-Run sed -i example/get_started/CMakeLists.txt -e 's| old2new | |'
-
-# 2. Build, check, and install
-# 3. Check install location
+# Build, check, install, check install location
 RUN \
 bin/run_cmake.sh && \
 cd build && \
@@ -413,8 +395,7 @@ RUN bin/check_all.sh
 # Install at_cascade
 RUN \
 $prefix/bin/python3 -m build && \
-$prefix/bin/pip3 install --force-reinstall \
-   dist/at_cascade-$at_cascade_version.tar.gz
+pip3 install --force-reinstall dist/at_cascade-$at_cascade_version.tar.gz
 #
 WORKDIR /home/work
 EOF
