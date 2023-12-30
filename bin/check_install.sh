@@ -16,19 +16,14 @@ then
    echo 'build_type is not debug or release'
    exit 1
 fi
-if [ "$1" == debug ]
-then
-   bin/run_cmake.sh --debug
-else
-   bin/run_cmake.sh
-fi
+build_type="$1"
 # -----------------------------------------------------------------------------
-# bash function that echos and executes a command
+# echo_eval
 echo_eval() {
    echo $*
    eval $*
 }
-# ---------------------------------------------------------------------------
+#
 # dismod_at_prefix
 cmd=`grep ^dismod_at_prefix bin/run_cmake.sh`
 eval $cmd
@@ -37,23 +32,29 @@ eval $cmd
 cmd=`grep ^python3_executable bin/run_cmake.sh`
 eval $cmd
 #
-# get python site-packages directory
-python_dir=''
+# site_packages
+site_packages=''
 if find -L $dismod_at_prefix -name site-packages > /dev/null
 then
-   python_dir=`find -L $dismod_at_prefix -name site-packages`
+   site_packages=`find -L $dismod_at_prefix -name site-packages`
 fi
-bin_dir="$dismod_at_prefix/bin"
-#
-# remove old install executable and python packages
-echo_eval rm -rf $bin_dir/dismod_at
-echo_eval rm -rf $bin_dir/dismodat.py
-if [ "$python_dir" != '' ]
+if [ "$site_packages" != '' ]
 then
    echo_eval rm -rf $pyton_dir/dismod_at
 fi
 #
-# install fresh copy
+# bin_dir
+bin_dir="$dismod_at_prefix/bin"
+echo_eval rm -rf $bin_dir/dismod_at
+echo_eval rm -rf $bin_dir/dismodat.py
+#
+# make install
+if [ "$build_type" == debug ]
+then
+   bin/run_cmake.sh --debug
+else
+   bin/run_cmake.sh
+fi
 echo_eval cd build
 echo_eval make install install_python
 echo_eval cd ..
@@ -62,27 +63,31 @@ echo_eval cd ..
 export PATH="$bin_dir:$PATH"
 #
 # PYTHONPATH
-python_dir=`find -L $HOME/prefix/dismod_at -name site-packages`
-export PYTHONPATH="$python_dir"
+site_packages=`find -L $HOME/prefix/dismod_at -name site-packages`
+export PYTHONPATH="$site_packages"
 echo "PYTHONPATH=$PYTHONPATH"
 #
 # LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=''
 #
-# create check_install and change into it
+# check_install
 if [ -e 'build/check_install' ]
 then
    echo_eval rm -r build/check_install
 fi
 echo_eval mkdir build/check_install
 echo_eval cd build/check_install
+#
+# get_started_db.py
 echo_eval cp ../../example/get_started/get_started_db.py get_started_db.py
 #
-# create get_started.db
+# create_db.py
 cat << EOF > create_db.py
 import get_started_db
 get_started_db.get_started_db()
 EOF
+#
+# run.sh
 cat << EOF > run.sh
 $python3_executable create_db.py
 dismod_at get_started.db init
