@@ -5,6 +5,7 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin whats_new_2023}
 {xrst_spell
+   cmake
    mm
    dd
    readonly
@@ -18,6 +19,17 @@ Changes and Additions to Dismod_at During 2023
 
 mm-dd
 *****
+
+12-30
+=====
+There were some problem with changes to
+:ref:`dock_dismod_at.sh-name` on 12-29:
+
+#. When restarting a container the python virtual environment was not set.
+#. The second checkout of dismod_at.git could fail because bin/run_cmake.sh
+   had changed.
+
+These have been fixed.
 
 12-29
 =====
