@@ -19,7 +19,6 @@ $Id:$
    reformulated
    truncates
    truncation
-   ubuntu
    misspecification
    bootstrapping
 }
@@ -54,15 +53,6 @@ This often causes the fitting of the simulated data to fail.
 `Bootstrapping <https://en.wikipedia.org/wiki/Bootstrapping_(statistics)>`_
 samples from the actual data, instead of using simulated data,
 would have the advantages without the problem mentioned above.
-
-dock_dismod_at.sh
-*****************
-The :ref:`dock_dismod_at.sh-name` script is using ubuntu-20.04 for
-its base image.
-An attempt to advance to using ubuntu-23.04 revealed that
-newer versions of ubuntu generate an error when pip is executed as root.
-This can probably be fixed by having a non root user that executes the pip
-commands and has write permissions for the dismod_at prefix.
 
 Batch Command
 *************

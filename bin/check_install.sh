@@ -28,7 +28,7 @@ echo_eval() {
    echo $*
    eval $*
 }
-# -----------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
 # dismod_at_prefix
 cmd=`grep ^dismod_at_prefix bin/run_cmake.sh`
 eval $cmd
@@ -103,8 +103,23 @@ then
       exit 0
    fi
 fi
-# -----------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
 # Test that OCI image gives the same result
+#
+# prefix
+cmd=`grep ^prefix ../../bin/dock_dismod_at.sh`
+eval $cmd
+if [ "$prefix" != '/home/venv' ]
+then
+   echo "dock_dismod_at.sh: prefix = $prefix"
+   exit 1
+fi
+cat << EOF > run.sh
+source $prefix/bin/activate
+python3 create_db.py
+dismod_at get_started.db init
+dismodat.py get_started.db db2csv
+EOF
 echo_eval mkdir podman
 echo_eval cd podman
 cat ../run.sh
@@ -112,7 +127,7 @@ if podman ps -a | grep test_container > /dev/null
 then
    podman rm -f test_container
 fi
-echo 'exit 0' | podman run -i --name test_container $dismod_at_image bash
+echo 'exit 0' | podman run -i --name test_container $dismod_at_image
 list='get_started_db.py create_db.py run.sh'
 for file in $list
 do

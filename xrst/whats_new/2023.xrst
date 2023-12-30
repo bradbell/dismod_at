@@ -10,6 +10,7 @@ $Id:$
    readonly
    nslict
    stderr
+   ubuntu
 }
 
 Changes and Additions to Dismod_at During 2023
@@ -17,6 +18,16 @@ Changes and Additions to Dismod_at During 2023
 
 mm-dd
 *****
+
+12-29
+=====
+Advance dock_dismod_at.sh version of Ubuntu from 20.04 to 23.04 ,
+:ref:`dock_dismod_at.sh@dismod_at_version` to 2023.12.29, and
+:ref:`dock_dismod_at.sh@at_cascade_version` to 2023.12.22.
+Advancing to Ubuntu 23.04 Also note the dock_dismod_at.sh
+wish list item, so it was removed.
+Also note that dismod_at-2023.12.29 has a minor fix for the case where
+:ref:`run_cmake.sh@dismod_at_prefix` does not end with ``dismod_at`` .
 
 12-05
 =====
@@ -31,7 +42,8 @@ Add the :ref:`wish_list@Command Documentation` wish list item.
 #. Add the :ref:`dock_dismod_at.sh@build_type` option to
    dock_dismod_at.sh (instead of building both debug and release
    versions in the same image).
-#. Add the :ref:`wish_list@dock_dismod_at.sh` wish list entry.
+#. Add the dock_dismod_at.sh wish list entry
+   (which was completed on 12-29) .
 #. Add the :ref:`wish_list@Bootstrapping` wish list entry.
 
 11-30

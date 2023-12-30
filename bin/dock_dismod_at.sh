@@ -286,11 +286,11 @@ if [ "$2" == 'base' ]
 then
 cat << EOF > Dockerfile
 # -----------------------------------------------------------------------------
-# Ubuntu 20.04 with dismod_at requirements that are installed using apt-get.
+# Ubuntu 23.04 with dismod_at requirements that are installed using apt-get.
 # The vim editor is included for use when debugging containers and
 # is not required by dismod_at.
 # -----------------------------------------------------------------------------
-FROM ubuntu:20.04
+FROM ubuntu:23.04
 RUN  apt-get update
 #
 # install packages
@@ -349,7 +349,7 @@ EOF
 # -----------------------------------------------------------------------------
 elif [ "$2" == 'dismod_at' ]
 then
-site_packages="$prefix/lib/python3.8/site-packages"
+site_packages="$prefix/lib/python3.11/site-packages"
 cat << EOF > Dockerfile
 FROM dismod_at.mixed.$build_type
 WORKDIR /home/dismod_at.git
@@ -378,8 +378,10 @@ Run sed -i example/get_started/CMakeLists.txt -e 's| old2new | |'
 RUN \
 bin/run_cmake.sh && \
 cd build && \
+make -j \$(nproc) && \
 make check && \
-make install install_python && \
+make install && \
+make install_python && \
 ls "$site_packages/dismod_at" > /dev/null && \
 cd ..
 
