@@ -68,12 +68,8 @@ dismod_at_prefix="$HOME/prefix/dismod_at"
 # {xrst_code sh}
 python3_executable='/usr/bin/python3'
 # {xrst_code}
-# You can use the command $code which python3$$ to determine the location
+# You can use the command ``which python3`` to determine the location
 # of the default version for this system.
-# In the past, removing the  characters in front of the following
-# command would work for the IHME cluster:
-#
-#     ``python3_executable`` ='/ ``usr/local/anaconda3-current/bin/python`` '
 #
 # specific_compiler
 # *****************

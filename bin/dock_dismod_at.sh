@@ -279,6 +279,7 @@ then
 fi
 echo 'Creating Dockerfile'
 #
+# prefix
 prefix='/home/venv'
 # ----------------------------------------------------------------------------
 if [ "$2" == 'base' ]
@@ -291,6 +292,8 @@ cat << EOF > Dockerfile
 # -----------------------------------------------------------------------------
 FROM ubuntu:20.04
 RUN  apt-get update
+#
+# install packages
 RUN  \
 DEBIAN_FRONTEND=noninteractive apt-get install -y  \
 cmake \
@@ -304,19 +307,20 @@ libsqlite3-dev \
 pkg-config \
 python3 \
 python3-venv \
-pip \
 vim \
 wget
 #
-Run pip3 install \
-matplotlib \
-numpy \
-scipy \
-build
-
+# python virtual environment
+RUN \
+python3 -m venv $prefix && \
+$prefix/bin/pip3 install matplotlib numpy scipy build
+#
 # Get dismod git repository as /home/dismod_at.git
 WORKDIR /home
 RUN git clone https://github.com/bradbell/dismod_at.git dismod_at.git
+#
+# activate virtual environment when using this image
+CMD . $prefix/bin/activate && bash
 EOF
 # ----------------------------------------------------------------------------
 elif [ "$2" == 'mixed' ]
@@ -327,7 +331,7 @@ WORKDIR /home/dismod_at.git
 
 # 1. Get source corresponding to dismod_at-$dismod_at_version
 # 2. Check that the corresponding hash is $dismod_at_hash
-# 3. Change install prefix to $prefix
+# 3. Change some settings in bin/run_cmake.sh
 # 4. Get cppad_mixed library and dependencies
 
 RUN \
@@ -335,15 +339,12 @@ git pull && \
 git checkout --quiet $dismod_at_hash  && \
 grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
 sed -i bin/run_cmake.sh \
-   -e 's|^dismod_at_prefix=.*|dismod_at_prefix='$prefix'|'
+   -e 's|^dismod_at_prefix=.*|dismod_at_prefix='$prefix'|' \
+   -e "s|^build_type=.*|build_type='$build_type'|" \
+   -e "s|^python3_executable=.*|python3_executable='$prefix/bin/python3'|"
 
-# set build_type
-RUN \
-sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='$build_type'|" && \
-bin/get_cppad_mixed.sh
-
-# Restore run_cmake.sh to its original state
-Run git checkout bin/run_cmake.sh
+# get_cppad_mixed
+RUN bin/get_cppad_mixed.sh
 EOF
 # -----------------------------------------------------------------------------
 elif [ "$2" == 'dismod_at' ]
@@ -356,42 +357,31 @@ WORKDIR /home/dismod_at.git
 # LD_LIBRARY_PATH
 ENV LD_LIBRARY_PATH=''
 
-# PYTHONPATH
-ENV PYTHONPATH="$site_packages"
-
 # PATH
 # must escape PATH variable so it gets interpreted in the image
 ENV PATH="\$PATH:$prefix/bin"
 
 # 1. Get source corresponding to dismod_at hash
 # 2. Check the corresponding dismod_at version
-# 3. Change install prefix to $prefix
 RUN \
 git checkout master && \
 git pull && \
 git checkout --quiet $dismod_at_hash  && \
-grep "$dismod_at_version" CMakeLists.txt > /dev/null &&\
-sed -i bin/run_cmake.sh \
-   -e 's|^dismod_at_prefix=.*|dismod_at_prefix='$prefix'|'
+grep "$dismod_at_version" CMakeLists.txt > /dev/null
 
 # Drop column command started with sqlite-3.35.0. This version of ubuntu
 # uses sqlite-3.31.1 so remove test of old2new_command.
 Run sed -i example/get_started/CMakeLists.txt -e 's| old2new | |'
 
-# 1. Set build_type
 # 2. Build, check, and install
 # 3. Check install location
 RUN \
-sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='$build_type'|" && \
 bin/run_cmake.sh && \
 cd build && \
 make check && \
 make install install_python && \
 ls "$site_packages/dismod_at" > /dev/null && \
 cd ..
-
-# Restore run_cmake.sh to its original state
-Run git checkout bin/run_cmake.sh
 
 WORKDIR /home/work
 EOF
@@ -410,18 +400,19 @@ git clone https://github.com/bradbell/at_cascade.git at_cascade.git && \
 cd at_cascade.git && \
 git checkout --quiet $at_cascade_hash && \
 grep "at_cascade-$at_cascade_version\$" at_cascade.xrst > /dev/null && \
-sed -i bin/check_all.sh -e '/run_xrst.sh/d'
+sed -i bin/check_all.sh -e '/run_xrst.sh/d' && \
+sed -i bin/run_test.sh -e 's|if python3|if $prefix/bin/python3|'
 
 WORKDIR /home/at_cascade.git
 
-# Test at_cascade using this build_type for dismod_at
+# Test at_cascade
 RUN bin/check_all.sh
 
 # Install at_cascade
 RUN \
-python3 -m build && \
-pip3 install --force-reinstall dist/at_cascade-$at_cascade_version.tar.gz \
-   --prefix=$prefix
+$prefix/bin/python3 -m build && \
+$prefix/bin/pip3 install --force-reinstall \
+   dist/at_cascade-$at_cascade_version.tar.gz
 #
 WORKDIR /home/work
 EOF
