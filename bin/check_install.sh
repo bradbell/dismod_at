@@ -91,7 +91,8 @@ EOF
 chmod +x run.sh
 cat run.sh
 ./run.sh
-#
+# ---------------------------------------------------------------------------
+# dismod_at_image
 dismod_at_image='dismod_at.image.release'
 if ! podman images | grep "^localhost/$dismod_at_image" > /dev/null
 then
@@ -103,8 +104,6 @@ then
       exit 0
    fi
 fi
-# ---------------------------------------------------------------------------
-# Test that OCI image gives the same result
 #
 # prefix
 cmd=`grep ^prefix ../../bin/dock_dismod_at.sh`
@@ -114,34 +113,53 @@ then
    echo "dock_dismod_at.sh: prefix = $prefix"
    exit 1
 fi
+#
+# run.sh
 cat << EOF > run.sh
 source $prefix/bin/activate
 python3 create_db.py
 dismod_at get_started.db init
 dismodat.py get_started.db db2csv
 EOF
+#
+# podman directory
 echo_eval mkdir podman
 echo_eval cd podman
-cat ../run.sh
+#
+# test_container
 if podman ps -a | grep test_container > /dev/null
 then
    podman rm -f test_container
 fi
 echo 'exit 0' | podman run -i --name test_container $dismod_at_image
-list='get_started_db.py create_db.py run.sh'
+list='
+   get_started_db.py
+   create_db.py
+   run.sh
+'
 for file in $list
 do
    podman cp ../$file test_container:/home/work
 done
+#
+# test_container
+cat ../run.sh
 podman start test_container
 echo './run.sh ; exit 0' | podman exec -i test_container bash
-list='age_avg.csv  data.csv  option.csv  variable.csv'
+#
+# compare podman results with local install results
+list='
+   age_avg.csv
+   data.csv
+   option.csv
+   variable.csv
+'
 for file in $list
 do
    podman cp test_container:/home/work/$file $file
    if ! diff ../$file $file
    then
-      echo "docker image results for $file are different"
+      echo "podman image results for $file are different for local install"
       exit 1
    fi
 done
