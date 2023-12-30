@@ -175,8 +175,8 @@ set -e -u
 # This script will build the following version of dismod_at image:
 # {xrst_spell_off}
 # {xrst_code sh}
-   dismod_at_version='20231201'
-   dismod_at_hash='51ba87c0e9fc311d23eb9325e1dd93e4b8517cc9'
+   dismod_at_version='20231229'
+   dismod_at_hash='06d27afd568be551762fc9b4d5f63cd5566de8cf'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -279,7 +279,7 @@ then
 fi
 echo 'Creating Dockerfile'
 #
-prefix='/home/prefix/dismod_at'
+prefix='/home/venv'
 # ----------------------------------------------------------------------------
 if [ "$2" == 'base' ]
 then
@@ -327,15 +327,15 @@ WORKDIR /home/dismod_at.git
 
 # 1. Get source corresponding to dismod_at-$dismod_at_version
 # 2. Check that the corresponding hash is $dismod_at_hash
-# 3. Change install prefix to /home/prefix/dismod_at
+# 3. Change install prefix to $prefix
 # 4. Get cppad_mixed library and dependencies
 
 RUN \
 git pull && \
 git checkout --quiet $dismod_at_hash  && \
 grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
-mkdir /home/prefix && \
-sed -i bin/run_cmake.sh -e 's|\$HOME/|/home/|g'
+sed -i bin/run_cmake.sh \
+   -e 's|^dismod_at_prefix=.*|dismod_at_prefix='$prefix'|'
 
 # set build_type
 RUN \
@@ -348,7 +348,6 @@ EOF
 # -----------------------------------------------------------------------------
 elif [ "$2" == 'dismod_at' ]
 then
-dir='/home/prefix'
 site_packages="$prefix/lib/python3.8/site-packages"
 cat << EOF > Dockerfile
 FROM dismod_at.mixed.$build_type
@@ -366,13 +365,14 @@ ENV PATH="\$PATH:$prefix/bin"
 
 # 1. Get source corresponding to dismod_at hash
 # 2. Check the corresponding dismod_at version
-# 3. Change install prefix to /home/prefix/dismod_at
+# 3. Change install prefix to $prefix
 RUN \
 git checkout master && \
 git pull && \
 git checkout --quiet $dismod_at_hash  && \
 grep "$dismod_at_version" CMakeLists.txt > /dev/null &&\
-sed -i bin/run_cmake.sh -e 's|\$HOME/|/home/|g'
+sed -i bin/run_cmake.sh \
+   -e 's|^dismod_at_prefix=.*|dismod_at_prefix='$prefix'|'
 
 # Drop column command started with sqlite-3.35.0. This version of ubuntu
 # uses sqlite-3.31.1 so remove test of old2new_command.
@@ -415,12 +415,9 @@ sed -i bin/check_all.sh -e '/run_xrst.sh/d'
 WORKDIR /home/at_cascade.git
 
 # Test at_cascade using this build_type for dismod_at
-RUN \
-if [ -e $prefix ] ; then rm $prefix ; fi && \
-ln -s $prefix.$build_type $prefix && \
-bin/check_all.sh
+RUN bin/check_all.sh
 
-# Install at_cascade below /home/prefix/dismod_at.$build_type
+# Install at_cascade
 RUN \
 python3 -m build && \
 pip3 install --force-reinstall dist/at_cascade-$at_cascade_version.tar.gz \
