@@ -15,6 +15,7 @@ in reverse order by date.
 The purpose of these sections is to
 assist you in learning about changes between various versions of dismod_at.
 {xrst_toc_hidden
+   xrst/whats_new/2024.xrst
    xrst/whats_new/2023.xrst
    xrst/whats_new/2022.xrst
    xrst/whats_new/2021.xrst
@@ -28,10 +29,11 @@ assist you in learning about changes between various versions of dismod_at.
 
 This Year
 *********
-:ref:`whats_new_2023-name`
+:ref:`whats_new_2024-name`
 
 Previous years
 **************
+:ref:`2022<whats_new_2023-name>`
 :ref:`2022<whats_new_2022-name>`
 :ref:`2021<whats_new_2021-name>`
 :ref:`2020<whats_new_2020-name>` ,

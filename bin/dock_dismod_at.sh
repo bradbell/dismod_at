@@ -185,8 +185,8 @@ set -e -u
 # This script can build the following version of the optional at_cascade image:
 # {xrst_spell_off}
 # {xrst_code sh}
-   at_cascade_version='2023.11.30'
-   at_cascade_hash='76ed17ae2a3bcd4977d8c22cecc25b9bbd3ad283'
+   at_cascade_version='2023.12.22'
+   at_cascade_hash='499a7b680a387469af2a659c7b747acea69ed0f3'
 # {xrst_code}
 # {xrst_spell_on}
 #

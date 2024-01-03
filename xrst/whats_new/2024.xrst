@@ -1,0 +1,25 @@
+$Id:$
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin whats_new_2024}
+{xrst_spell
+   mm
+   dd
+}
+
+Changes and Additions to Dismod_at During 2024
+##############################################
+
+mm-dd
+*****
+
+01-03
+=====
+On 2023 :ref:`whats_new_2023@mm-dd@12-29` the dock_dismod_at.sh
+:ref:`dock_dismod_at.sh@at_cascade_version` did not
+advance to 2023.12.22 (it was 2023.11.20).
+This has been fixed.
+
+{xrst_end whats_new_2024}
