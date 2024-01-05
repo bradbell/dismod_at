@@ -45,17 +45,17 @@ set -e -u
 #     ``./dock_dismod_at.sh dismod_at`` ,``dismod_at.dismod_at``\ *build_type*
 #     ``./dock_dismod_at.sh at_cascade``,``dismod_at.at_cascade``\ *build_type*
 #
-#  #. The *build_type* can be ``debug`` or ``release`` ; see
+# #.  The *build_type* can be ``debug`` or ``release`` ; see
 #     :ref:`dock_dismod_at.sh@build_type` .
-#  #. Each image above depends on its previous image; e.g., if you
+# #.  Each image above depends on its previous image; e.g., if you
 #     rebuild ``dismod_at.base`` , you must rebuild all the other images.
 #     The :ref:`release_notes-name` will mention when never versions are
 #     available.
-#  #. The image commands above will not execute if the corresponding image
+# #.  The image commands above will not execute if the corresponding image
 #     already exists.
 #     You must remove containers that use an image and then remove the image,
 #     before you can create a new version of the image.
-#  #. The commands above will create a
+# #.  The commands above will create a
 #     `Dockerfile <https://docs.docker.com/glossary/?term=Dockerfile>`_
 #     in the current working directory.
 #     If such a file already exists, it will need to be moved or deleted
