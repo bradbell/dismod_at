@@ -15,6 +15,31 @@ Changes and Additions to Dismod_at During 2024
 mm-dd
 *****
 
+01-05
+*****
+**API Change** :
+The :ref:`dock_dismod_at.sh-name` documentation has been simplified
+and its API has changed as follows:
+
+#. The word ``image`` is not longer present in the
+   :ref:`dock_dismod_at.sh@Syntax` for each of the dock_dismod_at.sh
+   commands.
+#. The image names have been changed as follows:
+
+   .. list-table::
+      :header-rows: 1
+
+      * - Old Name
+        - New Name
+      * - ``dismod_at.base``
+        - ``dismod_at.base``
+      * - ``dismod_at.mixed``\ *build_type*
+        - ``dismod_at.mixed``\ *build_type*
+      * - ``dismod_at.image.dismod_at``\ *build_type*
+        - ``dismod_at.dismod_at``\ *build_type*
+      * - ``at_cascade.image.dismod_at``\ *build_type*
+        - ``dismod_at.at_cascade``\ *build_type*
+
 01-03
 =====
 On 2023 :ref:`whats_new_2023@mm-dd@12-29` the dock_dismod_at.sh

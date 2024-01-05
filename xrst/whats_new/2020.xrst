@@ -100,9 +100,9 @@ to specify a prefix for each of the
    are available.
 #. **API change** for :ref:`dock_dismod_at.sh-name` .
    To be specific, there are now three dismod_at docker images:
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at.base` ,
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at.mixed` ,
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+   dismod_at.base ,
+   dismod_at.mixed ,
+   dismod_at.image .
    You must rebuild all of these images.
 
 10-10
@@ -120,7 +120,7 @@ This bug only occurred when ``ldlt_cholmod`` was ``yes`` in
 the factorization of the random effects Hessian had a permutation
 that did not act as its own inverse.
 To use the new dock_dismod_at.sh you will have to build a new
-:ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+dismod_at.image .
 
 08-23
 =====
@@ -152,7 +152,7 @@ so that ipopt and all its libraries also get built for debugging.
    :ref:`dock_dismod_at.sh@dismod_at_version`
    to 20200702.
    This will require building a new
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+   dismod_at.image .
 
 07-01
 =====
@@ -179,9 +179,9 @@ Advance to the dock_dismod_at.sh
 :ref:`dock_dismod_at.sh@dismod_at_version`
 to 20200620
 This will require building a new
-:ref:`dock_dismod_at.sh@Building Images@dismod_at.base`
+dismod_at.base
 and then
-:ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+dismod_at.image .
 
 06-20
 =====
@@ -294,7 +294,7 @@ asymptotic sampling method.
    :ref:`dock_dismod_at.sh@dismod_at_version`
    to 20200325.
    This will require building a new
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+   dismod_at.image .
 
 03-24
 =====
@@ -357,7 +357,7 @@ in the debug build.
    :ref:`dock_dismod_at.sh@dismod_at_version`
    to 20200318.
    This will require building a new
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+   dismod_at.image .
 #. Add the :ref:`sample_command@simulate_index` argument
    to the asymptotic version of the sample command.
    This fixed a bug where the asymptotic statistics for a fit using
@@ -380,7 +380,7 @@ in the debug build.
    :ref:`dock_dismod_at.sh@dismod_at_version`
    to 20200315.
    This will require building a new
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+   dismod_at.image .
 #. The sample command
    :ref:`sample_command@asymptotic` method
    was changed to ignore all the constraints except for
@@ -414,7 +414,7 @@ in the debug build.
    :ref:`dock_dismod_at.sh@dismod_at_version`
    to 20200309.
    This will require building a new
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+   dismod_at.image .
 
 03-06
 =====
@@ -457,7 +457,7 @@ Advance the dock_dismod_at.sh
 :ref:`dock_dismod_at.sh@dismod_at_version`
 to 20200218.
 This will require building a new
-:ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+dismod_at.image .
 
 02-18
 =====
@@ -484,7 +484,7 @@ has been improved.
    :ref:`dock_dismod_at.sh@dismod_at_version`
    to 20200213.
    This will require building a new
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+   dismod_at.image .
 
 01-31
 =====
@@ -506,7 +506,7 @@ wish list item.
    to 2020010.
    of ``dock_dismod_at.sh`` .
    This will require building a new
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+   dismod_at.image .
 
 01-07
 =====

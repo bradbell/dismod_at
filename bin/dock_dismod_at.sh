@@ -19,45 +19,59 @@ set -e -u
 # }
 # {xrst_comment_ch #}
 #
-# Install and Run dismod_at in a Docker Image
-# ###########################################
+# Install and Run dismod_at and at_cascade in Docker Images
+# #########################################################
 #
 # Purpose
 # *******
-# This bash script will create a dismod_at and at_cascade OCI image.
-# Using this script is an  alternative to going through the steps required to
-# :ref:`install_dismod_at<install_unix-name>` .
-# You can use the following link to get a get a copy of the dismod_at.sh
-# `bash script <https://raw.githubusercontent.com/bradbell/dismod_at/master/bin/dock_dismod_at.sh>`_
+# This bash script will create the dismod_at OCI images.
+# Using this script is an alternative to going through the steps required to
+# :ref:`install_dismod_at<install_unix-name>` and
+# `at_cascade <https://at-cascade.readthedocs.io>`_ .
+# You can use the following link to get a get a copy of
+# `dock_dock_dismod_at/sh <https://raw.githubusercontent.com/bradbell/dismod_at/master/bin/dock_dismod_at.sh>`_
 # If you understand docker, this script also serves as an example
 # install of dismod_at.
 #
 # Syntax
 # ******
 #
-# Build Image
-# ===========
+#  .. csv-table::
+#     :widths: auto
+#     :header: Command, image_name
 #
-# | ``./dock_dismod_at.sh image base``
-# | ``./dock_dismod_at.sh image mixed``
-# | ``./dock_dismod_at.sh image dismod_at``
-# | ``./dock_dismod_at.sh image at_cascade``
+#     ``./dock_dismod_at.sh base``      ,``dismod_at.base``
+#     ``./dock_dismod_at.sh mixed``     ,``dismod_at.mixed``\ *build_type*
+#     ``./dock_dismod_at.sh dismod_at`` ,``dismod_at.dismod_at``\ *build_type*
+#     ``./dock_dismod_at.sh at_cascade``,``dismod_at.at_cascade``\ *build_type*
 #
-# Run Container
-# =============
+#  #. The *build_type* can be ``debug`` or ``release`` ; see
+#     :ref:`dock_dismod_at.sh@build_type` .
+#  #. Each image above depends on its previous image; e.g., if you
+#     rebuild ``dismod_at.base`` , you must rebuild all the other images.
+#     The :ref:`release_notes-name` will mention when never versions are
+#     available.
+#  #. The image commands above will not execute if the corresponding image
+#     already exists.
+#     You must remove containers that use an image and then remove the image,
+#     before you can create a new version of the image.
+#  #. The commands above will create a
+#     `Dockerfile <https://docs.docker.com/glossary/?term=Dockerfile>`_
+#     in the current working directory.
+#     If such a file already exists, it will need to be moved or deleted
+#     before the command can be executed.
 #
-# | *driver* ``run -it --name`` *container_name* ``dismod_at.image bash``
-# | *driver* ``run -it --name`` *container_name* ``at_cascade.image bash``
+# Create A Container
+# ==================
+# | *driver* ``run -it --name`` *container_name* *image_name* ``bash``
 #
 # Resume Container
 # ================
-#
 # | *driver* ``start`` *container_name*
 # | *driver* ``exec -it`` *container_name* ``bash``
 #
 # Copy Files
 # ==========
-#
 # | *driver* ``cp`` *file_name* |space| *container_name*\ ``:/home/work``
 # | *driver* ``cp`` *container_name*\ ``:/home/work/``\ *file_name* |space| .
 #
@@ -69,7 +83,6 @@ set -e -u
 #
 # Remove Image
 # ============
-#
 # | *driver* rmi *image_name*
 #
 #
@@ -105,7 +118,7 @@ set -e -u
 # standard output and standard error to a file.
 # For example,
 #
-#     ``./dock_dismod_at.sh image base >&`` *log_file*
+#     ``./dock_dismod_at.sh base >&`` *log_file*
 #
 # will redirect standard output and standard error to *log_file* .
 # If you do this, you will not see the progress during execution.
@@ -125,54 +138,9 @@ set -e -u
 #
 #     *driver* ``run busybox echo`` ``'Hello World'``
 #
-# Building Images
-# ***************
-# The image commands above will not execute if the corresponding OCI image
-# already exists.
-# You must remove containers that use an image and then remove the image,
-# before you can execute the image command successfully.
-#
-# dismod_at.base
-# ==============
-# The ``image base`` syntax creates a new OCI image with the name
-# ``dismod_at.base`` .
-# The :ref:`whats_new<whats_new_2019-name>` instructions will tell you if
-# you need to re-execute this command.
-#
-# dismod_at.mixed
-# ===============
-# The ``image mixed`` syntax creates a new OCI image with the name
-# ``dismod_at.mixed`` .
-# The ``dismod_at.base`` image must exist before the
-# ``dismod_at.mixed`` image can be created.
-# The :ref:`whats_new<whats_new_2019-name>` instructions will tell you if
-# you need to re-execute this command.
-#
-# dismod_at.image
-# ===============
-# The ``image dismod_at`` syntax creates a new OCI image with the name
-# ``dismod_at.image`` .
-# The ``dismod_at.mixed`` image must exist before the
-# ``dismod_at.image`` image can be created.
-#
-# at_cascade.image
-# ================
-# The ``image at_cascade`` syntax creates a new OCI image with the name
-# ``at_cascade.image`` .
-# The ``dismod_at.image`` image must exist before the
-# ``at_cascade.image`` image can be created.
-# The `at_cascade <https://bradbell.github.io/at_cascade/doc/rst/at_cascade.html>`_ package is an optional add-on to the dismod_at program.
-#
-# Dockerfile
-# ==========
-# The :ref:`dock_dismod_at.sh@Syntax@Build Image` commands above will create a
-# `Dockerfile <https://docs.docker.com/glossary/?term=Dockerfile>`_
-# in the current working directory.
-# If such a file already exists, it will need to be moved or deleted.
-#
 # dismod_at_version
 # *****************
-# This script will build the following version of dismod_at image:
+# This script can build the following version of ``dismod_at.dismod_at``
 # {xrst_spell_off}
 # {xrst_code sh}
    dismod_at_version='20231229'
@@ -182,7 +150,7 @@ set -e -u
 #
 # at_cascade_version
 # ******************
-# This script can build the following version of the optional at_cascade image:
+# This script can build the following version of ``dismod_at.at_cascade``
 # {xrst_spell_off}
 # {xrst_code sh}
    at_cascade_version='2023.12.22'
@@ -193,25 +161,22 @@ set -e -u
 # {xrst_end dock_dismod_at.sh}
 # ---------------------------------------------------------------------------
 ok='true'
-if [ "$#" != 2 ]
+if [ "$#" != 1 ]
 then
    ok='false'
-elif [ "$1" != 'image' ]
-then
-   ok='false'
-elif [ "$2" != 'base' ] \
-&& [ "$2" != 'mixed' ] \
-&& [ "$2" != 'dismod_at' ] \
-&& [ "$2" != 'at_cascade' ]
+elif [ "$1" != 'base' ] \
+&& [ "$1" != 'mixed' ] \
+&& [ "$1" != 'dismod_at' ] \
+&& [ "$1" != 'at_cascade' ]
 then
    ok='false'
 fi
 if [ "$ok" != 'true' ]
 then
-   echo 'usage: dock_dismod_at.sh image base'
-   echo 'usage: dock_dismod_at.sh image mixed'
-   echo 'usage: dock_dismod_at.sh image dismod_at'
-   echo 'usage: dock_dismod_at.sh image at_cascade'
+   echo 'usage: dock_dismod_at.sh base'
+   echo 'usage: dock_dismod_at.sh mixed'
+   echo 'usage: dock_dismod_at.sh dismod_at'
+   echo 'usage: dock_dismod_at.sh at_cascade'
    exit 1
 fi
 # ---------------------------------------------------------------------------
@@ -235,21 +200,11 @@ fi
 # ---------------------------------------------------------------------------
 # Build images
 # ----------------------------------------------------------------------------
-if [ "$2" == 'base' ]
+if [ "$1" == 'base' ]
 then
    image_name="dismod_at.base"
-elif [ "$2" == 'mixed' ]
-then
-   image_name="dismod_at.mixed.$build_type"
-elif [ "$2" == 'dismod_at' ]
-then
-   image_name="dismod_at.image.$build_type"
-elif [ "$2" == 'at_cascade' ]
-then
-   image_name="at_cascade.image.$build_type"
 else
-   'dock_dismod_at.sh: program error'
-   exit 1
+   image_name="dismod_at.$1.$build_type"
 fi
 if [ -e 'Dockerfile' ]
 then
@@ -260,7 +215,7 @@ fi
 if $driver ps -a | grep "$image_name" > /dev/null
 then
    echo 'dock_dismod_at.sh Error'
-   echo 'Must first remove following OCI containers:'
+   echo 'Must first remove following containers:'
    $driver ps -a | head -1
    $driver ps -a | grep "$image_name"
    echo 'Use the following command for each container_id above:'
@@ -270,10 +225,10 @@ fi
 if $driver images | grep "$image_name " > /dev/null
 then
    echo 'dock_dismod_at.sh Error'
-   echo 'Must first remove following images:'
+   echo 'Must first remove following image:'
    $driver images | head -1
    $driver images | grep "$image_name "
-   echo 'Use the following command for each image above:'
+   echo 'Use the following command to remove the image above:'
    echo "$driver rmi image_id"
    exit 1
 fi
@@ -282,7 +237,7 @@ echo 'Creating Dockerfile'
 # prefix
 prefix='/home/venv'
 # ----------------------------------------------------------------------------
-if [ "$2" == 'base' ]
+if [ "$1" == 'base' ]
 then
 cat << EOF > Dockerfile
 # -----------------------------------------------------------------------------
@@ -334,7 +289,7 @@ sed -i bin/run_cmake.sh \
    -e "s|^python3_executable=.*|python3_executable='$prefix/bin/python3'|"
 EOF
 # ----------------------------------------------------------------------------
-elif [ "$2" == 'mixed' ]
+elif [ "$1" == 'mixed' ]
 then
 cat << EOF > Dockerfile
 FROM dismod_at.base
@@ -342,7 +297,7 @@ WORKDIR /home/dismod_at.git
 RUN bin/get_cppad_mixed.sh
 EOF
 # -----------------------------------------------------------------------------
-elif [ "$2" == 'dismod_at' ]
+elif [ "$1" == 'dismod_at' ]
 then
 site_packages="$prefix/lib/python3.11/site-packages"
 cat << EOF > Dockerfile
@@ -370,10 +325,10 @@ cd ..
 WORKDIR /home/work
 EOF
 # ----------------------------------------------------------------------------
-elif [ "$2" == 'at_cascade' ]
+elif [ "$1" == 'at_cascade' ]
 then
 cat << EOF > Dockerfile
-FROM dismod_at.image.$build_type
+FROM dismod_at.dismod_at.$build_type
 WORKDIR /home
 
 # 1. Get source corresponding to at_cascade hash

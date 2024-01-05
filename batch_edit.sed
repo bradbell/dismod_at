@@ -30,4 +30,9 @@
 # '
 # ----------------------------------------------------------------------------
 # Put other sed commands below here and without # at start of line
-s|:ref:`db2csv_command@data.csv@meas_delta`|meas_delta|
+s|:ref:`dock_dismod_at.sh@Building Images@Dockerfile`|Dockerfile|
+s|:ref:`dock_dismod_at.sh@Building Images@dismod_at.base`|dismod_at.base|
+s|:ref:`dock_dismod_at.sh@Building Images@dismod_at.image`|dismod_at.image|
+s|:ref:`dock_dismod_at.sh@Building Images@dismod_at.mixed`|dismod_at.mixed|
+s|:ref:`dock_dismod_at.sh@Building Images@at_cascade.image`|at_cascade.image|
+s|:ref:`dock_dismod_at.sh@Building Images`|Building Images|

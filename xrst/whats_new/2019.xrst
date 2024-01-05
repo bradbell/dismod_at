@@ -259,11 +259,11 @@ the selected section.
 =====
 
 #. The comments in the dock_dismod_at.sh
-   :ref:`dock_dismod_at.sh@Building Images@Dockerfile` were improved.
+   Dockerfile were improved.
    This will help, people who understand docker,
    with the :ref:`install-name` procedure.
 #. The version of ubuntu in
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at.base`
+   dismod_at.base
    was changed from 18.04 to 19.10.
    This requires running
 
@@ -351,7 +351,7 @@ the selected section.
    A modified version of ``bin/run_cmake.sh`` was in the
    dismod_at.base which caused a problem when building dismod_at.image.
    This has been fixed but you should rebuild
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at.base`
+   dismod_at.base
    to get this fix.
 
 09-17
@@ -443,14 +443,14 @@ by constraints on other cause mortality).
 =====
 
 #. The ``dock_dismod_at.sh`` command now has two stages to its build process;
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at.base`
+   dismod_at.base
    and
-   :ref:`dock_dismod_at.sh@Building Images@dismod_at.image` .
+   dismod_at.image .
    This avoids having to rebuild the entire image every time.
 #. Extra Debugging instructions were
    added to the ``dock_dismod_at.sh`` command.
 #. Advance to cppad-20190725. This fixes a warning when
-   :ref:`dock_dismod_at.sh@Building Images` using
+   Building Images using
    ``dock_dismod_at.sh`` .
 
 07-24

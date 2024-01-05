@@ -614,7 +614,7 @@ This is in preparation for adding a warm start option to the fit command.
       ./dock_dismod_at image dismod_at
    {xrst_code}
    {xrst_spell_on}
-   The :ref:`dock_dismod_at.sh@Building Images@dismod_at.mixed`
+   The dismod_at.mixed
    image is necessary because the version of cppad_mixed has changed since
    the last advancement of dock_dismod_at.sh.
 #. In the ``user_data_sim_py`` example the code
