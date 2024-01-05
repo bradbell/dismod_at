@@ -49,8 +49,8 @@ set -e -u
 #     :ref:`dock_dismod_at.sh@build_type` .
 # #.  Each image above depends on its previous image; e.g., if you
 #     rebuild ``dismod_at.base`` , you must rebuild all the other images.
-#     The :ref:`release_notes-name` will mention when never versions are
-#     available.
+#     The :ref:`release_notes-name` will mention when new versions
+#     of the images are available.
 # #.  The image commands above will not execute if the corresponding image
 #     already exists.
 #     You must remove containers that use an image and then remove the image,

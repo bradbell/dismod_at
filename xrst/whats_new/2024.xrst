@@ -21,7 +21,7 @@ mm-dd
 The :ref:`dock_dismod_at.sh-name` documentation has been simplified
 and its API has changed as follows:
 
-#. The word ``image`` is not longer present in the
+#. The word ``image`` is no longer present in the
    :ref:`dock_dismod_at.sh@Syntax` for each of the dock_dismod_at.sh
    commands.
 #. The image names have been changed as follows:
