@@ -41,9 +41,9 @@ set -e -u
 #     :header: Command, image_name
 #
 #     ``./dock_dismod_at.sh base``      ,``dismod_at.base``
-#     ``./dock_dismod_at.sh mixed``     ,``dismod_at.mixed``\ *build_type*
-#     ``./dock_dismod_at.sh dismod_at`` ,``dismod_at.dismod_at``\ *build_type*
-#     ``./dock_dismod_at.sh at_cascade``,``dismod_at.at_cascade``\ *build_type*
+#     ``./dock_dismod_at.sh mixed``     ,``dismod_at.mixed.``\ *build_type*
+#     ``./dock_dismod_at.sh dismod_at`` ,``dismod_at.dismod_at.``\ *build_type*
+#     ``./dock_dismod_at.sh at_cascade``,``dismod_at.at_cascade.``\ *build_type*
 #
 # #.  The *build_type* can be ``debug`` or ``release`` ; see
 #     :ref:`dock_dismod_at.sh@build_type` .

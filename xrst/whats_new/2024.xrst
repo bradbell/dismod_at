@@ -33,12 +33,12 @@ and its API has changed as follows:
         - New Name
       * - ``dismod_at.base``
         - ``dismod_at.base``
-      * - ``dismod_at.mixed``\ *build_type*
-        - ``dismod_at.mixed``\ *build_type*
-      * - ``dismod_at.image.dismod_at``\ *build_type*
-        - ``dismod_at.dismod_at``\ *build_type*
-      * - ``at_cascade.image.dismod_at``\ *build_type*
-        - ``dismod_at.at_cascade``\ *build_type*
+      * - ``dismod_at.mixed.``\ *build_type*
+        - ``dismod_at.mixed.``\ *build_type*
+      * - ``dismod_at.image.``\ *build_type*
+        - ``dismod_at.dismod_at.``\ *build_type*
+      * - ``at_cascade.image.``\ *build_type*
+        - ``dismod_at.at_cascade.``\ *build_type*
 
 01-03
 =====
