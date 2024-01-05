@@ -16,7 +16,7 @@ mm-dd
 *****
 
 01-05
-*****
+=====
 **API Change** :
 The :ref:`dock_dismod_at.sh-name` documentation has been simplified
 and its API has changed as follows:
