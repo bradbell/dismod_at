@@ -143,8 +143,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.dismod_at``
 # {xrst_spell_off}
 # {xrst_code sh}
-   dismod_at_version='20231229'
-   dismod_at_hash='06d27afd568be551762fc9b4d5f63cd5566de8cf'
+   dismod_at_version='20240105'
+   dismod_at_hash='bd93a7ebddd104baae37c63cd11f0c29c682a23b'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -153,8 +153,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.at_cascade``
 # {xrst_spell_off}
 # {xrst_code sh}
-   at_cascade_version='2023.12.22'
-   at_cascade_hash='499a7b680a387469af2a659c7b747acea69ed0f3'
+   at_cascade_version='2024.1.28'
+   at_cascade_hash='d5d94ef82f52e55fca0127b514d0293ff2598926'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -339,7 +339,6 @@ git clone https://github.com/bradbell/at_cascade.git at_cascade.git && \
 cd at_cascade.git && \
 git checkout --quiet $at_cascade_hash && \
 grep "at_cascade-$at_cascade_version\$" at_cascade.xrst > /dev/null && \
-sed -i bin/check_all.sh -e '/run_xrst.sh/d' && \
 sed -i bin/run_test.sh -e 's|if python3|if $prefix/bin/python3|'
 
 WORKDIR /home/at_cascade.git
