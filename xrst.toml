@@ -28,6 +28,7 @@ latex_macro = [
    '\newcommand{\W}[1]{ \; #1 \; }'
 ]
 
+# BEGIN_SORT_THIS_LINE_PLUS_3
 [project_dictionary]
 data = [ '''
    avg
@@ -47,11 +48,15 @@ data = [ '''
    dismodat
    dtime
    eqnarray
+   gaussian
    hes
    init
+   int
    ipopt
    laplace
+   max
    meas
+   min
    mulcov
    mulstd
    multiplier
@@ -75,3 +80,4 @@ data = [ '''
    var
    vec
 ''' ]
+# END_SORT_THIS_LINE_MINUS_2
