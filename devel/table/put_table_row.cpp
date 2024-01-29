@@ -4,6 +4,10 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin put_table_row dev}
+{xrst_spell
+   col
+   val
+}
 
 C++: Insert New Row at End of a Table
 #####################################

@@ -448,9 +448,6 @@ n_child_        ( child_id2node_id.size() )
 /*
 -------------------------------------------------------------------------------
 {xrst_begin pack_info_sizes dev}
-{xrst_spell
-   subgroups
-}
 
 Variable Pack Info: Sizes
 #########################
@@ -1027,7 +1024,6 @@ pack_info::group_rate_value_info(size_t rate_id, size_t j) const
 ------------------------------------------------------------------------------
 {xrst_begin pack_info_subgroup_rate dev}
 {xrst_spell
-   subgroups
    subvec
 }
 
@@ -1172,7 +1168,6 @@ pack_info::subvec_info pack_info::subgroup_rate_value_info(
 ------------------------------------------------------------------------------
 {xrst_begin pack_info_subgroup_meas dev}
 {xrst_spell
-   subgroups
    subvec
 }
 

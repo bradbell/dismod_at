@@ -5,7 +5,6 @@
 # {xrst_begin user_hes_fixed_math.py}
 # {xrst_spell
 #     cc
-#     minimizer
 # }
 # {xrst_comment_ch #}
 #

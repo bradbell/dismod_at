@@ -5,24 +5,23 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin whats_new_2017}
 {xrst_spell
-   apposed
    cmake
    command command
    dd
+   dev
    eigen
    fabs
    frac
    github
    libdir
+   lookup
    lrt
+   meta
    mm
-   optimizer
-   postscripts
-   sparsity
+   sam
    subgraph
    suitesparse
    tst
-   unscaled
 }
 
 Changes and Additions to Dismod_at During 2017

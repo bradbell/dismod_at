@@ -3,9 +3,6 @@
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_sum_residual.py}
-# {xrst_spell
-#     estimator
-# }
 # {xrst_comment_ch #}
 #
 # Sum of Residuals at Optimal Estimate

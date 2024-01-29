@@ -5,12 +5,6 @@
 {xrst_begin posterior}
 {xrst_spell
    cc
-   covariance
-   determinant
-   estimator
-   lemma
-   lemmas
-   maximizer
 }
 
 Simulating Posterior Distribution for Model Variables

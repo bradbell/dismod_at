@@ -3,6 +3,9 @@
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin bnd_mulcov_table}
+{xrst_spell
+   diff
+}
 
 The Covariate and Multiplier Bound Table
 ########################################

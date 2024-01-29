@@ -6,7 +6,6 @@
 {xrst_begin bilinear_interp dev}
 {xrst_spell
    interpolant
-   interpolating
 }
 
 Bilinear Interpolation

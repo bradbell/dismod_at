@@ -5,8 +5,6 @@
 # {xrst_begin user_lasso_covariate.py}
 # {xrst_spell
 #     exp
-#     nonzero
-#     refits
 # }
 # {xrst_comment_ch #}
 #

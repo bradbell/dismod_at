@@ -3,6 +3,9 @@
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_sim_log.py}
+# {xrst_spell
+#     meta
+# }
 # {xrst_comment_ch #}
 #
 # Simulating Data with Log Transformed Distribution

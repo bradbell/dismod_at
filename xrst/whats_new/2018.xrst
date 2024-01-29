@@ -6,27 +6,24 @@ $Id:$
 {xrst_begin whats_new_2018}
 {xrst_spell
    cholmod
-   compilers
+   da
    dd
    dt
-   estimators
    gcc
    grep
    hpp
-   instal
-   integrals
-   lemma
+   ik
    mm
    msg
    mtother
-   nans
-   optimizer
-   prefixes
    rel
+   sec
    sql
    subvector
    suitesparse
    txt
+   ty
+   un
    wconversion
    wpedantic
    wshadow

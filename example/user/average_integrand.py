@@ -4,9 +4,6 @@
 # ----------------------------------------------------------------------------
 """
 {xrst_begin user_average_integrand.py}
-{xrst_spell
-   integrators
-}
 
 Using the Python average_integrand Utility
 ##########################################

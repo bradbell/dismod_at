@@ -6,10 +6,10 @@ $Id:$
 {xrst_begin whats_new_2023}
 {xrst_spell
    cmake
-   mm
    dd
-   readonly
+   mm
    nslict
+   readonly
    stderr
    ubuntu
 }

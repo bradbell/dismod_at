@@ -7,6 +7,9 @@
 
 /*
 {xrst_begin time_line_vec dev}
+{xrst_spell
+   diff
+}
 
 Vector of Time Lines For Averaging a Function of Age and Time
 #############################################################

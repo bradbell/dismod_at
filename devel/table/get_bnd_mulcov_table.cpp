@@ -4,6 +4,9 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_bnd_mulcov_table dev}
+{xrst_spell
+   diff
+}
 
 C++: Get the Data Subset Table
 ##############################

@@ -3,6 +3,10 @@
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_bnd_mulcov.py}
+# {xrst_spell
+#     diff
+#     europe
+# }
 # {xrst_comment_ch #}
 #
 # Bounding Covariate Multipliers Absolute Data Effect

@@ -5,7 +5,9 @@
 # ----------------------------------------------------------------------------
 # {xrst_begin metropolis}
 # {xrst_spell
+#     markov
 #     numpy
+#     un
 # }
 # {xrst_comment_ch #}
 #

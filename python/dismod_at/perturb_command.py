@@ -4,7 +4,6 @@
 # ----------------------------------------------------------------------------
 # {xrst_begin perturb_command}
 # {xrst_spell
-#     perturbing
 #     tbl
 # }
 # {xrst_comment_ch #}

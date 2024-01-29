@@ -9,19 +9,18 @@ $Id:$
    distutils
    homebrew
    ihme
-   integrator
    lsoda
    matplotlib
    mm
    omhelp
    prc
    rel
+   sam
    scipi
    scipy
    stdout
    suitesparse
    tol
-   weightings
 }
 
 Changes and Additions to Dismod_at During 2022

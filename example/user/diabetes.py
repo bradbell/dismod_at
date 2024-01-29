@@ -4,13 +4,13 @@
 # ----------------------------------------------------------------------------
 # {xrst_begin user_diabetes.py}
 # {xrst_spell
+#     ae
 #     bmi
 #     bool
-#     integrals
-#     ms
+#     ik
 #     mtspecific
 #     rel
-#     ts
+#     te
 # }
 # {xrst_comment_ch #}
 #

@@ -5,13 +5,11 @@
 {xrst_begin trace_fixed_table}
 {xrst_spell
    biegler
-   infeasibility
+   du
    iter
    lagrange
    lagrangian
-   ls
    pr
-   reformulated
    wachter
 }
 

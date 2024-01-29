@@ -5,6 +5,7 @@
 # {xrst_begin user_warm_start.py}
 # {xrst_spell
 #     iter
+#     num
 #     stderr
 # }
 # {xrst_comment_ch #}

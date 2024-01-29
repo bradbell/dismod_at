@@ -8,24 +8,24 @@ $Id:$
    cholesky
    cholmod
    cmake
-   covariance
    dd
+   dev
    devel
    eigen
-   factorization
    gcc
    gsl
    hpp
    iter
    lagrange
    libdir
-   metis
    mm
    nlp
-   optimizer
+   num
    relrisk
+   res
    rng
    suitesparse
+   sys
    wmisleading
    zsum
 }

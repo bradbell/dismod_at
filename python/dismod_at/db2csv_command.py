@@ -4,10 +4,13 @@
 # ----------------------------------------------------------------------------
 # {xrst_begin db2csv_command}
 # {xrst_spell
+#     diff
 #     dir
 #     ihme
 #     ij
-#     ss
+#     reg
+#     res
+#     sam
 #     stdcv
 # }
 # {xrst_comment_ch #}

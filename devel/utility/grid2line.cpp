@@ -4,9 +4,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin grid2line dev}
-{xrst_spell
-   interpolated
-}
 
 Interpolation from Smoothing Grid to a Line
 ###########################################

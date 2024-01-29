@@ -3,9 +3,6 @@
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_censor.py}
-# {xrst_spell
-#     nonzero
-# }
 # {xrst_comment_ch #}
 #
 # Fitting Data That Has Negative Values Censored

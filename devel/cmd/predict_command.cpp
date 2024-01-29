@@ -16,9 +16,6 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
 -------------------------------------------------------------------------------
 {xrst_begin predict_command}
-{xrst_spell
-   withing
-}
 
 The Predict Command
 ###################

@@ -5,6 +5,7 @@
 # ----------------------------------------------------------------------------
 # {xrst_begin get_name_type}
 # {xrst_spell
+#     col
 #     tbl
 # }
 # {xrst_comment_ch #}

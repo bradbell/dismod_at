@@ -3,6 +3,9 @@
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_hold_out_2.py}
+# {xrst_spell
+#     europe
+# }
 # {xrst_comment_ch #}
 #
 # hold_out Command: Balancing Sex Covariate Values

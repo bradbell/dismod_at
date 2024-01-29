@@ -8,17 +8,18 @@ $Id:$
    checkpointing
    cmake
    dd
-   distributions
+   dev
    dockerfile
+   goto
    iter
    misspecification
    mm
+   num
    omh
    omhelp
+   sam
    stdcv
    ubuntu
-   uninformative
-   variate
 }
 
 Changes and Additions to Dismod_at During 2019

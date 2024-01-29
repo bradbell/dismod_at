@@ -5,6 +5,7 @@
 /*
 {xrst_begin get_density_table dev}
 {xrst_spell
+   cen
    enum
    nonsmooth
 }

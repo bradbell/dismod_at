@@ -5,8 +5,6 @@
 {xrst_begin bilinear}
 {xrst_spell
    interpolant
-   interpolated
-   interpolating
 }
 
 dismod_at Bilinear Interpolation

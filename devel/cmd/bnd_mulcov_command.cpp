@@ -20,6 +20,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 -----------------------------------------------------------------------------
 {xrst_begin bnd_mulcov_command}
 {xrst_spell
+   diff
    mul
 }
 

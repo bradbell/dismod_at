@@ -7,6 +7,7 @@
 {xrst_begin cpp_create_table dev}
 {xrst_spell
    bool
+   col
 }
 
 Use C++ to Create a Database Table

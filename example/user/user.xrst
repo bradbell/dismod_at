@@ -8,8 +8,8 @@ $Id:$
    asy
    bilevel
    covid
+   diff
    prc
-   trapezoidal
    zsum
 }
 

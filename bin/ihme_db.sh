@@ -8,6 +8,7 @@
 # {xrst_spell
 #     cmake
 #     dir
+#     epi
 # }
 # {xrst_comment_ch #}
 #

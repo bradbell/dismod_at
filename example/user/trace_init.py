@@ -4,6 +4,7 @@
 # ----------------------------------------------------------------------------
 # {xrst_begin user_trace_init.py}
 # {xrst_spell
+#     def
 #     exp
 # }
 # {xrst_comment_ch #}

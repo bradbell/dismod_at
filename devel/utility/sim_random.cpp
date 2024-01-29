@@ -6,6 +6,7 @@
 /*
 {xrst_begin sim_random dev}
 {xrst_spell
+   cen
    enum
    gsl
    rng

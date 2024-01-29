@@ -6,7 +6,6 @@
 {xrst_begin eigen_ode2 dev}
 {xrst_spell
    cc
-   eigenvalue
    eigenvector
    tf
    yf

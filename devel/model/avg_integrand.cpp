@@ -570,6 +570,7 @@ Float avg_integrand::rectangle(
 {xrst_begin avg_integrand_add_cohort dev}
 {xrst_spell
    adj
+   ini
 }
 
 Add ODE Solution for One Cohort To time_line_object

@@ -5,6 +5,7 @@
 /*
 {xrst_begin log_message dev}
 {xrst_spell
+   os
    ostream
    unix
 }

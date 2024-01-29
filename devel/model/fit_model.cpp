@@ -808,7 +808,6 @@ CppAD::mixed::d_sparse_rcv fit_model::random_obj_hes(
 ---------------------------------------------------------------------------
 {xrst_begin fit_model_sample_posterior dev}
 {xrst_spell
-   covariance
    uhat
 }
 

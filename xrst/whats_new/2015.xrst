@@ -9,27 +9,22 @@ $Id:$
    arg
    bool
    cmake
-   compilers
    dd
+   dev
    devel
    eigen
    enum
-   gnu
    hpp
    ihme
-   installers
    libdir
-   massif
    mixed mixed
    mm
    mtwith
    nullptr
-   optimizer
-   quotients
+   pos
+   pre
    relrisk
-   reproducible
-   simplification
-   sparsity
+   sec
    tincidence
    valgrind
    xam

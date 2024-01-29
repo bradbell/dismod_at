@@ -5,9 +5,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin fixed_effect dev}
-{xrst_spell
-   inverses
-}
 
 Setting and Getting the Fixed Effect Vector
 ###########################################

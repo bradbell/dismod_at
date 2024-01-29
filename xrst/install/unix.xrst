@@ -8,10 +8,10 @@ $Id:$
    cd
    cmake
    config
+   dev
    devel
    eigen
    fortran
-   gnu
    grep
    gsl
    install install

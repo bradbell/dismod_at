@@ -5,7 +5,6 @@
 # {xrst_begin user_sample_asy_sim.py}
 # {xrst_spell
 #     cc
-#     estimator
 # }
 # {xrst_comment_ch #}
 #

@@ -3,6 +3,9 @@
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_compress.py}
+# {xrst_spell
+#     def
+# }
 # {xrst_comment_ch #}
 #
 # Using Data Interval Compression

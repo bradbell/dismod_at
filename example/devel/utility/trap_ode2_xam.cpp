@@ -4,9 +4,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin trap_ode2_xam.cpp dev}
-{xrst_spell
-   trapezoidal
-}
 
 Example and Test of Trapezoidal Method of Solving ODE
 #####################################################

@@ -6,13 +6,10 @@
 #
 # {xrst_begin run_cmake.sh}
 # {xrst_spell
-#     colons
-#     compilers
 #     cxx
 #     fortran
 #     gcc
 #     gfortran
-#     gnu
 #     libdir
 #     makefile
 #     pthread

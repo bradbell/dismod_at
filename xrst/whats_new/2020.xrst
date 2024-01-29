@@ -9,20 +9,14 @@ $Id:$
    cholmod
    chron
    coinbrew
-   covariance
    dd
-   dependencies
    devel
    eigen
-   factorization
+   ip
    ldlt
    mm
    modversion
-   nulls
-   optimizer
    pc
-   simplification
-   statics
 }
 
 Changes and Additions to Dismod_at During 2020

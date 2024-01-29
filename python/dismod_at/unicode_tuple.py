@@ -6,7 +6,6 @@
 # {xrst_begin unicode_tuple}
 # {xrst_spell
 #     iterable
-#     iterate
 # }
 # {xrst_comment_ch #}
 #

@@ -18,6 +18,9 @@
 /*
 -----------------------------------------------------------------------------
 {xrst_begin hold_out_command}
+{xrst_spell
+   thoes
+}
 
 Hold Out Command: Randomly Sub-sample The Data
 ##############################################

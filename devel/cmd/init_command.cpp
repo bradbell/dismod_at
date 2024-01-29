@@ -14,9 +14,6 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
 -----------------------------------------------------------------------------
 {xrst_begin init_command}
-{xrst_spell
-   initializes
-}
 
 The Initialize Command
 ######################

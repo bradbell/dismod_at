@@ -4,9 +4,6 @@ $Id:$
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin command}
-{xrst_spell
-   perturb
-}
 
 The dismod_at Commands
 ######################

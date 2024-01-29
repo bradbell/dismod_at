@@ -4,9 +4,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_db_input dev}
-{xrst_spell
-   preform
-}
 
 C++: Get the Data Base Input Tables
 ###################################

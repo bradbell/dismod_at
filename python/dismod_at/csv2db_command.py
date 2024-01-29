@@ -4,6 +4,7 @@
 # ----------------------------------------------------------------------------
 # {xrst_begin csv2db_command}
 # {xrst_spell
+#     da
 #     dt
 #     mtall
 #     mtexcess

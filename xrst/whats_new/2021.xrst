@@ -5,17 +5,15 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin whats_new_2021}
 {xrst_spell
+   cen
    cmake
-   complementarity
    covid
    cygwin
    dd
-   debugger
    dir
    distutils
    eigen
    ihme
-   integrators
    lagrange
    lagrangian
    makedirs
@@ -23,15 +21,15 @@ $Id:$
    mm
    msg
    msys
-   nulls
    ocurred
+   os
    pdf
    podman
    prc
-   scalars
    stdcv
    stderr
    stdout
+   sys
    table table
    ubuntu
    util

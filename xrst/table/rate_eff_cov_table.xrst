@@ -3,6 +3,9 @@
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin rate_eff_cov_table}
+{xrst_spell
+   attaches
+}
 
 The Rate Effect Covariate Table
 ###############################

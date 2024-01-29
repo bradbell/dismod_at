@@ -5,8 +5,8 @@
 # {xrst_begin user_jump_at_age.py}
 # {xrst_spell
 #     apx
+#     def
 #     exp
-#     interpolated
 # }
 # {xrst_comment_ch #}
 #

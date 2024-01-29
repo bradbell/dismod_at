@@ -5,9 +5,6 @@
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin random_effect dev}
-{xrst_spell
-   inverses
-}
 
 Setting and Getting the Random Effect Vector
 ############################################

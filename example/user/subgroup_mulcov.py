@@ -3,9 +3,6 @@
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_subgroup_mulcov.py}
-# {xrst_spell
-#     subgroups
-# }
 # {xrst_comment_ch #}
 #
 # Example Fitting With Subgroup Covariate Multipliers

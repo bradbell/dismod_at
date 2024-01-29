@@ -3,6 +3,9 @@
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin get_started_db.py}
+# {xrst_spell
+#     ik
+# }
 # {xrst_comment_ch #}
 #
 # Create get_started Input Tables: Example and Test

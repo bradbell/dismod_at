@@ -4,6 +4,7 @@
 # ----------------------------------------------------------------------------
 # {xrst_begin user_shock_cov.py}
 # {xrst_spell
+#     def
 #     exp
 # }
 # {xrst_comment_ch #}

@@ -5,10 +5,7 @@
 # ----------------------------------------------------------------------------
 {xrst_begin average_integrand}
 {xrst_spell
-   integrator
-   integrators
    tol
-   trapezoidal
 }
 
 Compute The Average Integrand

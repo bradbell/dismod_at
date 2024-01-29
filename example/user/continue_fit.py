@@ -5,6 +5,7 @@
 # {xrst_begin user_continue_fit.py}
 # {xrst_spell
 #     iter
+#     num
 #     stderr
 # }
 # {xrst_comment_ch #}

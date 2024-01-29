@@ -21,9 +21,6 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
 -------------------------------------------------------------------------------
 {xrst_begin sample_command}
-{xrst_spell
-   covariance
-}
 
 The Sample Command
 ##################

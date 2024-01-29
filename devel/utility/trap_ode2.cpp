@@ -6,8 +6,8 @@
 {xrst_begin trap_ode2 dev}
 {xrst_spell
    cc
+   cramer
    tf
-   trapezoidal
    yf
    yi
 }

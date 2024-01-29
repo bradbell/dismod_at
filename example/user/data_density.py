@@ -3,9 +3,6 @@
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_data_density.py}
-# {xrst_spell
-#     nonzero
-# }
 # {xrst_comment_ch #}
 #
 # Fit With Outliers Using Data Density Command

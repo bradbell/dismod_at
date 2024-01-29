@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 {xrst_begin hes_fixed_table}
 {xrst_spell
-   differentiable
+   col
 }
 
 Hessian of The Fixed Effect Objective Function

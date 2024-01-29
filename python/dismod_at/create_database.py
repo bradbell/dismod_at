@@ -5,6 +5,7 @@
 # {xrst_begin create_database}
 # {xrst_spell
 #     bool
+#     da
 #     dt
 #     len
 #     subsmooth

@@ -6,6 +6,7 @@
 /*
 {xrst_begin blob_table dev}
 {xrst_spell
+   col
    sizeof
 }
 

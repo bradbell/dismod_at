@@ -5,6 +5,7 @@
 # ----------------------------------------------------------------------------
 # {xrst_begin create_table}
 # {xrst_spell
+#     col
 #     tbl
 # }
 # {xrst_comment_ch #}

@@ -3,6 +3,9 @@
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin hes_random_table}
+{xrst_spell
+   col
+}
 
 Hessian of The Random Effect Objective Function
 ###############################################

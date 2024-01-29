@@ -7,20 +7,15 @@ $Id:$
 {xrst_spell
    auxillary
    checkpointing
-   conditionals
    cppadcg
    curred
-   distributions
+   dev
    eigen
+   gen
    lagrange
-   minima
-   onces
-   optimizer
-   reformulated
-   truncates
-   truncation
    misspecification
-   bootstrapping
+   multi
+   onces
 }
 
 Dismod_at Wish List
