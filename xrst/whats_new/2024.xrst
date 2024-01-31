@@ -15,6 +15,10 @@ Changes and Additions to Dismod_at During 2024
 mm-dd
 *****
 
+01-31
+=====
+Add a hold out example to the :ref:`wish_list@Batch Command` wish list item.
+
 01-28
 =====
 In :ref:`dock_dismod_at.sh-name` advance to

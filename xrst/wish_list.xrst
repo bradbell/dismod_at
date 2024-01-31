@@ -53,9 +53,11 @@ Batch Command
 *************
 Add a batch command that combines multiple commands in a file.
 In some cases, dismod_at would not need to re-initialize and could save
-a considerable amount of time. For example, when executing a
-:ref:`sample_command-name` or :ref:`predict_command-name` after a
-:ref:`fit_command-name` .
+a considerable amount of time. For example:
+
+#. When executing the :ref:`hold_out_command-name` for multiple integrands.
+#. When executing a :ref:`sample_command-name` or :ref:`predict_command-name`
+   after a :ref:`fit_command-name` .
 
 Empty Tables
 ************
