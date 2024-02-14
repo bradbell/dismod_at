@@ -81,10 +81,15 @@ ENDFOREACH(user_case)
 ADD_CUSTOM_TARGET( check_example_user DEPENDS ${depends} )
 # ---------------------------------------------------------------------------
 # Build check_example_user_speed (not included above)
+# Arguemen values that caused CppAD to crash before versions
+# 20240214 and 20240000.3; see heading 02-14 on
+# https://cppad.readthedocs.io/latest/whats_new_24.html#whats-new-24-mm-dd-02-14
 SET(random_seed      0)
 SET(n_children       10)
 SET(quasi_fixed     "false")
 SET(ode_step_size    5)
+SET(n_data           200)
+SET(max_fit          50)
 #
 ADD_CUSTOM_TARGET(
    check_example_user_speed
@@ -93,6 +98,8 @@ ADD_CUSTOM_TARGET(
       ${n_children}
       ${quasi_fixed}
       ${ode_step_size}
+      ${n_data}
+      ${max_fit}
    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
    DEPENDS dismod_at
 )

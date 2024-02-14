@@ -15,6 +15,20 @@ Changes and Additions to Dismod_at During 2024
 mm-dd
 *****
 
+02-14
+=====
+#. Make :ref:`user_speed.py@n_data` an adjustable parameter to the
+   speed.py timing tests.
+   Include the :ref:`hold_out_command-name` in the speed.py timing tests.
+   In addition, separate the elapsed time into the different steps
+   taken by speed.py.
+
+#. Advance to cppad_mixed-20240214.
+   This fixes a bug in CppAD, which was discovered using the
+   new *n_data* argument and hold_out commands in speed.py .
+
+.. _2023-02-14: https://cppad.readthedocs.io/latest/whats_new_24.html#whats-new-24-mm-dd-02-14
+
 01-31
 =====
 Add a hold out example to the :ref:`wish_list@Batch Command` wish list item.

@@ -12,7 +12,12 @@
 # ******
 #
 # | *python3* ``example/user/speed.py`` \\
-# | |tab| *random_seed* *n_children* *quasi_fixed* *ode_step_size*
+# | |tab| *random_seed* \\
+# | |tab| *n_children* \\
+# | |tab| *quasi_fixed* \\
+# | |tab| *ode_step_size* \\
+# | |tab| *n_data* \\
+# | |tab| *max_fit*
 #
 # python3
 # *******
@@ -43,16 +48,27 @@
 # The total work for the test increases with proportional to the
 # square of this step size
 #
+# n_data
+# ******
+# number of simulated data values
+# ( should be greater than *n_children* ).
+#
+# max_fit
+# *******
+# There are two integrands in this example, Sincidence and prevalence.
+# Each one gets about half the data.
+# One suggested max_fit value is *n_data* / 4; see
+# :ref:`hold_out_command@max_fit` is set to
+# If *max_fit* equals *n_data* , all the data will be included.
+#
 # Fixed Effects
 # *************
-# {xrst_spell_off}
 # {xrst_code py}
 iota_parent_true          = 0.05
 rho_parent_true           = 0.2
 mulcov_income_iota_true   = 1.0
 mulcov_sex_rho_true       = -1.0
 # {xrst_code}
-# {xrst_spell_on}
 #
 # iota_parent_true
 # ================
@@ -76,31 +92,18 @@ mulcov_sex_rho_true       = -1.0
 # ***
 # value of the offset :ref:`statistic@Notation@eta` in the
 # log transformation:
-# {xrst_spell_off}
 # {xrst_code py}
 eta = 1e-6
 # {xrst_code}
-# {xrst_spell_on}
 #
 # measure_cv
 # **********
 # the coefficient of variation for the simulated measurement noise.
 # If you use a larger *measure_cv* you will probably need
 # a larger number of data points; see *n_data* below.
-# {xrst_spell_off}
 # {xrst_code py}
 measure_cv = 0.05
 # {xrst_code}
-# {xrst_spell_on}
-#
-# n_data
-# ******
-# number of simulated data values.
-# {xrst_spell_off}
-# {xrst_code py}
-n_data = 200
-# {xrst_code}
-# {xrst_spell_on}
 #
 # age_list
 # ********
@@ -108,11 +111,9 @@ n_data = 200
 # grid points for the parent rate smoothing of *iota* and *rho* .
 # The child rate smoothing has a grid point at the minimum
 # and maximum age below.
-# {xrst_spell_off}
 # {xrst_code py}
 age_list = [ 0.0, 5.0, 15.0, 35.0, 50.0, 75.0, 90.0, 100.0 ]
 # {xrst_code}
-# {xrst_spell_on}
 #
 # time_list
 # *********
@@ -120,11 +121,9 @@ age_list = [ 0.0, 5.0, 15.0, 35.0, 50.0, 75.0, 90.0, 100.0 ]
 # grid points for the parent rate smoothing of *iota* and *rho* .
 # The child rate smoothing has a grid point at the minimum
 # and maximum time below.
-# {xrst_spell_off}
 # {xrst_code py}
 time_list = [ 1990.0, 2000.0, 2010.0, 2020.0 ]
 # {xrst_code}
-# {xrst_spell_on}
 #
 # Source Code
 # ***********
@@ -140,23 +139,25 @@ import sys
 import os
 import time
 import numpy
+import timeit
 test_program = 'example/user/speed.py'
-if sys.argv[0] != test_program  or len(sys.argv) != 5 :
-   usage  = 'python3 ' + test_program + '\\\n'
-   usage += '\trandom_seed n_children quasi_fixed ode_step_size\n'
-   usage += 'where working directory is dismod_at distribution directory\n'
-   usage += 'python3:          the python 3 program on your system\n'
-   usage += 'random_seed:      non-negative random seed; if zero, use clock\n'
-   usage += 'n_children:       positive number of child nodes\n'
-   usage += 'quasi_fixed:      true or false\n'
-   usage += 'ode_step_size:    floating point step in age and time\n'
+if sys.argv[0] != test_program  or len(sys.argv) != 7 :
+   usage  = 'python3 ' + test_program + 'a1, ..., a6\\\n'
+   usage += 'python3:            the python 3 program on your system\n'
+   usage += 'a1: random_seed:    non-negative random seed; if zero, use clock\n'
+   usage += 'a2: n_children:     positive number of child nodes\n'
+   usage += 'a3: quasi_fixed:    true or false\n'
+   usage += 'a4: ode_step_size:  floating point step in age and time\n'
+   usage += 'a5: n_data:         positive number of simulated data points\n'
+   usage += 'a5: max_fit:        maximum # data points to fit per integrand\n'
    sys.exit(usage)
 #
-start_time       = time.time();
 random_seed_arg  = sys.argv[1]
 n_children       = int( sys.argv[2] )
 quasi_fixed      = sys.argv[3]
 ode_step_size    = sys.argv[4]
+n_data           = int( sys.argv[5] )
+max_fit          = int( sys.argv[6] )
 #
 if quasi_fixed != 'true' and quasi_fixed != 'false' :
    msg = 'quasi_fixed = "' + quasi_fixed + '" is not true or false'
@@ -397,12 +398,19 @@ def example_db (file_name) :
    # ----------------------------------------------------------------------
    return
 # ===========================================================================
-# Run the init command to create the var table
+#
+# elapsed_seconds
+elapsed_seconds = dict()
+#
+# file_name
 file_name  = 'example.db'
 example_db(file_name)
 #
-program = '../../devel/dismod_at'
+# init, elapsed_seconds
+program    = '../../devel/dismod_at'
+start_time = timeit.default_timer()
 dismod_at.system_command_prc([ program, file_name, 'init' ])
+elapsed_seconds['init'] = timeit.default_timer() - start_time
 # -----------------------------------------------------------------------
 # read database
 connection      = dismod_at.create_connection(
@@ -453,18 +461,34 @@ for var_id in range( len(var_table) ) :
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------
-# simulate_command
+# simulate, elapsed_seconds
+start_time = timeit.default_timer()
 dismod_at.system_command_prc(
    [ program, file_name, 'simulate', '1' ]
 )
-# fit_command
+elapsed_seconds['simulate'] = timeit.default_timer() - start_time
+#
+# hold_out, elapsed_seconds
+start_time = timeit.default_timer()
+for integrand_name in [ 'Sincidence', 'prevalence' ] :
+   dismod_at.system_command_prc(
+      [ program, file_name, 'hold_out', integrand_name, str(max_fit) ]
+   )
+elapsed_seconds['hold_out'] = timeit.default_timer() - start_time
+#
+# fit, elapsed_seconds
+start_time = timeit.default_timer()
 dismod_at.system_command_prc(
    [ program, file_name, 'fit', 'both', '0' ]
 )
-# sample_command
+elapsed_seconds['fit'] = timeit.default_timer() - start_time
+#
+# sample, elapsed_seconds
+start_time = timeit.default_timer()
 dismod_at.system_command_prc(
    [ program, file_name, 'sample', 'asymptotic', 'both', '100', '0' ]
 )
+elapsed_seconds['sample'] = timeit.default_timer() - start_time
 # -----------------------------------------------------------------------
 # result tables
 connection    = dismod_at.create_connection(
@@ -518,9 +542,13 @@ print('random_seed      = ', random_seed)
 print('n_children       = ', n_children)
 print('quasi_fixed      = ', quasi_fixed)
 print('ode_step_size    = ', ode_step_size)
-print('elapsed seconds  =', time.time() - start_time)
+print('n_data           = ', n_data)
+print('max_fit          = ', max_fit)
 print('max_error        = ', max_error)
-if max_error > 5e-2 :
+for key in elapsed_seconds :
+   label = f'elapsed_seconds[{key}]'
+   print( f'{label:25} = {elapsed_seconds[key]}' )
+if max_error > 7e-2 :
    print('simulated.py: Error')
    assert(False)
 # -----------------------------------------------------------------------------
