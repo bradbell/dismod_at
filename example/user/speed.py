@@ -100,7 +100,7 @@ eta = 1e-6
 # **********
 # the coefficient of variation for the simulated measurement noise.
 # If you use a larger *measure_cv* you will probably need
-# a larger number of data points; see *n_data* below.
+# a larger number of data points; see *n_data* and *max_fit* above.
 # {xrst_code py}
 measure_cv = 0.05
 # {xrst_code}
