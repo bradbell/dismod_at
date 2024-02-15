@@ -85,12 +85,14 @@
 #
 # Parent Rates
 # ============
-# We use the notation
-# as for age start,
-# ae for age end,
-# ts for time start, and
-# te for time end.
-# The following table gives the values used for the parent rates
+# The true parent rate is defined by its value at four (age, time) points
+# and then bilinear interpolation (in log space) is used between those
+# four points. The four points are (as,ts), (as,te), (ae,ts), (ae,te) where
+# as is age start,
+# ae is age end,
+# ts is time start, and
+# te is time end.
+# The following table gives the values used for the true parent rates
 # (note that the parent rate for pini cannot change with age):
 #
 # .. list-table::
