@@ -15,6 +15,13 @@ Changes and Additions to Dismod_at During 2024
 mm-dd
 *****
 
+02-17
+=====
+There were two rows with the value of
+:ref:`option_table@Age Average Grid@ode_step_size` in the db2csv
+:ref:`db2csv_command@option.csv` file.
+This has been fixed.
+
 02-14
 =====
 #. Make :ref:`user_speed.py@n_data` an adjustable parameter to the

@@ -1228,7 +1228,6 @@ def db2csv_command(database_file_arg) :
       [ "meas_noise_effect",                 "add_std_scale_all"],
       [ "method_random",                     "ipopt_random"],
       [ "ode_step_size",                     "10.0"],
-      [ "ode_step_size",                     "10.0"],
       [ "other_database",                    ""],
       [ "other_input_table",                 ""],
       [ "parent_node_id",                    ""],
