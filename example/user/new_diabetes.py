@@ -32,7 +32,7 @@ age_list  = [ 0.0, 10.0, 20.0, 30.0, 40.0, 50.0, 70.0, 100.0 ]
 time_list = [ 1960, 1980, 1990, 2000, 2010, 2020 ]
 #
 # number_nodes
-number_nodes = 20
+number_nodes = 10
 #
 # std_random_effects_sim
 std_random_effects_sim = 0.2
@@ -41,11 +41,17 @@ std_random_effects_sim = 0.2
 mulcov_sim = { 'sex':0.5, 'bmi':0.02, 'ms_2000':0.3  }
 #
 # no_effect_rate
-no_effect_rate = {
-   'iota'  : 0.001 ,
-   'chi'   : 0.02  ,
-   'omega' : 0.01  ,
-}
+def no_effect_rate(rate_name, age, time) :
+   if rate_name == 'iota' :
+      rate = 0.001
+   elif rate_name == 'chi' :
+      rate = 0.02
+   elif rate_name == 'omega' :
+      rate = 0.01
+   else :
+      rate = None
+      assert False
+   return rate
 #
 # minimum_prealance_std
 minimum_prevalence_std = 1e-4
@@ -57,26 +63,26 @@ average_integrand_step_size = 5.0
 ode_step_size = 5.0
 #
 # hold_out_max_fit
-hold_out_max_fit = 500
+hold_out_max_fit = 250
 # ---------------------------------------------------------------------------
 #
 # random_seed
 if random_seed == 0 :
    random_seed = int( time.time() )
 
-# random_effect_list
+# random_effect_sim
 # In this example, the random effects are the same iota and chi.
 # Note that index zero corresponds to the parent node and has no random effect.
-random_effect_list = [ 0.0 ]
+random_effect_sim = [ 0.0 ]
 for i in range(number_nodes-1) :
    random_effect = std_random_effects_sim * random.gauss(mu = 0.0, sigma = 1.0)
-   random_effect_list.append( random_effect )
+   random_effect_sim.append( random_effect )
 #
 # rate_true
 # Assume all covariates are relative to their referece values
 def rate_true(rate_name, age, time, node_index, sex, bmi) :
-   rate   = no_effect_rate[rate_name]
-   effect = random_effect_list[node_index]
+   rate   = no_effect_rate(rate_name, age, time)
+   effect = random_effect_sim[node_index]
    if rate_name == 'iota' :
       effect += mulcov_sim['bmi'] * bmi
    elif rate_name == 'chi' :
@@ -196,7 +202,10 @@ def example_db(file_name) :
                   meas_std = meas_mean * 0.2
                   min_std  = minimum_prevalence_std
                   if integrand_name == 'mtspecific' :
-                     min_std = minimum_prevalence_std * no_effect_rate['chi']
+                     age_mid  = (age_list[0] + age_list[-1]) / 2.0
+                     time_mid = (time_list[0] + time_list[-1]) / 2.0
+                     chi_mid  = no_effect_rate('chi', age_mid, time_mid)
+                     min_std  = minimum_prevalence_std * chi_mid
                   meas_std = max(meas_std, min_std)
                   #
                   # data_table
@@ -227,9 +236,9 @@ def example_db(file_name) :
    prior_table = [ {
          # parent_rate_value_prior
          'name':    'parent_rate_value_prior',
-         'density': 'log_gaussian',
+         'density': 'gaussian',
          'mean':    0.01,
-         'std':     0.2,
+         'std':     1.0,
          'lower':   1e-6,
          'upper':   1.0,
          'eta':     1e-6,
@@ -254,6 +263,7 @@ def example_db(file_name) :
    } ]
    #
    # prior_fun
+   omega_0_0 = no_effect_rate('omega', 0.0, 0.0)
    prior_fun = dict()
    prior_fun['parent'] = lambda age, time : \
       ('parent_rate_value_prior', 'log_gauss_0_0.01', 'log_gauss_0_0.01')
@@ -262,7 +272,7 @@ def example_db(file_name) :
    prior_fun['mulcov'] = lambda age, time : \
       ('uniform_-inf_+inf', None, None)
    prior_fun['omega'] = lambda age, time : \
-      (no_effect_rate['omega'], None, None)
+      (omega_0_0, None, None)
    #
    # smooth_table
    smooth_table = [ {
@@ -399,5 +409,60 @@ if True :
 #
 # fit both
 dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
+#
+# rate_table, var_table, fit_var_table, covariate_table
+connection = dismod_at.create_connection(
+   file_name, new = False, readonly = True
+)
+rate_table       = dismod_at.get_table_dict(connection, 'rate')
+var_table        = dismod_at.get_table_dict(connection, 'var')
+fit_var_table    = dismod_at.get_table_dict(connection, 'fit_var')
+covariate_table  = dismod_at.get_table_dict(connection, 'covariate')
+connection.close()
+#
+# max_rel_error, sim_var_list
+max_rel_error = 0.0
+sim_var_list  = list()
+for (var_id, row) in enumerate(var_table) :
+   skip          = False
+   fit_var_value = fit_var_table[var_id]['fit_var_value']
+   var_type      = row['var_type']
+   if var_type == 'rate' :
+      rate_name     = rate_table[ row['rate_id'] ]['rate_name']
+      node_id       = row['node_id']
+      age           = age_list[ row['age_id'] ]
+      time          = time_list[ row['time_id'] ]
+      if node_id == 0 :
+         sim_var_value = no_effect_rate(rate_name, age, time)
+         rel_error     = 1.0 - fit_var_value / sim_var_value
+      else :
+         skip = True
+         sim_var_value = random_effect_sim[node_id]
+         rel_error     = 1.0 - fit_var_value / sim_var_value
+   elif var_type in [ 'mulcov_rate_value' , 'mulcov_meas_value' ] :
+      covariate_name = covariate_table[ row['covariate_id'] ]['covariate_name']
+      sim_var_value  = mulcov_sim[covariate_name]
+      rel_error     = 1.0 - fit_var_value / sim_var_value
+   else :
+      assert False
+   if not skip :
+      max_rel_error = max(max_rel_error, abs(rel_error) )
+   sim_var_list.append( [ sim_var_value , rel_error] )
+print( f'max_rel_error = {max_rel_error}' )
+assert max_rel_error < 0.1
+#
+# truth_var_table
+connection = dismod_at.create_connection(
+   file_name, new = False, readonly = False
+)
+tbl_name = 'truth_var'
+col_name = [ 'truth_var_value' , 'rel_error' ]
+col_type = [ 'real', 'real' ]
+row_list = sim_var_list
+dismod_at.create_table(
+   connection, tbl_name, col_name, col_type, row_list
+)
+connection.close()
+#
 #
 print('diabetes.py: OK')
