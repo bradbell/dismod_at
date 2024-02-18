@@ -23,25 +23,79 @@ import dismod_at
 if not os.path.exists('build/example/user') :
    os.makedirs('build/example/user')
 os.chdir('build/example/user')
+# ----------------------------------------------------------------------------
+# {xrst_begin user_diabetes.py}
+#
+# An Example Fitting Simulated Diabetes Data
+# ##########################################
+# This example fits iota and chi using only prevalence and mtspecific data.
+# It is designed so that you are changed the setting documented below.
+# See :ref:`user_example@Run One Example` for instruction on running this
+# example.
 #
 # random_seed
+# ***********
+# This integer is used to seed the random number generator.
+# If it is zero, the current number of seconds on the system clock is used.
+# {xrst_code py}
 random_seed = 0
+# {xrst_code}
 #
 # age_list, time_list
+# *******************
+# These are the ages and times at which we simulate the data.
+# They are also the ages and times where we model iota and chi.
+# {xrst_code py}
 age_list  = [ 0.0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 ]
 time_list = [ 1980, 1990, 2000, 2010, 2020 ]
+# {xrst_code}
 #
 # number_nodes
+# ************
+# This integer is the number of nodes.
+# If it is one, there are no child nodes (hence no random effects).
+# Otherwise, there are *number_nodes* - 1 child nodes.
+# {xrst_code py}
 number_nodes = 10
+# {xrst_code}
 #
-# std_random_effect_sim
-std_random_effect_sim = 0.2
+# sim_std_random_effect
+# *********************
+# If there are child nodes, the random effect for each node is simulated
+# using a Gaussian with this standard deviation.
+# For each child node, the same random effect is used for both iota and chi.
+# {xrst_code py}
+sim_std_random_effect = 0.2
+# {xrst_code}
 #
-# mulcov_sim
-mulcov_sim = { 'sex':0.5, 'bmi':0.02, 'ms_2000':0.3  }
+# sim_mulcov
+# **********
+# This python dictionary contains the covariate multiplier values used
+# to simulate the data.
+# In this example, there is one covariate multiplier for each covariate,
+# so we use the covariate names to identify the multipliers:
+# {xrst_code py}
+sim_mulcov = { 'sex':0.4, 'bmi':0.02, 'ms_2000':0.3  }
+# {xrst_code}
 #
-# no_effect_rate
-def no_effect_rate(rate_name, age, time) :
+# .. csv_table::
+#  :header-rows: 1
+#
+#  Name,    Covariate Value,                Affects
+#  sex,     (female=-0.5) (male=0.5),       chi
+#  bmi,     body mass index,                iota
+#  ms_2000, 1 (0) if year is (is not) 2000, prevalence
+#
+# sim_no_effect_rate
+# ******************
+# This is the value used to simulate the no effect rates; i.e.,
+# the rates before the random efffects and covaraite effects are included.
+# The dismod_at model is constant with respect to age (time) for ages
+# outside the limits of *age_list* ( *time_list* ).
+# The ages and times passed into this function are clipped so the rates
+# returned by this function better agree with the dismod_at model.
+# {xrst_code py}
+def sim_no_effect_rate(rate_name, age, time) :
    age      = min( age_list[-1], max(age_list[0], age) )
    time     = min( time_list[-1], max(time_list[0], age) )
    age_exp  = - abs(age - 50.0) / 100.00
@@ -56,49 +110,83 @@ def no_effect_rate(rate_name, age, time) :
       rate = None
       assert False
    return rate
+# {xrst_code}
 #
 # model_meas_cv
+# *************
+# The measruements are simulated without noise, but the model
+# has this level of measurement nose (express as a coefficient of variation):
+# {xrst_code py}
 model_meas_cv = 0.1
+# {xrst_code}
 #
 # minimum_prealance_std
+# *********************
+# In this model, initial prevalence is zero. Hence a coefficent of variation
+# model for the measurement noise does not work at age zero.
+# We use a minimum prevalence standard deviation to avoid this problem:
+# {xrst_code py}
 minimum_prevalence_std = 1e-4
-#
-# average_integrand_step_size
-average_integrand_step_size = 5.0
+# {xrst_code}
 #
 # ode_step_size
+# *************
+# This is the option table :ref:`option_table@Average Age Grid@ode_step_size`
+# value.
+# {xrst_code py}
 ode_step_size = 5.0
+# {xrst_code}
 #
 # hold_out_max_fit
+# ****************
+# This is the hold out command :ref:`hold_out_command@max_fit` value.
+# It is used to hold out prevalence and mtspecific data.
+# {xrst_code}
 hold_out_max_fit = 250
+# {xrst_code}
 #
 # fixed_effect_rel_error_bnd
+# **************************
+# This is a bound on the relative error in the fixed effects estimates.
+# If the releative error is greater that this for a fixed effect,
+# a message that identifies the fixed effect and the relative error is
+# printed and this program will exit with a non-zero error flag.
+# {xrst_code py}
 fixed_effect_rel_error_bnd = 0.1
+# {xrst_code}
 #
-# exclude_error_agd
+# Source Code
+# ***********
+# {xrst_literal
+#     # BEGIN_SOURCE_CODE
+#     # END_SOURCE_CODE
+# }
+#
+# {xrst_end user_diabetes.py}
 # ---------------------------------------------------------------------------
+# BEGIN_SOURCE_CODE
 #
 # random_seed
 if random_seed == 0 :
    random_seed = int( time.time() )
-
+#
 # random_effect_sim
 # In this example, the random effects are the same iota and chi.
 # Note that index zero corresponds to the parent node and has no random effect.
 random_effect_sim = [ 0.0 ]
 for i in range(number_nodes-1) :
-   random_effect = std_random_effect_sim * random.gauss(mu = 0.0, sigma = 1.0)
+   random_effect = sim_std_random_effect * random.gauss(mu = 0.0, sigma = 1.0)
    random_effect_sim.append( random_effect )
 #
 # rate_true
 # Assume all covariates are relative to their referece values
 def rate_true(rate_name, age, time, node_index, sex, bmi) :
-   rate   = no_effect_rate(rate_name, age, time)
+   rate   = sim_no_effect_rate(rate_name, age, time)
    effect = random_effect_sim[node_index]
    if rate_name == 'iota' :
-      effect += mulcov_sim['bmi'] * bmi
+      effect += sim_mulcov['bmi'] * bmi
    elif rate_name == 'chi' :
-      effect += mulcov_sim['sex'] * sex
+      effect += sim_mulcov['sex'] * sex
    elif rate_name == 'omega' :
       effect += 0.0
    else :
@@ -194,8 +282,6 @@ def example_db(file_name) :
                      #
                      # grid
                      grid         = dict()
-                     n_step       = int(age / average_integrand_step_size) + 1
-                     d_age        = age / n_step
                      grid['age']  = [ age ]
                      grid['time'] = [ time ]
                      #
@@ -207,7 +293,7 @@ def example_db(file_name) :
                         rate_fun, integrand_name, grid, abs_tol
                      )
                      if integrand_name == 'prevalence' :
-                        effect    = ms_2000 * mulcov_sim['ms_2000']
+                        effect    = ms_2000 * sim_mulcov['ms_2000']
                         meas_mean = meas_mean * math.exp(effect)
                   #
                   # meas_std
@@ -216,7 +302,7 @@ def example_db(file_name) :
                   if integrand_name == 'mtspecific' :
                      age_mid  = (age_list[0] + age_list[-1]) / 2.0
                      time_mid = (time_list[0] + time_list[-1]) / 2.0
-                     chi_mid  = no_effect_rate('chi', age_mid, time_mid)
+                     chi_mid  = sim_no_effect_rate('chi', age_mid, time_mid)
                      min_std  = minimum_prevalence_std * chi_mid
                   meas_std = max(meas_std, min_std)
                   #
@@ -275,7 +361,7 @@ def example_db(file_name) :
    } ]
    #
    # prior_fun
-   omega_0_0 = no_effect_rate('omega', 0.0, 0.0)
+   omega_0_0 = sim_no_effect_rate('omega', 0.0, 0.0)
    prior_fun = dict()
    prior_fun['parent'] = lambda age, time : \
       ('parent_rate_value_prior', 'difference_prior', 'difference_prior')
@@ -459,7 +545,7 @@ for (var_id, row) in enumerate(var_table) :
       time          = time_list[ row['time_id'] ]
       if node_id == 0 :
          fixed_effect  = True
-         sim_var_value = no_effect_rate(rate_name, age, time)
+         sim_var_value = sim_no_effect_rate(rate_name, age, time)
          rel_error     = 1.0 - fit_var_value / sim_var_value
          if abs(rel_error) > fixed_effect_rel_error_bnd :
             print(rate_name, age, time, rel_error)
@@ -470,7 +556,7 @@ for (var_id, row) in enumerate(var_table) :
    elif var_type in [ 'mulcov_rate_value' , 'mulcov_meas_value' ] :
       fixed_effect   = True
       covariate_name = covariate_table[ row['covariate_id'] ]['covariate_name']
-      sim_var_value  = mulcov_sim[covariate_name]
+      sim_var_value  = sim_mulcov[covariate_name]
       rel_error     = 1.0 - fit_var_value / sim_var_value
       if abs(rel_error) > fixed_effect_rel_error_bnd :
          print(covariate_name, rel_error)
@@ -500,5 +586,5 @@ connection.close()
 #
 # max_rel_error
 assert max_rel_error <= fixed_effect_rel_error_bnd
-#
 print('diabetes.py: OK')
+# END_SOURCE_CODE
