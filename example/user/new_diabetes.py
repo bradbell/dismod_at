@@ -42,8 +42,10 @@ mulcov_sim = { 'sex':0.5, 'bmi':0.02, 'ms_2000':0.3  }
 #
 # no_effect_rate
 def no_effect_rate(rate_name, age, time) :
-   age_exp  = - abs(age - 50.0) / 50.00
-   time_exp = - abs(time - 2000.0) / 20.0
+   age      = min( age_list[-1], max(age_list[0], age) )
+   time     = min( time_list[-1], max(time_list[0], age) )
+   age_exp  = - abs(age - 50.0) / 100.00
+   time_exp = - abs(time - 2000.0) / 40.0
    if rate_name == 'iota' :
       rate = 0.001 * ( 1.0 + math.exp(age_exp) + math.exp(time_exp) )
    elif rate_name == 'chi' :
@@ -266,7 +268,7 @@ def example_db(file_name) :
          'std':     0.4,
          'eta':     1e-6,
       },{
-         # unoform_-inf_+inf
+         # uniform_-inf_+inf
          'name':    'uniform_-inf_+inf',
          'density': 'uniform',
          'mean':    0.0,
@@ -284,6 +286,10 @@ def example_db(file_name) :
    prior_fun['omega'] = lambda age, time : \
       (omega_0_0, None, None)
    #
+   # age_id_list, time_id_list
+   age_id_list  = list( range( len(age_list) ) )
+   time_id_list = list( range( len(time_list) ) )
+   #
    # smooth_table
    smooth_table = [ {
          # smooth_omega
@@ -292,10 +298,16 @@ def example_db(file_name) :
          'time_id':  [0],
          'fun':      prior_fun['omega']
       },{
-         # smooth_parent_
-         'name':     'smooth_parent',
-         'age_id':   range( len(age_list) ),
-         'time_id':  range( len(time_list) ),
+         # smooth_parent_iota
+         'name':     'smooth_parent_iota',
+         'age_id':   age_id_list[: -1],
+         'time_id':  time_id_list,
+         'fun':      prior_fun['parent']
+      },{
+         # smooth_parent_chi
+         'name':     'smooth_parent_chi',
+         'age_id':   age_id_list[1 :],
+         'time_id':  time_id_list,
          'fun':      prior_fun['parent']
       },{
          # smooth_child
@@ -314,12 +326,12 @@ def example_db(file_name) :
    # rate_table
    rate_table = [ {
          'name':           'iota',
-         'parent_smooth':  'smooth_parent',
+         'parent_smooth':  'smooth_parent_iota',
          'child_smooth':   'smooth_child',
          'child_nslist':   None,
       },{
          'name':           'chi',
-         'parent_smooth':  'smooth_parent',
+         'parent_smooth':  'smooth_parent_chi',
          'child_smooth':   'smooth_child',
          'child_nslist':   None,
       },{
