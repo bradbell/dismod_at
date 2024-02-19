@@ -18,7 +18,6 @@ do
    if ! grep "^   $name\$" example/user/CMakeLists.txt > /dev/null
    then
       if [ "$name" != 'speed' ] \
-      && [ "$name" != 'diabetes' ] \
       && [ "$name" != 'new_diabetes' ] \
       && [ "$name" != 'covid_19' ]
       then
@@ -28,13 +27,10 @@ do
    fi
    #
    # user.xrst
-   if [ "$name" != 'new_diabetes' ]
-   then
    if ! grep ":ref:.user_$name.py-title" example/user/user.xrst > /dev/null
    then
       echo ":ref:\`user_$name.py-title\` is not in example/user/user.xrst"
       exit 1
-   fi
    fi
 done
 echo 'check_user_xam.sh: OK'

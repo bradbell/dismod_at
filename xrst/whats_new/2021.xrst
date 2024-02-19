@@ -628,7 +628,7 @@ This is in preparation for adding a warm start option to the fit command.
    {xrst_code}
    {xrst_spell_on}
 #. Change the default setting for
-   :ref:`user_diabetes.py@Problem Parameters@quasi_fixed`
+   quasi_fixed
    from ``'true'`` to ``'false'`` .
 #. Change :ref:`user_fit_sim.py-name` *quasi_newton* setting from
    ``'true'`` to ``'false'`` and make the maximum allowable error

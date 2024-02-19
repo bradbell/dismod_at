@@ -15,6 +15,10 @@ Changes and Additions to Dismod_at During 2024
 mm-dd
 *****
 
+02-18
+=====
+The :ref:`user_diabetes.py-name` example was completely re-written.
+
 02-17
 =====
 There were two rows with the value of
