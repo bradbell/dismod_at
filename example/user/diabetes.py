@@ -99,21 +99,29 @@ sim_mulcov = { 'sex':0.4, 'bmi':0.02, 'ms_2000':0.3  }
 # ******************
 # This is the value used to simulate the no effect rates; i.e.,
 # the rates before the random effects and covariate effects are included.
-# The dismod_at model is constant with respect to age (time) for ages
-# outside the limits of *age_list* ( *time_list* ).
-# The ages and times passed into this function are clipped so the rates
-# returned by this function better agree with the dismod_at model.
+# The dismod_at model for iota, chi and omega are constant with respect to
+# age and time outside the grid limits for the corresponding rate.
+# The last age is not included in the iota age grid because there
+# is no prevalence data after it. Hence iota is constant for ages after
+# the next to last age.
+# The first age is not included in the chi age grid because prevalence
+# is zero at that age (and mtspecific does not inform chi).
+# Hence chi is constant for ages before the second age.
 # {xrst_code py}
 def sim_no_effect_rate(rate_name, age, time) :
-   age      = min( age_list[-1], max(age_list[0], age) )
    time     = min( time_list[-1], max(time_list[0], age) )
    age_exp  = - abs(age - 50.0) / 100.00
    time_exp = - abs(time - 2000.0) / 40.0
    if rate_name == 'iota' :
+      age  = min( age_list[-2], max(age_list[0], age) )
       rate = 0.001 * ( 1.0 + math.exp(age_exp) + math.exp(time_exp) )
    elif rate_name == 'chi' :
+      # chi is currently constant so age does not matter, but we set it here
+      # incase you change that.
+      age  = min( age_list[-1], max(age_list[1], age) )
       rate = 0.02
    elif rate_name == 'omega' :
+      # There is really no reason to change omega from a constant.
       rate = 0.01
    else :
       rate = None
@@ -250,14 +258,13 @@ def example_db(file_name) :
    # data_table
    data_table   = list()
    #
-   # count, integrand_name, age, time, node_name, sex_name
-   count = 0
+   # integrand_name, age, time, node_name, sex_name
+   # Skip first age because prevalence and mtspecific are zero for that age.
    for integrand_name in integrand_list :
       for age in age_list[1:] :
          for time in time_list :
             for node_index in range(number_nodes) :
                for sex_name in sex_dict :
-                  count += 1
                   #
                   # node_name
                   node_name = node_list[node_index]
@@ -467,7 +474,7 @@ def example_db(file_name) :
 
       { 'name':'quasi_fixed',            'value':'false'                },
       { 'name':'max_num_iter_fixed',     'value':'50'                   },
-      { 'name':'print_level_fixed',      'value':'0'                    },
+      { 'name':'print_level_fixed',      'value':'5'                    },
       { 'name':'tolerance_fixed',        'value':'1e-4'                 },
 
       { 'name':'max_num_iter_random',    'value':'50'                   },
@@ -596,6 +603,7 @@ dismod_at.create_table(
 connection.close()
 #
 # max_rel_error
+print( f'maximum fixed effect relative error = {max_rel_error}' )
 assert max_rel_error <= fixed_effect_rel_error_bnd
 print('diabetes.py: OK')
 # END_SOURCE_CODE
