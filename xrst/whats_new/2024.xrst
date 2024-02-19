@@ -17,11 +17,19 @@ mm-dd
 
 02-18
 =====
-The :ref:`user_diabetes.py-name` example was completely re-written.
-This has been improved in many ways. For example,
-it is simpler than other examples that simulate data
-because it uses :ref:`average_integrand-name` ,
-instead of the :ref:`simulate_command-name` .
+#. The :ref:`user_diabetes.py-name` example was completely re-written.
+   This has been improved in many ways. For example,
+   it is simpler than other examples that simulate data
+   because it uses :ref:`average_integrand-name` ,
+   instead of the :ref:`simulate_command-name` .
+#. If one uses a :ref:`rate_eff_cov_table-name` ,
+   and they have a lot of nodes and covariates,
+   setting up the interpolation for this covariates can be time consuming.
+   This is now only done for the commands that need this information.
+   This changed the execution time for the :ref:`init_command-name` or
+   :ref:`hold_out_command-name` commands from
+   about 30 minutes to about 12 seconds
+   (for one IHME Mexico diabetes estimation case).
 
 02-17
 =====
