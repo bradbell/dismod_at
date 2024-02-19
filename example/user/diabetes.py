@@ -121,7 +121,8 @@ def sim_no_effect_rate(rate_name, age, time) :
       age  = min( age_list[-1], max(age_list[1], age) )
       rate = 0.02
    elif rate_name == 'omega' :
-      # There is really no reason to change omega from a constant.
+      # For this example, omega must be constant for all age and time
+      # (the value of omega does not affect prevalence or mtspecific).
       rate = 0.01
    else :
       rate = None
@@ -170,6 +171,69 @@ hold_out_max_fit = 250
 # printed and this program will exit with a non-zero error flag.
 # {xrst_code py}
 fixed_effect_rel_error_bnd = 0.1
+# {xrst_code}
+#
+# Priors
+# ******
+#
+# parent_rate_value_prior
+# =======================
+# This prior is used for the value of iota and chi, for the parent node,
+# at each of the grid points in the corresponding smoothings.
+# Note that omega is constrained to the value used for it during simulation.
+# Also note that eta does not affect the density but it does affect the
+# :ref:`prior_table@eta@Scaling Fixed Effects` .
+# {xrst_code py}
+parent_rate_value_prior = {
+   'density': 'gaussian',
+   'mean':    0.01,
+   'std':     1.0,
+   'lower':   1e-6,
+   'upper':   1.0,
+   'eta':     1e-6,
+}
+# {xrst_code}
+#
+# child_rate_value_prior
+# ======================
+# This prior is used for the log of iota and chi for the child nodes.
+# These are random effects and are constant w.r.t. age, time; i.e.,
+# there is only one grid point (one variable)
+# for each node and each rate (iota and chi) .
+# {xrst_code py}
+child_rate_value_prior = {
+   'density': 'gaussian',
+   'mean':    0.0,
+   'std':     0.1,
+}
+# {xrst_code}
+#
+# difference_prior
+# ================
+# This is the prior used for the forward difference (w.r.t. age and time)
+# of the value of iota and chi between grid points.
+# {xrst_code py}
+difference_prior = {
+   'density': 'log_gaussian',
+   'mean':    0.0,
+   'std':     0.4,
+   'eta':     1e-6,
+}
+# {xrst_code}
+#
+# mulcov_prior
+# ============
+# This is the value prior used for each of the covariate multipliers.
+# These are fixed effects and are constant w.r.t age, time.
+# The mean does not affect the density and
+# is used as a starting point for the first optimization.
+# (The first optimization is just w.r.t the fixed effects and is used to get
+# a starting point for optimization w.r.t. both the fixed and random effects.)
+# {xrst_code py}
+mulcov_prior = {
+   'density': 'uniform',
+   'mean':    0.0,
+}
 # {xrst_code}
 #
 # Source Code
@@ -347,34 +411,15 @@ def example_db(file_name) :
                   data_table.append(row)
    #
    # prior_table
-   prior_table = [ {
-         # parent_rate_value_prior
-         'name':    'parent_rate_value_prior',
-         'density': 'gaussian',
-         'mean':    0.01,
-         'std':     1.0,
-         'lower':   1e-6,
-         'upper':   1.0,
-         'eta':     1e-6,
-      },{
-         # child_rate_value_prior
-         'name':    'child_rate_value_prior',
-         'density': 'gaussian',
-         'mean':    0.0,
-         'std':     0.1,
-      },{
-         # difference_prior
-         'name':    'difference_prior',
-         'density': 'log_gaussian',
-         'mean':    0.0,
-         'std':     0.4,
-         'eta':     1e-6,
-      },{
-         # uniform_-inf_+inf
-         'name':    'uniform_-inf_+inf',
-         'density': 'uniform',
-         'mean':    0.0,
-   } ]
+   parent_rate_value_prior['name'] = 'parent_rate_value_prior'
+   child_rate_value_prior['name']  = 'child_rate_value_prior'
+   difference_prior['name']        = 'difference_prior'
+   mulcov_prior['name']            = 'mulcov_prior'
+   prior_table = list()
+   prior_table.append( parent_rate_value_prior )
+   prior_table.append( child_rate_value_prior )
+   prior_table.append( difference_prior )
+   prior_table.append( mulcov_prior )
    #
    # prior_fun
    omega_0_0 = sim_no_effect_rate('omega', 0.0, 0.0)
@@ -384,7 +429,7 @@ def example_db(file_name) :
    prior_fun['child'] = lambda age, time : \
       ('child_rate_value_prior', None, None)
    prior_fun['mulcov'] = lambda age, time : \
-      ('uniform_-inf_+inf', None, None)
+      ('mulcov_prior', None, None)
    prior_fun['omega'] = lambda age, time : \
       (omega_0_0, None, None)
    #

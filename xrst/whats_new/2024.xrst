@@ -18,6 +18,10 @@ mm-dd
 02-18
 =====
 The :ref:`user_diabetes.py-name` example was completely re-written.
+This has been improved in many ways. For example,
+it is simpler than other examples that simulate data
+because it uses :ref:`average_integrand-name` ,
+instead of the :ref:`simulate_command-name` .
 
 02-17
 =====
