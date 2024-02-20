@@ -30,6 +30,9 @@ mm-dd
    :ref:`hold_out_command-name` commands from
    about 30 minutes to about 12 seconds
    (for one IHME Mexico diabetes estimation case).
+#. Advance dock_dismod_at
+   :ref:`dock_dismod_at.sh@dismod_at_version` to 20240219
+   (to include the changes above).
 
 02-17
 =====
