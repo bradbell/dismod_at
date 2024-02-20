@@ -49,6 +49,11 @@ This often causes the fitting of the simulated data to fail.
 samples from the actual data, instead of using simulated data,
 would have the advantages without the problem mentioned above.
 
+Error on max iterations
+***********************
+Raise an error when IPOPT reaches the specified maximum iteration limit without 
+converging and stop process with error status.
+
 Batch Command
 *************
 Add a batch command that combines multiple commands in a file.
