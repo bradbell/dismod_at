@@ -15,6 +15,13 @@ Changes and Additions to Dismod_at During 2024
 mm-dd
 *****
 
+02-20
+=====
+The :ref:`dock_dismod_at.sh@build_type` was fixed in the base image,
+instead of the mixed image.
+This is has been fixed, in addition, all the images double check that
+they are building the correct version and build type.
+
 02-18
 =====
 #. The :ref:`user_diabetes.py-name` example was completely re-written.

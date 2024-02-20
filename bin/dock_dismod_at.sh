@@ -275,18 +275,12 @@ ENV PATH            $prefix/bin:\$PATH
 # pip packages
 RUN pip3 install matplotlib numpy scipy build
 #
-# 1. Get source corresponding to dismod_at-$dismod_at_version
-# 2. Check that the corresponding hash is $dismod_at_hash
-# 3. Change some settings in bin/run_cmake.sh
+# Get source corresponding to dismod_at-$dismod_at_version
 RUN \
 git clone https://github.com/bradbell/dismod_at.git dismod_at.git && \
 cd dismod_at.git && \
 git checkout --quiet $dismod_at_hash  && \
-grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
-sed -i bin/run_cmake.sh \
-   -e 's|^dismod_at_prefix=.*|dismod_at_prefix='$prefix'|' \
-   -e "s|^build_type=.*|build_type='$build_type'|" \
-   -e "s|^python3_executable=.*|python3_executable='$prefix/bin/python3'|"
+grep "$dismod_at_version" CMakeLists.txt > /dev/null
 EOF
 # ----------------------------------------------------------------------------
 elif [ "$1" == 'mixed' ]
@@ -294,6 +288,17 @@ then
 cat << EOF > Dockerfile
 FROM dismod_at.base
 WORKDIR /home/dismod_at.git
+#
+# Check soruce
+RUN grep "$dismod_at_version" CMakeLists.txt > /dev/null
+#
+# Change bin/run_cmake.sh
+RUN sed -i bin/run_cmake.sh \
+   -e 's|^dismod_at_prefix=.*|dismod_at_prefix='$prefix'|' \
+   -e "s|^build_type=.*|build_type='$build_type'|" \
+   -e "s|^python3_executable=.*|python3_executable='$prefix/bin/python3'|"
+#
+# Install cppad_mixed
 RUN bin/get_cppad_mixed.sh
 EOF
 # -----------------------------------------------------------------------------
@@ -303,15 +308,20 @@ site_packages="$prefix/lib/python3.11/site-packages"
 cat << EOF > Dockerfile
 FROM dismod_at.mixed.$build_type
 WORKDIR /home/dismod_at.git
-
+#
+# Check soruce
+RUN \
+grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
+grep "^build_type=.$build_type." bin/run_cmake.sh> /dev/null
+#
 # LD_LIBRARY_PATH
 ENV LD_LIBRARY_PATH=''
-
+#
 # PATH
 # must escape PATH variable so it gets interpreted in the image
 ENV PATH="\$PATH:$prefix/bin"
-
-# Build, check, install, check install location
+#
+# dismod_at: Build, check, install, check install location
 RUN \
 bin/run_cmake.sh && \
 cd build && \
@@ -330,7 +340,12 @@ then
 cat << EOF > Dockerfile
 FROM dismod_at.dismod_at.$build_type
 WORKDIR /home
-
+#
+# Check dismod_at source
+RUN \
+grep "$dismod_at_version" dismod_at.git/CMakeLists.txt > /dev/null && \
+grep "^build_type=.$build_type." dismod_at.git/bin/run_cmake.sh> /dev/null
+#
 # 1. Get source corresponding to at_cascade hash
 # 2. Check the corresponding at_cascade version
 # 3. Remove building the documentaiton from check_all.sh
@@ -340,12 +355,12 @@ cd at_cascade.git && \
 git checkout --quiet $at_cascade_hash && \
 grep "at_cascade-$at_cascade_version\$" at_cascade.xrst > /dev/null && \
 sed -i bin/run_test.sh -e 's|if python3|if $prefix/bin/python3|'
-
+#
 WORKDIR /home/at_cascade.git
-
+#
 # Test at_cascade
 RUN bin/check_all.sh
-
+#
 # Install at_cascade
 RUN \
 $prefix/bin/python3 -m build && \
