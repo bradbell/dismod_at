@@ -3,24 +3,34 @@ $Id:$
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin whats_new_2024}
+{xrst_begin 2024}
 {xrst_spell
    dd
    mm
 }
 
-Changes and Additions to Dismod_at During 2024
-##############################################
+Release Notes for 2024
+######################
 
 mm-dd
 *****
 
 02-20
 =====
-The :ref:`dock_dismod_at.sh@build_type` was fixed in the base image,
-instead of the mixed image.
-This is has been fixed, in addition, all the images double check that
-they are building the correct version and build type.
+#. The :ref:`dock_dismod_at.sh@build_type` was fixed in the base image,
+   instead of the mixed image.
+   This is has been fixed, in addition, all the images double check that
+   they are building the correct version and build type.
+#. Change the page name ``whats_new_``\ *year* to just *year* .
+   This shortens the links to the dismod_at release notes; e.g. ,
+   the link::
+
+      https://dismod-at.readthedocs.io/whats_new_2024.html#whats-new-2024-mm-dd-02-14
+
+   changed to::
+
+      https://dismod-at.readthedocs.io/2024.html#mm-dd-02-14
+
 
 02-18
 =====
@@ -60,7 +70,7 @@ This has been fixed.
    This fixes a bug in CppAD, which was discovered using the
    new *n_data* argument and hold_out commands in speed.py .
 
-.. _2023-02-14: https://cppad.readthedocs.io/latest/whats_new_24.html#whats-new-24-mm-dd-02-14
+.. _2023-02-14: https://cppad.readthedocs.io/latest/24.html#whats-new-24-mm-dd-02-14
 
 01-31
 =====
@@ -98,9 +108,9 @@ and its API has changed as follows:
 
 01-03
 =====
-On 2023 :ref:`whats_new_2023@mm-dd@12-29` the dock_dismod_at.sh
+On 2023 :ref:`2023@mm-dd@12-29` the dock_dismod_at.sh
 :ref:`dock_dismod_at.sh@at_cascade_version` did not
 advance to 2023.12.22 (it was 2023.11.20).
 This has been fixed.
 
-{xrst_end whats_new_2024}
+{xrst_end 2024}

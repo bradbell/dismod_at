@@ -3,7 +3,7 @@ $Id:$
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin whats_new_2020}
+{xrst_begin 2020}
 {xrst_spell
    checkpointing
    cholmod
@@ -19,8 +19,8 @@ $Id:$
    pc
 }
 
-Changes and Additions to Dismod_at During 2020
-##############################################
+Release Notes for 2020
+######################
 
 mm-dd
 *****
@@ -509,4 +509,4 @@ Fix the following compile error when ``NDEBUG`` is not defined:
 | |tab| .../ ``devel/table/get_subgroup_table.cpp:128:31: error:``
 | |tab| ``'subgroup_id'`` ``was not declared in this scope``
 
-{xrst_end whats_new_2020}
+{xrst_end 2020}

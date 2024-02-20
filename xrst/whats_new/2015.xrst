@@ -3,7 +3,7 @@ $Id:$
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin whats_new_2015}
+{xrst_begin 2015}
 {xrst_spell
    approx
    arg
@@ -30,8 +30,8 @@ $Id:$
    xam
 }
 
-Changes and Additions to Dismod_at During 2015
-##############################################
+Release Notes for 2015
+######################
 
 mm-dd
 *****
@@ -286,7 +286,7 @@ This is represented by
 #. There was a bug in the solution of the differential equation.
    The ``iota_pos_rho_zero`` and ``iota_zero_rho_pos``
    :ref:`option_table@rate_case` options were reversed.
-   This bug was introduced on :ref:`whats_new_2015@mm-dd@10-29`
+   This bug was introduced on :ref:`2015@mm-dd@10-29`
    and has been fixed.
 #. The ``cppad_mixed ran_like`` virtual
    function must be implemented for both ``a1_double`` and ``a2_double``
@@ -359,7 +359,7 @@ This is represented by
 10-29
 =====
 
-#. The change on :ref:`whats_new_2015@mm-dd@10-27` whereby
+#. The change on :ref:`2015@mm-dd@10-27` whereby
    ``node_rate_value_info`` was reverted because it used three times
    as much memory and time.
    The name was however changed from ``node_rate_value_info`` to
@@ -610,7 +610,7 @@ the entire database from 334 seconds to one second.
    run time was reduced to 3.5 minutes).
 #. The ``dev::get_db_input.cpp`` routine now checks the lower and upper limits
    implied by the choice of ``node_rate_value_info`` .
-   This was removed on :ref:`2015-10-27<whats_new_2015@mm-dd@10-27>` .
+   This was removed on :ref:`2015-10-27<2015@mm-dd@10-27>` .
 
 08-08
 =====
@@ -990,7 +990,7 @@ First version of :ref:`sample_command-name` that passes its example / test.
 
 #. Add the ``node_rate_value_info`` argument
    to the fit command.
-   (This was removed on :ref:`2015-10-27<whats_new_2015@mm-dd@10-27>` .)
+   (This was removed on :ref:`2015-10-27<2015@mm-dd@10-27>` .)
    This enables taking advantage of cases where *rho*
    or *iota* are zero (to speed integration).
    In addition, it allows for some cases where *chi* is zero.
@@ -1079,4 +1079,4 @@ This changed the contents of the
 First version of ``dismod_at`` is available to be downloaded and installed;
 see :ref:`install_unix-name` .
 
-{xrst_end whats_new_2015}
+{xrst_end 2015}

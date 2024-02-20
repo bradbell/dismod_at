@@ -3,7 +3,7 @@ $Id:$
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin whats_new_2017}
+{xrst_begin 2017}
 {xrst_spell
    cmake
    command command
@@ -24,8 +24,8 @@ $Id:$
    tst
 }
 
-Changes and Additions to Dismod_at During 2017
-##############################################
+Release Notes for 2017
+######################
 
 mm-dd
 *****
@@ -326,7 +326,7 @@ of the random effects failed.
 09-29
 =====
 
-#. The change on :ref:`whats_new_2017@mm-dd@09-20`
+#. The change on :ref:`2017@mm-dd@09-20`
    introduced a bug because it ignored the
    :ref:`option_table@warn_on_stderr` option.
    This has been fixed.
@@ -361,7 +361,7 @@ to have more control over scaling the objective. See
    :ref:`option_table@Extra Columns@avgint_extra_columns` was
    present and null.
 #. A ``db2csv`` wish list item was added (fulfilled on
-   :ref:`whats_new_2017@mm-dd@10-17` ).
+   :ref:`2017@mm-dd@10-17` ).
 
 09-26
 =====
@@ -811,4 +811,4 @@ generated error messages. This has been fixed and they now work.
 =====
 Advance to cppad-20161113 and cppad_mixed-20170114.
 
-{xrst_end whats_new_2017}
+{xrst_end 2017}

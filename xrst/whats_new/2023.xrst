@@ -3,7 +3,7 @@ $Id:$
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin whats_new_2023}
+{xrst_begin 2023}
 {xrst_spell
    cmake
    dd
@@ -14,8 +14,8 @@ $Id:$
    ubuntu
 }
 
-Changes and Additions to Dismod_at During 2023
-##############################################
+Release Notes for 2023
+######################
 
 mm-dd
 *****
@@ -321,4 +321,4 @@ to 2023.03.20.
    dismod_at-20230105 and the at_cascade version advanced to
    at_cascade-2023.1.5.
 
-{xrst_end whats_new_2023}
+{xrst_end 2023}

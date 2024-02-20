@@ -3,7 +3,7 @@ $Id:$
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin whats_new_2016}
+{xrst_begin 2016}
 {xrst_spell
    cholesky
    cholmod
@@ -30,8 +30,8 @@ $Id:$
    zsum
 }
 
-Changes and Additions to Dismod_at During 2016
-##############################################
+Release Notes for 2016
+######################
 
 mm-dd
 *****
@@ -213,7 +213,7 @@ The ``import_cascade.py`` program was removed
 
 #. A new assert, that checks for infinity or nan results during the integration,
    was added. This should be converted to a more useful error message;
-   (this was done on :ref:`whats_new_2016@mm-dd@10-16` ).
+   (this was done on :ref:`2016@mm-dd@10-16` ).
    Furthermore, in some cases it can be avoided; see
    :ref:`wish_list@ODE Solution@Large Excess Mortality`
    in the wish list.
@@ -488,7 +488,7 @@ there are no random effects.
    This enables on the include, or drop out, a multiplier by
    only changing one entry the :ref:`mulcov_table-name` .
 #. Fix problem with documentation for *sigma*
-   that occurred in changes on :ref:`whats_new_2016@mm-dd@04-22` .
+   that occurred in changes on :ref:`2016@mm-dd@04-22` .
 #. Fix discussion of
    :ref:`fixed_value@lambda_j`
    in the value prior for fixed effects.
@@ -678,4 +678,4 @@ had the wrong number of age values. This has been fixed.
 Advance to a newer version of cppad_mixed
 (rerun ``bin/install_cppad_mixed.sh`` ).
 
-{xrst_end whats_new_2016}
+{xrst_end 2016}

@@ -3,7 +3,7 @@ $Id:$
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin whats_new_2022}
+{xrst_begin 2022}
 {xrst_spell
    dd
    distutils
@@ -23,8 +23,8 @@ $Id:$
    tol
 }
 
-Changes and Additions to Dismod_at During 2022
-##############################################
+Release Notes for 2022
+######################
 
 mm-dd
 *****
@@ -267,4 +267,4 @@ Add fact that null is the default value for *lower* and *upper*
 to the documentation for the create_database
 :ref:`create_database@prior_table` .
 
-{xrst_end whats_new_2022}
+{xrst_end 2022}

@@ -84,7 +84,7 @@ ADD_CUSTOM_TARGET( check_example_user DEPENDS ${depends} )
 # Build check_example_user_speed (not included above)
 # These argument values caused CppAD to crash before versions
 # 20240214 and 20240000.3; see heading 02-14 on
-# https://cppad.readthedocs.io/latest/whats_new_24.html#whats-new-24-mm-dd-02-14
+# https://cppad.readthedocs.io/latest/24.html#whats-new-24-mm-dd-02-14
 SET(random_seed      0)
 SET(n_children       10)
 SET(quasi_fixed     "false")

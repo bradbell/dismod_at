@@ -3,7 +3,7 @@ $Id:$
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-23 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin whats_new_2018}
+{xrst_begin 2018}
 {xrst_spell
    cholmod
    da
@@ -29,8 +29,8 @@ $Id:$
    wshadow
 }
 
-Changes and Additions to Dismod_at During 2018
-##############################################
+Release Notes for 2018
+######################
 
 mm-dd
 *****
@@ -222,7 +222,7 @@ wish list item.
 08-07
 =====
 Add the :ref:`csv2db_command-name` wish list items
-(removed on :ref:`2019-09-24<whats_new_2019@mm-dd@09-24>` ).
+(removed on :ref:`2019-09-24<2019@mm-dd@09-24>` ).
 
 08-06
 =====
@@ -435,7 +435,7 @@ This should both reduce memory usage.
 =====
 There was a bug in the simulation of age difference and time
 difference prior means introduced on
-:ref:`04-24<whats_new_2018-name>` .
+:ref:`04-24<2018-name>` .
 To be specific :math:`\sigma`
 was being used where :math:`\delta` should have been.
 
@@ -987,7 +987,7 @@ In addition, change the :ref:`user_example-name` examples to use this feature.
    was corrected to allow for negative values in
    :ref:`density_table@Notation@Linear` cases.
    (The mistake fixed here was made during the changes on
-   :ref:`whats_new_2018@mm-dd@01-20` ; see below.)
+   :ref:`2018@mm-dd@01-20` ; see below.)
 #. Check for and abort with an error message when there is a ``null``
    value in the data table
    :ref:`data_table@meas_value` column.
@@ -1047,4 +1047,4 @@ that have the reference value for all the rate covariates; see
 :ref:`mulcov_table@mulcov_type@rate_value` in the mulcov table
 documentation.
 
-{xrst_end whats_new_2018}
+{xrst_end 2018}
