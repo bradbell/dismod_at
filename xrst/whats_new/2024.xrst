@@ -15,6 +15,13 @@ Release Notes for 2024
 mm-dd
 *****
 
+03-10
+=====
+The :ref:`create_connection-name` would sometimes hang when
+used with python multiprocessing. The connections have been changed
+so that they can only be used by :ref:`create_connection@One Thread` .
+This seems to have fixed this problem.
+
 02-20
 =====
 #. The :ref:`dock_dismod_at.sh@build_type` was fixed in the base image,
