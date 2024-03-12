@@ -143,8 +143,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.dismod_at``
 # {xrst_spell_off}
 # {xrst_code sh}
-   dismod_at_version='20240219'
-   dismod_at_hash='e42eec0e9eb57bc61f9a50f012e6b73531483ba4'
+   dismod_at_version='20240310'
+   dismod_at_hash='7f62277fd126125e422b795b1e209bc6821de652'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -153,8 +153,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.at_cascade``
 # {xrst_spell_off}
 # {xrst_code sh}
-   at_cascade_version='2024.1.28'
-   at_cascade_hash='d5d94ef82f52e55fca0127b514d0293ff2598926'
+   at_cascade_version='2024.3.12'
+   at_cascade_hash='2a79882bb152536ffa0254a114b11466afc12efb'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -274,23 +274,23 @@ ENV PATH            $prefix/bin:\$PATH
 #
 # pip packages
 RUN pip3 install matplotlib numpy scipy build
-#
-# Get source corresponding to dismod_at-$dismod_at_version
-RUN \
-git clone https://github.com/bradbell/dismod_at.git dismod_at.git && \
-cd dismod_at.git && \
-git checkout --quiet $dismod_at_hash  && \
-grep "$dismod_at_version" CMakeLists.txt > /dev/null
 EOF
 # ----------------------------------------------------------------------------
 elif [ "$1" == 'mixed' ]
 then
 cat << EOF > Dockerfile
 FROM dismod_at.base
+WORKDIR /home
+#
+# Get source corresponding to dismod_at-$dismod_at_version
+RUN git clone https://github.com/bradbell/dismod_at.git dismod_at.git
+#
+# WORKDIR
 WORKDIR /home/dismod_at.git
 #
-# Check soruce
-RUN grep "$dismod_at_version" CMakeLists.txt > /dev/null
+RUN \
+git checkout --quiet $dismod_at_hash  && \
+grep "$dismod_at_version" CMakeLists.txt > /dev/null
 #
 # Change bin/run_cmake.sh
 RUN sed -i bin/run_cmake.sh \
@@ -346,17 +346,17 @@ RUN \
 grep "$dismod_at_version" dismod_at.git/CMakeLists.txt > /dev/null && \
 grep "^build_type=.$build_type." dismod_at.git/bin/run_cmake.sh> /dev/null
 #
-# 1. Get source corresponding to at_cascade hash
-# 2. Check the corresponding at_cascade version
-# 3. Remove building the documentaiton from check_all.sh
+# Get at_cascade source
+RUN git clone https://github.com/bradbell/at_cascade.git at_cascade.git
+#
+# WORKDIR
+WORKDIR /home/at_cascade.git
+#
+# Get at_cascade corresponding to hash
 RUN \
-git clone https://github.com/bradbell/at_cascade.git at_cascade.git && \
-cd at_cascade.git && \
 git checkout --quiet $at_cascade_hash && \
 grep "at_cascade-$at_cascade_version\$" at_cascade.xrst > /dev/null && \
 sed -i bin/run_test.sh -e 's|if python3|if $prefix/bin/python3|'
-#
-WORKDIR /home/at_cascade.git
 #
 # Test at_cascade
 RUN bin/check_all.sh
