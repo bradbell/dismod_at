@@ -182,8 +182,8 @@ fi
 # ---------------------------------------------------------------------------
 if ! $driver ps > /dev/null
 then
-   echo "Cannot run $dirver ps"
-   if [ "$dirver" == 'docker' ]
+   echo "Cannot run $driver ps"
+   if [ "$driver" == 'docker' ]
    then
 cat << EOF
 If docker deamon is not running perhaps one of the following will start it:
