@@ -98,10 +98,10 @@ cat run.sh
 ./run.sh
 # ---------------------------------------------------------------------------
 # dismod_at_image
-dismod_at_image='dismod_at.image.release'
+dismod_at_image='dismod_at.dismod_at.release'
 if ! podman images | grep "^localhost/$dismod_at_image" > /dev/null
 then
-   dismod_at_image='dismod_at.image.debug'
+   dismod_at_image='dismod_at.dismod_at.debug'
    if ! podman images | grep "^localhost/$dismod_at_image" > /dev/null
    then
       echo 'podman cannot find dismod_at.image, skipping its test'

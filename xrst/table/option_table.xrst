@@ -15,8 +15,8 @@
    pos
    relrisk
    stderr
+   table table
    tol
-   zsum
 }
 
 The Option Table

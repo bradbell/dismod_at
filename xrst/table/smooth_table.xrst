@@ -3,6 +3,9 @@
 # SPDX-FileContributor: 2014-22 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin smooth_table}
+{xrst_spell
+   model model
+}
 
 The Smoothing Table
 ###################

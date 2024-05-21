@@ -6,7 +6,6 @@ $Id:$
 {xrst_begin install_unix}
 {xrst_spell
    cd
-   cmake
    config
    dev
    devel

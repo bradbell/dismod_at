@@ -8,7 +8,6 @@ $Id:$
    approx
    arg
    bool
-   cmake
    dd
    dev
    devel

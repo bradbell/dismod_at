@@ -7,6 +7,7 @@ $Id:$
 {xrst_spell
    dd
    mm
+   dirver
 }
 
 Release Notes for 2024
@@ -14,6 +15,10 @@ Release Notes for 2024
 
 mm-dd
 *****
+
+05-21
+=====
+Fix a misspelling of driver (as dirver) in dock_dismod_at.sh.
 
 03-12
 =====

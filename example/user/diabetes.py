@@ -26,11 +26,11 @@ os.chdir('build/example/user')
 # ----------------------------------------------------------------------------
 # {xrst_begin user_diabetes.py}
 # {xrst_spell
-#     mtspecific
 #     bmi
 #     def
-#     exp
 #     elif
+#     exp
+#     mtspecific
 #     rel
 # }
 # {xrst_comment_ch #}

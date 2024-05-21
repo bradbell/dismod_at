@@ -6,7 +6,6 @@ $Id:$
 {xrst_begin 2019}
 {xrst_spell
    checkpointing
-   cmake
    dd
    dev
    dockerfile

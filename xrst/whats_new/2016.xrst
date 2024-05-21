@@ -7,7 +7,6 @@ $Id:$
 {xrst_spell
    cholesky
    cholmod
-   cmake
    dd
    dev
    devel
@@ -27,7 +26,6 @@ $Id:$
    suitesparse
    sys
    wmisleading
-   zsum
 }
 
 Release Notes for 2016

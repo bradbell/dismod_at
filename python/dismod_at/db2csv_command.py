@@ -6,7 +6,6 @@
 # {xrst_spell
 #     diff
 #     dir
-#     ihme
 #     ij
 #     reg
 #     res
