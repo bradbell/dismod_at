@@ -2,7 +2,7 @@
 # $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Test this version, not previous install
 export PYTHONPATH=''
@@ -45,8 +45,6 @@ done
 # run_xrst.sh
 echo_eval bin/run_xrst.sh
 #
-# check version number
-echo_eval version.sh check
 # ----------------------------------------------------------------------------
 # run cmake
 if [ "$build_type" == 'debug' ]

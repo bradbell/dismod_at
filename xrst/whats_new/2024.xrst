@@ -1,13 +1,14 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin 2024}
 {xrst_spell
    dd
    mm
    dirver
+   yyyymmdd
 }
 
 Release Notes for 2024
@@ -15,6 +16,13 @@ Release Notes for 2024
 
 mm-dd
 *****
+
+05-22
+=====
+Change the dismod_at version numbers from
+yyyymmdd format to year.month.day format; e.g, 
+the old version number for 2024-05-22 is 20240522 
+and it's new version number is 2024.5.22 .
 
 05-21
 =====
