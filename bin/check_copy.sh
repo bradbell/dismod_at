@@ -88,11 +88,13 @@ cat << EOF > temp.sed
 s|\\(SPDX-FileContributor: *[0-9]\\{4\\}\\)[-0-9]* $fullname|\\1-24 $fullname|
 s|\\(SPDX-FileContributor\\): 2024-24 |\\1: 2024 |
 EOF
-if [ "$USER" == 'bradbell' ]
+list=''
+if [ "${USER+x}" != '' ]
 then
-   list=$(git status --porcelain | sed -e 's|^...||' )
-else
-   list=''
+   if [ "$USER" == 'bradbell' ]
+   then
+      list=$(git status --porcelain | sed -e 's|^...||' )
+   fi
 fi
 for file_name in $list
 do
