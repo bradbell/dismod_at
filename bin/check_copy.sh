@@ -14,16 +14,21 @@ spdx_license_id='SPDX-License-Identifier: AGPL-3.0-or-later'
 # no_copyright_list
 # These files do not have the spdx license id in them.
 # If an entry below is a directory it specifies all the files in the directory.
+# BEGIN_SORT_THIS_LINE_PLUS_2
 no_copyright_list='
    .gitignore
    .readthedocs.yaml
    2DO
    batch_edit.sed
-   readme.md
-   xrst.toml
+   bin/check_copy.sh
+   bin/check_version.sh
+   bin/git_commit.sh
    python/README.md
    python/pyproject.toml
+   readme.md
+   xrst.toml
 '
+# END_SORT_THIS_LINE_MINUS_2
 # END: SECTION THAT DEPENDS ON GIT REPOSITORY
 # ----------------------------------------------------------------------------
 if [ $# != 0 ]
