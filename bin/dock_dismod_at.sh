@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 #
 # exit on error or undefined variable
@@ -143,8 +143,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.dismod_at``
 # {xrst_spell_off}
 # {xrst_code sh}
-   dismod_at_version='20240310'
-   dismod_at_hash='7f62277fd126125e422b795b1e209bc6821de652'
+   dismod_at_version='2024.5.22'
+   dismod_at_hash='72b7b42ddf5adf63988275533b32f0b797957bf7'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -153,8 +153,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.at_cascade``
 # {xrst_spell_off}
 # {xrst_code sh}
-   at_cascade_version='2024.3.12'
-   at_cascade_hash='2a79882bb152536ffa0254a114b11466afc12efb'
+   at_cascade_version='2024.5.22'
+   at_cascade_hash='a0b6f8d36737fbcfcc692ffbd49dd871d2e7b7bc'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -311,6 +311,8 @@ WORKDIR /home/dismod_at.git
 #
 # Check soruce
 RUN \
+git pull origin master && \
+git checkout --quiet $dismod_at_hash  && \
 grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
 grep "^build_type=.$build_type." bin/run_cmake.sh> /dev/null
 #
@@ -343,8 +345,11 @@ WORKDIR /home
 #
 # Check dismod_at source
 RUN \
-grep "$dismod_at_version" dismod_at.git/CMakeLists.txt > /dev/null && \
-grep "^build_type=.$build_type." dismod_at.git/bin/run_cmake.sh> /dev/null
+cd dismod_at.git && \
+git pull origin master && \
+git checkout --quiet $dismod_at_hash  && \
+grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
+grep "^build_type=.$build_type." bin/run_cmake.sh> /dev/null
 #
 # Get at_cascade source
 RUN git clone https://github.com/bradbell/at_cascade.git at_cascade.git
