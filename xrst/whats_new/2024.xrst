@@ -19,7 +19,9 @@ mm-dd
 
 05-24
 =====
-Add the :ref:`command@Version` command.
+#. Add the :ref:`command@Version` command.
+#. Advance :ref:`dock_dismod_at.sh-name` to dismod_at-2024.5.25
+   and at_cascade-2024.5.25.
 
 05-22
 =====
