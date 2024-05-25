@@ -17,7 +17,7 @@ Release Notes for 2024
 mm-dd
 *****
 
-05-24
+05-25
 =====
 #. Add the :ref:`command@Version` command.
 #. Advance :ref:`dock_dismod_at.sh-name` to dismod_at-2024.5.25
