@@ -1,16 +1,26 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin command}
 
 The dismod_at Commands
 ######################
 
+Version
+*******
+The dismod_at command::
+
+   dismod_at --version
+
+writes the output ``dismod_at-``\ *version* to standard output
+where *version* is the version of dismod_at that you are using.
+
 Primary Database
 ****************
-Each of the dismod_at commands specifies a database; e.g., see
+Each of the dismod_at commands (except the version command)
+specifies a database; e.g., see
 :ref:`set_command@database` for the set command.
 This is referred to as the primary database
 (in contrast to the `option_table@Other Database@other_database` ).

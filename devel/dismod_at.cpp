@@ -1,7 +1,7 @@
 // $Id:$
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-23 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <map>
 # include <cassert>
@@ -66,6 +66,14 @@ int main(int n_arg, const char** argv)
    using std::string;
    using CppAD::vector;
    // ---------------- command line arguments ---------------------------
+   //
+   // --version
+   if( n_arg == 2 )
+   {  if( strcmp( argv[1] , "--version" ) == 0 )
+      {  std::cout << "dismod_at-" DISMOD_AT_VERSION "\n";
+         return 0;
+      }
+   }
    // command_info
    // BEGIN_SORT_THIS_LINE_PLUS_2
    struct { const char* name; int n_arg; } command_info[] = {

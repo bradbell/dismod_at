@@ -17,6 +17,10 @@ Release Notes for 2024
 mm-dd
 *****
 
+05-24
+=====
+Add the :ref:`command@Version` command.
+
 05-22
 =====
 #. Change the dismod_at version numbers from
