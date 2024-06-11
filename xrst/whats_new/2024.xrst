@@ -9,6 +9,7 @@ $Id:$
    mm
    dirver
    yyyymmdd
+   pertrub
 }
 
 Release Notes for 2024
@@ -16,6 +17,12 @@ Release Notes for 2024
 
 mm-dd
 *****
+
+06-10
+=====
+Fix usage message for ``dismodat.py`` . To be specific, change
+``pertrub`` to ``perturb`` .
+
 
 05-25
 =====

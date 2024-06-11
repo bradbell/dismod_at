@@ -2,7 +2,7 @@
 # $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin dismodat.py}
 # {xrst_comment_ch #}
@@ -50,7 +50,7 @@ import dismod_at
 # ---------------------------------------------------------------------------
 # check usage
 usage  = 'dismodat.py database db2csv\n'
-usage += 'dismodat.py database pertrub tbl_name sigma\n'
+usage += 'dismodat.py database perturb tbl_name sigma\n'
 usage += 'dismodat.py database plot_rate_fit pdf_file plot_title rate_set\n'
 usage += 'dismodat.py database plot_data_fit pdf_file plot_title max_plot'
 #
