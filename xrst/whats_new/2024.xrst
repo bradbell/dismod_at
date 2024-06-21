@@ -18,6 +18,12 @@ Release Notes for 2024
 mm-dd
 *****
 
+06-21
+=====
+Add the :ref:`predict_command@zero_meas_value` option to the
+predict command.
+In addition, add the :ref:`user_zero_meas_value.py-name` example.
+
 06-10
 =====
 Fix usage message for ``dismodat.py`` . To be specific, change

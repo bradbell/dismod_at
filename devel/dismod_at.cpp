@@ -90,6 +90,7 @@ int main(int n_arg, const char** argv)
       {"init",         3},
       {"old2new",      3},
       {"predict",      4},
+      {"predict",      5},
       {"sample",       6},
       {"sample",       7},
       {"set",          5},
@@ -633,13 +634,22 @@ int main(int n_arg, const char** argv)
          pack_object              ,
          child_info4avgint
       );
-      size_t n_var = pack_object.size();
-      std::string source = argv[3];
+      //
+      std::string source   = argv[3];
+      bool zero_meas_value = false;
+      if( n_arg > 4 )
+      {  if( strcmp(argv[4], "zero_meas_value") != 0 )
+         {  cerr << "dismod_at database predict " << source << argv[4] << endl; 
+            cerr << "expected " << argv[4] << " to be zero_meas_value\n";
+         }
+         zero_meas_value = true;
+      }
       dismod_at::predict_command(
          source               ,
+         zero_meas_value      ,
          db                   ,
          db_input             ,
-         n_var                ,
+         pack_object          ,
          avgint_object        ,
          avgint_subset_obj    ,
          var2prior

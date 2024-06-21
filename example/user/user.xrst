@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin user_example}
 {xrst_spell
@@ -105,6 +105,7 @@ http://sqlitebrowser.org/.
    example/user/trace_init.py
    example/user/trapezoidal.py
    example/user/warm_start.py
+   example/user/zero_meas_value.py
    example/user/zsum_child_rate.py
    example/user/zsum_mulcov_meas.py
    example/user/zsum_mulcov_rate.py
@@ -222,6 +223,8 @@ Examples With Explanation
      - :ref:`user_trapezoidal.py-title`
    * - user_warm_start.py
      - :ref:`user_warm_start.py-title`
+   * - user_zero_meas_value.py
+     - :ref:`user_zero_meas_value.py-title`
    * - user_zsum_child_rate.py
      - :ref:`user_zsum_child_rate.py-title`
    * - user_zsum_mulcov_meas.py

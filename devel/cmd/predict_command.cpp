@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/mixed/exception.hpp>
@@ -23,6 +23,7 @@ The Predict Command
 Syntax
 ******
 ``dismod_at`` *database* ``predict`` *source*
+``dismod_at`` *database* ``predict`` *source* ``zero_meas_value``
 
 database
 ********
@@ -65,6 +66,15 @@ In this case there is only one set of model variables that the
 predictions are computed for and
 :ref:`predict_table@sample_index` is always zero.
 
+zero_meas_value
+***************
+If this argument is present, the value zero is used for the
+:ref:`mulcov_table@mulcov_type@meas_value` covariate multipliers
+(instead of the value in the *source* table).
+This predicts what the mean of the corresponding data
+would be if there were no measurement value covariate effects. 
+
+
 predict_table
 *************
 A new :ref:`predict_table-name` is created each time this command is run.
@@ -90,9 +100,10 @@ using this command.
 // ----------------------------------------------------------------------------
 void predict_command(
    const std::string&                                    source              ,
+   bool                                                  zero_meas_value     ,
    sqlite3*                                              db                  ,
    const dismod_at::db_input_struct&                     db_input            ,
-   size_t                                                n_var               ,
+   const dismod_at::pack_info&                           pack_object         ,
    dismod_at::data_model&                                avgint_object       ,
    const CppAD::vector<dismod_at::avgint_subset_struct>& avgint_subset_obj   ,
    const pack_prior&                                     var2prior
@@ -111,6 +122,9 @@ void predict_command(
       dismod_at::error_exit(msg);
    }
    // ------------------------------------------------------------------------
+   // n_var
+   size_t n_var = pack_object.size();
+   // ------------------------------------------------------------------------
    // variable_value
    vector<double> variable_value;
    string table_name = source;
@@ -126,8 +140,28 @@ void predict_command(
    );
    size_t n_sample = variable_value.size() / n_var;
    assert( n_sample * n_var == variable_value.size() );
-# ifndef NDEBUG
+   //
+   // variable_value
+   if( zero_meas_value )
+   {  pack_info::subvec_info info;
+      size_t n_integrand = db_input.integrand_table.size();
+      for(size_t integrand_id = 0; integrand_id < n_integrand; ++integrand_id)
+      {  size_t n_cov = pack_object.group_meas_value_n_cov(integrand_id);
+         for(size_t j = 0; j < n_cov; ++j)
+         {  info = pack_object.group_meas_value_info(integrand_id, j);
+            for(size_t k = 0; k < info.n_var; ++k)
+            {  size_t var_id = info.offset + k;
+               size_t sample_index = 0;
+               while(sample_index < n_sample)
+               {  variable_value[var_id + sample_index * n_var] = 0.0;
+                  ++sample_index;
+               }
+            }
+         }
+      }
+   }
    // ------------------------------------------------------------------------
+# ifndef NDEBUG
    // check sample table
    if( source == "sample" )
    {  // sample table

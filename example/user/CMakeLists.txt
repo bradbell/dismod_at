@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build check_example_user
 SET(depends "")
@@ -65,6 +65,7 @@ FOREACH(user_case
    trace_init
    trapezoidal
    warm_start
+   zero_meas_value
    zsum_child_rate
    zsum_mulcov_meas
    zsum_mulcov_rate

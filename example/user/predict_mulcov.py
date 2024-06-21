@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_predict_mulcov.py}
 # {xrst_comment_ch #}
@@ -129,15 +129,15 @@ def example_db (file_name) :
    def fun_iota_parent(a, t) :
       return ('prior_iota_parent', None, None)
    # ----------------------------------------------------------------------
-   # age table
    #
-   # time table
+   # node table
    node_table = [
       { 'name':'north_america', 'parent':''              },
    ]
    #
    # weight table:
    weight_table = list()
+   #
    # integrand table
    integrand_table = [
       { 'name':'Sincidence' },
