@@ -18,6 +18,13 @@ Release Notes for 2024
 mm-dd
 *****
 
+06-22
+=====
+Add subgroup random effects to the covariate multipliers in the
+:ref:`user_zero_meas_value.py-name` example.
+In addition, fix the setting of these random effects to zero when the
+:ref:`predict_command@zero_meas_value` option is specified.
+
 06-21
 =====
 Add the :ref:`predict_command@zero_meas_value` option to the

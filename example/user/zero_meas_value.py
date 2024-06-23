@@ -101,8 +101,10 @@ if not os.path.exists('build/example/user') :
 os.chdir('build/example/user')
 # ---------------------------------------------------------------------------
 def example_db (file_name) :
-   def fun_beta(a, t) :
-      return ('prior_beta_value', None,  None)
+   def fun_group(a, t) :
+      return ('prior_group_value', None,  None)
+   def fun_subgroup(a, t) :
+      return ('prior_subgroup_value', None,  None)
    def fun_iota_parent(a, t) :
       return ('prior_iota_value', None, None)
    # ----------------------------------------------------------------------
@@ -113,7 +115,10 @@ def example_db (file_name) :
    time_list   = [ 1990.0,  2020.0 ]
    #
    # node_table
-   node_table = [ { 'name':'world', 'parent':'' } ]
+   node_table = [ 
+      { 'name':'world',       'parent':'' },
+      { 'name':'high_income', 'parent':'world' },
+   ]
    #
    # integrand_table
    integrand_table = [ { 'name':'Sincidence' } ]
@@ -131,13 +136,15 @@ def example_db (file_name) :
          'type':      'meas_value',
          'effected':  'Sincidence',
          'group':     'world',
-         'smooth':    'smooth_beta'
+         'smooth':    'smooth_group',
+         'subsmooth': 'smooth_subgroup',
       },{# bmi
          'covariate': 'bmi',
          'type':      'rate_value',
          'effected':  'iota',
          'group':     'world',
-         'smooth':    'smooth_beta'
+         'smooth':    'smooth_group',
+         'subsmooth': 'smooth_subgroup',
       },
    ]
    #
@@ -149,12 +156,17 @@ def example_db (file_name) :
          'lower':    no_effect_iota_true,
          'upper':    no_effect_iota_true,
          'mean':     no_effect_iota_true,
-      },{ # prior_beta_value
-         'name':     'prior_beta_value',
+      },{ # prior_group_value
+         'name':     'prior_group_value',
          'density':  'uniform',
          'mean':     0.0,
          'lower':   -1.0,
          'upper':   +1.0,
+      },{ # prior_subgroup_value
+         'name':     'prior_subgroup_value',
+         'density':  'gaussian',
+         'mean':     0.0,
+         'std':      10.0,
       },
    ]
    #
@@ -165,11 +177,16 @@ def example_db (file_name) :
          'age_id':                   [ 0 ],
          'time_id':                  [ 0 ],
          'fun':                      fun_iota_parent
-      },{ # smooth_beta
-         'name':                     'smooth_beta',
+      },{ # smooth_group
+         'name':                     'smooth_group',
          'age_id':                   [ 0 ],
          'time_id':                  [ 0 ],
-         'fun':                      fun_beta,
+         'fun':                      fun_group,
+      },{ # smooth_subgroup
+         'name':                     'smooth_subgroup',
+         'age_id':                   [ 0 ],
+         'time_id':                  [ 0 ],
+         'fun':                      fun_subgroup,
       }
    ]
    #
@@ -253,7 +270,7 @@ example_db(file_name)
 #
 program = '../../devel/dismod_at'
 dismod_at.system_command_prc([ program, file_name, 'init' ])
-dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
+dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
 dismod_at.system_command_prc(
    [ program, file_name, 'predict', 'fit_var', 'zero_meas_value' ]
 )
@@ -274,7 +291,7 @@ for row in predict_table :
    effect         = beta_bmi_true * (bmi - reference_bmi)
    # note that only the bmi effect is included in this check
    check          = no_effect_iota_true * math.exp(effect)
-   assert abs( 1.0 - avg_integrand / check ) < 1e-10
+   assert abs( 1.0 - avg_integrand / check ) < 1e-7
 # -----------------------------------------------------------------------------
 print('zero_meas_value.py: OK')
 # END PYTHON

@@ -124,6 +124,9 @@ void predict_command(
    // ------------------------------------------------------------------------
    // n_var
    size_t n_var = pack_object.size();
+   //
+   // pack_vec
+   vector<double> pack_vec(n_var);
    // ------------------------------------------------------------------------
    // variable_value
    vector<double> variable_value;
@@ -143,21 +146,51 @@ void predict_command(
    //
    // variable_value
    if( zero_meas_value )
-   {  pack_info::subvec_info info;
-      size_t n_integrand = db_input.integrand_table.size();
-      for(size_t integrand_id = 0; integrand_id < n_integrand; ++integrand_id)
-      {  size_t n_cov = pack_object.group_meas_value_n_cov(integrand_id);
-         for(size_t j = 0; j < n_cov; ++j)
-         {  info = pack_object.group_meas_value_info(integrand_id, j);
-            for(size_t k = 0; k < info.n_var; ++k)
-            {  size_t var_id = info.offset + k;
-               size_t sample_index = 0;
-               while(sample_index < n_sample)
-               {  variable_value[var_id + sample_index * n_var] = 0.0;
-                  ++sample_index;
+   {  size_t sample_id = 0;
+      for(size_t sample_index = 0; sample_index < n_sample; ++sample_index)
+      {  //  
+         // pack_vec
+         for(size_t var_id = 0; var_id < n_var; ++var_id)
+            pack_vec[var_id] = variable_value[sample_id++];  
+         //
+         // pack_vec
+         censor_var_limit(
+            pack_vec,
+            pack_vec,
+            var2prior,
+            db_input.prior_table
+         );
+         //
+         // pack_vec
+         pack_info::subvec_info info;
+         size_t n_int = db_input.integrand_table.size();
+         for(size_t integrand_id = 0; integrand_id < n_int; ++integrand_id)
+         {  size_t n_cov = pack_object.group_meas_value_n_cov(integrand_id);
+            for(size_t j = 0; j < n_cov; ++j)
+            {  info = pack_object.group_meas_value_info(integrand_id, j);
+               for(size_t k = 0; k < info.n_var; ++k)
+               {  size_t var_id = info.offset + k;
+                  pack_vec[var_id] = 0.0;
+               }
+            }
+            n_cov = pack_object.subgroup_meas_value_n_cov(integrand_id);
+            for(size_t j = 0; j < n_cov; ++j)
+            {  size_t n_sub = 
+                  pack_object.subgroup_meas_value_n_sub(integrand_id, j);  
+               for(size_t k = 0; k < n_sub; ++k)
+               {  info = 
+                     pack_object.subgroup_meas_value_info(integrand_id, j, k);
+                     for(size_t ell = 0; ell < info.n_var; ++ell)
+                     {  size_t var_id = info.offset + ell;
+                        pack_vec[var_id] = 0.0;
+                     }
                }
             }
          }
+         //
+         // variable_value
+         for(size_t var_id = 0; var_id < n_var; ++var_id)
+            variable_value[var_id + sample_index * n_var] = pack_vec[var_id];
       }
    }
    // ------------------------------------------------------------------------
@@ -208,22 +241,11 @@ void predict_command(
    col_type[2]   = "real";
    col_unique[2] = false;
    //
-   // pack_vec
-   vector<double> pack_vec(n_var);
-   //
    size_t sample_id = 0;
    for(size_t sample_index = 0; sample_index < n_sample; sample_index++)
    {  // copy the variable values for this sample index into pack_vec
       for(size_t var_id = 0; var_id < n_var; var_id++)
          pack_vec[var_id] = variable_value[sample_id++];
-      //
-      // censor samples to be within limits
-      censor_var_limit(
-         pack_vec,
-         pack_vec,
-         var2prior,
-         db_input.prior_table
-      );
       //
       for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
       {
