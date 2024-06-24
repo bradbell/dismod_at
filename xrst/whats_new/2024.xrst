@@ -18,6 +18,12 @@ Release Notes for 2024
 mm-dd
 *****
 
+06-24
+=====
+Advance dock_dismod_at
+:ref:`dock_dismod_at.sh@dismod_at_version` to 2024.6.23 and
+:ref:`dock_dismod_at.sh@at_cascade_version` to 2024.5.24.
+
 06-22
 =====
 Add subgroup random effects to the covariate multipliers in the
