@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-23 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # ifndef DISMOD_AT_AVG_INTEGRAND_HPP
 # define DISMOD_AT_AVG_INTEGRAND_HPP
@@ -38,7 +38,6 @@ private:
    const double                              ode_step_size_;
    const CppAD::vector<double>&              age_table_;
    const CppAD::vector<double>&              time_table_;
-   const CppAD::vector<subgroup_struct>&     subgroup_table_;
    const CppAD::vector<integrand_struct>&    integrand_table_;
    const CppAD::vector<weight_info>&         w_info_vec_;
 
