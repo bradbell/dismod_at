@@ -10,6 +10,10 @@ $Id:$
    dirver
    yyyymmdd
    pertrub
+   homebrew
+   numpy
+   matplotlib
+   scipy
 }
 
 Release Notes for 2024
@@ -17,6 +21,14 @@ Release Notes for 2024
 
 mm-dd
 *****
+
+06-27
+=====
+Fix some problems with the install of dismod_at on macOS.
+To be more specific, :ref:`example_install.sh-name` should now work
+if you use homebrew as a package manager and install the
+following packages ``numpy``, ``python-matplotlib`` , ``scipy``
+before running example_install.sh.
 
 06-24
 =====
