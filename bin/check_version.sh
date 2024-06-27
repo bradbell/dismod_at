@@ -55,7 +55,8 @@ fi
 # -----------------------------------------------------------------------------
 # check_version
 check_version() {
-   sed "$1" -f temp.sed > temp.out
+   echo "sed $1 -f temp.sed > temp.out"
+   sed -f temp.sed "$1" > temp.out
    if ! diff "$1" temp.out > /dev/null
    then
       version_ok='no'

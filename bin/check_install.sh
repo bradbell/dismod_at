@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # test install of python module and executable
 # ---------------------------------------------------------------------------
@@ -99,14 +99,21 @@ cat run.sh
 # ---------------------------------------------------------------------------
 # dismod_at_image
 dismod_at_image='dismod_at.dismod_at.release'
-if ! podman images | grep "^localhost/$dismod_at_image" > /dev/null
+if ! which podman > /dev/null
 then
-   dismod_at_image='dismod_at.dismod_at.debug'
+   echo "Cannot find podman, skipping test of $dismod_at_image"
+   echo 'check_install.sh: OK'
+   exit 0
+else
    if ! podman images | grep "^localhost/$dismod_at_image" > /dev/null
    then
-      echo 'podman cannot find dismod_at.image, skipping its test'
-      echo 'check_install.sh: OK'
-      exit 0
+      dismod_at_image='dismod_at.dismod_at.debug'
+      if ! podman images | grep "^localhost/$dismod_at_image" > /dev/null
+      then
+         echo "podman cannot find $dismod_at_image, skipping its test"
+         echo 'check_install.sh: OK'
+         exit 0
+      fi
    fi
 fi
 #

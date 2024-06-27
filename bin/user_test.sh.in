@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 set -e -u
 #
@@ -27,8 +27,9 @@ for try in {1..3}
 do
    if @python3_executable@ $user_test >& user_test.tmp
    then
-      sed -i user_test.tmp \
-         -e '/warning: Adding subgroup informtion to following tables:/d'
+      sed -i \
+         -e '/warning: Adding subgroup informtion to following tables:/d' \
+         user_test.tmp
       #
       if ! grep 'warning:' user_test.tmp > /dev/null
       then

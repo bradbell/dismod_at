@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 #
 # {xrst_begin run_cmake.sh}
@@ -13,10 +13,6 @@
 #     libdir
 #     makefile
 #     pthread
-#     usr
-#     wconversion
-#     wpedantic
-#     wshadow
 # }
 # {xrst_comment_ch #}
 #
@@ -63,7 +59,7 @@ dismod_at_prefix="$HOME/prefix/dismod_at"
 # ******************
 # Path to the python3 executable on this machine.
 # {xrst_code sh}
-python3_executable='/usr/bin/python3'
+python3_executable="$(which python3)"
 # {xrst_code}
 # You can use the command ``which python3`` to determine the location
 # of the default version for this system.
@@ -86,9 +82,16 @@ specific_compiler=''
 # extra_cxx_flags
 # ***************
 # Extra C++ flags used during compilation:
+# {xrst_spell_off}
 # {xrst_code sh}
 extra_cxx_flags='-std=c++17 -Wpedantic -Wall -Wshadow -Wconversion'
+extra_cxx_flags="$extra_cxx_flags -Wno-bitwise-instead-of-logical"
+if which brew > /dev/null
+then
+   extra_cxx_flags="$extra_cxx_flags -Wno-sign-conversion -I /opt/homebrew/include"
+fi
 # {xrst_code}
+# {xrst_spell_on}
 # An alternative might be ``-Wall`` .
 #
 # cmake_libdir

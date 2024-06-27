@@ -14,7 +14,7 @@
 /build
 #
 # Directories created by pip
-/python/dist/
+/python/build/
 /python/dismod_at.egg-info/
 #
 # a previous release build that /build can point to

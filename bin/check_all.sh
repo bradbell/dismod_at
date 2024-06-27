@@ -43,7 +43,10 @@ do
 done
 #
 # run_xrst.sh
-echo_eval bin/run_xrst.sh
+if which xrst > /dev/null
+then
+   echo_eval bin/run_xrst.sh
+fi
 #
 # ----------------------------------------------------------------------------
 # run cmake

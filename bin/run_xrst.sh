@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -22,11 +22,17 @@ index_page_name=$(\
 )
 #
 # number_jobs
-if [ $(nproc) == '1' ] || [ $(nproc) == '2' ]
+if which nproc >& /dev/null
+then
+   number_jobs=$(nproc)
+else
+   number_jobs=$(sysctl -n hw.ncpu)
+fi
+if [ $number_jobs == '1' ]
 then
    number_jobs=1
 else
-   let number_jobs="$(nproc) - 1"
+   let number_jobs="$number_jobs - 1"
 fi
 #
 # build
