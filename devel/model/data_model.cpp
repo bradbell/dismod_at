@@ -289,7 +289,6 @@ data_model::data_model(
 // const
 fit_simulated_data_ ( fit_simulated_data)           ,
 n_covariate_        (n_covariate)                   ,
-ode_step_size_      (ode_step_size)                 ,
 n_child_            ( child_info4data.child_size() )   ,
 subset_cov_value_   (subset_cov_value)              ,
 pack_object_        (pack_object)                   ,

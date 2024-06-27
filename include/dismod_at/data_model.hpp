@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-23 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # ifndef DISMOD_AT_DATA_MODEL_HPP
 # define DISMOD_AT_DATA_MODEL_HPP
@@ -35,7 +35,6 @@ private:
    // constant values
    const bool                   fit_simulated_data_;
    const size_t                 n_covariate_;
-   const double                 ode_step_size_;
    const size_t                 n_child_;
    const CppAD::vector<double>& subset_cov_value_;
    const pack_info&             pack_object_;
