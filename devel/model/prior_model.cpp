@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-23 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin prior_model_ctor dev}
@@ -12,7 +12,7 @@ Syntax
 ******
 
 | ``prior_model`` *prior_object* (
-| |tab| *pack_object* , *var2prior* , *age_table* , *time_table* , *prior_table*
+| |tab| *pack_object* , *var2prior* , *prior_table*
 | )
 
 prior_object
@@ -38,22 +38,6 @@ This argument has prototype
 
 and is the :ref:`pack_prior-name` information corresponding to the
 :ref:`model_variables-name` .
-
-age_table
-*********
-This argument has prototype
-
-   ``const CppAD::vector<double>&`` *age_table*
-
-and is the :ref:`get_age_table@age_table` .
-
-time_table
-**********
-This argument has prototype
-
-   ``const CppAD::vector<double>&`` *time_table*
-
-and is the :ref:`get_time_table@time_table` .
 
 prior_table
 ***********
@@ -85,15 +69,11 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 prior_model::prior_model(
    const pack_info&                       pack_object     ,
    const pack_prior&                      var2prior       ,
-   const CppAD::vector<double>&           age_table       ,
-   const CppAD::vector<double>&           time_table      ,
    const CppAD::vector<prior_struct>&     prior_table     ,
    const CppAD::vector<density_enum>&     density_table   )
 :
 pack_object_(pack_object)     ,
 var2prior_(var2prior)         ,
-age_table_(age_table)         ,
-time_table_(time_table)       ,
 prior_table_(prior_table)     ,
 density_table_(density_table)
 {  // Set prior_mean_ to values in prior table (default)
