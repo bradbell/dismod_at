@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # ifndef DISMOD_AT_AVG_NOISE_EFFECT_HPP
 # define DISMOD_AT_AVG_NOISE_EFFECT_HPP
@@ -21,7 +21,6 @@ Contents
 
 # include <cppad/utility/vector.hpp>
 # include "get_subgroup_table.hpp"
-# include "get_integrand_table.hpp"
 # include "pack_info.hpp"
 # include "a1_double.hpp"
 # include "adj_integrand.hpp"
@@ -38,7 +37,6 @@ private:
    const CppAD::vector<double>&              age_table_;
    const CppAD::vector<double>&              time_table_;
    const CppAD::vector<subgroup_struct>&     subgroup_table_;
-   const CppAD::vector<integrand_struct>&    integrand_table_;
    const CppAD::vector<weight_info>&         w_info_vec_;
    const CppAD::vector<smooth_info>&         s_info_vec_;
    const pack_info&                          pack_object_;
@@ -81,7 +79,6 @@ public:
       const CppAD::vector<double>&              age_table        ,
       const CppAD::vector<double>&              time_table       ,
       const CppAD::vector<subgroup_struct>&     subgroup_table   ,
-      const CppAD::vector<integrand_struct>&    integrand_table  ,
       const CppAD::vector<weight_info>&         w_info_vec       ,
       const CppAD::vector<smooth_info>&         s_info_vec       ,
       const pack_info&                          pack_object

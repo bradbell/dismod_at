@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-23 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin data_model_ctor dev}
@@ -314,7 +314,6 @@ avg_noise_obj_(
    age_table,
    time_table,
    subgroup_table,
-   integrand_table,
    w_info_vec,
    s_info_vec,
    pack_object

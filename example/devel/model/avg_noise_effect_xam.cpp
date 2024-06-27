@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -133,14 +133,6 @@ bool avg_noise_effect_xam(void)
       s_info_vec[smooth_id] = s_info;
    }
    //
-   // integrand_table
-   size_t n_integrand = dismod_at::number_integrand_enum;
-   vector<dismod_at::integrand_struct> integrand_table(n_integrand);
-   for(size_t i = 0; i < n_integrand; i++)
-   {  integrand_table[i].integrand       = dismod_at::integrand_enum(i);
-      integrand_table[i].minimum_meas_cv = 0.0;
-   }
-   //
    // subgroup_table
    size_t n_subgroup = 1;
    vector<dismod_at::subgroup_struct> subgroup_table(n_subgroup);
@@ -177,6 +169,7 @@ bool avg_noise_effect_xam(void)
 
    // pack_object
    // values in child_id2node_id do not matter because child_nslist_id is null
+   size_t n_integrand = dismod_at::number_integrand_enum;
    vector<size_t> child_id2node_id(0);
    vector<dismod_at::nslist_pair_struct> nslist_pair(0);
    dismod_at::pack_info pack_object(
@@ -200,7 +193,6 @@ bool avg_noise_effect_xam(void)
       age_table,
       time_table,
       subgroup_table,
-      integrand_table,
       w_info_vec,
       s_info_vec,
       pack_object
