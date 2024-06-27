@@ -287,11 +287,13 @@ data_model::data_model(
 // END_DATA_MODEL_PROTOTYPE
 :
 // const
-fit_simulated_data_ ( fit_simulated_data)           ,
-n_covariate_        (n_covariate)                   ,
-n_child_            ( child_info4data.child_size() )   ,
-subset_cov_value_   (subset_cov_value)              ,
-pack_object_        (pack_object)                   ,
+fit_simulated_data_ ( fit_simulated_data)            ,
+n_covariate_        (n_covariate)                    ,
+n_child_            ( child_info4data.child_size() ) ,
+subset_cov_value_   (subset_cov_value)               ,
+# ifndef NDEBUG
+pack_object_size_   (pack_object.size())             ,
+# endif
 avgint_obj_(
    cov2weight_obj,
    ode_step_size,
@@ -834,7 +836,7 @@ residual_struct<Float> data_model::like_one(
    const Float&                  avg       ,
    Float&                        delta_out )
 {
-   assert( pack_object_.size() == pack_vec.size() );
+   assert( pack_object_size_ == pack_vec.size() );
    assert( replace_like_called_ );
 
    // covariate information for this data point

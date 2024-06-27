@@ -37,7 +37,9 @@ private:
    const size_t                 n_covariate_;
    const size_t                 n_child_;
    const CppAD::vector<double>& subset_cov_value_;
-   const pack_info&             pack_object_;
+# ifndef NDEBUG
+   const size_t                 pack_object_size_;
+# endif
    //
    // set by constructor and not changed
    meas_noise_effect_enum         meas_noise_effect_;
