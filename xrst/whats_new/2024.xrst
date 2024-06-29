@@ -5,6 +5,7 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin 2024}
 {xrst_spell
+   cmake
    dd
    mm
    dirver
@@ -21,6 +22,13 @@ Release Notes for 2024
 
 mm-dd
 *****
+
+06-28
+=====
+There was a bug in the most recent change to :ref:`dock_dismod_at.sh-name`.
+(It would get an error about changing ``bin/run_cmake.sh`` when attempting to
+checkout out a specific version of ``dismod_at`` .)
+This has been fixed.
 
 06-27
 =====

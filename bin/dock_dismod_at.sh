@@ -311,8 +311,10 @@ WORKDIR /home/dismod_at.git
 #
 # Check soruce
 RUN \
+mv bin/run_cmake.sh temp.sh && \
 git pull origin master && \
 git checkout --quiet $dismod_at_hash  && \
+mv temp.sh bin/run_cmake.sh && \
 grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
 grep "^build_type=.$build_type." bin/run_cmake.sh> /dev/null
 #
@@ -346,8 +348,10 @@ WORKDIR /home
 # Check dismod_at source
 RUN \
 cd dismod_at.git && \
+mv bin/run_cmake.sh temp.sh && \
 git pull origin master && \
 git checkout --quiet $dismod_at_hash  && \
+mv temp.sh bin/run_cmake.sh && \
 grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
 grep "^build_type=.$build_type." bin/run_cmake.sh> /dev/null
 #
