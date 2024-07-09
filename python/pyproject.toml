@@ -1,8 +1,45 @@
-# copied from
-# https://packaging.python.org/en/latest/tutorials/packaging-projects/
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# ----------------------------------------------------------------------------
+# https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
+#
 [build-system]
-requires = [
-   "setuptools>=42",
-   "wheel"
+requires      = ['setuptools', 'setuptools-scm']
+build-backend = 'setuptools.build_meta'
+# -----------------------------------------------------------------------------
+[project]
+name              = 'dismod_at'
+version           = '2024.6.27'
+description       = 'Disease Rates as Functions of Age and Time'
+readme            = 'README.md'
+requires-python   = '>=3.0'
+keywords          = [ 'public health', 'disease', 'cause of death' ]
+license           = { text = 'AGPL-3.0-or-later' }
+authors           = [
+  {name  = 'Bradley M. Bell', email = 'bradbell@seanet.com'},
 ]
-build-backend = "setuptools.build_meta"
+dependencies      = [
+   'matplotlib',
+   'numpy',
+   'scipy',
+]
+classifiers       = [
+   'Development Status :: 4 - Beta',
+   'License            :: OSI Approved',
+   'Operating System   :: OS Independent',
+   'Environment        :: Console',
+   'Intended Audience  :: Public Health Modelers',
+   'Natural Language   :: English',
+]
+#
+# -----------------------------------------------------------------------------
+[tool.setuptools]
+packages = ['dismod_at']
+
+[project.urls]
+'Homepage'    = 'https://github.com/bradbell/dismod_at'
+'Bug Tracker' = 'https://github.com/bradbell/dismod_at/issues'
+
+# The script bin/dismodat.py is installed by ./CMakeLists.txt
+# The program bin/dismod_at is installed by ../devel/CMakeLists.txt

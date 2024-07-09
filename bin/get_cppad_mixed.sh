@@ -67,7 +67,9 @@ cmd=`grep '^specific_compiler=' bin/run_cmake.sh`
 eval $cmd
 #
 # extra_cxx_flags
-cmd=`grep '^extra_cxx_flags=' bin/run_cmake.sh`
+# Note that this picks up all the assignments to extra_cxx_flags, including
+# those that should be conditional on a homebrew install.
+cmd=`grep '^ *extra_cxx_flags=' bin/run_cmake.sh`
 eval $cmd
 #
 # dismod_at_prefix

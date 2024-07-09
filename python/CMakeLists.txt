@@ -11,3 +11,10 @@ ADD_CUSTOM_TARGET(
    pip3 install --ignore-installed --prefix=${dismod_at_prefix} .
    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
+INSTALL(
+   FILES ${CMAKE_CURRENT_SOURCE_DIR}/bin/dismodat.py
+   DESTINATION ${dismod_at_prefix}/bin
+   PERMISSIONS WORLD_EXECUTE
+               GROUP_READ GROUP_EXECUTE
+               OWNER_READ OWNER_WRITE OWNER_EXECUTE
+)
