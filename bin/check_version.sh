@@ -9,13 +9,13 @@ set -e -u
 # stable_version_file
 # This file contains the version number unless the branch is master or main.
 # The current date is used when the branch is master or main.
-stable_version_file='python/setup.cfg'
+stable_version_file='python/pyproject.toml'
 #
 # version_files
 # These are the files that are check to make sure version number is correct.
 version_files='
    dismod_at.xrst
-   python/setup.cfg
+   python/pyproject.toml
    CMakeLists.txt
 '
 #
@@ -28,8 +28,8 @@ cat << EOF > temp.sed
 # dismod_at.xrst
 s|dismod_at-[0-9]\\{4\\}[.][0-9]*[.][0-9]*|dismod_at-$version|g
 #
-# python/setup.cfg
-s|version\\( *\\)= *[0-9]\\{4\\}[.][0-9]*[.][0-9]*|version\\1= $version|
+# python/pyproject.toml
+s|version\\( *\\)= '*[0-9]\\{4\\}[.][0-9]*[.][0-9]*'|version\\1= '$version'|
 #
 # CMakeLists.txt
 s|SET( *dismod_at_version.*|SET(dismod_at_version "$version")|

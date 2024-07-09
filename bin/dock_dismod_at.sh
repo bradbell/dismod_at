@@ -272,8 +272,6 @@ RUN python3 -m venv $prefix
 ENV VIRTUAL_ENV     $prefix
 ENV PATH            $prefix/bin:\$PATH
 #
-# pip packages
-RUN pip3 install matplotlib numpy scipy build
 EOF
 # ----------------------------------------------------------------------------
 elif [ "$1" == 'mixed' ]
