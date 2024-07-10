@@ -29,7 +29,7 @@ Advance dock_dismod_at
 :ref:`dock_dismod_at.sh@dismod_at_version` and
 :ref:`dock_dismod_at.sh@at_cascade_version` to 2024.7.10.
 This tests the changes on 07-09 below
-(and fixed a problem instroduced in dock_dismod_at.sh).
+(and fixed a problem introduced in dock_dismod_at.sh).
 
 07-09
 =====
