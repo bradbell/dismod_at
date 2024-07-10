@@ -72,8 +72,8 @@ Fix usage message for ``dismodat.py`` . To be specific, change
 05-22
 =====
 #. Change the dismod_at version numbers from
-   yyyymmdd format to year.month.day format; e.g, 
-   the old version number for 2024-05-22 is 20240522 
+   yyyymmdd format to year.month.day format; e.g,
+   the old version number for 2024-05-22 is 20240522
    and it's new version number is 2024.5.22 .
 #. Advance dock_dismod_at
    :ref:`dock_dismod_at.sh@dismod_at_version` to 2024.5.22 and

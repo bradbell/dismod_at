@@ -72,7 +72,7 @@ If this argument is present, the value zero is used for the
 :ref:`mulcov_table@mulcov_type@meas_value` covariate multipliers
 (instead of the value in the *source* table).
 This predicts what the mean of the corresponding data
-would be if there were no measurement value covariate effects. 
+would be if there were no measurement value covariate effects.
 
 
 predict_table
@@ -148,10 +148,10 @@ void predict_command(
    if( zero_meas_value )
    {  size_t sample_id = 0;
       for(size_t sample_index = 0; sample_index < n_sample; ++sample_index)
-      {  //  
+      {  //
          // pack_vec
          for(size_t var_id = 0; var_id < n_var; ++var_id)
-            pack_vec[var_id] = variable_value[sample_id++];  
+            pack_vec[var_id] = variable_value[sample_id++];
          //
          // pack_vec
          censor_var_limit(
@@ -175,10 +175,10 @@ void predict_command(
             }
             n_cov = pack_object.subgroup_meas_value_n_cov(integrand_id);
             for(size_t j = 0; j < n_cov; ++j)
-            {  size_t n_sub = 
-                  pack_object.subgroup_meas_value_n_sub(integrand_id, j);  
+            {  size_t n_sub =
+                  pack_object.subgroup_meas_value_n_sub(integrand_id, j);
                for(size_t k = 0; k < n_sub; ++k)
-               {  info = 
+               {  info =
                      pack_object.subgroup_meas_value_info(integrand_id, j, k);
                      for(size_t ell = 0; ell < info.n_var; ++ell)
                      {  size_t var_id = info.offset + ell;

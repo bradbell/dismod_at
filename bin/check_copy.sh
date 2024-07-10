@@ -22,6 +22,7 @@ no_copyright_list='
    batch_edit.sed
    bin/check_copy.sh
    bin/check_version.sh
+   bin/check_invisible.sh
    bin/git_commit.sh
    python/README.md
    python/pyproject.toml

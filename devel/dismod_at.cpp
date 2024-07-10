@@ -638,9 +638,9 @@ int main(int n_arg, const char** argv)
       std::string source   = argv[3];
       bool zero_meas_value = false;
       if( n_arg > 4 )
-      {  string argv_4 = argv[4];  
+      {  string argv_4 = argv[4];
          if( strcmp(argv[4], "zero_meas_value") != 0 )
-         {  message  = "dismod_at database predict " + source + " " + argv_4; 
+         {  message  = "dismod_at database predict " + source + " " + argv_4;
             message += "\nexpected " + argv_4 + " to be zero_meas_value\n";
             dismod_at::error_exit(message);
          }

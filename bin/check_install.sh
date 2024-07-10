@@ -64,7 +64,7 @@ export PATH="$bin_dir:$PATH"
 #
 # PYTHONPATH
 site_packages=$(
-   find -L $HOME/prefix/dismod_at -name site-packages  | tr '\n' ':' 
+   find -L $HOME/prefix/dismod_at -name site-packages  | tr '\n' ':'
 )
 export PYTHONPATH="$site_packages"
 echo "PYTHONPATH=$PYTHONPATH"

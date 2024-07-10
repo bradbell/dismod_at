@@ -39,7 +39,7 @@ The higher income, the more likely that incidence will
 be recorded. We model this using a meas_value covariate multiplier
 one income. The value of this multiplier used to simulate the data is
 {xrst_code py}'''
-beta_income_true    = 0.5; 
+beta_income_true    = 0.5;
 r'''{xrst_code}
 
 reference_bmi
@@ -115,7 +115,7 @@ def example_db (file_name) :
    time_list   = [ 1990.0,  2020.0 ]
    #
    # node_table
-   node_table = [ 
+   node_table = [
       { 'name':'world',       'parent':'' },
       { 'name':'high_income', 'parent':'world' },
    ]
@@ -129,7 +129,7 @@ def example_db (file_name) :
       { 'name':'bmi',    'reference': reference_bmi} ,    # x_1
    ]
    #
-   # mulcov_table: 
+   # mulcov_table:
    mulcov_table = [
       {  # income
          'covariate': 'income',
