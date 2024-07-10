@@ -23,6 +23,21 @@ Release Notes for 2024
 mm-dd
 *****
 
+07-10
+=====
+Advance dock_dismod_at
+:ref:`dock_dismod_at.sh@dismod_at_version` and
+:ref:`dock_dismod_at.sh@at_cascade_version` to 2024.7.10.
+This tests the changes on 07-09 below
+(and fixed a problem instroduced in dock_dismod_at.sh).
+
+07-09
+=====
+Change the install of the dismod_at python module so that it
+automatically includes any packages it depends on.
+This is should solve some problems when using
+:ref:`example_install.sh-name` with homebrew on macOS.
+
 06-28
 =====
 There was a bug in the most recent change to :ref:`dock_dismod_at.sh-name`.
@@ -42,7 +57,7 @@ before running example_install.sh.
 =====
 Advance dock_dismod_at
 :ref:`dock_dismod_at.sh@dismod_at_version` to 2024.6.23 and
-:ref:`dock_dismod_at.sh@at_cascade_version` to 2024.5.24.
+:ref:`dock_dismod_at.sh@at_cascade_version` to 2024.6.24.
 
 06-22
 =====

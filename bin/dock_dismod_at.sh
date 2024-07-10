@@ -143,8 +143,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.dismod_at``
 # {xrst_spell_off}
 # {xrst_code sh}
-   dismod_at_version='2024.6.23'
-   dismod_at_hash='ce85ea6a69a7c7548ad92481619cd0827877b654'
+   dismod_at_version='2024.7.10'
+   dismod_at_hash='c4a737260ea6acbba89f31f6ea879f6c15dd3e0f'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -153,8 +153,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.at_cascade``
 # {xrst_spell_off}
 # {xrst_code sh}
-   at_cascade_version='2024.6.24'
-   at_cascade_hash='7c6b91a1cf939cf7eb49332a49f4d40fac1c096f'
+   at_cascade_version='2024.7.10'
+   at_cascade_hash='f3b8ccbbd5d31018f9fe94f116915a6c3a4e770a'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -272,6 +272,9 @@ RUN python3 -m venv $prefix
 ENV VIRTUAL_ENV     $prefix
 ENV PATH            $prefix/bin:\$PATH
 #
+# pip packages required by dismod_at
+RUN pip3 install matplotlib numpy scipy
+#
 EOF
 # ----------------------------------------------------------------------------
 elif [ "$1" == 'mixed' ]
@@ -369,9 +372,7 @@ sed -i bin/run_test.sh -e 's|if python3|if $prefix/bin/python3|'
 RUN bin/check_all.sh
 #
 # Install at_cascade
-RUN \
-$prefix/bin/python3 -m build && \
-pip3 install --force-reinstall dist/at_cascade-$at_cascade_version.tar.gz
+RUN pip3 install .
 #
 WORKDIR /home/work
 EOF
