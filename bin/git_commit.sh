@@ -78,7 +78,7 @@ $branch:
 EOF
 git status --porcelain | sed -e 's|^|# |' >> temp.log
 $EDITOR temp.log
-sed -i temp.log -e '/^#/d'
+sed -i -e '/^#/d' temp.log
 if ! head -1 temp.log | grep "^$branch:" > /dev/null
 then
    echo "Aborting because first line does not begin with $branch:"

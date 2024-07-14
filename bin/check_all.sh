@@ -3,9 +3,12 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-24 Bradley M. Bell
-# ----------------------------------------------------------------------------
-# Test this version, not previous install
-export PYTHONPATH=''
+# -----------------------------------------------------------------------------
+# bash function that echos and executes a command
+echo_eval() {
+   echo $*
+   eval $*
+}
 # ---------------------------------------------------------------------------
 if [ "$0" != "bin/check_all.sh" ]
 then
@@ -19,22 +22,20 @@ then
    echo 'build_type is not debug or release'
    exit 1
 fi
-build_type="$1"
-# -----------------------------------------------------------------------------
-# bash function that echos and executes a command
-echo_eval() {
-   echo $*
-   eval $*
-}
-# -----------------------------------------------------------------------------
-# check build_type in run_cmake.sh
+#
+# build_type
 if ! grep "^build_type='release'" bin/run_cmake.sh > /dev/null
 then
    echo 'bin/check_all.sh: build_type in bin/run_cmake.sh is not release'
    exit 1
 fi
-# -----------------------------------------------------------------------------
-# run bin/check_*.sh with exception of this file and bin/check_install.sh
+build_type="$1"
+#
+# dismod_at_prefix
+eval $(grep '^dismod_at_prefix=' bin/run_cmake.sh)
+#
+# bin/check_*.sh
+# exclude this file and bin/check_install.sh
 list=`ls bin/check_*.sh | sed \
    -e '/check_all.sh/d' -e '/check_install.sh/d'`
 for script in $list
@@ -48,7 +49,6 @@ then
    echo_eval bin/run_xrst.sh
 fi
 #
-# ----------------------------------------------------------------------------
 # run cmake
 if [ "$build_type" == 'debug' ]
 then
@@ -59,6 +59,31 @@ fi
 #
 echo "bin/run_cmake.sh $flag >& cmake.log"
 bin/run_cmake.sh $flag >& cmake.log
+#
+# dismod_at_prefix, PYTHONPATH
+# Clean out previous install of dismod_at. Note that run_cmake.sh
+# may have set this prefix to a link for the particular build type.
+for file in dismod_at dismodat.py
+do
+   if [ -e "$dismod_at_prefix/bin/$file" ]
+   then
+      echo_eval rm "$dismod_at_prefix/bin/$file"
+   fi
+done
+export PYTHONPATH=''
+for dir in $(find -L $dismod_at_prefix -name 'site-packages' )
+do
+   if [ "$PYTHONPATH" == '' ]
+   then
+      PYTHONPATH="$dir"
+   else
+      PYTHONPATH="$PYTHONPATH:$dir"
+   fi
+   if ls "$dir/dismod_at"* >& /dev/null
+   then
+      echo_eval rm -r "$dir/dismod_at"*
+   fi
+done
 # ----------------------------------------------------------------------------
 #
 echo_eval cd build
