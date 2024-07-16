@@ -15,6 +15,7 @@ $Id:$
    numpy
    matplotlib
    scipy
+   xam
 }
 
 Release Notes for 2024
@@ -22,6 +23,12 @@ Release Notes for 2024
 
 mm-dd
 *****
+
+07-15
+=====
+Fix a compiler warning in 
+get_option_table_xam.cpp.
+(This is a test and developer example.)
 
 07-10
 =====
