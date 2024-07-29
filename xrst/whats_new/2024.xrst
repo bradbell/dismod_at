@@ -24,9 +24,13 @@ Release Notes for 2024
 mm-dd
 *****
 
+07-29
+=====
+Advance from cppad_mixed-20240214 to cppad_mixed-20240729.
+
 07-15
 =====
-Fix a compiler warning in 
+Fix a compiler warning in
 get_option_table_xam.cpp.
 (This is a test and developer example.)
 
