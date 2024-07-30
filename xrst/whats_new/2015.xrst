@@ -1,13 +1,14 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin 2015}
 {xrst_spell
    approx
    arg
    bool
+   cmake
    dd
    dev
    devel
@@ -452,7 +453,7 @@ was replace by the row
    ``cppad_mixed_set_sparsity`` option was also added to the
    :ref:`install_unix@dismod_at@Setup` .
 #. Create a separate documentation section for editing of
-   :ref:`run_cmake.sh-name` during the install procedure.
+   :ref:`install_settings.py-name` during the install procedure.
 
 10-20
 =====

@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin 2022}
 {xrst_spell
@@ -217,7 +217,7 @@ to the hold_out command; see the new
 #. In :ref:`plot_curve-name` ,
    find a way around Matplotlib bug when there are lots of figures.
    This sometimes caused a python crash with an IO error.
-#. Fix setting of C compiler in :ref:`run_cmake.sh-name` .
+#. Fix setting of C compiler in :ref:`install_settings.py-name` .
 
 03-08
 =====
@@ -231,7 +231,7 @@ to the hold_out command; see the new
 #. Advance to cppad_mixed-20220304. This fixes some problems
    with the install on macOS with homebrew.
 #. Fix a problem with the setting of the C++ compiler using
-   :ref:`run_cmake.sh@specific_compiler` .
+   :ref:`install_settings.py@specific_compiler` .
 #. Make some improvements to :ref:`data_density_command-name` documentation.
 
 02-17

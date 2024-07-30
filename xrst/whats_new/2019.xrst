@@ -6,10 +6,12 @@ $Id:$
 {xrst_begin 2019}
 {xrst_spell
    checkpointing
+   cmake
    dd
    dev
    dockerfile
    goto
+   ihme
    iter
    misspecification
    mm
@@ -19,7 +21,6 @@ $Id:$
    sam
    stdcv
    ubuntu
-   ihme
 }
 
 Release Notes for 2019
@@ -250,7 +251,7 @@ the selected section.
 #. Add mention that the install scripts under
    :ref:`install_unix@Special Requirements` also
    serve as examples of how to install the corresponding packages.
-   In addition, :ref:`run_cmake.sh-name` serves as an example of how
+   In addition, :ref:`install_settings.py-name` serves as an example of how
    to install dismod_at.
 #. The :ref:`csv2db_command-name` wish list items were removed because we
    assume that the dismod_at user can write code in some scripting language
@@ -572,7 +573,7 @@ Automatically set
 
 #. Advance to cppad_mixed-20190607.
    This gives better error messaging when ``nan`` occurs
-   and :ref:`run_cmake.sh@build_type` is ``debug`` .
+   and :ref:`install_settings.py@build_type` is ``debug`` .
 #. A paragraph discussing
    :ref:`fit_command@Ipopt Options` was added to the
    fit command documentation.

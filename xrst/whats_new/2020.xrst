@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin 2020}
 {xrst_spell
@@ -56,7 +56,7 @@ Advance to cppad_mixed-20201222.
 This improves the error messaging during the install of
 :ref:`cppad_mixed.sh<install_unix@Special Requirements@cppad_mixed>` .
 In addition, this new version avoids ipopt creating of the file
-``debug.out`` (when :ref:`run_cmake.sh@build_type` is debug).
+``debug.out`` (when :ref:`install_settings.py@build_type` is debug).
 
 12-17
 =====
@@ -131,7 +131,7 @@ necessary third party software (not use coinbrew).
 
 08-16
 =====
-Improve the debug :ref:`run_cmake.sh@build_type`
+Improve the debug :ref:`install_settings.py@build_type`
 so that ipopt and all its libraries also get built for debugging.
 
 07-02

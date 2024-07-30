@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_speed.py}
 # {xrst_comment_ch #}
@@ -21,7 +21,7 @@
 #
 # python3
 # *******
-# This is the :ref:`run_cmake.sh@python3_executable`
+# This is the :ref:`install_settings.py@python3_executable`
 # on your system.
 #
 # random_seed

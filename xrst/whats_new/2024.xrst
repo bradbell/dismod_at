@@ -7,16 +7,16 @@ $Id:$
 {xrst_spell
    cmake
    dd
-   mm
    dirver
-   yyyymmdd
-   pertrub
    homebrew
-   numpy
+   ihme
    matplotlib
+   mm
+   numpy
+   pertrub
    scipy
    xam
-   ihme
+   yyyymmdd
 }
 
 Release Notes for 2024

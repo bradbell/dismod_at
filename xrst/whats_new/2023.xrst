@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin 2023}
 {xrst_spell
@@ -37,7 +37,7 @@ Advance dock_dismod_at.sh version of Ubuntu from 20.04 to 23.04 ,
 Advancing to Ubuntu 23.04 Also note the dock_dismod_at.sh
 wish list item, so it was removed.
 Also note that dismod_at-2023.12.29 has a minor fix for the case where
-:ref:`run_cmake.sh@dismod_at_prefix` does not end with ``dismod_at`` .
+:ref:`install_settings.py@dismod_at_prefix` does not end with ``dismod_at`` .
 
 12-05
 =====

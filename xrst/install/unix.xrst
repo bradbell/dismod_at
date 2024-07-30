@@ -1,4 +1,4 @@
-$Id:$
+install_settings.py
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-24 Bradley M. Bell
@@ -23,12 +23,12 @@ $Id:$
    scipy
    suitesparse
    txt
+   cmake
 }
 
 Installing dismod_at in Unix
 ############################
 {xrst_toc_hidden
-   bin/run_cmake.sh
    bin/install_settings.py
    bin/example_install.sh
 }
@@ -175,7 +175,7 @@ If one of these commands fails,
    ``find -L`` *dismod_at_prefix* ``-name`` *pkg* . ``pc 2> /dev/null``
 
 should find the directory where *pkg* . ``pc`` is located;
-see :ref:`run_cmake.sh@dismod_at_prefix` .
+see :ref:`install_settings.py@dismod_at_prefix` .
 
 LD_LIBRARY_PATH
 ===============
@@ -199,7 +199,7 @@ Use the following command to find it:
 
    ``find -L`` *dismod_at_prefix* ``-name dismod_at 2> /dev/null``
 
-see :ref:`run_cmake.sh@dismod_at_prefix` .
+see :ref:`install_settings.py@dismod_at_prefix` .
 
 PYTHONPATH
 ==========
@@ -211,7 +211,7 @@ you should be able to execute the following commands:
 | |tab| ``quit`` ()
 
 where *python3* is your
-:ref:`python3 executable<run_cmake.sh@python3_executable>` .
+:ref:`install_settings.py@python3_executable` .
 If you get the error ``No module named 'dismod_at'`` ,
 you will need to add the directory where the module is installed
 to your python path.
@@ -224,9 +224,9 @@ Special Requirements
 The packages listed below are required by dismod_at
 and may not have standard system installs
 
-run_cmake.sh
-============
-The settings in :ref:`bin/run_cmake.sh<run_cmake.sh-name>`
+install_settings.py
+===================
+The settings in :ref:`bin/install_settings.py<install_settings.py-name>`
 are used by the
 scripts that install the special requirements.
 You must first change
@@ -275,12 +275,13 @@ a new version of ``dismod_at`` :
 
 Setup
 =====
-The file :ref:`bin/run_cmake.sh<run_cmake.sh-name>` has setting that
+The file
+:ref:`bin/install_settings.py<install_settings.py-name>` has setting that
 you should change so they correspond to your machine.
 
 Cmake Command
 =============
-After changing ``bin/run_cmake.sh`` to work for your system,
+After changing ``bin/install_settings.py`` to work for your system,
 in the ``dismod_at.git`` directory
 execute the following command:
 ::

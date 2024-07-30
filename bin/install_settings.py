@@ -11,18 +11,18 @@ import subprocess
 #
 # {xrst_begin install_settings.py}
 # {xrst_spell
+#     cmake
 #     cxx
+#     eval
 #     fortran
 #     gcc
+#     getcwd
 #     gfortran
 #     libdir
 #     makefile
+#     os
 #     pthread
 #     sys
-#     os
-#     cmake
-#     getcwd
-#     eval
 # }
 # {xrst_comment_ch #}
 #

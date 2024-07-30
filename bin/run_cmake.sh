@@ -1,118 +1,9 @@
-#! /bin/bash -e
+#! /usr/bin/env bash
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-24 Bradley M. Bell
+set -e -u
 # ----------------------------------------------------------------------------
-#
-# {xrst_begin run_cmake.sh}
-# {xrst_spell
-#     cxx
-#     fortran
-#     gcc
-#     gfortran
-#     libdir
-#     makefile
-#     pthread
-# }
-# {xrst_comment_ch #}
-#
-# bin/run_cmake.sh: User Configuration Options
-# ############################################
-#
-# verbose_makefile
-# ****************
-# Use 'no' for normal and 'yes' for verbose make output:
-# {xrst_code sh}
-verbose_makefile='no'
-# {xrst_code}
-#
-# build_type
-# **********
-# Use either ``debug`` or ``release`` for the type of this build:
-# {xrst_code sh}
-build_type='release'
-# {xrst_code}
-#
-# dismod_at_prefix
-# ****************
-# Prefix where dismod_at will be installed:
-# {xrst_code sh}
-dismod_at_prefix="$HOME/prefix/dismod_at"
-# {xrst_code}
-# If *dismod_at_prefix* ends in ``dismod_at`` ,
-# ``run_cmake.sh`` will use a soft link from this prefix to
-# *dismod_at_prefix* . ``debug`` or
-# *dismod_at_prefix* . ``release``
-# depending on the choice for *build_type* .
-#
-# Debug and Release
-# *****************
-# If a soft link is used for the install,
-# the same technique will be used to map the ``build``
-# directory to the debug or release version.
-# If you are using both a debug and release versions of dismod_at,
-# both versions of the
-# :ref:`install_unix@Special Requirements`
-# will need to be installed.
-#
-# python3_executable
-# ******************
-# Path to the python3 executable on this machine.
-# {xrst_code sh}
-python3_executable="$(which python3)"
-# {xrst_code}
-# You can use the command ``which python3`` to determine the location
-# of the default version for this system.
-#
-# specific_compiler
-# *****************
-# On some systems, e.g. the Mac using port, there are problems with mixing
-# different compiler systems for fortran and C++; see
-# `ipopt issue 471 <https://github.com/coin-or/Ipopt/discussions/471>`_.
-# This variable allows you to set a specific compiler for
-# C, and or CXX and or FC. For example
-# ``specific_compiler='CC=gcc CXX=g++ FC=gfortran'``
-# uses the gnu versions of these compilers.
-# The configuration will automatically find compilers that are not specified;
-# i.e., if
-# {xrst_code sh}
-specific_compiler=''
-# {xrst_code}
-#
-# extra_cxx_flags
-# ***************
-# Extra C++ flags used during compilation:
-# {xrst_spell_off}
-# {xrst_code sh}
-extra_cxx_flags='-std=c++17 -Wpedantic -Wall -Wshadow -Wconversion'
-extra_cxx_flags="$extra_cxx_flags -Wno-bitwise-instead-of-logical"
-if which brew > /dev/null
-then
-   extra_cxx_flags="$extra_cxx_flags -Wno-sign-conversion -I /opt/homebrew/include"
-fi
-# {xrst_code}
-# {xrst_spell_on}
-# An alternative might be ``-Wall`` .
-#
-# cmake_libdir
-# ************
-# Sub-directory of each prefix where libraries are installed.
-# {xrst_code sh}
-cmake_libdir='lib64'
-# {xrst_code}
-#
-# system_specific_library_list
-# ****************************
-# List of libraries that are needed for a particular system. For example,
-# if when you build ``dismod_at`` the ``pthread`` library is
-# required by your system, then include it here.
-# Libraries in the list can be separated by spaces or semi-colons.
-# {xrst_code sh}
-system_specific_library_list=''
-# {xrst_code}
-#
-# {xrst_end run_cmake.sh}
-# ============================================================================
 # bash function that echos and executes a command
 echo_eval() {
    echo $*
@@ -124,7 +15,7 @@ then
    echo 'bin/run_cmake.sh: must be executed from its parent directory'
    exit 1
 fi
-while [ "$1" != '' ]
+while [ "$#" != 0 ]
 do
    if [ "$1" == '--help' ]
    then
@@ -149,6 +40,16 @@ EOF
    fi
    shift
 done
+#
+# verbose_makefile
+# buld_type
+# dismod_at_prefix
+# python3_executable
+# specific_compiler
+# extra_cxx_flags
+# cmake_libdir
+# system_specific_library_list
+eval $(bin/install_settings.py)
 # --------------------------------------------------------------------------
 export PKG_CONFIG_PATH="$dismod_at_prefix/$cmake_libdir/pkgconfig"
 # --------------------------------------------------------------------------

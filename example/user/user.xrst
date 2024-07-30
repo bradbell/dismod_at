@@ -30,7 +30,7 @@ you can run one of these examples with the command
 
    *python3_executable* ``example/user/`` *name*
 
-where :ref:`run_cmake.sh@python3_executable`
+where :ref:`install_settings.py@python3_executable`
 is the python3 program and *name* is the name of the example.
 The name of the example
 includes the ``.py`` extension at the end,
