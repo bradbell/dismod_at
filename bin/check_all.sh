@@ -24,15 +24,15 @@ then
 fi
 #
 # build_type
-if ! grep "^build_type='release'" bin/run_cmake.sh > /dev/null
+if ! grep "^build_type *= *'release'" bin/install_settings.py > /dev/null
 then
-   echo 'bin/check_all.sh: build_type in bin/run_cmake.sh is not release'
+   echo 'bin/check_all.sh: build_type in bin/install_setings.py is not release'
    exit 1
 fi
 build_type="$1"
 #
 # dismod_at_prefix
-eval $(grep '^dismod_at_prefix=' bin/run_cmake.sh)
+eval $(bin/install_settings.py | grep ^dismod_at_prefix)
 #
 # bin/check_*.sh
 # exclude this file and bin/check_install.sh
