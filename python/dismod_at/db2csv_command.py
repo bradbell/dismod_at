@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin db2csv_command}
 # {xrst_spell
@@ -633,17 +633,11 @@
 # {xrst_comment -------------------------------------------------------}
 # {xrst_toc_hidden
 #    example/get_started/db2csv_command.py
-#    bin/ihme_db.sh
 # }
 # Example
 # *******
 # The file :ref:`db2csv_command.py-name` contains an example and test
 # using this command.
-#
-# ihme_db.sh
-# **********
-# The script :ref:`ihme_db.sh-name` can be used to run ``db2csv`` for a
-# dismod_at database on the IHME cluster.
 #
 # {xrst_end db2csv_command}
 def db2csv_command(database_file_arg) :

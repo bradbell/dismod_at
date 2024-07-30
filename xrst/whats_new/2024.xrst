@@ -16,10 +16,16 @@ $Id:$
    matplotlib
    scipy
    xam
+   ihme
 }
 
 Release Notes for 2024
 ######################
+
+settings branch
+***************
+#. Remove the ``bin/ihme_db.sh`` script
+   (it is out of date, was IHME specific, and no longer used).
 
 mm-dd
 *****

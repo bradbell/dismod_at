@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin 2019}
 {xrst_spell
@@ -19,6 +19,7 @@ $Id:$
    sam
    stdcv
    ubuntu
+   ihme
 }
 
 Release Notes for 2019
@@ -594,7 +595,8 @@ This started with version ``20190521`` and has been fixed.
 06-01
 =====
 
-#. The :ref:`ihme_db.sh-name` script was improved and documented.
+#. The ``bin/ihme_db.sh`` script was improved and documented.
+   (it was later removed on 2024-07-30).
 #. In some cases, ``avg_age`` was still being used instead of ``age_avg`` ,
    see the discussion about the ``avg_age`` on
    :ref:`2018-10-30<2018@mm-dd@10-30>` .
