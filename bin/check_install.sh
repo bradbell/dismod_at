@@ -25,12 +25,10 @@ echo_eval() {
 }
 #
 # dismod_at_prefix
-cmd=`grep ^dismod_at_prefix bin/run_cmake.sh`
-eval $cmd
+eval $(bin/install_settings.py | grep '^dismod_at_prefix')
 #
 # python3_executable
-cmd=`grep ^python3_executable bin/run_cmake.sh`
-eval $cmd
+eval $(bin/install_settings.py | grep '^python3_executable')
 #
 # site_packages
 site_packages=''
