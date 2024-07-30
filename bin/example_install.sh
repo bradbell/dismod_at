@@ -23,13 +23,11 @@
 # ----------------------------------------------------------------------------
 # BEGIN BASH
 #
-# set build_type to value in run_cmake.sh
-cmd=`grep '^build_type=' bin/run_cmake.sh`
-eval $cmd
+# build_type
+eval $(bin/install_settings.py | grep '^build_type')
 #
-# set dismod_at_prefix to value in run_cmake.sh
-cmd=`grep '^dismod_at_prefix=' bin/run_cmake.sh`
-eval $cmd
+# dismod_at_prefix 
+eval $(bin/install_settings.py | grep '^dismod_at_prefix')
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
