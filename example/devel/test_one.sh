@@ -19,7 +19,8 @@ then
 fi
 # -----------------------------------------------------------------------------
 # determine if debug or release
-if grep "cmake_build_type='RELEASE'" ../../bin/run_cmake.sh > /dev/null
+build_type=$(bin/install_settings.py | grep '^build_type *=')
+if [ "$build_type" == 'debug' ]
 then
    build_type='-O3 -DNDEBUG'
 else
