@@ -26,6 +26,11 @@ then
    echo 'bin/git_commit.sh: cannot find ./.git'
    exit 1
 fi
+if ! grep "^build_type *= *'release'" bin/install_settings.py > /dev/null
+then
+   echo 'git_commit.sh: build_type is not release in bin/install_settings.py'
+   exit 1
+fi
 # -----------------------------------------------------------------------------
 # EDITOR
 set +u

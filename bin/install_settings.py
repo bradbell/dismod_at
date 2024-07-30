@@ -39,22 +39,22 @@ import subprocess
 # This sets install_settings to a python dictionary that has a key-value
 # pair for of the settings listed below:
 # {xrst_code py}
-# sys.path.insert(0, os.getcwd() + '/bin')
-# import install_settings
-# install_settings = install_settings.install_settings()
-# sys.path.pop(0)
+sys.path.insert(0, os.getcwd() + '/bin')
+import install_settings
+install_settings = install_settings.install_settings()
+sys.path.pop(0)
 # {xrst_code}
 #
 # Bash
 # ====
 # This prints the value for each of the install settings:
 # {xrst_code sh}
-# bin/install_settings.py
-# {xrst_code}
+bin/install_settings.py
+{xrst_code}
 # This sets a bash variable to its value for
 # each of the install settings:
 # {xrst_code sh}
-# eval $(bin/install_settings.py)
+eval $(bin/install_settings.py)
 # {xrst_code}
 #
 # verbose_makefile
