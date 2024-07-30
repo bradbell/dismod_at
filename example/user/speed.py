@@ -142,7 +142,7 @@ import numpy
 import timeit
 test_program = 'example/user/speed.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 7 :
-   usage  = 'python3 ' + test_program + 'a1, ..., a6\\\n'
+   usage  = 'python3 ' + test_program + ' a1 a2 a3 a4 a5 a6\\\n'
    usage += 'python3:            the python 3 program on your system\n'
    usage += 'a1: random_seed:    non-negative random seed; if zero, use clock\n'
    usage += 'a2: n_children:     positive number of child nodes\n'

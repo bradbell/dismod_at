@@ -18,14 +18,20 @@ quasi_fixed='false'
 # smaller increase work per function evaluation
 ode_step_size='1.0'
 #
+# n_data
+n_data=200
+#
+# max_fit
+max_fit=50
+#
 # If non-empty, compare branches.
 # If empty, and there is a new sub-directory, use new subdirectory for changes.
 # If empty, and no new sub-directory, only run branch1 case.
 branch2=''
 #
-# Assume that at beginning, installs correspond to master branch.
+# Assume that at beginning, installs correspond to the original branch.
 # If true, re-install release version corresponding to each version and
-# at the end ensure installs correspond to master version.
+# at the end ensure installs correspond to original branch.
 get_cppad_mixed='false'
 # -----------------------------------------------------------------------------
 if [ "$0" != 'bin/speed.sh' ]
@@ -42,15 +48,10 @@ then
 fi
 branch1="$1"
 # -----------------------------------------------------------------------------
-current=`git branch | sed -n -e '/^\*/p' | sed -e 's|^\* *||'`
-if [ "$current" != 'master' ]
+original_branch=`git branch | sed -n -e '/^\*/p' | sed -e 's|^\* *||'`
+if [ "$branch2" == "$original_branch" ]
 then
-   echo 'bin/speed.sh must be run from master branch'
-   exit 1
-fi
-if [ "$branch2" == 'master' ]
-then
-   echo 'bin/speed.sh: branch2 cannot be master'
+   echo "bin/speed.sh: branch2 cannot be original_branch = $original_branch"
    exit 1
 fi
 if [ "$branch1" == "$branch2" ]
@@ -58,6 +59,11 @@ then
    echo 'bin/speed.sh: branch1 and branch2 must be different'
    echo 'branch2 can be empty in which case new is used to replace soruce'
    exit 1
+fi
+if ! grep "^build_type *= *'release'" bin/install_settings.py > /dev/null
+then
+   echo 'bin/speed.sh: install_settings.py build_type is not release'
+   exit
 fi
 # -----------------------------------------------------------------------------
 if [ "$branch2" != '' ] || [ -d new ]
@@ -90,8 +96,6 @@ do
    # ----------------------------------------------------------------------
    # run camke for release version
    # ----------------------------------------------------------------------
-   sed -i bin/run_cmake.sh -e "s|^build_type=.*|build_type='release'|"
-   #
    # run cmake
    echo "bin/run_cmake.sh > build.release/$name.log"
    bin/run_cmake.sh > build/$name.log
@@ -122,6 +126,7 @@ do
    #
    # create database
    arguments="$random_seed $n_children $quasi_fixed $ode_step_size"
+   arguments+=" $n_data $max_fit"
    echo "python3 example/user/speed.py $arguments >> build.release/$name.log"
    python3 example/user/speed.py $arguments >> build/$name.log
    #
@@ -141,16 +146,11 @@ do
    mv massif.out ../../$name.massif
    #
    popd > /dev/null
-   # ------------------------------------------------------------------------
-   # undo changes in bin/run_cmake.sh
-   # ------------------------------------------------------------------------
-   git checkout bin/run_cmake.sh
 done
-# ---------------------------------------------------------------------------
-# restore master
-# ---------------------------------------------------------------------------
-git checkout master
-if [ "$name" != 'master' ]
+# 
+# original_branch
+git checkout $original_branch
+if [ "$name" != "$original_branch" ]
 then
    if [ "$get_cppad_mixed" == 'true' ]
    then
