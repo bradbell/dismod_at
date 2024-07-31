@@ -27,10 +27,13 @@ mm-dd
 
 07-30
 =====
-#. Move the install settings from ``bin/run_cmake.sh`` to 
+#. Move the install settings from ``bin/run_cmake.sh`` to
    :ref:`bin/install_settings.py<install_settings.py-name>` .
 #. Remove the ``bin/ihme_db.sh`` script
    (it was out of date, was IHME specific, and would no longer be useful).
+#. Advance dock_dismod_at
+   :ref:`dock_dismod_at.sh@dismod_at_version` and
+   :ref:`dock_dismod_at.sh@at_cascade_version` to 2024.7.30.
 
 07-29
 =====

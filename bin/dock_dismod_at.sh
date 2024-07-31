@@ -1,4 +1,4 @@
-#! /usr/bin/env bash
+#build_type! /usr/bin/env bash
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-24 Bradley M. Bell
@@ -143,8 +143,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.dismod_at``
 # {xrst_spell_off}
 # {xrst_code sh}
-   dismod_at_version='2024.7.10'
-   dismod_at_hash='c4a737260ea6acbba89f31f6ea879f6c15dd3e0f'
+   dismod_at_version='2024.7.30'
+   dismod_at_hash='54206a574ce868f5064b7018da60594038f4f953'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -153,8 +153,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.at_cascade``
 # {xrst_spell_off}
 # {xrst_code sh}
-   at_cascade_version='2024.7.10'
-   at_cascade_hash='f3b8ccbbd5d31018f9fe94f116915a6c3a4e770a'
+   at_cascade_version='2024.7.30'
+   at_cascade_hash='346a37ccec4b95d505afe895aa4c63c68374bf46'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -293,11 +293,11 @@ RUN \
 git checkout --quiet $dismod_at_hash  && \
 grep "$dismod_at_version" CMakeLists.txt > /dev/null
 #
-# Change bin/run_cmake.sh
-RUN sed -i bin/run_cmake.sh \
-   -e 's|^dismod_at_prefix=.*|dismod_at_prefix='$prefix'|' \
-   -e "s|^build_type=.*|build_type='$build_type'|" \
-   -e "s|^python3_executable=.*|python3_executable='$prefix/bin/python3'|"
+# Change bin/install_settings.py
+RUN sed -i bin/install_settings.py \
+   -e "s|^dismod_at_prefix *=.*|dismod_at_prefix = '$prefix'|" \
+   -e "s|^build_type *=.*|build_type = '$build_type'|"  \
+   -e "s|^python3_executable *=.*|python3_executable = '$prefix/bin/python3'|"
 #
 # Install cppad_mixed
 RUN bin/get_cppad_mixed.sh
@@ -312,12 +312,12 @@ WORKDIR /home/dismod_at.git
 #
 # Check soruce
 RUN \
-mv bin/run_cmake.sh temp.sh && \
+mv bin/install_settings.py temp.py && \
 git pull origin master && \
 git checkout --quiet $dismod_at_hash  && \
-mv temp.sh bin/run_cmake.sh && \
+mv temp.py bin/install_settings.py && \
 grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
-grep "^build_type=.$build_type." bin/run_cmake.sh> /dev/null
+grep "^build_type *= *'$build_type'" bin/install_settings.py> /dev/null
 #
 # LD_LIBRARY_PATH
 ENV LD_LIBRARY_PATH=''
@@ -349,12 +349,12 @@ WORKDIR /home
 # Check dismod_at source
 RUN \
 cd dismod_at.git && \
-mv bin/run_cmake.sh temp.sh && \
+mv bin/install_settings.py temp.py && \
 git pull origin master && \
 git checkout --quiet $dismod_at_hash  && \
-mv temp.sh bin/run_cmake.sh && \
+mv temp.py bin/install_settings.py && \
 grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
-grep "^build_type=.$build_type." bin/run_cmake.sh> /dev/null
+grep "^build_type *= *'$build_type'" bin/install_settings.py> /dev/null
 #
 # Get at_cascade source
 RUN git clone https://github.com/bradbell/at_cascade.git at_cascade.git
