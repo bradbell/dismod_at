@@ -29,6 +29,8 @@ mm-dd
 =====
 #. Move the install settings from ``bin/run_cmake.sh`` to
    :ref:`bin/install_settings.py<install_settings.py-name>` .
+   The ``install_settings.py`` routine is better able to transfer
+   results that depend on the system it is run on.
 #. Remove the ``bin/ihme_db.sh`` script
    (it was out of date, was IHME specific, and would no longer be useful).
 #. Advance dock_dismod_at
