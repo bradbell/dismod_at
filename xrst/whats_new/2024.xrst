@@ -25,6 +25,13 @@ Release Notes for 2024
 mm-dd
 *****
 
+08-13
+=====
+Add read permission for the world to the ``dismodat.py`` file
+so that now user, group and world can execute this script.
+(It used to be the case that only users in the same group
+as the installer could execute this script.)
+
 07-30
 =====
 #. Move the install settings from ``bin/run_cmake.sh`` to
