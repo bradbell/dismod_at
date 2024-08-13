@@ -27,10 +27,12 @@ mm-dd
 
 08-13
 =====
-Add read permission for the world to the ``dismodat.py`` file
-so that now user, group and world can execute this script.
-(It used to be the case that only users in the same group
-as the installer could execute this script.)
+#. Add read permission for the world to the ``dismodat.py`` file
+   so that now user, group and world can execute this script.
+   (It used to be the case that only users in the same group
+   as the installer could execute this script.)
+#. Advance dock_dismod_at
+   :ref:`dock_dismod_at.sh@dismod_at_version` to 2024.8.13.
 
 07-30
 =====
