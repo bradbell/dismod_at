@@ -80,20 +80,20 @@
 # result
 # ******
 #
-# #. If *return_stdout* and *return stderr* are both false,
-#    *result* is ``None`` .
+# #.  If *return_stdout* and *return stderr* are both false,
+#     *result* is ``None`` .
 #
-# #. If *return_stdout* is true and *return_stderr* is false,
-#    *result* is a ``str`` with the contents of standard output.
+# #.  If *return_stdout* is true and *return_stderr* is false,
+#     *result* is a ``str`` with the contents of standard output.
 #
-# #. If *return_stderr* is true :
+# #.  If *return_stderr* is true :
 #
-#    *  *result.returncode* is an ``int`` with the command's return code.
+#     #. *result.returncode* is an ``int`` with the command's return code.
 #
-#    *   *result.stderr* is an ``str`` with the contents of standard error.
+#     #. *result.stderr* is an ``str`` with the contents of standard error.
 #        If the return code is non-zero, the *command* is included.
 #
-#    *   If *return_stdout* is also true,
+#     #. If *return_stdout* is also true,
 #        *result.stdout* is an ``str`` with the contents of standard output.
 #
 # Example
