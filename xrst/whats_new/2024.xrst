@@ -25,6 +25,12 @@ Release Notes for 2024
 mm-dd
 *****
 
+08-18
+=====
+The specifications for :ref:`errors <log_table@message_type@error>`
+in the log table now include the fact that the program exits with
+a non-zero exit code directly after reporting one of these errors.
+
 08-13
 =====
 #. Add read permission for the world to the ``dismodat.py`` file

@@ -50,9 +50,9 @@ is used as the random seed during the specified *command* .
 
 error
 =====
-This is a fatal error.
-The message was added to the log table
-and then the program exited.
+If a fatal error is detected, a message with this type is added to the
+log table and dismod_at exists with an non-zero exit code
+directly after reporting the error.
 
 warning
 =======
