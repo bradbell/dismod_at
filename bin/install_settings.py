@@ -131,7 +131,7 @@ if shutil.which('brew') != None :
    cmd    = [ 'brew', '--prefix' ]
    result = subprocess.run(cmd, capture_output=True, encoding='utf-8')
    if result.returncode == 0:
-      brew_prefix      = result.stdout
+      brew_prefix      = result.stdout.strip()
       extra_cxx_flags += f' -Wno-sign-conversion -I {brew_prefix}/include'
 # {xrst_code}
 # {xrst_spell_on}

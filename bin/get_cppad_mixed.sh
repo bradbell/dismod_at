@@ -39,8 +39,8 @@
 # ---------------------------------------------------------------------------
 # CppAD mixed version information
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='9fe99a27262e9db4eefcedd7ad8a687198dfcc3e'
-version='20240729'
+hash_key='74029ef9b0657381c0654255d08965b39d487ecc'
+version='20240902'
 # --------------------------------------------------------------------------
 name='bin/get_cppad_mixed.sh'
 if [ $0 != $name ]
@@ -152,12 +152,18 @@ fi
 # cppad_mixed example install
 run_test='false'
 replace='true'
-echo_eval bin/example_install.sh $run_test $replace
-# -----------------------------------------------------------------------------
+if echo_eval bin/example_install.sh $run_test $replace
+then
+   ok='yes'
+fi
 echo 'mv example_install.log get_cppad_mixed.log'
 echo 'mv example_install.err get_cppad_mixed.err'
 cp example_install.log $dismod_at_dir/get_cppad_mixed.log
 cp example_install.err $dismod_at_dir/get_cppad_mixed.err
+if [ "$ok" != 'yes' ]
+then
+   exit 1
+fi
 # -----------------------------------------------------------------------------
 echo 'get_cppad_mixed.sh: OK'
 exit 0
