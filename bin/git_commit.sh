@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 set -e -u
 # ---------------------------------------------------------------------------
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-24 Bradley M. Bell
 # ---------------------------------------------------------------------------
@@ -26,11 +26,9 @@ then
    echo 'bin/git_commit.sh: cannot find ./.git'
    exit 1
 fi
-if ! grep "^build_type *= *'release'" bin/install_settings.py > /dev/null
-then
-   echo 'git_commit.sh: build_type is not release in bin/install_settings.py'
-   exit 1
-fi
+#
+# grep, sed
+source bin/grep_and_sed.sh
 # -----------------------------------------------------------------------------
 # EDITOR
 set +u
@@ -44,13 +42,13 @@ set -u
 # new files
 # convert spaces in file names to @@
 list=$(
-   git status --porcelain | sed -n -e '/^?? /p' |  \
-      sed -e 's|^?? ||' -e 's|"||g' -e 's| |@@|g'
+   git status --porcelain | $sed -n -e '/^?? /p' |  \
+      $sed -e 's|^?? ||' -e 's|"||g' -e 's| |@@|g'
 )
 for file in $list
 do
    # convert @@ in file names back to spaces
-   file=$(echo $file | sed -e 's|@@| |g')
+   file=$(echo $file | $sed -e 's|@@| |g')
    res=''
    while [ "$res" != 'delete' ] && [ "$res" != 'add' ] && [ "$res" != 'abort' ]
    do
@@ -81,16 +79,16 @@ $branch:
 # 4. Lines starting with '#' are not included in the message.
 # 5. Below is a list of the files for this commit:
 EOF
-git status --porcelain | sed -e 's|^|# |' >> temp.log
+git status --porcelain | $sed -e 's|^|# |' >> temp.log
 $EDITOR temp.log
-sed -i -e '/^#/d' temp.log
-if ! head -1 temp.log | grep "^$branch:" > /dev/null
+$sed -i -e '/^#/d' temp.log
+if ! head -1 temp.log | $grep "^$branch:" > /dev/null
 then
    echo "Aborting because first line does not begin with $branch:"
    echo 'See ./temp.log'
    exit 1
 fi
-if ! head -1 temp.log | grep "^$branch:.*[^ \t]" > /dev/null
+if ! head -1 temp.log | $grep "^$branch:.*[^ \t]" > /dev/null
 then
    echo "Aborting because only white space follow $branch: in first line"
    echo 'See ./temp.log'

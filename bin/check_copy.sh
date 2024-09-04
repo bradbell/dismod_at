@@ -1,36 +1,25 @@
 #! /usr/bin/env bash
 set -e -u
-# SPDX-License-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2023-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# BEGIN: SECTION THAT DEPENDS ON GIT REPOSITORY
+if [ "$0" != "bin/check_copy.sh" ]
+then
+   echo "bin/check_copy.sh: must be executed from its parent directory"
+   exit 1
+fi
+if [ "$#" != 0 ]
+then
+   echo 'check_copy does not expect any arguments'
+   exit 1
+fi
 #
-# spdx_license_id
-# Each file, except those specified by no_copyright_list, should have a line
-# that ends with the following text:
-spdx_license_id='SPDX-License-Identifier: AGPL-3.0-or-later'
+# grep, sed
+source bin/grep_and_sed.sh
 #
-# no_copyright_list
-# These files do not have the spdx license id in them.
-# If an entry below is a directory it specifies all the files in the directory.
-# BEGIN_SORT_THIS_LINE_PLUS_2
-no_copyright_list='
-   .gitignore
-   .readthedocs.yaml
-   2DO
-   batch_edit.sed
-   bin/check_copy.sh
-   bin/check_version.sh
-   bin/check_invisible.sh
-   bin/git_commit.sh
-   python/README.md
-   python/pyproject.toml
-   readme.md
-   xrst.toml
-'
-# END_SORT_THIS_LINE_MINUS_2
-# END: SECTION THAT DEPENDS ON GIT REPOSITORY
+# spdx_license_id, no_copyright_list
+source bin/dev_settings.sh
 # ----------------------------------------------------------------------------
 if [ $# != 0 ]
 then
@@ -59,10 +48,10 @@ for name in $no_copyright_list
 do
    if [ -f $name ]
    then
-      echo "^$name\$" | sed -e 's|/|[/]|g' -e 's|.*|/&/d|' >> temp.sed
+      echo "^$name\$" | $sed -e 's|/|[/]|g' -e 's|.*|/&/d|' >> temp.sed
    elif [ -d $name ]
    then
-      echo "^$name/" | sed -e 's|/|[/]|g' -e 's|.*|/&/d|' >> temp.sed
+      echo "^$name/" | $sed -e 's|/|[/]|g' -e 's|.*|/&/d|' >> temp.sed
    else
       echo "$name in no_copyright_list is not a file or directory"
       exit 1
@@ -70,9 +59,9 @@ do
 done
 missing='no'
 changed='no'
-for file_name in $(git ls-files | sed -f temp.sed)
+for file_name in $(git ls-files | $sed -f temp.sed)
 do
-   if ! grep "$spdx_license_id\$" $file_name > /dev/null
+   if ! $grep "$spdx_license_id\$" $file_name > /dev/null
    then
       if [ "$missing" == 'no' ]
       then
@@ -94,14 +83,14 @@ if [ "${USER+x}" != '' ]
 then
    if [ "$USER" == 'bradbell' ]
    then
-      list=$(git status --porcelain | sed -e 's|^...||' )
+      list=$(git status --porcelain | $sed -e 's|^...||' )
    fi
 fi
 for file_name in $list
 do
    if [ -e $file_name ]
    then
-      sed \
+      $sed \
       -e 's|\(SPDX-FileContributor\): *\([0-9]\{4\}\)[-0-9]* |\1: \2-24 |' \
       -e 's|\(SPDX-FileContributor\): 2024-24 |\1: 2024 |' \
       $file_name > temp.$$
@@ -116,7 +105,7 @@ do
          echo $file_name
          if diff $file_name temp.$$
          then
-            echo 'check_copy.sh: program error'
+            echo 'check_version.sh: program error'
             exit 1
          fi
          changed='yes'
