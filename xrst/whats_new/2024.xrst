@@ -38,7 +38,8 @@ mm-dd
 #. Advance from cppad_mixed-20240902 to cppad_mixed-20240910.
 
 #. Advance dock_dismod_at to
-   :ref:`dock_dismod_at.sh@dismod_at_version` to 2024.9.24 .
+   :ref:`dock_dismod_at.sh@dismod_at_version` to 2024.9.24 and
+   :ref:`dock_dismod_at.sh@at_cascade_version` to 2024.9.24 .
 
 09-09
 =====
