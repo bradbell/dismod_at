@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build test / user
 SET(depends "")
@@ -24,7 +24,7 @@ FOREACH(user_case
    laplace
    minimum_cv
    neg_iteration
-   no_data
+   nodata_eta0
    not_ordered
    parent_node_id
    perturb_other

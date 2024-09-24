@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-23 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_prior_table dev}
@@ -227,23 +227,23 @@ CppAD::vector<prior_struct> get_prior_table(
          error_exit(msg, table_name, i);
       }
       //
-      // check ets
+      // check eta
       switch( density_table[density_id[i]]  )
       {  case log_gaussian_enum:
          case log_laplace_enum:
          case log_students_enum:
-         ok = eta[i] > 0.0;
+         ok = eta[i] >= 0.0;
          break;
 
          default:
          ok = true;
       }
-      //
-      // check nu
       if( ! ok )
-      {  msg = "This is a log density and eta not greater than zero.";
+      {  msg = "This is a log density and eta not greater than or equal zero.";
          error_exit(msg, table_name, i);
       }
+      //
+      // check nu
       switch( density_table[density_id[i]] )
       {  case students_enum:
          case log_students_enum:

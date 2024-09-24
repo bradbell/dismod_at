@@ -10,6 +10,17 @@ echo_eval() {
    eval $*
 }
 # -----------------------------------------------------------------------------
+#
+# buld_type, verbose_makefile
+# dismod_at_prefix
+# python3_executable
+# specific_compiler
+# extra_cxx_flags
+# cmake_libdir
+# system_specific_library_list
+eval $(bin/install_settings.py)
+#
+# build_type, verbose_makefile
 if [ "$0" != 'bin/run_cmake.sh' ]
 then
    echo 'bin/run_cmake.sh: must be executed from its parent directory'
@@ -40,16 +51,6 @@ EOF
    fi
    shift
 done
-#
-# verbose_makefile
-# buld_type
-# dismod_at_prefix
-# python3_executable
-# specific_compiler
-# extra_cxx_flags
-# cmake_libdir
-# system_specific_library_list
-eval $(bin/install_settings.py)
 # --------------------------------------------------------------------------
 export PKG_CONFIG_PATH="$dismod_at_prefix/$cmake_libdir/pkgconfig"
 # --------------------------------------------------------------------------

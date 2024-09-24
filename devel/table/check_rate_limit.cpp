@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin check_rate_limit dev}
@@ -78,6 +78,7 @@ void check_rate_limit(
 {  assert( rate_table.size()   == number_rate_enum );
    using CppAD::to_string;
    //
+   // rate_zero
    CppAD::vector<bool> rate_zero(number_rate_enum);
    if( rate_case == "no_ode" || rate_case == "trapezoidal" )
    {  // no restrictions on the rates
@@ -102,16 +103,26 @@ void check_rate_limit(
    else
    {  assert(false);
    }
+   //
+   // n_gird
    size_t n_grid = smooth_grid.size();
+   //
+   // error_*
+   // define error_* outside loop so lasts after loop
+   // If error_rate_id is not number_rate_enum, then other values are defined
    size_t error_rate_id     = number_rate_enum;
    size_t error_smooth_id   = 0;
    size_t error_grid_id     = 0;
    size_t error_prior_id    = 0;
    double error_const_value = 0.0;
-   bool   error_zero       = false;
+   double error_eta         = 0.0;
+   bool   error_upper_non0  = false;
+   //
+   // rate_id
    for(size_t rate_id = 0; rate_id < number_rate_enum; rate_id++)
    if( rate_enum(rate_id) == iota_enum || rate_enum(rate_id) == rho_enum )
-   {  size_t smooth_id = rate_table[rate_id].parent_smooth_id;
+   {  // smooth_id
+      size_t smooth_id = rate_table[rate_id].parent_smooth_id;
       if( smooth_id == DISMOD_AT_NULL_SIZE_T )
       {  if( ! rate_zero[rate_id] )
          {  std::string msg = "parent_smooth_id for this rate is null";
@@ -121,29 +132,40 @@ void check_rate_limit(
          }
       }
       else
-      {  for(size_t grid_id = 0; grid_id < n_grid; grid_id++)
+      {  // grid_id
+         for(size_t grid_id = 0; grid_id < n_grid; grid_id++)
          if( size_t( smooth_grid[grid_id].smooth_id ) == smooth_id )
-         {  double lower    = smooth_grid[grid_id].const_value;
-            double upper    = smooth_grid[grid_id].const_value;
+         {  //
+            // prior_id, lower, upper, prior_id
             size_t prior_id = smooth_grid[grid_id].value_prior_id;
+            double lower    = smooth_grid[grid_id].const_value;
+            double upper    = smooth_grid[grid_id].const_value;
+            double eta      = std::numeric_limits<double>::quiet_NaN();
             if( prior_id != DISMOD_AT_NULL_SIZE_T )
             {  assert( std::isnan(lower) );
                lower    = prior_table[prior_id].lower;
                upper    = prior_table[prior_id].upper;
+               eta      = prior_table[prior_id].eta;
             }
+            //
+            // error
             bool error;
             if( rate_zero[rate_id] )
                error = upper != 0.0;
-            else
+            else if( std::isnan(eta) )
                error = lower <= 0.0;
+            else
+               error = lower + eta <= 0.0;
             if( error )
-            {
+            {  //
+               // set error_*
                error_rate_id     = rate_id;
                error_smooth_id   = smooth_id;
                error_grid_id     = grid_id;
                error_prior_id    = prior_id;
                error_const_value = smooth_grid[grid_id].const_value;
-               error_zero        = rate_zero[rate_id];
+               error_eta         = eta;
+               error_upper_non0  = rate_zero[rate_id];
             }
          }
       }
@@ -151,10 +173,14 @@ void check_rate_limit(
    if( error_rate_id < number_rate_enum )
    {
       std::string message;
-      if( error_zero)
+      if( error_upper_non0 )
          message = "expected prior upper limit to be == 0.0 for";
       else
-         message = "expected prior lower limit to be > 0.0 for";
+      {  if( std::isnan(error_eta) )
+            message = "expected prior lower limit to be > 0.0 for";
+         else
+            message = "expected prior lower limit plus eta to be > 0.0 for";
+      }
       if( rate_enum(error_rate_id) == iota_enum )
          message += " iota\n";
       else

@@ -27,9 +27,17 @@ Release Notes for 2024
 mm-dd
 *****
 
+09-24
+=====
+It was an error for the prior table to have an :ref:`prior_table@eta`
+that was zero and a density that was
+:ref:`density_table@Notation@Log Scaled` .
+This has been changes so that eta can be zero if
+:ref:`prior_table@lower` plus eta is greater than zero.
+
 09-09
 =====
-The development and install tools were extended to work well on 
+The development and install tools were extended to work well on
 MacOS with homebrew.
 The versions between 08-25 and 09-08
 were not tested and may have trouble on other systems.
