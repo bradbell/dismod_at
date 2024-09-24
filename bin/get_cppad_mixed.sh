@@ -39,8 +39,8 @@
 # ---------------------------------------------------------------------------
 # CppAD mixed version information
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='74029ef9b0657381c0654255d08965b39d487ecc'
-version='20240902'
+hash_key='5a262865b3d152d0a84969868c75b45e271e7f55'
+version='20240910'
 # --------------------------------------------------------------------------
 name='bin/get_cppad_mixed.sh'
 if [ $0 != $name ]
@@ -58,10 +58,10 @@ echo_eval() {
    eval $*
 }
 # --------------------------------------------------------------------------
-# build_type, 
-# specific_compiler, 
-# extra_cxx_flags, 
-# dismod_at_prefix, 
+# build_type,
+# specific_compiler,
+# extra_cxx_flags,
+# dismod_at_prefix,
 # cmake_libdir
 eval $(bin/install_settings.py)
 # ---------------------------------------------------------------------------

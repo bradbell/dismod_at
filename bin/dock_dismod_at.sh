@@ -143,8 +143,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.dismod_at``
 # {xrst_spell_off}
 # {xrst_code sh}
-   dismod_at_version='2024.8.13'
-   dismod_at_hash='1f637c2941ab6b0501eed9ac65011bc826675e16'
+   dismod_at_version='2024.9.24'
+   dismod_at_hash='0088a8a58d1004096992aeb904b56727fc75dad3'
 # {xrst_code}
 # {xrst_spell_on}
 #

@@ -29,11 +29,16 @@ mm-dd
 
 09-24
 =====
-It was an error for the prior table to have an :ref:`prior_table@eta`
-that was zero and a density that was
-:ref:`density_table@Notation@Log Scaled` .
-This has been changes so that eta can be zero if
-:ref:`prior_table@lower` plus eta is greater than zero.
+#. It was an error for the prior table to have an :ref:`prior_table@eta`
+   that was zero and a density that was
+   :ref:`density_table@Notation@Log Scaled` .
+   This has been changes so that eta can be zero if
+   :ref:`prior_table@lower` plus eta is greater than zero.
+
+#. Advance from cppad_mixed-20240902 to cppad_mixed-20240910.
+
+#. Advance dock_dismod_at to
+   :ref:`dock_dismod_at.sh@dismod_at_version` to 2024.9.24 .
 
 09-09
 =====
