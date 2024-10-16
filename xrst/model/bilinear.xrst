@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin bilinear}
 {xrst_spell
    interpolant
+   delim
 }
 
 dismod_at Bilinear Interpolation
@@ -56,10 +57,22 @@ In this case the function is defined by
       \frac{t_{j+1} - s}{t_{j+1} - t_j} v_{i+1,j}
    +
    \frac{a_{i+1} - s}{a_{i+1} - a_i}
-      \frac{s - t_j}{t_{j+1} - t_j} v_{i+1,j}
+      \frac{s - t_j}{t_{j+1} - t_j} v_{i,j+1}
    +
    \frac{\alpha - a_i}{a_{i+1} - a_i}
       \frac{s - t_j}{t_{j+1} - t_j} v_{i+1,j+1}
+
+Note that
+
+.. csv-table::
+   :header-rows: 1
+   :delim: ;
+
+   :math:`( \alpha , s)`          ; :math:`f( \alpha, s)`
+   :math:`( a_i , t_j  )`         ; :math:`v_{i,j}`
+   :math:`( a_i , t_{j+1}  )`     ; :math:`v_{i,j+1}`
+   :math:`( a_{i+1} , t_j  )`     ; :math:`v_{i+1,j}`
+   :math:`( a_{i+1} , t_{j+1}  )` ; :math:`v_{i+1,j+1}`
 
 Below Minimum Age
 =================

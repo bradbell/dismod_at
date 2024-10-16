@@ -6,6 +6,7 @@ $Id:$
 {xrst_begin 2024}
 {xrst_spell
    cmake
+   culbreth
    dd
    dirver
    grep
@@ -26,6 +27,14 @@ Release Notes for 2024
 
 mm-dd
 *****
+
+10-16
+=====
+Garland Culbreth found an error in the :ref:`bilinear@Interpolant@Bilinear`
+formula. To be specific the second :math:`v_{i+1,j}` was fixed by changing it
+to :math:`v_{i,j+1}` .
+In addition, a table was added below that formula that checks the
+value at the vertex points.
 
 09-24
 =====
