@@ -28,6 +28,10 @@ Release Notes for 2024
 mm-dd
 *****
 
+10-20
+=====
+Advance from cppad_mixed-20240910 to cppad_mixed-20241029.
+
 10-16
 =====
 Garland Culbreth found an error in the :ref:`bilinear@Interpolant@Bilinear`
