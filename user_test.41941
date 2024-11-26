@@ -1,0 +1,9 @@
+example/user/bilevel_random.py
+../../devel/dismod_at example.db init
+../../devel/dismod_at example.db fit both
+n111 0.2 0.2615428121110773 -0.3077140605553865
+Traceback (most recent call last):
+  File "/home/bradbell/repo/dismod_at.git/example/user/bilevel_random.py", line 405, in <module>
+    assert False
+           ^^^^^
+AssertionError

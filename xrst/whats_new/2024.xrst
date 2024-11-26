@@ -28,6 +28,16 @@ Release Notes for 2024
 mm-dd
 *****
 
+11-26
+=====
+It is an error if there is a zero or negative
+:ref:`weight_grid_table@weight` value in the weight_grid table,
+and the corresponding :ref:`weight_grid_table@weight_id`
+also appears in the :ref:`data_table-name`  or the :ref:`avgint_table-name` .
+The error message for this case has been improved.
+To be specific, the corresponding row of the data table or avgint table
+is reported.
+
 10-20
 =====
 Advance from cppad_mixed-20240910 to cppad_mixed-20241029.
