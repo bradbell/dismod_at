@@ -241,11 +241,11 @@ if [ "$1" == 'base' ]
 then
 cat << EOF > Dockerfile
 # -----------------------------------------------------------------------------
-# Ubuntu 23.04 with dismod_at requirements that are installed using apt-get.
+# Ubuntu 24.04 with dismod_at requirements that are installed using apt-get.
 # The vim editor is included for use when debugging containers and
 # is not required by dismod_at.
 # -----------------------------------------------------------------------------
-FROM ubuntu:23.04
+FROM ubuntu:24.04
 RUN  apt-get update
 WORKDIR /home
 #
