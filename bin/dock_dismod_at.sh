@@ -305,7 +305,7 @@ EOF
 # -----------------------------------------------------------------------------
 elif [ "$1" == 'dismod_at' ]
 then
-site_packages="$prefix/lib/python3.11/site-packages"
+site_packages="$prefix/lib/python3.12/site-packages"
 cat << EOF > Dockerfile
 FROM dismod_at.mixed.$build_type
 WORKDIR /home/dismod_at.git
