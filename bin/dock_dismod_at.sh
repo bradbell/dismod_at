@@ -33,19 +33,28 @@ set -e -u
 # If you understand docker, this script also serves as an example
 # install of dismod_at.
 #
-# Syntax
+# Images
 # ******
+# The headers below are images and the text directly below a header
+# is the command that creates the image.
 #
-#  .. csv-table::
-#     :widths: auto
-#     :header: Command, image_name
+# dismod_at.base
+# ==============
+# ./dock_dismod_at.sh base
+# 
+# dismod_at.mixed.build_type
+# ==========================
+# ./dock_dismod_at.sh mixed
 #
-#     ``./dock_dismod_at.sh base``      ,``dismod_at.base``
-#     ``./dock_dismod_at.sh mixed``     ,``dismod_at.mixed.``\ *build_type*
-#     ``./dock_dismod_at.sh dismod_at`` ,``dismod_at.dismod_at.``\ *build_type*
-#     ``./dock_dismod_at.sh at_cascade``,``dismod_at.at_cascade.``\ *build_type*
+# dismod_at.dismod_at.build_type
+# ==============================
+# ./dock_dismod_at.sh dismod_at
 #
-# #.  The *build_type* can be ``debug`` or ``release`` ; see
+# dismod_at.at_cascade.build_type
+# ===============================
+# ./dock_dismod_at.sh at_cascade
+#
+# #.  The *build_type* is either ``debug`` or ``release`` ; see
 #     :ref:`dock_dismod_at.sh@build_type` .
 # #.  Each image above depends on its previous image; e.g., if you
 #     rebuild ``dismod_at.base`` , you must rebuild all the other images.
@@ -60,6 +69,9 @@ set -e -u
 #     in the current working directory.
 #     If such a file already exists, it will need to be moved or deleted
 #     before the command can be executed.
+#
+# Working with Images
+# *******************
 #
 # Create A Container
 # ==================
@@ -143,7 +155,7 @@ set -e -u
 # This script can build the following version of ``dismod_at.dismod_at``
 # {xrst_spell_off}
 # {xrst_code sh}
-   dismod_at_version='2024.9.24'
+   dismod_at_version='2024.12.2'
    dismod_at_hash='0088a8a58d1004096992aeb904b56727fc75dad3'
 # {xrst_code}
 # {xrst_spell_on}

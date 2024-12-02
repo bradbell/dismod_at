@@ -20,6 +20,7 @@ $Id:$
    scipy
    xam
    yyyymmdd
+   ubuntu
 }
 
 Release Notes for 2024
@@ -27,6 +28,12 @@ Release Notes for 2024
 
 mm-dd
 *****
+
+12-02
+=====
+Advance Ubuntu in the dismod_at.base image from 23.04 to 24.04 in the
+:ref:`dock_dismod_at.sh@Images@dismod_at.base` image.
+This also advances python3.11 to python3.12 .
 
 11-26
 =====
@@ -275,8 +282,7 @@ The :ref:`dock_dismod_at.sh-name` documentation has been simplified
 and its API has changed as follows:
 
 #. The word ``image`` is no longer present in the
-   :ref:`dock_dismod_at.sh@Syntax` for each of the dock_dismod_at.sh
-   commands.
+   :ref:`image <dock_dismod_at.sh@Images>` names.
 #. The image names have been changed as follows:
 
    .. list-table::
