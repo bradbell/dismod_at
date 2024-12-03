@@ -35,8 +35,24 @@ set -e -u
 #
 # Images
 # ******
-# The headers below are images and the text directly below a header
-# is the command that creates the image.
+# #.  The headers below are image names and the text below an image name
+#     is the command that creates the image.
+# #.  The *build_type* in each image name is either 
+#     ``debug`` or ``release`` ; see
+#     :ref:`dock_dismod_at.sh@build_type` .
+# #.  Each image depends on its previous image; e.g., if you
+#     rebuild ``dismod_at.base`` , you must rebuild all the other images.
+#     The :ref:`release_notes-name` will mention when new versions
+#     of the images are available.
+# #.  The image commands above will not execute if the corresponding image
+#     already exists.
+#     You must remove containers that use an image and then remove the image,
+#     before you can create a new version of the image.
+# #.  The commands above will create a
+#     `Dockerfile <https://docs.docker.com/glossary/?term=Dockerfile>`_
+#     in the current working directory.
+#     If such a file already exists, it will need to be moved or deleted
+#     before the command can be executed.
 #
 # dismod_at.base
 # ==============
@@ -53,22 +69,6 @@ set -e -u
 # dismod_at.at_cascade.build_type
 # ===============================
 # ./dock_dismod_at.sh at_cascade
-#
-# #.  The *build_type* is either ``debug`` or ``release`` ; see
-#     :ref:`dock_dismod_at.sh@build_type` .
-# #.  Each image above depends on its previous image; e.g., if you
-#     rebuild ``dismod_at.base`` , you must rebuild all the other images.
-#     The :ref:`release_notes-name` will mention when new versions
-#     of the images are available.
-# #.  The image commands above will not execute if the corresponding image
-#     already exists.
-#     You must remove containers that use an image and then remove the image,
-#     before you can create a new version of the image.
-# #.  The commands above will create a
-#     `Dockerfile <https://docs.docker.com/glossary/?term=Dockerfile>`_
-#     in the current working directory.
-#     If such a file already exists, it will need to be moved or deleted
-#     before the command can be executed.
 #
 # Working with Images
 # *******************
@@ -156,7 +156,7 @@ set -e -u
 # {xrst_spell_off}
 # {xrst_code sh}
    dismod_at_version='2024.12.2'
-   dismod_at_hash='0088a8a58d1004096992aeb904b56727fc75dad3'
+   dismod_at_hash='0783bedd0c4b5075ecbc27d8ac62c1c4c50a0cf2'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -165,8 +165,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.at_cascade``
 # {xrst_spell_off}
 # {xrst_code sh}
-   at_cascade_version='2024.9.24'
-   at_cascade_hash='de31dc875e3926dc687b819ecfb36d72ea5dc480'
+   at_cascade_version='2024.12.2'
+   at_cascade_hash='94b9e50bb29423155ad70d5375dde3ac36533cae'
 # {xrst_code}
 # {xrst_spell_on}
 #

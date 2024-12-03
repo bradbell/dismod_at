@@ -31,9 +31,18 @@ mm-dd
 
 12-02
 =====
-Advance Ubuntu in the dismod_at.base image from 23.04 to 24.04 in the
-:ref:`dock_dismod_at.sh@Images@dismod_at.base` image.
-This also advances python3.11 to python3.12 .
+#. Advance Ubuntu in the dismod_at.base image from 23.04 to 24.04 in the
+   :ref:`dock_dismod_at.sh@Images@dismod_at.base` image.
+   This also advances python3.11 to python3.12 .
+
+#. Advance dock_dismod_at to
+   :ref:`dock_dismod_at.sh@dismod_at_version` to 2024.12.2 and
+   :ref:`dock_dismod_at.sh@at_cascade_version` to 2024.12.2 .
+
+#. The dock_dismod_at.sh :ref:`dock_dismod_at.sh@Images` documentation
+   has been separated from 
+   :ref:`dock_dismod_at.sh@Working with Images` .
+
 
 11-26
 =====
