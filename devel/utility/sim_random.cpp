@@ -8,8 +8,6 @@
 {xrst_spell
    cen
    enum
-   gsl
-   rng
 }
 
 Simulate a Dismod_at Random Distribution

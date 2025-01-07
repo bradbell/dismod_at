@@ -279,7 +279,7 @@ bool prior_random_xam(void)
    // mulcov_meas_noise: none
    // mulcov_rate_value: none
    dismod_at::prior_model prior_object(
-   pack_object, var2prior, age_table, time_table, prior_table, density_table
+      pack_object, var2prior, prior_table, density_table
    );
    // -------------- compute fixed negative log-likelihood --------------------------------
    CppAD::vector< dismod_at::residual_struct<double> > residual_vec;

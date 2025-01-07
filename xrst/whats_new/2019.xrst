@@ -1,9 +1,9 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin whats_new_2019}
+{xrst_begin 2019}
 {xrst_spell
    checkpointing
    cmake
@@ -11,6 +11,7 @@ $Id:$
    dev
    dockerfile
    goto
+   ihme
    iter
    misspecification
    mm
@@ -22,8 +23,8 @@ $Id:$
    ubuntu
 }
 
-Changes and Additions to Dismod_at During 2019
-##############################################
+Release Notes for 2019
+######################
 
 mm-dd
 *****
@@ -114,7 +115,7 @@ option table.
    subset of that data that has extra measurement noise.
 #. The ``meas_std_effect``
    :ref:`option_table@Table Format@option_name` was removed.
-   It was deprecated (see :ref:`whats_new_2019@mm-dd@04-08` below)
+   It was deprecated (see :ref:`2019@mm-dd@04-08` below)
    and should have been replaced by
    :ref:`option_table@meas_noise_effect` .
 
@@ -138,7 +139,7 @@ Use :ref:`system_command_prc-name` to simplify the
    The ``group/sub`` column as added to
    :ref:`db2csv_command@variable.csv`
    (changed to ``group`` and ``subgroup`` on
-   :ref:`whats_new_2019@mm-dd@12-04` ).
+   :ref:`2019@mm-dd@12-04` ).
    The :ref:`db2csv_command@data.csv@subgroup` and
    :ref:`db2csv_command@data.csv@group` columns were added to data.csv
    The :ref:`db2csv_command@data.csv@subgroup`
@@ -165,11 +166,11 @@ argument was added to the ``create_database`` routine.
 
 #. The automatic conversion of ``meas_std`` to
    :ref:`mulcov_table@mulcov_type@meas_noise` has been removed;
-   see :ref:`whats_new_2019@mm-dd@04-08` below.
+   see :ref:`2019@mm-dd@04-08` below.
 #. The ``old2new`` command that added the
    :ref:`var_table@mulcov_id` column to the var table was removed;
-   see :ref:`whats_new_2019@mm-dd@04-20`
-   and :ref:`whats_new_2019@mm-dd@04-23` below.
+   see :ref:`2019@mm-dd@04-20`
+   and :ref:`2019@mm-dd@04-23` below.
 
 11-18
 =====
@@ -250,7 +251,7 @@ the selected section.
 #. Add mention that the install scripts under
    :ref:`install_unix@Special Requirements` also
    serve as examples of how to install the corresponding packages.
-   In addition, :ref:`run_cmake.sh-name` serves as an example of how
+   In addition, :ref:`install_settings.py-name` serves as an example of how
    to install dismod_at.
 #. The :ref:`csv2db_command-name` wish list items were removed because we
    assume that the dismod_at user can write code in some scripting language
@@ -286,7 +287,7 @@ the selected section.
    be used to specify an uninformative prior; i.e.,
    uniform from minus infinity to plus infinity.
    (The corresponding null prior id wish list item was removed; see
-   :ref:`whats_new_2019@mm-dd@09-20` .)
+   :ref:`2019@mm-dd@09-20` .)
 #. The :ref:`user_const_value.py-name` example has been changed to use
    more grid points for the fixed rate effects than for the random rate effects.
    In addition, the omega constraint uses the new null feature for the
@@ -572,7 +573,7 @@ Automatically set
 
 #. Advance to cppad_mixed-20190607.
    This gives better error messaging when ``nan`` occurs
-   and :ref:`run_cmake.sh@build_type` is ``debug`` .
+   and :ref:`install_settings.py@build_type` is ``debug`` .
 #. A paragraph discussing
    :ref:`fit_command@Ipopt Options` was added to the
    fit command documentation.
@@ -595,10 +596,11 @@ This started with version ``20190521`` and has been fixed.
 06-01
 =====
 
-#. The :ref:`ihme_db.sh-name` script was improved and documented.
+#. The ``bin/ihme_db.sh`` script was improved and documented.
+   (it was later removed on 2024-07-30).
 #. In some cases, ``avg_age`` was still being used instead of ``age_avg`` ,
    see the discussion about the ``avg_age`` on
-   :ref:`2018-10-30<whats_new_2018@mm-dd@10-30>` .
+   :ref:`2018-10-30<2018@mm-dd@10-30>` .
    This has been fixed.
 #. This discussion of the :ref:`age_avg_table-name` in the :ref:`data_flow-name`
    and :ref:`init_command-name` was improved.
@@ -931,7 +933,7 @@ This has been fixed.
 =====
 
 #. A weighting wish list item was added (and was completed on
-   :ref:`whats_new_2019@mm-dd@09-13` ).
+   :ref:`2019@mm-dd@09-13` ).
 #. The :ref:`user_ill_condition.py-name` example was added.
 #. The :ref:`data_sim_table-name` documentation formula for
    :ref:`density_table@Notation@Log Scaled`
@@ -969,4 +971,4 @@ to redirect one to the integrand table.
 Reduce the change of random failure in ``test/user/fit_meas_noise.py``
 during :ref:`testing<install_unix@dismod_at@Test>` .
 
-{xrst_end whats_new_2019}
+{xrst_end 2019}

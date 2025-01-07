@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # test install of python module and executable
 # ---------------------------------------------------------------------------
@@ -25,12 +25,10 @@ echo_eval() {
 }
 #
 # dismod_at_prefix
-cmd=`grep ^dismod_at_prefix bin/run_cmake.sh`
-eval $cmd
+eval $(bin/install_settings.py | grep '^dismod_at_prefix')
 #
 # python3_executable
-cmd=`grep ^python3_executable bin/run_cmake.sh`
-eval $cmd
+eval $(bin/install_settings.py | grep '^python3_executable')
 #
 # site_packages
 site_packages=''
@@ -63,7 +61,9 @@ echo_eval cd ..
 export PATH="$bin_dir:$PATH"
 #
 # PYTHONPATH
-site_packages=`find -L $HOME/prefix/dismod_at -name site-packages`
+site_packages=$(
+   find -L $HOME/prefix/dismod_at -name site-packages  | tr '\n' ':'
+)
 export PYTHONPATH="$site_packages"
 echo "PYTHONPATH=$PYTHONPATH"
 #
@@ -98,15 +98,22 @@ cat run.sh
 ./run.sh
 # ---------------------------------------------------------------------------
 # dismod_at_image
-dismod_at_image='dismod_at.image.release'
-if ! podman images | grep "^localhost/$dismod_at_image" > /dev/null
+dismod_at_image='dismod_at.dismod_at.release'
+if ! which podman > /dev/null
 then
-   dismod_at_image='dismod_at.image.debug'
+   echo "Cannot find podman, skipping test of $dismod_at_image"
+   echo 'check_install.sh: OK'
+   exit 0
+else
    if ! podman images | grep "^localhost/$dismod_at_image" > /dev/null
    then
-      echo 'podman cannot find dismod_at.image, skipping its test'
-      echo 'check_install.sh: OK'
-      exit 0
+      dismod_at_image='dismod_at.dismod_at.debug'
+      if ! podman images | grep "^localhost/$dismod_at_image" > /dev/null
+      then
+         echo "podman cannot find $dismod_at_image, skipping its test"
+         echo 'check_install.sh: OK'
+         exit 0
+      fi
    fi
 fi
 #

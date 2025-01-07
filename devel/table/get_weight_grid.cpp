@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_weight_grid dev}
@@ -95,6 +95,7 @@ this function.
 # include <dismod_at/get_table_column.hpp>
 # include <dismod_at/check_table_id.hpp>
 # include <dismod_at/error_exit.hpp>
+# include <dismod_at/null_int.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
@@ -106,12 +107,15 @@ CppAD::vector<weight_grid_struct> get_weight_grid(
 // END_PROTOTYPE
 {  using std::string;
    //
-   // positive_weight
-   std::set<int> positive_weight;
+   // data_weight_set
+   std::set<int> data_weight_set;
    for(size_t data_id = 0; data_id < data_table.size(); ++data_id)
-      positive_weight.insert( data_table[data_id].weight_id );
+      data_weight_set.insert( data_table[data_id].weight_id );
+   //
+   // avgint_weight_set
+   std::set<int> avgint_weight_set;
    for(size_t avgint_id = 0; avgint_id < avgint_table.size(); ++avgint_id)
-      positive_weight.insert( avgint_table[avgint_id].weight_id );
+      avgint_weight_set.insert( avgint_table[avgint_id].weight_id );
    //
    // itr
    std::set<int>::const_iterator itr;
@@ -145,12 +149,48 @@ CppAD::vector<weight_grid_struct> get_weight_grid(
       weight_grid[i].age_id    = age_id[i];
       weight_grid[i].time_id   = time_id[i];
       weight_grid[i].weight    = weight[i];
-      itr                      = positive_weight.find( weight_id[i] );
-      if( weight[i] <= 0.0 && itr != positive_weight.end() )
-      {  string msg = "weight is less that zero and ";
-         msg += "weight_id = " + CppAD::to_string( weight_id[i] );
-         msg += " is in avginte or data table";
-         error_exit(msg, table_name, i);
+      if( weight[i] <= 0.0 )
+      {  bool weight_error = false;
+         //
+         // data_id
+         size_t data_id   = DISMOD_AT_NULL_SIZE_T;
+         itr = data_weight_set.find( weight_id[i] );
+         if( itr != data_weight_set.end() )
+         {  for(size_t id = 0; id < data_table.size(); ++id)
+               if( data_table[id].weight_id == weight_id[i] )
+                     data_id = id;
+            assert( data_id != DISMOD_AT_NULL_SIZE_T );
+            weight_error = true;
+         }
+         //
+         // avgint_id
+         size_t avgint_id   = DISMOD_AT_NULL_SIZE_T;
+         itr = avgint_weight_set.find( weight_id[i] );
+         if( itr != avgint_weight_set.end() )
+         {  for(size_t id = 0; id < avgint_table.size(); ++id)
+               if( avgint_table[id].weight_id == weight_id[i] )
+                     avgint_id = id;
+            assert( avgint_id != DISMOD_AT_NULL_SIZE_T );
+            weight_error = true;
+         }
+         if( weight_error )
+         {  string msg = "\nweight_grid_table";
+            msg += ": weight_grid_id = " + CppAD::to_string(i);
+            msg += ", weight_id = " + CppAD::to_string( weight_id[i] );
+            msg += ", weight = " + CppAD::to_string( weight[i] );
+            msg += "\nThis weight is <= 0 and appears in data or avgint table";
+            if( data_id != DISMOD_AT_NULL_SIZE_T )
+            {  msg += "\ndata_table";
+               msg += ": data_id = " + CppAD::to_string(data_id);
+               msg += ", weight_id = " +  CppAD::to_string( weight_id[i] );
+            }
+            if( avgint_id != DISMOD_AT_NULL_SIZE_T )
+            {  msg += "\navgint_table";
+               msg += ": avgint_id = " + CppAD::to_string(avgint_id);
+               msg += ", weight_id = " +  CppAD::to_string( weight_id[i] );
+            }
+            error_exit(msg, table_name, i);
+         }
       }
    }
    return weight_grid;

@@ -1,15 +1,16 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Test a case where there is not data and fit does not agree with mean.
+# Also test a log prior case where and eta = 0, but eta + lower > 0
 # ------------------------------------------------------------------------
 iota_mean     = 0.01
 # ------------------------------------------------------------------------
 import sys
 import os
 import subprocess
-test_program = 'test/user/no_data.py'
+test_program = 'test/user/nodata_eta0.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :
    usage  = 'python3 ' + test_program + '\n'
    usage += 'where python3 is the python 3 program on your system\n'
@@ -86,7 +87,7 @@ def example_db (file_name) :
          'upper':    1e+2 * iota_mean,
          'mean':     iota_mean,
          'std':      iota_mean,
-         'eta':      1e-3 * iota_mean
+         'eta':      0.0,
       }
    ]
    # ----------------------------------------------------------------------
@@ -211,6 +212,6 @@ for var_id in range( n_var ) :
    max_err = max(max_err, abs( value / iota_mean - 1.0 ) )
 assert abs(value / iota_mean - 1.0 ) <= 1e-10
 # -----------------------------------------------------------------------------
-print('no_data.py: OK')
+print('nodata_eta0.py: OK')
 # -----------------------------------------------------------------------------
 # END PYTHON

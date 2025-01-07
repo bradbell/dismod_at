@@ -1,9 +1,9 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin whats_new_2017}
+{xrst_begin 2017}
 {xrst_spell
    cmake
    command command
@@ -24,8 +24,8 @@ $Id:$
    tst
 }
 
-Changes and Additions to Dismod_at During 2017
-##############################################
+Release Notes for 2017
+######################
 
 mm-dd
 *****
@@ -70,7 +70,7 @@ which is required by ``cppad_mixed-20171218`` .
    that caused a problem during
    :ref:`testing<install_unix@dismod_at@Test>` on some systems.
    This has been fixed.
-#. The value :ref:`libdir<run_cmake.sh@cmake_libdir>` is now specified
+#. The value :ref:`libdir<install_settings.py@cmake_libdir>` is now specified
    in ``bin/run_cmake.sh``
    (it used to be specified by ``bin/libdir.sh`` ).
 
@@ -78,7 +78,7 @@ which is required by ``cppad_mixed-20171218`` .
 =====
 There was a bug in the
 :ref:`predict sample<predict_command@source@sample>` command
-when :ref:`run_cmake.sh@build_type` was ``debug`` .
+when :ref:`install_settings.py@build_type` was ``debug`` .
 To be specific, the check to see if the database was consistent
 had an error in it.
 This has been fixed.
@@ -326,7 +326,7 @@ of the random effects failed.
 09-29
 =====
 
-#. The change on :ref:`whats_new_2017@mm-dd@09-20`
+#. The change on :ref:`2017@mm-dd@09-20`
    introduced a bug because it ignored the
    :ref:`option_table@warn_on_stderr` option.
    This has been fixed.
@@ -361,7 +361,7 @@ to have more control over scaling the objective. See
    :ref:`option_table@Extra Columns@avgint_extra_columns` was
    present and null.
 #. A ``db2csv`` wish list item was added (fulfilled on
-   :ref:`whats_new_2017@mm-dd@10-17` ).
+   :ref:`2017@mm-dd@10-17` ).
 
 09-26
 =====
@@ -412,7 +412,7 @@ Errors are also printed, but this is not a change.
    The install has been modified to use
    :ref:`install_unix@System Requirements@pkg-config` to find these
    non-standard locations.
-#. The ``log_fatal_error`` option was removed from :ref:`run_cmake.sh-name`
+#. The ``log_fatal_error`` option was removed from :ref:`install_settings.py-name`
    (by putting an assert before the exit in the fatal error routine).
 
 09-18
@@ -446,11 +446,11 @@ up when the object results in a ``nan`` .
 =====
 
 #. Instructions were added for building both the debug and release
-   :ref:`run_cmake.sh@Debug and Release`
+   :ref:`install_settings.py@dismod_at_prefix@Debug and Release`
    version of ``dismod_at`` on the same system.
 #. The :ref:`install_unix@Special Requirements@cppad_mixed`
    install script was changed so that it does not optimize AD functions when
-   :ref:`run_cmake.sh@build_type` is ``debug`` .
+   :ref:`install_settings.py@build_type` is ``debug`` .
    This can be used to verify that optimizing to AD functions only
    affects the speed and memory used by ``dismod_at`` and
    not its results.
@@ -734,7 +734,7 @@ This in turn enables Cppad Mixed to make more use of AD function optimization
 
 #. Remove the need to set *PKG_CONFIG_PATH* during the
    :ref:`install_unix-name` procedure
-   (:ref:`run_cmake.sh@dismod_at_prefix`
+   (:ref:`install_settings.py@dismod_at_prefix`
    in ``bin/run_cmake.sh`` is used to determine this setting automatically).
 #. Improve the discussion on setting the
    :ref:`python path<install_unix@Paths@PYTHONPATH>` .
@@ -775,7 +775,7 @@ fixed effects.
 =====
 Simplify the install procedure. Now it is only necessary to adjust
 the settings in
-:ref:`install_unix@Special Requirements@run_cmake.sh` .
+:ref:`install_unix@Special Requirements@install_settings.py` .
 These settings are automatically used by all the
 ``bin/install_`` *package* . ``sh`` scripts.
 
@@ -811,4 +811,4 @@ generated error messages. This has been fixed and they now work.
 =====
 Advance to cppad-20161113 and cppad_mixed-20170114.
 
-{xrst_end whats_new_2017}
+{xrst_end 2017}

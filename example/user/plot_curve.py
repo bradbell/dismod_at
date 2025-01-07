@@ -49,7 +49,6 @@
 # BEGIN PYTHON
 import sys
 import os
-import string
 import math
 test_program = 'example/user/plot_curve.py'
 if sys.argv[0] != test_program  or len(sys.argv) != 1 :

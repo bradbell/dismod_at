@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/mixed/exception.hpp>
 # include <dismod_at/avg_noise_effect.hpp>
@@ -25,7 +25,6 @@ Syntax
 | |tab| *age_table* ,
 | |tab| *time_table* ,
 | |tab| *subgroup_table* ,
-| |tab| *integrand_table* ,
 | |tab| *w_info_vec* ,
 | |tab| *s_info_vec* ,
 | |tab| *pack_object*
@@ -67,11 +66,6 @@ subgroup_table
 This argument is the :ref:`subgroup_table-name` .
 A reference to *subgroup_table* is used by *avg_noise_obj* .
 
-integrand_table
-***************
-This argument is the :ref:`integrand_table-name` .
-A reference to *integrand_table* is used by *avg_noise_obj* .
-
 w_info_vec
 **********
 For each :ref:`weight_table@weight_id` ,
@@ -111,7 +105,6 @@ avg_noise_effect::avg_noise_effect(
       const CppAD::vector<double>&              age_table        ,
       const CppAD::vector<double>&              time_table       ,
       const CppAD::vector<subgroup_struct>&     subgroup_table   ,
-      const CppAD::vector<integrand_struct>&    integrand_table  ,
       const CppAD::vector<weight_info>&         w_info_vec       ,
       const CppAD::vector<smooth_info>&         s_info_vec       ,
       const pack_info&                          pack_object      )
@@ -121,7 +114,6 @@ ode_step_size_             ( ode_step_size )   ,
 age_table_                 ( age_table )       ,
 time_table_                ( time_table )      ,
 subgroup_table_            ( subgroup_table )  ,
-integrand_table_           ( integrand_table ) ,
 w_info_vec_                ( w_info_vec )      ,
 s_info_vec_                ( s_info_vec )      ,
 pack_object_               ( pack_object )     ,

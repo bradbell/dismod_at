@@ -1,7 +1,7 @@
 // $Id:$
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # ifndef DISMOD_AT_PREDICT_COMMAND_HPP
 # define DISMOD_AT_PREDICT_COMMAND_HPP
@@ -19,9 +19,10 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void predict_command(
    const std::string&                                    source              ,
+   bool                                                  zero_meas_value     ,
    sqlite3*                                              db                  ,
    const dismod_at::db_input_struct&                     db_input            ,
-   size_t                                                n_var               ,
+   const dismod_at::pack_info&                           pack_object         ,
    dismod_at::data_model&                                avgint_object       ,
    const CppAD::vector<dismod_at::avgint_subset_struct>& avgint_subset_obj   ,
    const pack_prior&                                     var2prior

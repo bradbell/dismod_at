@@ -1,7 +1,7 @@
-#! /usr/bin/env bash
+#build_type! /usr/bin/env bash
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 #
 # exit on error or undefined variable
@@ -33,21 +33,14 @@ set -e -u
 # If you understand docker, this script also serves as an example
 # install of dismod_at.
 #
-# Syntax
+# Images
 # ******
-#
-#  .. csv-table::
-#     :widths: auto
-#     :header: Command, image_name
-#
-#     ``./dock_dismod_at.sh base``      ,``dismod_at.base``
-#     ``./dock_dismod_at.sh mixed``     ,``dismod_at.mixed.``\ *build_type*
-#     ``./dock_dismod_at.sh dismod_at`` ,``dismod_at.dismod_at.``\ *build_type*
-#     ``./dock_dismod_at.sh at_cascade``,``dismod_at.at_cascade.``\ *build_type*
-#
-# #.  The *build_type* can be ``debug`` or ``release`` ; see
+# #.  The headers below are image names and the text below an image name
+#     is the command that creates the image.
+# #.  The *build_type* in each image name is either 
+#     ``debug`` or ``release`` ; see
 #     :ref:`dock_dismod_at.sh@build_type` .
-# #.  Each image above depends on its previous image; e.g., if you
+# #.  Each image depends on its previous image; e.g., if you
 #     rebuild ``dismod_at.base`` , you must rebuild all the other images.
 #     The :ref:`release_notes-name` will mention when new versions
 #     of the images are available.
@@ -60,6 +53,25 @@ set -e -u
 #     in the current working directory.
 #     If such a file already exists, it will need to be moved or deleted
 #     before the command can be executed.
+#
+# dismod_at.base
+# ==============
+# ./dock_dismod_at.sh base
+# 
+# dismod_at.mixed.build_type
+# ==========================
+# ./dock_dismod_at.sh mixed
+#
+# dismod_at.dismod_at.build_type
+# ==============================
+# ./dock_dismod_at.sh dismod_at
+#
+# dismod_at.at_cascade.build_type
+# ===============================
+# ./dock_dismod_at.sh at_cascade
+#
+# Working with Images
+# *******************
 #
 # Create A Container
 # ==================
@@ -143,8 +155,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.dismod_at``
 # {xrst_spell_off}
 # {xrst_code sh}
-   dismod_at_version='20240105'
-   dismod_at_hash='bd93a7ebddd104baae37c63cd11f0c29c682a23b'
+   dismod_at_version='2024.12.2'
+   dismod_at_hash='0783bedd0c4b5075ecbc27d8ac62c1c4c50a0cf2'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -153,8 +165,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.at_cascade``
 # {xrst_spell_off}
 # {xrst_code sh}
-   at_cascade_version='2024.1.28'
-   at_cascade_hash='d5d94ef82f52e55fca0127b514d0293ff2598926'
+   at_cascade_version='2024.12.2'
+   at_cascade_hash='94b9e50bb29423155ad70d5375dde3ac36533cae'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -182,8 +194,8 @@ fi
 # ---------------------------------------------------------------------------
 if ! $driver ps > /dev/null
 then
-   echo "Cannot run $dirver ps"
-   if [ "$dirver" == 'docker' ]
+   echo "Cannot run $driver ps"
+   if [ "$driver" == 'docker' ]
    then
 cat << EOF
 If docker deamon is not running perhaps one of the following will start it:
@@ -241,11 +253,11 @@ if [ "$1" == 'base' ]
 then
 cat << EOF > Dockerfile
 # -----------------------------------------------------------------------------
-# Ubuntu 23.04 with dismod_at requirements that are installed using apt-get.
+# Ubuntu 24.04 with dismod_at requirements that are installed using apt-get.
 # The vim editor is included for use when debugging containers and
 # is not required by dismod_at.
 # -----------------------------------------------------------------------------
-FROM ubuntu:23.04
+FROM ubuntu:24.04
 RUN  apt-get update
 WORKDIR /home
 #
@@ -272,46 +284,61 @@ RUN python3 -m venv $prefix
 ENV VIRTUAL_ENV     $prefix
 ENV PATH            $prefix/bin:\$PATH
 #
-# pip packages
-RUN pip3 install matplotlib numpy scipy build
+# pip packages required by dismod_at
+RUN pip3 install matplotlib numpy scipy
 #
-# 1. Get source corresponding to dismod_at-$dismod_at_version
-# 2. Check that the corresponding hash is $dismod_at_hash
-# 3. Change some settings in bin/run_cmake.sh
-RUN \
-git clone https://github.com/bradbell/dismod_at.git dismod_at.git && \
-cd dismod_at.git && \
-git checkout --quiet $dismod_at_hash  && \
-grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
-sed -i bin/run_cmake.sh \
-   -e 's|^dismod_at_prefix=.*|dismod_at_prefix='$prefix'|' \
-   -e "s|^build_type=.*|build_type='$build_type'|" \
-   -e "s|^python3_executable=.*|python3_executable='$prefix/bin/python3'|"
 EOF
 # ----------------------------------------------------------------------------
 elif [ "$1" == 'mixed' ]
 then
 cat << EOF > Dockerfile
 FROM dismod_at.base
+WORKDIR /home
+#
+# Get source corresponding to dismod_at-$dismod_at_version
+RUN git clone https://github.com/bradbell/dismod_at.git dismod_at.git
+#
+# WORKDIR
 WORKDIR /home/dismod_at.git
+#
+RUN \
+git checkout --quiet $dismod_at_hash  && \
+grep "$dismod_at_version" CMakeLists.txt > /dev/null
+#
+# Change bin/install_settings.py
+RUN sed -i bin/install_settings.py \
+   -e "s|^dismod_at_prefix *=.*|dismod_at_prefix = '$prefix'|" \
+   -e "s|^build_type *=.*|build_type = '$build_type'|"  \
+   -e "s|^python3_executable *=.*|python3_executable = '$prefix/bin/python3'|"
+#
+# Install cppad_mixed
 RUN bin/get_cppad_mixed.sh
 EOF
 # -----------------------------------------------------------------------------
 elif [ "$1" == 'dismod_at' ]
 then
-site_packages="$prefix/lib/python3.11/site-packages"
+site_packages="$prefix/lib/python3.12/site-packages"
 cat << EOF > Dockerfile
 FROM dismod_at.mixed.$build_type
 WORKDIR /home/dismod_at.git
-
+#
+# Check soruce
+RUN \
+mv bin/install_settings.py temp.py && \
+git pull origin master && \
+git checkout --quiet $dismod_at_hash  && \
+mv temp.py bin/install_settings.py && \
+grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
+grep "^build_type *= *'$build_type'" bin/install_settings.py> /dev/null
+#
 # LD_LIBRARY_PATH
 ENV LD_LIBRARY_PATH=''
-
+#
 # PATH
 # must escape PATH variable so it gets interpreted in the image
 ENV PATH="\$PATH:$prefix/bin"
-
-# Build, check, install, check install location
+#
+# dismod_at: Build, check, install, check install location
 RUN \
 bin/run_cmake.sh && \
 cd build && \
@@ -330,26 +357,34 @@ then
 cat << EOF > Dockerfile
 FROM dismod_at.dismod_at.$build_type
 WORKDIR /home
-
-# 1. Get source corresponding to at_cascade hash
-# 2. Check the corresponding at_cascade version
-# 3. Remove building the documentaiton from check_all.sh
+#
+# Check dismod_at source
 RUN \
-git clone https://github.com/bradbell/at_cascade.git at_cascade.git && \
-cd at_cascade.git && \
+cd dismod_at.git && \
+mv bin/install_settings.py temp.py && \
+git pull origin master && \
+git checkout --quiet $dismod_at_hash  && \
+mv temp.py bin/install_settings.py && \
+grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
+grep "^build_type *= *'$build_type'" bin/install_settings.py> /dev/null
+#
+# Get at_cascade source
+RUN git clone https://github.com/bradbell/at_cascade.git at_cascade.git
+#
+# WORKDIR
+WORKDIR /home/at_cascade.git
+#
+# Get at_cascade corresponding to hash
+RUN \
 git checkout --quiet $at_cascade_hash && \
 grep "at_cascade-$at_cascade_version\$" at_cascade.xrst > /dev/null && \
 sed -i bin/run_test.sh -e 's|if python3|if $prefix/bin/python3|'
-
-WORKDIR /home/at_cascade.git
-
+#
 # Test at_cascade
 RUN bin/check_all.sh
-
+#
 # Install at_cascade
-RUN \
-$prefix/bin/python3 -m build && \
-pip3 install --force-reinstall dist/at_cascade-$at_cascade_version.tar.gz
+RUN pip3 install .
 #
 WORKDIR /home/work
 EOF

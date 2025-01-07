@@ -1,19 +1,279 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin whats_new_2024}
+{xrst_begin 2024}
 {xrst_spell
+   cmake
+   culbreth
    dd
+   dirver
+   grep
+   homebrew
+   ihme
+   matplotlib
    mm
+   numpy
+   pertrub
+   sed
+   scipy
+   xam
+   yyyymmdd
+   ubuntu
 }
 
-Changes and Additions to Dismod_at During 2024
-##############################################
+Release Notes for 2024
+######################
 
 mm-dd
 *****
+
+12-02
+=====
+#. Advance Ubuntu in the dismod_at.base image from 23.04 to 24.04 in the
+   :ref:`dock_dismod_at.sh@Images@dismod_at.base` image.
+   This also advances python3.11 to python3.12 .
+
+#. Advance dock_dismod_at to
+   :ref:`dock_dismod_at.sh@dismod_at_version` to 2024.12.2 and
+   :ref:`dock_dismod_at.sh@at_cascade_version` to 2024.12.2 .
+
+#. The dock_dismod_at.sh :ref:`dock_dismod_at.sh@Images` documentation
+   has been separated from 
+   :ref:`dock_dismod_at.sh@Working with Images` .
+
+
+11-26
+=====
+It is an error if there is a zero or negative
+:ref:`weight_grid_table@weight` value in the weight_grid table,
+and the corresponding :ref:`weight_grid_table@weight_id`
+also appears in the :ref:`data_table-name`  or the :ref:`avgint_table-name` .
+The error message for this case has been improved.
+To be specific, the corresponding row of the data table or avgint table
+is reported.
+
+10-20
+=====
+Advance from cppad_mixed-20240910 to cppad_mixed-20241029.
+
+10-16
+=====
+Garland Culbreth found an error in the :ref:`bilinear@Interpolant@Bilinear`
+formula. To be specific the second :math:`v_{i+1,j}` was fixed by changing it
+to :math:`v_{i,j+1}` .
+In addition, a table was added below that formula that checks the
+value at the vertex points.
+
+09-24
+=====
+#. It was an error for the prior table to have an :ref:`prior_table@eta`
+   that was zero and a density that was
+   :ref:`density_table@Notation@Log Scaled` .
+   This has been changes so that eta can be zero if
+   :ref:`prior_table@lower` plus eta is greater than zero.
+
+#. Advance from cppad_mixed-20240902 to cppad_mixed-20240910.
+
+#. Advance dock_dismod_at to
+   :ref:`dock_dismod_at.sh@dismod_at_version` to 2024.9.24 and
+   :ref:`dock_dismod_at.sh@at_cascade_version` to 2024.9.24 .
+
+09-09
+=====
+The development and install tools were extended to work well on
+MacOS with homebrew.
+The versions between 08-25 and 09-08
+were not tested and may have trouble on other systems.
+(There was a problem with the new ``bin/grep_and_sed.sh`` script.)
+
+08-18
+=====
+The specifications for :ref:`errors <log_table@message_type@error>`
+in the log table now include the fact that the program exits with
+a non-zero exit code directly after reporting one of these errors.
+
+08-13
+=====
+#. Add read permission for the world to the ``dismodat.py`` file
+   so that now user, group and world can execute this script.
+   (It used to be the case that only users in the same group
+   as the installer could execute this script.)
+#. Advance dock_dismod_at
+   :ref:`dock_dismod_at.sh@dismod_at_version` to 2024.8.13.
+
+07-30
+=====
+#. Move the install settings from ``bin/run_cmake.sh`` to
+   :ref:`bin/install_settings.py<install_settings.py-name>` .
+   The ``install_settings.py`` routine is better able to transfer
+   results that depend on the system it is run on.
+#. Remove the ``bin/ihme_db.sh`` script
+   (it was out of date, was IHME specific, and would no longer be useful).
+#. Advance dock_dismod_at
+   :ref:`dock_dismod_at.sh@dismod_at_version` and
+   :ref:`dock_dismod_at.sh@at_cascade_version` to 2024.7.30.
+
+07-29
+=====
+Advance from cppad_mixed-20240214 to cppad_mixed-20240729.
+
+07-15
+=====
+Fix a compiler warning in
+get_option_table_xam.cpp.
+(This is a test and developer example.)
+
+07-10
+=====
+Advance dock_dismod_at
+:ref:`dock_dismod_at.sh@dismod_at_version` and
+:ref:`dock_dismod_at.sh@at_cascade_version` to 2024.7.10.
+This tests the changes on 07-09 below
+(and fixed a problem introduced in dock_dismod_at.sh).
+
+07-09
+=====
+Change the install of the dismod_at python module so that it
+automatically includes any packages it depends on.
+This is should solve some problems when using
+:ref:`example_install.sh-name` with homebrew on macOS.
+
+06-28
+=====
+There was a bug in the most recent change to :ref:`dock_dismod_at.sh-name`.
+(It would get an error about changing ``bin/run_cmake.sh`` when attempting to
+checkout out a specific version of ``dismod_at`` .)
+This has been fixed.
+
+06-27
+=====
+Fix some problems with the install of dismod_at on macOS.
+To be more specific, :ref:`example_install.sh-name` should now work
+if you use homebrew as a package manager and install the
+following packages ``numpy``, ``python-matplotlib`` , ``scipy``
+before running example_install.sh.
+
+06-24
+=====
+Advance dock_dismod_at
+:ref:`dock_dismod_at.sh@dismod_at_version` to 2024.6.23 and
+:ref:`dock_dismod_at.sh@at_cascade_version` to 2024.6.24.
+
+06-22
+=====
+Add subgroup random effects to the covariate multipliers in the
+:ref:`user_zero_meas_value.py-name` example.
+In addition, fix the setting of these random effects to zero when the
+:ref:`predict_command@zero_meas_value` option is specified.
+
+06-21
+=====
+Add the :ref:`predict_command@zero_meas_value` option to the
+predict command.
+In addition, add the :ref:`user_zero_meas_value.py-name` example.
+
+06-10
+=====
+Fix usage message for ``dismodat.py`` . To be specific, change
+``pertrub`` to ``perturb`` .
+
+
+05-25
+=====
+#. Add the :ref:`command@Version` command.
+#. Advance :ref:`dock_dismod_at.sh-name` to dismod_at-2024.5.25
+   and at_cascade-2024.5.25.
+
+05-22
+=====
+#. Change the dismod_at version numbers from
+   yyyymmdd format to year.month.day format; e.g,
+   the old version number for 2024-05-22 is 20240522
+   and it's new version number is 2024.5.22 .
+#. Advance dock_dismod_at
+   :ref:`dock_dismod_at.sh@dismod_at_version` to 2024.5.22 and
+   :ref:`dock_dismod_at.sh@at_cascade_version` to 2024.5.20.
+   In addition, fix using same dismod_at mixed image when only
+   dismod_at or at_cascade changes.
+
+
+
+05-21
+=====
+Fix a misspelling of driver (as dirver) in dock_dismod_at.sh.
+
+03-12
+=====
+#. The :ref:`dock_dismod_at.sh-name` had the version of dismod_at baked in.
+   This has been changed so that it is no longer necessary to re-build
+   the base image each time the version of dismod_at changes.
+#. Advance `dock_dismod_at.sh`` to dismod_at-20240310 and at_cascade-2024.3.12.
+
+03-10
+=====
+The :ref:`create_connection-name` would sometimes hang when
+used with python multiprocessing. The connections have been changed
+so that they can only be used by :ref:`create_connection@One Thread` .
+This seems to have fixed this problem.
+
+02-20
+=====
+#. The :ref:`dock_dismod_at.sh@build_type` was fixed in the base image,
+   instead of the mixed image.
+   This is has been fixed, in addition, all the images double check that
+   they are building the correct version and build type.
+#. Change the page name ``whats_new_``\ *year* to just *year* .
+   This shortens the links to the dismod_at release notes; e.g. ,
+   the link::
+
+      https://dismod-at.readthedocs.io/whats_new_2024.html#whats-new-2024-mm-dd-02-14
+
+   changed to::
+
+      https://dismod-at.readthedocs.io/2024.html#mm-dd-02-14
+
+
+02-18
+=====
+#. The :ref:`user_diabetes.py-name` example was completely re-written.
+   This has been improved in many ways. For example,
+   it is simpler than other examples that simulate data
+   because it uses :ref:`average_integrand-name` ,
+   instead of the :ref:`simulate_command-name` .
+#. If one uses a :ref:`rate_eff_cov_table-name` ,
+   and they have a lot of nodes and covariates,
+   setting up the interpolation for this covariates can be time consuming.
+   This is now only done for the commands that need this information.
+   This changed the execution time for the :ref:`init_command-name` or
+   :ref:`hold_out_command-name` commands from
+   about 30 minutes to about 12 seconds
+   (for one IHME Mexico diabetes estimation case).
+#. Advance dock_dismod_at
+   :ref:`dock_dismod_at.sh@dismod_at_version` to 20240219
+   (to include the changes above).
+
+02-17
+=====
+There were two rows with the value of
+:ref:`option_table@Age Average Grid@ode_step_size` in the db2csv
+:ref:`db2csv_command@option.csv` file.
+This has been fixed.
+
+02-14
+=====
+#. Make :ref:`user_speed.py@n_data` an adjustable parameter to the
+   speed.py timing tests.
+   Include the :ref:`hold_out_command-name` in the speed.py timing tests.
+   In addition, separate the elapsed time into the different steps
+   taken by speed.py.
+
+#. Advance to cppad_mixed-20240214.
+   This fixes a bug in CppAD, which was discovered using the
+   new *n_data* argument and hold_out commands in speed.py .
+
+.. _2023-02-14: https://cppad.readthedocs.io/latest/24.html#whats-new-24-mm-dd-02-14
 
 01-31
 =====
@@ -31,8 +291,7 @@ The :ref:`dock_dismod_at.sh-name` documentation has been simplified
 and its API has changed as follows:
 
 #. The word ``image`` is no longer present in the
-   :ref:`dock_dismod_at.sh@Syntax` for each of the dock_dismod_at.sh
-   commands.
+   :ref:`image <dock_dismod_at.sh@Images>` names.
 #. The image names have been changed as follows:
 
    .. list-table::
@@ -51,9 +310,9 @@ and its API has changed as follows:
 
 01-03
 =====
-On 2023 :ref:`whats_new_2023@mm-dd@12-29` the dock_dismod_at.sh
+On 2023 :ref:`2023@mm-dd@12-29` the dock_dismod_at.sh
 :ref:`dock_dismod_at.sh@at_cascade_version` did not
 advance to 2023.12.22 (it was 2023.11.20).
 This has been fixed.
 
-{xrst_end whats_new_2024}
+{xrst_end 2024}

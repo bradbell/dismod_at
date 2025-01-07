@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-23 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/mixed/exception.hpp>
 # include <dismod_at/avg_integrand.hpp>
@@ -143,7 +143,6 @@ avg_integrand::avg_integrand(
 ode_step_size_             ( ode_step_size )   ,
 age_table_                 ( age_table )       ,
 time_table_                ( time_table )      ,
-subgroup_table_            ( subgroup_table )  ,
 integrand_table_           ( integrand_table ) ,
 w_info_vec_                ( w_info_vec )      ,
 double_time_line_object_   ( age_avg_grid )    ,

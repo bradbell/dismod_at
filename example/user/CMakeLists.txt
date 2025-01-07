@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build check_example_user
 SET(depends "")
 #
 # This list below is result of ls ./*.py in this directory
-# and removing covid_19.py diabetes.py, speed.py,
+# and removing covid_19.py speed.py,
 # and the .py at end of each entry.
 #
 # BEGIN_SORT_THIS_LINE_PLUS_2
@@ -27,6 +27,7 @@ FOREACH(user_case
    csv2db
    data_density
    data_sim
+   diabetes
    diff_constraint
    fit_fixed_both
    fit_meas_noise
@@ -64,6 +65,7 @@ FOREACH(user_case
    trace_init
    trapezoidal
    warm_start
+   zero_meas_value
    zsum_child_rate
    zsum_mulcov_meas
    zsum_mulcov_rate
@@ -81,10 +83,15 @@ ENDFOREACH(user_case)
 ADD_CUSTOM_TARGET( check_example_user DEPENDS ${depends} )
 # ---------------------------------------------------------------------------
 # Build check_example_user_speed (not included above)
+# These argument values caused CppAD to crash before versions
+# 20240214 and 20240000.3; see heading 02-14 on
+# https://cppad.readthedocs.io/latest/24.html#whats-new-24-mm-dd-02-14
 SET(random_seed      0)
 SET(n_children       10)
 SET(quasi_fixed     "false")
 SET(ode_step_size    5)
+SET(n_data           200)
+SET(max_fit          50)
 #
 ADD_CUSTOM_TARGET(
    check_example_user_speed
@@ -93,14 +100,8 @@ ADD_CUSTOM_TARGET(
       ${n_children}
       ${quasi_fixed}
       ${ode_step_size}
-   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-   DEPENDS dismod_at
-)
-# -----------------------------------------------------------------------------
-# Build check_example_user_diabetes (not included above)
-ADD_CUSTOM_TARGET(
-   check_example_user_diabetes
-   ${python3_executable} example/user/diabetes.py
+      ${n_data}
+      ${max_fit}
    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
    DEPENDS dismod_at
 )

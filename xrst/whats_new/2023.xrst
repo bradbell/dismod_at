@@ -1,9 +1,9 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin whats_new_2023}
+{xrst_begin 2023}
 {xrst_spell
    cmake
    dd
@@ -14,8 +14,8 @@ $Id:$
    ubuntu
 }
 
-Changes and Additions to Dismod_at During 2023
-##############################################
+Release Notes for 2023
+######################
 
 mm-dd
 *****
@@ -37,7 +37,7 @@ Advance dock_dismod_at.sh version of Ubuntu from 20.04 to 23.04 ,
 Advancing to Ubuntu 23.04 Also note the dock_dismod_at.sh
 wish list item, so it was removed.
 Also note that dismod_at-2023.12.29 has a minor fix for the case where
-:ref:`run_cmake.sh@dismod_at_prefix` does not end with ``dismod_at`` .
+:ref:`install_settings.py@dismod_at_prefix` does not end with ``dismod_at`` .
 
 12-05
 =====
@@ -186,8 +186,8 @@ The error message for this case was improved.
    was advanced to 2023.6.18 .
 #. The dock_dismod_at.sh script was changed so that it just builds
    (does not run) the dismod_at image.
-   Suggestions for how to run the image were added to the
-   :ref:`dock_dismod_at.sh@Syntax`.
+   Suggestions for how to run the image were added under the heading
+   :ref:`dock_dismod_at.sh@Working with Images`.
 #. Testing of the debug version of at_cascade was removed because it is slow.
 
 06-17
@@ -321,4 +321,4 @@ to 2023.03.20.
    dismod_at-20230105 and the at_cascade version advanced to
    at_cascade-2023.1.5.
 
-{xrst_end whats_new_2023}
+{xrst_end 2023}

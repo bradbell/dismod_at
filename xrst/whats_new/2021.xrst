@@ -1,9 +1,9 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin whats_new_2021}
+{xrst_begin 2021}
 {xrst_spell
    cen
    cmake
@@ -25,7 +25,6 @@ $Id:$
    os
    pdf
    podman
-   prc
    stdcv
    stderr
    stdout
@@ -35,8 +34,8 @@ $Id:$
    util
 }
 
-Changes and Additions to Dismod_at During 2021
-##############################################
+Release Notes for 2021
+######################
 
 mm-dd
 *****
@@ -351,7 +350,7 @@ To be specific, ``export DYLD_LIBRARY_PATH`` no longer works
 (export works for most shell variables but not others).
 The ``bin/get_cppad_mixed.sh`` was changed to adapt to this problem
 including advancing to cppad_mixed-20210714.
-In addition, the :ref:`run_cmake.sh@specific_compiler`
+In addition, the :ref:`install_settings.py@specific_compiler`
 setting was added to ``bin/run_cmake.sh`` to make it easier
 to build using MacPorts.
 
@@ -434,7 +433,7 @@ This has been fixed.
    :ref:`db2csv_command@data.csv@eta` ,
    :ref:`db2csv_command@data.csv@nu` .
 #. Remove the log density wish list item which is no longer necessary
-   after the improvement to log densities on :ref:`whats_new_2021@mm-dd@05-20` .
+   after the improvement to log densities on :ref:`2021@mm-dd@05-20` .
 #. Improve the usage message with ``dismod_at`` is executed with no arguments.
 #. Advance to version 20210624 of cppad_mixed and dock_dismod_at.sh.
 
@@ -628,7 +627,7 @@ This is in preparation for adding a warm start option to the fit command.
    {xrst_code}
    {xrst_spell_on}
 #. Change the default setting for
-   :ref:`user_diabetes.py@Problem Parameters@quasi_fixed`
+   quasi_fixed
    from ``'true'`` to ``'false'`` .
 #. Change :ref:`user_fit_sim.py-name` *quasi_newton* setting from
    ``'true'`` to ``'false'`` and make the maximum allowable error
@@ -718,7 +717,7 @@ Ipopt.git was below Mumps.git.
 =====
 Advance to :ref:`dock_dismod_at.sh-name` version 20210128.
 Most importantly this includes the new *meas_noise_effect* options
-added on :ref:`whats_new_2021@mm-dd@01-10` .
+added on :ref:`2021@mm-dd@01-10` .
 For those at IHME, it is also has the new ``fit_ihme.py`` program.
 
 01-22
@@ -800,4 +799,4 @@ are next to the corresponding lower and upper limits.
 
       D \left( u_j \W{,} \mu_j \W{,} \lambda_j \sigma_j \W{,} d_j \right)
 
-{xrst_end whats_new_2021}
+{xrst_end 2021}

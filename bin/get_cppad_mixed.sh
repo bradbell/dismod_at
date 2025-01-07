@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 #
 # {xsrst_comment_ch #}
@@ -39,8 +39,8 @@
 # ---------------------------------------------------------------------------
 # CppAD mixed version information
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='dac712e32423a31d5100bee9e6938f26db99f788'
-version='20231201'
+hash_key='5240ff52655bf9afc4fd851001f9170ad1979098'
+version='20241029'
 # --------------------------------------------------------------------------
 name='bin/get_cppad_mixed.sh'
 if [ $0 != $name ]
@@ -58,25 +58,12 @@ echo_eval() {
    eval $*
 }
 # --------------------------------------------------------------------------
-# build_type
-cmd=`grep '^build_type=' bin/run_cmake.sh`
-eval $cmd
-#
-# specific_compiler
-cmd=`grep '^specific_compiler=' bin/run_cmake.sh`
-eval $cmd
-#
-# extra_cxx_flags
-cmd=`grep '^extra_cxx_flags=' bin/run_cmake.sh`
-eval $cmd
-#
-# dismod_at_prefix
-cmd=`grep '^dismod_at_prefix=' bin/run_cmake.sh`
-eval $cmd
-#
+# build_type,
+# specific_compiler,
+# extra_cxx_flags,
+# dismod_at_prefix,
 # cmake_libdir
-cmd=`grep '^cmake_libdir=' bin/run_cmake.sh`
-eval $cmd
+eval $(bin/install_settings.py)
 # ---------------------------------------------------------------------------
 export LD_LIBRARY_PATH=''
 export PKG_CONFIG_PATH=''
@@ -118,7 +105,7 @@ else
    optimize='no'
 fi
 # -----------------------------------------------------------------------------
-# transfer dismod_at.git run_cmake.sh options to cppad_mixed run_cmake.sh
+# transfer dismod_at.git install_settings to cppad_mixed run_cmake.sh
 cppad_mixed_dir=$(pwd)
 echo "edit $cppad_mixed_dir/bin/run_cmake.sh"
 sed \
@@ -165,12 +152,18 @@ fi
 # cppad_mixed example install
 run_test='false'
 replace='true'
-echo_eval bin/example_install.sh $run_test $replace
-# -----------------------------------------------------------------------------
+if echo_eval bin/example_install.sh $run_test $replace
+then
+   ok='yes'
+fi
 echo 'mv example_install.log get_cppad_mixed.log'
 echo 'mv example_install.err get_cppad_mixed.err'
 cp example_install.log $dismod_at_dir/get_cppad_mixed.log
 cp example_install.err $dismod_at_dir/get_cppad_mixed.err
+if [ "$ok" != 'yes' ]
+then
+   exit 1
+fi
 # -----------------------------------------------------------------------------
 echo 'get_cppad_mixed.sh: OK'
 exit 0

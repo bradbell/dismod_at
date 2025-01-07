@@ -18,7 +18,7 @@ do
    if ! grep "^   $name\$" example/user/CMakeLists.txt > /dev/null
    then
       if [ "$name" != 'speed' ] \
-      && [ "$name" != 'diabetes' ] \
+      && [ "$name" != 'new_diabetes' ] \
       && [ "$name" != 'covid_19' ]
       then
          echo "$name is not in example/user/CMakeLists.txt"

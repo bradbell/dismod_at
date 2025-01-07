@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin get_started}
 
@@ -29,7 +29,7 @@ you can run one of these examples with the command
 
    *python3_executable* ``example/get_started/`` *name*
 
-where :ref:`run_cmake.sh@python3_executable`
+where :ref:`install_settings.py@python3_executable`
 is the python3 program and *name* is the name of the example.
 The name of the example
 includes the ``.py`` extension at the end.

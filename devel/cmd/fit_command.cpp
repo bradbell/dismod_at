@@ -24,6 +24,7 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 {xrst_spell
    iter
    num
+   table table
 }
 
 The Fit Command

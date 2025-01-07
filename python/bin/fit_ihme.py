@@ -220,7 +220,7 @@ In addition setting a child smothing to None does not affect the
 correpsonding parent rates.
 ''',
 
-'whats_new_2021':'''
+'2021':'''
 
 01-22:
 1. Automatic detection and setting of proper rate_case.

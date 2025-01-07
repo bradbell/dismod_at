@@ -1,7 +1,7 @@
 // $Id:$
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-23 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <map>
 # include <cassert>
@@ -66,6 +66,14 @@ int main(int n_arg, const char** argv)
    using std::string;
    using CppAD::vector;
    // ---------------- command line arguments ---------------------------
+   //
+   // --version
+   if( n_arg == 2 )
+   {  if( strcmp( argv[1] , "--version" ) == 0 )
+      {  std::cout << "dismod_at-" DISMOD_AT_VERSION "\n";
+         return 0;
+      }
+   }
    // command_info
    // BEGIN_SORT_THIS_LINE_PLUS_2
    struct { const char* name; int n_arg; } command_info[] = {
@@ -82,6 +90,7 @@ int main(int n_arg, const char** argv)
       {"init",         3},
       {"old2new",      3},
       {"predict",      4},
+      {"predict",      5},
       {"sample",       6},
       {"sample",       7},
       {"set",          5},
@@ -344,19 +353,6 @@ int main(int n_arg, const char** argv)
    size_t n_weight    = db_input.weight_table.size();
    size_t n_smooth    = db_input.smooth_table.size();
    // ---------------------------------------------------------------------
-   // w_info_vec
-   vector<dismod_at::weight_info> w_info_vec(n_weight + 1);
-   for(size_t weight_id = 0; weight_id < n_weight; weight_id++)
-   {  w_info_vec[weight_id] = dismod_at::weight_info(
-         db_input.age_table,
-         db_input.time_table,
-         weight_id,
-         db_input.weight_table,
-         db_input.weight_grid_table
-      );
-   }
-   // The constant weighting is placed at the end of w_info_vec
-   w_info_vec[n_weight] = dismod_at::weight_info();
    //
    // s_info_vec
    vector<dismod_at::smooth_info> s_info_vec(n_smooth);
@@ -600,6 +596,19 @@ int main(int n_arg, const char** argv)
             avgint_subset_obj,
             avgint_subset_cov_value
       );
+      // w_info_vec
+      vector<dismod_at::weight_info> w_info_vec(n_weight + 1);
+      for(size_t weight_id = 0; weight_id < n_weight; weight_id++)
+      {  w_info_vec[weight_id] = dismod_at::weight_info(
+            db_input.age_table,
+            db_input.time_table,
+            weight_id,
+            db_input.weight_table,
+            db_input.weight_grid_table
+         );
+      }
+      // The constant weighting is placed at the end of w_info_vec
+      w_info_vec[n_weight] = dismod_at::weight_info();
       //
       // avgint_object
       dismod_at::data_model avgint_object(
@@ -625,20 +634,32 @@ int main(int n_arg, const char** argv)
          pack_object              ,
          child_info4avgint
       );
-      size_t n_var = pack_object.size();
-      std::string source = argv[3];
+      //
+      std::string source   = argv[3];
+      bool zero_meas_value = false;
+      if( n_arg > 4 )
+      {  string argv_4 = argv[4];
+         if( strcmp(argv[4], "zero_meas_value") != 0 )
+         {  message  = "dismod_at database predict " + source + " " + argv_4;
+            message += "\nexpected " + argv_4 + " to be zero_meas_value\n";
+            dismod_at::error_exit(message);
+         }
+         zero_meas_value = true;
+      }
       dismod_at::predict_command(
          source               ,
+         zero_meas_value      ,
          db                   ,
          db_input             ,
-         n_var                ,
+         pack_object          ,
          avgint_object        ,
          avgint_subset_obj    ,
          var2prior
       );
    }
    else
-   {  // -------------------------------------------------------------------
+   {  // command_arg is depend, fit, simulate, or sample
+      //
       // data_subset_table
       vector<dismod_at::data_subset_struct> data_subset_table =
          dismod_at::get_data_subset(db);
@@ -681,11 +702,20 @@ int main(int n_arg, const char** argv)
       dismod_at::prior_model prior_object(
          pack_object           ,
          var2prior             ,
-         db_input.age_table    ,
-         db_input.time_table   ,
          db_input.prior_table  ,
          db_input.density_table
       );
+      // w_info_vec
+      vector<dismod_at::weight_info> w_info_vec(n_weight + 1);
+      for(size_t weight_id = 0; weight_id < n_weight; weight_id++)
+      {  w_info_vec[weight_id] = dismod_at::weight_info(
+            db_input.age_table,
+            db_input.time_table,
+            weight_id,
+            db_input.weight_table,
+            db_input.weight_grid_table
+         );
+      }
       // data_object
       dismod_at::data_model data_object(
          cov2weight_obj           ,

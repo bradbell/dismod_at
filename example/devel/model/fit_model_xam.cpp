@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-23 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin fit_model_xam.cpp dev}
@@ -325,7 +325,7 @@ bool fit_model_xam(void)
    //
    // prior_object
    dismod_at::prior_model prior_object(
-   pack_object, var2prior, age_table, time_table, prior_table, density_table
+      pack_object, var2prior, prior_table, density_table
    );
    //
    // random_const

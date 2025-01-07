@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-23 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_data_table dev}
@@ -189,7 +189,6 @@ this function.
 # include <dismod_at/error_exit.hpp>
 # include <dismod_at/get_density_table.hpp>
 # include <dismod_at/null_int.hpp>
-# include <dismod_at/log_message.hpp>
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 

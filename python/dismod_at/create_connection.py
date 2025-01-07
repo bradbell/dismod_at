@@ -38,9 +38,15 @@
 # **********
 # The return value is an sqlite3
 # `connection object <https://docs.python.org/2/library/sqlite3.html#connection-objects>`_
-# You must close this connection when you are done with it by executing
 #
-#     *connection* . ``close`` ()
+# Close
+# *****
+# You must close this connection when you are done with it by executing
+# *connection*\ .\ ``close``\ ()
+#
+# One Thread
+# **********
+# The connection can only be used the thread that created it.
 #
 # {xrst_end create_connection}
 # ---------------------------------------------------------------------------
@@ -67,8 +73,8 @@ def create_connection(file_name, new = False, readonly = False) :
    if readonly :
       file_name_plus_mode =  f'file:{file_name}?mode=ro'
       connection = sqlite3.connect(
-         file_name_plus_mode, uri = True, check_same_thread = False
+         file_name_plus_mode, uri = True, check_same_thread = True
       )
    else :
-      connection = sqlite3.connect(file_name, check_same_thread = False)
+      connection = sqlite3.connect(file_name, check_same_thread = True)
    return connection

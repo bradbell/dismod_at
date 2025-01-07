@@ -1,9 +1,9 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
-{xrst_begin whats_new_2018}
+{xrst_begin 2018}
 {xrst_spell
    cholmod
    da
@@ -29,8 +29,8 @@ $Id:$
    wshadow
 }
 
-Changes and Additions to Dismod_at During 2018
-##############################################
+Release Notes for 2018
+######################
 
 mm-dd
 *****
@@ -222,7 +222,7 @@ wish list item.
 08-07
 =====
 Add the :ref:`csv2db_command-name` wish list items
-(removed on :ref:`2019-09-24<whats_new_2019@mm-dd@09-24>` ).
+(removed on :ref:`2019-09-24<2019@mm-dd@09-24>` ).
 
 08-06
 =====
@@ -246,7 +246,7 @@ Put more emphasis on the difference between the
 =====
 
 #. Add the
-   :ref:`run_cmake.sh@build_type` to the
+   :ref:`install_settings.py@build_type` to the
    usage message that is printed when no command
    line arguments are give to ``dismod_at`` .
 #. Some dismod_at :ref:`commands<command-name>`
@@ -300,7 +300,7 @@ Other Changes
    :ref:`install_unix@Special Requirements@eigen` is different
    from the other prefixes.
 #. Change the default value of
-   :ref:`run_cmake.sh@build_type` to ``debug`` .
+   :ref:`install_settings.py@build_type` to ``debug`` .
    You have to change this to get the faster (``release`` )
    version of dismod_at.
 #. Improve discussion of the
@@ -309,7 +309,7 @@ Other Changes
    This should improve detection
    (during the :ref:`install<install_unix-name>` )
    of when the default settings for
-   :ref:`run_cmake.sh@extra_cxx_flags` do not work.
+   :ref:`install_settings.py@extra_cxx_flags` do not work.
 
 07-23
 =====
@@ -342,7 +342,7 @@ Advance to
 ``cppad-20180630`` ,
 ``cppad_mixed-20180630`` ,
 and remove
-``checkpoint_newton_step`` from :ref:`run_cmake.sh-name` .
+``checkpoint_newton_step`` from :ref:`install_settings.py-name` .
 This should make be faster and use less memory when
 :ref:`option_table@Optimize Fixed Only@quasi_fixed` is false.
 For the :ref:`user_speed.py-name` example with
@@ -357,7 +357,7 @@ the elapsed time improved from
 Advance to ``cppad-20180627`` and ``cppad_mixed-20180629`` .
 Again this is expected to be an improvement to the optimization
 of cppad functions when
-:ref:`run_cmake.sh@build_type` is ``release`` .
+:ref:`install_settings.py@build_type` is ``release`` .
 
 06-21
 =====
@@ -376,7 +376,7 @@ Advance to ``cppad-20180620`` and ``cppad_mixed-20180620`` .
 This should use less memory, and increase speed,
 during the optimization of cppad functions,
 which is only done when
-:ref:`run_cmake.sh@build_type` is ``release`` .
+:ref:`install_settings.py@build_type` is ``release`` .
 
 06-18
 =====
@@ -388,7 +388,7 @@ Change the set command  so that the possible sources include the
 Advance to ``cppad-20180613`` and ``cppad_mixed-20180614`` .
 This should use less memory during the optimization of cppad functions,
 which is only done when
-:ref:`run_cmake.sh@build_type` is ``release`` .
+:ref:`install_settings.py@build_type` is ``release`` .
 In addition, it should fix a problem with
 ``cppad_mixed`` finding the file ``cholmod.h``
 on some systems.
@@ -435,7 +435,7 @@ This should both reduce memory usage.
 =====
 There was a bug in the simulation of age difference and time
 difference prior means introduced on
-:ref:`04-24<whats_new_2018-name>` .
+:ref:`04-24<2018-name>` .
 To be specific :math:`\sigma`
 was being used where :math:`\delta` should have been.
 
@@ -725,53 +725,53 @@ This fixes a problem, for some compilers, where some friend functions in
 
 02-17
 =====
-Change the :ref:`user_diabetes.py-name` example so that it constrains the
+Change the user_diabetes.py example so that it constrains the
 child omega rates to vary with age and time using the
-:ref:`user_diabetes.py@Problem Parameters@parent_age_grid`
+parent_age_grid
 and *parent_time_grid* .
 
 02-14
 =====
 
 #. Add
-   :ref:`user_diabetes.py@Problem Parameters@child_age_grid`
+   child_age_grid
    and
-   :ref:`user_diabetes.py@Problem Parameters@child_time_grid`
+   child_time_grid
    to the diabetes example problem parameters.
 #. Improve documentation of
    :ref:`rate_table@child_nslist_id` .
 
 02-13
 =====
-The changes below are for :ref:`user_diabetes.py-name` :
+The changes below are for user_diabetes.py :
 
 #. Add
-   :ref:`user_diabetes.py@Problem Parameters@random_seed`
+   random_seed
    and
-   :ref:`user_diabetes.py@Problem Parameters@tolerance_fixed`
+   tolerance_fixed
    to the problem parameters.
 #. Change
-   :ref:`user_diabetes.py@Problem Parameters@fit_with_noise_in_data`
+   fit_with_noise_in_data
    to be false, so less data can result in tests passing; i.e,
    makes automated testing faster.
 #. Change max_abs_rel_err to
-   :ref:`user_diabetes.py@Problem Parameters@accept_rel_err` .
+   accept_rel_err .
 #. Change
-   :ref:`user_diabetes.py@Problem Parameters@ode_step_size`
+   ode_step_size
    to be larger to make the automated testing run faster.
 
 02-12
 =====
-The changes below are for :ref:`user_diabetes.py-name` :
+The changes below are for user_diabetes.py :
 
 #. Add two child nodes (random effects) to the
-   :ref:`user_diabetes.py@Problem Parameters@node_list` .
+   node_list .
 #. Changes so the example with random effects runs faster:
    Increase the
    :ref:`tolerance_fixed<option_table@Optimize Fixed and Random@tolerance>` .
    Reduce the number of points in the
-   :ref:`age<user_diabetes.py@Problem Parameters@parent_age_grid>` and
-   :ref:`time<user_diabetes.py@Problem Parameters@parent_time_grid>` grids.
+   age and
+   time grids.
 #. Set the :ref:`scale_var_table-name` equal to the :ref:`start_var_table-name` .
    This avoids nans during evaluation of the objective with random effects.
 #. Optimize first with no random effects and then use that as a starting
@@ -790,19 +790,19 @@ The changes below are for :ref:`user_diabetes.py-name` :
    :ref:`scaling<prior_table@eta@Scaling Fixed Effects>` ; see
    :ref:`db2csv_command@variable.csv@prior_info` .
 
-The changes below are for :ref:`user_diabetes.py-name` :
+The changes below are for user_diabetes.py :
 
 #. Remove two priors that are no longer being used.
 #. Change the priors for the rates so use log
    :ref:`scaling<prior_table@eta@Scaling Fixed Effects>`
    during the optimization process.
 #. Add
-   :ref:`user_diabetes.py@Problem Parameters@derivative_test_fixed` , and
-   :ref:`user_diabetes.py@Problem Parameters@mulcov_dict`
+   derivative_test_fixed , and
+   mulcov_dict
    to the set of problem parameters.
 #. Increase the number of points in the age and time grids.
 #. Correct documentation for covariate
-   :ref:`user_diabetes.py@Covariates@Multipliers` .
+   Multipliers .
 
 02-09
 =====
@@ -837,11 +837,11 @@ The variable.csv :ref:`db2csv_command@variable.csv@start` column
 was only correct when
 :ref:`db2csv_command@variable.csv@var_type` was ``rate`` .
 This has been fixed.
-The changes below are for :ref:`user_diabetes.py-name` :
+The changes below are for user_diabetes.py :
 
 #. Add
-   :ref:`user_diabetes.py@Problem Parameters@truth2start` ,
-   :ref:`user_diabetes.py@Problem Parameters@accept_rel_err` ,
+   truth2start ,
+   accept_rel_err ,
    to the problem parameters.
 #. Add fitting of multipliers for the following covariates:
    market scan 2000 on
@@ -856,22 +856,22 @@ The age and time limits in the
 (as are most of its other columns)
 to reduce the space used when viewing the columns in a spread sheet program.
 
-The changes below are for :ref:`user_diabetes.py-name` :
+The changes below are for user_diabetes.py :
 
 #. Make the standard deviations in the parent rate differences
-   :ref:`user_diabetes.py@Problem Parameters` .
-#. Change :ref:`user_diabetes.py@Problem Parameters@node_list`
+   Problem Parameters .
+#. Change node_list
    example to only the parent node.
 #. Add
-   :ref:`user_diabetes.py@Problem Parameters@integrand_list` ,
-   :ref:`user_diabetes.py@Problem Parameters@ode_step_size` ,
-   :ref:`user_diabetes.py@Problem Parameters@meas_repeat` ,
-   :ref:`user_diabetes.py@Problem Parameters@quasi_fixed` ,
+   integrand_list ,
+   ode_step_size ,
+   meas_repeat ,
+   quasi_fixed ,
    to the problem parameters.
 
 02-02
 =====
-All these changes are to :ref:`user_diabetes.py-name`
+All these changes are to user_diabetes.py
 which is still under construction.
 
 #. Added age and time variation to omega and chi.
@@ -879,13 +879,13 @@ which is still under construction.
    there is feed back from the initial iota to prevalence at all ages.
 #. Increase number of age grid points to 9
    so ages are closer to being integer valued.
-#. The :ref:`user_diabetes.py@Problem Parameters`
+#. The Problem Parameters
    were moved into the documentation section of the this example.
 
 02-01
 =====
 Added time variation to :ref:`rate_table@rate_name@iota` in the
-:ref:`user_diabetes.py-name` example.
+user_diabetes.py example.
 This example is still under construction, but it has some interesting
 techniques for simulating data and testing models.
 
@@ -971,7 +971,7 @@ In addition, change the :ref:`user_example-name` examples to use this feature.
    This only makes sure the new version works
    and should not result in any change to ``dismod-at`` .
 #. Improve the instructions for combining both
-   :ref:`run_cmake.sh@Debug and Release`
+   :ref:`install_settings.py@dismod_at_prefix@Debug and Release`
    versions of dismod_at on the same system.
 
 01-21
@@ -987,7 +987,7 @@ In addition, change the :ref:`user_example-name` examples to use this feature.
    was corrected to allow for negative values in
    :ref:`density_table@Notation@Linear` cases.
    (The mistake fixed here was made during the changes on
-   :ref:`whats_new_2018@mm-dd@01-20` ; see below.)
+   :ref:`2018@mm-dd@01-20` ; see below.)
 #. Check for and abort with an error message when there is a ``null``
    value in the data table
    :ref:`data_table@meas_value` column.
@@ -1008,12 +1008,12 @@ In addition, change the :ref:`user_example-name` examples to use this feature.
 
 #. The flags ``-Wpedantic`` , ``-Wshadow`` and ``-Wconversion``
    were added to the default value of
-   :ref:`run_cmake.sh@extra_cxx_flags` .
+   :ref:`install_settings.py@extra_cxx_flags` .
    In addition, fix the corresponding warning messages generated by gcc
    during the
    :ref:`install_unix@dismod_at` part of the instal process.
 #. Fix an un-used variable warning when
-   :ref:`run_cmake.sh@build_type` is ``release`` .
+   :ref:`install_settings.py@build_type` is ``release`` .
 #. Replace the default acceptable tolerance by the
    :ref:`tolerances<option_table@Optimize Fixed and Random@tolerance>`
    specified in the options table.
@@ -1047,4 +1047,4 @@ that have the reference value for all the rate covariates; see
 :ref:`mulcov_table@mulcov_type@rate_value` in the mulcov table
 documentation.
 
-{xrst_end whats_new_2018}
+{xrst_end 2018}

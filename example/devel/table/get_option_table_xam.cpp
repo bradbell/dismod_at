@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-23 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_option_table_xam.cpp dev}
@@ -36,42 +36,42 @@ bool get_option_table_xam(void)
    // Testing with different order than in get_option_table
    // Furthermore, we have not included max_num_iter_fixed in list
    // so that its default value of 100 gets used.
+   // BEGIN_SORT_THIS_LINE_PLUS_2
    struct { const char* name; const char* value; } option_list[] = {
-      "meas_noise_effect",                  "add_std_scale_all",
-      // BEGIN_SORT_THIS_LINE_PLUS_1
-      "accept_after_max_steps_fixed",     "6",
-      "accept_after_max_steps_random",    "6",
-      "age_avg_split",                    "1.0 2.0",
-      "avgint_extra_columns",             "",
-      "bound_frac_fixed",                 "1e-3",
-      "bound_random",                     "3.0",
-      "compress_interval",                "0 0",
-      "data_extra_columns",               "",
-      "derivative_test_fixed",            "second-order",
-      "derivative_test_random",           "first-order",
-      "hold_out_integrand",               "",
-      "limited_memory_max_history_fixed", "15",
-      "max_num_iter_random",              "50",
-      "method_random",                    "ipopt_random",
-      "ode_step_size",                    "20.0",
-      "other_database",                   "",
-      "other_input_table",                "",
-      "parent_node_id",                   "1",
-      "parent_node_name",                 "north_america",
-      "print_level_fixed",                "5",
-      "print_level_random",               "5",
-      "quasi_fixed",                      "false",
-      "random_seed",                      "123",
-      "rate_case",                        "iota_zero_rho_zero",
-      "splitting_covariate",              "",
-      "tolerance_fixed",                  "1e-7",
-      "tolerance_random",                 "1e-7",
-      "trace_init_fit_model",             "false",
-      "warn_on_stderr",                   "true",
-      "zero_sum_child_rate",              "iota  omega",
-      "zero_sum_mulcov_group",            "world"
-      // END_SORT_THIS_LINE_MINUS_1
+      { "accept_after_max_steps_fixed",     "6" },
+      { "accept_after_max_steps_random",    "6" },
+      { "age_avg_split",                    "1.0 2.0" },
+      { "avgint_extra_columns",             "" },
+      { "bound_frac_fixed",                 "1e-3" },
+      { "bound_random",                     "3.0" },
+      { "compress_interval",                "0 0" },
+      { "data_extra_columns",               "" },
+      { "derivative_test_fixed",            "second-order" },
+      { "derivative_test_random",           "first-order" },
+      { "hold_out_integrand",               "" },
+      { "limited_memory_max_history_fixed", "15" },
+      { "max_num_iter_random",              "50" },
+      { "meas_noise_effect",                "add_std_scale_all" },
+      { "method_random",                    "ipopt_random" },
+      { "ode_step_size",                    "20.0" },
+      { "other_database",                   "" },
+      { "other_input_table",                "" },
+      { "parent_node_id",                   "1" },
+      { "parent_node_name",                 "north_america" },
+      { "print_level_fixed",                "5" },
+      { "print_level_random",               "5" },
+      { "quasi_fixed",                      "false" },
+      { "random_seed",                      "123" },
+      { "rate_case",                        "iota_zero_rho_zero" },
+      { "splitting_covariate",              "" },
+      { "tolerance_fixed",                  "1e-7" },
+      { "tolerance_random",                 "1e-7" },
+      { "trace_init_fit_model",             "false" },
+      { "warn_on_stderr",                   "true" },
+      { "zero_sum_child_rate",              "iota  omega" },
+      { "zero_sum_mulcov_group",            "world" }
    };
+   // END_SORT_THIS_LINE_MINUS_2
    size_t n_option = sizeof(option_list) / sizeof( option_list[0] );
    //
    // create table
