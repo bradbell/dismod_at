@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-23 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/mixed/exception.hpp>
 # include <dismod_at/adj_integrand.hpp>
@@ -15,8 +15,8 @@
 /*
 {xrst_begin adj_integrand dev}
 {xrst_spell
-   adjint
-   refactored
+  adjint
+  refactored
 }
 
 Compute Adjusted Integrand On a Line

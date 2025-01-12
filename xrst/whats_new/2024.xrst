@@ -5,22 +5,21 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin 2024}
 {xrst_spell
-   cmake
-   culbreth
-   dd
-   dirver
-   grep
-   homebrew
-   ihme
-   matplotlib
-   mm
-   numpy
-   pertrub
-   sed
-   scipy
-   xam
-   yyyymmdd
-   ubuntu
+  cmake
+  culbreth
+  dd
+  dirver
+  grep
+  homebrew
+  ihme
+  matplotlib
+  mm
+  numpy
+  pertrub
+  scipy
+  sed
+  xam
+  yyyymmdd
 }
 
 Release Notes for 2024
@@ -40,7 +39,7 @@ mm-dd
    :ref:`dock_dismod_at.sh@at_cascade_version` to 2024.12.2 .
 
 #. The dock_dismod_at.sh :ref:`dock_dismod_at.sh@Images` documentation
-   has been separated from 
+   has been separated from
    :ref:`dock_dismod_at.sh@Working with Images` .
 
 

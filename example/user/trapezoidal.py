@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 """
 {xrst_begin user_trapezoidal.py}
 {xrst_spell
-   mtexcess
-   mtother
+  mtexcess
+  mtother
 }
 
 Using the Trapezoidal ODE Solver

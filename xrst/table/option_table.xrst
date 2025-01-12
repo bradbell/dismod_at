@@ -1,22 +1,22 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin option_table}
 {xrst_spell
-   eigen
-   frac
-   iter
-   lese
-   mtexcess
-   mtother
-   mtwith
-   num
-   pos
-   relrisk
-   stderr
-   table table
-   tol
+  eigen
+  frac
+  iter
+  lese
+  mtexcess
+  mtother
+  mtwith
+  num
+  pos
+  relrisk
+  stderr
+  table table
+  tol
 }
 
 The Option Table

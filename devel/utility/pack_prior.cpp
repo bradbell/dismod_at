@@ -9,7 +9,7 @@
 -------------------------------------------------------------------------------
 {xrst_begin pack_prior dev}
 {xrst_spell
-   bool
+  bool
 }
 
 Priors in Variable ID Order

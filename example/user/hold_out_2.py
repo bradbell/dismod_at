@@ -1,11 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_hold_out_2.py}
-# {xrst_spell
-#     europe
-# }
 # {xrst_comment_ch #}
 #
 # hold_out Command: Balancing Sex Covariate Values

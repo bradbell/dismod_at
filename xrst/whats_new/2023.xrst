@@ -5,13 +5,12 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin 2023}
 {xrst_spell
-   cmake
-   dd
-   mm
-   nslict
-   readonly
-   stderr
-   ubuntu
+  cmake
+  dd
+  mm
+  nslict
+  readonly
+  stderr
 }
 
 Release Notes for 2023

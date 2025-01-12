@@ -5,28 +5,27 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin 2016}
 {xrst_spell
-   cholesky
-   cholmod
-   cmake
-   dd
-   dev
-   devel
-   eigen
-   gcc
-   gsl
-   hpp
-   iter
-   lagrange
-   libdir
-   mm
-   nlp
-   num
-   relrisk
-   res
-   rng
-   suitesparse
-   sys
-   wmisleading
+  cholesky
+  cholmod
+  cmake
+  dd
+  dev
+  devel
+  eigen
+  gcc
+  gsl
+  hpp
+  iter
+  libdir
+  mm
+  nlp
+  num
+  relrisk
+  res
+  rng
+  suitesparse
+  sys
+  wmisleading
 }
 
 Release Notes for 2016

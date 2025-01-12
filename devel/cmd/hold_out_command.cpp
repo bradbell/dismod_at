@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-23 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <gsl/gsl_randist.h>
@@ -19,7 +19,7 @@
 -----------------------------------------------------------------------------
 {xrst_begin hold_out_command}
 {xrst_spell
-   thoes
+  thoes
 }
 
 Hold Out Command: Randomly Sub-sample The Data

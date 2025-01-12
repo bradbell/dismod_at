@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 {xrst_begin bilinear}
 {xrst_spell
-   interpolant
-   delim
+  delim
+  interpolant
 }
 
 dismod_at Bilinear Interpolation

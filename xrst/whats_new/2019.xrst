@@ -5,22 +5,20 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin 2019}
 {xrst_spell
-   checkpointing
-   cmake
-   dd
-   dev
-   dockerfile
-   goto
-   ihme
-   iter
-   misspecification
-   mm
-   num
-   omh
-   omhelp
-   sam
-   stdcv
-   ubuntu
+  checkpointing
+  cmake
+  dd
+  dev
+  dockerfile
+  goto
+  ihme
+  iter
+  misspecification
+  mm
+  num
+  omh
+  omhelp
+  stdcv
 }
 
 Release Notes for 2019

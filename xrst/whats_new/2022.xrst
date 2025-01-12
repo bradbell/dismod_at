@@ -5,22 +5,21 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin 2022}
 {xrst_spell
-   dd
-   distutils
-   homebrew
-   ihme
-   lsoda
-   matplotlib
-   mm
-   omhelp
-   prc
-   rel
-   sam
-   scipi
-   scipy
-   stdout
-   suitesparse
-   tol
+  dd
+  distutils
+  homebrew
+  ihme
+  lsoda
+  matplotlib
+  mm
+  omhelp
+  prc
+  rel
+  scipi
+  scipy
+  stdout
+  suitesparse
+  tol
 }
 
 Release Notes for 2022

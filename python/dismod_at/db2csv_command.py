@@ -7,9 +7,7 @@
 #     diff
 #     dir
 #     ij
-#     reg
 #     res
-#     sam
 #     stdcv
 # }
 # {xrst_comment_ch #}

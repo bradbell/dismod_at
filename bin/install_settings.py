@@ -20,7 +20,6 @@ import subprocess
 #     gfortran
 #     libdir
 #     makefile
-#     os
 #     pthread
 #     sys
 # }

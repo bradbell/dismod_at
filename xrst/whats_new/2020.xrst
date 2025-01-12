@@ -5,18 +5,17 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin 2020}
 {xrst_spell
-   checkpointing
-   cholmod
-   chron
-   coinbrew
-   dd
-   devel
-   eigen
-   ip
-   ldlt
-   mm
-   modversion
-   pc
+  checkpointing
+  cholmod
+  coinbrew
+  dd
+  devel
+  eigen
+  ip
+  ldlt
+  mm
+  modversion
+  pc
 }
 
 Release Notes for 2020

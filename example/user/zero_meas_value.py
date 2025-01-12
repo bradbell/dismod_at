@@ -5,7 +5,7 @@
 r'''
 {xrst_begin user_zero_meas_value.py}
 {xrst_spell
-   bmi
+  bmi
 }
 
 Exclude Measurement Value Covariate Multipliers From Predictions

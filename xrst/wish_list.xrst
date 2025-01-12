@@ -1,21 +1,19 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin wish_list}
 {xrst_spell
-   auxillary
-   checkpointing
-   cppadcg
-   curred
-   dev
-   eigen
-   gen
-   lagrange
-   misspecification
-   multi
-   onces
+  auxillary
+  checkpointing
+  cppadcg
+  curred
+  dev
+  eigen
+  misspecification
+  multi
+  onces
 }
 
 Dismod_at Wish List

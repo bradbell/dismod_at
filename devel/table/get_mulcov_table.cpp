@@ -5,7 +5,7 @@
 /*
 {xrst_begin get_mulcov_table dev}
 {xrst_spell
-   enum
+  enum
 }
 
 C++: Get the Covariate Multiplier Table Information

@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/mixed/exception.hpp>
 # include <dismod_at/a1_double.hpp>
@@ -21,8 +21,8 @@ namespace dismod_at { // DISMOD_AT_BEGIN_NAMSPACE
 /*
 {xrst_begin fit_model_ctor dev}
 {xrst_spell
-   enum
-   stderr
+  enum
+  stderr
 }
 
 Fit Model Constructor
@@ -333,7 +333,7 @@ data_object_   ( data_object )
 -----------------------------------------------------------------------------
 {xrst_begin fit_model_run_fit dev}
 {xrst_spell
-   frac
+  frac
 }
 
 Run optimization to determine the optimal fixed and random effects
@@ -609,9 +609,6 @@ void fit_model::run_fit(
 /*
 ---------------------------------------------------------------------------
 {xrst_begin fit_model_get_solution dev}
-{xrst_spell
-   lagrange
-}
 
 Get Solution Corresponding to Previous Fit
 ##########################################
@@ -713,7 +710,7 @@ void fit_model::get_solution(
 ---------------------------------------------------------------------------
 {xrst_begin fit_model_random_obj_hes dev}
 {xrst_spell
-   rcv
+  rcv
 }
 
 Compute Hessian Of Random Effects Objective
@@ -808,7 +805,7 @@ CppAD::mixed::d_sparse_rcv fit_model::random_obj_hes(
 ---------------------------------------------------------------------------
 {xrst_begin fit_model_sample_posterior dev}
 {xrst_spell
-   uhat
+  uhat
 }
 
 Sample From Posterior Distribution for a Fit

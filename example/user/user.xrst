@@ -5,12 +5,12 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin user_example}
 {xrst_spell
-   asy
-   bilevel
-   covid
-   diff
-   prc
-   zsum
+  asy
+  bilevel
+  covid
+  diff
+  prc
+  zsum
 }
 
 User Examples and Tests

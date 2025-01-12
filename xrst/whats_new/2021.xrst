@@ -5,33 +5,29 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin 2021}
 {xrst_spell
-   cen
-   cmake
-   covid
-   cygwin
-   dd
-   dir
-   distutils
-   eigen
-   ihme
-   lagrange
-   lagrangian
-   makedirs
-   mkpath
-   mm
-   msg
-   msys
-   ocurred
-   os
-   pdf
-   podman
-   stdcv
-   stderr
-   stdout
-   sys
-   table table
-   ubuntu
-   util
+  cen
+  cmake
+  covid
+  cygwin
+  dd
+  dir
+  distutils
+  eigen
+  ihme
+  makedirs
+  mkpath
+  mm
+  msg
+  msys
+  ocurred
+  pdf
+  podman
+  stdcv
+  stderr
+  stdout
+  sys
+  table table
+  util
 }
 
 Release Notes for 2021

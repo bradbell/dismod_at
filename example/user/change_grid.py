@@ -1,11 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-24 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_change_grid.py}
-# {xrst_spell
-#     paris
-# }
 # {xrst_comment_ch #}
 #
 # Remove an Age or Time From a Smoothing

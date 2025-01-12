@@ -1,19 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_integrand_table dev}
 {xrst_spell
-   enum
-   mtall
-   mtexcess
-   mtother
-   mtspecific
-   mtstandard
-   mtwith
-   relrisk
-   tincidence
+  enum
+  mtall
+  mtexcess
+  mtother
+  mtspecific
+  mtstandard
+  mtwith
+  relrisk
+  tincidence
 }
 
 C++: Get the Integrand Table Information

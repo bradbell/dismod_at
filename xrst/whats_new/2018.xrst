@@ -5,28 +5,26 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin 2018}
 {xrst_spell
-   cholmod
-   da
-   dd
-   dt
-   gcc
-   grep
-   hpp
-   ik
-   mm
-   msg
-   mtother
-   rel
-   sec
-   sql
-   subvector
-   suitesparse
-   txt
-   ty
-   un
-   wconversion
-   wpedantic
-   wshadow
+  cholmod
+  da
+  dd
+  dt
+  gcc
+  grep
+  hpp
+  ik
+  mm
+  msg
+  mtother
+  rel
+  sql
+  subvector
+  suitesparse
+  txt
+  un
+  wconversion
+  wpedantic
+  wshadow
 }
 
 Release Notes for 2018

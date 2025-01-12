@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin pack_info_ctor dev}
@@ -662,7 +662,7 @@ size_t pack_info::mulstd_offset(size_t smooth_id, size_t k) const
 ------------------------------------------------------------------------------
 {xrst_begin pack_info_node_rate dev}
 {xrst_spell
-   subvec
+  subvec
 }
 
 Variable Pack Info: Node Rates
@@ -768,7 +768,7 @@ pack_info::subvec_info pack_info::node_rate_value_info(size_t rate_id, size_t j)
 ------------------------------------------------------------------------------
 {xrst_begin pack_info_group_meas dev}
 {xrst_spell
-   subvec
+  subvec
 }
 
 Variable Pack Info: Group Measurement Covariate Multipliers
@@ -909,7 +909,7 @@ pack_info::group_meas_noise_info(size_t integrand_id, size_t j) const
 ------------------------------------------------------------------------------
 {xrst_begin pack_info_group_rate dev}
 {xrst_spell
-   subvec
+  subvec
 }
 
 Variable Pack Info: Group Rate Covariate Multipliers
@@ -1024,7 +1024,7 @@ pack_info::group_rate_value_info(size_t rate_id, size_t j) const
 ------------------------------------------------------------------------------
 {xrst_begin pack_info_subgroup_rate dev}
 {xrst_spell
-   subvec
+  subvec
 }
 
 Variable Pack Info: Subgroup Rate Covariate Multipliers
@@ -1168,7 +1168,7 @@ pack_info::subvec_info pack_info::subgroup_rate_value_info(
 ------------------------------------------------------------------------------
 {xrst_begin pack_info_subgroup_meas dev}
 {xrst_spell
-   subvec
+  subvec
 }
 
 Variable Pack Info: Subgroup Measurement Covariate Multipliers

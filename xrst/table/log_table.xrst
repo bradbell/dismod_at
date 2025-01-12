@@ -4,10 +4,9 @@
 # ----------------------------------------------------------------------------
 {xrst_begin log_table}
 {xrst_spell
-   datetime
-   january
-   unix
-   unixepoch
+  datetime
+  unix
+  unixepoch
 }
 
 The Log Table

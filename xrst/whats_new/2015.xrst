@@ -5,29 +5,27 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin 2015}
 {xrst_spell
-   approx
-   arg
-   bool
-   cmake
-   dd
-   dev
-   devel
-   eigen
-   enum
-   hpp
-   ihme
-   libdir
-   mixed mixed
-   mm
-   mtwith
-   nullptr
-   pos
-   pre
-   relrisk
-   sec
-   tincidence
-   valgrind
-   xam
+  approx
+  bool
+  cmake
+  dd
+  dev
+  devel
+  eigen
+  enum
+  hpp
+  ihme
+  libdir
+  mixed mixed
+  mm
+  mtwith
+  nullptr
+  pos
+  pre
+  relrisk
+  tincidence
+  valgrind
+  xam
 }
 
 Release Notes for 2015

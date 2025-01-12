@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin trap_ode2 dev}
 {xrst_spell
-   cc
-   cramer
-   tf
-   yf
-   yi
+  cc
+  cramer
+  tf
+  yf
+  yi
 }
 
 Trapezoidal Solution of ODE with Two Components

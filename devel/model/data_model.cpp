@@ -5,7 +5,7 @@
 /*
 {xrst_begin data_model_ctor dev}
 {xrst_spell
-   bool
+  bool
 }
 
 Data Model: Constructor
@@ -710,7 +710,7 @@ Float data_model::average(
 -----------------------------------------------------------------------------
 {xrst_begin data_model_like_one dev}
 {xrst_spell
-   subvectors
+  subvectors
 }
 
 One Weighted Residual and Log-Likelihood for any Integrands
@@ -958,7 +958,7 @@ residual_struct<Float> data_model::like_one(
 -------------------------------------------------------------------------------
 {xrst_begin data_model_like_all dev}
 {xrst_spell
-   bool
+  bool
 }
 
 All the Weighted Residuals and Log-Likelihoods

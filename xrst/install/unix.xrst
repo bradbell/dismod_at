@@ -5,25 +5,24 @@ install_settings.py
 # ----------------------------------------------------------------------------
 {xrst_begin install_unix}
 {xrst_spell
-   cd
-   config
-   dev
-   devel
-   eigen
-   fortran
-   grep
-   gsl
-   install install
-   matplotlib
-   modversion
-   numpy
-   pc
-   pkg
-   rpath
-   scipy
-   suitesparse
-   txt
-   cmake
+  cmake
+  config
+  dev
+  devel
+  eigen
+  fortran
+  grep
+  gsl
+  install install
+  matplotlib
+  modversion
+  numpy
+  pc
+  pkg
+  rpath
+  scipy
+  suitesparse
+  txt
 }
 
 Installing dismod_at in Unix

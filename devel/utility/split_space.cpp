@@ -1,15 +1,15 @@
 // $Id:$
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-24 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <dismod_at/split_space.hpp>
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
 {xrst_begin split_space dev}
 {xrst_spell
-   substring
-   substrings
+  substring
+  substrings
 }
 
 Split String Into Substrings With Spaces as Delimiter

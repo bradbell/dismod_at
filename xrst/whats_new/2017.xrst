@@ -5,23 +5,21 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin 2017}
 {xrst_spell
-   cmake
-   command command
-   dd
-   dev
-   eigen
-   fabs
-   frac
-   github
-   libdir
-   lookup
-   lrt
-   meta
-   mm
-   sam
-   subgraph
-   suitesparse
-   tst
+  cmake
+  command command
+  dd
+  dev
+  eigen
+  fabs
+  frac
+  github
+  libdir
+  lookup
+  lrt
+  mm
+  subgraph
+  suitesparse
+  tst
 }
 
 Release Notes for 2017
