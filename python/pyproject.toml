@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
 #
@@ -10,7 +10,7 @@ build-backend = 'setuptools.build_meta'
 # -----------------------------------------------------------------------------
 [project]
 name              = 'dismod_at'
-version           = '2025.1.12'
+version           = '2025.1.13'
 description       = 'Disease Rates as Functions of Age and Time'
 readme            = 'README.md'
 requires-python   = '>=3.0'
