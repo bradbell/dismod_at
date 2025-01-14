@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin 2016}
 {xrst_spell
@@ -653,7 +653,7 @@ Advance to a newer version of cppad_mixed
 =====
 Remove some :ref:`wish_list-name` items that have been completed
 and move some others to the
-`cppad_mixed <moby.ihme.washington.edu/bradbell/cppad_mixed/wish_list.htm>`_
+`cppad_mixed <https://cppad-mixed.readthedocs.io/latest/>`_
 package.
 
 01-15

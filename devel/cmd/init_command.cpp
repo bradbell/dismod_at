@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-23 Bradley M. Bell
+// SPDX-FileContributor: 2014-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <dismod_at/init_command.hpp>
@@ -55,7 +55,7 @@ The option table is an exception to this rule; see
 database
 ********
 Is an
-http://www.sqlite.org/sqlite/ database containing the
+`sqlite <https://www.sqlite.org/index.html>`_ database containing the
 ``dismod_at`` :ref:`input-name` tables which are not modified.
 
 age_avg_table

@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin user_example}
 {xrst_spell
@@ -48,7 +48,7 @@ Each of these examples will create a corresponding database called
    ``build/example/user/example.db``
 
 which can be inspected using any sqlite viewer; e.g.,
-http://sqlitebrowser.org/.
+https://sqlitebrowser.org/.
 
 {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 {xrst_toc_hidden

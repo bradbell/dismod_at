@@ -1,7 +1,7 @@
 #build_type! /usr/bin/env bash
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 #
 # exit on error or undefined variable
@@ -37,7 +37,7 @@ set -e -u
 # ******
 # #.  The headers below are image names and the text below an image name
 #     is the command that creates the image.
-# #.  The *build_type* in each image name is either 
+# #.  The *build_type* in each image name is either
 #     ``debug`` or ``release`` ; see
 #     :ref:`dock_dismod_at.sh@build_type` .
 # #.  Each image depends on its previous image; e.g., if you
@@ -49,7 +49,7 @@ set -e -u
 #     You must remove containers that use an image and then remove the image,
 #     before you can create a new version of the image.
 # #.  The commands above will create a
-#     `Dockerfile <https://docs.docker.com/glossary/?term=Dockerfile>`_
+#     `Dockerfile <https://docs.docker.com/reference/glossary/>`_
 #     in the current working directory.
 #     If such a file already exists, it will need to be moved or deleted
 #     before the command can be executed.
@@ -57,7 +57,7 @@ set -e -u
 # dismod_at.base
 # ==============
 # ./dock_dismod_at.sh base
-# 
+#
 # dismod_at.mixed.build_type
 # ==========================
 # ./dock_dismod_at.sh mixed

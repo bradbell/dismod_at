@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <dismod_at/depend_command.hpp>
@@ -23,7 +23,7 @@ Syntax
 database
 ********
 Is an
-http://www.sqlite.org/sqlite/ database containing the
+`sqlite <https://www.sqlite.org/index.html>`_ database containing the
 ``dismod_at`` :ref:`input-name` tables which are not modified.
 
 depend_var_table

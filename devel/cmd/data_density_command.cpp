@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-23 Bradley M. Bell
+// SPDX-FileContributor: 2014-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <gsl/gsl_statistics_double.h>
@@ -39,7 +39,7 @@ hence the density can't be changed.
 database
 ********
 Is an
-http://www.sqlite.org/sqlite/ database containing the
+`sqlite <https://www.sqlite.org/index.html>`_ database containing the
 ``dismod_at`` :ref:`input-name` tables which are not modified.
 If this is the only argument, all the data densities are set back to the
 values specified by the :ref:`data_table-name` .

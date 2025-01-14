@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin 2022}
 {xrst_spell
@@ -76,9 +76,9 @@ This fixes a problem using older versions of python; e.g., 3.8.10.
 Finish conversion of dismod_at documentation from
 `omhelp <http://bradbell.github.io/omhelp/doc/omhelp.htm>`_
 to the sphinx
-`xrst <http://bradbell.github.io/xrst/html/purpose.html>`_  wrapper.
+`xrst <https://xrst.readthedocs.io/latest/purpose.html>`_  wrapper.
 The following is a link to the
-`old documentation <http://bradbell.github.io/dismod_at/doc/dismod_at.htm>`_ .
+`old documentation <https://bradbell.github.io/dismod_at/doc/dismod_at.htm>`_ .
 
 12-02
 =====
