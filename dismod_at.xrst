@@ -3,6 +3,9 @@
 # SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin dismod_at}
+{xrst_spell
+   gz
+}
 
 dismod_at User Documentation and API
 ####################################
@@ -28,13 +31,15 @@ Versions
    * - This version
      - dismod_at-2025.1.14
    * - Documentation for latest version
-     - `latest <https://dismod_at.readthedocs.io/latest>`_
+     - `latest <https://dismod-at.readthedocs.io/latest>`_
    * - Documentation for most recent stable version
-     - `stable-2025 <https://dismod_at.readthedocs.io/stable-2025>`_
+     - `stable-2025 <https://dismod-at.readthedocs.io/stable-2025>`_
    * - Most recent release of this stable version
      - release-2025_
 
-.. _release-2025: https://github.com/bradbell/dismod_at/archive/2025.0.0.tar.gz
+.. _release-2025: https://codeload.github.com/bradbell/
+   dismod_at/tar.gz/refs/tags/2025.0.0
+
 
 Contents
 ********
