@@ -20,6 +20,7 @@ build:
          --html_theme furo
          --group_list default
          --index_page_name dismod_at
+         --suppress_spell_warnings
       #
       # _readthedocs/html
       # The directory that Read the Docs uploads when commands is used.
