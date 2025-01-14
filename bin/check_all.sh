@@ -1,8 +1,8 @@
-#! /bin/bash -e
-# $Id:$
+#! /usr/bin/env bash
+set -e -u
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -16,20 +16,71 @@ then
    echo 'must be executed from its parent directory'
    exit 1
 fi
-if [ "$1" != 'debug' ] && [ "$1" != 'release' ]
-then
-   echo 'bin/check_all.sh build_type'
-   echo 'build_type is not debug or release'
-   exit 1
-fi
-#
-# build_type
 if ! grep "^build_type *= *'release'" bin/install_settings.py > /dev/null
 then
    echo 'bin/check_all.sh: build_type in bin/install_setings.py is not release'
    exit 1
 fi
-build_type="$1"
+#
+if [ $# == 1 ]
+then
+   if [ "$1" == --help ]
+   then
+cat << EOF
+bin/check_all.sh flags
+possible flags
+--help                     print this help message
+--debug                    compile for debugging
+--verbose_make             generate verbose makefiles
+--skip_external_links      do not check documentation external links
+--suppress_spell_warnings  do not check for documentaiton spelling errors
+EOF
+      exit 0
+   fi
+fi
+#
+# debug, verbose_make, skip_external_links, suppress_spell_warnings
+debug='no'
+verbose_make='no'
+skip_external_links='no'
+suppress_spell_warnings='no'
+while [ $# != 0 ]
+do
+   case "$1" in
+
+      --debug)
+      debug='yes'
+      ;;
+
+
+      --verbose_make)
+      verbose_make='yes'
+      ;;
+
+      --skip_external_links)
+      skip_external_links='yes'
+      ;;
+
+      --suppress_spell_warnings)
+      suppress_spell_warnings='yes'
+      ;;
+
+      *)
+      echo "bin/check_all.sh: command line argument "$1" is not valid"
+      exit 1
+      ;;
+
+   esac
+   shift
+done
+#
+# build_type
+if [ "$debug" == 'no' ]
+then
+   build_type="release"
+else
+   build_type='debug'
+fi
 #
 # dismod_at_prefix
 eval $(bin/install_settings.py | grep ^dismod_at_prefix)
@@ -44,10 +95,16 @@ do
 done
 #
 # run_xrst.sh
-if which xrst > /dev/null
+flags=''
+if [ "$skip_external_links" == 'no' ]
 then
-   echo_eval bin/run_xrst.sh
+   flags+=' --external_links'
 fi
+if [ "$suppress_spell_warnings" == 'yes' ]
+then
+   flags+=' --suppress_spell_warnings'
+fi
+bin/run_xrst.sh $flags
 #
 # run cmake
 if [ "$build_type" == 'debug' ]

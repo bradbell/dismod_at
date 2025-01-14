@@ -4,16 +4,37 @@
 # ----------------------------------------------------------------------------
 {xrst_begin dismod_at}
 
-dismod_at-2025.1.13: User Documentation and API
-###############################################
+dismod_at User Documentation and API
+####################################
 
 Purpose
 *******
 Estimating disease rates as functions of age and time.
 
+License
+*******
+`AGPL-3.0-or-later <https://spdx.org/licenses/AGPL-3.0-or-later.html>`_
+
 Git Repository
 **************
 `<https://github.com/bradbell/dismod_at>`_
+
+Versions
+********
+
+.. list-table::
+   :widths: auto
+
+   * - This version
+     - dismod_at-2025.1.14
+   * - Documentation for latest version
+     - `latest <https://dismod_at.readthedocs.io/latest>`_
+   * - Documentation for most recent stable version
+     - `stable-2025 <https://dismod_at.readthedocs.io/stable-2025>`_
+   * - Most recent release of this stable version
+     - release-2025_
+
+.. _release-2025: https://github.com/bradbell/dismod_at/archive/2025.0.0.tar.gz
 
 Contents
 ********
