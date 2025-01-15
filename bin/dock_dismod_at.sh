@@ -27,7 +27,7 @@ set -e -u
 # This bash script will create the dismod_at OCI images.
 # Using this script is an alternative to going through the steps required to
 # :ref:`install_dismod_at<install_unix-name>` and
-# `at_cascade <https://at-cascade.readthedocs.io>`_ .
+# `at_cascade <https://at-cascade.readthedocs.io/latest>`_ .
 # You can use the following link to get a get a copy of
 # `dock_dock_dismod_at/sh <https://raw.githubusercontent.com/bradbell/dismod_at/master/bin/dock_dismod_at.sh>`_
 # If you understand docker, this script also serves as an example
@@ -155,8 +155,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.dismod_at``
 # {xrst_spell_off}
 # {xrst_code sh}
-   dismod_at_version='2024.12.2'
-   dismod_at_hash='0783bedd0c4b5075ecbc27d8ac62c1c4c50a0cf2'
+   dismod_at_version='2025.0.0'
+   dismod_at_hash='7c6bb3edc61e2ec3510103189311b098f685beef'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -165,8 +165,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.at_cascade``
 # {xrst_spell_off}
 # {xrst_code sh}
-   at_cascade_version='2024.12.2'
-   at_cascade_hash='94b9e50bb29423155ad70d5375dde3ac36533cae'
+   at_cascade_version='2025.0.0'
+   at_cascade_hash='616b90c0b265b5c57615a6ca8cbd4900bee280ef'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -325,7 +325,6 @@ WORKDIR /home/dismod_at.git
 # Check soruce
 RUN \
 mv bin/install_settings.py temp.py && \
-git pull origin master && \
 git checkout --quiet $dismod_at_hash  && \
 mv temp.py bin/install_settings.py && \
 grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
@@ -362,7 +361,6 @@ WORKDIR /home
 RUN \
 cd dismod_at.git && \
 mv bin/install_settings.py temp.py && \
-git pull origin master && \
 git checkout --quiet $dismod_at_hash  && \
 mv temp.py bin/install_settings.py && \
 grep "$dismod_at_version" CMakeLists.txt > /dev/null && \

@@ -1,0 +1,45 @@
+$Id:$
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin 2025}
+{xrst_spell
+   mm
+   dd
+}
+
+Release Notes for 2025
+######################
+
+mm-dd
+*****
+
+01-15
+=====
+Start the 2025 stable versions of dismod_at; see the new
+:ref:`dismod_at@Versions` table.
+A release for 2025 has the stable version 2025.0.\ *number*
+where *number* is the release number.
+Only bug fixes, not new features, are added between release numbers.
+The dock_dismod_at.sh version of dismod_at was advanced to 2025.0.0; see
+:ref:`dock_dismod_at.sh@dismod_at_version` .
+The dock_dismod_at.sh version of at_cascade was advanced to 2025.0.0; see
+:ref:`dock_dismod_at.sh@at_cascade_version` .
+
+This change has broken old web links to the dismod_at documentation.
+An old link of the form
+
+| |tab| ``https://dismod-at.readthedocs.io/``\ *html_file_name*
+
+has the following form in the latest documentation:
+
+| |tab| ``https://dismod-at.readthedocs.io/latest/``\ *html_file_name*
+
+and the following for in the 2025 stable documentation:
+
+| |tab| ``https://dismod-at.readthedocs.io/stable-2025/``\ *html_file_name*
+
+
+
+{xrst_end 2025}
