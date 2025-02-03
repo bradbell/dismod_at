@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin math_ode}
+{xrst_begin diff_eq}
 
-The Dismod_at Ordinary Differential Equation
-############################################
+The Dismod_at Differential Equation
+###################################
 
 Susceptible, S(a, t)
 ********************
@@ -51,31 +51,61 @@ condition we are modeling.
 
 Initial Prevalence, pini(t)
 ***************************
+We normalize the functions :math:`S(a, t)` and :math:`C(a, t)` so
+that the initial population :math:`S(0, t) + C(0, t)` is equal to one.
 The initial prevalence :math:`P(0, t)`
 is the faction of the population that is born with the condition.
-We normalize the function :math:`S(a, t)` and :math:`C(a, t)` so
-that the initial population :math:`S(0, t) + C(0, t)` is equal to one.
 It follows that :math:`C(0, t) = P(0, t)` and
 :math:`S(0, t) = 1 - P(0, t)`
 
-The Dismod_at ODE
-*****************
-Fix :math:`c` the time of birth for one cohort.
-Given a function :math:`f(a, t)` we use the notation
-:math:`f_c (a) = f(a, c + a)`.
-The ordinary differential equation for this cohort is
+The Deterministic Dismod_at ODE
+*******************************
+We use :math:`c` to denote the time of birth for a cohort.
+The ordinary differential equation for a fixed cohort is
 
 .. math::
    :nowrap:
 
-   \begin{eqnarray}
-   S_c '(a)
-   & = &
-   - [ \iota_c (a) + \omega_c (a) ] S_c (a) + \rho_c (a) C_c (a)
+   \begin{split}
+   \frac{d}{d a} S(a,c+a)
+   =
+   & - S(a,c+a) ~ \left[ \iota (a,c+a) + \omega (a,c+a) \right] \\
+   & + C(a,c+a) ~ \rho (a,c+a)
    \\
-   C_c '(a)
-   & = &
-   + \iota_c (a) S_c (a) - [ \rho_c (a) + \chi_c (a) + \omega_c (a) ] C_c (a)
-   \end{eqnarray}
+   \frac{d}{d a} C(a,c+a)
+   =
+   & + S(a,c+a) ~ \iota (a,c+a) \\
+   & - C(a,c+a) ~ \left[ \rho (a,c+a) + \chi (a,c+a) + \omega (a,c+a) \right]
+   \end{split}
 
-{xrst_end math_ode}
+
+The Deterministic Dismod_at PDE
+*******************************
+Using the Chain rule,
+the left hand sides in the equations above are also given by:
+
+
+.. math::
+   :nowrap:
+
+   \begin{split}
+   \frac{d}{d a} S(a,c+a)
+   =
+   \frac{ \partial }{ \partial a } S(a, c+a) +
+   \frac{ \partial }{ \partial t } S(a, c+a)
+   \\
+   \frac{d}{d a} C(a,c+a)
+   =
+   \frac{ \partial }{ \partial a } C(a, c+a) +
+   \frac{ \partial }{ \partial t } C(a, c+a)
+   \end{split}
+
+The Stochastic Dismod_at PDE
+****************************
+The stochastic version of this equation would include random drift
+for the rates :math:`\iota , \rho , \chi` and :math:`\omega` .
+There is a further complication here because the random drift
+is for versions of the rates that have the covariate effects removed.
+
+
+{xrst_end diff_eq}
