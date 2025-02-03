@@ -51,7 +51,7 @@
 #
 #     * - *iota_reference*
 #       - There is one variable corresponding to the reference value for
-#         :ref:`iota(a,t)<math_ode@Incidence, iota(a, t)>` in north_america.
+#         :ref:`iota(a,t)<diff_eq@Incidence, iota(a, t)>` in north_america.
 #     * - *alpha*
 #       - There are four variables corresponding to the
 #         :ref:`mulcov_table@mulcov_type@rate_value`

@@ -17,7 +17,8 @@ mm-dd
 
 02-02
 =====
-The :ref:`math_ode-title` section was improved and extended
+The ``math_ode`` page was moved to :ref:`diff_eq-name` .
+It was also improved and extended
 to include discussion of the partial and stochastic differential equation.
 
 01-15

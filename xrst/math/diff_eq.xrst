@@ -3,7 +3,7 @@
 # SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 
-{xrst_begin math_ode}
+{xrst_begin diff_eq}
 
 The Dismod_at Differential Equation
 ###################################
@@ -108,4 +108,4 @@ There is a further complication here because the random drift
 is for versions of the rates that have the covariate effects removed.
 
 
-{xrst_end math_ode}
+{xrst_end diff_eq}

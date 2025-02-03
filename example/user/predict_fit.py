@@ -58,7 +58,7 @@
 #
 #     * - *iota_north_america*
 #       - The true value for
-#         :ref:`iota(a,t)<math_ode@Incidence, iota(a, t)>` in north_america.
+#         :ref:`iota(a,t)<diff_eq@Incidence, iota(a, t)>` in north_america.
 #     * - *canada_effect*
 #       - The true model value for the canada
 #         :ref:`child rate effect<model_variables@Random Effects, u@Child Rate Effects>` on iota.
