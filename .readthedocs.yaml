@@ -1,9 +1,24 @@
+# {xrst_comment_ch #}
+#
+# Example Read the Docs Configuration
+# ###################################
+#
+# Read the Docs Specification
+# ***************************
+# `<https://docs.readthedocs.com/platform/stable/config-file>`_
+#
+# This Example File
+# *****************
+# {xrst_literal}
+#
 version: 2
 
 build:
-   os: "ubuntu-20.04"
+   os: "ubuntu-22.04"
    tools:
       python: "3.10"
+   #
+   # The readthedocs commands feature is still in beta
    commands:
       #
       # xrst
@@ -13,8 +28,12 @@ build:
       - pip uninstall -y xrst
       - pip install --index-url https://test.pypi.org/simple/ xrst
       #
+      # This command prints the version of xrst that is being used
+      - xrst --version
+      #
       # build/html
-      # The xsrst html_directory for this configuration is build/html.
+      # This comamnd builds the xrst user documentaiton.
+      # Suppress spell warnings because readthdocs uses a different dictionry.
       - xrst
          --page_source
          --html_theme furo
