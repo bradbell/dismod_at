@@ -19,6 +19,10 @@ spdx_license_id='AGPL-3.0-or-later'
 # package_name
 package_name='dismod_at'
 #
+# index_page_name
+# is the xrst index page_name for this projects documentaiton.
+index_page_name='dismod_at'
+#
 # version_file_list
 # The possible patterns for a latest version number are:
 #     yyyymmdd or yyyy.month.day
@@ -76,8 +80,8 @@ no_copyright_list='
 invisible_and_tab_ok='
 '
 #
-# check_commit
-# These files may have automatic changes that should not be commited.
+# check_git_commit
+# These files may have automatic changes that should not be commited every time.
 # Including them in this list gives the user the option to abort their changes.
-check_commit='
+check_git_commit='
 '
