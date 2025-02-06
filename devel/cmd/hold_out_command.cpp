@@ -39,6 +39,13 @@ max_fit
 This is the maximum number of data points to fit for the specified integrand;
 i.e., the maximum number that are not held out.
 
+max_fit_parent
+**************
+If this argument is DISMOD_AT_NULL_SIZE_T,
+the value *max_fit* applies to the combination of the parent and child nodes.
+Otherwise, *max_fit* applies to the total from all the child nodes and
+*max_fit_parent* applies to the parent node.
+
 covariate_id
 ************
 is the covariate that will be balanced;
@@ -64,6 +71,7 @@ in data_subset_table.
 CppAD::vector<int> hold_out_max_fit(
    integrand_enum                                this_integrand    ,
    size_t                                        max_fit           ,
+   size_t                                        max_fit_parent    ,
    const child_info&                             child_info4data   ,
    const CppAD::vector<data_subset_struct>&      data_subset_table ,
    const CppAD::vector<integrand_struct>&        integrand_table   ,
@@ -121,25 +129,59 @@ CppAD::vector<int> hold_out_max_fit(
       }
    }
    //
+   // subset_hold_out
+   if( max_fit_parent != DISMOD_AT_NULL_SIZE_T )
+   {  if( max_fit_parent < avail[n_child].size() )
+      {  //
+         // n_hold_out
+         size_t n_hold_out = avail[n_child].size() - max_fit_parent;
+         //
+         // chosen: array of indices that are chosen
+         vector<size_t> chosen(n_hold_out);
+         //
+         // chosen
+         gsl_ran_choose(
+            rng,
+            chosen.data(),
+            n_hold_out,
+            avail[n_child].data(),
+            avail[n_child].size(),
+            sizeof(size_t)
+         );
+         //
+         // subset_hold_out
+         for(size_t i = 0; i < n_hold_out; ++i)
+         {  size_t subset_id = chosen[i];
+            assert( subset_hold_out[subset_id] == 0 );
+            subset_hold_out[subset_id] = 1;
+         }
+      }
+   }
+   //
+   // n_area
+   size_t n_area = n_child + 1;
+   if( max_fit_parent != DISMOD_AT_NULL_SIZE_T )
+      n_area = n_child;
+   //
    // avail_size
-   vector<size_t> avail_size(n_child + 1);
-   for(size_t child_id = 0; child_id <= n_child; ++child_id)
+   vector<size_t> avail_size(n_area);
+   for(size_t child_id = 0; child_id < n_area; ++child_id)
       avail_size[child_id] = avail[child_id].size();
    //
    // size_order
-   vector<size_t> size_order(n_child + 1);
+   vector<size_t> size_order(n_area);
    CppAD::index_sort(avail_size, size_order);
    //
    // n_fit
    size_t n_fit = 0;
    //
-   for(size_t index = 0; index <= n_child; ++index)
+   for(size_t index = 0; index < n_area; ++index)
    {  //
       // child_id
       size_t child_id = size_order[index];
       //
       // n_left
-      size_t n_left = n_child + 1 - index;
+      size_t n_left = n_area - index;
       //
       // this_max_fit
       // the maximum to choose for this child_id, cov_value_id
@@ -164,7 +206,7 @@ CppAD::vector<int> hold_out_max_fit(
          // chosen: array of indices that are chosen
          vector<size_t> chosen(n_hold_out);
          //
-         // choose which elements to hold out
+         // chosen
          gsl_ran_choose(
             rng,
             chosen.data(),
@@ -383,7 +425,7 @@ CppAD::vector<int> hold_out_with_cov(
          // chosen: array of indices that are chosen
          vector<size_t> chosen(n_hold_out);
          //
-         // choose which elements to hold out
+         // chosen
          gsl_ran_choose(
             rng,
             chosen.data(),
@@ -430,15 +472,18 @@ Hold Out Command: Randomly Sub-sample The Data
 Syntax
 ******
 
-| ``dismod_at`` *database* ``hold_out`` *integrand_name* *max_fit*
-| ``dismod_at`` *database* ``hold_out`` *integrand_name* *max_fit* *cov_name* *cov_value_1* *cov_value_2*
+.. |first4|  replace:: ``dismod_at`` *database* ``hold_out`` *integrand_name*
+
+| |first4| *max_fit*
+| |first4| *max_fit* *max_fit_parent*
+| |first4| *max_fit* *cov_name* *cov_value_1* *cov_value_2*
 
 Purpose
 *******
 This command is used to set a maximum number of data values
 that are included in subsequent fits.
 It is intended to make the initialization and fitting faster.
-The random sample of which values to include can be made repeatable using
+The random choice of which values to include can be made repeatable using
 :ref:`option_table@random_seed` .
 
 database
@@ -454,12 +499,20 @@ This is the
 
 max_fit
 *******
-This is the maximum number of data points to fit for the specified integrand;
+If this argument is present,
+it is the maximum number of data points to fit for the specified integrand;
 i.e., the maximum number that are not held out.
-If for this integrand there are more than *mas_fit* points with
+If for this integrand there are more than *max_fit* points with
 :ref:`data_table@hold_out` zero in the data table,
 points are randomly held out so that there are *max_fit*
 points fit for this integrand.
+
+max_fit_parent
+**************
+If this argument is present,
+*max_fit* only applies to the total data from child nodes.
+The value *max_fit_parent* determines the maximum number of
+:ref:`option_table@Parent Node` data values to include.
 
 cov_name
 ********
@@ -518,7 +571,7 @@ void hold_out_command(
    sqlite3*                                      db                ,
    const std::string&                            integrand_name    ,
    const std::string&                            max_fit_str       ,
-   const std::string&                            cov_name          ,
+   const std::string&                            argument_5        ,
    const std::string&                            cov_value_1_str   ,
    const std::string&                            cov_value_2_str   ,
    const child_info&                             child_info4data   ,
@@ -539,6 +592,11 @@ void hold_out_command(
    // max_fit
    size_t max_fit = std::atoi( max_fit_str.c_str() );
    //
+   // max_fit_parent
+   size_t max_fit_parent = DISMOD_AT_NULL_SIZE_T;
+   if( argument_5.size() != 0 && cov_value_1_str.size() == 0 )
+      max_fit_parent = std::atoi( argument_5.c_str() );
+   //
    // this_integrand
    integrand_enum this_integrand = number_integrand_enum;
    for(size_t i = 0; i < size_t(number_integrand_enum); ++i)
@@ -553,10 +611,11 @@ void hold_out_command(
    //
    // subset_hold_out
    vector<int> subset_hold_out;
-   if( cov_name.size() == 0 )
+   if( cov_value_1_str.size() == 0 )
    {  subset_hold_out = hold_out_max_fit(
          this_integrand    ,
          max_fit           ,
+         max_fit_parent    ,
          child_info4data   ,
          data_subset_table ,
          integrand_table   ,
@@ -572,7 +631,7 @@ void hold_out_command(
       subset_hold_out     = hold_out_with_cov(
          this_integrand    ,
          max_fit           ,
-         cov_name          ,
+         argument_5        ,
          cov_value_1       ,
          cov_value_2       ,
          child_info4data   ,

@@ -16,6 +16,11 @@ Release Notes for 2025
 mm-dd
 *****
 
+02-06
+=====
+Add the :ref:`hold_out_command@max_fit_parent` option
+to the hold_out command.
+
 02-04
 =====
 #. Advance to cppad_mixed from 2025.0.0 to 2025.2.2.

@@ -1,7 +1,7 @@
 // $Id:$
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-24 Bradley M. Bell
+// SPDX-FileContributor: 2014-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <map>
 # include <cassert>
@@ -86,6 +86,7 @@ int main(int n_arg, const char** argv)
       {"fit",          5},
       {"fit",          6},
       {"hold_out",     5},
+      {"hold_out",     6},
       {"hold_out",     8},
       {"init",         3},
       {"old2new",      3},
@@ -507,19 +508,20 @@ int main(int n_arg, const char** argv)
    else if( command_arg == "hold_out" )
    {  string integrand_name  = argv[3];
       string max_fit_str     = argv[4];
-      string cov_name        = "";
+      string argument_5      = "";
       string cov_value_1_str = "";
       string cov_value_2_str = "";
+      if( 5 < n_arg )
+         argument_5          = argv[5];
       if( n_arg == 8 )
-      {  cov_name        = argv[5];
-         cov_value_1_str = argv[6];
-         cov_value_2_str = argv[7];
+      {  cov_value_1_str     = argv[6];
+         cov_value_2_str     = argv[7];
       }
       dismod_at::hold_out_command(
          db,
          integrand_name,
          max_fit_str,
-         cov_name,
+         argument_5,
          cov_value_1_str,
          cov_value_2_str,
          child_info4data,

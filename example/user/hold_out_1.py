@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_hold_out_1.py}
 # {xrst_spell
@@ -63,6 +63,14 @@
 # the fitting value for *iota* is very close to the true value
 # for incidence.
 #
+# Parameters
+# **********
+# you can change the following parameters in this test:
+# {xrst_literal
+#     BEGIN_PARAMETERS
+#     END_PARAMETERS
+# }
+#
 # Source Code
 # ***********
 # {xrst_literal
@@ -73,9 +81,12 @@
 # {xrst_end user_hold_out_1.py}
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
-# values used to simulate data
-iota_true    = 0.01
-n_child_node = 10
+# BEGIN_PARAMETERS
+iota_true      = 0.01
+n_child_node   = 10
+max_fit        = 2 * n_child_node
+max_parent_fit = max_fit
+# END_PARAMETERS
 # ------------------------------------------------------------------------
 import sys
 import os
@@ -170,7 +181,8 @@ def example_db (file_name) :
    data_table.append( copy.copy(row) )
    #
    # Sincidence data points with value iota_true and data_table hold_out 0
-   # Note that every child node has four data points.
+   # Note that every child node has four data points and the parent node
+   # has 2 * max_fit data opoints
    row['integrand']  = 'Sincidence'
    row['hold_out']   = False
    row['meas_value'] = iota_true
@@ -178,6 +190,9 @@ def example_db (file_name) :
       row['node'] = f'n{node_id}'
       for k in range(4) :
          data_table.append( copy.copy(row) )
+   row['node'] = 'n0'
+   for k in range(2 * max_fit) :
+      data_table.append( copy.copy(row) )
    #
    # ----------------------------------------------------------------------
    # prior_table
@@ -258,72 +273,93 @@ def example_db (file_name) :
 file_name = 'example.db'
 example_db(file_name)
 #
-#
+# program
 program = '../../devel/dismod_at'
-dismod_at.system_command_prc([ program, file_name, 'init' ])
 #
+# integrand
 integrand = 'Sincidence'
-max_fit   = 2 * n_child_node
-dismod_at.system_command_prc(
-   [ program, file_name, 'hold_out', integrand, str(max_fit) ]
-)
-dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
-# -----------------------------------------------------------------------
-# read database
-connection            = dismod_at.create_connection(
-   file_name, new = False, readonly = True
-)
-var_table             = dismod_at.get_table_dict(connection, 'var')
-fit_var_table         = dismod_at.get_table_dict(connection, 'fit_var')
-data_table            = dismod_at.get_table_dict(connection, 'data')
-data_subset_table     = dismod_at.get_table_dict(connection, 'data_subset')
-integrand_table       = dismod_at.get_table_dict(connection, 'integrand')
-fit_data_subset_table = dismod_at.get_table_dict(connection, 'fit_data_subset')
-connection.close()
 #
-# only one varable in this model, iota
-assert len(var_table) == 1
-assert len(fit_var_table) == 1
-#
-# all data points are in the data_sebset table, so data_subset_id is
-# the same as data_id (see data subset table documentation).
-assert len(data_subset_table) == len(data_table)
-assert len(fit_data_subset_table) == len(data_table)
-#
-# check that max_fit Sincidence values are not held out
-count_fit = 0
-for subset_row in data_subset_table :
-   data_id         = subset_row['data_id']
-   data_row        = data_table[data_id]
-   integrand_id    = data_row['integrand_id']
-   integrand_name  = integrand_table[integrand_id]['integrand_name']
-   if integrand_name == 'Sincidence' :
-      hold_out    = data_row['hold_out'] == 1 or subset_row['hold_out'] == 1
-      if not hold_out :
-         count_fit += 1
-assert count_fit == max_fit
-#
-# check fitted value for iota
-iota_fit = fit_var_table[0]['fit_var_value']
-assert abs( 1.0 - iota_fit / iota_true ) < 1e-6
-#
-# check residuals for non-zero data
-for (subset_id, fit_row) in enumerate(fit_data_subset_table) :
-   data_row          = data_table[data_id]
-   meas_value        = data_row['meas_value']
-   meas_std          = data_row['meas_std']
-   weighted_residual = fit_row['weighted_residual']
-   integrand_id      = data_row['integrand_id']
-   integrand_name    = integrand_table[integrand_id]['integrand_name']
-   if integrand_name == 'prevalence' :
-      age      = data_row['age_lower']
-      model    = 1.0 - math.exp( - iota_fit * age )
+# separate_parent
+for separate_parent in [ True, False ] :
+   #
+   # init
+   dismod_at.system_command_prc([ program, file_name, 'init' ])
+   #
+   # hold_out
+   command = [ program, file_name, 'hold_out', integrand, str(max_fit) ]
+   if separate_parent :
+      command.append( str(max_fit) )
+   dismod_at.system_command_prc( command )
+   #
+   # fit
+   dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
+   #
+   # *_table
+   connection            = dismod_at.create_connection(
+      file_name, new = False, readonly = True
+   )
+   var_table             = dismod_at.get_table_dict(connection, 'var')
+   fit_var_table         = dismod_at.get_table_dict(connection, 'fit_var')
+   data_table            = dismod_at.get_table_dict(connection, 'data')
+   data_subset_table     = dismod_at.get_table_dict(connection, 'data_subset')
+   integrand_table       = dismod_at.get_table_dict(connection, 'integrand')
+   fit_data_subset_table = \
+      dismod_at.get_table_dict(connection, 'fit_data_subset')
+   connection.close()
+   #
+   # var_table
+   # only one varable in this model, iota
+   assert len(var_table) == 1
+   assert len(fit_var_table) == 1
+   #
+   # data_subset_table
+   # all data points are in the data_sebset table, so data_subset_id is
+   # the same as data_id (see data subset table documentation).
+   assert len(data_subset_table) == len(data_table)
+   assert len(fit_data_subset_table) == len(data_table)
+   #
+   # check that max_fit Sincidence values are not held out
+   count_child_fit  = 0
+   count_parent_fit = 0
+   for subset_row in data_subset_table :
+      data_id         = subset_row['data_id']
+      data_row        = data_table[data_id]
+      node_id         = data_row['node_id']
+      integrand_id    = data_row['integrand_id']
+      integrand_name  = integrand_table[integrand_id]['integrand_name']
+      if integrand_name == 'Sincidence' :
+         hold_out    = data_row['hold_out'] == 1 or subset_row['hold_out'] == 1
+         if not hold_out :
+            if node_id == 0 :
+               count_parent_fit += 1
+            else :
+               count_child_fit += 1
+   if separate_parent :
+      assert count_child_fit == max_fit
+      assert count_parent_fit == max_fit
    else :
-      model    = iota_fit
+      assert count_child_fit + count_parent_fit == max_fit
+   #
+   # check fitted value for iota
+   iota_fit = fit_var_table[0]['fit_var_value']
+   assert abs( 1.0 - iota_fit / iota_true ) < 1e-6
+   #
+   # check residuals for non-zero data
+   for (subset_id, fit_row) in enumerate(fit_data_subset_table) :
+      data_row          = data_table[data_id]
+      meas_value        = data_row['meas_value']
+      meas_std          = data_row['meas_std']
+      weighted_residual = fit_row['weighted_residual']
+      integrand_id      = data_row['integrand_id']
+      integrand_name    = integrand_table[integrand_id]['integrand_name']
+      if integrand_name == 'prevalence' :
+         age      = data_row['age_lower']
+         model    = 1.0 - math.exp( - iota_fit * age )
+      else :
+         model    = iota_fit
 
-   check    = ( meas_value - model ) / meas_std
-   assert( 1.0 - weighted_residual / check ) < 1e-6
-#
+      check    = ( meas_value - model ) / meas_std
+      assert( 1.0 - weighted_residual / check ) < 1e-6
 # -----------------------------------------------------------------------------
 print('hold_out_1.py: OK')
 # -----------------------------------------------------------------------------
