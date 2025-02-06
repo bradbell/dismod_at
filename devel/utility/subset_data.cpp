@@ -1,7 +1,7 @@
 // $Id:$
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-24 Bradley M. Bell
+// SPDX-FileContributor: 2014-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin subset_data dev}
@@ -215,13 +215,13 @@ void subset_data(
    size_t n_integrand = integrand_table.size();
    //
    // hold_out_integrand_list
-   const std::string& hold_out_integrand = get_str_map(
+   const std::string hold_out_integrand = get_str_map(
       option_map, "hold_out_integrand", ""
    );
    CppAD::vector<std::string> hold_out_list = split_space(hold_out_integrand);
    //
    // age_size, time_size
-   const std::string& compress_interval = get_str_map(
+   const std::string compress_interval = get_str_map(
       option_map, "compress_interval", "0 0"
    );
    CppAD::vector<std::string> compress_interval_split = split_space(

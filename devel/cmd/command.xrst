@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin command}
 
@@ -81,3 +81,16 @@ Commands
 {xrst_comment END_SORT_THIS_LINE_MINUS_2}
 
 {xrst_end command}
+# ----------------------------------------------------------------------------
+{xrst_begin devel_command dev}
+
+Dismod_at Developer Command Documentation}
+##########################################
+
+Contents
+********
+{xrst_toc_table
+   devel/cmd/hold_out_command.cpp
+}
+
+{xrst_end devel_command}
