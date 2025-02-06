@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_hold_out_2.py}
 # {xrst_comment_ch #}
@@ -26,7 +26,7 @@
 # ***********
 # If this is zero, the clock is used to seed the random number generator:
 # {xrst_code py}
-random_seed = 1234
+random_seed = 0
 # {xrst_code}
 #
 # alpha_true
@@ -60,6 +60,8 @@ def iota_true(node, sex) :
       iota    = 1.2 * iota_avg  * math.exp( effect )
    elif node == 'italy' :
       iota    = 0.8 * iota_avg * math.exp( effect )
+   elif node == 'europe' :
+      iota    = iota_avg * math.exp( effect )
    return iota
 # {xrst_code}
 # {xrst_spell_on}
@@ -106,6 +108,13 @@ def iota_true(node, sex) :
 # ---------------------------------------------------------------------------
 # BEGIN PYTHON
 # ------------------------------------------------------------------------
+integrand_name = 'Sincidence'
+max_fit        = 10
+max_fit_parent = 10
+cov_name       = 'sex'
+cov_value_1    = '-0.5'
+cov_value_2    = '+0.5'
+#
 import sys
 import os
 import csv
@@ -198,10 +207,10 @@ def example_db (file_name) :
       'subgroup':     'world',
       'meas_std':    iota_avg / 10.0,
    }
-   n_repeat = 10
+   n_repeat = max_fit
    for i in range(n_repeat) :
       # sample twice as often from germany so that original data not balenced
-      for node in [ "germany", "germany", "italy" ] :
+      for node in [ "germany", "germany", "italy", "europe" ] :
          for sex in [ -0.5, +0.5 ] :
             meas_value = iota_true(node, sex)
             row['sex']        = sex
@@ -294,67 +303,81 @@ def example_db (file_name) :
 file_name = 'example.db'
 example_db(file_name)
 #
-integrand_name = 'Sincidence'
-max_fit        = '10'
-cov_name       = 'sex'
-cov_value_1    = '-0.5'
-cov_value_2    = '+0.5'
-#
+# program
 program = '../../devel/dismod_at'
-dismod_at.system_command_prc([ program, file_name, 'init' ])
-command = [ program, file_name, 'hold_out', integrand_name, max_fit ]
-if True :
-   # If you change True above to False, you will do not balance the
-   # sex covariter and the rel_error test for alpha will fail
+#
+# separate_parent
+for separate_parent in [ True, False ] :
+   #
+   # init
+   dismod_at.system_command_prc([ program, file_name, 'init' ])
+   #
+   # hold_out
+   command = [ program, file_name, 'hold_out', integrand_name, str(max_fit) ]
+   if  separate_parent :
+      command += [ str(max_fit_parent) ]
    command += [ cov_name, cov_value_1, cov_value_2 ]
-dismod_at.system_command_prc(command)
-dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
-# -----------------------------------------------------------------------
-#
-# var_table, fit_var_table
-connection            = dismod_at.create_connection(
-   file_name, new = False, readonly = True
-)
-var_table             = dismod_at.get_table_dict(connection, 'var')
-fit_var_table         = dismod_at.get_table_dict(connection, 'fit_var')
-connection.close()
-#
-# check var_table and fit_var_table
-assert len(var_table) == 2
-assert len(fit_var_table) == 2
-for var_id in range( len(var_table) ) :
-   var_type       = var_table[var_id]['var_type']
-   fit_var_value  = fit_var_table[var_id]['fit_var_value']
-   if var_type == 'mulcov_rate_value' :
-      # relative error for alpha
-      rel_error  = 1.0 - fit_var_value / alpha_true
-      assert abs(rel_error) < 1e-5
+   dismod_at.system_command_prc(command)
+   #
+   # fit
+   dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
+   #
+   # var_table, fit_var_table
+   connection            = dismod_at.create_connection(
+      file_name, new = False, readonly = True
+   )
+   var_table             = dismod_at.get_table_dict(connection, 'var')
+   fit_var_table         = dismod_at.get_table_dict(connection, 'fit_var')
+   connection.close()
+   #
+   # check var_table and fit_var_table
+   assert len(var_table) == 2
+   assert len(fit_var_table) == 2
+   for var_id in range( len(var_table) ) :
+      var_type       = var_table[var_id]['var_type']
+      fit_var_value  = fit_var_table[var_id]['fit_var_value']
+      if var_type == 'mulcov_rate_value' :
+         # relative error for alpha
+         rel_error  = 1.0 - fit_var_value / alpha_true
+         if separate_parent :
+            assert abs(rel_error) < 1e-5
+         else :
+            assert abs(rel_error) > 1e-2
+      else :
+         # relative error for iota
+         assert var_type == 'rate'
+         rel_error = 1.0 - fit_var_value / iota_avg
+         assert abs(rel_error) < 0.1
+   #
+   # data_table, data_subset_table, integrand_table
+   connection            = dismod_at.create_connection(
+      file_name, new = False, readonly = True
+   )
+   data_table            = dismod_at.get_table_dict(connection, 'data')
+   data_subset_table     = dismod_at.get_table_dict(connection, 'data_subset')
+   integrand_table       = dismod_at.get_table_dict(connection, 'integrand')
+   connection.close()
+   #
+   # count_fit_parent, count_fit_child
+   count_fit_parent = 0
+   count_fit_child  = 0
+   for subset_row in data_subset_table :
+      data_id        = subset_row['data_id']
+      data_row       = data_table[data_id]
+      integrand_id   = data_row['integrand_id']
+      node_id        = data_row['node_id']
+      integrand_name = integrand_table[integrand_id]['integrand_name']
+      assert integrand_name == 'Sincidence'
+      if data_row['hold_out'] == 0 and subset_row['hold_out'] == 0 :
+         if node_id == 0 :
+            count_fit_parent += 1
+         else :
+            count_fit_child += 1
+   if separate_parent :
+      assert count_fit_parent == max_fit_parent
+      assert count_fit_child  == max_fit
    else :
-      # relative error for iota
-      assert var_type == 'rate'
-      rel_error = 1.0 - fit_var_value / iota_avg
-      assert abs(rel_error) < 0.1
-#
-# data_table, data_subset_table, integrand_table
-connection            = dismod_at.create_connection(
-   file_name, new = False, readonly = True
-)
-data_table            = dismod_at.get_table_dict(connection, 'data')
-data_subset_table     = dismod_at.get_table_dict(connection, 'data_subset')
-integrand_table       = dismod_at.get_table_dict(connection, 'integrand')
-connection.close()
-#
-# hold_in_count
-hold_in_count = 0
-for subset_row in data_subset_table :
-   data_id        = subset_row['data_id']
-   data_row       = data_table[data_id]
-   integrand_id   = data_row['integrand_id']
-   integrand_name = integrand_table[integrand_id]['integrand_name']
-   assert integrand_name == 'Sincidence'
-   if data_row['hold_out'] == 0 and subset_row['hold_out'] == 0 :
-      hold_in_count += 1
-assert hold_in_count == int(max_fit)
+      assert count_fit_parent + count_fit_child  == max_fit
 #
 # -----------------------------------------------------------------------------
 print('hold_out_2.py: OK')

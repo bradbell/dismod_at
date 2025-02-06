@@ -88,6 +88,7 @@ int main(int n_arg, const char** argv)
       {"hold_out",     5},
       {"hold_out",     6},
       {"hold_out",     8},
+      {"hold_out",     9},
       {"init",         3},
       {"old2new",      3},
       {"predict",      4},
@@ -506,24 +507,16 @@ int main(int n_arg, const char** argv)
       );
    }
    else if( command_arg == "hold_out" )
-   {  string integrand_name  = argv[3];
-      string max_fit_str     = argv[4];
-      string argument_5      = "";
-      string cov_value_1_str = "";
-      string cov_value_2_str = "";
-      if( 5 < n_arg )
-         argument_5          = argv[5];
-      if( n_arg == 8 )
-      {  cov_value_1_str     = argv[6];
-         cov_value_2_str     = argv[7];
-      }
+   {  string integrand_name = argv[3];
+      string max_fit_str    = argv[4];
+      vector<string> optional_argument(n_arg - 5);
+      for(int i = 0; i < n_arg - 5; ++i)
+         optional_argument[i] = argv[5+i];
       dismod_at::hold_out_command(
          db,
          integrand_name,
          max_fit_str,
-         argument_5,
-         cov_value_1_str,
-         cov_value_2_str,
+         optional_argument,
          child_info4data,
          db_input.integrand_table,
          db_input.covariate_table,

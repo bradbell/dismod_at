@@ -1,7 +1,7 @@
 // $Id:$
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # ifndef DISMOD_AT_HOLD_OUT_COMMAND_HPP
 # define DISMOD_AT_HOLD_OUT_COMMAND_HPP
@@ -18,9 +18,7 @@ void hold_out_command(
    sqlite3*                                      db                ,
    const std::string&                            integrand_name    ,
    const std::string&                            max_fit_str       ,
-   const std::string&                            cov_name          ,
-   const std::string&                            cov_value_1_str   ,
-   const std::string&                            cov_value_2_str   ,
+   const CppAD::vector<std::string>&             optional_argument ,
    const child_info&                             child_info4data   ,
    const CppAD::vector<integrand_struct>&        integrand_table   ,
    const CppAD::vector<covariate_struct>&        covariate_table   ,

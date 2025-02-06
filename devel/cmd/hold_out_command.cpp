@@ -300,6 +300,13 @@ max_fit
 This is the maximum number of data points to fit for the specified integrand;
 i.e., the maximum number that are not held out.
 
+max_fit_parent
+**************
+If this argument is DISMOD_AT_NULL_SIZE_T,
+the value *max_fit* applies to the combination of the parent and child nodes.
+Otherwise, *max_fit* applies to the total from all the child nodes and
+*max_fit_parent* applies to the parent node.
+
 covariate_id
 ************
 is the covariate that will be balanced;
@@ -325,6 +332,7 @@ in data_subset_table.
 CppAD::vector<int> hold_out_with_cov(
    integrand_enum                                this_integrand    ,
    size_t                                        max_fit           ,
+   size_t                                        max_fit_parent    ,
    const std::string&                            cov_name          ,
    double                                        cov_value_1       ,
    double                                        cov_value_2       ,
@@ -419,6 +427,36 @@ CppAD::vector<int> hold_out_with_cov(
    vector<size_t> size_order(n_avail);
    CppAD::index_sort(avail_size, size_order);
    //
+   // subset_hold_out
+   if( max_fit_parent != DISMOD_AT_NULL_SIZE_T )
+   {  size_t n_data_fit   = 0;
+      size_t n_avail_left = 3;
+      for(size_t order = 0; order < n_avail; ++order)
+      {  // index
+         size_t index = size_order[order];
+         //
+         // child_id, cov_value_id
+         size_t cov_value_id = index % 3;
+         size_t child_id     = index / 3;
+         if( child_id == n_child )
+         {  assert( 0 < n_avail_left);
+            hold_out_this_avail(
+               subset_hold_out,
+               n_data_fit,
+               n_avail_left,
+               max_fit_parent,
+               avail[child_id][cov_value_id]
+            );
+            --n_avail_left;
+         }
+      }
+   }
+   //
+   // n_avail_left
+   size_t n_avail_left = n_avail;
+   if( max_fit_parent != DISMOD_AT_NULL_SIZE_T )
+      n_avail_left -= 3;
+   //
    // n_data_fit
    size_t n_data_fit = 0;
    //
@@ -431,17 +469,18 @@ CppAD::vector<int> hold_out_with_cov(
       size_t cov_value_id = index % 3;
       size_t child_id     = index / 3;
       //
-      // n_avail_left
-      size_t n_avail_left = n_avail - order;
-      //
-      // subset_hold_out
-      hold_out_this_avail(
-         subset_hold_out,
-         n_data_fit,
-         n_avail_left,
-         max_fit,
-         avail[child_id][cov_value_id]
-      );
+      if( max_fit_parent == DISMOD_AT_NULL_SIZE_T || child_id < n_child )
+      {  //
+         // subset_hold_out
+         hold_out_this_avail(
+            subset_hold_out,
+            n_data_fit,
+            n_avail_left,
+            max_fit,
+            avail[child_id][cov_value_id]
+         );
+         --n_avail_left;
+      }
    }
    // BEGIN_RETURN_HOLD_OUT_WITH_COV
 # ifndef NDEBUG
@@ -571,9 +610,7 @@ void hold_out_command(
    sqlite3*                                      db                ,
    const std::string&                            integrand_name    ,
    const std::string&                            max_fit_str       ,
-   const std::string&                            argument_5        ,
-   const std::string&                            cov_value_1_str   ,
-   const std::string&                            cov_value_2_str   ,
+   const CppAD::vector<std::string>&             optional_argument ,
    const child_info&                             child_info4data   ,
    const CppAD::vector<integrand_struct>&        integrand_table   ,
    const CppAD::vector<covariate_struct>&        covariate_table   ,
@@ -582,6 +619,24 @@ void hold_out_command(
 {  using std::string;
    using CppAD::vector;
    using CppAD::to_string;
+   //
+   //  max_fit_parent, cov_name, cov_value_1_str, cov_value_2_str;
+   string max_fit_parent_str, cov_name, cov_value_1_str, cov_value_2_str;
+   if( optional_argument.size() == 1 )
+      max_fit_parent_str = optional_argument[0];
+   else if( optional_argument.size() == 3 )
+   {  cov_name           = optional_argument[0];
+      cov_value_1_str    = optional_argument[1];
+      cov_value_2_str    = optional_argument[2];
+   }
+   else if( optional_argument.size() == 4 )
+   {  max_fit_parent_str  = optional_argument[0];
+      cov_name            = optional_argument[1];
+      cov_value_1_str     = optional_argument[2];
+      cov_value_2_str     = optional_argument[3];
+   }
+   else
+      assert( optional_argument.size() == 0 );
    //
    // data_subset_table
    vector<data_subset_struct> data_subset_table = get_data_subset(db);
@@ -594,8 +649,8 @@ void hold_out_command(
    //
    // max_fit_parent
    size_t max_fit_parent = DISMOD_AT_NULL_SIZE_T;
-   if( argument_5.size() != 0 && cov_value_1_str.size() == 0 )
-      max_fit_parent = std::atoi( argument_5.c_str() );
+   if( max_fit_parent_str.size() != 0 )
+      max_fit_parent = std::atoi( max_fit_parent_str.c_str() );
    //
    // this_integrand
    integrand_enum this_integrand = number_integrand_enum;
@@ -625,13 +680,13 @@ void hold_out_command(
       );
    }
    else
-   {
-      double cov_value_1  = std::atof( cov_value_1_str.c_str() );
+   {  double cov_value_1  = std::atof( cov_value_1_str.c_str() );
       double cov_value_2  = std::atof( cov_value_2_str.c_str() );
       subset_hold_out     = hold_out_with_cov(
          this_integrand    ,
          max_fit           ,
-         argument_5        ,
+         max_fit_parent    ,
+         cov_name          ,
          cov_value_1       ,
          cov_value_2       ,
          child_info4data   ,
