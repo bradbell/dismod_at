@@ -515,6 +515,7 @@ Syntax
 
 | |first4| *max_fit*
 | |first4| *max_fit* *max_fit_parent*
+| |first4| *max_fit* *max_fit_parent* *cov_name* *cov_value_1* *cov_value_2*
 | |first4| *max_fit* *cov_name* *cov_value_1* *cov_value_2*
 
 Purpose
