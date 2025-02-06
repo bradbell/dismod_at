@@ -16,6 +16,94 @@
 # include <dismod_at/null_int.hpp>
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 /*
+{xrst_begin hold_out_this_avail dev}
+
+Set subset_hold_out For This Set of Available Data
+##################################################
+{xrst_literal
+   // BEGIN_HOLD_OUT_THIS_AVAIL
+   // END_HOLD_OUT_THIS_AVAIL
+}
+
+subset_hold_out
+***************
+this has the data that is held out.
+
+n_data_fit
+**********
+this is the number of data that are not held out (so far).
+It is both an input and output
+
+n_avail_left
+************
+this is the number of available lists left.
+The lists are passed to this routine in increasing size order.
+
+max_data_fit
+************
+This is the maximum number of data that can be fit.
+The hold outs must ensure this limit is not reached.
+
+
+avail
+*****
+This is the current list of available data.
+Only subset indices in this list may have there
+subset_hold_out value changed from 0 to 1.
+
+{xrst_end hold_out_this_avail}
+*/
+// BEGIN_HOLD_OUT_THIS_AVAIL
+void hold_out_this_avail(
+   CppAD::vector<int>&     subset_hold_out ,
+   size_t&                 n_data_fit      ,
+   size_t                  n_avail_left    ,
+   size_t                  max_data_fit    ,
+   CppAD::vector<size_t>&  avail           )
+// END_HOLD_OUT_THIS_AVAIL
+{
+   // rng
+   // gsl random number generator
+   gsl_rng* rng = CppAD::mixed::get_gsl_rng();
+   //
+   // this_max_fit
+   size_t this_max_fit = (max_data_fit - n_data_fit) / n_avail_left;
+   if( this_max_fit * n_avail_left < max_data_fit - n_data_fit )
+      ++this_max_fit;
+   if( this_max_fit + n_avail_left > max_data_fit - n_data_fit )
+      this_max_fit = max_data_fit - n_data_fit;
+   //
+   // n_data_fit, data_subset_table
+   if( avail.size() <= this_max_fit )
+      n_data_fit += avail.size();
+   else
+   {  n_data_fit += this_max_fit;
+      //
+      // n_hold_out
+      size_t n_hold_out = avail.size() - this_max_fit;
+      //
+      // chosen: array of indices that are chosen
+      CppAD::vector<size_t> chosen(n_hold_out);
+      //
+      // chosen
+      gsl_ran_choose(
+         rng,
+         chosen.data(),
+         n_hold_out,
+         avail.data(),
+         avail.size(),
+         sizeof(size_t)
+      );
+      //
+      // subset_hold_out
+      for(size_t i = 0; i < n_hold_out; ++i)
+      {  size_t subset_id = chosen[i];
+         assert( subset_hold_out[subset_id] == 0 );
+         subset_hold_out[subset_id] = 1;
+      }
+   }
+}
+/*
 ------------------------------------------------------------------------------
 {xrst_begin hold_out_max_fit dev}
 
@@ -91,10 +179,6 @@ CppAD::vector<int> hold_out_max_fit(
       if( integrand_table[i].integrand == this_integrand )
          this_integrand_id = int(i);
    //
-   // rng
-   // gsl random number generator
-   gsl_rng* rng = CppAD::mixed::get_gsl_rng();
-   //
    // subset_hold_out
    vector<int> subset_hold_out( n_subset );
    for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
@@ -131,98 +215,50 @@ CppAD::vector<int> hold_out_max_fit(
    //
    // subset_hold_out
    if( max_fit_parent != DISMOD_AT_NULL_SIZE_T )
-   {  if( max_fit_parent < avail[n_child].size() )
-      {  //
-         // n_hold_out
-         size_t n_hold_out = avail[n_child].size() - max_fit_parent;
-         //
-         // chosen: array of indices that are chosen
-         vector<size_t> chosen(n_hold_out);
-         //
-         // chosen
-         gsl_ran_choose(
-            rng,
-            chosen.data(),
-            n_hold_out,
-            avail[n_child].data(),
-            avail[n_child].size(),
-            sizeof(size_t)
-         );
-         //
-         // subset_hold_out
-         for(size_t i = 0; i < n_hold_out; ++i)
-         {  size_t subset_id = chosen[i];
-            assert( subset_hold_out[subset_id] == 0 );
-            subset_hold_out[subset_id] = 1;
-         }
-      }
+   {  size_t n_data_fit   = 0;
+      size_t n_avail_left = 1;
+      hold_out_this_avail(
+         subset_hold_out,
+         n_data_fit,
+         n_avail_left,
+         max_fit_parent,
+         avail[n_child]
+      );
    }
    //
-   // n_area
-   size_t n_area = n_child + 1;
+   // n_avail
+   size_t n_avail = n_child + 1;
    if( max_fit_parent != DISMOD_AT_NULL_SIZE_T )
-      n_area = n_child;
+      n_avail = n_child;
    //
    // avail_size
-   vector<size_t> avail_size(n_area);
-   for(size_t child_id = 0; child_id < n_area; ++child_id)
+   vector<size_t> avail_size(n_avail);
+   for(size_t child_id = 0; child_id < n_avail; ++child_id)
       avail_size[child_id] = avail[child_id].size();
    //
    // size_order
-   vector<size_t> size_order(n_area);
+   vector<size_t> size_order(n_avail);
    CppAD::index_sort(avail_size, size_order);
    //
-   // n_fit
-   size_t n_fit = 0;
+   // n_data_fit
+   size_t n_data_fit = 0;
    //
-   for(size_t index = 0; index < n_area; ++index)
+   for(size_t index = 0; index < n_avail; ++index)
    {  //
       // child_id
       size_t child_id = size_order[index];
       //
-      // n_left
-      size_t n_left = n_area - index;
+      // n_avail_left
+      size_t n_avail_left = n_avail - index;
       //
-      // this_max_fit
-      // the maximum to choose for this child_id, cov_value_id
-      size_t this_max_fit = (max_fit - n_fit) / n_left;
-      if( this_max_fit * n_left < max_fit - n_fit )
-         ++this_max_fit;
-      if( this_max_fit + n_fit > max_fit )
-         this_max_fit = max_fit - n_fit;
-      //
-      // n_fit, data_subset_table
-      if( avail[child_id].size() <= this_max_fit )
-      {  // include all the data correspnding to this child_id
-         n_fit += avail[child_id].size();
-      }
-      else
-      {  // include this_max_fit data corresponding to this child_id
-         n_fit += this_max_fit;
-         //
-         // n_hold_out
-         size_t n_hold_out = avail[child_id].size() - this_max_fit;
-         //
-         // chosen: array of indices that are chosen
-         vector<size_t> chosen(n_hold_out);
-         //
-         // chosen
-         gsl_ran_choose(
-            rng,
-            chosen.data(),
-            n_hold_out,
-            avail[child_id].data(),
-            avail[child_id].size(),
-            sizeof(size_t)
-         );
-         //
-         // subset_hold_out
-         for(size_t i = 0; i < n_hold_out; ++i)
-         {  size_t subset_id = chosen[i];
-            assert( subset_hold_out[subset_id] == 0 );
-            subset_hold_out[subset_id] = 1;
-         }
-      }
+      // subset_hold_out
+      hold_out_this_avail(
+         subset_hold_out,
+         n_data_fit,
+         n_avail_left,
+         max_fit,
+         avail[child_id]
+      );
    }
    // BEGIN_RETURN_HOLD_OUT_MAX_FIT
 # ifndef NDEBUG
@@ -311,10 +347,6 @@ CppAD::vector<int> hold_out_with_cov(
       if( integrand_table[i].integrand == this_integrand )
          this_integrand_id = int(i);
    //
-   // rng
-   // gsl random number generator
-   gsl_rng* rng = CppAD::mixed::get_gsl_rng();
-   //
    // subset_hold_out
    vector<int> subset_hold_out( n_subset );
    for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
@@ -371,11 +403,11 @@ CppAD::vector<int> hold_out_with_cov(
       }
    }
    //
-   // n_index
-   size_t n_index = 3 * (n_child + 1);
+   // n_avail
+   size_t n_avail = 3 * (n_child + 1);
    //
    // avail_size
-   vector<size_t> avail_size(n_index);
+   vector<size_t> avail_size(n_avail);
    for(size_t child_id = 0; child_id <= n_child; ++child_id)
    {  for(size_t cov_value_id = 0; cov_value_id < 3; ++cov_value_id)
       {  size_t index      = child_id * 3 + cov_value_id;
@@ -384,13 +416,13 @@ CppAD::vector<int> hold_out_with_cov(
    }
    //
    // size_order
-   vector<size_t> size_order(n_index);
+   vector<size_t> size_order(n_avail);
    CppAD::index_sort(avail_size, size_order);
    //
-   // n_fit
-   size_t n_fit = 0;
+   // n_data_fit
+   size_t n_data_fit = 0;
    //
-   for(size_t order = 0; order < n_index; ++order)
+   for(size_t order = 0; order < n_avail; ++order)
    {  //
       // index
       size_t index = size_order[order];
@@ -399,49 +431,17 @@ CppAD::vector<int> hold_out_with_cov(
       size_t cov_value_id = index % 3;
       size_t child_id     = index / 3;
       //
-      // n_left
-      size_t n_left = n_index - order;
+      // n_avail_left
+      size_t n_avail_left = n_avail - order;
       //
-      // this_max_fit
-      // the maximum to choose for this child_id, cov_value_id
-      size_t this_max_fit = (max_fit - n_fit) / n_left;
-      if( this_max_fit * n_left < max_fit - n_fit )
-         ++this_max_fit;
-      if( this_max_fit + n_fit > max_fit )
-         this_max_fit = max_fit - n_fit;
-      //
-      // n_fit, data_subset_table
-      if( avail_size[index] <= this_max_fit )
-      {  // include all the data correspnding to this index
-         n_fit += avail_size[index];
-      }
-      else
-      {  // include this_max_fit data corresponding to this index
-         n_fit += this_max_fit;
-         //
-         // n_hold_out
-         size_t n_hold_out = avail_size[index] - this_max_fit;
-         //
-         // chosen: array of indices that are chosen
-         vector<size_t> chosen(n_hold_out);
-         //
-         // chosen
-         gsl_ran_choose(
-            rng,
-            chosen.data(),
-            n_hold_out,
-            avail[child_id][cov_value_id].data(),
-            avail_size[index],
-            sizeof(size_t)
-         );
-         //
-         // subset_hold_out
-         for(size_t i = 0; i < n_hold_out; ++i)
-         {  size_t subset_id = chosen[i];
-            assert( subset_hold_out[subset_id] == 0 );
-            subset_hold_out[subset_id] = 1;
-         }
-      }
+      // subset_hold_out
+      hold_out_this_avail(
+         subset_hold_out,
+         n_data_fit,
+         n_avail_left,
+         max_fit,
+         avail[child_id][cov_value_id]
+      );
    }
    // BEGIN_RETURN_HOLD_OUT_WITH_COV
 # ifndef NDEBUG
