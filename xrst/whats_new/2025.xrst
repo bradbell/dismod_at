@@ -16,6 +16,11 @@ Release Notes for 2025
 mm-dd
 *****
 
+02-07
+=====
+Advance the dock_dismod_at :ref:`dock_dismod_at.sh@dismod_at_version` and
+:ref:`dock_dismod_at.sh@at_cascade_version` to 2025.2.7.
+
 02-06
 =====
 Add the :ref:`hold_out_command@max_fit_parent` option
