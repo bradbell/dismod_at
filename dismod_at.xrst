@@ -29,7 +29,7 @@ Versions
    :widths: auto
 
    * - This version
-     - dismod_at-2025.0.0
+     - dismod_at-2025.0.1
    * - Documentation for latest version
      - `latest <https://dismod-at.readthedocs.io/latest>`_
    * - Documentation for most recent stable version
@@ -38,7 +38,7 @@ Versions
      - release-2025_
 
 .. _release-2025: https://codeload.github.com/bradbell/
-   dismod_at/tar.gz/refs/tags/2025.0.0
+   dismod_at/tar.gz/refs/tags/2025.0.1
 
 
 Contents
