@@ -66,6 +66,7 @@ no_copyright_list='
    .gitignore
    .readthedocs.yaml
    2DO
+   agpl-3.0.txt
    batch_edit.sed
    python/README.md
    python/pyproject.toml
