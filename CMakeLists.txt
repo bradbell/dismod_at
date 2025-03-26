@@ -298,8 +298,8 @@ CONFIGURE_FILE(
    ${CMAKE_CURRENT_SOURCE_DIR}/include/dismod_at/configure.hpp
 )
 CONFIGURE_FILE(
-   ${CMAKE_CURRENT_SOURCE_DIR}/bin/user_test.sh.in
-   ${CMAKE_CURRENT_SOURCE_DIR}/bin/user_test.sh
+   ${CMAKE_CURRENT_SOURCE_DIR}/bin/user_test.py.in
+   ${CMAKE_CURRENT_SOURCE_DIR}/bin/user_test.py
 )
 # ----------------------------------------------------------------------------
 # subdirectories

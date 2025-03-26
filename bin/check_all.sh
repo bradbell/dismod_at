@@ -157,7 +157,7 @@ echo_eval cd ..
 echo "bin/check_install.sh $build_type >& install.log"
 bin/check_install.sh $build_type >& install.log
 # -----------------------------------------------------------------------------
-# check.log output is generalted by bin/user_test.sh which checks for warnings
+# check.log output is generalted by bin/user_test.py which checks for warnings
 # and re-runs. If a warning occurs a second time, bin/user_tes.sh error exits.
 for target in cmake speed install
 do

@@ -1,0 +1,65 @@
+#! /usr/bin/env python
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
+# ----------------------------------------------------------------------------
+#
+import sys
+import os
+import time
+import re
+local_dir = os.getcwd() + '/python'
+if( os.path.isdir( local_dir + '/dismod_at' ) ) :
+   sys.path.insert(0, local_dir)
+import dismod_at
+#
+# pattern
+pattern = re.compile(
+   r'\n.*warning: Adding subgroup informtion to following tables:.*'
+)
+#
+def main() :
+   #
+   # program
+   program = 'bin/user_test.py'
+   #
+   # user_test
+   if sys.argv[0] != program :
+      msg = f'{program}: must be executed from its parent directory'
+      sys.exit(msg)
+   if len( sys.argv ) < 2 :
+      msg =  f'usage: {program} user_test'
+      sys.exit(msg)
+   user_test = sys.argv[1]
+   if not os.path.isfile( user_test ) :
+      msg = f'{pogram}: the user_test {user_test} does not exist.'
+      sys.exit(msg)
+   #
+   # command
+   command = [ '@python3_executable@', user_test ]
+   #
+   # i_try
+   for i_try in range(4) :
+      #
+      # result
+      result = dismod_at.system_command_prc(
+         command       = command ,
+         print_command = True ,
+         return_stdout = True ,
+         return_stderr = True ,
+      )
+      if result.returncode == 0 :
+         print( result.stdout )
+         if result.stderr != '' :
+            print( result.stderr )
+         sys.exit(0)
+      else :
+         msg  = f'{program}: {user_test}: try number {i_try + 1}: Error\n'
+         msg += 're-running with different random seed'
+         print(msg)
+         time.sleep(1)
+   print( result.stdout )
+   system.exit( result.stderr )
+   print( 'user_test.py: giving up after 4 attempts' )
+#
+main()

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build check_example_user
 SET(depends "")
@@ -73,7 +73,7 @@ FOREACH(user_case
 # END_SORT_THIS_LINE_MINUS_2
    ADD_CUSTOM_TARGET(
       check_example_user_${user_case}
-      bin/user_test.sh example/user/${user_case}.py
+      bin/user_test.py example/user/${user_case}.py
       WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
       DEPENDS dismod_at
    )

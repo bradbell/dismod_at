@@ -5,6 +5,7 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin 2025}
 {xrst_spell
+   macos
    mm
    dd
 }
@@ -14,6 +15,11 @@ Release Notes for 2025
 
 mm-dd
 *****
+
+03-25
+=====
+Change ``bin/user_test.sh`` to ``bin/user_test.py`` so that it can be
+used in Dos, Macos, and Linux.
 
 03-21
 =====
