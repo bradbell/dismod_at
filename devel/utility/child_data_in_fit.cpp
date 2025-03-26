@@ -1,7 +1,7 @@
 // $Id:$
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin child_data_in_fit dev}
@@ -97,7 +97,7 @@ CppAD::vector<size_t> child_data_in_fit(
       result[child] = 0;
    //
    // hold_out_integrand_list
-   const std::string& hold_out_integrand = get_str_map(
+   const std::string hold_out_integrand = get_str_map(
       option_map, "hold_out_integrand", ""
    );
    CppAD::vector<std::string> hold_out_list = split_space(hold_out_integrand);
