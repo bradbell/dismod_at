@@ -320,7 +320,7 @@ void init_command(
       {
          size_t index        = size_t(data_id) * n_covariate + id;
          double cov_value    = db_input.data_cov_value[index];
-         if( not std::isnan( cov_value ) )
+         if( ! std::isnan( cov_value ) )
          {  double reference    = db_input.covariate_table[id].reference;
             double abs_diff     = std::fabs(cov_value - reference);
             //

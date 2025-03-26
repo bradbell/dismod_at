@@ -5,9 +5,11 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin 2025}
 {xrst_spell
+   isnan
    macos
    mm
    dd
+   conda
 }
 
 Release Notes for 2025
@@ -18,12 +20,28 @@ mm-dd
 
 03-25
 =====
-Change ``bin/user_test.sh`` to ``bin/user_test.py`` so that it can be
-used in Dos, Macos, and Linux.
+1. Change ``bin/user_test.sh`` to ``bin/user_test.py`` so that it can be
+   used in Dos, Macos, and Linux.
+2. Fix some no-standard constructs in logical expressions; e.g.,
+   change ``not std::isnan``  to ``! std::isnan`` .
 
-03-21
+02-07
 =====
-Advance to cppad_mixed-2025.0.2 and dismod_at-2025.0.1.
+Advance the dock_dismod_at :ref:`dock_dismod_at.sh@dismod_at_version` and
+:ref:`dock_dismod_at.sh@at_cascade_version` to 2025.2.7.
+
+02-06
+=====
+Add the :ref:`hold_out_command@max_fit_parent` option
+to the hold_out command.
+
+02-04
+=====
+#. Advance to cppad_mixed from 2025.0.0 to 2025.2.2.
+   This has improvements to the install procedure that were
+   made to facilitate including cppad_mixed in conda-forge.
+#. Advance the dock_dismod_at :ref:`dock_dismod_at.sh@dismod_at_version` and
+   :ref:`dock_dismod_at.sh@at_cascade_version` to 2025.2.4.
 
 02-02
 =====

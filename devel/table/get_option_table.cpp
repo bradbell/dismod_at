@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-24 Bradley M. Bell
+// SPDX-FileContributor: 2014-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_option_table dev}
@@ -488,7 +488,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
       msg += " is second-order or only-second-order";
       error_exit(msg, table_name);
    }
-   if( other_input_table and not other_database )
+   if( other_input_table && ! other_database )
    {  msg  = "other_input_table option is non-empty and other_database";
       msg += " is not specified";
       error_exit(msg, table_name);
