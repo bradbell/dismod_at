@@ -23,6 +23,8 @@ mm-dd
    used in Dos, Macos, and Linux.
 2. Fix some no-standard constructs in logical expressions; e.g.,
    change ``not std::isnan``  to ``! std::isnan`` .
+3. Fix 'possibly dangling reference to a temporary' in `subset_data.cpp`
+      and `child_data_in_fit.cpp` .
 
 02-02
 =====
