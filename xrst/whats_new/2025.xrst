@@ -5,6 +5,7 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin 2025}
 {xrst_spell
+   isnan
    macos
    mm
    dd
@@ -19,8 +20,10 @@ mm-dd
 
 03-25
 =====
-Change ``bin/user_test.sh`` to ``bin/user_test.py`` so that it can be
-used in Dos, Macos, and Linux.
+1. Change ``bin/user_test.sh`` to ``bin/user_test.py`` so that it can be
+   used in Dos, Macos, and Linux.
+2. Fix some no-standard constructs in logical expressions; e.g.,
+   change ``not std::isnan``  to ``! std::isnan`` .
 
 02-07
 =====
