@@ -171,7 +171,7 @@ if("${isSystemDir}" STREQUAL "-1")
    set(CMAKE_INSTALL_RPATH "${dismod_at_pefix}/${cmake_libdir}")
 endif("${isSystemDir}" STREQUAL "-1")
 # ----------------------------------------------------------------------------
-# pkg-config information for: sqlite3, gsl, eigen, ipopt, cppad_mixed, cppad
+# package information for: gsl, eigen, ipopt, cppad_mixed, cppad
 FIND_PACKAGE(PkgConfig)
 FOREACH(pkg sqlite3 gsl eigen3 ipopt cppad_mixed cppad)
    pkg_check_modules( ${pkg} QUIET ${pkg} )
@@ -190,6 +190,12 @@ FOREACH(pkg sqlite3 gsl eigen3 ipopt cppad_mixed cppad)
    # LINK_DIRECTORIES
    LINK_DIRECTORIES( ${${pkg}_LIBRARY_DIRS} )
 ENDFOREACH(pkg)
+#
+# package information for: sqlite3
+# The file sqlite3.pc does not get installed on windows so use FIND_PACKAGE
+FIND_PACKAGE(SQLite3)
+SET(sqlite3_LIBRARIES "${SQLite3_LIBRARIES}" )
+INCLUDE_DIRECTORIES( ${SQLite3_INCLUDE_DIRS} )
 # ----------------------------------------------------------------------------
 # no pkg-config for SuiteSparse so explicitly set
 # suitesparse_INCLUDE_DIR
