@@ -173,7 +173,7 @@ endif("${isSystemDir}" STREQUAL "-1")
 # ----------------------------------------------------------------------------
 # package information for: gsl, eigen, ipopt, cppad_mixed, cppad
 FIND_PACKAGE(PkgConfig)
-FOREACH(pkg sqlite3 gsl eigen3 ipopt cppad_mixed cppad)
+FOREACH(pkg gsl eigen3 ipopt cppad_mixed cppad)
    pkg_check_modules( ${pkg} QUIET ${pkg} )
    IF( ${pkg}_FOUND )
       MESSAGE(STATUS "Found ${pkg}.pc file")
