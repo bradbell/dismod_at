@@ -196,66 +196,11 @@ ENDFOREACH(pkg)
 FIND_PACKAGE(SQLite3)
 SET(sqlite3_LIBRARIES "${SQLite3_LIBRARIES}" )
 INCLUDE_DIRECTORIES( ${SQLite3_INCLUDE_DIRS} )
-# ----------------------------------------------------------------------------
-# no pkg-config for SuiteSparse so explicitly set
-# suitesparse_INCLUDE_DIR
 #
-# suitesparse_prefix
-# suitesparse_suffix
-SET(suitesparse_prefix "NOTFOUND")
-SET(suitesparse_suffix "NOTFOUND")
-EXECUTE_PROCESS(
-   COMMAND brew --prefix suitesparse
-   OUTPUT_VARIABLE brew_prefix
-   OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-IF( NOT "${brew_prefix}" STREQUAL "" )
-   FOREACH(suffix "include" "include/suitesparse")
-      IF( EXISTS "${brew_prefix}/${suffix}/cholmod.h" )
-         MESSAGE(STATUS "Using ${brew_prefix}/${suffix}/cholmod.h" )
-         SET(suitesparse_prefix "${brew_prefix}")
-         SET(suitesparse_suffix "${suffix}")
-      ENDIF( EXISTS "${brew_prefix}/${suffix}/cholmod.h" )
-   ENDFOREACH(suffix "include" "include/suitesparse")
-ENDIF( NOT ( "${brew_prefix}" STREQUAL "" ) )
-FOREACH(prefix
-   /usr
-   /usr/local
-   /opt/local
-   /usr/local/opt/suitesparse
-   "${cmake_install_prefix}"
-)
-   FOREACH(suffix "include" "include/suitesparse")
-      IF( EXISTS "${prefix}/${suffix}/cholmod.h" )
-         IF( suitesparse_prefix )
-            SET(same "yes")
-            IF( NOT "${prefix}" STREQUAL "${suitesparse_prefix}" )
-               SET(same "no")
-            ELSEIF( NOT "${suffix}" STREQUAL "${suitesparse_prefix}" )
-               SET(same "no")
-            ENDIF()
-            IF( same STREQUAL "no" )
-               MESSAGE(STATUS "Not using ${prefix}/${suffix}/cholmod.h")
-            ENDIF( same STREQUAL "no" )
-         ELSE( suitesparse_prefix )
-            MESSAGE(STATUS "Using ${prefix}/${suffix}/cholmod.h" )
-            SET(suitesparse_prefix "${prefix}")
-            SET(suitesparse_suffix "${suffix}")
-         ENDIF( suitesparse_prefix )
-      ENDIF( EXISTS "${prefix}/${suffix}/cholmod.h" )
-   ENDFOREACH(suffix "include" "include/suitesparse")
-ENDFOREACH(prefix)
-#
-# suitesparse_INCLUDE_DIR
-IF( suitesparse_prefix )
-   SET(suitesparse_INCLUDE_DIR  "${suitesparse_prefix}/${suitesparse_suffix}" )
-ELSE( suitesparse_prefix )
-   MESSAGE(FATAL_ERROR "cannot find cholmod.h" )
-ENDIF( suitesparse_prefix )
-IF( NOT "${suitesparse_INCLUDE_DIR}" STREQUAL "/usr/include" )
-   MESSAGE(STATUS "suitesparse_INCLUDE_DIR=${suitesparse_INCLUDE_DIR}" )
-   INCLUDE_DIRECTORIES( ${suitesparse_INCLUDE_DIR} )
-ENDIF( "${suitesparse_INCLUDE_DIR}" != "/usr/include" )
+# The cppad_mixed.hpp file includes cholmod.h so this is needed.
+# 2DO: Modify the cppad_mixed package so that this is not necessary.
+FIND_PACKAGE(CHOLMOD)
+INCLUDE_DIRECTORIES( ${CHOLMOD_INCLUDE_DIR} )
 # ----------------------------------------------------------------------------
 # check compiler flags
 #
