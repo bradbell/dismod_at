@@ -173,7 +173,7 @@ endif("${isSystemDir}" STREQUAL "-1")
 # ----------------------------------------------------------------------------
 # package information for: gsl, eigen, ipopt, cppad_mixed, cppad
 FIND_PACKAGE(PkgConfig)
-FOREACH(pkg sqlite3 gsl eigen3 ipopt cppad_mixed cppad)
+FOREACH(pkg gsl eigen3 ipopt cppad_mixed cppad)
    pkg_check_modules( ${pkg} QUIET ${pkg} )
    IF( ${pkg}_FOUND )
       MESSAGE(STATUS "Found ${pkg}.pc file")
@@ -197,6 +197,7 @@ FIND_PACKAGE(SQLite3)
 SET(sqlite3_LIBRARIES "${SQLite3_LIBRARIES}" )
 INCLUDE_DIRECTORIES( ${SQLite3_INCLUDE_DIRS} )
 #
+# package information for: CHOLMOD
 # The cppad_mixed.hpp file includes cholmod.h so this is needed.
 # 2DO: Modify the cppad_mixed package so that this is not necessary.
 FIND_PACKAGE(CHOLMOD)
