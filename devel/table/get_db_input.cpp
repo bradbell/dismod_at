@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-23 Bradley M. Bell
+// SPDX-FileContributor: 2014-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_db_input dev}
@@ -251,6 +251,9 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
    db_input.weight_grid_table = get_weight_grid(
       db_tmp, db_input.data_table, db_input.avgint_table
    );
+   //
+   // close database and return
+   sqlite3_close(db_other);
    //
    // -----------------------------------------------------------------------
    // check primary keys

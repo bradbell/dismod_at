@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin random_effect_xam.cpp dev}
@@ -19,7 +19,6 @@ C++ random_effect: Example and Test
 # include <cppad/cppad.hpp>
 # include <dismod_at/random_effect.hpp>
 # include <dismod_at/get_rate_table.hpp>
-# include <dismod_at/open_connection.hpp>
 # include <dismod_at/null_int.hpp>
 
 bool random_effect_xam(void)

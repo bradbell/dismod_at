@@ -73,7 +73,7 @@ FOREACH(user_case
 # END_SORT_THIS_LINE_MINUS_2
    ADD_CUSTOM_TARGET(
       check_example_user_${user_case}
-      bin/user_test.py example/user/${user_case}.py
+      ${python3_executable} bin/user_test.py example/user/${user_case}.py
       WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
       DEPENDS dismod_at
    )

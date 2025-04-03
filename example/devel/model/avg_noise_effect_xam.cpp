@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-24 Bradley M. Bell
+// SPDX-FileContributor: 2014-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 /*
@@ -19,7 +19,6 @@ C++ avg_noise_effect: Example and Test
 // BEGIN C++
 # include <limits>
 # include <dismod_at/avg_noise_effect.hpp>
-# include <dismod_at/open_connection.hpp>
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/age_avg_grid.hpp>
 

@@ -18,6 +18,11 @@ Release Notes for 2025
 mm-dd
 *****
 
+04-03
+=====
+Some of the C++ connections to the data base were not properly closed.
+This caused a failure during testing on windows systems and has been fixed.
+
 03-25
 =====
 1. Change ``bin/user_test.sh`` to ``bin/user_test.py`` so that it can be

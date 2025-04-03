@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-23 Bradley M. Bell
+// SPDX-FileContributor: 2014-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 Test computing data model values on a subset of data table.
 */
 # include <limits>
 # include <dismod_at/data_model.hpp>
-# include <dismod_at/open_connection.hpp>
 # include <dismod_at/null_int.hpp>
 # include <dismod_at/age_avg_grid.hpp>
 # include <dismod_at/cov2weight_map.hpp>
