@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Test bound_frac using case where lower limit == initial value < upper limit
 iota_true        = 0.05
@@ -13,8 +13,9 @@ bound_frac       = 1e-4
 import sys
 import os
 import subprocess
-test_program = 'test/user/bound_frac.py'
-if sys.argv[0] != test_program  or len(sys.argv) != 1 :
+test_program  = 'test/user/bound_frac.py'
+check_program = sys.argv[0].replace('\\', '/')
+if check_program != test_program  or len(sys.argv) != 1 :
    usage  = 'python3 ' + test_program + '\n'
    usage += 'where python3 is the python 3 program on your system\n'
    usage += 'and working directory is the dismod_at distribution directory\n'

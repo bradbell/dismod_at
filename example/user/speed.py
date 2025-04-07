@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_speed.py}
 # {xrst_comment_ch #}
@@ -140,8 +140,9 @@ import os
 import time
 import numpy
 import timeit
-test_program = 'example/user/speed.py'
-if sys.argv[0] != test_program  or len(sys.argv) != 7 :
+test_program  = 'example/user/speed.py'
+check_program = sys.argv[0].replace('\\', '/')
+if check_program != test_program  or len(sys.argv) != 7 :
    usage  = 'python3 ' + test_program + ' a1 a2 a3 a4 a5 a6\\\n'
    usage += 'python3:            the python 3 program on your system\n'
    usage += 'a1: random_seed:    non-negative random seed; if zero, use clock\n'

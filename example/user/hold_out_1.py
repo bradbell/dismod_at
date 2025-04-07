@@ -92,8 +92,9 @@ import sys
 import os
 import copy
 import math
-test_program = 'example/user/hold_out_1.py'
-if sys.argv[0] != test_program  or len(sys.argv) != 1 :
+test_program  = 'example/user/hold_out_1.py'
+check_program = sys.argv[0].replace('\\', '/')
+if check_program != test_program  or len(sys.argv) != 1 :
    usage  = 'python3 ' + test_program + '\n'
    usage += 'where python3 is the python 3 program on your system\n'
    usage += 'and working directory is the dismod_at distribution directory\n'

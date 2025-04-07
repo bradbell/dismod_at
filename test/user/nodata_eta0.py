@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Test a case where there is not data and fit does not agree with mean.
 # Also test a log prior case where and eta = 0, but eta + lower > 0
@@ -10,8 +10,9 @@ iota_mean     = 0.01
 import sys
 import os
 import subprocess
-test_program = 'test/user/nodata_eta0.py'
-if sys.argv[0] != test_program  or len(sys.argv) != 1 :
+test_program  = 'test/user/nodata_eta0.py'
+check_program = sys.argv[0].replace('\\', '/')
+if check_program != test_program  or len(sys.argv) != 1 :
    usage  = 'python3 ' + test_program + '\n'
    usage += 'where python3 is the python 3 program on your system\n'
    usage += 'and working directory is the dismod_at distribution directory\n'

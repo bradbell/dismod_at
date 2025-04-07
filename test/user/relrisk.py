@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # true values used to simulate data
 other_true      = 0.05
@@ -11,8 +11,9 @@ import sys
 import os
 import subprocess
 import pdb
-test_program = 'test/user/relrisk.py'
-if sys.argv[0] != test_program  or len(sys.argv) != 1 :
+test_program  = 'test/user/relrisk.py'
+check_program = sys.argv[0].replace('\\', '/')
+if check_program != test_program  or len(sys.argv) != 1 :
    usage  = 'python3 ' + test_program + '\n'
    usage += 'where python3 is the python 3 program on your system\n'
    usage += 'and working directory is the dismod_at distribution directory\n'

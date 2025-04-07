@@ -7,7 +7,7 @@ SET(depends "")
 FOREACH(cmd db2csv depend init fit modify predict old2new set simulate sample)
    ADD_CUSTOM_TARGET(
       check_example_get_started_${cmd}
-      bin/user_test.py example/get_started/${cmd}_command.py
+      ${python3_executable} bin/user_test.py example/get_started/${cmd}_command.py
       WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
       DEPENDS dismod_at
    )

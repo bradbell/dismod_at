@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_covid_19.py}
 # {xrst_spell
@@ -212,8 +212,9 @@ import copy
 import numpy
 import matplotlib.pyplot
 import matplotlib.gridspec
-test_program = 'example/user/covid_19.py'
-if sys.argv[0] != test_program  or len(sys.argv) != 1 :
+test_program  = 'example/user/covid_19.py'
+check_program = sys.argv[0].replace('\\', '/')
+if check_program != test_program  or len(sys.argv) != 1 :
    usage  = 'python3 ' + test_program + '\n'
    usage += 'where python3 is the python 3 program on your system\n'
    usage += 'and working directory is the dismod_at distribution directory\n'
