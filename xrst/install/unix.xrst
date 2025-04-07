@@ -77,9 +77,9 @@ You need to have the following additional python packages:
 
 sqlite3
 =======
-The `http://sqlite.org/ <https://www.sqlite.org/index.html>`_ library,
+The `http://sqlite.org/ <https://sqlite.org/index.html>`_ library,
 version 3.7.11 (released on 2012-03-20) or higher; see
-`sqlite releases <https://www.sqlite.org/changes.html>`_.
+`sqlite releases <https://sqlite.org/changes.html>`_.
 Note that the development headers are required; e.g.,
 on Fedora or Red-Hat one needs to install ``sqlite-devel`` .
 

@@ -531,7 +531,7 @@ The random choice of which values to include can be made repeatable using
 database
 ********
 Is an
-`sqlite <https://www.sqlite.org/index.html>`_ database containing the
+`sqlite <https://sqlite.org/index.html>`_ database containing the
 ``dismod_at`` :ref:`input-name` tables which are not modified.
 
 integrand_name

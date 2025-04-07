@@ -49,7 +49,7 @@ set the absolute bound for all the random effects.
 database
 ********
 Is an
-`sqlite <https://www.sqlite.org/index.html>`_ database containing the
+`sqlite <https://sqlite.org/index.html>`_ database containing the
 ``dismod_at`` :ref:`input-name` tables which are not modified.
 
 max_abs_effect

@@ -39,7 +39,7 @@ hence the density can't be changed.
 database
 ********
 Is an
-`sqlite <https://www.sqlite.org/index.html>`_ database containing the
+`sqlite <https://sqlite.org/index.html>`_ database containing the
 ``dismod_at`` :ref:`input-name` tables which are not modified.
 If this is the only argument, all the data densities are set back to the
 values specified by the :ref:`data_table-name` .
