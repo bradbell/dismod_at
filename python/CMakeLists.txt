@@ -1,10 +1,14 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 CONFIGURE_FILE(
    ${CMAKE_CURRENT_SOURCE_DIR}/bin/dismodat.py.in
    ${CMAKE_CURRENT_SOURCE_DIR}/bin/dismodat.py
+)
+CONFIGURE_FILE(
+   ${CMAKE_CURRENT_SOURCE_DIR}/dismod_at/__init__.py.in
+   ${CMAKE_CURRENT_SOURCE_DIR}/dismod_at/__init__.py
 )
 ADD_CUSTOM_TARGET(
    install_python

@@ -280,9 +280,10 @@ for var_id in range( len(var_table) ) :
 # ---------------------------------------------------------------------------
 # Now check data.csv for interval compression
 os.chdir('../../..')
-program   = 'python/bin/dismodat.py'
-file_name = 'build/example/user/' + file_name
-dismod_at.system_command_prc([ program, file_name, 'db2csv' ])
+python_exe = dismod_at.python3_executable
+program    = 'python/bin/dismodat.py'
+file_name  = 'build/example/user/' + file_name
+dismod_at.system_command_prc([ python_exe, program, file_name, 'db2csv' ])
 data_file      = open('build/example/user/data.csv', 'r')
 reader         = csv.DictReader(data_file)
 for (data_id, row) in enumerate(reader) :

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin modify_command.py}
 # {xrst_comment_ch #}
@@ -58,6 +58,7 @@ get_started_db.get_started_db()
 # return to test_dir when done.
 os.chdir(dist_dir)
 print( os.getcwd() )
+python_exe       = dismod_at.python3_executable
 program          = 'python/bin/dismodat.py'
 file_name        = test_dir + '/get_started.db'
 command          = 'modify'
@@ -66,6 +67,7 @@ column_name      = 'density_id' # column we are modifying
 row_expression   = 'data_id==0' # row we are modifiying
 value_expression = '6'          # value we are placeing in that row, column
 system_cmd       = [
+   python_exe,
    program,
    file_name,
    command,

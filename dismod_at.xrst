@@ -51,7 +51,7 @@ Contents
    xrst/table/database.xrst
    xrst/model/model.xrst
    devel/cmd/command.xrst
-   python/dismod_at/__init__.py
+   python/dismod_at/__init__.py.in
    xrst/release_notes.xrst
    xrst/wish_list.xrst
 }

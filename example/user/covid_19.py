@@ -516,9 +516,10 @@ example_db(file_name)
 # fit data
 program_cpp = '../../devel/dismod_at'
 program_py  = '../../../python/bin/dismodat.py'
+python_exe  = dismod_at.python3_executable
 dismod_at.system_command_prc([ program_cpp, file_name, 'init' ])
 dismod_at.system_command_prc([ program_cpp, file_name, 'fit', 'fixed' ])
-dismod_at.system_command_prc([ program_py,  file_name, 'db2csv' ])
+dismod_at.system_command_prc([ python_exe, program_py,  file_name, 'db2csv' ])
 #
 # weighted residuals
 file_in  = 'data.csv'

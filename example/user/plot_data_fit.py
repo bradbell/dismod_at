@@ -365,11 +365,12 @@ for (var_id, row) in enumerate(var_table) :
 # -----------------------------------------------------------------------------
 # Run plot at unix command line
 os.chdir('../../..')
-program  = 'python/bin/dismodat.py'
-database = f'build/example/user/{database}'
-pdf_file = f'build/example/user/{pdf_file}'
-max_plot = str(max_plot)
-dismod_at.system_command_prc( [
+python_exe = dismod_at.python3_executable
+program    = 'python/bin/dismodat.py'
+database   = f'build/example/user/{database}'
+pdf_file   = f'build/example/user/{pdf_file}'
+max_plot   = str(max_plot)
+dismod_at.system_command_prc( [ python_exe,
    program, database, 'plot_data_fit', pdf_file, plot_title, max_plot
 ] )
 print(f'Plot file: {pdf_file}')

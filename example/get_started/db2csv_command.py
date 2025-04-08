@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin db2csv_command.py}
 # {xrst_comment_ch #}
@@ -63,9 +63,10 @@ dismod_at.system_command_prc( [ program, file_name, 'fit', 'both' ] )
 # return to test_dir when done.
 os.chdir(dist_dir)
 print( os.getcwd() )
+python_exe     = dismod_at.python3_executable
 program        = 'python/bin/dismodat.py'
 file_name      = test_dir + '/get_started.db'
-dismod_at.system_command_prc( [ program, file_name, 'db2csv'] )
+dismod_at.system_command_prc( [ python_exe, program, file_name, 'db2csv'] )
 os.chdir(test_dir)
 # ---------------------------------------------------------------------------
 # get_table
