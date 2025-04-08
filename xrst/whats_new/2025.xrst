@@ -18,6 +18,12 @@ Release Notes for 2025
 mm-dd
 *****
 
+04-08
+=====
+The error messages for invalid values in the
+:ref:`option_table-name` were improved.
+To be specific, the option name was included in the messages.
+
 04-03
 =====
 Some of the C++ connections to the data base were not properly closed.

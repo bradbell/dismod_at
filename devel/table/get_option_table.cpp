@@ -238,8 +238,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
                   found = true;
             }
             if( ! found )
-            {  string cmd = name_vec[match];
-               msg = cmd + ": invalid interand_name = '";
+            {  msg = name_vec[match] + ": invalid interand_name = '";
                msg += name + "'";
                error_exit(msg, table_name, option_id);
             }
@@ -254,7 +253,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
          ok     |= option_value[option_id] == "add_var_scale_all";
          ok     |= option_value[option_id] == "add_var_scale_none";
          if( ! ok )
-         {  msg = "option table: meas_noise_effect = '";
+         {  msg = "meas_noise_effect = '";
             msg += option_value[option_id] + "'";
             error_exit(msg, table_name, option_id);
          }
@@ -269,7 +268,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
          ok     |= option_value[option_id] == "iota_zero_rho_zero";
          ok     |= option_value[option_id] == "iota_pos_rho_pos";
          if( ! ok )
-         {  msg = "option table: rate_case = '";
+         {  msg = "rate_case = '";
             msg += option_value[option_id] + "'";
             error_exit(msg, table_name, option_id);
          }
@@ -278,7 +277,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
       if( name_vec[match] == "ode_step_size" )
       {  bool ok = std::atof( option_value[option_id].c_str() ) > 0.0;
          if( ! ok )
-         {  msg = "option_value is <= 0.0 for ode_step_size";
+         {  msg = "ode_step_size is <= 0.0";
             error_exit(msg, table_name, option_id);
          }
       }
@@ -286,7 +285,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
       if( name_vec[match] == "random_seed" )
       {  bool ok = std::atoi( option_value[option_id].c_str() ) >= 0;
          if( ! ok )
-         {  msg = "option_value is < 0 for random_seed";
+         {  msg = "random_seed is < 0";
             error_exit(msg, table_name, option_id);
          }
       }
@@ -297,7 +296,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
          else if( option_value[option_id] == "false" )
             quasi_fixed = false;
          else
-         {  msg = "option_value is not true or false";
+         {  msg = "quasi_fixed is not true or false";
             error_exit(msg, table_name, option_id);
          }
       }
@@ -306,7 +305,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
       {  if(
             option_value[option_id] != "true" &&
             option_value[option_id] != "false" )
-         {  msg = "option_value is not true or false";
+         {  msg = "warn_on_stderr is not true or false";
             error_exit(msg, table_name, option_id);
          }
       }
@@ -315,7 +314,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
       {  if(
             option_value[option_id] != "true" &&
             option_value[option_id] != "false" )
-         {  msg = "option_value is not true or false";
+         {  msg = "trace_init_fit_model is not true or false";
             error_exit(msg, table_name, option_id);
          }
       }
@@ -328,7 +327,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
       {  double tolerance = std::atof( option_value[option_id].c_str() );
          bool ok = 0.0 < tolerance;
          if( ! ok )
-         {  msg = "option_value is not greater than zero";
+         {  msg = name_vec[match] + " is not greater than zero";
             error_exit(msg, table_name, option_id);
          }
       }
@@ -339,7 +338,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
          {  double bound_random = std::atof( bound_random_str.c_str() );
             bool ok = 0.0 <= bound_random;
             if( ! ok )
-            {  msg = "option_value is less than zero.";
+            {  msg = "bound_random is less than zero.";
                error_exit(msg, table_name, option_id);
             }
          }
@@ -353,7 +352,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
       {  int max_num_iter = std::atoi( option_value[option_id].c_str() );
          bool ok = -1 <= max_num_iter;
          if( ! ok )
-         {  msg = "option_value is less than minus one";
+         {  msg = name_vec[match] + " is less than minus one";
             error_exit(msg, table_name, option_id);
          }
       }
@@ -366,7 +365,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
       {  int print_level = std::atoi( option_value[option_id].c_str() );
          bool ok = 0 <= print_level && print_level <= 12;
          if( ! ok )
-         {  msg = "option_value is not between 0 and 12 inclusive";
+         {  msg = name_vec[match] + " is not between 0 and 12 inclusive";
             error_exit(msg, table_name, option_id);
          }
       }
@@ -381,7 +380,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
       {  int pos_integer = std::atoi( option_value[option_id].c_str() );
          bool ok = 0 < pos_integer;
          if( ! ok )
-         {  msg = "option_value is not a positive integer";
+         {  msg = name_vec[match] + " is not a positive integer";
             error_exit(msg, table_name, option_id);
          }
       }
@@ -399,7 +398,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
          ok     |= option_value[option_id] == "adaptive";
          ok     |= option_value[option_id] == "trace-adaptive";
          if( ! ok )
-         {  msg  = "option_value not one of the following:\n";
+         {  msg  = name_vec[match] + " is not one of the following:\n";
             msg += "none, first-order, second-order, only-second-order\n";
             msg += "adaptive, trace-adaptive";
             error_exit(msg, table_name, option_id);
@@ -425,7 +424,7 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
             for(size_t rate_id = 0; rate_id < n_rate; rate_id++)
                found = found || rate_name == get_rate_name(rate_id);
             if( ! found )
-            {  msg  = rate_name + " in option_value list";
+            {  msg  = "zero_sum_child_rate: " + rate_name;
                msg += " is not a valid rate name";
                error_exit(msg, table_name, option_id);
             }
@@ -436,24 +435,24 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
       {  if( option_value[option_id] != "ipopt_solve"  &&
              option_value[option_id] != "ipopt_random"
          )
-         {  msg  = "method_random option is not ";
+         {  msg  = "method_random is not ";
             msg += "ipopt_solve or ipopt_random";
             error_exit(msg, table_name, option_id);
          }
       }
       if( name_vec[match] == "compress_interval" )
       {  if( option_value_split.size() != 2 )
-         {  msg = "option_value must have two space separated elements.";
+         {  msg = "compress_interval must be two space separated elements.";
             error_exit(msg, table_name, option_id);
          }
          double age_size = std::atof( option_value_split[0].c_str() );
          if( age_size < 0.0 )
-         {  msg = "option_valuew age_size is less than zero.";
+         {  msg = "compress_interval age_size is less than zero.";
             error_exit(msg, table_name, option_id);
          }
          double time_size = std::atof( option_value_split[1].c_str() );
          if( time_size < 0.0 )
-         {  msg = "option_valuew time_size is less than zero.";
+         {  msg = "compress_interval time_size is less than zero.";
             error_exit(msg, table_name, option_id);
          }
       }

@@ -102,6 +102,7 @@ dismod_at.system_command_prc(
 file_stdout.close()
 file_stdout = open(file_name, 'r')
 result      = file_stdout.read()
+file_stdout.close()
 assert result  == command[1] + '\n'
 os.remove(file_name)
 #
