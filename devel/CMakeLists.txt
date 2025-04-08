@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # devel
 # BEGIN_SORT_THIS_LINE_PLUS_2
@@ -33,7 +33,7 @@ ADD_LIBRARY(devel EXCLUDE_FROM_ALL
    table/check_table_id.cpp
    table/check_zero_sum.cpp
    table/create_table.cpp
-   table/does_table_exist
+   table/does_table_exist.cpp
    table/exec_sql_cmd.cpp
    table/get_age_table.cpp
    table/get_avgint_table.cpp
