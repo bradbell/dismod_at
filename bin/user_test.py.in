@@ -59,7 +59,7 @@ def main() :
          print(msg)
          time.sleep(1)
    print( result.stdout )
-   syx.exit( result.stderr )
+   sys.exit( result.stderr )
    print( 'user_test.py: giving up after 4 attempts' )
 #
 main()
