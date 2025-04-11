@@ -18,6 +18,14 @@ Release Notes for 2025
 mm-dd
 *****
 
+04-11
+=====
+The `test/user/bound_random.py` case was failing on windows.
+Change the derivative test for this case to `adaptive` so that it
+is the same on windows and linux.
+Also decrease the width of the feasible region so that derivative
+testing does not use a point where the objective can't be evaluated.
+
 04-08
 =====
 The error messages for invalid values in the
