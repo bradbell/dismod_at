@@ -55,6 +55,7 @@ from .db2csv_command      import db2csv_command
 from .get_name_type       import get_name_type
 from .get_row_list        import get_row_list
 from .get_table_dict      import get_table_dict
+from .main                import main
 from .metropolis          import metropolis
 from .modify_command      import modify_command
 from .perturb_command     import perturb_command
