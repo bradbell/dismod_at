@@ -107,8 +107,8 @@ def example_db (file_name) :
       { # prior_rate_parent
          'name':     'prior_rate_parent',
          'density':  'uniform',
-         'lower':    iota_true['north_america'] / 100,
-         'upper':    iota_true['north_america'] * 100,
+         'lower':    iota_true['north_america'] / 10,
+         'upper':    iota_true['north_america'] * 10,
          'mean':     iota_true['north_america'] * 2,
          'std':      None,
          'eta':      None
@@ -191,7 +191,7 @@ def example_db (file_name) :
       { 'name':'rate_case',              'value':'iota_pos_rho_zero' },
 
       { 'name':'quasi_fixed',            'value':'true'          },
-      { 'name':'derivative_test_fixed',  'value':'first-order'   },
+      { 'name':'derivative_test_fixed',  'value':'adaptive'      },
       { 'name':'max_num_iter_fixed',     'value':'100'           },
       { 'name':'print_level_fixed',      'value':'0'             },
       { 'name':'tolerance_fixed',        'value':'1e-11'         },
