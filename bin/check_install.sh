@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # test install of python module and executable
 # ---------------------------------------------------------------------------
@@ -91,7 +91,7 @@ EOF
 cat << EOF > run.sh
 $python3_executable create_db.py
 dismod_at get_started.db init
-dismodat.py get_started.db db2csv
+dismod-at get_started.db db2csv
 EOF
 chmod +x run.sh
 cat run.sh

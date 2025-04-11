@@ -18,6 +18,11 @@ Release Notes for 2025
 mm-dd
 *****
 
+04-12
+=====
+The name ``dismod-at`` can be used in place of :ref:`dismodat.py-name`.
+The current plan is for `dismodat.py` to be used for testing and not installed.
+
 04-11
 =====
 The `test/user/bound_random.py` case was failing on windows.

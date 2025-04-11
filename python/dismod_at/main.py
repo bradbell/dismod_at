@@ -135,4 +135,5 @@ def main():
    dismod_at.sql_command(connection, cmd)
    connection.close()
    # ---------------------------------------------------------------------------
-   print('dismodat.py: OK')
+   program_name = sys.argv[0].replace('\\', '/').split('/')[-1]
+   print( program_name + ': OK')

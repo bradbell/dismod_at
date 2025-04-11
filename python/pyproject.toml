@@ -44,5 +44,12 @@ package_dir   = 'at_cascade'
 'Homepage'    = 'https://github.com/bradbell/dismod_at'
 'Bug Tracker' = 'https://github.com/bradbell/dismod_at/issues'
 
+# dismod_at
 # The script bin/dismodat.py is installed by ./CMakeLists.txt
+
+# dismodat.py
 # The program bin/dismod_at is installed by ../devel/CMakeLists.txt
+
+# dismod-at
+[project.scripts]
+dismod-at = 'dismod_at:main'
