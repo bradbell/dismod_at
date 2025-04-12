@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2014-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin balance_pair_xam.cpp dev}
@@ -47,7 +47,7 @@ bool balance_pair_xam(void)
    //
    // i_try
    size_t i_try = 0;
-   while( i_try < 2 )
+   while( i_try < 3 )
    {  ++i_try;
       //
       // sample_vec
@@ -70,13 +70,13 @@ bool balance_pair_xam(void)
       }
       // ok
       if( ascend || descend )
-      {  // give up after two tries
-         if( i_try == 2 )
+      {  // give up after three tries
+         if( i_try == 3 )
             ok = false;
       }
       else
-      {  // skip second run of test
-         i_try = 2;
+      {  // this try succeeded
+         i_try = 3;
       }
    }
    //

@@ -10,6 +10,7 @@ $Id:$
    mm
    dd
    conda
+   xam
 }
 
 Release Notes for 2025
@@ -20,8 +21,10 @@ mm-dd
 
 04-12
 =====
-The name ``dismod-at`` can be used in place of :ref:`dismodat.py-name`.
-The current plan is for `dismodat.py` to be used for testing and not installed.
+#. The name ``dismod-at`` can be used in place of :ref:`dismodat.py-name`.
+   The current plan is to deprecate `dismodat.py` and only use it for testing.
+#. The number of attempts in ``balanced_pair_xam`` test was increased from
+   two to three to reduce the chance of a random failure.
 
 04-11
 =====
