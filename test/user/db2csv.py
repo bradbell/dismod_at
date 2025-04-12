@@ -219,6 +219,31 @@ def example_db (file_name) :
    )
    return
 # ===========================================================================
+# system_command
+# 1. print the command before executing it
+# 2. double check for errors during the command
+# 3 print any error message that is returned before aborting
+def system_command(command) :
+   print( " ".join( command ) )
+   try :
+      result = subprocess.run(
+         command,
+         check          = False,
+         capture_output = True ,
+         encoding       = 'utf-8',
+         env            = os.environ
+      )
+   #
+   except subprocess.CalledProcessErrror as e :
+      if e.stdout != None and e.stdout != "" :
+         print( e.stdout )
+      sys.exit( e.stderr )
+   #
+   if result.stdout != None and result.stdout != "" :
+      print( result.stdout )
+   if result.returncode != 0 :
+      sys.exit( result.stderr )
+#
 # create the database
 file_name  = 'example.db'
 example_db(file_name)
@@ -235,10 +260,7 @@ command_list = [
    [ program  , file_name, 'fit', 'fixed', 'warm_start' ],
 ]
 for command in command_list :
-   print( ' '.join(command) )
-   flag = subprocess.call( command )
-   if flag != 0 :
-      sys.exit('db2csv.py: command failed')
+   system_command( command )
 # must go back to distribution directory to run bin/dismodat.py in sandbox
 os.chdir('../../..')
 python_exe = dismod_at.python3_executable
@@ -248,10 +270,7 @@ command = [
    'build/test/user/' + file_name,
    'db2csv'
 ]
-print( ' '.join(command) )
-flag = subprocess.call( command )
-if flag != 0 :
-   sys.exit('db2csv.py: command failed')
+system_command( command )
 # -----------------------------------------------------------------------
 # variable.csv
 data_file    = open('build/test/user/variable.csv', 'r')
