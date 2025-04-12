@@ -222,7 +222,7 @@ def example_db (file_name) :
 # system_command
 # 1. print the command before executing it
 # 2. double check for errors during the command
-# 3 print any error message that is returned before aborting
+# 3. if an error occurs, exit with message
 def system_command(command) :
    print( " ".join( command ) )
    try :
@@ -235,13 +235,15 @@ def system_command(command) :
       )
    #
    except subprocess.CalledProcessErrror as e :
-      if e.stdout != None and e.stdout != "" :
-         print( e.stdout )
+      if e.stdout == None or e.stdout == "" :
+         sys.exit('run_test.py: command above failed with no error message')
       sys.exit( e.stderr )
    #
    if result.stdout != None and result.stdout != "" :
       print( result.stdout )
    if result.returncode != 0 :
+      if result.stdout == None or result.stdout == "" :
+         sys.exit('run_test.py: command above failed with no error message')
       sys.exit( result.stderr )
 #
 # create the database
