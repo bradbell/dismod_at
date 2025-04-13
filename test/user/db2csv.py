@@ -275,8 +275,8 @@ command = [
 system_command( command )
 # -----------------------------------------------------------------------
 # variable.csv
-data_file    = open('build/test/user/variable.csv', 'r')
-reader       = csv.DictReader(data_file)
+file_name    = open('build/test/user/variable.csv', 'r')
+reader       = csv.DictReader(file_name)
 count_mulcov = 0
 for row in reader :
    # Check bnd_mulcov informaiton
@@ -298,8 +298,8 @@ for row in reader :
          assert row['bound'] == ''
 # -----------------------------------------------------------------------
 # data.csv
-data_file = open('build/test/user/data.csv', 'r')
-reader    = csv.DictReader(data_file)
+file_name = open('build/test/user/data.csv', 'r')
+reader    = csv.DictReader(file_name)
 for row in reader :
    #
    # meas_std
@@ -317,8 +317,8 @@ for row in reader :
    assert abs( 1.0 - result / sigma) < 1e-4
 # -----------------------------------------------------------------------
 # mixed_info.csv
-data_file = open('build/test/user/mixed_info.csv', 'r')
-reader    = csv.DictReader(data_file)
+file_name = open('build/test/user/mixed_info.csv', 'r')
+reader    = csv.DictReader(file_name)
 mixed_name_list = [
    "n_fixed",
    "n_random",
