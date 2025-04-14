@@ -16,8 +16,8 @@ ADD_CUSTOM_TARGET(
    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 )
 #
-# 2DO: add the install of dismodat.py functionality to pyproject.toml.
-# Perhaps as dismod-at will be the python and dismod_at the C++ executable ?
+# Install dismodat.py for backward compatibility on non windows systems.
+# This has been replaced by the script dismod-at in pyproject.toml.
 INSTALL(
    FILES ${CMAKE_CURRENT_SOURCE_DIR}/bin/dismodat.py
    DESTINATION ${dismod_at_prefix}/bin
