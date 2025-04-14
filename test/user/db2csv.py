@@ -266,12 +266,9 @@ for command in command_list :
 # must go back to distribution directory to run bin/dismodat.py in sandbox
 os.chdir('../../..')
 python_exe = dismod_at.python3_executable
-command = [
-   python_exe,
-   'python/bin/dismodat.py',
-   'build/test/user/' + file_name,
-   'db2csv'
-]
+program    = 'python/bin/dismodat.py'
+database   = 'build/test/user/' + file_name
+command    = [ python_exe, program, database, 'db2csv' ]
 system_command( command )
 # -----------------------------------------------------------------------
 # variable.csv
