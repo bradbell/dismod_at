@@ -218,33 +218,6 @@ def example_db (file_name) :
       option_table
    )
    return
-# ===========================================================================
-# system_command
-# 1. print the command before executing it
-# 2. double check for errors during the command
-# 3. if an error occurs, exit with message
-def system_command(command) :
-   print( " ".join( command ) )
-   try :
-      result = subprocess.run(
-         command,
-         check          = False,
-         capture_output = True ,
-         encoding       = 'utf-8',
-         env            = os.environ
-      )
-   #
-   except subprocess.CalledProcessErrror as e :
-      if e.stdout == None or e.stdout == "" :
-         sys.exit('run_test.py: command above failed with no error message')
-      sys.exit( e.stderr )
-   #
-   if result.stdout != None and result.stdout != "" :
-      print( result.stdout )
-   if result.returncode != 0 :
-      if result.stdout == None or result.stdout == "" :
-         sys.exit('run_test.py: command above failed with no error message')
-      sys.exit( result.stderr )
 #
 # create the database
 file_name  = 'example.db'
@@ -262,14 +235,14 @@ command_list = [
    [ program  , file_name, 'fit', 'fixed', 'warm_start' ],
 ]
 for command in command_list :
-   system_command( command )
+   dismod_at.system_command_prc( command )
 # must go back to distribution directory to run bin/dismodat.py in sandbox
 os.chdir('../../..')
 python_exe = dismod_at.python3_executable
 program    = 'python/bin/dismodat.py'
 database   = 'build/test/user/' + file_name
 command    = [ python_exe, program, database, 'db2csv' ]
-system_command( command )
+dismod_at.system_command_prc( command )
 # -----------------------------------------------------------------------
 # variable.csv
 file_name    = open('build/test/user/variable.csv', 'r')

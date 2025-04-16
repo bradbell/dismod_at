@@ -138,16 +138,6 @@ os.chdir('build/example/user')
 # random_seed_str
 random_seed_str = str( int( time.time() ) )
 # ----------------------------------------------------------------------------
-# run a system command
-def system_command(command) :
-   print( ' '.join(command) )
-   flag = subprocess.call( command )
-   if flag != 0 :
-      msg  = 'command failed: flag = ' + str(flag)
-      msg += ', random_seed = ' + random_seed_str
-      sys.exit(msg)
-   return
-# ------------------------------------------------------------------------
 def fun_iota_parent(a, t) :
    return ('prior_iota_parent', None, None)
 def fun_gamma(a, t):
@@ -306,13 +296,16 @@ example_db(file_name)
 program        = '../../devel/dismod_at'
 #
 # init database
-system_command([ program, file_name, 'init' ])
+command = [ program, file_name, 'init' ]
+dismod_at.system_command_prc(command)
 #
 # Note that the prior mean is equal to the true value for iota
-system_command([ program, file_name, 'set', 'truth_var', 'prior_mean' ])
+command = [ program, file_name, 'set', 'truth_var', 'prior_mean' ]
+dismod_at.system_command_prc(command)
 #
 # create data_sim table
-system_command([ program, file_name, 'simulate', str(number_simulate) ])
+command = [ program, file_name, 'simulate', str(number_simulate) ]
+dismod_at.system_command_prc(command)
 # -----------------------------------------------------------------------
 # check simulated data
 from math import log

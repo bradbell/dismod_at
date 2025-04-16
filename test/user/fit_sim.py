@@ -40,16 +40,6 @@ os.chdir('build/test/user')
 # random_seed_str
 random_seed_str = str( int( time.time() ) )
 # ----------------------------------------------------------------------------
-# run a system command
-def system_command(command) :
-   print( ' '.join(command) )
-   flag = subprocess.call( command )
-   if flag != 0 :
-      msg  = 'command failed: flag = ' + str(flag)
-      msg += ', random_seed = ' + random_seed_str
-      sys.exit(msg)
-   return
-# ------------------------------------------------------------------------
 # note that the a, t values are not used for this case
 def fun_rate_child(a, t) :
    return ('prior_gauss_zero', 'prior_gauss_zero', 'prior_gauss_zero')
@@ -274,7 +264,7 @@ def example_db (file_name) :
 file_name      = 'example.db'
 example_db(file_name)
 program        = '../../devel/dismod_at'
-system_command([ program, file_name, 'init' ])
+dismod_at.system_command_prc([ program, file_name, 'init' ])
 # -----------------------------------------------------------------------
 # read database
 connection      = dismod_at.create_connection(
@@ -320,10 +310,14 @@ dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------
 # Simulate and then fit the data
-system_command([ program, file_name, 'set', 'scale_var', 'truth_var' ])
-system_command([ program, file_name, 'set', 'start_var', 'truth_var' ])
-system_command([ program, file_name, 'simulate', '2' ])
-system_command([ program, file_name, 'fit', 'both', '0' ])
+command = [ program, file_name, 'set', 'scale_var', 'truth_var' ]
+dismod_at.system_command_prc( command )
+command = [ program, file_name, 'set', 'start_var', 'truth_var' ]
+dismod_at.system_command_prc( command )
+command = [ program, file_name, 'simulate', '2' ]
+dismod_at.system_command_prc( command )
+command = [ program, file_name, 'fit', 'both', '0' ]
+dismod_at.system_command_prc( command )
 # -----------------------------------------------------------------------
 # check fit results
 connection   = dismod_at.create_connection(
@@ -345,10 +339,10 @@ if max_error > 5e-2 :
    assert(False)
 # -----------------------------------------------------------------------------
 # set start_var so it corresponds to second set of model variables
-cmd = [ program, file_name, 'sample', 'simulate', 'both', '2' ]
-system_command(cmd)
-cmd = [ program, file_name, 'set', 'start_var', 'sample', '1' ]
-system_command(cmd)
+command = [ program, file_name, 'sample', 'simulate', 'both', '2' ]
+dismod_at.system_command_prc(command)
+command = [ program, file_name, 'set', 'start_var', 'sample', '1' ]
+dismod_at.system_command_prc(command)
 start_var_table = dismod_at.get_table_dict(connection, 'start_var')
 sample_table    = dismod_at.get_table_dict(connection, 'sample')
 sample_index    = 1
