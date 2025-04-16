@@ -11,6 +11,8 @@ $Id:$
    dd
    conda
    xam
+   subprocess
+   stderr
 }
 
 Release Notes for 2025
@@ -18,6 +20,12 @@ Release Notes for 2025
 
 mm-dd
 *****
+
+04-16
+=====
+The :ref:`system_command_prc-name` routine was improved so that
+it captured and reported exceptions during its call to
+``subprocess.run`` as if they were messages on stderr.
 
 04-12
 =====

@@ -1,7 +1,7 @@
 # $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin system_command_prc}
 # {xrst_spell
@@ -156,13 +156,29 @@ def system_command_prc(
    else :
       stderr = file_stderr
    #
-   # subprocess_return
-   subprocess_return = subprocess.run(
-      command,
-      stdout   = stdout  ,
-      stderr   = stderr  ,
-      encoding = 'utf-8' ,
-   )
+   # except_msg, subprocess_return
+   except_msg        = None
+   subprocess_return = subprocess.CompletedProcess(args=command, returncode=1)
+   try :
+      subprocess_return = subprocess.run(
+         command,
+         stdout   = stdout  ,
+         stderr   = stderr  ,
+         encoding = 'utf-8' ,
+      )
+   except subprocess.CalledProcessErrror as e :
+      if e.stdout == None or e.stdout == "" :
+         except_msg = 'CalledProcessErrror with an empty error message.'
+      else :
+         except_msg = e.stderr
+   except :
+      except_msg = str(sys.exception()) + ' exception'
+   #
+   # file_stderr, subprocess_return.stderr
+   if except_msg != None :
+      subprocess_return.stderr = except_msg
+      if file_stderr is not None :
+         file_stderr.write(except_msg)
    #
    # returncode
    returncode = subprocess_return.returncode
