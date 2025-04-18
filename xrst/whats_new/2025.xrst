@@ -21,6 +21,11 @@ Release Notes for 2025
 mm-dd
 *****
 
+04-17
+=====
+Advance the dock_dismod_at :ref:`dock_dismod_at.sh@dismod_at_version`
+from 2025.2.7 to 2025.4.16.
+
 04-16
 =====
 The :ref:`system_command_prc-name` routine was improved so that

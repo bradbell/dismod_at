@@ -10,12 +10,11 @@ build-backend = 'setuptools.build_meta'
 # -----------------------------------------------------------------------------
 [project]
 name              = 'dismod_at'
-version           = '2025.4.16'
+version           = '2025.4.17'
 description       = 'Disease Rates as Functions of Age and Time'
 readme            = 'README.md'
 requires-python   = '>=3.0'
 keywords          = [ 'public health', 'disease', 'cause of death' ]
-license           = { text = 'AGPL-3.0-or-later' }
 authors           = [
   {name  = 'Bradley M. Bell', email = 'bradbell@seanet.com'},
 ]
@@ -32,6 +31,9 @@ classifiers       = [
    'Intended Audience  :: Public Health Modelers',
    'Natural Language   :: English',
 ]
+#
+# https://github.com/pypa/setuptools/issues/4903
+license           = { text = 'AGPL-3.0-or-later' }
 #
 # -----------------------------------------------------------------------------
 [tool.setuptools]

@@ -44,7 +44,7 @@ fi
 # bin_dir
 bin_dir="$dismod_at_prefix/bin"
 echo_eval rm -rf $bin_dir/dismod_at
-echo_eval rm -rf $bin_dir/dismodat.py
+echo_eval rm -rf $bin_dir/dismod-at
 #
 # make install
 if [ "$build_type" == debug ]
@@ -130,7 +130,7 @@ fi
 cat << EOF > run.sh
 python3 create_db.py
 dismod_at get_started.db init
-dismodat.py get_started.db db2csv
+dismod-at get_started.db db2csv
 EOF
 #
 # podman directory
