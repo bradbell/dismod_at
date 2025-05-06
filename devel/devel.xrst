@@ -10,6 +10,7 @@ Dismod_at Developer Documentation
 Contents
 ********
 {xrst_toc_table
+   python/bin/dismodat.py.in
    devel/table/table.xrst
    devel/utility/utility.xrst
    devel/model/model.xrst

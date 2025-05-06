@@ -9,7 +9,6 @@ $Id:$
    macos
    mm
    dd
-   conda
    xam
    subprocess
    stderr
@@ -20,6 +19,19 @@ Release Notes for 2025
 
 mm-dd
 *****
+
+05-06
+=====
+#. Add :ref:`install_conda-name` instructions.
+   This is the first install of dismod_at that works on windows.
+
+#. Deprecate :ref:`python_main@Syntax@dismodat.py` and replace it with
+   :ref:`python_main@Syntax@dismod-at` .
+
+#. Add a table of :ref:`commands<python_main@command>` to the
+   python main program documentation.
+
+
 
 04-17
 =====

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin db2csv_command}
 # {xrst_spell
@@ -20,7 +20,7 @@
 #
 # As Program
 # ==========
-# ``dismodat.py`` *database* ``db2csv``
+# ``dismod-at`` *database* ``db2csv``
 #
 # As Python Function
 # ==================

@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin 2023}
 {xrst_spell
@@ -40,7 +40,9 @@ Also note that dismod_at-2023.12.29 has a minor fix for the case where
 
 12-05
 =====
-Add the :ref:`wish_list@Command Documentation` wish list item.
+Add the Command Documentation wish list item.
+This was completed by the :ref:`python_main@command`
+table for the python main program.
 
 12-01
 =====

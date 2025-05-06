@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin 2018}
 {xrst_spell
@@ -502,7 +502,7 @@ This should both increase speed and reduce memory usage.
 =====
 
 #. A description of the log entries when
-   using the :ref:`dismodat.py<dismodat.py@Log Table>` syntax was added.
+   using the :ref:`python_main<python_main@Log Table>` syntax was added.
 #. The documentation for log entry at the end of a command
    was corrected from ``done`` to
    :ref:`end<log_table@message_type@command>` .

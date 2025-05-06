@@ -10,7 +10,7 @@ build-backend = 'setuptools.build_meta'
 # -----------------------------------------------------------------------------
 [project]
 name              = 'dismod_at'
-version           = '2025.4.17'
+version           = '2025.5.6'
 description       = 'Disease Rates as Functions of Age and Time'
 readme            = 'README.md'
 requires-python   = '>=3.0'

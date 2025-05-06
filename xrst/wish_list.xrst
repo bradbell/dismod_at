@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin wish_list}
 {xrst_spell
@@ -18,14 +18,6 @@ $Id:$
 
 Dismod_at Wish List
 ###################
-
-Command Documentation
-*********************
-#. There should be one section in the documentation for all the
-   dismod_at commands and it should split into those commands that use
-   ``dismod_at`` and those that use ``dismodat.py`` .
-#. There does not seem to be any documentation for the dismodat.py
-   plot command. This should be fixed.
 
 Bootstrapping
 *************

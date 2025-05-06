@@ -1,7 +1,7 @@
 $Id:$
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin 2021}
 {xrst_spell
@@ -739,7 +739,7 @@ you will get a usage message that give you some idea how to use it.
 01-19
 =====
 The file name was removed from the log table entry at the
-:ref:`dismodat.py@Log Table@Start`
+:ref:`python_main@Log Table@Start`
 of a ``dismodat.py`` command.
 This is so that all log messages with
 :ref:`log_table@message_type` ``command``

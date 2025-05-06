@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin modify_command}
 # {xrst_spell
@@ -21,7 +21,7 @@
 # As Program
 # ==========
 #
-# | ``dismodat.py`` *database* ``modify`` \\
+# | ``dismod-at`` *database* ``modify`` \\
 # | |tab| *table_name* *column_name* *row_expression* *value_expression*  \\
 # | |tab| *statement_one* *statement_two*  ...
 #
@@ -92,7 +92,7 @@
 #
 # Log Table
 # *********
-# See :ref:`dismodat.py<dismodat.py@Log Table>` .
+# See :ref:`python_main<python_main@Log Table>` .
 # {xrst_toc_hidden
 #    example/get_started/modify_command.py
 # }

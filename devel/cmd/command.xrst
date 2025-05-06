@@ -27,7 +27,7 @@ This is referred to as the primary database
 
 Data Flow
 *********
-Each command as a set of
+Each command has its own set of
 :ref:`extra input tables<data_flow@Command Extra Input Tables>` and
 :ref:`output tables<data_flow@Command Output Tables>` .
 
@@ -51,7 +51,7 @@ The second is an ``end`` message and signifies that the command completed.
    devel/cmd/sample_command.cpp
    devel/cmd/set_command.cpp
    devel/cmd/simulate_command.cpp
-   python/bin/dismodat.py.in
+   python/dismod_at/main.py
 }
 {xrst_comment END_SORT_THIS_LINE_MINUS_2}
 

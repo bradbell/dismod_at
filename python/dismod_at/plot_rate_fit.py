@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 '''
 {xrst_begin plot_rate_fit}
@@ -14,6 +14,12 @@ Plot The Rates for a Fit
 Syntax
 ******
 
+As Program
+==========
+``dismod-at`` *database* ``plot_rate_fit`` *pdf_file* *plot_title* *rate_set*
+
+As Python Function
+==================
 | *plot_set* = ``plot_rate_fit`` (
 | |tab| *database* , *pdf_file* , *plot_title* , *rate_set*
 | )

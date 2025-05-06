@@ -4,36 +4,19 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
-# {xrst_begin dismodat.py}
+# {xrst_begin dismodat.py dev}
 # {xrst_comment_ch #}
 #
-# Python Program Syntax
-# #####################
+# Sandbox Version of Python Main Program
+# ######################################
 #
 # Syntax
 # ******
-# dismodat.py database command ...
+# python/bin/dismodat.py database command ...
 #
-# Log Table
-# *********
+# See Also
+# :ref:`python_main-name`
 #
-# Start
-# =====
-# At the start, a ``dismodat.py``
-# command adds a
-# :ref:`log_table@message_type@command`
-# log entry with
-# :ref:`log_table@message`
-# equal to
-#
-#     ``begin`` *command*  ...
-#
-# End
-# ===
-# At the end,
-# a ``dismodat.py`` command adds a command log entry with message equal to
-#
-#     ``end`` *command*
 #
 # {xrst_end dismodat.py}
 # -----------------------------------------------------------------------------

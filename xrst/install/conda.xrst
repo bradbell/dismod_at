@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2025 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin install_conda}
+
+Installing dismod_at In a Conda Environment
+###########################################
+You can use conda to install dismod_at on windows, linux, or macOS.
+
+Install Conda
+*************
+Use the following link to
+`install conda
+<https://docs.conda.io/projects/conda/en/latest/user-guide/install/>`_ .
+
+Install dismod_at
+*****************
+The following command to install dismod_at in your current conda environment::
+
+   conda install conda-forge::dismod-at
+
+{xrst_end install_conda}

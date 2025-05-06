@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 '''
 {xrst_begin plot_data_fit}
@@ -13,6 +13,13 @@ Plot The Data Fit By Integrand
 
 Syntax
 ******
+#
+# As Program
+# ==========
+# ``dismod-at`` *database* ``plot_data_fit`` *pdf_file* *plot_title max_plot*
+#
+# As Python Function
+# ==================
 {xrst_literal
    # BEGIN syntax
    # END syntax

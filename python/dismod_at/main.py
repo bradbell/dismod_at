@@ -4,21 +4,75 @@
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 # SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
-   # ---------------------------------------------------------------------------
+# {xrst_begin python_main}
+# {xrst_comment_ch #}
+#
+# The Python Main Program
+# #######################
+#
+# Syntax
+# ******
+#
+# dismod-at
+# =========
+# |tab| ``dismod-at``  database command ...
+#
+# dismodat.py
+# ===========
+# The following syntax does not work on windows and was
+# Deprecated on 2025-05-06.
+#
+# |tab| ``dismodat.py`` database command ...
+#
+# command
+# *******
+# The commands that use the python main program ``dismod-at``
+# (as apposed to the C++ main program ``dismod_at`` ) are:
+#
+# .. csv-table::
+#     :widths: auto
+#     :header: *command* , documentation
+#
+#     ``db2csv``   , :ref:`db2csv_command-title`
+#     ``perturb``  , :ref:`perturb_command-title`
+#     ``plot_rate_fit`` , :ref:`plot_rate_fit-title`
+#     ``plot_data_fit`` , :ref:`plot_data_fit-title`
+#
+# Log Table
+# *********
+#
+# Start
+# =====
+# This program adds a
+# :ref:`log_table@message_type@command`
+# log entry with at the start of the command.
+# The :ref:`log_table@message` for this entry is
+#
+#     ``begin`` *command*  ...
+#
+# End
+# ===
+# If the command completes, a log entry with the following message is added
+# to the log:
+#
+#     ``end`` *command*
+#
+# {xrst_end python_main}
+# ---------------------------------------------------------------------------
 def main():
    import sys
    import time
    import dismod_at
    #
    # check usage
-   usage  = 'dismodat.py database db2csv\n'
-   usage += 'dismodat.py database perturb tbl_name sigma\n'
-   usage += 'dismodat.py database plot_rate_fit pdf_file plot_title rate_set\n'
-   usage += 'dismodat.py database plot_data_fit pdf_file plot_title max_plot'
+   usage  = 'dismod-at database db2csv\n'
+   usage += 'dismod-at database perturb tbl_name sigma\n'
+   usage += 'dismod-at database plot_rate_fit pdf_file plot_title rate_set\n'
+   usage += 'dismod-at database plot_data_fit pdf_file plot_title max_plot'
    #
    # deprecated
-   # usage += 'dismodat.py database csv2db configure_csv measure_csv\n'
-   # usage += 'dismodat.py database modify\\\n'
+   # usage += 'dismod-at database csv2db configure_csv measure_csv\n'
+   # usage += 'dismod-at database modify\\\n'
    # usage += '\ttable_name column_name row_expression value_expression\\\n'
    # usage += '\t[statement_one [statement_two ...] ]'
    #
