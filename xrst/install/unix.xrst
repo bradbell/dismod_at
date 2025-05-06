@@ -247,7 +247,7 @@ includes an install of ipopt.
 
 cppad
 =====
-The `cppad <https://www.coin-or.org/CppAD/>`_
+The `cppad <https://cppad.readthedocs.io/latest/>`_
 C++ algorithmic differentiation package.
 The script ``bin/get_cppad_mixed.sh`` (see below)
 includes an install of cppad.

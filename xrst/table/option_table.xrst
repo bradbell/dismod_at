@@ -341,7 +341,7 @@ of the fixed effects objective at the value of the fixed effects in
 Optimize Fixed Only
 *******************
 The following options control the
-`Ipopt <https://www.coin-or.org/Ipopt/documentation/>`_ optimization
+`Ipopt <https://coin-or.github.io/Ipopt/>`_ optimization
 of the fixed effects:
 
 quasi_fixed
