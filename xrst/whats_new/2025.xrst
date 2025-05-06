@@ -46,7 +46,7 @@ it captured and reported exceptions during its call to
 
 04-12
 =====
-#. The name ``dismod-at`` can be used in place of :ref:`dismodat.py-name`.
+#. The name ``dismod-at`` can be used in place of ``dismodat.py``.
    The current plan is to deprecate `dismodat.py` and only use it for testing.
 #. The number of attempts in ``balanced_pair_xam`` test was increased from
    two to three to reduce the chance of a random failure.

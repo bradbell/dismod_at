@@ -187,7 +187,7 @@ Advance to ``cppad-20180827`` and ``cppad_mixed-20180829``
 08-22
 =====
 
-#. Add :ref:`dismodat.py-name` to the documentation under the command section.
+#. Add ``dismodat.py`` to the documentation under the command section.
 #. Advance to cppad-20180820 and cppad_mixed-20180821.
    This uses a new CppAD feature and resulted in the following
    change for :ref:`user_speed.py-name` :
