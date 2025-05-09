@@ -93,10 +93,13 @@ MACRO( set_library_path_list
    ENDFOREACH( lib )
    # MESSAGE(STATUS "${library_path_list}=${${library_path_list}}"  )
 ENDMACRO( set_library_path_list )
+#
+# find_CHOLMOD
+INCLUDE(cmake/find_cholmod.cmake)
 # ============================================================================
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 PROJECT(dismod_at)
-SET(dismod_at_version "2025.5.6")
+SET(dismod_at_version "2025.5.9")
 INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
 INCLUDE(CheckCXXSourceRuns)
 # ============================================================================
@@ -171,9 +174,23 @@ if("${isSystemDir}" STREQUAL "-1")
    set(CMAKE_INSTALL_RPATH "${dismod_at_pefix}/${cmake_libdir}")
 endif("${isSystemDir}" STREQUAL "-1")
 # ----------------------------------------------------------------------------
+# 2DO: replace this by FIND_PACKAGE(CHOLMOD) when the bug on Fedora 42 is fixed
+# https://bugzilla.redhat.com/show_bug.cgi?id=2365312
+find_CHOLMOD( )
+#
+# pkg_config_list
+# Note that CHOLMOD.pc is missing on windows and the project manages
+# will not fix this.
+IF( ${CHOLMOD_INCLUDE_DIRS} STREQUAL "NOTFOUND" )
+   SET(pkg_config_list gsl eigen3 ipopt cppad_mixed cppad CHOMOLD)
+ELSE( )
+   SET(pkg_config_list gsl eigen3 ipopt cppad_mixed cppad)
+   INCLUDE_DIRECTORIES( ${CHOLMOD_INCLUDE_DIRS} )
+ENDIF( )
+#
 # package information for: gsl, eigen, ipopt, cppad_mixed, cppad
 FIND_PACKAGE(PkgConfig)
-FOREACH(pkg gsl eigen3 ipopt cppad_mixed cppad)
+FOREACH(pkg ${pkg_config_list} )
    pkg_check_modules( ${pkg} QUIET ${pkg} )
    IF( ${pkg}_FOUND )
       MESSAGE(STATUS "Found ${pkg}.pc file")
@@ -196,11 +213,6 @@ ENDFOREACH(pkg)
 FIND_PACKAGE(SQLite3)
 SET(sqlite3_LIBRARIES "${SQLite3_LIBRARIES}" )
 INCLUDE_DIRECTORIES( ${SQLite3_INCLUDE_DIRS} )
-#
-# The cppad_mixed.hpp file includes cholmod.h so this is needed.
-# 2DO: Modify the cppad_mixed package so that this is not necessary.
-FIND_PACKAGE(CHOLMOD)
-INCLUDE_DIRECTORIES( ${CHOLMOD_INCLUDE_DIR} )
 # ----------------------------------------------------------------------------
 # check compiler flags
 #

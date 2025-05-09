@@ -12,6 +12,8 @@ $Id:$
    xam
    subprocess
    stderr
+   suitesparse
+   txt
 }
 
 Release Notes for 2025
@@ -19,6 +21,14 @@ Release Notes for 2025
 
 mm-dd
 *****
+
+05-09
+=====
+#. Advance to cppad_mixed-2025.5.8.
+#. There is a bug in the install of suitesparse on Fedora-42 that prevented
+   dismod_at from installing. A temporary fix was used to get around this.
+   Search for FIND_PACKAGE(CHOLMOD) in the top level CMakeLists.txt file
+   to see more discussion about this.
 
 05-06
 =====
