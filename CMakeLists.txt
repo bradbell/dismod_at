@@ -94,12 +94,15 @@ MACRO( set_library_path_list
    # MESSAGE(STATUS "${library_path_list}=${${library_path_list}}"  )
 ENDMACRO( set_library_path_list )
 #
-# find_CHOLMOD
+# add_to_set(variable_set element_set)
+INCLUDE(cmake/add_to_set.cmake)
+#
+# find_CHOLMOD( )
 INCLUDE(cmake/find_cholmod.cmake)
 # ============================================================================
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 PROJECT(dismod_at)
-SET(dismod_at_version "2025.5.9")
+SET(dismod_at_version "2025.5.22")
 INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
 INCLUDE(CheckCXXSourceRuns)
 # ============================================================================

@@ -14,6 +14,7 @@ $Id:$
    stderr
    suitesparse
    txt
+   cmake
 }
 
 Release Notes for 2025
@@ -21,6 +22,15 @@ Release Notes for 2025
 
 mm-dd
 *****
+
+05-22
+=====
+#. The :ref:`example_install.sh-name` script was sometimes writing
+   ``example_install.log`` and ``example_install.err`` to the directory
+   above the top source directory. This has been fixed.
+#. There was a problem with the change on 05-09 below:
+   ``add_to_set`` was missing during the cmake command.
+   This has been fixed.
 
 05-09
 =====

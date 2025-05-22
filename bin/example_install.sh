@@ -1,7 +1,7 @@
 #! /bin/bash -e
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 #
 # {xrst_begin example_install.sh}
@@ -26,7 +26,7 @@
 # build_type
 eval $(bin/install_settings.py | grep '^build_type')
 #
-# dismod_at_prefix 
+# dismod_at_prefix
 eval $(bin/install_settings.py | grep '^dismod_at_prefix')
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
@@ -72,7 +72,7 @@ fi
 #
 # bin/run_cmake.sh
 echo "bin/run_cmake.sh 1>> example_install.log 2>> example_install.err"
-bin/run_cmake.sh 1>> ../example_install.log 2>> ../example_install.err
+bin/run_cmake.sh 1>> example_install.log 2>> example_install.err
 #
 # change into build directory
 echo_eval cd build
