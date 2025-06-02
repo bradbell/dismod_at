@@ -17,6 +17,7 @@
   stderr
   table table
   tol
+  rcond
 }
 
 The Option Table
@@ -562,6 +563,17 @@ value of the splitting covariate.
 For example, the covariate values might be different for each value of sex.
 If the *splitting_covariate* is not ``null``  ,
 the rate_eff_cov table must be non-empty.
+
+asymptotic_rcond_lower
+**********************
+If *option_name* is ``asymptotic_rcond_lower`` ,
+the corresponding value is a lower bound for the
+reciprocal condition number of the Hessian of the fixed effects objective.
+This Hessian is used as an approximation for the information matrix which
+sampling using the :ref:`sample_command@asymptotic` method.
+The reciprocal condition is always between zero and one.
+If the actual condition number is less than *asymptotic_rcond_lower*,
+the asymptotic sample method will fail.
 
 Example
 *******

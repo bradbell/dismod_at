@@ -1199,12 +1199,14 @@ def db2csv_command(database_file_arg) :
    csv_writer = csv.DictWriter(csv_file, fieldnames=header)
    csv_writer.writeheader()
    # This table must have the same values as in
-   # devel/table/get_option_table.cpp
+   # devel/table/get_option_table.cpp and
+   # example/devel/table/get_option_table_xam.cpp
    option_list = [
       # BEGIN_SORT_THIS_LINE_PLUS_1
       [ "accept_after_max_steps_fixed",      "5"],
       [ "accept_after_max_steps_random",     "5"],
       [ "age_avg_split",                     ""],
+      [ "asymptotic_rcond_lower",            "0.0"],
       [ "avgint_extra_columns",              ""],
       [ "bound_frac_fixed",                  "1e-2"],
       [ "bound_random",                      ""],

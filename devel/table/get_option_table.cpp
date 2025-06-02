@@ -124,11 +124,13 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
    //
    // option name and its default value
    // Changes here must also be made in python/dismod_at/db2csv_command.py
+   // and example/devel/table/get_option_table_xam.cpp
    struct { const char* name; const char* value; } option_list[] = {
       // BEGIN_SORT_THIS_LINE_PLUS_1
       { "accept_after_max_steps_fixed",     "5"                  },
       { "accept_after_max_steps_random",    "5"                  },
       { "age_avg_split",                    ""                   },
+      { "asymptotic_rcond_lower",           "0.0"                },
       { "avgint_extra_columns",             ""                   },
       { "bound_frac_fixed",                 "1e-2"               },
       { "bound_random",                     ""                   },

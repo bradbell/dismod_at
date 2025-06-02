@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-24 Bradley M. Bell
+// SPDX-FileContributor: 2014-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin get_option_table_xam.cpp dev}
@@ -41,6 +41,7 @@ bool get_option_table_xam(void)
       { "accept_after_max_steps_fixed",     "6" },
       { "accept_after_max_steps_random",    "6" },
       { "age_avg_split",                    "1.0 2.0" },
+      { "asymptotic_rcond_lower",           "0.0" },
       { "avgint_extra_columns",             "" },
       { "bound_frac_fixed",                 "1e-3" },
       { "bound_random",                     "3.0" },

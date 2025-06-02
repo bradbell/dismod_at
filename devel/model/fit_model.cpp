@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-24 Bradley M. Bell
+// SPDX-FileContributor: 2014-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 # include <cppad/mixed/exception.hpp>
 # include <dismod_at/a1_double.hpp>
@@ -367,6 +367,7 @@ For *name* equal to
 :ref:`option_table@Optimize Fixed and Random@max_num_iter` ,
 :ref:`option_table@Optimize Fixed and Random@print_level` ,
 :ref:`option_table@Optimize Fixed and Random@accept_after_max_steps` ,
+:ref:`option_table@asymptotic_rcond_lower` ,
 and for *fit* equal to ``fixed`` and ``random``
 
    *option_map* [" *name* _ *fit* "]
@@ -1088,9 +1089,10 @@ void fit_model::sample_posterior(
       return;
    }
    //
-   // sample_fix
+   // sample_fix, rcond
    CppAD::vector<double> sample_fix(n_sample * n_fixed_);
-   msg = "";
+   double rcond = std::numeric_limits<double>::quiet_NaN();
+   msg          = "";
    try {
       // sample fixed effects
       msg = sample_fixed(
@@ -1098,8 +1100,19 @@ void fit_model::sample_posterior(
          hes_fixed_obj_rcv,
          solution,
          cppad_mixed_fixed_lower,
-         cppad_mixed_fixed_upper
+         cppad_mixed_fixed_upper,
+         rcond
       );
+      std::string str   = get_str_map(option_map, "asymptotic_rcond_lower");
+      double      lower = std::stod( str );
+      if( rcond < lower )
+      {  str = "rcond = " + CppAD::to_string(rcond) + " is less than "
+               "asymptotic_rcond_lower = " + str;
+         if( msg == "" )
+            msg = str;
+         else
+            msg += "\n" + str;
+      }
    }
    catch(const std::exception& e)
    {  std::string message("sample_command: std::exception: ");
