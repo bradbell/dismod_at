@@ -38,7 +38,8 @@
 # {xsrst_end get_cppad_mixed_sh}
 # ---------------------------------------------------------------------------
 # CppAD mixed version information
-web_page='44bd65e165b4bdd0d64be5bd53cf23ac1031cb36'
+web_page='https://github.com/bradbell/cppad_mixed.git'
+hash_key='44bd65e165b4bdd0d64be5bd53cf23ac1031cb36'
 version='2025.6.2'
 # --------------------------------------------------------------------------
 name='bin/get_cppad_mixed.sh'

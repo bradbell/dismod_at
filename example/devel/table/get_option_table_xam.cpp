@@ -32,10 +32,13 @@ bool get_option_table_xam(void)
    bool     new_file  = true;
    sqlite3* db        = dismod_at::open_connection(file_name, new_file);
    //
-   // option name and corresponding values
-   // Testing with different order than in get_option_table
-   // Furthermore, we have not included max_num_iter_fixed in list
-   // so that its default value of 100 gets used.
+   // option_list
+   // option name and corresponding values with different order than in
+   // get_option_table.cpp. Furthermore, we have not included
+   // max_num_iter_fixed in list so that its default value of 100 gets used.
+   // Changes to this table must also be made in
+   // devel/table/get_option_table.cpp
+   // python/dismod_at/db2csv_command.py
    // BEGIN_SORT_THIS_LINE_PLUS_2
    struct { const char* name; const char* value; } option_list[] = {
       { "accept_after_max_steps_fixed",     "6" },

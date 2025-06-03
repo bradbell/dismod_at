@@ -122,9 +122,10 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
    // for error messaging
    string msg;
    //
-   // option name and its default value
-   // Changes here must also be made in python/dismod_at/db2csv_command.py
-   // and example/devel/table/get_option_table_xam.cpp
+   // option_list
+   // option name and its default value, Changes here must also be made in
+   // python/dismod_at/db2csv_command.py
+   // example/devel/table/get_option_table_xam.cpp
    struct { const char* name; const char* value; } option_list[] = {
       // BEGIN_SORT_THIS_LINE_PLUS_1
       { "accept_after_max_steps_fixed",     "5"                  },
@@ -455,6 +456,14 @@ CppAD::vector<option_struct> get_option_table(sqlite3* db)
          double time_size = std::atof( option_value_split[1].c_str() );
          if( time_size < 0.0 )
          {  msg = "compress_interval time_size is less than zero.";
+            error_exit(msg, table_name, option_id);
+         }
+      }
+      if( name_vec[match] == "asymptotic_rcond_lower" )
+      {  double lower = std::stod( option_value[option_id] );
+         if( lower < 0.0 || 1.0 < lower )
+         {  msg = "asymptotic_rcond_lower = " + option_value[option_id];
+            msg += " is less than zero or great than one.";
             error_exit(msg, table_name, option_id);
          }
       }

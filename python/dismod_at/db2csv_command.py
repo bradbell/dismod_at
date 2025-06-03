@@ -1198,8 +1198,10 @@ def db2csv_command(database_file_arg) :
    header     = [ 'option_name', 'option_value' ]
    csv_writer = csv.DictWriter(csv_file, fieldnames=header)
    csv_writer.writeheader()
+   #
+   # option_list
    # This table must have the same values as in
-   # devel/table/get_option_table.cpp and
+   # devel/table/get_option_table.cpp
    # example/devel/table/get_option_table_xam.cpp
    option_list = [
       # BEGIN_SORT_THIS_LINE_PLUS_1

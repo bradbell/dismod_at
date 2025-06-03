@@ -132,7 +132,8 @@ def example_db (file_name) :
    # option_table
    option_table = [
       { 'name':'parent_node_name',       'value':'n0'                 },
-      { 'name':'rate_case',              'value':'iota_zero_rho_zero'  }
+      { 'name':'rate_case',              'value':'iota_zero_rho_zero' },
+      { 'name':'asymptotic_rcond_lower', 'value':'1.0'                },
    ]
    # ----------------------------------------------------------------------
    # subgroup_table

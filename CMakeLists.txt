@@ -102,7 +102,7 @@ INCLUDE(cmake/find_cholmod.cmake)
 # ============================================================================
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 PROJECT(dismod_at)
-SET(dismod_at_version "2025.6.2")
+SET(dismod_at_version "2025.6.3")
 INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
 INCLUDE(CheckCXXSourceRuns)
 # ============================================================================
