@@ -574,6 +574,10 @@ sampling using the :ref:`sample_command@asymptotic` method.
 The reciprocal condition is always between zero and one.
 If the actual condition number is less than *asymptotic_rcond_lower*,
 the asymptotic sample method will fail.
+If :ref:`option_table@Optimize Fixed and Random@print_level`
+for optimizing the fixed effects is non-zero,
+the actual reciprocal condition number is printed after
+asymptotic sampling of the fixed effects.
 
 Example
 *******

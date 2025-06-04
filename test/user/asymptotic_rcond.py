@@ -172,6 +172,7 @@ if result.returncode == 0 :
    msg += 'asymptotic_rcond_lower is equal to one and\n'
    msg += 'asymptotic sampling did not fail.'
    sys.exit(msg)
+assert 0 <= result.stderr.find('asymptotic_rcond_lower')
 # -----------------------------------------------------------------------
 print('asymptotic_rcond.py: OK')
 # END PYTHON

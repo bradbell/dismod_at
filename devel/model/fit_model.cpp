@@ -1091,10 +1091,10 @@ void fit_model::sample_posterior(
    //
    // sample_fix, rcond
    CppAD::vector<double> sample_fix(n_sample * n_fixed_);
-   double rcond = std::numeric_limits<double>::quiet_NaN();
    msg          = "";
    try {
       // sample fixed effects
+      double rcond = std::numeric_limits<double>::quiet_NaN();
       msg = sample_fixed(
          sample_fix,
          hes_fixed_obj_rcv,
@@ -1105,9 +1105,14 @@ void fit_model::sample_posterior(
       );
       std::string str   = get_str_map(option_map, "asymptotic_rcond_lower");
       double      lower = std::stod( str );
+      str               = get_str_map(option_map, "print_level_fixed");
+      int         level = std::stoi( str );
+      if( 0 < level )
+         std::cout << "sample_fixd: rcond = " << rcond << "\n";
       if( rcond < lower )
-      {  str = "rcond = " + CppAD::to_string(rcond) + " is less than "
-               "asymptotic_rcond_lower = " + str;
+      {  str  = "sample_fixed: rcond = " + CppAD::to_string(rcond);
+         str += "\nis less than asymptotic_rcond_lower = ";
+         str += CppAD::to_string(lower);
          if( msg == "" )
             msg = str;
          else
