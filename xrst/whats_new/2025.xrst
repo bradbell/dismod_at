@@ -26,10 +26,11 @@ mm-dd
 
 06-06
 =====
-Fix bug in commit on 06-05 by changing CHOMOLD -> CHOLMOD in CMakeLists.txt.
-This caused the following error on some systems::
+#. Fix bug in commit on 06-05 by changing CHOMOLD -> CHOLMOD in CMakeLists.txt.
+   This caused the following error on some systems::
 
-   -- Cannot find CHOMOLD.pc file
+      -- Cannot find CHOMOLD.pc file
+#. Advance to cppad_mixed-2025.6.6.
 
 06-04
 =====
