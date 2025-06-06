@@ -102,7 +102,7 @@ INCLUDE(cmake/find_cholmod.cmake)
 # ============================================================================
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 PROJECT(dismod_at)
-SET(dismod_at_version "2025.6.5")
+SET(dismod_at_version "2025.6.6")
 INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
 INCLUDE(CheckCXXSourceRuns)
 # ============================================================================
@@ -185,13 +185,13 @@ find_CHOLMOD( )
 # Note that CHOLMOD.pc is missing on windows and the project manages
 # will not fix this.
 IF( ${CHOLMOD_INCLUDE_DIRS} STREQUAL "NOTFOUND" )
-   SET(pkg_config_list gsl eigen3 ipopt cppad_mixed cppad CHOMOLD)
+   SET(pkg_config_list gsl eigen3 ipopt cppad_mixed cppad CHOLMOD)
 ELSE( )
    SET(pkg_config_list gsl eigen3 ipopt cppad_mixed cppad)
    INCLUDE_DIRECTORIES( ${CHOLMOD_INCLUDE_DIRS} )
 ENDIF( )
 #
-# package information for: gsl, eigen, ipopt, cppad_mixed, cppad
+# package information for: gsl, eigen, ipopt, cppad_mixed, cppad, (CHOLMOD ?)
 FIND_PACKAGE(PkgConfig)
 FOREACH(pkg ${pkg_config_list} )
    pkg_check_modules( ${pkg} QUIET ${pkg} )
@@ -201,12 +201,10 @@ FOREACH(pkg ${pkg_config_list} )
       MESSAGE(STATUS "Cannot find ${pkg}.pc file")
       MESSAGE(FATAL_ERROR  "PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH}")
    ENDIF( ${pkg}_FOUND )
+   #
    # INLCUDE_DIRECTORIES
-   IF( ${pkg} STREQUAL "eigen3" )
-      INCLUDE_DIRECTORIES( SYSTEM ${eigen3_INCLUDE_DIRS} )
-   ELSE( ${pkg} STREQUAL "eigen3" )
-      INCLUDE_DIRECTORIES( ${${pkg}_INCLUDE_DIRS} )
-   ENDIF( ${pkg} STREQUAL "eigen3" )
+   INCLUDE_DIRECTORIES( SYSTEM ${${pkg}_INCLUDE_DIRS} )
+   #
    # LINK_DIRECTORIES
    LINK_DIRECTORIES( ${${pkg}_LIBRARY_DIRS} )
 ENDFOREACH(pkg)
