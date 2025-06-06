@@ -30,7 +30,12 @@ mm-dd
    This caused the following error on some systems::
 
       -- Cannot find CHOMOLD.pc file
+
 #. Advance to cppad_mixed-2025.6.6.
+
+#. Advance the dock_dismod_at
+   :ref:`dock_dismod_at.sh@dismod_at_version` from 2025.4.16 to 2025.6.6 and
+   :ref:`dock_dismod_at.sh@at_cascade_version` from 2025.2.7 to 2025.6.5 .
 
 06-04
 =====
@@ -71,7 +76,6 @@ approximation for the asymptotic information matrix;
 
 #. Add a table of :ref:`commands<python_main@command>` to the
    python main program documentation.
-
 
 
 04-17
