@@ -24,6 +24,13 @@ Release Notes for 2025
 mm-dd
 *****
 
+06-17
+=====
+The data fit :ref:`plots <plot_data_fit-name>` scaling of the model
+and measurement values is in log scale using the median of the data.
+This would create a problem when more than half the data had value zero.
+This has been fixed by using the median of the data greater than zero.
+
 06-06
 =====
 #. Fix bug in commit on 06-05 by changing CHOMOLD -> CHOLMOD in CMakeLists.txt.

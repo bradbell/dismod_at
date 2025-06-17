@@ -269,12 +269,11 @@ def plot_data_fit(
       if n_point - n_hold_out > 1 :
          #
          #
-         # y_min, y_max
+         # d_min, d_max
          d_fit       = numpy_info['meas_value'][not_hold_out]
-         d_median    = numpy.median( d_fit )
+         d_median    = numpy.median( d_fit[ d_fit > 0.0]  )
          d_max       = d_median * 1e+3
          d_min       = d_median * 1e-3
-         assert d_min >= 0.0
          #
          # r_min, r_max
          r_fit       = numpy_info['residual'][not_hold_out]
