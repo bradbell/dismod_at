@@ -269,8 +269,8 @@ dismod_at.system_command_prc([ program, file_name, 'init' ])
 connection      = dismod_at.create_connection(
    file_name, new = False, readonly = False
 )
-var_table        = dismod_at.get_table_dict(connection, 'var')
-rate_table     = dismod_at.get_table_dict(connection, 'rate')
+var_table       = dismod_at.get_table_dict(connection, 'var')
+rate_table      = dismod_at.get_table_dict(connection, 'rate')
 covariate_table= dismod_at.get_table_dict(connection, 'covariate')
 # -----------------------------------------------------------------------
 # truth table:

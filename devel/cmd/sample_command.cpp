@@ -45,7 +45,7 @@ from the posterior distribution; see
 method
 ******
 The sample command argument *method* must be
-``simulate`` or ``asymptotic`` ; see discussion below:
+``simulate`` , ``asymptotic`` or ``censor_asymptotic`` ; see discussion below:
 
 variables
 *********
@@ -66,7 +66,8 @@ in the previous simulate command.
 
 simulate_index
 **************
-If this argument is present, *method* must be ``asymptotic``
+If this argument is present, *method* must be
+``asymptotic`` or ``censor_asymptotic``
 and *simulate_index* must be the same as in the corresponding
 :ref:`fit command<fit_command@simulate_index>` .
 
@@ -92,7 +93,7 @@ posterior distribution of maximum likelihood estimates.
 
 asymptotic
 **********
-If *method* is ``asymptotic`` ,
+If *method* is ``asymptotic`` or ``censor_asymptotic``
 the :ref:`fit_var_table-name` is an additional input in this case
 and it assumed to correspond to a
 fit :ref:`fit_command@variables@both` .
@@ -103,13 +104,19 @@ The asymptotic statistics of the model variables is used to generate
 *number_sample* samples of the model variables
 The samples with different values of *sample_index* are independent.
 All of the Laplace density terms are ignored by the asymptotic statistics.
-The constraints are also ignored, except the constraints were
+
+If *method* is ``asymptotic`` ,
+the constraints are also ignored, except the constraints were
 the lower and upper limits for a variable are equal.
+The ``censor_asymptotic`` method simulates the same as ``asymptotic``
+except that values less than (greater than) the lower (upper) bound
+are set equal to the corresponding bound.
 
 Fixed Effects Distribution
 ==========================
 The asymptotic distribution used to simulate the fixed effects is a normal
-with mean equal to the value of the fixed effects in the :ref:`fit_var_table-name`
+with mean equal to the value of the fixed effects in the
+:ref:`fit_var_table-name`
 and covariance equal to the inverse of the
 Hessian of the fixed effect objective
 :ref:`sample_command@Output Tables@hes_fixed_table` .
@@ -152,7 +159,7 @@ which was created by the previous :ref:`simulate_command-name` .
 
 fit_var_table
 =============
-If *method* is ``asymptotic`` ,
+If *method* is ``asymptotic`` or ``censor_asymptotic`` ,
 this command has the extra input :ref:`fit_var_table-name`
 which was created by a previous fit command which
 must have included :ref:`fit_command@variables@both`
@@ -167,7 +174,7 @@ A new :ref:`sample_table-name` is created each time this command is run.
 It contains samples of the model variables.
 Hence the number of rows in this table is *number_sample*
 times the number of rows in the :ref:`var_table-name` .
-If the ``asymptotic`` command fails because the
+If the ``asymptotic`` or ``censor asymptotic`` command fails because the
 fixed effects information matrix is not positive definite,
 this command will terminate with an error and the sample table will not exist.
 The corresponding fixed effects information matrix will be in the
@@ -175,7 +182,7 @@ The corresponding fixed effects information matrix will be in the
 
 No Sample Table
 ===============
-In the special case where *method* is ``asymptotic``
+In the case where *method* is ``asymptotic`` or ``censor_asymptotic``
 and the Hessian of the fixed objective is not positive definite,
 the sample table is not created; i.e.,
 there is be no sample table in the database after this command.
@@ -186,7 +193,7 @@ the sample table is not created.
 hes_fixed_table
 ===============
 A new :ref:`hes_fixed_table-name` is created each time this command is run
-with *method* equal to ``asymptotic`` .
+with *method* equal to ``asymptotic`` or ``censor_asymptotic`` .
 The Hessian of the fixed effects objective is written in this table.
 If *simulate_index* is present (is not present) the Hessian corresponds
 to the simulated measurements in the :ref:`data_sim_table-name`
@@ -195,7 +202,7 @@ to the simulated measurements in the :ref:`data_sim_table-name`
 hes_random_table
 ================
 A new :ref:`hes_random_table-name` is created each time this command is run
-with *method* equal to ``asymptotic`` and
+with *method* equal to ``asymptotic`` or ``censor_asymptotic`` and
 *variables* equal to ``both`` .
 The Hessian of the random effects objective is written in this table.
 If *simulate_index* is present (is not present) the Hessian corresponds
@@ -244,10 +251,12 @@ void sample_command(
    using CppAD::vector;
    string msg;
    // -------------------------------------------------------------------
-   if( method != "simulate" && method != "asymptotic" )
+   if( method != "simulate"
+   && method != "asymptotic"
+   && method != "censor_asymptotic" )
    {  msg  = "dismod_at sample command method = ";
       msg += method + " is not one of the following: ";
-      msg += "simulate, asymptotic";
+      msg += "simulate, asymptotic, censor_asymptotic";
       dismod_at::error_exit(msg);
    }
    if( variables != "fixed" && variables != "both" )
@@ -615,7 +624,7 @@ void sample_command(
       return;
    }
    // ----------------------------------------------------------------------
-   assert( method == "asymptotic" );
+   assert( method == "asymptotic" || method == "censor_asymptotic" );
    //
    sql_cmd = "drop table if exists hes_fixed";
    dismod_at::exec_sql_cmd(db, sql_cmd);
@@ -709,6 +718,10 @@ void sample_command(
             row_value[n_col * sample_id + 1] = to_string( var_id );
             //
             double var_value = sample_out[ sample_index * n_var + var_id];
+            if( method == "censor_asymptotic" )
+            {  var_value        = std::max(var_value, var_lower[var_id] );
+               var_value        = std::min(var_value, var_upper[var_id] );
+            }
             row_value[n_col * sample_id + 2] = to_string(var_value);
          }
       }

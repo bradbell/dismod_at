@@ -13,6 +13,7 @@ FOREACH(user_case
    bound_random
    censor_1
    censor_2
+   censor_asymptotic
    const_value
    csv2db
    db2csv
