@@ -271,9 +271,13 @@ def plot_data_fit(
          #
          # d_min, d_max
          d_fit       = numpy_info['meas_value'][not_hold_out]
-         d_median    = numpy.median( d_fit[ d_fit > 0.0]  )
-         d_max       = d_median * 1e+3
-         d_min       = d_median * 1e-3
+         if (d_fit <= 0.0).all() :
+            d_min = 0.0
+            d_max = 0.0
+         else :
+            d_median    = numpy.median( d_fit[ d_fit > 0.0]  )
+            d_max       = d_median * 1e+3
+            d_min       = d_median * 1e-3
          #
          # r_min, r_max
          r_fit       = numpy_info['residual'][not_hold_out]
@@ -344,9 +348,12 @@ def plot_data_fit(
                   clip_list  = [ r_min, r_max ]
                   limit_list = [ 1.1 * r_min, 1.1 * r_max ]
                else :
-                  pyplot.yscale('log')
                   clip_list  = [ d_min, d_max ]
                   limit_list = [ 0.9 * d_min, 1.1 * d_max ]
+                  if d_min == 0.0 and d_max == 0.0 :
+                     limit_list = [ -1.0 , +1.0 ]
+                  else :
+                     pyplot.yscale('log')
                #
                # ylim
                pyplot.ylim(limit_list[0], limit_list[1])

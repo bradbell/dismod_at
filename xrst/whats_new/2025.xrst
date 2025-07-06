@@ -24,6 +24,12 @@ Release Notes for 2025
 mm-dd
 *****
 
+07-06
+=====
+There was a problem with the change on 06-17 when all the data was zero.
+In this special case the plot is now done in linear instead of log space.
+(This case was not handled properly before the change on 06-17.)
+
 07-05
 =====
 Add the ``censor_asymptotic`` :ref:`sample_command@method`
