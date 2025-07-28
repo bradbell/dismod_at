@@ -133,6 +133,8 @@ void create_table(
 {  using CppAD::to_string;
 
    std::string cmd;
+   std::string cmd1;
+   std::string cmd2;
    size_t n_col = col_name.size();
    size_t n_row = row_value.size() / n_col;
    //
@@ -162,23 +164,61 @@ void create_table(
       return;
    //
    // data for the multiple insert
-   for(size_t i = 0; i < n_row; i++)
-   {  cmd += "( "  + to_string(i);
-      for(size_t j = 0; j < n_col; j++)
-      {  cmd += ", ";
-         if( col_type[j] == "text" )
-            cmd += "'" + row_value[i * n_col + j] + "'";
-         else if( row_value[i * n_col + j] == "" )
-            cmd += "null";
+   if (n_row < 1000000000)
+   {  for(size_t i = 0; i < n_row; i++)
+      {  cmd += "( "  + to_string(i);
+         for(size_t j = 0; j < n_col; j++)
+         {  cmd += ", ";
+            if( col_type[j] == "text" )
+               cmd += "'" + row_value[i * n_col + j] + "'";
+            else if( row_value[i * n_col + j] == "" )
+               cmd += "null";
+            else
+               cmd += row_value[i * n_col + j];
+         }
+         if( i + 1 < n_row )
+            cmd += " ),\n";
          else
-            cmd += row_value[i * n_col + j];
+            cmd += " )\n";
       }
-      if( i + 1 < n_row )
-         cmd += " ),\n";
-      else
-         cmd += " )\n";
+      dismod_at::exec_sql_cmd(db, cmd);
+   } else
+   {  for(size_t i = 0; i < 1000000000; i++)
+      {  cmd1 = cmd + "( "  + to_string(i);
+         for(size_t j = 0; j < n_col; j++)
+         {  cmd1 += ", ";
+            if( col_type[j] == "text" )
+               cmd1 += "'" + row_value[i * n_col + j] + "'";
+            else if( row_value[i * n_col + j] == "" )
+               cmd1 += "null";
+            else
+               cmd1 += row_value[i * n_col + j];
+         }
+         if( i + 1 < 1000000000 )
+            cmd1 += " ),\n";
+         else
+            cmd1 += " )\n";
+      }
+      for(size_t i = 1000000000; i < n_row; i++)
+      {  cmd2 = cmd + "( "  + to_string(i);
+         for(size_t j = 0; j < n_col; j++)
+         {  cmd2 += ", ";
+            if( col_type[j] == "text" )
+               cmd2 += "'" + row_value[i * n_col + j] + "'";
+            else if( row_value[i * n_col + j] == "" )
+               cmd2 += "null";
+            else
+               cmd2 += row_value[i * n_col + j];
+         }
+         if( i + 1 < n_row )
+            cmd2 += " ),\n";
+         else
+            cmd2 += " )\n";
+      }
+      dismod_at::exec_sql_cmd(db, cmd1);
+      dismod_at::exec_sql_cmd(db, cmd2);
    }
-   dismod_at::exec_sql_cmd(db, cmd);
+
 }
 
 } // END_DISMOD_AT_NAMESPACE
