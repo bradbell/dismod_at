@@ -104,7 +104,7 @@ set -e -u
 # ``docker`` or ``podman`` :
 # {xrst_spell_off}
 # {xrst_code sh}
-   driver='podman'
+   driver='docker'
 # {xrst_code}
 # {xrst_spell_on}
 # Above and below we refer to the value of this shell variable as *driver* .
@@ -155,8 +155,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.dismod_at``
 # {xrst_spell_off}
 # {xrst_code sh}
-   dismod_at_version='2025.7.6'
-   dismod_at_hash='97cb2fd43d8b99c9cd1e0cfb8417abcead49cf55'
+   dismod_at_version='2025.7.11'
+   dismod_at_hash='c3cfd4417165231614ac35d861169c664220ca0b'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -296,7 +296,7 @@ FROM dismod_at.base
 WORKDIR /home
 #
 # Get source corresponding to dismod_at-$dismod_at_version
-RUN git clone https://github.com/bradbell/dismod_at.git dismod_at.git
+RUN git clone https://github.com/garland-culbreth/dismod_at dismod_at.git
 #
 # WORKDIR
 WORKDIR /home/dismod_at.git
