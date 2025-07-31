@@ -174,7 +174,9 @@ def main():
    # ---------------------------------------------------------------------------
    # write end for this command
    end_time     = int( time.time() )
-   message      = 'end ' + sys.argv[2]
+   message       = 'end'
+   for i in range(len(sys.argv) - 2) :
+      message += ' ' + sys.argv[i+2]
    cmd  = 'insert into log'
    cmd += ' (log_id,message_type,table_name,row_id,unix_time,message) values('
    cmd += str(log_id+1) + ','   # log_id

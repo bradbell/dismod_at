@@ -16,6 +16,7 @@ $Id:$
    txt
    cmake
    pc
+   startswith
 }
 
 Release Notes for 2025
@@ -23,6 +24,35 @@ Release Notes for 2025
 
 mm-dd
 *****
+
+07-31
+=====
+#. The documentation for log table message type
+   :ref:`log_table@message_type@command` has been improved.
+
+#. The documentation for :ref:`db2csv_command@log.csv` was improved
+   to menton that there will be a ``begin db2csv`` without the corresponding
+   ``end db2cav`` at the end of log.csv .
+
+API Change
+----------
+The log table ``end`` command message_type has been changed so that the entire
+command is included in the messages; i.e., it is the same as the
+corresponding begin with begin replaced by end.
+It used to be that just ``end`` followed by the command name was included
+in the message.
+For example, in the :ref:`user_re_scale.py-name` example, the code
+{xrst_code py}
+   assert log_table[fit_log_id + 1]['message'] == 'end fit'
+{xrst_code}
+was changed to
+{xrst_code py}
+   assert log_table[fit_log_id + 1]['message'] == 'end fit both'
+{xrst_code}
+Note that it could have also been changed to
+{xrst_code py}
+   assert log_table[fit_log_id + 1]['message'].startswith( 'end fit' )
+{xrst_code}
 
 07-11
 =====

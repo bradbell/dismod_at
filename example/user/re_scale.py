@@ -221,7 +221,7 @@ fit_log_id = None
 for log_id in range( len(log_table) ) :
    if log_table[log_id]['message'] == 'begin fit both' :
       fit_log_id = log_id
-assert log_table[fit_log_id + 1]['message'] == 'end fit'
+assert log_table[fit_log_id + 1]['message'] == 'end fit both'
 #
 # rate variables
 assert len(age_table) == 3

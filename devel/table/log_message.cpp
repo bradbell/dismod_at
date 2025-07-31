@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-24 Bradley M. Bell
+// SPDX-FileContributor: 2014-25 Bradley M. Bell
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin log_message dev}
@@ -53,6 +53,14 @@ and must be one of the following:
 ``value`` .
 This value gets written in the
 :ref:`log_table@message_type` column of the log table.
+
+command
+=======
+If *message_type* is ``command`` ,
+*value* will start with ``begin`` or ``end`` .
+The rest of the message will be the command line arguments to dismod_at.
+If a begin does not have a corresponding end,
+without any other command messages between them, the command failed.
 
 message
 *******

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-24 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin log_table}
 {xrst_spell
@@ -29,15 +29,16 @@ This column has type ``text`` and is one of the following values:
 command
 =======
 
-#. The start of every command is logged with ``begin`` ,
+#. The *message* for a command is ``begin`` ,
    followed by white space,
    followed by the name of the command.
    If optional arguments follow the command name,
    they are included after the command name and are separated by spaces.
-#. The end of every command is logged with the name of the command followed by
-   ``end`` .
-   If ``end`` does not appear after the command starts,
-   the command failed to finish.
+#. The end of every successful command is logged with *message* equal to
+   ``end`` followed by the same text as in the corresponding begin.
+   If a ``begin`` message does not have a corresponding ``end`` message,
+   the command failed.
+   (A corresponding end must occur before he next begin command.)
 
 random_seed
 ===========

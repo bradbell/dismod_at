@@ -198,12 +198,14 @@ int main(int n_arg, const char** argv)
    }
    std::time_t unix_time =
       dismod_at::log_message(db, DISMOD_AT_NULL_PTR, "command", message);
+   //
+   // end_message
+   string end_message = "end" + message.substr(5);
    // ----------------------------------------------------------------------
    // old2new command must fix database before get_db_input can be run
    if( command_arg == "old2new" )
    {  dismod_at::old2new_command(db);
-      message = "end " + command_arg;
-      dismod_at::log_message(db, DISMOD_AT_NULL_PTR, "command", message);
+      dismod_at::log_message(db, DISMOD_AT_NULL_PTR, "command", end_message);
       sqlite3_close(db);
       return 0;
    }
@@ -222,8 +224,7 @@ int main(int n_arg, const char** argv)
       std::string value = argv[5];
       dismod_at::set_option_command(db, option_table, name, value);
       //
-      message = "end " + command_arg;
-      dismod_at::log_message(db, DISMOD_AT_NULL_PTR, "command", message);
+      dismod_at::log_message(db, DISMOD_AT_NULL_PTR, "command", end_message);
       sqlite3_close(db);
       return 0;
    }
@@ -834,10 +835,8 @@ int main(int n_arg, const char** argv)
       dismod_at::error_exit(message);
    }
 # endif
-   // =======================================================================
    // ---------------------------------------------------------------------
-   message = "end " + command_arg;
-   dismod_at::log_message(db, DISMOD_AT_NULL_PTR, "command", message);
+   dismod_at::log_message(db, DISMOD_AT_NULL_PTR, "command", end_message);
    sqlite3_close(db);
    return 0;
 }

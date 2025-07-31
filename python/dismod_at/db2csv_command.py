@@ -81,6 +81,9 @@
 # :ref:`log_table@row_id` ,
 # :ref:`log_table@unix_time` , and
 # :ref:`log_table@message` .
+# Note that a `begin db2csv` command will appear at the end of this file
+# without the corresponding `end db2csv` because the db2csv command was not
+# completed when ``log.csv`` was written.
 #
 # age_avg.csv
 # ***********
