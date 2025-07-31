@@ -164,7 +164,7 @@ void create_table(
    //
    // data for the multiple insert
    size_t cut_size = 5000000;
-   for(size_t n = cut_size; n <= n_row; n += cut_size)
+   for(size_t n = 0; n <= n_row; n += cut_size)
    {  if (n > n_row)
          n = n_row;
       for(size_t i = n - cut_size; i < n; i++)
