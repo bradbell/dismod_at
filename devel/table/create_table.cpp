@@ -159,6 +159,8 @@ void create_table(
       cmd += ", " + col_name[j];
    cmd += " ) values\n";
    //
+   std::cout << "CREATE_TABLE.CPP : cmd = " << cmd << std::endl;
+   //
    if( n_row == 0 )
       return;
    //
@@ -187,6 +189,7 @@ void create_table(
          else
             cmd_n += " )\n";
       }
+      std::cout << "CREATE_TABLE.CPP : cmd_n = " << cmd_n << std::endl;
       dismod_at::exec_sql_cmd(db, cmd_n);
    }
 }
