@@ -155,8 +155,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.dismod_at``
 # {xrst_spell_off}
 # {xrst_code sh}
-   dismod_at_version='2025.7.6'
-   dismod_at_hash='97cb2fd43d8b99c9cd1e0cfb8417abcead49cf55'
+   dismod_at_version='2025.7.31'
+   dismod_at_hash='1e6a7d0bf733527bd3d7c22b8efcd8d89891a182'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -165,8 +165,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.at_cascade``
 # {xrst_spell_off}
 # {xrst_code sh}
-   at_cascade_version='2025.7.10'
-   at_cascade_hash='e95815318f197f8cfd0989e1683f8bea3022259a'
+   at_cascade_version='2025.8.1'
+   at_cascade_hash='c841e78c1cf91cd802ecb987e33cef88cc499b02'
 # {xrst_code}
 # {xrst_spell_on}
 #
