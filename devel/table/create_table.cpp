@@ -168,6 +168,7 @@ void create_table(
    {  size_t i_start = n - cut_size;
       if (n > n_row)
          n = n_row;
+         std::cout << "CUT LOOP TEST: n = " << n << std::endl;
       for(size_t i = i_start; i < n; i++)
       {  cmd_n = cmd + "( "  + to_string(i);
          for(size_t j = 0; j < n_col; j++)
