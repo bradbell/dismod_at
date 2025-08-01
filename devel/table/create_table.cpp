@@ -133,6 +133,7 @@ void create_table(
 {  using CppAD::to_string;
 
    std::string cmd;
+   std::string cmd_n;
    size_t n_col = col_name.size();
    size_t n_row = row_value.size() / n_col;
    //
@@ -162,23 +163,30 @@ void create_table(
       return;
    //
    // data for the multiple insert
-   for(size_t i = 0; i < n_row; i++)
-   {  cmd += "( "  + to_string(i);
-      for(size_t j = 0; j < n_col; j++)
-      {  cmd += ", ";
-         if( col_type[j] == "text" )
-            cmd += "'" + row_value[i * n_col + j] + "'";
-         else if( row_value[i * n_col + j] == "" )
-            cmd += "null";
+   size_t cut_size = 5000000;
+   for(size_t n = cut_size; n < n_row+cut_size; n += cut_size)
+   {  size_t i_start = n - cut_size;
+      if (n > n_row)
+         n = n_row;
+      cmd_n = cmd;
+      for(size_t i = i_start; i < n; i++)
+      {  cmd_n = cmd_n + "( "  + to_string(i);
+         for(size_t j = 0; j < n_col; j++)
+         {  cmd_n += ", ";
+            if( col_type[j] == "text" )
+               cmd_n += "'" + row_value[i * n_col + j] + "'";
+            else if( row_value[i * n_col + j] == "" )
+               cmd_n += "null";
+            else
+               cmd_n += row_value[i * n_col + j];
+         }
+         if( i + 1 < n )
+            cmd_n += " ),\n";
          else
-            cmd += row_value[i * n_col + j];
+            cmd_n += " )\n";
       }
-      if( i + 1 < n_row )
-         cmd += " ),\n";
-      else
-         cmd += " )\n";
+      dismod_at::exec_sql_cmd(db, cmd_n);
    }
-   dismod_at::exec_sql_cmd(db, cmd);
 }
 
 } // END_DISMOD_AT_NAMESPACE
