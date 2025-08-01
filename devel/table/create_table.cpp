@@ -163,15 +163,11 @@ void create_table(
       return;
    //
    // data for the multiple insert
-   std::cout << "CREATE_TABLE.CPP : table_name = " << table_name << std::endl;
-   std::cout << "CREATE_TABLE.CPP : n_row = " << n_row << std::endl;
    size_t cut_size = 5000000;
    for(size_t n = cut_size; n < n_row+cut_size; n += cut_size)
    {  size_t i_start = n - cut_size;
       if (n > n_row)
          n = n_row;
-         std::cout << "CREATE_TABLE.CPP : cut n = " << n << std::endl;
-         std::cout << "CREATE_TABLE.CPP : i_start = " << i_start << std::endl;
       cmd_n = cmd;
       for(size_t i = i_start; i < n; i++)
       {  cmd_n = cmd_n + "( "  + to_string(i);
@@ -189,7 +185,6 @@ void create_table(
          else
             cmd_n += " )\n";
       }
-      std::cout << "CREATE_TABLE.CPP : cmd_n = " << cmd_n << std::endl;
       dismod_at::exec_sql_cmd(db, cmd_n);
    }
 }
