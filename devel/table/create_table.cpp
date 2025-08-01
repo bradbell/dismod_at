@@ -172,8 +172,9 @@ void create_table(
          n = n_row;
          std::cout << "CREATE_TABLE.CPP : cut n = " << n << std::endl;
          std::cout << "CREATE_TABLE.CPP : i_start = " << i_start << std::endl;
+      cmd_n = cmd;
       for(size_t i = i_start; i < n; i++)
-      {  cmd_n = cmd + "( "  + to_string(i);
+      {  cmd_n = cmd_n + "( "  + to_string(i);
          for(size_t j = 0; j < n_col; j++)
          {  cmd_n += ", ";
             if( col_type[j] == "text" )
