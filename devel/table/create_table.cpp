@@ -163,12 +163,14 @@ void create_table(
       return;
    //
    // data for the multiple insert
+   std::cout << "CREATE_TABLE.CPP : table_name = " << table_name << std::endl;
+   std::cout << "CREATE_TABLE.CPP : n_row = " << n_row << std::endl;
    size_t cut_size = 5000000;
    for(size_t n = cut_size; n < n_row+cut_size; n += cut_size)
    {  size_t i_start = n - cut_size;
       if (n > n_row)
          n = n_row;
-         std::cout << "CUT LOOP TEST: n = " << n << std::endl;
+         std::cout << "CREATE_TABLE.CPP : cut n = " << n << std::endl;
       for(size_t i = i_start; i < n; i++)
       {  cmd_n = cmd + "( "  + to_string(i);
          for(size_t j = 0; j < n_col; j++)
