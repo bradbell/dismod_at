@@ -159,8 +159,6 @@ void create_table(
       cmd += ", " + col_name[j];
    cmd += " ) values\n";
    //
-   std::cout << "CREATE_TABLE.CPP : cmd = " << cmd << std::endl;
-   //
    if( n_row == 0 )
       return;
    //
@@ -173,6 +171,7 @@ void create_table(
       if (n > n_row)
          n = n_row;
          std::cout << "CREATE_TABLE.CPP : cut n = " << n << std::endl;
+         std::cout << "CREATE_TABLE.CPP : i_start = " << i_start << std::endl;
       for(size_t i = i_start; i < n; i++)
       {  cmd_n = cmd + "( "  + to_string(i);
          for(size_t j = 0; j < n_col; j++)
