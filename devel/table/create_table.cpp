@@ -129,7 +129,8 @@ void create_table(
    const CppAD::vector<std::string>&   col_name       ,
    const CppAD::vector<std::string>&   col_type       ,
    const CppAD::vector<bool>&          col_unique     ,
-   const CppAD::vector<std::string>&   row_value      )
+   const CppAD::vector<std::string>&   row_value      ,
+   const std::size_t&                  cut_size       )
 {  using CppAD::to_string;
 
    std::string cmd;
@@ -163,7 +164,6 @@ void create_table(
       return;
    //
    // data for the multiple insert
-   size_t cut_size = 5000000;
    for(size_t n = cut_size; n < n_row+cut_size; n += cut_size)
    {  size_t i_start = n - cut_size;
       if (n > n_row)
