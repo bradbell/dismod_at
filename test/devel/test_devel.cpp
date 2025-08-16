@@ -13,6 +13,7 @@ extern bool grid2line(void);
 extern bool meas_mulcov(void);
 extern bool rate_mulcov(void);
 extern bool cppad_mixed_xam(void);
+extern bool create_table_split(void);
 
 // anonymous namespace
 namespace {
@@ -54,6 +55,7 @@ int main(void)
    RUN(meas_mulcov);
    RUN(rate_mulcov);
    RUN(cppad_mixed_xam);
+   RUN(create_table_split);
 
    // summary report
    int return_flag;
