@@ -88,6 +88,16 @@ For *i* = 0 , ..., *n_row* ``-1`` ,
 is the value placed in the *i*-th row and column with name
 *col_name* [ *j* .
 
+cut_size
+********
+This argument has prototype
+
+   ``const std::size_t&`` *cut_size*
+
+We use *cut_size* for the number of rows to insert into the table in
+one insertion operation. If *n_row* is greater than *cut_size*, rows
+will be inserted in multiple operations, *cut_size* rows at a time.
+
 single quote
 ============
 The single quote character cannot appear in any of the values.
