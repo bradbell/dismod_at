@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-25 Bradley M. Bell
+# SPDX-FileContributor: 2025 Garland Culbreth
 # ---------------------------------------------------------------------------
 # source bin/dev_settings.sh
 # Sets the value of the the development tool variables for this package.
@@ -69,6 +70,7 @@ version_file_list='
 # for spaces in the full name.
 contributor_list='
    bradbell:Bradley_M._Bell
+   gculbr:Garland_Culbreth
 '
 #
 # no_copyright_list

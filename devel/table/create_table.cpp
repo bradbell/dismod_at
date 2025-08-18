@@ -1,23 +1,22 @@
 // $Id:$
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-24 Bradley M. Bell
+// SPDX-FileContributor: 2014-25 Bradley M. Bell
+// SPDX-FileContributor: 2025 Garland Culbreth
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin cpp_create_table dev}
-{xrst_spell
-  bool
-}
 
 Use C++ to Create a Database Table
 ##################################
 
-Syntax
-******
+Prototype
+*********
+{xrst_literal
+   // BEGIN_PROTOTYPE
+   // END_PROTOTYPE
+}
 
-| ``dismod_at.create_table`` (
-| |tab| *db* , *table_name* , *col_name* , *col_type* , *col_unique* , *row_value*
-| )
 
 Purpose
 *******
@@ -25,27 +24,15 @@ Create a table and place data in the table.
 
 db
 **
-This argument has prototype
-
-   ``sqlite3`` * *db*
-
-and is the database we are placing the table into.
+is the database we are placing the table into.
 
 table_name
 **********
-This argument has prototype
-
-   ``const std::string&`` *table_name*
-
-and is the name of the table we are putting information into.
+is the name of the table we are putting information into.
 
 col_name
 ********
-This argument has prototype
-
-   ``const CppAD::vector<std::string>&`` *col_name*
-
-and is a vector of the names for the column names in this table.
+is a vector of the names for the column names in this table.
 The size of this vector must greater than zero
 and is number of columns in the table
 minus one (the primary key column is not included).
@@ -54,30 +41,18 @@ and then the order of the other columns in the same order as *col_name* .
 
 col_type
 ********
-This argument has prototype
-
-   ``const CppAD::vector<std::string>&`` *col_type*
-
-It has the same size and order as *col_name* and specifies
+has the same size and order as *col_name* and specifies
 the type for the corresponding columns.
 The valid types are ``text`` , ``integer`` , and ``real`` .
 
 col_unique
 **********
-This argument has prototype
-
-   ``const CppAD::vector<bool>&`` *col_unique*
-
-It has the same size and order as *col_name* and specifies
+has the same size and order as *col_name* and specifies
 if the corresponding columns have a
 ``unique`` constraint (no repeated values).
 
 row_value
 *********
-This argument has prototype
-
-   ``const CppAD::vector<std::string>&`` *row_value*
-
 We use *n_row* for the number of rows in the table.
 The size of *row_value* is *n_row* * *col_name.size* () .
 For *i* = 0 , ..., *n_row* ``-1`` ,
@@ -90,10 +65,6 @@ is the value placed in the *i*-th row and column with name
 
 cut_size
 ********
-This argument has prototype
-
-   ``const std::size_t&`` *cut_size*
-
 We use *cut_size* for the number of rows to insert into the table in
 one insertion operation. If *n_row* is greater than *cut_size*, rows
 will be inserted in multiple operations, *cut_size* rows at a time.
@@ -133,6 +104,7 @@ The file :ref:`create_table_xam.cpp-name` is an example use of
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
+// BEGIN_PROTOTYPE
 void create_table(
    sqlite3*                            db             ,
    const std::string&                  table_name     ,
@@ -141,6 +113,7 @@ void create_table(
    const CppAD::vector<bool>&          col_unique     ,
    const CppAD::vector<std::string>&   row_value      ,
    const std::size_t&                  cut_size       )
+// END_PROTOTYPE
 {  using CppAD::to_string;
 
    std::string cmd;
