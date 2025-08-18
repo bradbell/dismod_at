@@ -32,14 +32,14 @@ test_create_table_split(void)
    vector<string> col_type   = {"real"};
    vector<bool>   col_unique = {false};
    vector<string> row_value(n_col * n_row);
-   size_t cut_size           = 3;
+   size_t max_insert         = 3;
 
    for(size_t k = 0; k < n_row; ++k)
    {  
       row_value[n_col * k] = to_string(k); 
    }
    dismod_at::create_table(
-      db, table_name, col_name, col_type, col_unique, row_value, cut_size
+      db, table_name, col_name, col_type, col_unique, row_value, max_insert
    );
 
    // get age table

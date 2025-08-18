@@ -18,7 +18,7 @@ namespace dismod_at {
       const CppAD::vector<std::string>&   col_type       ,
       const CppAD::vector<bool>&          col_unique     ,
       const CppAD::vector<std::string>&   row_value      ,
-      const std::size_t&                  cut_size = 1000
+      const std::size_t&                  max_insert = 1000
    );
 }
 // END_PROTOTYPE

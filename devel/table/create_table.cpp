@@ -76,11 +76,11 @@ Note that the special case where the value is the empty string,
 and the type is ``integer`` or ``real`` , the ``null``
 value is placed at the corresponding location in the table.
 
-cut_size
-********
-We use *cut_size* for the number of rows to insert into the table in
-one insertion operation. If *n_row* is greater than *cut_size*, rows
-will be inserted in multiple operations, *cut_size* rows at a time.
+max_insert
+**********
+We use *max_insert* for the number of rows to insert into the table in
+one insertion operation. If *n_row* is greater than *max_insert*, rows
+will be inserted in multiple operations, *max_insert* rows at a time.
 
 table_name_id
 *************
@@ -112,7 +112,7 @@ void create_table(
    const CppAD::vector<std::string>&   col_type       ,
    const CppAD::vector<bool>&          col_unique     ,
    const CppAD::vector<std::string>&   row_value      ,
-   const std::size_t&                  cut_size       )
+   const std::size_t&                  max_insert     )
 {  using CppAD::to_string;
 
    std::string cmd;
@@ -146,8 +146,8 @@ void create_table(
       return;
    //
    // data for the multiple insert
-   for(size_t n = cut_size; n < n_row+cut_size; n += cut_size)
-   {  size_t i_start = n - cut_size;
+   for(size_t n = max_insert; n < n_row+max_insert; n += max_insert)
+   {  size_t i_start = n - max_insert;
       if (n > n_row)
          n = n_row;
       cmd_n = cmd;
