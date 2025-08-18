@@ -79,8 +79,11 @@ value is placed at the corresponding location in the table.
 max_insert
 **********
 We use *max_insert* for the number of rows to insert into the table in
-one insertion operation. If *n_row* is greater than *max_insert*, rows
-will be inserted in multiple operations, *max_insert* rows at a time.
+one SQL command. The default value for this parameter is 1000. If
+*n_row* is greater than *max_insert*, rows will be inserted in multiple
+operations, *max_insert* rows at a time, until fewer rows than *max_insert*
+remain, at which point the remaining rows will be inserted. If *n_row*
+is less than *max_insert* all rows will be inserted at once.
 
 table_name_id
 *************
