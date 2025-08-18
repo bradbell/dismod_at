@@ -9,6 +9,7 @@
 # include <string>
 # include <cppad/utility/vector.hpp>
 
+// BEGIN_PROTOTYPE
 namespace dismod_at {
    void create_table(
       sqlite3*                            db             ,
@@ -20,5 +21,6 @@ namespace dismod_at {
       const std::size_t&                  cut_size = 1000
    );
 }
+// END_PROTOTYPE
 
 # endif

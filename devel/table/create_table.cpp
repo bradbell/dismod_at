@@ -13,6 +13,7 @@ Use C++ to Create a Database Table
 Prototype
 *********
 {xrst_literal
+   include/dismod_at/create_table.hpp
    // BEGIN_PROTOTYPE
    // END_PROTOTYPE
 }
@@ -63,12 +64,6 @@ For *i* = 0 , ..., *n_row* ``-1`` ,
 is the value placed in the *i*-th row and column with name
 *col_name* [ *j* .
 
-cut_size
-********
-We use *cut_size* for the number of rows to insert into the table in
-one insertion operation. If *n_row* is greater than *cut_size*, rows
-will be inserted in multiple operations, *cut_size* rows at a time.
-
 single quote
 ============
 The single quote character cannot appear in any of the values.
@@ -80,6 +75,12 @@ null
 Note that the special case where the value is the empty string,
 and the type is ``integer`` or ``real`` , the ``null``
 value is placed at the corresponding location in the table.
+
+cut_size
+********
+We use *cut_size* for the number of rows to insert into the table in
+one insertion operation. If *n_row* is greater than *cut_size*, rows
+will be inserted in multiple operations, *cut_size* rows at a time.
 
 table_name_id
 *************
@@ -104,7 +105,6 @@ The file :ref:`create_table_xam.cpp-name` is an example use of
 
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
-// BEGIN_PROTOTYPE
 void create_table(
    sqlite3*                            db             ,
    const std::string&                  table_name     ,
@@ -113,7 +113,6 @@ void create_table(
    const CppAD::vector<bool>&          col_unique     ,
    const CppAD::vector<std::string>&   row_value      ,
    const std::size_t&                  cut_size       )
-// END_PROTOTYPE
 {  using CppAD::to_string;
 
    std::string cmd;

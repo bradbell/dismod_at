@@ -123,7 +123,7 @@ fi
 #
 # xrst
 # python -m will search the current working directory first
-echo_eval python -m xrst \
+echo_eval python3 -m xrst \
    --local_toc \
    --html_theme sphinx_rtd_theme \
    --index_page_name $index_page_name \
