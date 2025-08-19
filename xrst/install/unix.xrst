@@ -84,7 +84,7 @@ on Fedora or Red-Hat one needs to install ``sqlite-devel`` .
 
 gsl
 ===
-`gsl <https://gnuwin32.sourceforge.net/packages/gsl.htm>`_,
+`gsl <https://www.gnu.org/software/gsl/>`_,
 the gnu scientific library.
 Note that the development headers are required; e.g.,
 on Fedora or Red-Hat one needs to install ``gsl-devel`` .
@@ -95,6 +95,14 @@ The `suitesparse <https://people.engr.tamu.edu/davis/suitesparse.html>`_
 sparse matrix package.
 Note that the development headers are required; e.g.,
 on Fedora or Red-Hat one needs to install ``suitesparse-devel`` .
+
+eigen
+=====
+The `eigen <https://libeigen.gitlab.io/eigen/docs-nightly/>_` 
+{xrst_comment
+   `eigen <https://eigen.tuxfamily.org/index.php?title=Main_Page>`_
+}
+linear algebra package.
 
 Download dismod_at.git
 **********************
@@ -163,9 +171,7 @@ the following command should work:
 
    ``pkg-config`` *pkg* ``--modversion``
 
-where *pkg* is any of the
-:ref:`install_unix@Special Requirements`
-below.
+where *pkg* is any of the required packages.
 (There is one exception, the eigen package uses ``eigen3`` for
 *pkg* above.)
 If one of these commands fails,
@@ -231,12 +237,6 @@ You must first change
 these settings to the appropriate values for your system before
 running the install scripts below:
 
-eigen
-=====
-The `eigen <https://eigen.tuxfamily.org/index.php?title=Main_Page>`_
-linear algebra package.
-The script ``bin/get_cppad_mixed.sh`` (see below)
-includes an install of eigen.
 
 ipopt
 =====
@@ -260,7 +260,7 @@ Starting in the ``dismod_at.git`` directory, the command
 
    ``bin/get_cppad_mixed.sh``
 
-can be used to install eigen, ipopt, and cppad_mixed.
+can be used to install ipopt, and cppad_mixed.
 This script also serves as an example of how to install cppad_mixed.
 
 dismod_at

@@ -551,8 +551,7 @@ Reduce the chance of a false failure from
 08-18
 =====
 
-#. There was a problem with the
-   :ref:`install_unix@Special Requirements@eigen`
+#. There was a problem with the eigen
    install script and its use of the ``-i`` flag on Mac systems.
    This has been fixed.
 #. Suppress certain warnings that occur when compiling with eigen package

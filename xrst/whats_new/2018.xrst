@@ -9,6 +9,7 @@ $Id:$
   da
   dd
   dt
+  eigen
   gcc
   grep
   hpp
@@ -295,7 +296,7 @@ Other Changes
    the age-time grid for rates is the same as the user's choice of
    grid for :ref:`csv2db_command@integrand@mtother` .
 #. Add discussion of why the default the prefix for
-   :ref:`install_unix@Special Requirements@eigen` is different
+   eigen is different
    from the other prefixes.
 #. Change the default value of
    :ref:`install_settings.py@build_type` to ``debug`` .

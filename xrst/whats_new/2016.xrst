@@ -273,7 +273,7 @@ Make the same change for the reference to running the ``sample_command`` .
 #. Change ``DEBUG`` and ``RELEASE`` to ``debug`` and ``release``
    in
    :ref:`install_settings.py-name` and the install for
-   :ref:`install_unix@Special Requirements@eigen` ,
+   eigen ,
    :ref:`install_unix@System Requirements@suitesparse` ,
    :ref:`install_unix@Special Requirements@ipopt` ,
    :ref:`install_unix@Special Requirements@cppad_mixed` .
@@ -284,7 +284,7 @@ In ``bin/install_cppad_mixed.sh``
 change ``cmake_build_type`` to ``build_type`` ; see
 :ref:`install_unix@Special Requirements@cppad_mixed` .
 In addition, add this parameter to the install for
-:ref:`install_unix@Special Requirements@eigen` ,
+eigen,
 :ref:`install_unix@System Requirements@suitesparse` , and
 :ref:`install_unix@Special Requirements@ipopt` .
 CppAD does not need this choice as it adapter to the choice of
