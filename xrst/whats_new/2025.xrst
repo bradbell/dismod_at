@@ -22,18 +22,19 @@ $Id:$
 Release Notes for 2025
 ######################
 
-Branch: create-table-split-insert
-*********************************
+
+mm-dd
+*****
+
+08-19
+=====
 Change the way the `dismod_at` executable creates tables so that it
 inserts at mode 1000 rows at a time.
 This was done to avoid the following limitation:
 'The maximum number of bytes in the text of an SQL statement is limited to
 `SQLITE_MAX_SQL_LENGTH` which defaults to 1,000,000,000.'
 
-mm-dd
-*****
-
-08-31
+08-01
 =====
 Advance the dock_dismod_at
 :ref:`dock_dismod_at.sh@dismod_at_version` from 2025.7.6 to 2025.7.31 and
