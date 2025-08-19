@@ -78,9 +78,9 @@ value is placed at the corresponding location in the table.
 
 max_insert
 **********
-We use *max_insert* for the number of rows to insert into the table in
-one SQL command. The default value for this parameter is 1000. If
-*n_row* is greater than *max_insert*, rows will be inserted in multiple
+We use *max_insert* for the maximum number of rows to insert into the table
+during one SQL command.
+If *n_row* is greater than *max_insert*, rows will be inserted in multiple
 operations, *max_insert* rows at a time, until fewer rows than *max_insert*
 remain, at which point the remaining rows will be inserted. If *n_row*
 is less than *max_insert* all rows will be inserted at once.
@@ -117,17 +117,20 @@ void create_table(
    const CppAD::vector<std::string>&   row_value      ,
    const std::size_t&                  max_insert     )
 {  using CppAD::to_string;
-
+   //
+   // cmd
    std::string cmd;
-   std::string cmd_n;
+   //
+   // n_col, n_row
    size_t n_col = col_name.size();
    size_t n_row = row_value.size() / n_col;
    //
    assert( col_type.size() == n_col );
    assert( col_unique.size() == n_col );
    assert( row_value.size() == n_row * n_col );
-
-   // the create the table command
+   //
+   // db
+   // create the table
    cmd  = "create table " + table_name;
    cmd += " (" + table_name + "_id integer primary key";
    for(size_t j = 0; j < n_col; j++)
@@ -138,39 +141,44 @@ void create_table(
    cmd += ");";
    dismod_at::exec_sql_cmd(db, cmd);
    //
-   // start the multiple insert command
+   if( n_row == 0 )
+      return;
+   //
+   // start_insert_command
    cmd = "insert into " + table_name;
    cmd += " (" + table_name + "_id";
    for(size_t j = 0; j < n_col; j++)
       cmd += ", " + col_name[j];
    cmd += " ) values\n";
+   std::string start_insert_command = cmd;
    //
-   if( n_row == 0 )
-      return;
-   //
-   // data for the multiple insert
-   for(size_t n = max_insert; n < n_row+max_insert; n += max_insert)
-   {  size_t i_start = n - max_insert;
-      if (n > n_row)
-         n = n_row;
-      cmd_n = cmd;
-      for(size_t i = i_start; i < n; i++)
-      {  cmd_n = cmd_n + "( "  + to_string(i);
+   // i_start, i_end
+   size_t i_end = 0;
+   while( i_end < n_row )
+   {  size_t i_start = i_end;
+      i_end = i_start + max_insert;
+      if (i_end > n_row)
+         i_end = n_row;
+      //
+      // cmd
+      cmd = start_insert_command;
+      for(size_t i = i_start; i < i_end; i++)
+      {  cmd = cmd + "( "  + to_string(i);
          for(size_t j = 0; j < n_col; j++)
-         {  cmd_n += ", ";
+         {  cmd += ", ";
             if( col_type[j] == "text" )
-               cmd_n += "'" + row_value[i * n_col + j] + "'";
+               cmd += "'" + row_value[i * n_col + j] + "'";
             else if( row_value[i * n_col + j] == "" )
-               cmd_n += "null";
+               cmd += "null";
             else
-               cmd_n += row_value[i * n_col + j];
+               cmd += row_value[i * n_col + j];
          }
-         if( i + 1 < n )
-            cmd_n += " ),\n";
+         if( i + 1 < i_end )
+            cmd += " ),\n";
          else
-            cmd_n += " )\n";
+            cmd += " )\n";
       }
-      dismod_at::exec_sql_cmd(db, cmd_n);
+      dismod_at::exec_sql_cmd(db, cmd);
    }
 }
 

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Build C++ Examples / Tests
 #
@@ -9,6 +9,7 @@
 ADD_EXECUTABLE(test_devel EXCLUDE_FROM_ALL
    age_time_order.cpp
    data_model_subset.cpp
+   create_table_split.cpp
    grid2line.cpp
    meas_mulcov.cpp
    rate_mulcov.cpp
