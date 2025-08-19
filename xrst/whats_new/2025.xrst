@@ -29,7 +29,7 @@ mm-dd
 08-19
 =====
 Change the way the `dismod_at` executable creates tables so that it
-inserts at mode 1000 rows at a time.
+inserts at most 1000 rows at a time.
 This was done to avoid the following limitation:
 'The maximum number of bytes in the text of an SQL statement is limited to
 `SQLITE_MAX_SQL_LENGTH` which defaults to 1,000,000,000.'
