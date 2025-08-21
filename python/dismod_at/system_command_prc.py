@@ -166,9 +166,9 @@ def system_command_prc(
          stderr   = stderr  ,
          encoding = 'utf-8' ,
       )
-   except subprocess.CalledProcessErrror as e :
+   except subprocess.CalledProcessError as e :
       if e.stdout == None or e.stdout == "" :
-         except_msg = 'CalledProcessErrror with an empty error message.'
+         except_msg = 'CalledProcessError with an empty error message.'
       else :
          except_msg = e.stderr
    except :
