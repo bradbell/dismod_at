@@ -26,6 +26,12 @@ Release Notes for 2025
 mm-dd
 *****
 
+08-21
+=====
+Advance the dock_dismod_at
+:ref:`dock_dismod_at.sh@dismod_at_version` from 2025.7.31 to 2025.8.21 and
+:ref:`dock_dismod_at.sh@at_cascade_version` from 2025.8.1 to 2025.8.21.
+
 08-19
 =====
 Change the way the `dismod_at` executable creates tables so that it
