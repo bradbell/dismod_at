@@ -283,6 +283,7 @@ connection      = dismod_at.create_connection(
 predict_table  = dismod_at.get_table_dict(connection, 'predict')
 avgint_table   = dismod_at.get_table_dict(connection, 'avgint')
 node_table     = dismod_at.get_table_dict(connection, 'node')
+connection.close()
 #
 for row in predict_table :
    avg_integrand  = row['avg_integrand']

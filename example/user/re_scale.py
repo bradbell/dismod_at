@@ -214,6 +214,7 @@ var_table       = dismod_at.get_table_dict(connection, 'var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 age_table       = dismod_at.get_table_dict(connection, "age")
 log_table       = dismod_at.get_table_dict(connection, "log")
+connection.close()
 #
 # check that convergence was detected during final fit by making
 # sure there are no warnings during the fit

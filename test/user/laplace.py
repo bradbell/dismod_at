@@ -232,6 +232,7 @@ node_table     = dismod_at.get_table_dict(connection, 'node')
 rate_table     = dismod_at.get_table_dict(connection, 'rate')
 var_table      = dismod_at.get_table_dict(connection, 'var')
 fit_var_table  = dismod_at.get_table_dict(connection, 'fit_var')
+connection.close()
 #
 # optimal values when standard deviation of random effects is infinity
 n_var = len( fit_var_table )

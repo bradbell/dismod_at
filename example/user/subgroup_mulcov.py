@@ -343,6 +343,7 @@ subgroup_table   = dismod_at.get_table_dict(connection, 'subgroup')
 node_table       = dismod_at.get_table_dict(connection, 'node')
 var_table        = dismod_at.get_table_dict(connection, 'var')
 fit_var_table    = dismod_at.get_table_dict(connection, 'fit_var')
+connection.close()
 n_var            = len(var_table)
 #
 # check fit results

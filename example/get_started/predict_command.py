@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin predict_command.py}
 # {xrst_comment_ch #}
@@ -63,6 +63,7 @@ var_table      = dismod_at.get_table_dict(connection, 'var')
 fit_var_table  = dismod_at.get_table_dict(connection, 'fit_var')
 avgint_table   = dismod_at.get_table_dict(connection, 'avgint')
 predict_table  = dismod_at.get_table_dict(connection, 'predict')
+connection.close()
 assert len(avgint_table) == 1
 #
 for var_id in range( len(var_table) ) :

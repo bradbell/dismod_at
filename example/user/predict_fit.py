@@ -297,6 +297,7 @@ connection      = dismod_at.create_connection(
 predict_table  = dismod_at.get_table_dict(connection, 'predict')
 avgint_table   = dismod_at.get_table_dict(connection, 'avgint')
 node_table     = dismod_at.get_table_dict(connection, 'node')
+connection.close()
 #
 # check that all the avgint_table values were predicted (no subsetting)
 assert len(predict_table) == 3

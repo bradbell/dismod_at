@@ -181,6 +181,7 @@ var_table       = dismod_at.get_table_dict(connection, 'var')
 rate_table      = dismod_at.get_table_dict(connection, 'rate')
 node_table      = dismod_at.get_table_dict(connection, 'node')
 hes_fixed_table = dismod_at.get_table_dict(connection, 'hes_fixed')
+connection.close()
 #
 assert len(var_table) == 3
 assert len(hes_fixed_table) == 1

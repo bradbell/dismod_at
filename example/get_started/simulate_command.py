@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin simulate_command.py}
 # {xrst_comment_ch #}
@@ -93,6 +93,7 @@ dismod_at.system_command_prc(
 data_table        = dismod_at.get_table_dict(connection, 'data')
 data_subset_table = dismod_at.get_table_dict(connection, 'data_subset')
 data_sim_table    = dismod_at.get_table_dict(connection, 'data_sim')
+connection.close()
 assert len(data_table) == 1
 assert len(data_sim_table) == number_simulate
 #

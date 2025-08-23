@@ -313,6 +313,7 @@ connection      = dismod_at.create_connection(
 )
 var_table       = dismod_at.get_table_dict(connection, 'var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
+connection.close()
 #
 for (var_id, row_var) in enumerate(var_table) :
    row_fit     = fit_var_table[var_id]

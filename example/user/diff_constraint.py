@@ -235,6 +235,7 @@ connection      = dismod_at.create_connection(
 # get parent rate variable values
 var_table     = dismod_at.get_table_dict(connection, 'var')
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
+connection.close()
 #
 middle_age_id  = 1
 middle_time_id = 1

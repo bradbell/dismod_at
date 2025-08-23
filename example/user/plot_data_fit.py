@@ -339,6 +339,7 @@ var_table       = dismod_at.get_table_dict(connection, 'var')
 node_table      = dismod_at.get_table_dict(connection, 'node')
 rate_table      = dismod_at.get_table_dict(connection, 'rate')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
+connection.close()
 #
 # 3 rates and one variable for each rate
 assert len(var_table) == 3

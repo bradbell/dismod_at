@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin init_command.py}
 # {xrst_comment_ch #}
@@ -119,6 +119,7 @@ for row in var_table :
 # check start_var and scale_var tables
 start_var = dismod_at.get_table_dict(connection, 'start_var')
 scale_var = dismod_at.get_table_dict(connection, 'scale_var')
+connection.close()
 for var_id in range( len(var_table) ) :
    assert start_var[var_id]['start_var_value'] == prior_mean[var_id]
    assert scale_var[var_id]['scale_var_value'] == prior_mean[var_id]

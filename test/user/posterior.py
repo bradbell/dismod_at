@@ -240,6 +240,7 @@ def compare(in_db, in_csv) :
 #
 # prior_sim_table
 prior_sim_table = dismod_at.get_table_dict(connection, 'prior_sim')
+connection.close()
 simulate_index  = 1
 assert len(variable_table) == number_var
 for var_id in range( number_var ) :

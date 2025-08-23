@@ -320,6 +320,7 @@ fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 rate_table    = dismod_at.get_table_dict(connection, 'rate')
 node_table    = dismod_at.get_table_dict(connection, 'node')
 time_table    = dismod_at.get_table_dict(connection, 'time')
+connection.close()
 #
 # for node = north_america, canada, united_states, mexico
 #  for time = 1990, 2010

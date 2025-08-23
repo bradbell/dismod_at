@@ -318,6 +318,7 @@ connection      = dismod_at.create_connection(
 )
 var_table       = dismod_at.get_table_dict(connection, 'var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
+connection.close()
 #
 assert len(var_table) == 2
 for (var_id, row_var) in enumerate(var_table) :

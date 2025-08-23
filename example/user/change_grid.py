@@ -267,6 +267,7 @@ age_table     = dismod_at.get_table_dict(connection, 'age')
 time_table    = dismod_at.get_table_dict(connection, 'time')
 var_table     = dismod_at.get_table_dict(connection, 'var')
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
+connection.close()
 #
 n_age  = len( age_table )
 n_time = len( time_table )

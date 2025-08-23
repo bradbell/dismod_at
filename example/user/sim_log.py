@@ -315,6 +315,7 @@ connection         = dismod_at.create_connection(
 data_sim_table     = dismod_at.get_table_dict(connection, 'data_sim')
 data_table         = dismod_at.get_table_dict(connection, 'data')
 data_subset_table  = dismod_at.get_table_dict(connection, 'data_subset')
+connection.close()
 residual_list      = list()
 for row in data_sim_table :
    data_sim_value = row['data_sim_value']

@@ -322,6 +322,7 @@ density_table         = dismod_at.get_table_dict(connection, 'density')
 var_table             = dismod_at.get_table_dict(connection, 'var')
 fit_var_table         = dismod_at.get_table_dict(connection, 'fit_var')
 smooth_gird_table     = dismod_at.get_table_dict(connection, 'smooth_grid')
+connection.close()
 #
 # check data residuals
 eps99    = 99.0 * numpy.finfo(float).eps

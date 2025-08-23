@@ -333,6 +333,7 @@ dismod_at.system_command_prc([ program, file_name, 'fit', 'both' ])
 #
 # get solution from fit_var table
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
+connection.close()
 #
 for var_id in range( n_var ) :
    var_type = var_table[var_id]['var_type']

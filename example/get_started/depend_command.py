@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin depend_command.py}
 # {xrst_comment_ch #}
@@ -59,6 +59,7 @@ connection = dismod_at.create_connection(
 # get variable and depend_var tables
 var_table         = dismod_at.get_table_dict(connection, 'var')
 depend_var_table  = dismod_at.get_table_dict(connection, 'depend_var')
+connection.close()
 #
 for var_id in range( len(var_table) ) :
    var_row         = var_table[var_id]

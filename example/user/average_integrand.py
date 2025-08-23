@@ -296,6 +296,7 @@ var_table       = dismod_at.get_table_dict(connection, 'var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 age_table       = dismod_at.get_table_dict(connection, 'age')
 time_table      = dismod_at.get_table_dict(connection, 'time')
+connection.close()
 #
 assert len(var_table) == 4
 for (var_id, row) in enumerate( var_table ) :

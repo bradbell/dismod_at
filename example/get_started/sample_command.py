@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin sample_command.py}
 # {xrst_comment_ch #}
@@ -112,6 +112,7 @@ if flag != 0 :
 # check the sample table
 var_table    = dismod_at.get_table_dict(connection, 'var')
 sample_table = dismod_at.get_table_dict(connection, 'sample')
+connection.close()
 #
 assert int(number_sample) == 1
 assert len(sample_table) == len(var_table)

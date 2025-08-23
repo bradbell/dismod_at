@@ -325,6 +325,7 @@ connection      = dismod_at.create_connection(
 # Results for fitting with no noise
 var_table     = dismod_at.get_table_dict(connection, 'var')
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
+connection.close()
 #
 # check rates values
 iota_rate_id      = 1

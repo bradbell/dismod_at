@@ -247,6 +247,7 @@ connection      = dismod_at.create_connection(
 data_table      = dismod_at.get_table_dict(connection, 'data')
 avgint_table    = dismod_at.get_table_dict(connection, 'avgint')
 predict_table   = dismod_at.get_table_dict(connection, 'predict')
+connection.close()
 #
 n_data =  len(data_table)
 assert len(avgint_table) == n_data

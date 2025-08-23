@@ -336,6 +336,7 @@ node_table      = dismod_at.get_table_dict(connection, 'node')
 time_table      = dismod_at.get_table_dict(connection, 'time')
 subgroup_table  = dismod_at.get_table_dict(connection, 'subgroup')
 integrand_table = dismod_at.get_table_dict(connection, 'integrand')
+connection.close()
 #
 # For each rate (iota and rho) there are two fixed effects.
 # In addition, for each rate and each subgroup there are two random effects.

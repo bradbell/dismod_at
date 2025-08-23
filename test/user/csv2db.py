@@ -108,6 +108,7 @@ connection = dismod_at.create_connection(
 var_table         = dismod_at.get_table_dict(connection, 'var')
 rate_table        = dismod_at.get_table_dict(connection, 'rate')
 integrand_table   = dismod_at.get_table_dict(connection, 'integrand')
+connection.close()
 #
 assert len(var_table) == 2
 for i in range(2) :

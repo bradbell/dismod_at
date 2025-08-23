@@ -178,6 +178,7 @@ connection     = dismod_at.create_connection(file_name, new = False)
 rate_table     = dismod_at.get_table_dict(connection, 'rate')
 var_table      = dismod_at.get_table_dict(connection, 'var')
 sample_table   = dismod_at.get_table_dict(connection, 'sample')
+connection.close()
 for row in var_table :
    rate_id = row['rate_id']
    rate_name = rate_table[rate_id]['rate_name']

@@ -292,6 +292,7 @@ connection      = dismod_at.create_connection(
 var_table     = dismod_at.get_table_dict(connection, 'var')
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 rate_table  = dismod_at.get_table_dict(connection, 'rate')
+connection.close()
 #
 parent_node_id = 1
 eps            = 1e-5

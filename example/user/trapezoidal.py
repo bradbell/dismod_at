@@ -234,6 +234,7 @@ connection      = dismod_at.create_connection(
 var_table       = dismod_at.get_table_dict(connection, 'var')
 rate_table      = dismod_at.get_table_dict(connection, 'rate')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
+connection.close()
 #
 rate2integrand  = {
    'iota'  : 'Sincidence',

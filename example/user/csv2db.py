@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin user_csv2db.py}
 # {xrst_spell
@@ -289,6 +289,7 @@ fit_var_table     = dismod_at.get_table_dict(connection, 'fit_var')
 data_table        = dismod_at.get_table_dict(connection, 'data')
 data_subset_table = dismod_at.get_table_dict(connection, 'data_subset')
 fit_data_subset   = dismod_at.get_table_dict(connection, 'fit_data_subset')
+connection.close()
 #
 max_abs_err = 0.0
 for var_id in range( len(var_table) ) :

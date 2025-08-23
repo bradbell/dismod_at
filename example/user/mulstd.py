@@ -295,6 +295,7 @@ connection      = dismod_at.create_connection(
 node_table      = dismod_at.get_table_dict(connection, 'node')
 var_table       = dismod_at.get_table_dict(connection, 'var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
+connection.close()
 rate_var_true = {
    'world':iota_world, 'child_1':effect_child_1, 'child_2':effect_child_2
 }

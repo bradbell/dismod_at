@@ -321,6 +321,7 @@ connection      = dismod_at.create_connection(
 # Results for fitting with no noise
 var_table     = dismod_at.get_table_dict(connection, 'var')
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
+connection.close()
 #
 parent_node_id = 1
 eps            = 1e-7

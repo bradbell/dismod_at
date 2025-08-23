@@ -276,6 +276,7 @@ dismod_at.system_command_prc([ program, file_name, 'fit', 'fixed' ])
 #
 # read new fit values
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
+connection.close()
 #
 for var_id in range( len(var_table) ) :
    age_id     = row['age_id']

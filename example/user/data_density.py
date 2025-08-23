@@ -285,6 +285,7 @@ var_table       = dismod_at.get_table_dict(connection, 'var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 fit_data_subset = dismod_at.get_table_dict(connection, 'fit_data_subset')
 data_table      = dismod_at.get_table_dict(connection, 'data')
+connection.close()
 #
 n_var = len( fit_var_table )
 assert n_var == 1

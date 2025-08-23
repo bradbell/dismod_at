@@ -260,6 +260,7 @@ var_table       = dismod_at.get_table_dict(connection, 'var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 rate_table      = dismod_at.get_table_dict(connection, 'rate')
 node_table      = dismod_at.get_table_dict(connection, 'node')
+connection.close()
 #
 # one age and one time for each of north_america, canada, unites_states
 n_var = len(var_table)

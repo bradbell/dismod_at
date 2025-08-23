@@ -195,6 +195,7 @@ connection      = dismod_at.create_connection(
 )
 var_table       = dismod_at.get_table_dict(connection, 'var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
+connection.close()
 #
 n_var          = len( var_table )
 parent_node_id = 0

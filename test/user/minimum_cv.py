@@ -176,6 +176,7 @@ var_table      = dismod_at.get_table_dict(connection, 'var')
 data_table     = dismod_at.get_table_dict(connection, 'data')
 fit_var_table  = dismod_at.get_table_dict(connection, 'fit_var')
 fit_data_table = dismod_at.get_table_dict(connection, 'fit_data_subset')
+connection.close()
 #
 omega_id = 4
 n_var    = len(var_table)

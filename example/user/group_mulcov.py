@@ -370,6 +370,7 @@ connection      = dismod_at.create_connection(
 # Results for fit fixed command
 var_table     = dismod_at.get_table_dict(connection, 'var')
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
+connection.close()
 #
 # parent node and tolerance
 parent_node_id = 0
