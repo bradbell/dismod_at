@@ -1841,3 +1841,9 @@ def db2csv_command(database_file_arg) :
       for row in table_data['mixed_info'] :
          csv_writer.writerow(row)
       csv_file.close()
+   # ==========================================================================
+   # close connections
+   # ==========================================================================
+   primary_connection.close()
+   if other_connection != None :
+      other_connection.close()
