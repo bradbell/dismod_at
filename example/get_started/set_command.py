@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-23 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # {xrst_begin set_command.py}
 # {xrst_comment_ch #}
@@ -93,6 +93,7 @@ connection      = dismod_at.create_connection(
 truth_var_table = dismod_at.get_table_dict(connection, 'truth_var')
 start_var_table = dismod_at.get_table_dict(connection, 'start_var')
 scale_var_table = dismod_at.get_table_dict(connection, 'scale_var')
+connection.close()
 for var_id in range( len(var_table) ) :
    #
    fit_row     = fit_var_table[var_id]

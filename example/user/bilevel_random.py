@@ -434,6 +434,7 @@ sample_std  = numpy.std(sample_array, axis=0, ddof = 1)
 #
 # check for covarage
 truth_var_table = dismod_at.get_table_dict(connection, 'truth_var')
+connection.close()
 for var_id in range(n_var) :
    var_type        = var_table[var_id]['var_type']
    age_id          = var_table[var_id]['age_id']

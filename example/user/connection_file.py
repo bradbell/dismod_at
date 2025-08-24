@@ -41,14 +41,13 @@ if not os.path.exists('build/example/user') :
    os.makedirs('build/example/user')
 os.chdir('build/example/user')
 #
-# connection
+# file_name
 database   = 'example.db'
 connection = dismod_at.create_connection(
    database , new = True, readonly = False
 )
-#
-# file_name
 file_name  = dismod_at.connection_file(connection)
+connection.close()
 #
 # check
 assert os.path.samefile(file_name,  database)
