@@ -234,6 +234,7 @@ col_name = [ 'truth_var_value' ]
 col_type = [ 'real' ]
 row_list = [ [iota_true] ]
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+connection.close()
 #
 # simulate a new data set and sample using it
 dismod_at.system_command_prc([ program, file_name, 'set', 'avgint', 'data' ])
@@ -260,6 +261,7 @@ if abs(first_estimate - second_estimate) / iota_true < 5e-3 :
 #
 # check all the simulated data values were non-negative
 data_sim_table = dismod_at.get_table_dict(connection, 'data_sim')
+connection.close()
 ## for row in data_sim_table :
    ## assert row['data_sim_value'] >= 0.0
 # -----------------------------------------------------------------------------

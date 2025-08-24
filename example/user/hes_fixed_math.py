@@ -641,6 +641,7 @@ def optimal_random_effect(fixed_effect) :
       file_name, new = False, readonly = True
    )
    fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
+   connection.close()
    #
    var_id        = node_name2var_id['child_0']
    uhat_0        = fit_var_table[var_id]['fit_var_value']

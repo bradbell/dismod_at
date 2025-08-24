@@ -249,6 +249,7 @@ connection            = dismod_at.create_connection(
 var_table             = dismod_at.get_table_dict(connection, 'var')
 fit_var_table         = dismod_at.get_table_dict(connection, 'fit_var')
 fit_data_subset_dict = dismod_at.get_table_dict(connection, 'fit_data_subset')
+connection.close()
 # -----------------------------------------------------------------------------
 count = 0
 n_var = len(var_table)

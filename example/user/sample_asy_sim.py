@@ -312,6 +312,7 @@ connection      = dismod_at.create_connection(
 )
 sample_table    = dismod_at.get_table_dict(connection, 'sample')
 hes_fixed_table = dismod_at.get_table_dict(connection, 'hes_fixed')
+connection.close()
 # -----------------------------------------------------------------------
 # check the asymptotic version of the sample table
 #

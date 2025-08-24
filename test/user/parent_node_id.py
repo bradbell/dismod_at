@@ -75,6 +75,7 @@ connection = dismod_at.create_connection(
 # get variable and fit_var tables
 var_table       = dismod_at.get_table_dict(connection, 'var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
+connection.close()
 #
 for var_id in range( len(var_table) ) :
    var_row     = var_table[var_id]

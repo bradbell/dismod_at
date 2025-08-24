@@ -361,6 +361,7 @@ for variables in [ 'fixed' , 'both' ] :
       file_name, new = False, readonly = True
    )
    sample_table  = dismod_at.get_table_dict(connection, 'sample')
+   connection.close()
    #
    # var_avg, var_std
    sample_array = numpy.zeros( (number_sample, 3), dtype = float )

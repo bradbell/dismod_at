@@ -498,6 +498,7 @@ connection    = dismod_at.create_connection(
 fit_var_table = dismod_at.get_table_dict(connection, 'fit_var')
 log_dict      = dismod_at.get_table_dict(connection, 'log')
 sample_table  = dismod_at.get_table_dict(connection, 'sample')
+connection.close()
 # -----------------------------------------------------------------------
 # determine random seed the was used
 random_seed = int(random_seed_arg)
