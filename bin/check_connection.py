@@ -35,7 +35,6 @@ def check_connection(file_path) :
       m_stop       = stop_pattern.search(data, m_start.end() )
       if m_stop == None :
          print( f'{file_path}: {variable}.close() not after create connection' )
-         breakpoint()
          ok = False
       else :
          #
@@ -46,7 +45,6 @@ def check_connection(file_path) :
          )
          if m_change != None :
             print( f'{file_path}: {variable}.close() not before {variable} =' )
-            breakpoint()
             ok = False
       #
       # m_start
