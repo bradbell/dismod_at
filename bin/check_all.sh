@@ -87,7 +87,7 @@ eval $(bin/install_settings.py | grep ^dismod_at_prefix)
 #
 # bin/check_*.sh
 # exclude this file and bin/check_install.sh
-list=`ls bin/check_*.sh | sed \
+list=`ls bin/check_*.sh bin/check_*.py | sed \
    -e '/check_all.sh/d' -e '/check_install.sh/d'`
 for script in $list
 do

@@ -250,5 +250,6 @@ def perturb_command(database, tbl_name, sigma_str) :
    #
    # replace table
    dismod_at.replace_table(connection, tbl_name, table)
+   connection.close()
    #
    return
