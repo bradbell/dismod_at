@@ -503,6 +503,7 @@ age_table        = dismod_at.get_table_dict(connection, 'age')
 var_table        = dismod_at.get_table_dict(connection, 'var')
 fit_var_table    = dismod_at.get_table_dict(connection, 'fit_var')
 covariate_table  = dismod_at.get_table_dict(connection, 'covariate')
+connection.close()
 n_var            = len(var_table)
 for var_id in range(n_var) :
    var_type     = var_table[var_id]['var_type']
@@ -562,7 +563,6 @@ dismod_at.system_command_prc(
 )
 #
 # check coverage of true values by posterior samples standard deviation
-connection.close()
 connection   = dismod_at.create_connection(
    file_name, new = False, readonly = True
 )
@@ -610,6 +610,7 @@ for var_id in range(n_var) :
 dismod_at.system_command_prc([ program, file_name, 'predict', 'sample' ])
 avgint_table    = dismod_at.get_table_dict(connection, 'avgint')
 predict_table   = dismod_at.get_table_dict(connection, 'predict')
+connection.close()
 n_avgint        = len( avgint_table )
 n_predict       = len( predict_table )
 n_subset        = int( n_predict / number_sample )
@@ -630,7 +631,6 @@ predict_std  = numpy.std(predict_array, axis=0, ddof = 1)
 # create fit_n11.db starting from fit_n1.db
 shutil.copyfile(file_name, 'fit_n11.db')
 file_name = 'fit_n11.db'
-connection.close()
 connection       = dismod_at.create_connection(
    file_name, new = False, readonly = False
 )
@@ -767,6 +767,7 @@ dismod_at.system_command_prc( [ program, file_name, 'fit', 'both' ] )
 # check e11
 var_table        = dismod_at.get_table_dict(connection, 'var')
 fit_var_table    = dismod_at.get_table_dict(connection, 'fit_var')
+connection.close()
 n_var            = len(var_table)
 for var_id in range(n_var) :
    var_type     = var_table[var_id]['var_type']

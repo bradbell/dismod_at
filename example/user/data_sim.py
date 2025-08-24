@@ -361,6 +361,7 @@ rate_table      = dismod_at.get_table_dict(connection, 'rate')
 integrand_table = dismod_at.get_table_dict(connection, 'integrand')
 covariate_table = dismod_at.get_table_dict(connection, 'covariate')
 node_table      = dismod_at.get_table_dict(connection, 'node')
+connection.close()
 # -----------------------------------------------------------------------
 # truth table:
 # -----------------------------------------------------------------------
@@ -405,8 +406,12 @@ for meas_noise_effect in meas_noise_effect_list :
       #
       var_id2true.append( truth_var_value )
       row_list.append( [ truth_var_value ] )
+   connection        = dismod_at.create_connection(
+      file_name, new = False, readonly = False
+   )
    dismod_at.sql_command(connection, 'DROP TABLE IF EXISTS truth_var')
    dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+   connection.close()
    # -------------------------------------------------------------------------
    # create and check the data_sim table
    dismod_at.system_command_prc([ program, file_name, 'simulate', '1' ])
@@ -419,6 +424,7 @@ for meas_noise_effect in meas_noise_effect_list :
    data_table        = dismod_at.get_table_dict(connection, 'data')
    data_subset_table = dismod_at.get_table_dict(connection, 'data_subset')
    data_sim_table    = dismod_at.get_table_dict(connection, 'data_sim')
+   connection.close()
    #
    # check that all the data_id appear in the data_subset table
    for data_subset_id in range(len(data_subset_table)) :
@@ -477,7 +483,6 @@ for meas_noise_effect in meas_noise_effect_list :
    # check that the standard deviation of the residuals is near one
    assert abs(residual_std - 1.0) <= 2.5 / numpy.sqrt(n_data)
    #
-connection.close()
 # -----------------------------------------------------------------------------
 print('data_sim.py: OK')
 # -----------------------------------------------------------------------------
