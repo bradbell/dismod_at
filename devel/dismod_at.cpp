@@ -631,20 +631,36 @@ int main(int n_arg, const char** argv)
          child_info4avgint
       );
       //
+      // source
       std::string source   = argv[3];
+      //
+      // zero_meas_value
       bool zero_meas_value = false;
-      if( n_arg > 4 )
-      {  string argv_4 = argv[4];
-         if( strcmp(argv[4], "zero_meas_value") != 0 )
-         {  message  = "dismod_at database predict " + source + " " + argv_4;
-            message += "\nexpected " + argv_4 + " to be zero_meas_value\n";
+      if( n_arg == 5 || n_arg == 7 )
+      {  const char* last_arg = argv[ n_arg - 1 ];
+         if( strcmp(last_arg, "zero_meas_value") != 0 )
+         {  message  = "dismod_at database predict command ";
+            message += "expected the last argument to be zero_meas_value\n";
             dismod_at::error_exit(message);
          }
          zero_meas_value = true;
       }
+      //
+      // fit_var_scale
+      double fit_var_scale = 1.0;
+      if( n_arg > 5 )
+      {  string argv_4 = argv[4];
+         if( strcmp(argv[4], "fit_var_scale") != 0 )
+         {  message  = "dismod_at database predict " + source + " " + argv_4;
+            message += "\nexpected " + argv_4 + " to be fit_var_scale\n";
+            dismod_at::error_exit(message);
+         }
+         fit_var_scale = std::atof( argv[5] );
+      }
       dismod_at::predict_command(
          source               ,
          zero_meas_value      ,
+         fit_var_scale        ,
          db                   ,
          db_input             ,
          pack_object          ,

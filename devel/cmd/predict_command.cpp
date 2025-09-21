@@ -22,8 +22,11 @@ The Predict Command
 
 Syntax
 ******
-``dismod_at`` *database* ``predict`` *source*
-``dismod_at`` *database* ``predict`` *source* ``zero_meas_value``
+| ``dismod_at`` *database* ``predict`` *source*
+| ``dismod_at`` *database* ``predict`` *source* ``zero_meas_value``
+| ``dismod_at`` *database* ``predict`` *source*  ``fit_var`` *scale*
+| ``dismod_at`` *database* ``predict`` *source* ``fit_var`` *scale*
+  ``zero_meas_value``
 
 database
 ********
@@ -74,6 +77,18 @@ If this argument is present, the value zero is used for the
 This predicts what the mean of the corresponding data
 would be if there were no measurement value covariate effects.
 
+fit_var scale
+*************
+If ``fit_var`` *scale* follows *source* ,
+*source* must be ``sample`` and the samples are scaled
+before the predictions are made.
+Let *i* be the :ref:`sample_table@sample_index` in the sample table.
+Let *j* the :ref:`sample_table@var_id` in the sample table and the
+:ref:`fit_var_table@fit_var_id` in the fit_var table.
+The scaled samples are defined by
+
+   scaled_sample(i,j) = fit_var(j)  + scale * ( sample(i,j)  - fit_var(j) )
+
 
 predict_table
 *************
@@ -101,6 +116,7 @@ using this command.
 void predict_command(
    const std::string&                                    source              ,
    bool                                                  zero_meas_value     ,
+   double                                                fit_var_scale       ,
    sqlite3*                                              db                  ,
    const dismod_at::db_input_struct&                     db_input            ,
    const dismod_at::pack_info&                           pack_object         ,
@@ -121,14 +137,31 @@ void predict_command(
       msg        += "sample, fit_var, truth_var";
       dismod_at::error_exit(msg);
    }
+   if ( fit_var_scale != 1.0 and source != "sample" )
+   {  string msg  = "dismod_at predict command: fit_var scale is present ";
+      msg        += "and source is not sample";
+      dismod_at::error_exit(msg);
+   }
+
    // ------------------------------------------------------------------------
    // n_var
    size_t n_var = pack_object.size();
    //
    // pack_vec
    vector<double> pack_vec(n_var);
+   //
    // ------------------------------------------------------------------------
-   // variable_value
+   // fit_var_value
+   vector<double> fit_var_value;
+   if( fit_var_scale != 1.0 )
+   {  string table_name   = "fit_var";
+      string column_name  = "fit_var_value";
+      dismod_at::get_table_column(
+         db, table_name, column_name, fit_var_value
+      );
+   }
+   // ------------------------------------------------------------------------
+   // n_sample, variable_value
    vector<double> variable_value;
    string table_name = source;
    string column_name;
@@ -143,6 +176,18 @@ void predict_command(
    );
    size_t n_sample = variable_value.size() / n_var;
    assert( n_sample * n_var == variable_value.size() );
+   //
+   // variable_value
+   if( fit_var_scale != 1.0 )
+   {  size_t sample_id = 0;
+      for(size_t sample_index = 0; sample_index < n_sample; ++sample_index)
+      {  for(size_t var_id = 0; var_id < n_var; ++var_id)
+         {  double sample               = variable_value[sample_id];
+            double fit                  = fit_var_value[var_id];
+            variable_value[sample_id++] = fit + fit_var_scale * (sample - fit);
+         }
+      }
+   }
    //
    // variable_value
    if( zero_meas_value )

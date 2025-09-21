@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-22 Bradley M. Bell
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin sample_table}
 
@@ -32,8 +32,8 @@ Its initial value is zero, and it increments by one for each row.
 sample_index
 ************
 This column has type ``integer`` and specifies the index,
-in the ``data_sim`` table, that a complete set of :ref:`model_variables-name` ,
-in the ``sample`` table, corresponds to.
+for each complete set of :ref:`model_variables-name` ,
+in the ``sample`` table.
 If *n_var* is the number of rows in the :ref:`var_table-name` ,
 
    *sample_index* = ``mod`` ( *sample_id* , *n_var* )
