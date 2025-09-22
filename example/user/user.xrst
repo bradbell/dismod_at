@@ -90,6 +90,7 @@ https://sqlitebrowser.org/.
    example/user/plot_rate_fit.py
    example/user/predict_fit.py
    example/user/predict_mulcov.py
+   example/user/predict_sample.py
    example/user/rate_eff_cov_table.py
    example/user/re_scale.py
    example/user/residual.py
@@ -197,6 +198,8 @@ Examples With Explanation
      - :ref:`user_predict_fit.py-title`
    * - user_predict_mulcov.py
      - :ref:`user_predict_mulcov.py-title`
+   * - user_predict_sample.py
+     - :ref:`user_predict_sample.py-title`
    * - user_residual.py
      - :ref:`user_residual.py-title`
    * - user_sample_asy.py

@@ -26,6 +26,12 @@ Release Notes for 2025
 mm-dd
 *****
 
+09-22
+=====
+Add the :ref:`predict_command@fit_var scale` option to the
+predict command. In addition, create the :ref:`user_predict_sample.py-name`
+example which demonstrates it used.
+
 08-21
 =====
 Advance the dock_dismod_at

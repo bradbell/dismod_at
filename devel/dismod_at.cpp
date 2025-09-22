@@ -93,6 +93,8 @@ int main(int n_arg, const char** argv)
       {"old2new",      3},
       {"predict",      4},
       {"predict",      5},
+      {"predict",      6},
+      {"predict",      7},
       {"sample",       6},
       {"sample",       7},
       {"set",          5},
@@ -646,13 +648,13 @@ int main(int n_arg, const char** argv)
          zero_meas_value = true;
       }
       //
-      // fit_var_scale
+      // fit_var scale
       double fit_var_scale = 1.0;
       if( n_arg > 5 )
       {  string argv_4 = argv[4];
-         if( strcmp(argv[4], "fit_var_scale") != 0 )
+         if( strcmp(argv[4], "fit_var") != 0 )
          {  message  = "dismod_at database predict " + source + " " + argv_4;
-            message += "\nexpected " + argv_4 + " to be fit_var_scale\n";
+            message += "\nexpected " + argv_4 + " to be fit_var\n";
             dismod_at::error_exit(message);
          }
          fit_var_scale = std::atof( argv[5] );

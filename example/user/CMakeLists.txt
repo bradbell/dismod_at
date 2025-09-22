@@ -51,6 +51,7 @@ FOREACH(user_case
    plot_rate_fit
    predict_fit
    predict_mulcov
+   predict_sample
    rate_eff_cov_table
    re_scale
    residual
