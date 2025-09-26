@@ -78,7 +78,7 @@ do
       ;;
 
       --external_links)
-      extra_flags+=" $1 --link_timeout 5"
+      extra_flags+=" $1 --link_timeout 10"
       ;;
 
       *)

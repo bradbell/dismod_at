@@ -26,6 +26,10 @@ Release Notes for 2025
 mm-dd
 *****
 
+09-25
+=====
+Advance `bin/get_cppad_mixed.sh` version from 2025.6.6 to 2025.9.19.
+
 09-22
 =====
 Add the :ref:`predict_command@fit_var scale` option to the
