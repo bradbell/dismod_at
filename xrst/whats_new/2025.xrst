@@ -26,6 +26,10 @@ Release Notes for 2025
 mm-dd
 *****
 
+10-12
+=====
+The ref:`wish_list@Logging Python Commands` wish list item was added.
+
 09-26
 =====
 Advance `bin/get_cppad_mixed.sh` version from 2025.6.6 to 2025.9.19.

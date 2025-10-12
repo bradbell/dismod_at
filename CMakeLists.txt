@@ -96,7 +96,7 @@ ENDMACRO( set_library_path_list )
 # ============================================================================
 CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 PROJECT(dismod_at)
-SET(dismod_at_version "2025.9.26")
+SET(dismod_at_version "2025.10.12")
 INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
 INCLUDE(CheckCXXSourceRuns)
 # ============================================================================

@@ -14,10 +14,21 @@ $Id:$
   misspecification
   multi
   onces
+  tbl
 }
 
 Dismod_at Wish List
 ###################
+
+Logging Python Commands
+***********************
+Currently the beginning and end of python commands are logged by
+:ref:`python_main-name` .
+Thus they do not get logged is the corresponding python function is called directly; e.g.,
+
+   dismod_at.perturb_command ( database , tbl_name , sigma )
+
+This should be fixed.
 
 Bootstrapping
 *************
