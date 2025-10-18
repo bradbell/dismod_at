@@ -29,8 +29,8 @@ mm-dd
 10-18
 =====
 Advance
-:ref:`dock_dismod_at.sh@dismod_at_version` from 2025.9.26 to 2025.10.17.
-
+:ref:`dock_dismod_at.sh@dismod_at_version` from 2025.9.26 to 2025.10.17 and
+:ref:`dock_dismod_at.sh@at_cascade_version` from 2025.10.15 to 2025.10.18.
 
 10-16
 =====
