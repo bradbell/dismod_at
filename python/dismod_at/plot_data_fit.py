@@ -25,6 +25,11 @@ Syntax
    # END syntax
 }
 
+log table
+*********
+This command uses :ref:`python_log_command-name` to enter
+begin and end markers in the database log table.
+
 database
 ********
 This ``str`` is the file name for
@@ -131,8 +136,25 @@ def plot_data_fit(
 # )
 # END syntax
 ) :
-   assert not database is None
-   assert not pdf_file is None
+   assert type(database) == str
+   assert type(pdf_file) == str
+   assert plot_title == None or type(plot_title) == str
+   assert max_plot == None or type(max_plot) == int
+   if integrand_list != None :
+      for integrand in  integrand_list :
+         assert type(integrand) == str
+   #
+   # arg_list
+   arg_list = [ pdf_file ]
+   if plot_title != None :
+      arg_list.append( pdf_file )
+   if max_plot != None :
+      arg_list.append( str(max_plot) )
+   if integrand_list != None :
+      arg_list += integrand_list
+   #
+   # database: log table
+   dismod_at.log_command("begin", database, "plot_data_fit", arg_list)
    #
    # connection
    connection = dismod_at.create_connection(
@@ -409,4 +431,8 @@ def plot_data_fit(
             pyplot.close( fig )
    # end of pages in pdf file
    pdf.close()
+   #
+   # database: log table
+   dismod_at.log_command("end", database, "plot_data_fit", arg_list)
+   #
    return n_fit_dict

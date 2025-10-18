@@ -24,6 +24,11 @@ As Python Function
 | |tab| *database* , *pdf_file* , *plot_title* , *rate_set*
 | )
 
+log table
+*********
+This command uses :ref:`python_log_command-name` to enter
+begin and end markers in the database log table.
+
 database
 ********
 This ``str`` is the file name for
@@ -96,6 +101,17 @@ def check4table(cursor, table_name) :
    return result
 # ----------------------------------------------------------------------------
 def plot_rate_fit(database, pdf_file, plot_title, rate_set) :
+   assert type(pdf_file) == str
+   assert type(plot_title) == str
+   assert type(rate_set) == set
+   for rate in rate_set :
+      assert type(rate) == str
+   #
+   # arg_list
+   arg_list = [ pdf_file, plot_title, " ".join(rate_set) ]
+   #
+   # database: log table
+   dismod_at.log_command("begin", database, "plot_rate_fit", arg_list)
    #
    # connection
    connection = dismod_at.create_connection(
@@ -244,4 +260,8 @@ def plot_rate_fit(database, pdf_file, plot_title, rate_set) :
       plot_limit = plot_limit,
       plot_data  = plot_data,
    )
+   #
+   # database: log table
+   dismod_at.log_command("end", database, "plot_rate_fit", arg_list)
+   #
    return plot_set

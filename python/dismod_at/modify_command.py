@@ -41,6 +41,11 @@
 # unless you are certain that the set of
 # :ref:`model_variables-name` was not affected by this change.
 #
+# log table
+# *********
+# This command uses :ref:`python_log_command-name` to enter
+# begin and end markers in the database log table.
+#
 # arg_list
 # ********
 # This is a list of strings containing the arguments in the
@@ -90,9 +95,6 @@
 # This would make the function ``exp`` ( *x* ) available for use
 # in *row_expression* and *value_expression* .
 #
-# Log Table
-# *********
-# See :ref:`python_main<python_main@Log Table>` .
 # {xrst_toc_hidden
 #    example/get_started/modify_command.py
 # }
@@ -109,7 +111,9 @@ def modify_command(database, arg_list) :
    import copy
    import dismod_at
    #
-   # -------------------------------------------------------------------------
+   # database: log table
+   dismod_at.log_command('begin', database, 'modify', arg_list)
+   #
    # arguments
    assert len(arg_list) >= 4
    table_name       = arg_list[0]
@@ -189,3 +193,6 @@ def modify_command(database, arg_list) :
    dismod_at.create_table(connection,table_name,col_name,col_type,row_list)
    # -------------------------------------------------------------------------
    connection.close()
+   #
+   # database: log table
+   dismod_at.log_command('end', database, 'modify', arg_list)

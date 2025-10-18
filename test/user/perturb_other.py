@@ -4,6 +4,7 @@
 # ----------------------------------------------------------------------------
 # perturb_command:
 # Test a case where there is not data and fit does not agree with mean.
+# Also test that begin and end markers get entered in the log table.
 #
 # other_database:
 # Test case where rate_eff_cov, but not rate, is in other_input_table list
@@ -218,7 +219,24 @@ var_table       = dismod_at.get_table_dict(connection, 'var')
 fit_var_table   = dismod_at.get_table_dict(connection, 'fit_var')
 start_var_table = dismod_at.get_table_dict(connection, 'start_var')
 scale_var_table = dismod_at.get_table_dict(connection, 'scale_var')
+log_table       = dismod_at.get_table_dict(connection, 'log')
 connection.close()
+#
+# check log
+begin_perturb = 0
+end_perturb   = 0
+for (row_id, row) in enumerate(log_table) :
+   if row['message_type'] == 'command' :
+      message = row['message']
+      if message.startswith('begin ') :
+         if message.find(' perturb ' ) >= 0 :
+            begin_perturb += 1
+      if message.startswith('end ') :
+         if message.find(' perturb ' ) >= 0 :
+            end_perturb += 1
+assert begin_perturb == 2
+assert end_perturb == 2
+#
 #
 n_age  = len( age_table )
 n_time = len( time_table )

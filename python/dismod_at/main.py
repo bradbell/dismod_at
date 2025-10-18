@@ -82,54 +82,7 @@ def main():
    database_file_arg = sys.argv[1]
    command_arg       = sys.argv[2]
    arg_list          = sys.argv[3:]
-   # ---------------------------------------------------------------------------
-   # begin_time
-   begin_time     = int( time.time() )
-   # ---------------------------------------------------------------------------
-   # deprecated
-   # special case where we execute the command first to create the database
-   if command_arg == 'csv2db' :
-      if len(sys.argv) != 5 :
-         sys.exit(usage)
-      configure_csv = sys.argv[3]
-      measure_csv   = sys.argv[4]
-      dismod_at.csv2db_command(database_file_arg, configure_csv, measure_csv)
-   # ---------------------------------------------------------------------------
-   # connection
-   connection    = dismod_at.create_connection(
-      database_file_arg, new = False, readonly = False
-   )
-   # ---------------------------------------------------------------------------
-   # create log table if it does not yet exist
-   cmd  = 'create table if not exists log('
-   cmd += ' log_id        integer primary key,'
-   cmd += ' message_type  text               ,'
-   cmd += ' table_name    text               ,'
-   cmd += ' row_id        integer            ,'
-   cmd += ' unix_time     integer            ,'
-   cmd += ' message       text               )'
-   dismod_at.sql_command(connection, cmd)
-   # ---------------------------------------------------------------------------
-   # write begin for this command
-   log_table     = dismod_at.get_table_dict(connection, 'log')
-   log_id        = len( log_table )
    #
-   # message
-   message       = 'begin'
-   for i in range(len(sys.argv) - 2) :
-      message += ' ' + sys.argv[i+2]
-   #
-   cmd  = 'insert into log'
-   cmd += ' (log_id,message_type,table_name,row_id,unix_time,message) values('
-   cmd += str(log_id) + ','     # log_id
-   cmd += '"command",'          # message_type
-   cmd += 'null,'               # table_name
-   cmd += 'null,'               # row_id
-   cmd += str(begin_time) + ',' # unix_time
-   cmd += '"' + message + '")'  # message
-   dismod_at.sql_command(connection, cmd)
-   connection.close()
-   # ---------------------------------------------------------------------------
    # execute command
    if command_arg == 'db2csv' :
       if len(sys.argv) != 3 :
@@ -162,8 +115,11 @@ def main():
          database_file_arg, pdf_file, plot_title, max_plot
       )
    elif command_arg == 'csv2db' :
-      # deprecated
-      pass # already executed this command
+      if len(sys.argv) != 5 :
+         sys.exit(usage)
+      configure_csv = sys.argv[3]
+      measure_csv   = sys.argv[4]
+      dismod_at.csv2db_command(database_file_arg, configure_csv, measure_csv)
    elif command_arg == 'modify' :
       # deprecated
       if len(sys.argv) < 7 :
@@ -171,25 +127,7 @@ def main():
       dismod_at.modify_command(database_file_arg, arg_list)
    else :
       sys.exit(usage)
-   # ---------------------------------------------------------------------------
-   # write end for this command
-   end_time     = int( time.time() )
-   message       = 'end'
-   for i in range(len(sys.argv) - 2) :
-      message += ' ' + sys.argv[i+2]
-   cmd  = 'insert into log'
-   cmd += ' (log_id,message_type,table_name,row_id,unix_time,message) values('
-   cmd += str(log_id+1) + ','   # log_id
-   cmd += '"command",'          # message_type
-   cmd += 'null,'               # table_name
-   cmd += 'null,'               # row_id
-   cmd += str(end_time) + ','   # unix_time
-   cmd += '"' + message + '")'  # message
-   connection = dismod_at.create_connection(
-      database_file_arg, new = False, readonly = False
-   )
-   dismod_at.sql_command(connection, cmd)
-   connection.close()
+   #
    # ---------------------------------------------------------------------------
    program_name = sys.argv[0].replace('\\', '/').split('/')[-1]
    print( program_name + ': OK')

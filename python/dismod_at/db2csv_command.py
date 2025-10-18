@@ -31,6 +31,11 @@
 # The ``null`` value in the database corresponds
 # to an empty string in the csv files.
 #
+# log table
+# *********
+# This command uses :ref:`python_log_command-name` to enter
+# begin and end markers in the database log table.
+#
 # database
 # ********
 # is the path from the currently directory to the database.
@@ -648,6 +653,9 @@ def db2csv_command(database_file_arg) :
    import sys
    import copy
    import math
+   #
+   # database: log table
+   dismod_at.log_command("begin", database_file_arg, "db2csv", list() )
    # -------------------------------------------------------------------------
    table_data     = dict()
    parent_node_id = None
@@ -1847,3 +1855,6 @@ def db2csv_command(database_file_arg) :
    primary_connection.close()
    if other_connection != None :
       other_connection.close()
+   #
+   # database: log table
+   dismod_at.log_command("end", database_file_arg, "db2csv", list())

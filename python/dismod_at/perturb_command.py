@@ -22,6 +22,11 @@
 # ==================
 # ``dismod_at.perturb_command`` ( *database* , *tbl_name* , *sigma* )
 #
+# log table
+# *********
+# This command uses :ref:`python_log_command-name` to enter
+# begin and end markers in the database log table.
+#
 # database
 # ********
 # is the path from the currently directory to the database.
@@ -204,6 +209,9 @@ def perturb_command(database, tbl_name, sigma_str) :
    assert type(tbl_name) == str
    assert type(sigma_str) == str
    #
+   # database: log table
+   dismod_at.log_command('begin', database, 'perturb', [tbl_name, sigma_str])
+   #
    # key
    if tbl_name == 'scale_var' :
       key = 'scale_var_value'
@@ -251,5 +259,8 @@ def perturb_command(database, tbl_name, sigma_str) :
    # replace table
    dismod_at.replace_table(connection, tbl_name, table)
    connection.close()
+   #
+   # database: log table
+   dismod_at.log_command('end', database, 'perturb', [tbl_name, sigma_str])
    #
    return

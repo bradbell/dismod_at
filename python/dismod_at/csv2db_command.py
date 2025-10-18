@@ -23,6 +23,8 @@
 # Deprecated
 # **********
 # This command was deprecated on 2021-12-05.
+# In addition, it does not put the begin and end markers in the log file
+# because the database does not exist when this command starts.
 #
 # Syntax
 # ******

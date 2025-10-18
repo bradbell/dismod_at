@@ -29,6 +29,7 @@ python3_executable = '@python3_executable@'
 #    python/dismod_at/get_name_type.py
 #    python/dismod_at/get_row_list.py
 #    python/dismod_at/get_table_dict.py
+#    python/dismod_at/log_command.py
 #    python/dismod_at/metropolis.py
 #    python/dismod_at/modify_command.py
 #    python/dismod_at/perturb_command.py
@@ -55,6 +56,7 @@ from .db2csv_command      import db2csv_command
 from .get_name_type       import get_name_type
 from .get_row_list        import get_row_list
 from .get_table_dict      import get_table_dict
+from .log_command         import log_command
 from .main                import main
 from .metropolis          import metropolis
 from .modify_command      import modify_command

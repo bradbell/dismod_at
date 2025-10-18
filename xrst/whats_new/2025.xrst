@@ -26,6 +26,22 @@ Release Notes for 2025
 mm-dd
 *****
 
+10-16
+=====
+It used to be that :ref:`python_main-name` would put markers in the log table
+for the begin and end of the python commands.
+In the case where the python commands were called from python,
+instead of through the python main program,
+there were not begin and end markers.
+This has been fixed and not the begin and end markers are written
+by the following python functions:
+:ref:`db2csv_command-name` ,
+:ref:`perturb_command-name` ,
+:ref:`plot_data_fit-name` ,
+:ref:`plot_rate_fit-name` ,
+and :ref:`modify_command-name` .
+Note that the modify command is deprecated.
+
 10-15
 =====
 Advance
@@ -33,7 +49,8 @@ Advance
 
 10-12
 =====
-The :ref:`wish_list@Logging Python Commands` wish list item was added.
+The :ref:Logging Python Commands wish list item was added.
+(It was completed by the changes on 10-18 above.)
 
 09-26
 =====
