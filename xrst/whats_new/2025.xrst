@@ -38,8 +38,8 @@ It used to be that :ref:`python_main-name` would put markers in the log table
 for the begin and end of the python commands.
 In the case where the python commands were called from python,
 instead of through the python main program,
-there were not begin and end markers.
-This has been fixed and not the begin and end markers are written
+there were no begin and end markers.
+This has been fixed and now the begin and end markers are written
 by the following python functions:
 :ref:`db2csv_command-name` ,
 :ref:`perturb_command-name` ,
