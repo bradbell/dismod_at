@@ -1,0 +1,34 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
+# SPDX-FileContributor: 2014-25 Bradley M. Bell
+# ----------------------------------------------------------------------------
+{xrst_begin 2026}
+{xrst_spell
+   mm
+   dd
+   cmake
+}
+
+Release Notes for 2026
+######################
+
+
+mm-dd
+*****
+
+01-07
+=====
+The changes are included in the 2026.0.0 version of dismod_at:
+
+#. Advance to using cppad_mixed-2026.0.0.
+   (This also advance cppad to version 20260000.0 .)
+
+#. Report an error if the sqlite libraries are not found during the
+   dismod_at cmake command. This makes it easier for the user to know
+   to install these libraries.
+
+#. The bin/example_install.sh script was not terminating with an error
+   code when one of the checks failed. This has been fixed.
+
+
+{xrst_end 2026}

@@ -103,6 +103,7 @@ do
       echo "Try running the follow command in $(pwd)"
       echo "    make $cmd"
       echo 'to see wy the check of dismod_at failed.'
+      exit 1
    fi
 done
 cd ..

@@ -201,6 +201,9 @@ ENDFOREACH(pkg)
 # The file sqlite3.pc does not get installed on windows so use FIND_PACKAGE
 FIND_PACKAGE(SQLite3)
 SET(sqlite3_LIBRARIES "${SQLite3_LIBRARIES}" )
+IF( NOT SQLite3_FOUND )
+   MESSAGE(FATAL_ERROR "CMake can'tfind the SQLite libraries on this system" )
+ENDIF( NOT SQLite3_FOUND )
 INCLUDE_DIRECTORIES( ${SQLite3_INCLUDE_DIRS} )
 #
 # package information for: CHOLMOD

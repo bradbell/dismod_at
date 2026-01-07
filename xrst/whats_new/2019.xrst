@@ -271,9 +271,7 @@ the selected section.
    | |tab| ./ ``dock_dismod_at.sh image dismod_at``
 
    This fixed a warning during the install of
-   :ref:`install_unix@Special Requirements@cppad` ;
-   see
-   `cmake mailing list <https://cmake.org/pipermail/cmake/2019-September/069977.html>`_.
+   :ref:`install_unix@Special Requirements@cppad` .
 
 09-22
 =====

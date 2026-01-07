@@ -61,7 +61,7 @@ is required by ``dismod_at`` .
 
 pkg-config
 ==========
-The `pkg-config <https://www.freedesktop.org/wiki/Software/pkg-config/>`_
+The `pkg-config <https://en.wikipedia.org/wiki/Pkg-config>`_
 program must be installed.
 
 python3

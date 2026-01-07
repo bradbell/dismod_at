@@ -39,8 +39,8 @@
 # ---------------------------------------------------------------------------
 # CppAD mixed version information
 web_page='https://github.com/bradbell/cppad_mixed.git'
-hash_key='fc9d9a97458824e992cd66b588b9d60918ab4522'
-version='2025.9.19'
+hash_key='6e32b03bd5c0cea8bf1b288f639cf4e019eed400'
+version='2026.0.0'
 # --------------------------------------------------------------------------
 name='bin/get_cppad_mixed.sh'
 if [ $0 != $name ]
@@ -88,7 +88,7 @@ then
 fi
 cd cppad_mixed.git
 echo_eval git reset --hard
-echo_eval git checkout master
+echo_eval git checkout main
 echo_eval git pull --ff-only
 echo_eval git checkout --quiet $hash_key
 check=`grep '^SET(cppad_mixed_version' CMakeLists.txt | \
