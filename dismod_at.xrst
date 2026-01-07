@@ -33,12 +33,12 @@ Versions
    * - Documentation for latest version
      - `latest <https://dismod-at.readthedocs.io/latest>`_
    * - Documentation for most recent stable version
-     - `stable-2025 <https://dismod-at.readthedocs.io/stable-2025>`_
+     - `stable-2026 <https://dismod-at.readthedocs.io/stable-2026>`_
    * - Most recent release of this stable version
-     - release-2025_
+     - release-2026_
 
-.. _release-2025: https://codeload.github.com/bradbell/
-   dismod_at/tar.gz/refs/tags/2025.0.2
+.. _release-2026: https://codeload.github.com/bradbell/
+   dismod_at/tar.gz/refs/tags/2026.0.0
 
 
 Contents
