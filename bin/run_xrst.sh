@@ -10,7 +10,7 @@ set -e -u
 # --help                     print the run_xrst.sh help message
 # --target_tex               create tex (instead of html) files
 # --exclude_dev              exclude developer documentation
-# --suppress_spell_warnings  do not check for documentaiton spelling errors
+# --suppress_spell_warnings  do not check for documentation spelling errors
 # --rst_line_numbers         sphinx errors and warnings use rst line numbers
 # --replace_spell_commands   replace xrst_spell commands assuming no errors
 # --external_links           check documentation external links
@@ -48,7 +48,7 @@ possible flags
 --help                     print the run_xrst.sh help message
 --target_tex               create tex (instead of html) files
 --exclude_dev              exclude developer documentation (group dev)
---suppress_spell_warnings  do not check for documentaiton spelling errors
+--suppress_spell_warnings  do not check for documentation spelling errors
 --rst_line_numbers         sphinx errors and warnings use rst line numbers
 --replace_spell_commands   replace xrst_spell commands assuming no errors
 --external_links           check documentation external links
@@ -78,7 +78,7 @@ do
       ;;
 
       --external_links)
-      extra_flags+=" $1 --link_timeout 10"
+      extra_flags+=" $1 --link_timeout 5"
       ;;
 
       *)
@@ -122,7 +122,7 @@ else
 fi
 #
 # xrst
-# python -m will search the current working directory first
+# python3 -m will search the current working directory first
 echo_eval python3 -m xrst \
    --local_toc \
    --html_theme sphinx_rtd_theme \

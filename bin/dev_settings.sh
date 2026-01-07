@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
 # SPDX-FileContributor: 2003-25 Bradley M. Bell
-# SPDX-FileContributor: 2025 Garland Culbreth
 # ---------------------------------------------------------------------------
 # source bin/dev_settings.sh
 # Sets the value of the the development tool variables for this package.
@@ -31,7 +30,7 @@ index_page_name='dismod_at'
 # version_file_list
 # The possible patterns for a latest version number are:
 #     yyyymmdd or yyyy.month.day
-# whee yyyymmdd is an eight decimal digit representation of the date.
+# where yyyymmdd is an eight decimal digit representation of the date.
 # yyyy is the year (as four decimal digits yyy), month is a number
 # between 1 and 12, and the day is a number between 1 and 31
 # The possible patterns for a release version number are:
@@ -65,7 +64,7 @@ version_file_list='
 # contributor_list
 # This maps the system user name $USER to the contributor's full name.
 # A full name can have multiple user names, but each user name can have
-# only one full name. The colon seperates the user name from the full name.
+# only one full name. The colon separates the user name from the full name.
 # The entries are separate by white space, so the under bar character is used
 # for spaces in the full name.
 contributor_list='

@@ -26,28 +26,16 @@ echo_eval() {
    eval $*
 }
 # -----------------------------------------------------------------------------
-#
-# skip_spell_check
-skip_spell_check='no'
+if [ $# != 0 ]
+then
+   echo 'usage: bin/git_commit.sh: does not expect arguments'
+   exit 1
+fi
 if [ "$0" != 'bin/git_commit.sh' ]
 then
    echo 'bin/git_commit.sh: must execute this script from its parent directory'
    exit 1
 fi
-if [ $# == 1 ]
-then
-   if [ "$1" != skip_spell_check ]
-   then
-      echo 'bin/git_commit.sh: [skip_spell_check]'
-      exit 1
-   fi
-   skip_spell_check='yes'
-elif [ $# != 0 ]
-then
-      echo 'bin/git_commit.sh: [skip_spell_check]'
-      exit 1
-fi
-#
 if [ ! -e './.git' ]
 then
    echo 'bin/git_commit.sh: cannot find ./.git'
@@ -161,10 +149,7 @@ fi
 mv temp.log git_commit.log
 if which typos >& /dev/null
 then
-   if [ "$skip_spell_check" == 'no' ]
-   then
-      typos git_commit.log
-   fi
+   typos git_commit.log
 fi
 # -----------------------------------------------------------------------------
 # git add

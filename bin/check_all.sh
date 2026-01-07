@@ -32,6 +32,7 @@ possible flags
 --help                     print this help message
 --debug                    compile for debugging
 --verbose_make             generate verbose makefiles
+--skip_check_copy          do not check copyright messages
 --skip_external_links      do not check documentation external links
 --suppress_spell_warnings  do not check for documentaiton spelling errors
 EOF
@@ -42,6 +43,7 @@ fi
 # debug, verbose_make, skip_external_links, suppress_spell_warnings
 debug='no'
 verbose_make='no'
+skip_check_copy='no'
 skip_external_links='no'
 suppress_spell_warnings='no'
 while [ $# != 0 ]
@@ -55,6 +57,10 @@ do
 
       --verbose_make)
       verbose_make='yes'
+      ;;
+
+      --skip_check_copy)
+      skip_check_copy='yes'
       ;;
 
       --skip_external_links)
@@ -85,10 +91,15 @@ fi
 # dismod_at_prefix
 eval $(bin/install_settings.py | grep ^dismod_at_prefix)
 #
+if [ "$skip_check_copy" == 'no' ]
+then
+   bin/check_copy.sh
+fi
+#
 # bin/check_*.sh
 # exclude this file and bin/check_install.sh
 list=`ls bin/check_*.sh bin/check_*.py | sed \
-   -e '/check_all.sh/d' -e '/check_install.sh/d'`
+   -e '/check_all.sh/d' -e '/check_install.sh/d' -e '/check_copy.sh/d'`
 for script in $list
 do
    $script
