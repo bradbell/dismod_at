@@ -1607,7 +1607,7 @@ def db2csv_command(database_file_arg) :
       row_out['weight'] = table_lookup(
          'weight', row_in['weight_id'], 'weight_name'
       )
-      # denisty
+      # density
       row_out['density'] = table_lookup(
          'density', subset_row['density_id'], 'density_name'
       )

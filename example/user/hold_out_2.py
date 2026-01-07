@@ -210,7 +210,7 @@ def example_db (file_name) :
    }
    n_repeat = max_fit
    for i in range(n_repeat) :
-      # sample twice as often from germany so that original data not balenced
+      # sample twice as often from germany so that original data not balanced
       for node in [ "germany", "germany", "italy", "europe" ] :
          for sex in [ -0.5, +0.5 ] :
             meas_value = iota_true(node, sex)

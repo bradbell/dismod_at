@@ -57,7 +57,7 @@ fi
 if [ "$branch1" == "$branch2" ]
 then
    echo 'bin/speed.sh: branch1 and branch2 must be different'
-   echo 'branch2 can be empty in which case new is used to replace soruce'
+   echo 'branch2 can be empty in which case new is used to replace source'
    exit 1
 fi
 if ! grep "^build_type *= *'release'" bin/install_settings.py > /dev/null
@@ -147,7 +147,7 @@ do
    #
    popd > /dev/null
 done
-# 
+#
 # original_branch
 git checkout $original_branch
 if [ "$name" != "$original_branch" ]

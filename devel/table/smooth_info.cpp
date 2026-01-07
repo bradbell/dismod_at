@@ -163,7 +163,7 @@ smooth_info::smooth_info(
    using std::string;
    using CppAD::to_string;
    //
-   // for erorr messaging
+   // for error messaging
    string msg, table_name;
    size_t row_id;
    size_t null_size_t = DISMOD_AT_NULL_SIZE_T;

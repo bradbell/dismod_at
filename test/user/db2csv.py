@@ -147,7 +147,7 @@ def example_db (file_name) :
          'lower':    0.00,
          'mean':     gamma_noise,
          'upper':    10.0 * gamma_noise
-      },{  # priot_flat
+      },{  # prior_flat
          'name':     'prior_flat',
          'density':  'uniform',
          'mean':     0.0,
@@ -249,7 +249,7 @@ file_name    = open('build/test/user/variable.csv', 'r')
 reader       = csv.DictReader(file_name)
 count_mulcov = 0
 for row in reader :
-   # Check bnd_mulcov informaiton
+   # Check bnd_mulcov information
    if row['var_type'].startswith('mulcov_') :
       count_mulcov += 1
       max_cov_diff = float( row['m_diff'] )

@@ -265,7 +265,7 @@ void simulate_command(
       }
    }
    // ----------------------------------------------------------------------
-   // Enforce zero_sum_child_rate contraints
+   // Enforce zero_sum_child_rate constraints
    //
    // n_child
    size_t n_child = pack_object.child_size();
@@ -302,13 +302,13 @@ void simulate_command(
          {  // initialize summation for this grid point
             double sum_random = 0.0;
             //
-            // sum over childern
+            // sum over children
             for(size_t j = 0; j < n_child; j++)
             {  // packing information for this child
                pack_info::subvec_info
                   info_j = pack_object.node_rate_value_info(rate_id, j);
                //
-               // all the children hav the same smoothing
+               // all the children have the same smoothing
                assert( info_j.smooth_id == info_0.smooth_id );
                assert( info_j.n_var     == info_0.n_var );
                //
@@ -337,7 +337,7 @@ void simulate_command(
       }
    }
    // ----------------------------------------------------------------------
-   // Enforce zero_sum_mulcov_group contraints
+   // Enforce zero_sum_mulcov_group constraints
    //
    // n_group
    size_t n_group = pack_object.group_size();
@@ -389,7 +389,7 @@ void simulate_command(
             );
          }
          //
-         // only consider groups that are zero sum contrained
+         // only consider groups that are zero sum constrained
          if( zero_sum_mulcov_group[info_0.group_id] )
          {  // smoothing for subgroups
             assert( info_0.smooth_id != DISMOD_AT_NULL_SIZE_T );

@@ -450,7 +450,7 @@ void fit_command(
       CppAD::mixed::d_sparse_rcv random_hes_rcv =
          fit_object.random_obj_hes(opt_value);
       //
-      // drop previous verison of this table
+      // drop previous version of this table
       string sql_cmd = "drop table if exists hes_random";
       dismod_at::exec_sql_cmd(db, sql_cmd);
       //
@@ -490,7 +490,7 @@ void fit_command(
    }
    // ------------------ mixed_info table ----------------------------
    {  //
-      // drop previous verison of this table
+      // drop previous version of this table
       string sql_cmd = "drop table if exists mixed_info";
       dismod_at::exec_sql_cmd(db, sql_cmd);
       //
@@ -587,7 +587,7 @@ void fit_command(
       // fit_var_value
       row_value[var_id * n_col + 0] = to_string( opt_value[var_id] );
       //
-      // initialzie residuals as empty (null in database)
+      // initialize residuals as empty (null in database)
       for(size_t k = 1; k < 4; k++)
          row_value[var_id * n_col + k] = "";
       //

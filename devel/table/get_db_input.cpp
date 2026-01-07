@@ -205,7 +205,7 @@ void get_db_input(sqlite3* db, db_input_struct& db_input)
    }
    //
    // get_mulcov_table uses subgroup table
-   // to check for erros
+   // to check for errors
    DISMOD_AT_SET_DB_TMP(mulcov)
    db_input.mulcov_table = get_mulcov_table(db_tmp, db_input.subgroup_table);
    //

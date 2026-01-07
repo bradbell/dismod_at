@@ -33,7 +33,7 @@ private:
    size_t mulstd_dage_;
    // prior_id for multiplier of dtime prior standard deviations
    size_t mulstd_dtime_;
-   // are all the value priors equivalant to a const_value
+   // are all the value priors equivalent to a const_value
    bool all_const_value_;
 public:
    // assignment operator

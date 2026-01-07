@@ -16,7 +16,7 @@ then
 fi
 name="$1"
 # ---------------------------------------------------------------------------
-# 7 is lenght of ${name} in text below
+# 7 is length of ${name} in text below
 wgt=''
 wlt=''
 len=`expr length $name`

@@ -19,7 +19,6 @@ $Id:$
   mm
   msg
   msys
-  ocurred
   pdf
   podman
   stdcv
@@ -353,7 +352,7 @@ to build using MacPorts.
 07-25
 =====
 Fix a bug in the :ref:`system_command_prc-name` error reporting.
-To be specific, when an error ocurred during a system command,
+To be specific, when an error occurred during a system command,
 the command return code was not properly reported.
 
 07-24
@@ -396,7 +395,7 @@ the command return code was not properly reported.
 07-05
 =====
 Fix two bugs in the changes on 07-04.
-One ocurred when using
+One occurred when using
 :ref:`option_table@Zero Sum Constraints` .
 The other was in the :ref:`db2csv_command-name`
 (the python code value ``true`` was corrected to ``True`` ).

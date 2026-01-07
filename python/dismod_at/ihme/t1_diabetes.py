@@ -36,7 +36,7 @@ def pini_parent_smoothing(
       'nu'         : None           ,
    }
    dtime_prior = {
-      'prior_name' : 'parent_smooting_pini_dtime_prior',
+      'prior_name' : 'parent_smoothing_pini_dtime_prior',
       'density_id' : density_id     ,
       'lower'      : None           ,
       'upper'      : None           ,
@@ -77,7 +77,7 @@ def iota_parent_smoothing(
       'nu'         : None           ,
    }
    dtime_prior = {
-      'prior_name' : 'parent_smooting_iota_dtime_prior',
+      'prior_name' : 'parent_smoothing_iota_dtime_prior',
       'density_id' : density_id     ,
       'lower'      : None           ,
       'upper'      : None           ,
@@ -117,7 +117,7 @@ def chi_parent_smoothing(
       'nu'         : None           ,
    }
    dtime_prior = {
-      'prior_name' : 'parent_smooting_chi_dtime_prior',
+      'prior_name' : 'parent_smoothing_chi_dtime_prior',
       'density_id' : density_id     ,
       'lower'      : None           ,
       'upper'      : None           ,
@@ -147,7 +147,7 @@ def iota_child_smoothing(
    }
    density_id   = density_name2id['uniform']
    dage_prior = {
-      'prior_name' : 'iota_child_smooting_dage_piror',
+      'prior_name' : 'iota_child_smoothing_dage_piror',
       'density_id' : density_id     ,
       'lower'      : None           ,
       'upper'      : None           ,
@@ -157,7 +157,7 @@ def iota_child_smoothing(
       'nu'         : None           ,
    }
    dtime_prior = {
-      'prior_name' : 'iota_child_smooting_dtime_piror',
+      'prior_name' : 'iota_child_smoothing_dtime_piror',
       'density_id' : density_id     ,
       'lower'      : None           ,
       'upper'      : None           ,
@@ -187,7 +187,7 @@ def chi_child_smoothing(
    }
    density_id   = density_name2id['uniform']
    dage_prior = {
-      'prior_name' : 'chi_child_smooting_dage_piror',
+      'prior_name' : 'chi_child_smoothing_dage_piror',
       'density_id' : density_id     ,
       'lower'      : None           ,
       'upper'      : None           ,
@@ -197,7 +197,7 @@ def chi_child_smoothing(
       'nu'         : None           ,
    }
    dtime_prior = {
-      'prior_name' : 'chi_child_smooting_dtime_piror',
+      'prior_name' : 'chi_child_smoothing_dtime_piror',
       'density_id' : density_id     ,
       'lower'      : None           ,
       'upper'      : None           ,
@@ -227,14 +227,14 @@ max_num_iter_fixed = 75
 # list of integrand that are in fitting without ode but not with ode
 ode_hold_out_list = ['mtexcess']
 #
-# Maximum absolute covariate effect = multiplier * (covariate - referece).
+# Maximum absolute covariate effect = multiplier * (covariate - reference).
 # Note that exp(effect) multiplies a model value to get the model value for
 # this covariate value. (Noise covariate multipliers are not included.)
 max_covariate_effect = 2.0
 #
 # Covariate multipliers that are set to a specific value:
 # This is a list with each entrry a list consisting of
-# covariate_name, rate or integrand, and value we are setting multilpier to
+# covariate_name, rate or integrand, and value we are setting multiplier to
 set_mulcov_value = []
 #
 # Ordered dictionary of parent smoothing functions

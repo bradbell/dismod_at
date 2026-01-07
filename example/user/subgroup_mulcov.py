@@ -89,7 +89,7 @@
 iota_parent_true      = 0.01 # value corresponding to parent with no effects
 group_effect_true     = 0.3  # value corresponding to group g1
 child_effect_true     = 0.2  # absolute value of child random effects
-subgroup_effect_true  = 0.1  # absoulte value of subgroup random effects
+subgroup_effect_true  = 0.1  # absolute value of subgroup random effects
 meas_cv               = 0.1  # coefficient of variation for each data point
 # {xrst_code}
 # {xrst_spell_on}

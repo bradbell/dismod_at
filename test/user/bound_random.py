@@ -70,7 +70,7 @@ def example_db (file_name) :
       { 'name':'constant',  'age_id':[0], 'time_id':[0], 'fun':fun }
    ]
    #
-   # covariate table: no covriates
+   # covariate table: no covariates
    covariate_table = list()
    #
    # mulcov table

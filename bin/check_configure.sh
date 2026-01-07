@@ -37,7 +37,7 @@ do
    fi
    if [ "$required" == 'no' ] && [ "$present" == 'yes' ]
    then
-      echo "unecessary: # include <dismod_at/configure.hpp>"
+      echo "unnecessary: # include <dismod_at/configure.hpp>"
       echo "  $file"
       exit 1
    fi

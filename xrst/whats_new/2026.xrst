@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-25 Bradley M. Bell
+# SPDX-FileContributor: 2014-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 {xrst_begin 2026}
 {xrst_spell
@@ -29,6 +29,8 @@ The changes are included in the 2026.0.0 version of dismod_at:
 
 #. The bin/example_install.sh script was not terminating with an error
    code when one of the checks failed. This has been fixed.
+
+#. Fix some spelling errors found by the typos package.
 
 
 {xrst_end 2026}

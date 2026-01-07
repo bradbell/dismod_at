@@ -112,7 +112,7 @@
 # BEGIN True values used to simulate data
 iota_true        = 0.05  # incidence rate
 rho_true         = 0.10  # remission rate
-mulcov_incidence = 1.0   # covariate multiplier for indicence data
+mulcov_incidence = 1.0   # covariate multiplier for incidence data
 mulcov_remission = 2.0;  # covariate multiplier for remission data
 # END True values used to simulate data
 # ------------------------------------------------------------------------

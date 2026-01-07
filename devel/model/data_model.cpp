@@ -241,11 +241,11 @@ namespace {
    void print_forward_if_positive(
       const char* name    ,
       const Float& value  )
-   {  std::string lable = "data_model::like_one: ";
-      lable      += name;
-      lable      += " = ";
+   {  std::string label = "data_model::like_one: ";
+      label      += name;
+      label      += " = ";
       double tiny = std::numeric_limits<double>::min();
-      CppAD::PrintFor(tiny - value, lable.c_str(), value, "\n");
+      CppAD::PrintFor(tiny - value, label.c_str(), value, "\n");
    }
    void print_forward_if_positive(
       const char* name    ,
@@ -894,7 +894,7 @@ residual_struct<Float> data_model::like_one(
    }
    //
    // sigma
-   // the adusted standard deviation
+   // the adjusted standard deviation
    Float sigma = Delta;
    switch( meas_noise_effect_ )
    {

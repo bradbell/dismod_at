@@ -1,4 +1,4 @@
-1. In variable.csv, change from Lagrange multipliers to grandient of objective.
+1. In variable.csv, change from Lagrange multipliers to gradient of objective.
 
 2. In asymptotic statistics, automatically detect which inequality constraint are active and treat like equality constraints.
 

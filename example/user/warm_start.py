@@ -227,7 +227,7 @@ log_table         = dismod_at.get_table_dict(connection, 'log' )
 trace_fixed_table = dismod_at.get_table_dict(connection, 'trace_fixed')
 connection.close()
 #
-# second fit should converge in 2 iteations
+# second fit should converge in 2 iterations
 assert( len(trace_fixed_table) <= 3 )
 #
 # check that we a warning (maximum number iterations during first fit)

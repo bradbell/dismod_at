@@ -34,7 +34,7 @@ possible flags
 --verbose_make             generate verbose makefiles
 --skip_check_copy          do not check copyright messages
 --skip_external_links      do not check documentation external links
---suppress_spell_warnings  do not check for documentaiton spelling errors
+--suppress_spell_warnings  do not check for documentation spelling errors
 EOF
       exit 0
    fi

@@ -32,7 +32,7 @@ def iota_parent_smoothing(
       'nu'         : None           ,
    }
    dtime_prior = {
-      'prior_name' : 'parent_smooting_iota_dtime_prior',
+      'prior_name' : 'parent_smoothing_iota_dtime_prior',
       'density_id' : density_id     ,
       'lower'      : None           ,
       'upper'      : None           ,
@@ -71,7 +71,7 @@ def chi_parent_smoothing(
       'nu'         : None           ,
    }
    dtime_prior = {
-      'prior_name' : 'parent_smooting_chi_dtime_prior',
+      'prior_name' : 'parent_smoothing_chi_dtime_prior',
       'density_id' : density_id     ,
       'lower'      : None           ,
       'upper'      : None           ,
@@ -100,14 +100,14 @@ max_num_iter_fixed = 50
 # list of integrand that are in fitting without ode but not with ode
 ode_hold_out_list = []
 #
-# Maximum absolute covariate effect = multiplier * (covariate - referece).
+# Maximum absolute covariate effect = multiplier * (covariate - reference).
 # Note that exp(effect) multiplies a model value to get the model value for
 # this covariate value. (Noise covariate multipliers are not included.)
 max_covariate_effect = 2.0
 #
 # Covariate multipliers that are set to a specific value:
 # This is a list with each entrry a list consisting of
-# covariate_name, rate or integrand, and value we are setting multilpier to
+# covariate_name, rate or integrand, and value we are setting multiplier to
 set_mulcov_value = [
    [ 'x_0',     'iota',    3.8661 ]
 ]
@@ -121,4 +121,4 @@ parent_smoothing['chi']  = chi_parent_smoothing
 #
 # Ordered dictionary of child smoothing functions
 child_smoothing = collections.OrderedDict()
-# child_smoothing['pini'] = None # is not necessary becacuse parent is None
+# child_smoothing['pini'] = None # is not necessary because parent is None

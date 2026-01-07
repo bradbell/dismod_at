@@ -71,4 +71,4 @@ CppAD::vector<std::string> split_space(const std::string& str)
    return result;
 }
 
-} // END_DISMOD_AT_NAMEPSACE
+} // END_DISMOD_AT_NAMESPACE

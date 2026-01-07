@@ -5,7 +5,6 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin wish_list}
 {xrst_spell
-  auxillary
   checkpointing
   cppadcg
   curred
@@ -13,7 +12,6 @@ $Id:$
   eigen
   misspecification
   multi
-  onces
 }
 
 Dismod_at Wish List
@@ -101,7 +99,7 @@ Immunity
 ********
 It would be possible to include an immunity state :math:`I` and have
 :math:`\rho` the rate at which one gets curred from the disease, and does
-not get it again. There would be a switch that one chooses to say that onces
+not get it again. There would be a switch that one chooses to say that ounces
 you are curred you become immune. This would require changing
 the definition of some of the integrands; e.g., prevalence would be
 :math:`C / (S + C + I)`. It would also require changing the ODE, but in
@@ -179,7 +177,7 @@ integrating from :math:`\mu` to :math:`c`,
 using absolute values for the integration limits,
 and the Sign function.
 This will result in a non-smooth the optimization problem.
-Perhaps the problem can be reformulated with auxillary variables
+Perhaps the problem can be reformulated with auxiliary variables
 to be a smooth problem ?
 
 ODE Solution

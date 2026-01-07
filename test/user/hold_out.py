@@ -198,7 +198,7 @@ data_subset_table     = dismod_at.get_table_dict(connection, 'data_subset')
 integrand_table       = dismod_at.get_table_dict(connection, 'integrand')
 connection.close()
 #
-# only one varable in this model, iota
+# only one variable in this model, iota
 assert len(var_table) == 1
 #
 # all three data points are in the data_sebset table, so data_subset_id is
@@ -235,7 +235,7 @@ connection            = dismod_at.create_connection(
 data_subset_table     = dismod_at.get_table_dict(connection, 'data_subset')
 connection.close()
 #
-# check that setting random seed yeilds the exact same hold outs
+# check that setting random seed yields the exact same hold outs
 check_list = list()
 for data_id in range(len_data_table) :
    hold_out = data_table[data_id]['hold_out'] == 1

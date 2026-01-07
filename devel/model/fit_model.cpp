@@ -17,7 +17,7 @@
 
 # define PRINT_SIZE_MAP 0
 
-namespace dismod_at { // DISMOD_AT_BEGIN_NAMSPACE
+namespace dismod_at { // DISMOD_AT_BEGIN_NAMESPACE
 /*
 {xrst_begin fit_model_ctor dev}
 {xrst_spell

@@ -21,7 +21,7 @@
 # required_definition( variable type docstring )
 #
 # variable
-# If this varaible is defined, echo its definition in the output.
+# If this variable is defined, echo its definition in the output.
 # Otherwise output a fatal error message.
 #
 # type
@@ -168,7 +168,7 @@ list(FIND
    isSystemDir
 )
 if("${isSystemDir}" STREQUAL "-1")
-   set(CMAKE_INSTALL_RPATH "${dismod_at_pefix}/${cmake_libdir}")
+   set(CMAKE_INSTALL_RPATH "${dismod_at_prefix}/${cmake_libdir}")
 endif("${isSystemDir}" STREQUAL "-1")
 # ----------------------------------------------------------------------------
 # package information for: gsl, eigen, ipopt, cppad_mixed, cppad, CHOLMOD
@@ -187,7 +187,7 @@ FOREACH(pkg gsl eigen3 ipopt cppad_mixed cppad CHOLMOD)
          MESSAGE(FATAL_ERROR  "PKG_CONFIG_PATH=$ENV{PKG_CONFIG_PATH}")
       ENDIF( )
    ENDIF( ${pkg}_FOUND )
-   # INLCUDE_DIRECTORIES
+   # INCLUDE_DIRECTORIES
    IF( ${pkg} STREQUAL "eigen3" )
       INCLUDE_DIRECTORIES( SYSTEM ${eigen3_INCLUDE_DIRS} )
    ELSE( ${pkg} STREQUAL "eigen3" )
@@ -208,7 +208,7 @@ INCLUDE_DIRECTORIES( ${SQLite3_INCLUDE_DIRS} )
 #
 # package information for: CHOLMOD
 # The cppad_mixed.hpp file includes cholmod.h so this is needed.
-# Fedora 42 uses CHOLMOD.pc (above) becasue FIND_PACKAGE(CHOLMOD) is broken
+# Fedora 42 uses CHOLMOD.pc (above) because FIND_PACKAGE(CHOLMOD) is broken
 IF( "$CHOLMOD_INDLUDE_DIR" STREQUAL "NOTFOUND" )
    FIND_PACKAGE(CHOLMOD)
    INCLUDE_DIRECTORIES( "${CHOLMOD_INCLUDE_DIR}" )

@@ -315,7 +315,7 @@ def plot_curve(
             pyplot.xlabel('age')
             pyplot.ylabel(z_name)
             #
-            # y axis sacling and limits
+            # y axis scaling and limits
             pyplot.yscale('log')
             pyplot.ylim(value_min, value_max)
          #
@@ -381,7 +381,7 @@ def plot_curve(
                pyplot.xlabel('age')
                pyplot.ylabel('standard error')
                #
-               # y axis sacling and limits
+               # y axis scaling and limits
                pyplot.yscale('log')
                pyplot.ylim(std_min, std_max)
             #
@@ -467,7 +467,7 @@ def plot_curve(
             pyplot.xlabel('time')
             pyplot.ylabel(z_name)
             #
-            # y axis sacling and limits
+            # y axis scaling and limits
             pyplot.yscale('log')
             pyplot.ylim(value_min, value_max)
          #
@@ -533,7 +533,7 @@ def plot_curve(
                pyplot.xlabel('time')
                pyplot.ylabel('standard error')
                #
-               # y axis sacling and limits
+               # y axis scaling and limits
                pyplot.yscale('log')
                pyplot.ylim(std_min, std_max)
             #

@@ -256,7 +256,7 @@ void get_avgint_table(
          avgint_cov_value[ i * n_covariate + j ] = x_j[i];
    }
 
-   // check for erorr conditions
+   // check for error conditions
    string msg;
    for(size_t avgint_id = 0; avgint_id < n_avgint; avgint_id++)
    {  // ------------------------------------------------------------

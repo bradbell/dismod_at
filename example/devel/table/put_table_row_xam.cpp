@@ -75,7 +75,7 @@ bool put_table_row_xam(void)
    //
    ok  &= covariate_table[0].covariate_name == "income";
    ok  &= covariate_table[0].reference      == 1000.;
-   // for max_difference, null is intrepreted as plus infinity
+   // for max_difference, null is interpreted as plus infinity
    ok  &= covariate_table[0].max_difference == std::atof("+inf");
    //
    ok  &= covariate_table[1].covariate_name == "weight";

@@ -147,7 +147,7 @@ def example_db (file_name) :
    #
    # mulcov table
    mulcov_table = [
-      {  # subgroup covariate multiplers effecting Sincidence
+      {  # subgroup covariate multipliers effecting Sincidence
          'covariate':'one',
          'type':'meas_value',
          'effected':'Sincidence',
@@ -167,7 +167,7 @@ def example_db (file_name) :
    # weight table:
    weight_table = list()
    #
-   # covariate table: no covriates
+   # covariate table: no covariates
    covariate_table = [
       { 'name':'one', 'reference':0.0, 'max_difference':None }
    ]

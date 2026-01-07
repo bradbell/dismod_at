@@ -134,7 +134,7 @@ int main(int n_arg, const char** argv)
       << "arguments: optional arguments depending on particular command\n";
       std::exit(1);
    }
-   // check if comamnd matches one of the cases in command_info
+   // check if command matches one of the cases in command_info
    const string database_arg  = argv[1];
    const string command_arg   = argv[2];
    vector<size_t> command_match;
@@ -176,7 +176,7 @@ int main(int n_arg, const char** argv)
       std::exit(1);
    }
    string message;
-   // --------------- open connection to datbase ---------------------------
+   // --------------- open connection to database ---------------------------
    bool new_file = false;
    sqlite3* db   = dismod_at::open_connection(database_arg, new_file);
    //
@@ -212,7 +212,7 @@ int main(int n_arg, const char** argv)
       return 0;
    }
    // ----------------------------------------------------------------------
-   // The "set option" comands must be done before get_db_input can be run
+   // The "set option" commands must be done before get_db_input can be run
    // because an option might affect if input is correct; e.g., rate_case
    if( command_arg == "set" && strcmp(argv[3], "option") == 0 )
    {  if( n_arg != 6 )
@@ -842,7 +842,7 @@ int main(int n_arg, const char** argv)
    } // END_TRY_BLOCK (when not debugging)
    catch(const std::exception& e)
    {  message = "dismod_at ";
-      message += database_arg + " " + command_arg + "\nstd::excpetion: ";
+      message += database_arg + " " + command_arg + "\nstd::exception: ";
       message += e.what();
       dismod_at::error_exit(message);
    }

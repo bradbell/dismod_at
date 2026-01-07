@@ -38,7 +38,7 @@ then
 fi
 if [ "$site_packages" != '' ]
 then
-   echo_eval rm -rf $pyton_dir/dismod_at
+   echo_eval rm -rf $python_dir/dismod_at
 fi
 #
 # bin_dir

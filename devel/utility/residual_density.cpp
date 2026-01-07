@@ -171,10 +171,10 @@ namespace {
    void print_forward_if_not_positive(
       const char* name    ,
       const Float& value  )
-   {  std::string lable = "residual_density: ";
-      lable += name;
-      lable += " = ";
-      CppAD::PrintFor(value, lable.c_str(), value, " is not greater than 0\n");
+   {  std::string label = "residual_density: ";
+      label += name;
+      label += " = ";
+      CppAD::PrintFor(value, label.c_str(), value, " is not greater than 0\n");
    }
    void print_forward_if_not_positive(
       const char* name    ,
@@ -215,7 +215,7 @@ namespace {
    }
    // log_binomial_density
    template <class Float>
-   Float log_binomial_denisty(const Float& n, const Float& k, const Float& p)
+   Float log_binomial_density(const Float& n, const Float& k, const Float& p)
    {  //
       // log_n_choose_k
       // log(n!) - log(k!) - log( (n-k)! )
@@ -388,7 +388,7 @@ residual_struct<Float> residual_density(
          Float n       = d_sample_size;
          Float p       = mu;
          Float k       = n * y;
-         logden_smooth = log_binomial_denisty(n, k, p);
+         logden_smooth = log_binomial_density(n, k, p);
       }
       break;
 
