@@ -171,10 +171,10 @@ namespace {
    void print_forward_if_not_positive(
       const char* name    ,
       const Float& value  )
-   {  std::string lable = "residual_density: ";
-      lable += name;
-      lable += " = ";
-      CppAD::PrintFor(value, lable.c_str(), value, " is not greater than 0\n");
+   {  std::string label = "residual_density: ";
+      label += name;
+      label += " = ";
+      CppAD::PrintFor(value, label.c_str(), value, " is not greater than 0\n");
    }
    void print_forward_if_not_positive(
       const char* name    ,

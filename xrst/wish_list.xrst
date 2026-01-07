@@ -12,7 +12,6 @@ $Id:$
   eigen
   misspecification
   multi
-  onces
 }
 
 Dismod_at Wish List
@@ -100,7 +99,7 @@ Immunity
 ********
 It would be possible to include an immunity state :math:`I` and have
 :math:`\rho` the rate at which one gets curred from the disease, and does
-not get it again. There would be a switch that one chooses to say that onces
+not get it again. There would be a switch that one chooses to say that ounces
 you are curred you become immune. This would require changing
 the definition of some of the integrands; e.g., prevalence would be
 :math:`C / (S + C + I)`. It would also require changing the ODE, but in

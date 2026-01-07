@@ -163,7 +163,7 @@ void check_child_nslist(
       for(size_t i = 0; i < n_child; i++)
          child_found[i] = false;
       //
-      // run thourgh the entries in this list
+      // run through the entries in this list
       for(size_t pair_id = 0; pair_id < nslist_pair.size(); pair_id++)
       if( nslist_pair[pair_id].nslist_id == nslist_id )
       {  size_t node_id        = nslist_pair[pair_id].node_id;

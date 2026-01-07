@@ -151,7 +151,7 @@ CppAD::vector<subgroup_struct> get_subgroup_table(sqlite3* db )
             ok &= this_group_id != subgroup_table[subgroup_id+1].group_id;
          if( ! ok )
          {  msg  = "This group and subgroup name are the same ";
-            msg += "and this group has multipler subgroups";
+            msg += "and this group has multiplier subgroups";
             error_exit(msg, table_name, subgroup_id);
          }
       }

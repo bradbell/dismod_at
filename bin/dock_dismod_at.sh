@@ -322,7 +322,7 @@ cat << EOF > Dockerfile
 FROM dismod_at.mixed.$build_type
 WORKDIR /home/dismod_at.git
 #
-# Check soruce
+# Check source
 RUN \
 mv bin/install_settings.py temp.py && \
 git checkout --quiet $dismod_at_hash  && \

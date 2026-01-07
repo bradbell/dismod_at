@@ -182,7 +182,7 @@ def example_db (file_name) :
       'subgroup':     'world',
    }
    # Sincidence for world
-   # (make income very large to demonstrate it is not inclued by bnd_mulcov)
+   # (make income very large to demonstrate it is not included by bnd_mulcov)
    income  = 4.0 * income_reference
    row['income']     = income
    row['node']       = 'world'
