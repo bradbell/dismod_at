@@ -8,14 +8,12 @@ $Id:$
   cmake
   culbreth
   dd
-  dirver
   grep
   homebrew
   ihme
   matplotlib
   mm
   numpy
-  pertrub
   scipy
   sed
   xam
@@ -176,7 +174,7 @@ In addition, add the :ref:`user_zero_meas_value.py-name` example.
 06-10
 =====
 Fix usage message for ``dismodat.py`` . To be specific, change
-``pertrub`` to ``perturb`` .
+``perturb`` to ``perturb`` .
 
 
 05-25
@@ -201,7 +199,7 @@ Fix usage message for ``dismodat.py`` . To be specific, change
 
 05-21
 =====
-Fix a misspelling of driver (as dirver) in dock_dismod_at.sh.
+Fix a misspelling of driver (as driver) in dock_dismod_at.sh.
 
 03-12
 =====

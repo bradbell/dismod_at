@@ -33,7 +33,7 @@ bool sim_random_xam(void)
    //
    size_t sample_size = 100*100*100;
    // -------------------------------------------------------------------
-   // check Gausian
+   // check Gaussian
    dismod_at::density_enum density = dismod_at::gaussian_enum;
    double delta   = 0.5;
    double mu      = 0.0;
@@ -116,7 +116,7 @@ bool sim_random_xam(void)
    check = gsl_cdf_tdist_Q(0.5, nu);
    ok   &= std::fabs( samp_prob / check - 1.0 ) < 1e-1;
    // -------------------------------------------------------------------
-   // check Log-Gausian
+   // check Log-Gaussian
    density        = dismod_at::log_gaussian_enum;
    delta          = 1e-1;
    mu             = 1e-1;

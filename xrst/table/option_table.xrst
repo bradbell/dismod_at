@@ -438,7 +438,7 @@ its rate random effects automatically use a random bound of zero.
 #. Note that the theory used to compute
    :ref:`sample_command@asymptotic` samples of the fixed
    effects, does not take *bound_random* into account.
-   On the other hand; the samples of the random effects are withing the
+   On the other hand; the samples of the random effects are within the
    limits specified by *bound_random* .
 
 Other Database

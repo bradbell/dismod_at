@@ -81,7 +81,7 @@ fi
 lib_name=`echo $file | sed -e 's|.*/lib||' -e 's|[.][^.]*$||'`
 dismod_at_lib="$dismod_at_lib -l$lib_name -lcppad_mixed"
 #
-# libarary flags necessary to use ipopt
+# library flags necessary to use ipopt
 ipopt_libs=`pkg-config --libs ipopt`
 #
 # build library

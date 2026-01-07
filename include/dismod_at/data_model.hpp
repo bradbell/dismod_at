@@ -25,7 +25,7 @@
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 class data_model {
-   // infromation for each data point
+   // information for each data point
    typedef struct {
       density_enum          density;
       size_t                child;
@@ -50,7 +50,7 @@ private:
    // Set false by constructor and true by replace_like.
    bool                         replace_like_called_;
 
-   // set by consructor, except that following fields set by replace_like
+   // set by constructor, except that following fields set by replace_like
    // subset_data_obj_[subset_id].density_id
    // subset_data_obj_[subset_id].hold_out
    // subset_data_obj_[subset_id].meas_value

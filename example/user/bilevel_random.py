@@ -418,7 +418,7 @@ dismod_at.system_command_prc(
    [program, file_name, 'sample',  'simulate', 'both', n_str]
 )
 #
-# compute sample standard deviation and check for coverate
+# compute sample standard deviation and check for coverage
 connection   = dismod_at.create_connection(
    file_name, new = False, readonly = True
 )
@@ -432,7 +432,7 @@ for sample_id in range( len(sample_table) ) :
    sample_array[sample_index, var_id] = var_value
 sample_std  = numpy.std(sample_array, axis=0, ddof = 1)
 #
-# check for covarage
+# check for coverage
 truth_var_table = dismod_at.get_table_dict(connection, 'truth_var')
 connection.close()
 for var_id in range(n_var) :

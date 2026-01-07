@@ -198,10 +198,10 @@ then
    if [ "$driver" == 'docker' ]
    then
 cat << EOF
-If docker deamon is not running perhaps one of the following will start it:
+If docker daemon is not running perhaps one of the following will start it:
    sudo systemctl start docker
    sudo service docker start
-If it is a premission problem perhaps one of the following will get permission:
+If it is a permission problem perhaps one of the following will get permission:
    sudo groupadd docker
    sudo usermod -aG docker $USER
 then log out and long back on this system.

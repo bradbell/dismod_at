@@ -62,9 +62,9 @@ python_exe       = dismod_at.python3_executable
 program          = 'python/bin/dismodat.py'
 file_name        = test_dir + '/get_started.db'
 command          = 'modify'
-table_name       = 'data'       # table we are modifiying
+table_name       = 'data'       # table we are modifying
 column_name      = 'density_id' # column we are modifying
-row_expression   = 'data_id==0' # row we are modifiying
+row_expression   = 'data_id==0' # row we are modifying
 value_expression = '6'          # value we are placeing in that row, column
 system_cmd       = [
    python_exe,

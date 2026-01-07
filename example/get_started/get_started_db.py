@@ -170,7 +170,7 @@ def get_started_db ():
       },{ # prior_omega_parent
          # omega for the parent is constant in (age, time) and
          # and is a uniform distribution on the interval [1e-4, 1.0].
-         # Becasue the prior is uniform, its mean 1e-1 is only used to
+         # Because the prior is uniform, its mean 1e-1 is only used to
          # start the optimization
          'name':     'prior_omega_parent',
          'density':  'uniform',

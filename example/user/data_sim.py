@@ -253,7 +253,7 @@ def example_db (file_name) :
       'eta':          meas_std,
       'nu':           10
    }
-   # The censored densities are not included becasue one cannot recover
+   # The censored densities are not included because one cannot recover
    # sigma when censoring occurs.
    density_list = [
       'gaussian', 'log_gaussian',
@@ -436,7 +436,7 @@ for meas_noise_effect in meas_noise_effect_list :
    residual_list = list()
    for data_sim_id in range( len(data_sim_table) ) :
       #
-      # data_sim table valeus
+      # data_sim table values
       row = data_sim_table[data_sim_id]
       simulate_index = row['simulate_index']
       data_subset_id = row['data_subset_id']
@@ -467,7 +467,7 @@ for meas_noise_effect in meas_noise_effect_list :
          delta  = math.log(y + eta + sigma) - math.log(y + eta)
       #
       # residual
-      z  = data_sim_value  # simulated data withoout censoring
+      z  = data_sim_value  # simulated data without censoring
       mu = iota_true       # mean of the simulated data
       if log_density(density) :
          residual = (math.log(z + eta) - math.log(mu + eta)) / delta

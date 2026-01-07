@@ -75,7 +75,7 @@ def example_db (file_name) :
    # weight table:
    weight_table = list()
    #
-   # covariate table: no covriates
+   # covariate table: no covariates
    covariate_table = list()
    #
    # mulcov table
@@ -282,7 +282,7 @@ for rate_id in range(n_rate) :
       assert ( rate_value[0][0] / 0.05 - 1.0 ) < tol
       #
       diff  = rate_value[last_age_id][0] - rate_value[0][0]
-      assert diff - 0.01 > - tol             # due to contraint
+      assert diff - 0.01 > - tol             # due to constraint
       assert abs(diff / 0.01 - 1.0) < 1e-3   # due to smoothing objective
       #
       diff  = rate_value[0][last_time_id] - rate_value[0][0]

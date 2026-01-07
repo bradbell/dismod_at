@@ -260,7 +260,7 @@ for i in range(number_nodes-1) :
    random_effect_sim.append( random_effect )
 #
 # rate_true
-# Assume all covariates are relative to their referece values
+# Assume all covariates are relative to their reference values
 def rate_true(rate_name, age, time, node_index, sex, bmi) :
    rate   = sim_no_effect_rate(rate_name, age, time)
    effect = random_effect_sim[node_index]
@@ -275,7 +275,7 @@ def rate_true(rate_name, age, time, node_index, sex, bmi) :
    rate = rate * math.exp( effect )
    return rate
 #
-# eample_db
+# example_db
 def example_db(file_name) :
    #
    # sex_dict

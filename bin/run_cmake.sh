@@ -11,7 +11,7 @@ echo_eval() {
 }
 # -----------------------------------------------------------------------------
 #
-# buld_type, verbose_makefile
+# build_type, verbose_makefile
 # dismod_at_prefix
 # python3_executable
 # specific_compiler

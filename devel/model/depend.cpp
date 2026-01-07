@@ -99,7 +99,7 @@ CppAD::vector<bool> data_depend(
    bool dependency    = false;
    // vectors of integers instead of bools for CppAD internal representation
    bool internal_bool = false;
-   // no need to traspose input and output patterns
+   // no need to transpose input and output patterns
    bool transpose     = false;
    // result returned here
    sparsity_pattern pattern_out;
@@ -214,7 +214,7 @@ CppAD::vector<bool> prior_depend(
    bool dependency    = false;
    // vectors of integers instead of bools for CppAD internal representation
    bool internal_bool = false;
-   // no need to traspose input and output patterns
+   // no need to transpose input and output patterns
    bool transpose     = false;
    // result returned here
    sparsity_pattern pattern_out;

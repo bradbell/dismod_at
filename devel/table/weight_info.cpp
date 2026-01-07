@@ -243,7 +243,7 @@ double weight_info::weight(size_t i, size_t j) const
 
 // Assignment operator
 void weight_info::operator=(const weight_info& w_info)
-{  // resize to zero so CppAD::vector assingments are legal
+{  // resize to zero so CppAD::vector assignments are legal
    age_id_.resize(0);
    time_id_.resize(0);
    weight_.resize(0);

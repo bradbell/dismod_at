@@ -265,7 +265,7 @@ void simulate_command(
       }
    }
    // ----------------------------------------------------------------------
-   // Enforce zero_sum_child_rate contraints
+   // Enforce zero_sum_child_rate constraints
    //
    // n_child
    size_t n_child = pack_object.child_size();
@@ -302,7 +302,7 @@ void simulate_command(
          {  // initialize summation for this grid point
             double sum_random = 0.0;
             //
-            // sum over childern
+            // sum over children
             for(size_t j = 0; j < n_child; j++)
             {  // packing information for this child
                pack_info::subvec_info
@@ -337,7 +337,7 @@ void simulate_command(
       }
    }
    // ----------------------------------------------------------------------
-   // Enforce zero_sum_mulcov_group contraints
+   // Enforce zero_sum_mulcov_group constraints
    //
    // n_group
    size_t n_group = pack_object.group_size();

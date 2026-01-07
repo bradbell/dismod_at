@@ -150,7 +150,7 @@ def example_db (file_name) :
       { 'name':'susceptible' }
    ]
    #
-   # covariate table: no covriates
+   # covariate table: no covariates
    covariate_table = list()
    #
    # mulcov table

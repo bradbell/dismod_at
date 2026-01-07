@@ -238,7 +238,7 @@ CppAD::vector<integrand_struct> get_integrand_table(
       //
       integrand_table[integrand_id].integrand = integrand;
       //
-      // minumum_meas_cv
+      // minimum_meas_cv
       if( integrand_table[integrand_id].minimum_meas_cv < 0.0 )
       {  string msg = name + " minimum_meas_cv < 0.0";
          error_exit(msg, table_name, integrand_id);

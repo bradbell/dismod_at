@@ -66,7 +66,7 @@ def example_db (file_name) :
       { 'name':'constant',  'age_id':[1], 'time_id':[1], 'fun':fun }
    ]
    #
-   # covariate table: no covriates
+   # covariate table: no covariates
    covariate_table = list()
    #
    # mulcov table
@@ -80,7 +80,7 @@ def example_db (file_name) :
    # ----------------------------------------------------------------------
    # data table: same order as list of integrands
    data_table = list()
-   # valeus that are the same for all data
+   # values that are the same for all data
    # If you change the density to gaussian, this program will report a bad fit.
    row = {
       'weight':      'constant',

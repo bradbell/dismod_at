@@ -237,7 +237,7 @@ def example_db (file_name) :
    # weight table:
    weight_table = list()
    #
-   # covariate table: no covriates
+   # covariate table: no covariates
    covariate_table = list()
    #
    # mulcov table

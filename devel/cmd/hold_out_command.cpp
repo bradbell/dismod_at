@@ -502,7 +502,6 @@ CppAD::vector<int> hold_out_with_cov(
 -----------------------------------------------------------------------------
 {xrst_begin hold_out_command}
 {xrst_spell
-  thoes
 }
 
 Hold Out Command: Randomly Sub-sample The Data
@@ -585,7 +584,7 @@ Covariates
 ==========
 If *cov_name* is present, the data for each child is further split
 into those with *cov_value_1*, those with *cov_value_2*,
-and thoes with a different value (for the covariate specified by *cov_name* ).
+and those with a different value (for the covariate specified by *cov_name* ).
 The choice of which points to include tries to sample the same number
 points form each of these sub-groups.
 

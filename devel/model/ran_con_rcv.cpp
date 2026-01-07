@@ -110,7 +110,7 @@ CppAD::mixed::d_sparse_rcv ran_con_rcv(
    if( ( n_child == 0 && n_group == 0 ) || bound_random == 0 )
       return A_rcv;
    //
-   // initilaize count of number of random constraint equations
+   // initialize count of number of random constraint equations
    size_t A_nr  = 0;
    //
    // initialize count of number of non-zeros in random constraint matrix

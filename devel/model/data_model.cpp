@@ -894,7 +894,7 @@ residual_struct<Float> data_model::like_one(
    }
    //
    // sigma
-   // the adusted standard deviation
+   // the adjusted standard deviation
    Float sigma = Delta;
    switch( meas_noise_effect_ )
    {

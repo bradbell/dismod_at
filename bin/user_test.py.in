@@ -15,7 +15,7 @@ import dismod_at
 #
 # pattern
 pattern = re.compile(
-   r'\n.*warning: Adding subgroup informtion to following tables:.*'
+   r'\n.*warning: Adding subgroup information to following tables:.*'
 )
 #
 def main() :

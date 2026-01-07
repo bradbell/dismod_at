@@ -33,7 +33,7 @@ def read_file(file_name) :
       table.append(row)
    return table
 #
-# avgerage
+# average
 def average(table, variable_column, value_column) :
    avg  = dict()
    count = dict()
@@ -130,7 +130,7 @@ print_variable( 'wavg_integrand_residual' , avg )
 print_variable( 'count', count )
 print()
 # --------------------------------------------------------------------------
-# rate_fit_valeu, rate_mean_value, rate_residual
+# rate_fit_value, rate_mean_value, rate_residual
 table = table_dict['variable']
 table = subsample(table, 'var_type', 'rate')
 (avg, count) = average(table, 'rate', 'fit_value')

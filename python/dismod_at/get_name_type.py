@@ -101,7 +101,7 @@ def get_name_type(connection, tbl_name) :
       else :
          if pk != 0 :
             msg     = f'{tbl_name} table in {database}'
-            msg    += '\n muiltiple columns in primary key'
+            msg    += '\n multiple columns in primary key'
             assert False, msg
       cid += 1
    return (col_name, col_type)

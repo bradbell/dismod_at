@@ -54,7 +54,7 @@ def replace_table(connection, tbl_name, table_dict) :
    # col_name, col_type
    (col_name, col_type) = dismod_at.get_name_type(connection, tbl_name)
    #
-   # remove primary key becasue it is automatically added bo create_table
+   # remove primary key because it is automatically added bo create_table
    primary_key = tbl_name + '_id'
    assert col_name[0] == primary_key
    assert col_type[0] == 'integer primary key'

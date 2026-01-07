@@ -37,13 +37,13 @@ namespace {
       rel_error = yf[1] / xf[1] - 1.0;
       ok       &= fabs( rel_error ) < 1e-5;
       //
-      // check trapeziodal equalt for y^f_1
+      // check trapezoidal equalt for y^f_1
       double term = b[0] * (yi[0] + yf[0])  + b[1] * (yi[1] + yf[1]);
       double check = yi[0] + term * tf / 2.0;
       rel_error = yf[0] / check - 1.0;
       ok       &= fabs( rel_error ) < 1e-5;
       //
-      // check trapeziodal equalt for y^f_2
+      // check trapezoidal equalt for y^f_2
       term     = b[2] * (yi[0] + yf[0])  + b[3] * (yi[1] + yf[1]);
       check     = yi[1] + term * tf / 2.0;
       rel_error = yf[1] / check - 1.0;

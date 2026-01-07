@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 # Build C++ Examples / Tests
 
-# Release or deug build
+# Release or debug build
 CONFIGURE_FILE(
    ${CMAKE_CURRENT_SOURCE_DIR}/run_all.py.in
    ${CMAKE_CURRENT_BINARY_DIR}/run_all.py

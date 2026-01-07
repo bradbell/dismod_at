@@ -340,7 +340,7 @@ pack_prior::pack_prior(
    size_t n_smooth    = s_info_vec.size();
    //
    // -----------------------------------------------------------------------
-   // initialize everyting to not defined
+   // initialize everything to not defined
    prior_vec_.resize(n_var);
    for(size_t var_id = 0; var_id < n_var; ++var_id)
    {
@@ -378,7 +378,7 @@ pack_prior::pack_prior(
                break;
 
                default:
-               // assigment to avoid compiler warning
+               // assignment to avoid compiler warning
                prior_id = DISMOD_AT_NULL_SIZE_T;
                assert(false);
             }

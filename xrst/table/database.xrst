@@ -23,7 +23,7 @@ has name *table_name* _ ``id`` that is the primary key for the table.
 The values in this column are ``integer`` ,
 start at zero and increment by one for each row in the table.
 {xrst_comment
-The first column assumption is requred by get_name_type.py.
+The first column assumption is required by get_name_type.py.
 No sure where else ?
 }
 

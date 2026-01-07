@@ -215,7 +215,7 @@ namespace {
    }
    // log_binomial_density
    template <class Float>
-   Float log_binomial_denisty(const Float& n, const Float& k, const Float& p)
+   Float log_binomial_density(const Float& n, const Float& k, const Float& p)
    {  //
       // log_n_choose_k
       // log(n!) - log(k!) - log( (n-k)! )
@@ -388,7 +388,7 @@ residual_struct<Float> residual_density(
          Float n       = d_sample_size;
          Float p       = mu;
          Float k       = n * y;
-         logden_smooth = log_binomial_denisty(n, k, p);
+         logden_smooth = log_binomial_density(n, k, p);
       }
       break;
 

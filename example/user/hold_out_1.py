@@ -309,7 +309,7 @@ for separate_parent in [ True, False ] :
    connection.close()
    #
    # var_table
-   # only one varable in this model, iota
+   # only one variable in this model, iota
    assert len(var_table) == 1
    assert len(fit_var_table) == 1
    #

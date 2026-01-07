@@ -701,7 +701,7 @@ void avg_integrand::add_cohort(
    time_line_vec<Float>&        time_line_object                 ,
    CppAD::vector<Float>&        line_adj                         )
 // END_ADD_COHORT_PROTOTYPE
-{  // numerical percision
+{  // numerical precision
    double eps99 = 99.0 * std::numeric_limits<double>::epsilon();
 
    // weight information for this average

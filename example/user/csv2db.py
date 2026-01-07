@@ -228,7 +228,7 @@ for integrand in [ 'remission', 'mtexcess', 'prevalence', 'mtall' ] :
          if integrand == 'mtall' :
             # change so weighted residual is a coefficient of variation
             row['meas_std']   = row['meas_value']
-            # hold out because used for omega constaint
+            # hold out because used for omega constraint
             row['hold_out']   = 1
             # save a copy for use by omega constraint
             mtall_data.append( row['meas_value'] )

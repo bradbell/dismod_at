@@ -46,7 +46,7 @@ void old2new_command(sqlite3* db)
    std::string table_name  = "data";
    std::string column_name = "sample_size";
    if( dismod_at::is_column_in_table(db, table_name, column_name) )
-   {  msg = "old2new commnad: sample_name is alread in data table";
+   {  msg = "old2new command: sample_name is already in data table";
       error_exit(msg, table_name);
    }
    //
