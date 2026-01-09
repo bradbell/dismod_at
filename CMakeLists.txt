@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-25 Bradley M. Bell
+# SPDX-FileContributor: 2014-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 # Sample Command line
 #                     cmake \
@@ -209,10 +209,11 @@ INCLUDE_DIRECTORIES( ${SQLite3_INCLUDE_DIRS} )
 # package information for: CHOLMOD
 # The cppad_mixed.hpp file includes cholmod.h so this is needed.
 # Fedora 42 uses CHOLMOD.pc (above) because FIND_PACKAGE(CHOLMOD) is broken
-IF( "$CHOLMOD_INDLUDE_DIR" STREQUAL "NOTFOUND" )
+IF( "${CHOLMOD_INCLUDE_DIR}" STREQUAL "NOTFOUND" )
    FIND_PACKAGE(CHOLMOD)
    INCLUDE_DIRECTORIES( "${CHOLMOD_INCLUDE_DIR}" )
 ENDIF( )
+MESSAGE(STATUS "CHOLMOD_INCLUDE_DIR=${CHOLMOD_INCLUDE_DIR}" )
 # ----------------------------------------------------------------------------
 # check compiler flags
 #

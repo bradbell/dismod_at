@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-// SPDX-FileContributor: 2014-25 Bradley M. Bell
+// SPDX-FileContributor: 2014-26 Bradley M. Bell
 // ----------------------------------------------------------------------------
 
 # include <cppad/mixed/exception.hpp>
@@ -137,7 +137,7 @@ void predict_command(
       msg        += "sample, fit_var, truth_var";
       dismod_at::error_exit(msg);
    }
-   if ( fit_var_scale != 1.0 and source != "sample" )
+   if ( fit_var_scale != 1.0 && source != "sample" )
    {  string msg  = "dismod_at predict command: fit_var scale is present ";
       msg        += "and source is not sample";
       dismod_at::error_exit(msg);

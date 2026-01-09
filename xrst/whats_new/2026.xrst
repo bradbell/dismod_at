@@ -4,21 +4,17 @@
 # ----------------------------------------------------------------------------
 {xrst_begin 2026}
 {xrst_spell
-   mm
-   dd
    cmake
 }
 
 Release Notes for 2026
 ######################
 
+Year.0.Release
+**************
 
-mm-dd
-*****
-
-01-07
-=====
-The changes are included in the 2026.0.0 version of dismod_at:
+2026.0.0
+========
 
 #. Advance to using cppad_mixed-2026.0.0.
    (This also advance cppad to version 20260000.0 .)
@@ -31,6 +27,11 @@ The changes are included in the 2026.0.0 version of dismod_at:
    code when one of the checks failed. This has been fixed.
 
 #. Fix some spelling errors found by the typos package.
+
+2026.0.1
+========
+There was a mistake in the search for CHOLMOD during the cmake command
+on windows. THis has been fixed.
 
 
 {xrst_end 2026}
