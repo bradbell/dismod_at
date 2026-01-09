@@ -14,7 +14,7 @@ set -e -u
 # new release (tag)  exists.
 # -----------------------------------------------------------------------------
 year='2026' # Year for this stable version
-release='0' # first release for each year starts with 0
+release='1' # first release for each year starts with 0
 # -----------------------------------------------------------------------------
 if [ "$0" != 'bin/new_release.sh' ]
 then
