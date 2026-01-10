@@ -16,6 +16,13 @@ Release Notes for 2026
 mm-dd
 *****
 
+01-10
+=====
+**API Change** :
+The 2026 release of cppad_mixed changed the name of its mater branch to main.
+This broke old versions of dock_dismod_at.sh; see
+:ref:`dock_dismod_at.sh@Patching Old Versions` .
+
 01-07
 =====
 The changes are included in the 2026.0.0 version of dismod_at:

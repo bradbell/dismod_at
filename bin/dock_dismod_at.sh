@@ -1,7 +1,7 @@
-#build_type! /usr/bin/env bash
+#! /usr/bin/env bash
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-25 Bradley M. Bell
+# SPDX-FileContributor: 2014-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 #
 # exit on error or undefined variable
@@ -21,6 +21,12 @@ set -e -u
 #
 # Install and Run dismod_at and at_cascade in Docker Images
 # #########################################################
+#
+# Patching Old Versions
+# *********************
+# If you are using a version of dock_dismod_at.sh that came before 2026,
+# you will have to patch it using the current version of the
+# script ``bin/patch_dock_dismod_at.sh`` .
 #
 # Purpose
 # *******
