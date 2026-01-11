@@ -1,7 +1,7 @@
-#build_type! /usr/bin/env bash
+#! /usr/bin/env bash
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-25 Bradley M. Bell
+# SPDX-FileContributor: 2014-26 Bradley M. Bell
 # ----------------------------------------------------------------------------
 #
 # exit on error or undefined variable
@@ -21,6 +21,12 @@ set -e -u
 #
 # Install and Run dismod_at and at_cascade in Docker Images
 # #########################################################
+#
+# Patching Old Versions
+# *********************
+# If you are using a version of dock_dismod_at.sh that came before 2026,
+# you will have to patch it using the current version of the
+# script ``bin/patch_dock_dismod_at.sh`` .
 #
 # Purpose
 # *******
@@ -155,8 +161,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.dismod_at``
 # {xrst_spell_off}
 # {xrst_code sh}
-   dismod_at_version='2025.10.17'
-   dismod_at_hash='6096ee00ccd934bb01638010bc6eb27d10fe0790'
+   dismod_at_version='2026.0.1'
+   dismod_at_hash='cac2d8bc518ac7187d9aa3bcb0e0b2ce99b4db8b'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -165,8 +171,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.at_cascade``
 # {xrst_spell_off}
 # {xrst_code sh}
-   at_cascade_version='2025.10.18'
-   at_cascade_hash='6a230a41ca351828aaeda98a3e553be6742614f4'
+   at_cascade_version='2026.0.0'
+   at_cascade_hash='78329a9aaf06e797774d9a6e8fd531e3e8694d44'
 # {xrst_code}
 # {xrst_spell_on}
 #

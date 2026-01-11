@@ -13,6 +13,18 @@ Release Notes for 2026
 Year.0.Release
 **************
 
+Pending Changes
+===============
+Advance the dock_dismod_at
+:ref:`dock_dismod_at.sh@dismod_at_version` from 2025.10.17 to 2026.0.1 and
+:ref:`dock_dismod_at.sh@at_cascade_version` from 2025.10.18 to 2026.0.0.
+
+
+2026.0.1
+========
+There was a mistake in the search for CHOLMOD during the cmake command
+on windows. This has been fixed.
+
 2026.0.0
 ========
 
@@ -27,11 +39,6 @@ Year.0.Release
    code when one of the checks failed. This has been fixed.
 
 #. Fix some spelling errors found by the typos package.
-
-2026.0.1
-========
-There was a mistake in the search for CHOLMOD during the cmake command
-on windows. This has been fixed.
 
 
 {xrst_end 2026}
