@@ -47,7 +47,7 @@ The changes are included in the 2026.0.0 version of dismod_at:
 
 01-09
 =====
-There a mistake in the search for CHOLMOD during the cmake command on
+There was a mistake in the search for CHOLMOD during the cmake command on
 windows. This has been fixed.
 
 
