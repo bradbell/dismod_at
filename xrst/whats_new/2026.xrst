@@ -29,6 +29,13 @@ The 2026 release of cppad_mixed changed the name of its mater branch to main.
 This broke old versions of dock_dismod_at.sh; see
 :ref:`dock_dismod_at.sh@Patching Old Versions` .
 
+01-09
+=====
+#. There was a mistake in the search for CHOLMOD during the cmake command on
+   windows. This has been fixed.
+
+#. Create the dismod_at-2026.0.1 release.
+
 01-07
 =====
 The changes are included in the 2026.0.0 version of dismod_at:
@@ -45,10 +52,8 @@ The changes are included in the 2026.0.0 version of dismod_at:
 
 #. Fix some spelling errors found by the typos package.
 
-01-09
-=====
-There was a mistake in the search for CHOLMOD during the cmake command on
-windows. This has been fixed.
+#. Create the dismod_at-2026.0.0 release
+
 
 
 {xrst_end 2026}
