@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2003-25 Bradley M. Bell
+# SPDX-FileContributor: 2003-26 Bradley M. Bell
 # ---------------------------------------------------------------------------
 # source bin/dev_settings.sh
 # Sets the value of the the development tool variables for this package.
@@ -55,6 +55,7 @@ index_page_name='dismod_at'
 # In addition, all occurrences of stable-yyyy and release-yyyy are updated.
 version_file_list='
    python/pyproject.toml
+   CITATION.cff
    dismod_at.xrst
    CMakeLists.txt
 '
@@ -80,6 +81,7 @@ no_copyright_list='
    .gitignore
    .readthedocs.yaml
    2DO
+   CITATION.cff
    agpl-3.0.txt
    batch_edit.sed
    python/README.md

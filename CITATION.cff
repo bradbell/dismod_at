@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Bell"
+  given-names: "Bradley"
+  orcid: "https://www.seanet.com/~bradbell/home.html"
+title: "Estimating disease rates as functions of age and time"
+version: "2026.0.1"
+url: "https://github.com/bradbell/dismod_at"
+
