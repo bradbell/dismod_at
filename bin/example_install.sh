@@ -54,8 +54,34 @@ then
    bin/build_type.sh example_install.sh $dismod_at_prefix $build_type
 fi
 # -----------------------------------------------------------------------------
-# install the special requirements
+# install cppad_mixed and it's special requirements
 echo_eval bin/get_cppad_mixed.sh
+# ----------------------------------------------------------------------------
+# sqlite3
+if which apt-get >& /dev/null
+then
+   if ! dpkg-query -l | sed -e 's|  *| |g' -e 's|^ii ||' | \
+      grep "^libsqlite3-dev" > /dev/null
+   then
+      echo_eval sudo apt-get install -y sqlite3 libsqlite3-dev
+   fi
+elif which dnf >& /dev/null
+then
+   if ! dnf list --installed | sed -e 's|  *| |g' | \
+      grep "^sqlite-devel" > /dev/null
+   then
+      echo_eval sudo dnf install -y sqlite-devel
+   fi
+fi
+# ----------------------------------------------------------------------------
+# numpy, matplotlib, scipy
+for package in numpy matplotlib scipy
+do
+   if ! pip list | grep "^$package" > /dev/null
+   then
+      echo_eval pip install $package
+   fi
+done
 # ----------------------------------------------------------------------------
 # dismod_at
 # -----------------------------------------------------------------------------
