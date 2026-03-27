@@ -16,6 +16,15 @@ Release Notes for 2026
 mm-dd
 *****
 
+03-27
+=====
+Change bin :ref:`example_install.sh-name` so that it
+automatically installs
+{xrst_spell_off}
+numpy, matplotlib, scipy and sqlite on redhat and debian systems.
+{xrst_spell_on}
+(These are required to test dismod_at which is part of the install process.)
+
 01-11
 =====
 Advance the dock_dismod_at
