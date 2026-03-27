@@ -55,6 +55,7 @@ index_page_name='dismod_at'
 # In addition, all occurrences of stable-yyyy and release-yyyy are updated.
 version_file_list='
    python/pyproject.toml
+   CITATION.cff
    dismod_at.xrst
    CMakeLists.txt
 '
@@ -80,6 +81,7 @@ no_copyright_list='
    .gitignore
    .readthedocs.yaml
    2DO
+   CITATION.cff
    agpl-3.0.txt
    batch_edit.sed
    bin/patch_dock_dismod_at.sh
