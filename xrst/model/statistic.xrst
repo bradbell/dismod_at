@@ -98,7 +98,7 @@ the weighted residual function for values is
 
 .. math::
 
-   R(y, \mu, \delta, d) = 0
+    R(y, \mu, \delta, d) = 0
 
 If the density is
 :ref:`density_table@Notation@Linear` ,
@@ -106,7 +106,7 @@ the weighted residual function for values is
 
 .. math::
 
-   R(y, \mu, \delta, d) = \frac{y - \mu}{\delta}
+    R(y, \mu, \delta, d) = \frac{y - \mu}{\delta}
 
 If the density is
 :ref:`density_table@Notation@Log Scaled` ,
@@ -114,13 +114,13 @@ the weighted residual function for values is
 
 .. math::
 
-   R(y, \mu, \delta, d)
-   =
-   \frac{
-      \log( y + \eta[d] ) - \log( \mu + \eta[d] )
-   }{
-      \delta
-   }
+    R(y, \mu, \delta, d)
+    =
+    \frac{
+        \log( y + \eta[d] ) - \log( \mu + \eta[d] )
+    }{
+        \delta
+    }
 
 Note that, for both the linear and log case,
 :math:`\mu` has the same units as :math:`y`.
@@ -132,7 +132,7 @@ the weighted residual function for differences is
 
 .. math::
 
-   R(z, y, \mu, \delta, d) = 0
+    R(z, y, \mu, \delta, d) = 0
 
 If the density is
 :ref:`density_table@Notation@Linear` ,
@@ -140,7 +140,7 @@ the weighted residual function for differences is
 
 .. math::
 
-   R(z, y, \mu, \delta, d) = \frac{z - y - \mu}{\delta}
+    R(z, y, \mu, \delta, d) = \frac{z - y - \mu}{\delta}
 
 Note that, in the linear case, all the arguments (except :math:`d`)
 have the same units.
@@ -150,13 +150,13 @@ the weighted residual function for differences is
 
 .. math::
 
-   R(z, y, \mu, \delta, d)
-   =
-   \frac{
-      \log(z + \eta[d] ) - \log( y + \eta[d] ) - \mu
-   }{
-      \delta
-   }
+    R(z, y, \mu, \delta, d)
+    =
+    \frac{
+        \log(z + \eta[d] ) - \log( y + \eta[d] ) - \mu
+    }{
+        \delta
+    }
 
 Note that in the log case, :math:`z, y` and :math:`\eta` have the same units
 while :math:`\mu` and :math:`\delta` are in log space.
@@ -185,9 +185,9 @@ log-density function :math:`D(y, \mu, \delta, d)` is defined by
 
 .. math::
 
-   D
-   =
-   \log \left[ {n \choose k} \mu^k (1- \mu )^{n-k} \right]
+    D
+    =
+    \log \left[ {n \choose k} \mu^k (1- \mu )^{n-k} \right]
 
 #. Here :math:`n` is the sample size for this data value :math:`y` ,
    :math:`k = n y` is the success count, and
@@ -210,9 +210,9 @@ are defined by
 
 .. math::
 
-   D
-   =
-   - \log \left( \delta \sqrt{2 \pi} \right) - \frac{1}{2} R^2
+    D
+    =
+    - \log \left( \delta \sqrt{2 \pi} \right) - \frac{1}{2} R^2
 
 where :math:`D` and :math:`R` have the same arguments;
 see :ref:`statistic@Weighted Residual Function, R` .
@@ -228,9 +228,9 @@ is defined by
 
 .. math::
 
-   D(y, \mu, \delta, d)
-   =
-   \log ( \R{erfc}[ \mu / ( \delta \sqrt{2} ) ] ) - \log(2)
+    D(y, \mu, \delta, d)
+    =
+    \log ( \R{erfc}[ \mu / ( \delta \sqrt{2} ) ] ) - \log(2)
 
 where :math:`\R{erfc}` is the complementary error function;
 see the Gaussian case for the
@@ -244,19 +244,19 @@ the log-density function for values is
 
 .. math::
 
-   D(y, \mu, \delta, d)
-   =
-   - \log \left[ \delta \sqrt{2 \pi} \right]
-   - \frac{1}{2} R(y, \mu, \delta, d)^2
+    D(y, \mu, \delta, d)
+    =
+    - \log \left[ \delta \sqrt{2 \pi} \right]
+    - \frac{1}{2} R(y, \mu, \delta, d)^2
 
 The log-density function for differences is
 
 .. math::
 
-   D(z, y, \mu, \delta, d)
-   =
-   - \log \left( \delta \sqrt{2 \pi} \right)
-   - \frac{1}{2} R(z, y, \mu, \delta, d)^2
+    D(z, y, \mu, \delta, d)
+    =
+    - \log \left( \delta \sqrt{2 \pi} \right)
+    - \frac{1}{2} R(z, y, \mu, \delta, d)^2
 
 Censored Log-Gaussian
 =====================
@@ -269,9 +269,9 @@ is defined by
 
 .. math::
 
-   D(y, \mu, \delta, d)
-   =
-   \log ( \R{erfc}[ ( \mu - \eta ) / ( \delta \sqrt{2} ) ] ) - \log(2)
+    D(y, \mu, \delta, d)
+    =
+    \log ( \R{erfc}[ ( \mu - \eta ) / ( \delta \sqrt{2} ) ] ) - \log(2)
 
 where we the arguments to :math:`\delta` are the same as
 in the log Gaussian case
@@ -289,9 +289,9 @@ are defined by
 
 .. math::
 
-   D
-   =
-   - \log \left( \delta \sqrt{2} \right) - \sqrt{2} | R |
+    D
+    =
+    - \log \left( \delta \sqrt{2} \right) - \sqrt{2} | R |
 
 where :math:`D` and :math:`R` have the same arguments.
 
@@ -306,9 +306,9 @@ is defined by
 
 .. math::
 
-   D(y, \mu, \delta, d)
-   =
-   - \mu \sqrt{2} / \delta - \log(2)
+    D(y, \mu, \delta, d)
+    =
+    - \mu \sqrt{2} / \delta - \log(2)
 
 where :math:`\R{erfc}` is the complementary error function;
 see the Gaussian case for the
@@ -322,19 +322,19 @@ the log-density function for values is
 
 .. math::
 
-   D(y, \mu, \delta, d)
-   =
-   - \log \left[ \delta \sqrt{2} \right]
-   - \sqrt{2} \left| R(y, \mu, \delta, d) \right|
+    D(y, \mu, \delta, d)
+    =
+    - \log \left[ \delta \sqrt{2} \right]
+    - \sqrt{2} \left| R(y, \mu, \delta, d) \right|
 
 The log-density function for differences is
 
 .. math::
 
-   D(z, y, \mu, \delta, d)
-   =
-   - \log \left( \delta \sqrt{2} \right)
-   - \sqrt{2} \left| R(z, y, \mu, \delta, d) \right|
+    D(z, y, \mu, \delta, d)
+    =
+    - \log \left( \delta \sqrt{2} \right)
+    - \sqrt{2} \left| R(z, y, \mu, \delta, d) \right|
 
 Censored Log-Laplace
 ====================
@@ -347,9 +347,9 @@ is defined by
 
 .. math::
 
-   D(y, \mu, \delta, d)
-   =
-   - ( \mu - \eta ) \sqrt{2} / \delta - \log(2)
+    D(y, \mu, \delta, d)
+    =
+    - ( \mu - \eta ) \sqrt{2} / \delta - \log(2)
 
 where we the arguments to :math:`\delta` are the same as
 in the log Laplace case.
@@ -366,13 +366,13 @@ are defined by
 
 .. math::
 
-   D
-   =
-   \log \left(
-   \frac{ \Gamma( ( \nu + 1 ) / 2 ) }{ \sqrt{ \nu \pi } \Gamma( \nu / 2 ) }
-   \right)
-   -
-   \frac{\nu + 1}{2} \log \left( 1 + R^2 / ( \nu - 2 ) \right)
+    D
+    =
+    \log \left(
+    \frac{ \Gamma( ( \nu + 1 ) / 2 ) }{ \sqrt{ \nu \pi } \Gamma( \nu / 2 ) }
+    \right)
+    -
+    \frac{\nu + 1}{2} \log \left( 1 + R^2 / ( \nu - 2 ) \right)
 
 where :math:`D` and :math:`R` have the same arguments
 and we have abbreviated :math:`\nu[d]` using just :math:`\nu`.
@@ -386,13 +386,13 @@ are defined by
 
 .. math::
 
-   D
-   =
-   \log \left(
-   \frac{ \Gamma( ( \nu + 1 ) / 2 ) }{ \sqrt{ \nu \pi } \Gamma( \nu / 2 ) }
-   \right)
-   -
-   \frac{\nu + 1}{2} \log \left( 1 + R^2 / ( \nu - 2 ) \right)
+    D
+    =
+    \log \left(
+    \frac{ \Gamma( ( \nu + 1 ) / 2 ) }{ \sqrt{ \nu \pi } \Gamma( \nu / 2 ) }
+    \right)
+    -
+    \frac{\nu + 1}{2} \log \left( 1 + R^2 / ( \nu - 2 ) \right)
 
 where :math:`D` and :math:`R` have the same arguments.
 

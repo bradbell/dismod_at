@@ -31,7 +31,7 @@ age_max
 The maximum age in this table is called *age_max* and is used to define
 the :ref:`age_avg_table@Age Average Grid` .
 {xrst_toc_hidden
-   example/table/age_table.py
+    example/table/age_table.py
 }
 Example
 *******

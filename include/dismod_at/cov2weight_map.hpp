@@ -12,38 +12,38 @@
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 class cov2weight_map {
-   // -----------------------------------------------------------------------
-   // BEGIN_CTOR_OUTPUTS
+    // -----------------------------------------------------------------------
+    // BEGIN_CTOR_OUTPUTS
 private:
-   const size_t           n_covariate_;
-   const size_t           n_node_;
-   const size_t           n_weight_;
-   //
-   size_t                 split_covariate_id_;
-   double                 split_covariate_reference_;
-   CppAD::vector<double>  split_value_vec_;
-   CppAD::vector<size_t>  weight_id_vec_;
-   // END_CTOR_OUTPUTS
+    const size_t           n_covariate_;
+    const size_t           n_node_;
+    const size_t           n_weight_;
+    //
+    size_t                 split_covariate_id_;
+    double                 split_covariate_reference_;
+    CppAD::vector<double>  split_value_vec_;
+    CppAD::vector<size_t>  weight_id_vec_;
+    // END_CTOR_OUTPUTS
 public:
-   //
-   // constructor
-   cov2weight_map(
-      size_t                                      n_node              ,
-      size_t                                      n_weight            ,
-      const std::string&                          splitting_covariate ,
-      const CppAD::vector<covariate_struct>&      covariate_table     ,
-      const CppAD::vector<rate_eff_cov_struct>&   rate_eff_cov_table
-   );
-   //
-   // weight_id
-   size_t weight_id(
-      size_t                       covariate_id ,
-      size_t                       node_id       ,
-      const CppAD::vector<double>& x
-   ) const;
-   //
-   // n_weight
-   size_t n_weight(void) const;
+    //
+    // constructor
+    cov2weight_map(
+        size_t                                      n_node              ,
+        size_t                                      n_weight            ,
+        const std::string&                          splitting_covariate ,
+        const CppAD::vector<covariate_struct>&      covariate_table     ,
+        const CppAD::vector<rate_eff_cov_struct>&   rate_eff_cov_table
+    );
+    //
+    // weight_id
+    size_t weight_id(
+        size_t                       covariate_id ,
+        size_t                       node_id       ,
+        const CppAD::vector<double>& x
+    ) const;
+    //
+    // n_weight
+    size_t n_weight(void) const;
 };
 
 } // END_DISMOD_AT_NAMESPACE

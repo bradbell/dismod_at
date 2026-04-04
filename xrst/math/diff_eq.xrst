@@ -25,7 +25,7 @@ has the condition; i.e.,
 
 .. math::
 
-   P(a, t) = \frac{ C(a, t) }{ S(a, t) + C(a, t) }
+    P(a, t) = \frac{ C(a, t) }{ S(a, t) + C(a, t) }
 
 Incidence, iota(a, t)
 *********************
@@ -64,19 +64,19 @@ We use :math:`c` to denote the time of birth for a cohort.
 The ordinary differential equation for a fixed cohort is
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{split}
-   \frac{d}{d a} S(a,c+a)
-   =
-   & - S(a,c+a) ~ \left[ \iota (a,c+a) + \omega (a,c+a) \right] \\
-   & + C(a,c+a) ~ \rho (a,c+a)
-   \\
-   \frac{d}{d a} C(a,c+a)
-   =
-   & + S(a,c+a) ~ \iota (a,c+a) \\
-   & - C(a,c+a) ~ \left[ \rho (a,c+a) + \chi (a,c+a) + \omega (a,c+a) \right]
-   \end{split}
+    \begin{split}
+    \frac{d}{d a} S(a,c+a)
+    =
+    & - S(a,c+a) ~ \left[ \iota (a,c+a) + \omega (a,c+a) \right] \\
+    & + C(a,c+a) ~ \rho (a,c+a)
+    \\
+    \frac{d}{d a} C(a,c+a)
+    =
+    & + S(a,c+a) ~ \iota (a,c+a) \\
+    & - C(a,c+a) ~ \left[ \rho (a,c+a) + \chi (a,c+a) + \omega (a,c+a) \right]
+    \end{split}
 
 
 The Deterministic Dismod_at PDE
@@ -86,19 +86,19 @@ the left hand sides in the equations above are also given by:
 
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{split}
-   \frac{d}{d a} S(a,c+a)
-   =
-   \frac{ \partial }{ \partial a } S(a, c+a) +
-   \frac{ \partial }{ \partial t } S(a, c+a)
-   \\
-   \frac{d}{d a} C(a,c+a)
-   =
-   \frac{ \partial }{ \partial a } C(a, c+a) +
-   \frac{ \partial }{ \partial t } C(a, c+a)
-   \end{split}
+    \begin{split}
+    \frac{d}{d a} S(a,c+a)
+    =
+    \frac{ \partial }{ \partial a } S(a, c+a) +
+    \frac{ \partial }{ \partial t } S(a, c+a)
+    \\
+    \frac{d}{d a} C(a,c+a)
+    =
+    \frac{ \partial }{ \partial a } C(a, c+a) +
+    \frac{ \partial }{ \partial t } C(a, c+a)
+    \end{split}
 
 The Stochastic Dismod_at PDE
 ****************************

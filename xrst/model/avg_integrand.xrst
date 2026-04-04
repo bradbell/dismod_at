@@ -27,13 +27,13 @@ In the case where the :ref:`rates<rate_table-name>` do not depend on time,
 the dismod_ode ordinary differential equation is
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      S'(a) & = & - [ \iota(a) + \omega (a) ] S(a) + \rho(a) C(a)
-      \\
-      C'(a) & = & + \iota(a) S(a) - [ \rho(a) + \chi(a) + \omega (a) ] C(a)
-   \end{eqnarray}
+    \begin{eqnarray}
+        S'(a) & = & - [ \iota(a) + \omega (a) ] S(a) + \rho(a) C(a)
+        \\
+        C'(a) & = & + \iota(a) S(a) - [ \rho(a) + \chi(a) + \omega (a) ] C(a)
+    \end{eqnarray}
 
 with the initial condition :math:`C(0) = p_0` and :math:`S(0) = 1 - p_0`.
 This equation is made more complicated by the fact that the
@@ -177,13 +177,13 @@ We define the adjusted *k*-th rate for the *i*-th data point by
 
 .. math::
 
-   r_{i,k} (a , t)
-   =
-   \exp \left \{
-      u_{i,k} (a, t) + \sum_{j \in J(k)}
-         x_{i,j} [ \alpha_{j,k} (a, t) + \Delta \alpha_{j,k} (a, t) ]
-   \right \}
-   q_k ( a, t )
+    r_{i,k} (a , t)
+    =
+    \exp \left \{
+        u_{i,k} (a, t) + \sum_{j \in J(k)}
+            x_{i,j} [ \alpha_{j,k} (a, t) + \Delta \alpha_{j,k} (a, t) ]
+    \right \}
+    q_k ( a, t )
 
 If :math:`n_i` is the parent node,
 the random effects is zero :math:`u_{i,k} (a, t) = 0`.
@@ -249,7 +249,7 @@ The with condition and susceptible fractions at age zero are
 
 .. math::
 
-   C (0, t) =  p_0 (t) \; , \; S (0, t) = 1 - p_0 (t)
+    C (0, t) =  p_0 (t) \; , \; S (0, t) = 1 - p_0 (t)
 
 We use :math:`c` to denote cohort; i.e., :math:`t = a + c`,
 Given the rates (initial prevalence is called a rate),
@@ -257,21 +257,21 @@ the functions :math:`S (a,t)` and :math:`C (a,t)` for :math:`a > 0`
 are defined by
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   ( \B{d} / \B{d} a )
-   S(a, a+c)
-   & = &
-   - [ \iota (a, a+c) + \omega (a, a+c) ] S(a, a+c)
-   + \rho(a, a+c) C(a, a+c)
-   \\
-   ( \B{d} / \B{d} a )
-   C(a, a+c)
-   & = &
-   + \iota(a, a+c) S(a, a+c)
-   - [ \rho(a, a+c) + \chi(a, a+c) + \omega(a, a+c) ] C(a, a+c)
-   \end{eqnarray}
+    \begin{eqnarray}
+    ( \B{d} / \B{d} a )
+    S(a, a+c)
+    & = &
+    - [ \iota (a, a+c) + \omega (a, a+c) ] S(a, a+c)
+    + \rho(a, a+c) C(a, a+c)
+    \\
+    ( \B{d} / \B{d} a )
+    C(a, a+c)
+    & = &
+    + \iota(a, a+c) S(a, a+c)
+    - [ \rho(a, a+c) + \chi(a, a+c) + \omega(a, a+c) ] C(a, a+c)
+    \end{eqnarray}
 
 Integrand, I_i(a,t)
 *******************
@@ -396,8 +396,8 @@ as a function of the fixed effects :math:`\theta`, is
 
 .. math::
 
-   E_i ( a, t ) = \sum_{j \in K_i}
-      x_{i,j} [ \beta_j (a, t) + \Delta \beta_j (a, t) ]
+    E_i ( a, t ) = \sum_{j \in K_i}
+        x_{i,j} [ \beta_j (a, t) + \Delta \beta_j (a, t) ]
 
 Adjusted Integrand
 ******************
@@ -405,7 +405,7 @@ The adjusted integrand is the following function of age and time:
 
 .. math::
 
-   I_i (a, t) \; \exp \left[ E_i (a, t) \right]
+    I_i (a, t) \; \exp \left[ E_i (a, t) \right]
 
 Note that if :math:`I_i (a, t)` is a covariate multiplier
 :ref:`avg_integrand@Integrand, I_i(a,t)@mulcov` ,
@@ -418,8 +418,8 @@ We use :math:`\bar{w}_i` to denote the weight integral defined by
 
 .. math::
 
-   \bar{w}_i = \frac{1}{b_i - a_i} \frac{1}{d_i - c_i}
-   \int_{a(i)}^{b(i)}  \int_{c(i)}^{d(i)} w_i (a,t) \; \B{d} t \; \B{d} a
+    \bar{w}_i = \frac{1}{b_i - a_i} \frac{1}{d_i - c_i}
+    \int_{a(i)}^{b(i)}  \int_{c(i)}^{d(i)} w_i (a,t) \; \B{d} t \; \B{d} a
 
 Average Integrand, A_i
 **********************
@@ -431,15 +431,15 @@ not counting integrand effects or measurement noise, is
 
 .. math::
 
-   A_i ( u , \theta )
-   =
-   \frac{1}{b_i - a_i} \frac{1}{d_i - c_i}
-   \left[
-   \int_{a(i)}^{b(i)}  \int_{c(i)}^{d(i)}
-   \frac{ w_i (a,t) }{ \bar{w}_i }
-   I_i (a, t) \; \exp \left[ E_i (a, t) \right]  \; \B{d} t \; \B{d} a
-   \right]
-   \;
+    A_i ( u , \theta )
+    =
+    \frac{1}{b_i - a_i} \frac{1}{d_i - c_i}
+    \left[
+    \int_{a(i)}^{b(i)}  \int_{c(i)}^{d(i)}
+    \frac{ w_i (a,t) }{ \bar{w}_i }
+    I_i (a, t) \; \exp \left[ E_i (a, t) \right]  \; \B{d} t \; \B{d} a
+    \right]
+    \;
 
 Note that this is actually a weighted average of the integrand function
 :math:`I_i (a, t)` times the total measurement covariate effect

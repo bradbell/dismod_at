@@ -4,8 +4,8 @@
 # ----------------------------------------------------------------------------
 # {xrst_begin user_sample_sim.py}
 # {xrst_spell
-#     exp
-#     mcmc
+#       exp
+#       mcmc
 # }
 # {xrst_comment_ch #}
 #
@@ -16,7 +16,7 @@
 # *******
 # The command
 #
-#     ``dismod_at`` *database* ``sample simulate`` *number_sample*
+#       ``dismod_at`` *database* ``sample simulate`` *number_sample*
 #
 # samples form the posterior distribution of the :ref:`model_variables-name`
 # using simulated data.
@@ -26,9 +26,9 @@
 # For this example, the :ref:`node_table-name` is
 # ::
 #
-#             north_america
-#             /          \
-#          mexico      canada
+#                 north_america
+#                 /          \
+#             mexico      canada
 #
 # Model Variables
 # ***************
@@ -98,18 +98,18 @@ delta  = math.log( 2.0 )
 #
 # .. math::
 #
-#  h(y, \mu, \delta) =
-#     - \frac{ ( y - \mu )^2 }{ \delta^2 }
-#     - \log \left( \delta \sqrt{ 2 \pi } \right)
+#   h(y, \mu, \delta) =
+#       - \frac{ ( y - \mu )^2 }{ \delta^2 }
+#       - \log \left( \delta \sqrt{ 2 \pi } \right)
 #
 # The total log-likelihood for this example is
 #
 # .. math::
 #
-#  h( y_n, \iota_n, s_n ] +
-#  h[ y_m, \exp( u_m ) \iota_n, s_m ] +
-#  h[ y_c, \exp( u_c ) \iota_n, s_c ] +
-#  h( u_m, 0, \delta ) + h( u_c , 0 , \delta )
+#   h( y_n, \iota_n, s_n ] +
+#   h[ y_m, \exp( u_m ) \iota_n, s_m ] +
+#   h[ y_c, \exp( u_c ) \iota_n, s_c ] +
+#   h( u_m, 0, \delta ) + h( u_c , 0 , \delta )
 #
 # number_sample
 # *************
@@ -161,8 +161,8 @@ random_seed = int( time.time() )
 # Source Code
 # ***********
 # {xrst_literal
-#     BEGIN PYTHON
-#     END PYTHON
+#       BEGIN PYTHON
+#       END PYTHON
 # }
 #
 # {xrst_end user_sample_sim.py}
@@ -175,190 +175,190 @@ import copy
 test_program  = 'example/user/sample_sim.py'
 check_program = sys.argv[0].replace('\\', '/')
 if check_program != test_program  or len(sys.argv) != 1 :
-   usage  = 'python3 ' + test_program + '\n'
-   usage += 'where python3 is the python 3 program on your system\n'
-   usage += 'and working directory is the dismod_at distribution directory\n'
-   sys.exit(usage)
+    usage  = 'python3 ' + test_program + '\n'
+    usage += 'where python3 is the python 3 program on your system\n'
+    usage += 'and working directory is the dismod_at distribution directory\n'
+    sys.exit(usage)
 print(test_program)
 #
 # import dismod_at
 local_dir = os.getcwd() + '/python'
 if( os.path.isdir( local_dir + '/dismod_at' ) ) :
-   sys.path.insert(0, local_dir)
+    sys.path.insert(0, local_dir)
 import dismod_at
 #
 # change into the build/example/user directory
 if not os.path.exists('build/example/user') :
-   os.makedirs('build/example/user')
+    os.makedirs('build/example/user')
 os.chdir('build/example/user')
 # ---------------------------------------------------------------------------
 #
 # no need to include sqrt{2 \pi} term (it does not depend on model variables)
 def h(y, mu, delta ) :
-   if delta <= 0.0 :
-      return - float("inf")
-   res = (y - mu ) / delta
-   return - res * res - math.log( delta )
+    if delta <= 0.0 :
+        return - float("inf")
+    res = (y - mu ) / delta
+    return - res * res - math.log( delta )
 #
 def log_f(x) :
-   iota_n = x[0]
-   u_m    = x[1]
-   u_c    = x[2]
-   #
-   ret    = h(y_n, iota_n, s_n)
-   ret   += h(y_m, math.exp(u_m) * iota_n, s_m )
-   ret   += h(y_c, math.exp(u_c) * iota_n, s_c )
-   ret   += h(u_m, 0.0, delta) + h(u_c, 0.0, delta)
-   return ret
+    iota_n = x[0]
+    u_m    = x[1]
+    u_c    = x[2]
+    #
+    ret    = h(y_n, iota_n, s_n)
+    ret   += h(y_m, math.exp(u_m) * iota_n, s_m )
+    ret   += h(y_c, math.exp(u_c) * iota_n, s_c )
+    ret   += h(u_m, 0.0, delta) + h(u_c, 0.0, delta)
+    return ret
 # ---------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
-   def fun_iota_child(a, t) :
-      return ('prior_iota_child', None, None)
-   def fun_iota_parent(a, t) :
-      return ('prior_iota_parent', None, None)
-   # ----------------------------------------------------------------------
-   # age table
-   age_list    = [    0.0,   100.0 ]
-   #
-   # time table
-   time_list   = [ 1995.0,  2015.0 ]
-   #
-   # integrand table
-   integrand_table = [ { 'name':'Sincidence' } ]
-   #
-   # node table: north_america -> (mexico, canada)
-   node_table = [
-      { 'name':'north_america', 'parent':''              },
-      { 'name':'mexico',        'parent':'north_america' },
-      { 'name':'canada',        'parent':'north_america' }
-   ]
-   #
-   # weight table:
-   weight_table = list()
-   #
-   # covariate table: no covariates
-   covariate_table = list()
-   #
-   # mulcov table
-   mulcov_table = list()
-   #
-   # avgint table:
-   avgint_table = list()
-   #
-   # nslist_dict:
-   nslist_dict = dict()
-   # ----------------------------------------------------------------------
-   # data table:
-   data_table = list()
-   row = {
-      'node':        'north_america',
-      'subgroup':    'world',
-      'density':     'gaussian',
-      'weight':      '',
-      'hold_out':     False,
-      'time_lower':   2000.0,
-      'time_upper':   2000.0,
-      'age_lower':    50.0,
-      'age_upper':    50.0,
-      'integrand':   'Sincidence',
-      'meas_value':   y_n,
-      'meas_std':     s_n,
-   }
-   data_table.append( copy.copy(row) )
-   #
-   row['node']       = 'mexico';
-   row['meas_value'] = y_m
-   row['meas_std']   = s_m
-   data_table.append( copy.copy(row) )
-   #
-   row['node']       = 'canada';
-   row['meas_value'] = y_c
-   row['meas_std']   = s_c
-   data_table.append( copy.copy(row) )
-   #
-   # ----------------------------------------------------------------------
-   # prior_table
-   prior_table = [
-      { # prior_iota_parent
-         'name':     'prior_iota_parent',
-         'density':  'uniform',
-         'lower':    y_n / 100.0 ,
-         'upper':    y_n * 100.0 ,
-         'mean':     y_n
-      },{ # prior_iota_child
-         'name':     'prior_iota_child',
-         'density':  'gaussian',
-         'mean':     0.0,
-         'std':      delta,
-      }
-   ]
-   # ----------------------------------------------------------------------
-   # smooth table
-   smooth_table = [
-      { # smooth_iota_parent
-         'name':                     'smooth_iota_parent',
-         'age_id':                   [ 0 ],
-         'time_id':                  [ 0 ],
-         'fun':                      fun_iota_parent
-      }, { # smooth_iota_child
-         'name':                     'smooth_iota_child',
-         'age_id':                   [ 0 ],
-         'time_id':                  [ 0 ],
-         'fun':                      fun_iota_child
-      }
-   ]
-   # ----------------------------------------------------------------------
-   # rate table
-   rate_table = [
-      {
-         'name':          'iota',
-         'parent_smooth': 'smooth_iota_parent',
-         'child_smooth':  'smooth_iota_child',
-      }
-   ]
-   # ----------------------------------------------------------------------
-   # option_table
-   option_table = [
-      { 'name':'parent_node_name',       'value':'north_america'      },
-      { 'name':'ode_step_size',          'value':'10.0'               },
-      { 'name':'random_seed',            'value':str(random_seed)     },
-      { 'name':'rate_case',              'value':'iota_pos_rho_zero'  },
+    def fun_iota_child(a, t) :
+        return ('prior_iota_child', None, None)
+    def fun_iota_parent(a, t) :
+        return ('prior_iota_parent', None, None)
+    # ----------------------------------------------------------------------
+    # age table
+    age_list    = [    0.0,   100.0 ]
+    #
+    # time table
+    time_list   = [ 1995.0,  2015.0 ]
+    #
+    # integrand table
+    integrand_table = [ { 'name':'Sincidence' } ]
+    #
+    # node table: north_america -> (mexico, canada)
+    node_table = [
+        { 'name':'north_america', 'parent':''              },
+        { 'name':'mexico',        'parent':'north_america' },
+        { 'name':'canada',        'parent':'north_america' }
+    ]
+    #
+    # weight table:
+    weight_table = list()
+    #
+    # covariate table: no covariates
+    covariate_table = list()
+    #
+    # mulcov table
+    mulcov_table = list()
+    #
+    # avgint table:
+    avgint_table = list()
+    #
+    # nslist_dict:
+    nslist_dict = dict()
+    # ----------------------------------------------------------------------
+    # data table:
+    data_table = list()
+    row = {
+        'node':        'north_america',
+        'subgroup':    'world',
+        'density':     'gaussian',
+        'weight':      '',
+        'hold_out':     False,
+        'time_lower':   2000.0,
+        'time_upper':   2000.0,
+        'age_lower':    50.0,
+        'age_upper':    50.0,
+        'integrand':   'Sincidence',
+        'meas_value':   y_n,
+        'meas_std':     s_n,
+    }
+    data_table.append( copy.copy(row) )
+    #
+    row['node']       = 'mexico';
+    row['meas_value'] = y_m
+    row['meas_std']   = s_m
+    data_table.append( copy.copy(row) )
+    #
+    row['node']       = 'canada';
+    row['meas_value'] = y_c
+    row['meas_std']   = s_c
+    data_table.append( copy.copy(row) )
+    #
+    # ----------------------------------------------------------------------
+    # prior_table
+    prior_table = [
+        { # prior_iota_parent
+            'name':     'prior_iota_parent',
+            'density':  'uniform',
+            'lower':    y_n / 100.0 ,
+            'upper':    y_n * 100.0 ,
+            'mean':     y_n
+        },{ # prior_iota_child
+            'name':     'prior_iota_child',
+            'density':  'gaussian',
+            'mean':     0.0,
+            'std':      delta,
+        }
+    ]
+    # ----------------------------------------------------------------------
+    # smooth table
+    smooth_table = [
+        { # smooth_iota_parent
+            'name':                     'smooth_iota_parent',
+            'age_id':                   [ 0 ],
+            'time_id':                  [ 0 ],
+            'fun':                      fun_iota_parent
+        }, { # smooth_iota_child
+            'name':                     'smooth_iota_child',
+            'age_id':                   [ 0 ],
+            'time_id':                  [ 0 ],
+            'fun':                      fun_iota_child
+        }
+    ]
+    # ----------------------------------------------------------------------
+    # rate table
+    rate_table = [
+        {
+            'name':          'iota',
+            'parent_smooth': 'smooth_iota_parent',
+            'child_smooth':  'smooth_iota_child',
+        }
+    ]
+    # ----------------------------------------------------------------------
+    # option_table
+    option_table = [
+        { 'name':'parent_node_name',       'value':'north_america'      },
+        { 'name':'ode_step_size',          'value':'10.0'               },
+        { 'name':'random_seed',            'value':str(random_seed)     },
+        { 'name':'rate_case',              'value':'iota_pos_rho_zero'  },
 
-      { 'name':'quasi_fixed',            'value':'true'         },
-      { 'name':'derivative_test_fixed',  'value':'first-order'  },
-      { 'name':'max_num_iter_fixed',     'value':'100'          },
-      { 'name':'print_level_fixed',      'value':'0'            },
-      { 'name':'tolerance_fixed',        'value':'1e-12'        },
+        { 'name':'quasi_fixed',            'value':'true'         },
+        { 'name':'derivative_test_fixed',  'value':'first-order'  },
+        { 'name':'max_num_iter_fixed',     'value':'100'          },
+        { 'name':'print_level_fixed',      'value':'0'            },
+        { 'name':'tolerance_fixed',        'value':'1e-12'        },
 
-      { 'name':'max_num_iter_random',    'value':'100'          },
-      { 'name':'print_level_random',     'value':'0'            },
-      { 'name':'tolerance_random',       'value':'1e-12'        },
-      { 'name':'zero_sum_child_rate',    'value':'iota'         },
-   ]
-   # ----------------------------------------------------------------------
-   # subgroup_table
-   subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
-   # ----------------------------------------------------------------------
-   # create database
-   dismod_at.create_database(
-      file_name,
-      age_list,
-      time_list,
-      integrand_table,
-      node_table,
-      subgroup_table,
-      weight_table,
-      covariate_table,
-      avgint_table,
-      data_table,
-      prior_table,
-      smooth_table,
-      nslist_dict,
-      rate_table,
-      mulcov_table,
-      option_table
-   )
+        { 'name':'max_num_iter_random',    'value':'100'          },
+        { 'name':'print_level_random',     'value':'0'            },
+        { 'name':'tolerance_random',       'value':'1e-12'        },
+        { 'name':'zero_sum_child_rate',    'value':'iota'         },
+    ]
+    # ----------------------------------------------------------------------
+    # subgroup_table
+    subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
+    # ----------------------------------------------------------------------
+    # create database
+    dismod_at.create_database(
+        file_name,
+        age_list,
+        time_list,
+        integrand_table,
+        node_table,
+        subgroup_table,
+        weight_table,
+        covariate_table,
+        avgint_table,
+        data_table,
+        prior_table,
+        smooth_table,
+        nslist_dict,
+        rate_table,
+        mulcov_table,
+        option_table
+    )
 # ===========================================================================
 file_name  = 'example.db'
 example_db(file_name)
@@ -372,7 +372,7 @@ dismod_at.system_command_prc([ program, file_name, 'init' ])
 # -----------------------------------------------------------------------
 # truth table:
 connection  = dismod_at.create_connection(
-   file_name, new = False, readonly = False
+    file_name, new = False, readonly = False
 )
 var_table   = dismod_at.get_table_dict(connection, 'var')
 rate_table  = dismod_at.get_table_dict(connection, 'rate')
@@ -385,23 +385,23 @@ col_type         = [ 'real' ]
 row_list         = list()
 node_name2var_id = dict()
 for var_id in range( len(var_table) ) :
-   var_info  = var_table[var_id]
-   rate_id   = var_info['rate_id']
-   node_id   = var_info['node_id']
-   rate_name = rate_table[rate_id]['rate_name']
-   node_name = node_table[node_id]['node_name']
-   assert( rate_name == 'iota' )
-   #
-   if node_name == 'north_america' :
-      truth_var_value = iota_n_true
-   elif node_name == 'mexico' :
-      truth_var_value = u_m_true
-   else :
-      assert node_name == 'canada'
-      truth_var_value = u_c_true
-   #
-   row_list.append( [ truth_var_value ] )
-   node_name2var_id[node_name] = var_id
+    var_info  = var_table[var_id]
+    rate_id   = var_info['rate_id']
+    node_id   = var_info['node_id']
+    rate_name = rate_table[rate_id]['rate_name']
+    node_name = node_table[node_id]['node_name']
+    assert( rate_name == 'iota' )
+    #
+    if node_name == 'north_america' :
+        truth_var_value = iota_n_true
+    elif node_name == 'mexico' :
+        truth_var_value = u_m_true
+    else :
+        assert node_name == 'canada'
+        truth_var_value = u_c_true
+    #
+    row_list.append( [ truth_var_value ] )
+    node_name2var_id[node_name] = var_id
 dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
 connection.close()
 # -----------------------------------------------------------------------
@@ -409,20 +409,20 @@ connection.close()
 #
 ns_string = str(number_sample)
 dismod_at.system_command_prc(
-   [ program, file_name, 'simulate', ns_string ]
+    [ program, file_name, 'simulate', ns_string ]
 )
 dismod_at.system_command_prc(
-   [ program, file_name, 'set', 'start_var', 'truth_var' ]
+    [ program, file_name, 'set', 'start_var', 'truth_var' ]
 )
 dismod_at.system_command_prc(
-   [ program, file_name, 'set', 'scale_var', 'truth_var' ]
+    [ program, file_name, 'set', 'scale_var', 'truth_var' ]
 )
 dismod_at.system_command_prc(
-   [ program, file_name, 'sample', 'simulate', 'both', ns_string ]
+    [ program, file_name, 'sample', 'simulate', 'both', ns_string ]
 )
 #
 connection   = dismod_at.create_connection(
-   file_name, new = False, readonly = True
+    file_name, new = False, readonly = True
 )
 sample_table = dismod_at.get_table_dict(connection, 'sample')
 connection.close()
@@ -430,9 +430,9 @@ connection.close()
 # convert samples to a numpy array
 sample_array = numpy.zeros( (number_sample, 3), dtype = float )
 for row in sample_table :
-   var_id                              = row['var_id']
-   sample_index                        = row['sample_index']
-   sample_array[sample_index, var_id ] = row['var_value']
+    var_id                              = row['var_id']
+    sample_index                        = row['sample_index']
+    sample_array[sample_index, var_id ] = row['var_value']
 #
 # compute statistics
 sim_avg = numpy.average(sample_array, axis=0);
@@ -452,23 +452,23 @@ mcmc_order = [ 'north_america', 'mexico', 'canada' ]
 # -----------------------------------------------------------------------
 # now compare values
 for i in range( len(var_table) ) :
-   # node that this model variable corresponds to
-   node_name = mcmc_order[i]
-   var_id    = node_name2var_id[node_name]
-   sim       = sim_avg[var_id]
-   mcmc      = mcmc_avg[i]
-   err       = sim / mcmc - 1.0
-   if abs(err) > 0.05 :
-      print(node_name, '_avg (sim, mcmc, err) = ', sim, mcmc, err)
-      print('random_seed = ', random_seed)
-      assert(False)
-   sim       = sim_std[var_id]
-   mcmc      = mcmc_std[i]
-   err       = sim / mcmc - 1.0
-   if abs(err) > 0.5 :
-      print(node_name, '_std (sim, mcmc, err) = ', sim, mcmc, err)
-      print('random_seed = ', random_seed)
-      assert(False)
+    # node that this model variable corresponds to
+    node_name = mcmc_order[i]
+    var_id    = node_name2var_id[node_name]
+    sim       = sim_avg[var_id]
+    mcmc      = mcmc_avg[i]
+    err       = sim / mcmc - 1.0
+    if abs(err) > 0.05 :
+        print(node_name, '_avg (sim, mcmc, err) = ', sim, mcmc, err)
+        print('random_seed = ', random_seed)
+        assert(False)
+    sim       = sim_std[var_id]
+    mcmc      = mcmc_std[i]
+    err       = sim / mcmc - 1.0
+    if abs(err) > 0.5 :
+        print(node_name, '_std (sim, mcmc, err) = ', sim, mcmc, err)
+        print('random_seed = ', random_seed)
+        assert(False)
 # ----------------------------------------------------------------------------
 print('sample_sim.py: OK')
 # END PYTHON

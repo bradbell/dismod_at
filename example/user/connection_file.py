@@ -11,8 +11,8 @@ Example Using connection_file
 Source Code
 ***********
 {xrst_literal
-   # BEGIN PYTHON
-   # END PYTHON
+    # BEGIN PYTHON
+    # END PYTHON
 }
 
 {xrst_end user_connection_file.py}
@@ -25,26 +25,26 @@ import os
 test_program  = 'example/user/connection_file.py'
 check_program = sys.argv[0].replace('\\', '/')
 if check_program != test_program  or len(sys.argv) != 1 :
-   usage  = 'python3 ' + test_program + '\n'
-   usage += 'where python3 is the python 3 program on your system\n'
-   usage += 'and working directory is the dismod_at distribution directory\n'
-   sys.exit(usage)
+    usage  = 'python3 ' + test_program + '\n'
+    usage += 'where python3 is the python 3 program on your system\n'
+    usage += 'and working directory is the dismod_at distribution directory\n'
+    sys.exit(usage)
 #
 # import dismod_at
 local_dir = os.getcwd() + '/python'
 if( os.path.isdir( local_dir + '/dismod_at' ) ) :
-   sys.path.insert(0, local_dir)
+    sys.path.insert(0, local_dir)
 import dismod_at
 #
 # change into the build/example/user directory
 if not os.path.exists('build/example/user') :
-   os.makedirs('build/example/user')
+    os.makedirs('build/example/user')
 os.chdir('build/example/user')
 #
 # file_name
 database   = 'example.db'
 connection = dismod_at.create_connection(
-   database , new = True, readonly = False
+    database , new = True, readonly = False
 )
 file_name  = dismod_at.connection_file(connection)
 connection.close()

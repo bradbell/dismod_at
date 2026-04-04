@@ -137,7 +137,7 @@ and *rate_id* corresponds to
 :ref:`smooth_table@n_age` equal to one
 (because age will have no effect for these covariate multipliers).
 {xrst_toc_hidden
-   example/table/mulcov_table.py
+    example/table/mulcov_table.py
 }
 Example
 *******

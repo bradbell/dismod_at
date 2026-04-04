@@ -14,8 +14,8 @@ Constructor
 Inputs
 ======
 {xrst_literal
-   // BEGIN_CTOR_INPUTS
-   // END_CTOR_INPUTS
+    // BEGIN_CTOR_INPUTS
+    // END_CTOR_INPUTS
 }
 
 n_node
@@ -41,9 +41,9 @@ is the :ref:`get_rate_eff_cov_table@rate_eff_cov_table` .
 Outputs
 =======
 {xrst_literal
-   include/dismod_at/cov2weight_map.hpp
-   // BEGIN_CTOR_OUTPUTS
-   // END_CTOR_OUTPUTS
+    include/dismod_at/cov2weight_map.hpp
+    // BEGIN_CTOR_OUTPUTS
+    // END_CTOR_OUTPUTS
 }
 
 n_covariate\_
@@ -83,7 +83,7 @@ For *covariate_id* equal zero to *n_covariate* - 1,
 *node_id* equal to zero to *n_node* - 1,
 and *split_id* equal to zero to split_value_vec\_.size() - 1, let::
 
-   index = (n_node * covariate_id + node_id) * n_split + split_id
+    index = (n_node * covariate_id + node_id) * n_split + split_id
 
 #. if *covariate_id* is in the rate_eff_cov table,
    weight_id_vec_[index] is the corresponding *weight_id* in rate_eff_cov table.
@@ -96,8 +96,8 @@ weight_id
 Syntax
 ======
 {xrst_literal
-   // BEGIN_WEIGHT_ID
-   // END_WEIGHT_ID
+    // BEGIN_WEIGHT_ID
+    // END_WEIGHT_ID
 }
 
 covariate_id
@@ -114,7 +114,7 @@ This vector has length *n_covariate* and contains the covariate
 value, minus its reference, for covariates that are not in the rate_eff_cov table.
 In particular::
 
-   x[split_value_id_] + split_value_reference_
+    x[split_value_id_] + split_value_reference_
 
 is the value of the splitting covariate.
 
@@ -128,8 +128,8 @@ weight_id
 n_weight
 ********
 {xrst_literal
-   // BEGIN_N_WEIGHT
-   // END_N_WEIGHT
+    // BEGIN_N_WEIGHT
+    // END_N_WEIGHT
 }
 
 {xrst_end cov2weight_map}
@@ -140,111 +140,111 @@ n_weight
 // ---------------------------------------------------------------------------
 // BEGIN_CTOR_INPUTS
 dismod_at::cov2weight_map::cov2weight_map(
-      size_t                                      n_node              ,
-      size_t                                      n_weight            ,
-      const std::string&                          splitting_covariate ,
-      const CppAD::vector<covariate_struct>&      covariate_table     ,
-      const CppAD::vector<rate_eff_cov_struct>&   rate_eff_cov_table  )
+        size_t                                      n_node              ,
+        size_t                                      n_weight            ,
+        const std::string&                          splitting_covariate ,
+        const CppAD::vector<covariate_struct>&      covariate_table     ,
+        const CppAD::vector<rate_eff_cov_struct>&   rate_eff_cov_table  )
 // END_CTOR_INPUTS
 :
 n_covariate_( covariate_table.size() ) ,
 n_node_( n_node )                      ,
 n_weight_( n_weight )
-{  //
-   // split_covariate_id_, split_covariate_reference_
-   split_covariate_id_        = n_covariate_;
-   split_covariate_reference_ = 0.0;
-   for(size_t id = 0; id < n_covariate_; ++id)
-   {  if( covariate_table[id].covariate_name == splitting_covariate )
-      {  split_covariate_id_        = id;
-         split_covariate_reference_ = covariate_table[id].reference;
-      }
-   }
-   assert( (splitting_covariate=="") == (split_covariate_id_==n_covariate_) );
-   //
-   // n_rate_eff_cov
-   size_t n_rate_eff_cov = rate_eff_cov_table.size();
-   assert( (splitting_covariate=="") || (0 < n_rate_eff_cov) );
-   //
-   // split_value_set
-   std::set<double> split_value_set;
-   if( split_covariate_id_ == n_covariate_ )
-      split_value_set.insert(0.0); // value is not used
-   else
-   {  for(size_t rec_id = 0; rec_id < n_rate_eff_cov; ++rec_id)
-         split_value_set.insert( rate_eff_cov_table[rec_id].split_value );
-   }
-   //
-   // split_value_vec_
-   {  std::set<double>::const_iterator itr;
-      for(itr = split_value_set.begin(); itr != split_value_set.end(); ++itr)
-         split_value_vec_.push_back( *itr );
-   }
-   //
-   // weight_id_vec_
-   size_t n_split = split_value_vec_.size();
-   size_t n_weight_id   = n_covariate_ * n_node_ * n_split;
-   weight_id_vec_.resize( n_weight_id );
-   for(size_t index = 0; index < n_weight_id; ++index )
-      weight_id_vec_[index] = n_weight_;
-   for(size_t rec_id = 0; rec_id < n_rate_eff_cov; ++rec_id)
-   {  int covariate_id    = rate_eff_cov_table[rec_id].covariate_id;
-      int node_id         = rate_eff_cov_table[rec_id].node_id;
-      int weight_id       = rate_eff_cov_table[rec_id].weight_id;
-      assert( size_t( covariate_id ) < n_covariate_ );
-      assert( size_t( node_id )      < n_node_ );
-      assert( size_t( weight_id )    < n_weight_ );
-      //
-      double split_value  = rate_eff_cov_table[rec_id].split_value;
-      size_t split_id = n_split;
-      for(size_t i = 0; i < n_split; ++i)
-      {  if( split_value_vec_[i] == split_value )
-         {  assert( split_id == n_split );
-            split_id = i;
-         }
-      }
-      assert( split_id != n_split );
-      size_t index = (n_node * covariate_id + node_id) * n_split + split_id;
-      weight_id_vec_[index] = weight_id;
-   }
+{   //
+    // split_covariate_id_, split_covariate_reference_
+    split_covariate_id_        = n_covariate_;
+    split_covariate_reference_ = 0.0;
+    for(size_t id = 0; id < n_covariate_; ++id)
+    {   if( covariate_table[id].covariate_name == splitting_covariate )
+        {   split_covariate_id_        = id;
+            split_covariate_reference_ = covariate_table[id].reference;
+        }
+    }
+    assert( (splitting_covariate=="") == (split_covariate_id_==n_covariate_) );
+    //
+    // n_rate_eff_cov
+    size_t n_rate_eff_cov = rate_eff_cov_table.size();
+    assert( (splitting_covariate=="") || (0 < n_rate_eff_cov) );
+    //
+    // split_value_set
+    std::set<double> split_value_set;
+    if( split_covariate_id_ == n_covariate_ )
+        split_value_set.insert(0.0); // value is not used
+    else
+    {   for(size_t rec_id = 0; rec_id < n_rate_eff_cov; ++rec_id)
+            split_value_set.insert( rate_eff_cov_table[rec_id].split_value );
+    }
+    //
+    // split_value_vec_
+    {   std::set<double>::const_iterator itr;
+        for(itr = split_value_set.begin(); itr != split_value_set.end(); ++itr)
+            split_value_vec_.push_back( *itr );
+    }
+    //
+    // weight_id_vec_
+    size_t n_split = split_value_vec_.size();
+    size_t n_weight_id   = n_covariate_ * n_node_ * n_split;
+    weight_id_vec_.resize( n_weight_id );
+    for(size_t index = 0; index < n_weight_id; ++index )
+        weight_id_vec_[index] = n_weight_;
+    for(size_t rec_id = 0; rec_id < n_rate_eff_cov; ++rec_id)
+    {   int covariate_id    = rate_eff_cov_table[rec_id].covariate_id;
+        int node_id         = rate_eff_cov_table[rec_id].node_id;
+        int weight_id       = rate_eff_cov_table[rec_id].weight_id;
+        assert( size_t( covariate_id ) < n_covariate_ );
+        assert( size_t( node_id )      < n_node_ );
+        assert( size_t( weight_id )    < n_weight_ );
+        //
+        double split_value  = rate_eff_cov_table[rec_id].split_value;
+        size_t split_id = n_split;
+        for(size_t i = 0; i < n_split; ++i)
+        {   if( split_value_vec_[i] == split_value )
+            {   assert( split_id == n_split );
+                split_id = i;
+            }
+        }
+        assert( split_id != n_split );
+        size_t index = (n_node * covariate_id + node_id) * n_split + split_id;
+        weight_id_vec_[index] = weight_id;
+    }
 }
 // ---------------------------------------------------------------------------
 // BEGIN_WEIGHT_ID
 size_t dismod_at::cov2weight_map::weight_id(
-   size_t                       covariate_id ,
-   size_t                       node_id      ,
-   const CppAD::vector<double>& x            ) const
+    size_t                       covariate_id ,
+    size_t                       node_id      ,
+    const CppAD::vector<double>& x            ) const
 // END_WEIGHT_ID
-{  //
-   // check if rate_eff_cov table is empty
+{   //
+    // check if rate_eff_cov table is empty
 
 
-   // n_split
-   size_t n_split = split_value_vec_.size();
-   //
-   // split_id
-   size_t split_id = n_split;
-   if( split_covariate_id_ != n_covariate_ )
-   {  double split_value = x[split_covariate_id_] + split_covariate_reference_;
-      for(size_t i = 0; i < n_split; ++i)
-      {  if( split_value_vec_[i] == split_value )
-         {  assert( split_id == n_split );
-            split_id = i;
-         }
-      }
-      assert( split_id != n_split );
-   }
-   if( split_id == n_split )
-      split_id = 0;
-   //
-   assert( covariate_id < n_covariate_ );
-   assert( node_id < n_node_ );
-   assert( split_id < n_split );
-   size_t index = (n_node_ * covariate_id + node_id) * n_split + split_id;
-   return weight_id_vec_[index];
+    // n_split
+    size_t n_split = split_value_vec_.size();
+    //
+    // split_id
+    size_t split_id = n_split;
+    if( split_covariate_id_ != n_covariate_ )
+    {   double split_value = x[split_covariate_id_] + split_covariate_reference_;
+        for(size_t i = 0; i < n_split; ++i)
+        {   if( split_value_vec_[i] == split_value )
+            {   assert( split_id == n_split );
+                split_id = i;
+            }
+        }
+        assert( split_id != n_split );
+    }
+    if( split_id == n_split )
+        split_id = 0;
+    //
+    assert( covariate_id < n_covariate_ );
+    assert( node_id < n_node_ );
+    assert( split_id < n_split );
+    size_t index = (n_node_ * covariate_id + node_id) * n_split + split_id;
+    return weight_id_vec_[index];
 }
 // ---------------------------------------------------------------------------
 // BEGIN_N_WEIGHT
 size_t dismod_at::cov2weight_map::n_weight(void) const
-{  return n_weight_; }
+{   return n_weight_; }
 // END_N_WEIGHT

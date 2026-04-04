@@ -102,7 +102,7 @@ Example
 :ref:`user_change_grid.py-name`
 
 {xrst_comment
-   example/table/smooth_grid_table.py is included by smooth_grid_table.omh
+    example/table/smooth_grid_table.py is included by smooth_grid_table.omh
 %}
 Example
 *******

@@ -28,7 +28,7 @@ Its initial value is zero, and it increments by one for each row.
 The *fit_var_id* column is also a foreign key for the
 :ref:`var_table-name` ; i.e.,
 
-   *var_id* = *fit_var_id*
+    *var_id* = *fit_var_id*
 
 In addition, the size of both tables is the same.
 

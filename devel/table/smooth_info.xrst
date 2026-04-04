@@ -10,7 +10,7 @@ smooth_info: The Smoothing Information Class
 Contents
 ********
 {xrst_toc_table
-   devel/table/smooth_info.cpp
+    devel/table/smooth_info.cpp
 }
 
 {xrst_end smooth_info}

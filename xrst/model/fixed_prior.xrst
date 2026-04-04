@@ -82,7 +82,7 @@ If :math:`a_{i(k)}` is not the maximum age, we use the notation
 
 .. math::
 
-   \Delta^a_k \theta = \theta_{\ell(k)} - \theta_k
+    \Delta^a_k \theta = \theta_{\ell(k)} - \theta_k
 
 L_k^a
 =====
@@ -114,27 +114,27 @@ The constraint set :math:`\Theta` is defined as the set of
 
 #. For all :math:`k`,
 
-   .. math::
+    .. math::
 
-      L_k^v \leq \theta_k \leq U_k^v
+        L_k^v \leq \theta_k \leq U_k^v
 
 #. For :math:`k`,
    that are not standard deviation multipliers,
    and such that :math:`a_{i(k)}` is not the maximum age
    for the corresponding smoothing,
 
-   .. math::
+    .. math::
 
-      L_k^a \leq \Delta^a_k \theta \leq U_k^a
+        L_k^a \leq \Delta^a_k \theta \leq U_k^a
 
 #. For :math:`k`,
    that are not standard deviation multipliers,
    and such that :math:`t_{j(k)}` is not the maximum time
    for the corresponding smoothing,
 
-   .. math::
+    .. math::
 
-      L_k^t \leq \Delta^t_k \theta \leq U_k^t
+        L_k^t \leq \Delta^t_k \theta \leq U_k^t
 
 Normalization Constant, C_theta
 *******************************
@@ -142,11 +142,11 @@ The normalization constant for the fixed effects density is
 
 .. math::
 
-   C_\theta
-   =
-   \int_{\Theta}
-      V^\theta ( \theta ) A^\theta ( \theta ) T^\theta ( \theta )
-         \; \B{d} \theta
+    C_\theta
+    =
+    \int_{\Theta}
+        V^\theta ( \theta ) A^\theta ( \theta ) T^\theta ( \theta )
+            \; \B{d} \theta
 
 See :ref:`fixed_value@V^theta` ,
 :ref:`fixed_diff@A^theta` , and
@@ -159,8 +159,8 @@ We define the prior for the fixed effects by
 
 .. math::
 
-   C_\theta \; \B{p} ( \theta )
-   =
-   V^\theta ( \theta ) A^\theta ( \theta ) T^\theta ( \theta )
+    C_\theta \; \B{p} ( \theta )
+    =
+    V^\theta ( \theta ) A^\theta ( \theta ) T^\theta ( \theta )
 
 {xrst_end fixed_prior}

@@ -225,11 +225,11 @@ This seems to have fixed this problem.
    This shortens the links to the dismod_at release notes; e.g. ,
    the link::
 
-      https://dismod-at.readthedocs.io/whats_new_2024.html#whats-new-2024-mm-dd-02-14
+        https://dismod-at.readthedocs.io/whats_new_2024.html#whats-new-2024-mm-dd-02-14
 
-   changed to::
+    changed to::
 
-      https://dismod-at.readthedocs.io/2024.html#mm-dd-02-14
+        https://dismod-at.readthedocs.io/2024.html#mm-dd-02-14
 
 
 02-18
@@ -291,19 +291,19 @@ and its API has changed as follows:
    :ref:`image <dock_dismod_at.sh@Images>` names.
 #. The image names have been changed as follows:
 
-   .. list-table::
-      :header-rows: 1
+    .. list-table::
+        :header-rows: 1
 
-      * - Old Name
-        - New Name
-      * - ``dismod_at.base``
-        - ``dismod_at.base``
-      * - ``dismod_at.mixed.``\ *build_type*
-        - ``dismod_at.mixed.``\ *build_type*
-      * - ``dismod_at.image.``\ *build_type*
-        - ``dismod_at.dismod_at.``\ *build_type*
-      * - ``at_cascade.image.``\ *build_type*
-        - ``dismod_at.at_cascade.``\ *build_type*
+        * - Old Name
+          - New Name
+        * - ``dismod_at.base``
+          - ``dismod_at.base``
+        * - ``dismod_at.mixed.``\ *build_type*
+          - ``dismod_at.mixed.``\ *build_type*
+        * - ``dismod_at.image.``\ *build_type*
+          - ``dismod_at.dismod_at.``\ *build_type*
+        * - ``at_cascade.image.``\ *build_type*
+          - ``dismod_at.at_cascade.``\ *build_type*
 
 01-03
 =====

@@ -18,7 +18,7 @@ We compute an
 :ref:`average integrand<avg_integrand@Average Integrand, A_i>`
 over a rectangular region defined as
 
-   [ *age_lower* , *age_upper* ] ``x`` [ *time_lower* , *time_upper*  ]
+    [ *age_lower* , *age_upper* ] ``x`` [ *time_lower* , *time_upper*  ]
 
 by the :ref:`data_table-name` or the :ref:`avgint_table-name` .
 Given a data table index or avgint table index :math:`i`,
@@ -195,8 +195,8 @@ for this average and define
 
 .. math::
 
-   \bar{w} = \int_{a(L)}^{a(U)} \int_{t(L)}^{t(U)}
-      w( a , t) \; \B{d} t \; \B{d} a
+    \bar{w} = \int_{a(L)}^{a(U)} \int_{t(L)}^{t(U)}
+        w( a , t) \; \B{d} t \; \B{d} a
 
 Note that if :math:`w(a, t)` is one,
 :math:`\bar{w} = ( a_U - a_L ) ( t_U - t_L )`.
@@ -208,9 +208,9 @@ with respect to age and time, in the definition of :math:`A`; i.e.,
 
 .. math::
 
-   A =
-   \frac{1}{ \bar{w} } \int_{a(L)}^{a(U)} \int_{t(L)}^{t(U)}
-      w(a, t) g( a , t) \; \B{d} t \; \B{d} a
+    A =
+    \frac{1}{ \bar{w} } \int_{a(L)}^{a(U)} \int_{t(L)}^{t(U)}
+        w(a, t) g( a , t) \; \B{d} t \; \B{d} a
 
 Time Integration
 ****************
@@ -225,21 +225,21 @@ Otherwise we define the approximations
 
 .. math::
 
-   W( a_j )
-   =
-   \sum_{i=1}^{i=N-1}
-      \frac{w( a_j , t_{i-1} ) + w( a_j , t_i )}{2} ( t_i - t_{i-1} )
-   \approx
-   \int_{t(L)}^{t(U)} w( a_j , t) \; \B{d} t
+    W( a_j )
+    =
+    \sum_{i=1}^{i=N-1}
+        \frac{w( a_j , t_{i-1} ) + w( a_j , t_i )}{2} ( t_i - t_{i-1} )
+    \approx
+    \int_{t(L)}^{t(U)} w( a_j , t) \; \B{d} t
 
 .. math::
 
-   G( a_j )
-   =
-   \sum_{i=1}^{i=N-1}
-   \frac{w \cdot g( a_j , t_{i-1} ) + w \cdot g( a_j , t_i )}{2} ( t_i - t_{i-1} )
-   \approx
-   \int_{t(L)}^{t(U)} w \cdot g ( a_j , t) \; \B{d} t
+    G( a_j )
+    =
+    \sum_{i=1}^{i=N-1}
+    \frac{w \cdot g( a_j , t_{i-1} ) + w \cdot g( a_j , t_i )}{2} ( t_i - t_{i-1} )
+    \approx
+    \int_{t(L)}^{t(U)} w \cdot g ( a_j , t) \; \B{d} t
 
 Age Integration
 ***************
@@ -250,17 +250,17 @@ Otherwise we define the following approximation for :math:`A`
 
 .. math::
 
-   \bar{W}
-   =
-   \sum_{j=1}^{j=J-1}
-      \frac{ W( a_{j-1}  ) + W( a_j ) }{2} ( a_j - a_{j-1} )
+    \bar{W}
+    =
+    \sum_{j=1}^{j=J-1}
+        \frac{ W( a_{j-1}  ) + W( a_j ) }{2} ( a_j - a_{j-1} )
 
 .. math::
 
-   A
-   \approx
-   \frac{1}{ \bar{W} }
-   \sum_{j=1}^{j=J-1}
-      \frac{ G( a_{j-1}  ) + G( a_j ) }{2} ( a_j - a_{j-1} )
+    A
+    \approx
+    \frac{1}{ \bar{W} }
+    \sum_{j=1}^{j=J-1}
+        \frac{ G( a_{j-1}  ) + G( a_j ) }{2} ( a_j - a_{j-1} )
 
 {xrst_end numeric_average}

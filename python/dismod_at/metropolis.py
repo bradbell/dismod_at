@@ -5,8 +5,8 @@
 # ----------------------------------------------------------------------------
 # {xrst_begin metropolis}
 # {xrst_spell
-#     numpy
-#     un
+#       numpy
+#       un
 # }
 # {xrst_comment_ch #}
 #
@@ -16,13 +16,13 @@
 # Syntax
 # ******
 #
-#     ( *a* , *c* ) = ``dismod_at.metropolis`` ( *log_f* , *m* , *x0* , *s* )
+#       ( *a* , *c* ) = ``dismod_at.metropolis`` ( *log_f* , *m* , *x0* , *s* )
 #
 # log_f
 # *****
 # Given a numpy ``float`` vector of length *n* , the syntax
 #
-#     *d* = *log_f* ( *x* )
+#       *d* = *log_f* ( *x* )
 #
 # sets the ``float`` *d* to the log of the un-normalized density
 # corresponding to the positive function :math:`f(x)` mapping
@@ -55,7 +55,7 @@
 #
 # .. math::
 #
-#  y_j^i = x_j^{i-1} + w_j^{i-1} s_j
+#   y_j^i = x_j^{i-1} + w_j^{i-1} s_j
 #
 # where :math:`w_j^i \sim \B{N}(0, 1)` are all independent.
 #
@@ -65,7 +65,7 @@
 #
 # .. math::
 #
-#  y_j^i = x_j^{i-1} + w_j^{i-1} s
+#   y_j^i = x_j^{i-1} + w_j^{i-1} s
 #
 # a
 # *
@@ -84,12 +84,12 @@
 #
 # .. math::
 #
-#  \frac{1}{m} \sum_{i=0}^{m-1} g( x^i )
-#  \rightarrow
-#  \frac{ \int g( x ) f ( x ) \B{d} x  }{ \int f( x ) \B{d} x }
+#   \frac{1}{m} \sum_{i=0}^{m-1} g( x^i )
+#   \rightarrow
+#   \frac{ \int g( x ) f ( x ) \B{d} x  }{ \int f( x ) \B{d} x }
 #
 # {xrst_toc_hidden
-#    example/user/metropolis.py
+#     example/user/metropolis.py
 # }
 # Example
 # *******
@@ -99,29 +99,29 @@
 # {xrst_end metropolis}
 # ---------------------------------------------------------------------------
 def metropolis(log_f, m, x0, s) :
-   import math
-   import numpy
-   import scipy.stats
-   if not isinstance(s, float) :
-      assert len(s) == len(x0)
-   inf    = float("inf")
-   n      = len(x0)
-   x      = x0
-   lpx    = log_f(x0)
-   assert lpx > -inf
-   c      = numpy.zeros((m, n), dtype=float)
-   c[0:]  = x
-   a      = 0
-   for i in range(m-1) :
-      w     = scipy.stats.norm.rvs(loc = 0.0, scale = 1.0, size=n)
-      y     = x + s * w
-      lpy   = log_f(y)
-      if lpy > -inf :
-         alpha = math.exp( lpy - lpx )
-         u     = scipy.stats.uniform.rvs(loc = 0.0, scale = 1.0, size=1)
-         if alpha >= u :
-            a   = a + 1
-            x   = y
-            lpx = lpy
-      c[i+1:] = x
-   return (a, c)
+    import math
+    import numpy
+    import scipy.stats
+    if not isinstance(s, float) :
+        assert len(s) == len(x0)
+    inf    = float("inf")
+    n      = len(x0)
+    x      = x0
+    lpx    = log_f(x0)
+    assert lpx > -inf
+    c      = numpy.zeros((m, n), dtype=float)
+    c[0:]  = x
+    a      = 0
+    for i in range(m-1) :
+        w     = scipy.stats.norm.rvs(loc = 0.0, scale = 1.0, size=n)
+        y     = x + s * w
+        lpy   = log_f(y)
+        if lpy > -inf :
+            alpha = math.exp( lpy - lpx )
+            u     = scipy.stats.uniform.rvs(loc = 0.0, scale = 1.0, size=1)
+            if alpha >= u :
+                a   = a + 1
+                x   = y
+                lpx = lpy
+        c[i+1:] = x
+    return (a, c)

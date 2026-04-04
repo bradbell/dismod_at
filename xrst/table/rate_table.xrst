@@ -29,14 +29,14 @@ and only the following values,
 appear in the *rate_name* column:
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   *rate_name*,Description
-   ``pini``,initial prevalence
-   ``iota``,model susceptible incidence
-   ``rho``,model remission
-   ``chi``,model excess mortality
-   ``omega``,model other cause mortality
+    *rate_name*,Description
+    ``pini``,initial prevalence
+    ``iota``,model susceptible incidence
+    ``rho``,model remission
+    ``chi``,model excess mortality
+    ``omega``,model other cause mortality
 
 In addition, these values must appear in the order above.
 (Note that this column is unique; i.e., each name only appears once.)
@@ -204,7 +204,7 @@ These priors must satisfy the following conditions:
    which gets interpreted as minus infinity (plus infinity).
 
 {xrst_toc_hidden
-   example/table/rate_table.py
+    example/table/rate_table.py
 }
 Example
 *******

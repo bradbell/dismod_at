@@ -20,8 +20,8 @@
 #
 # .. math::
 #
-#  f( \iota ) =
-#  \frac{1}{2} \sum_{i=0}^{N-1} \left( \frac{y_i - \iota}{\delta_i} \right)^2
+#   f( \iota ) =
+#   \frac{1}{2} \sum_{i=0}^{N-1} \left( \frac{y_i - \iota}{\delta_i} \right)^2
 #
 # Optimal Solution
 # ****************
@@ -29,8 +29,8 @@
 #
 # .. math::
 #
-#  0 = f'( \hat{\iota} ) =
-#     - \sum_{i=1}^{N-1} \frac{y_i - \hat{\iota} }{\delta_i^2}
+#   0 = f'( \hat{\iota} ) =
+#       - \sum_{i=1}^{N-1} \frac{y_i - \hat{\iota} }{\delta_i^2}
 #
 # Weighted Residuals
 # ******************
@@ -38,7 +38,7 @@
 #
 # .. math::
 #
-#  r_i = \frac{y_i - \hat{\iota}}{\delta_i}
+#   r_i = \frac{y_i - \hat{\iota}}{\delta_i}
 #
 # If :math:`\hat{\iota}` were the true value for :math:`\iota`,
 # the weighted residuals would be mean zero and variance one.
@@ -46,11 +46,11 @@
 #
 # .. math::
 #
-#  0 = \sum_{i=1}^{N-1} \frac{y_i - \hat{\iota} }{\delta_i^2}
+#   0 = \sum_{i=1}^{N-1} \frac{y_i - \hat{\iota} }{\delta_i^2}
 #
 # .. math::
 #
-#  0 = \sum_{i=1}^{N-1} \frac{r_i}{\delta_i}
+#   0 = \sum_{i=1}^{N-1} \frac{r_i}{\delta_i}
 #
 # Note that if :math:`\delta_i` were the same for all :math:`i`,
 # the sum of the weighted residuals :math:`\sum_i r_i` would be zero.
@@ -63,7 +63,7 @@
 #
 # .. math::
 #
-#  0 = \sum_{i=1}^{N-1} \frac{r_i}{y_i}
+#   0 = \sum_{i=1}^{N-1} \frac{r_i}{y_i}
 #
 # Weighted Average of Weighted Residuals
 # **************************************
@@ -71,19 +71,19 @@
 #
 # .. math::
 #
-#  w_i = \delta_i^{-1} / \sum_{i=0}^{N-1} \delta_i^{-1}
+#   w_i = \delta_i^{-1} / \sum_{i=0}^{N-1} \delta_i^{-1}
 #
 # The corresponding weighted average of the weighted residuals is zero; i.e,
 #
 # .. math::
 #
-#  0 = \sum_{i=1}^{N-1} w_i r_i
+#   0 = \sum_{i=1}^{N-1} w_i r_i
 #
 # Source Code
 # ***********
 # {xrst_literal
-#     BEGIN PYTHON
-#     END PYTHON
+#       BEGIN PYTHON
+#       END PYTHON
 # }
 #
 # {xrst_end user_sum_residual.py}
@@ -102,151 +102,151 @@ import math
 test_program  = 'example/user/sum_residual.py'
 check_program = sys.argv[0].replace('\\', '/')
 if check_program != test_program  or len(sys.argv) != 1 :
-   usage  = 'python3 ' + test_program + '\n'
-   usage += 'where python3 is the python 3 program on your system\n'
-   usage += 'and working directory is the dismod_at distribution directory\n'
-   sys.exit(usage)
+    usage  = 'python3 ' + test_program + '\n'
+    usage += 'where python3 is the python 3 program on your system\n'
+    usage += 'and working directory is the dismod_at distribution directory\n'
+    sys.exit(usage)
 #
 # import dismod_at
 local_dir = os.getcwd() + '/python'
 if( os.path.isdir( local_dir + '/dismod_at' ) ) :
-   sys.path.insert(0, local_dir)
+    sys.path.insert(0, local_dir)
 import dismod_at
 #
 # change into the build/example/user directory
 if not os.path.exists('build/example/user') :
-   os.makedirs('build/example/user')
+    os.makedirs('build/example/user')
 os.chdir('build/example/user')
 # ------------------------------------------------------------------------
 def example_db (file_name) :
-   def fun_iota_parent(a, t) :
-      return ('prior_iota_parent', 'prior_gauss_zero', 'prior_gauss_zero')
-   # ----------------------------------------------------------------------
-   # age_list
-   age_list = [ 0.0, 100.0 ]
-   #
-   # time_list
-   time_list = [ 1990.0, 2200.0 ]
-   #
-   # integrand table:
-   integrand_table = [
-      { 'name':'Sincidence' },
-   ]
-   #
-   # node table:
-   node_table = [ { 'name':'world', 'parent':'' } ]
-   #
-   # weight table:
-   weight_table = list()
-   #
-   # covariate table:
-   covariate_table = list()
-   #
-   # mulcov table:
-   mulcov_table = list()
-   # -----------------------------------------------------------------------
-   # data table:
-   data_table = list()
-   #
-   # values that are the same for all data rows
-   row = {
-      'integrand':   'Sincidence',
-      'density':     'gaussian',
-      'weight':      '',
-      'hold_out':     False,
-      'age_lower':    50.0,
-      'age_upper':    50.0,
-      'time_lower':   2000.0,
-      'time_upper':   2000.0,
-      'node':         'world',
-      'subgroup':     'world',
-   }
-   # N = 2, y_0 = iota_true - noise , y1 = iota_true + noise
-   noise = 0.9 * iota_true
-   Sincidence = [
-      iota_true - noise,
-      iota_true + noise,
-   ]
-   for meas_value in Sincidence :
-      row['meas_value'] = meas_value
-      row['meas_std']   = meas_value   # 100 % coefficient of variation
-      data_table.append( copy.copy(row) )
-   #
-   # ----------------------------------------------------------------------
-   # prior_table
-   prior_table = [
-      {  # prior_gauss_zero
-         'name':     'prior_gauss_zero',
-         'density':  'gaussian',
-         'mean':     0.0,
-         'std':      0.01,
-      },{ # prior_iota_parent
-         'name':     'prior_iota_parent',
-         'density':  'uniform',
-         'lower':    1e-19,
-         'upper':    1.0,
-         'mean':     1.01e-06,
-      }
-   ]
-   #
-   # smooth table
-   name      = 'smooth_iota_parent'
-   fun       = fun_iota_parent
-   age_grid  = [0]
-   time_grid = [0]
-   smooth_table = [ {
-      'name':name, 'age_id':age_grid, 'time_id':time_grid, 'fun':fun
-   } ]
-   #
-   # rate table:
-   rate_table = [
-      {  'name':          'iota',
-         'parent_smooth': 'smooth_iota_parent',
-         'child_smooth':   None,
-      }
-   ]
-   #
-   # option_table
-   option_table = [
-      { 'name':'rate_case',              'value':'iota_pos_rho_zero' },
-      { 'name':'parent_node_name',       'value':'world'             },
-      { 'name':'quasi_fixed',            'value':'false'             },
-      { 'name':'print_level_fixed',      'value':'0'                 },
-      { 'name':'tolerance_fixed',        'value':'1e-9'              },
-      { 'name':'tolerance_random',       'value':'1e-10'             },
+    def fun_iota_parent(a, t) :
+        return ('prior_iota_parent', 'prior_gauss_zero', 'prior_gauss_zero')
+    # ----------------------------------------------------------------------
+    # age_list
+    age_list = [ 0.0, 100.0 ]
+    #
+    # time_list
+    time_list = [ 1990.0, 2200.0 ]
+    #
+    # integrand table:
+    integrand_table = [
+        { 'name':'Sincidence' },
+    ]
+    #
+    # node table:
+    node_table = [ { 'name':'world', 'parent':'' } ]
+    #
+    # weight table:
+    weight_table = list()
+    #
+    # covariate table:
+    covariate_table = list()
+    #
+    # mulcov table:
+    mulcov_table = list()
+    # -----------------------------------------------------------------------
+    # data table:
+    data_table = list()
+    #
+    # values that are the same for all data rows
+    row = {
+        'integrand':   'Sincidence',
+        'density':     'gaussian',
+        'weight':      '',
+        'hold_out':     False,
+        'age_lower':    50.0,
+        'age_upper':    50.0,
+        'time_lower':   2000.0,
+        'time_upper':   2000.0,
+        'node':         'world',
+        'subgroup':     'world',
+    }
+    # N = 2, y_0 = iota_true - noise , y1 = iota_true + noise
+    noise = 0.9 * iota_true
+    Sincidence = [
+        iota_true - noise,
+        iota_true + noise,
+    ]
+    for meas_value in Sincidence :
+        row['meas_value'] = meas_value
+        row['meas_std']   = meas_value   # 100 % coefficient of variation
+        data_table.append( copy.copy(row) )
+    #
+    # ----------------------------------------------------------------------
+    # prior_table
+    prior_table = [
+        {   # prior_gauss_zero
+            'name':     'prior_gauss_zero',
+            'density':  'gaussian',
+            'mean':     0.0,
+            'std':      0.01,
+        },{ # prior_iota_parent
+            'name':     'prior_iota_parent',
+            'density':  'uniform',
+            'lower':    1e-19,
+            'upper':    1.0,
+            'mean':     1.01e-06,
+        }
+    ]
+    #
+    # smooth table
+    name      = 'smooth_iota_parent'
+    fun       = fun_iota_parent
+    age_grid  = [0]
+    time_grid = [0]
+    smooth_table = [ {
+        'name':name, 'age_id':age_grid, 'time_id':time_grid, 'fun':fun
+    } ]
+    #
+    # rate table:
+    rate_table = [
+        {   'name':          'iota',
+            'parent_smooth': 'smooth_iota_parent',
+            'child_smooth':   None,
+        }
+    ]
+    #
+    # option_table
+    option_table = [
+        { 'name':'rate_case',              'value':'iota_pos_rho_zero' },
+        { 'name':'parent_node_name',       'value':'world'             },
+        { 'name':'quasi_fixed',            'value':'false'             },
+        { 'name':'print_level_fixed',      'value':'0'                 },
+        { 'name':'tolerance_fixed',        'value':'1e-9'              },
+        { 'name':'tolerance_random',       'value':'1e-10'             },
 
-   ]
-   #
-   # avgint table: empty
-   avgint_table = list()
-   #
-   # nslist_dict:
-   nslist_dict = dict()
-   #
-   # subgroup_table
-   subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
-   #
-   # create database
-   dismod_at.create_database(
-      file_name,
-      age_list,
-      time_list,
-      integrand_table,
-      node_table,
-      subgroup_table,
-      weight_table,
-      covariate_table,
-      avgint_table,
-      data_table,
-      prior_table,
-      smooth_table,
-      nslist_dict,
-      rate_table,
-      mulcov_table,
-      option_table
-   )
-   # ----------------------------------------------------------------------
-   return
+    ]
+    #
+    # avgint table: empty
+    avgint_table = list()
+    #
+    # nslist_dict:
+    nslist_dict = dict()
+    #
+    # subgroup_table
+    subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
+    #
+    # create database
+    dismod_at.create_database(
+        file_name,
+        age_list,
+        time_list,
+        integrand_table,
+        node_table,
+        subgroup_table,
+        weight_table,
+        covariate_table,
+        avgint_table,
+        data_table,
+        prior_table,
+        smooth_table,
+        nslist_dict,
+        rate_table,
+        mulcov_table,
+        option_table
+    )
+    # ----------------------------------------------------------------------
+    return
 # ===========================================================================
 # create database
 database  = 'example.db'
@@ -262,16 +262,16 @@ dismod_at.system_command_prc([ program, database, 'fit', 'fixed' ])
 # read tables
 #
 connection = dismod_at.create_connection(
-   database, new = False, readonly = True
+    database, new = False, readonly = True
 )
 #
 name_list = [
-   'fit_var',
-   'data',
+    'fit_var',
+    'data',
 ]
 table_list = dict()
 for table_name in name_list :
-   table_list[table_name] = dismod_at.get_table_dict(connection, table_name)
+    table_list[table_name] = dismod_at.get_table_dict(connection, table_name)
 #
 connection.close()
 # ----------------------------------------------------------------------------

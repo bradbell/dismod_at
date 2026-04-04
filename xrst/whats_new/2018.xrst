@@ -147,12 +147,12 @@ or :math:`t_i` where appropriate.
 #. Advance to cppad-0180925 and cppad_mixed-0180925.
    This had the following effect timing result for ``bin/speed.sh`` :
 
-   .. csv-table::
-      :widths: auto
+    .. csv-table::
+        :widths: auto
 
-      ,user time,memory
-      before,10.395 sec,1.265 GB
-      after,9.376  sec,1.247 GB
+        ,user time,memory
+        before,10.395 sec,1.265 GB
+        after,9.376  sec,1.247 GB
 
 09-28
 =====
@@ -691,7 +691,7 @@ The install :ref:`download<install_unix@Download dismod_at.git>` procedure was c
 to use the following command to determine the version number:
 ::
 
-   grep '^SET(dismod_at_version' CMakeLists.txt
+    grep '^SET(dismod_at_version' CMakeLists.txt
 
 03-08
 =====
@@ -700,7 +700,7 @@ type detected in an :ref:`input-name` table.
 To be specific, a syntax error would occur on the line
 ::
 
-   msg  = 'expected type ' + ty ++  ' for column ' + name
+    msg  = 'expected type ' + ty ++  ' for column ' + name
 
 This was fixed by changing ``++`` to ``+`` .
 
@@ -947,7 +947,7 @@ is not used during the simulate command.
 Change the specification for the
 :ref:`create_database@smooth_table` function
 
-   ( *v* , *da* , *dt* ) = *fun* ( *a* , *t* )
+    ( *v* , *da* , *dt* ) = *fun* ( *a* , *t* )
 
 so that ``None`` can be returned for *da* and *dt*
 when there is no such forward difference.

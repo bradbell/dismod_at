@@ -61,7 +61,7 @@ This column has type ``real`` and specifies the mean
 for the prior.
 It must hold that
 
-   *lower* <= *mean* <= *upper*
+    *lower* <= *mean* <= *upper*
 
 uniform
 =======
@@ -94,7 +94,7 @@ If the density is
 :ref:`density_table@Notation@Log Scaled` and for a
 :ref:`statistic@Weighted Residual Function, R@Value` ,
 
-   *delta* = ``log`` ( *mean* + *eta* + *std* ) ``- log`` ( *mean* + *eta* )
+    *delta* = ``log`` ( *mean* + *eta* + *std* ) ``- log`` ( *mean* + *eta* )
 
 is the standard deviation for the
 log of the random variable plus *eta* ; see
@@ -104,7 +104,7 @@ Using the notation ``~=`` for approximately equal,
 and taking the derivative of the log at the midpoint for the difference,
 we get
 
-   *delta* ~= *std* / ( *mean* + *eta* + *std* /2 )
+    *delta* ~= *std* / ( *mean* + *eta* + *std* /2 )
 
 If this density is used for a
 :ref:`statistic@Weighted Residual Function, R@Difference` ,
@@ -153,7 +153,7 @@ null
 In the cases that are not Student densities,
 this field can be ``null`` .
 {xrst_toc_hidden
-   example/table/prior_table.py
+    example/table/prior_table.py
 }
 Example
 *******

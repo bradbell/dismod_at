@@ -67,16 +67,16 @@ import copy
 import math
 source_file = 'example/user/other_database.py'
 if sys.argv[0] != source_file  or len(sys.argv) != 1 :
-   usage  = 'python3 ' + source_file + '\n'
-   usage += 'where python3 is the python 3 program on your system\n'
-   usage += 'and working directory is the dismod_at distribution directory\n'
-   sys.exit(usage)
+    usage  = 'python3 ' + source_file + '\n'
+    usage += 'where python3 is the python 3 program on your system\n'
+    usage += 'and working directory is the dismod_at distribution directory\n'
+    sys.exit(usage)
 print(source_file)
 #
 # import dismod_at
 local_dir = os.getcwd() + '/python'
 if( os.path.isdir( local_dir + '/dismod_at' ) ) :
-   sys.path.insert(0, local_dir)
+    sys.path.insert(0, local_dir)
 import dismod_at
 #
 # work_directory
@@ -84,133 +84,133 @@ work_directory = 'build/example/user'
 # ------------------------------------------------------------------------
 # Note that the a, t values are not used for this example
 def example_db (file_name) :
-   # note that the a, t values are not used for this case
-   def fun_iota(a, t) :
-      return ('prior_iota', None, None)
-   # ----------------------------------------------------------------------
-   # age table:
-   age_list    = [ 0.0, 50.0, 100.0 ]
-   #
-   # time table:
-   time_list   = [ 1990.0, 2000.0, 2010.0, 2020.0 ]
-   #
-   # integrand table:
-   integrand_table = [
-       { 'name':'Sincidence' }
-   ]
-   #
-   # node table:
-   node_table = [ { 'name':'world', 'parent':'' } ]
-   #
-   # weight table:
-   weight_table = list()
-   #
-   # covariate table:
-   covariate_table = list()
-   #
-   # mulcov table:
-   mulcov_table = list()
-   #
-   # avgint table: empty
-   avgint_table = list()
-   #
-   # nslist_dict:
-   nslist_dict = dict()
-   # ----------------------------------------------------------------------
-   # data table:
-   data_table = list()
-   #
-   # values that are the same for all data points
-   row = {
-      'integrand':   'Sincidence',
-      'hold_out':    False,
-      'density':     'gaussian',
-      'meas_std':    iota_true / 10.,
-      'weight':      '',
-      'time_lower':   2000.,
-      'time_upper':   2000.,
-      'node':         'world',
-      'subgroup':     'world',
-      'meas_value':   iota_true,
-      'age_lower':    50.0,
-      'age_upper':    50.0,
-      'time_lower':   2000.0,
-      'time_upper':   2000.0,
-   }
-   data_table.append(row)
-   #
-   # ----------------------------------------------------------------------
-   # prior_table
-   prior_table = [
-      { # prior_iota
-         'name':     'prior_iota',
-         'density':  'uniform',
-         'lower':    iota_true / 10.0,
-         'upper':    iota_true * 10.0,
-         'mean':     iota_true * 2.0,
-      }
-   ]
-   # ----------------------------------------------------------------------
-   # smooth table
-   name           = 'smooth_iota'
-   fun            = fun_iota
-   smooth_table = [
-      {  'name':name,
-         'age_id':[0],
-         'time_id':[0],
-         'fun':fun
-      }
-   ]
-   # ----------------------------------------------------------------------
-   # rate table:
-   rate_table = [
-      {  'name':          'iota',
-         'parent_smooth': 'smooth_iota',
-      }
-   ]
-   # ----------------------------------------------------------------------
-   # option_table
-   option_table = [
-      { 'name':'rate_case',              'value':'iota_pos_rho_zero'   },
-      { 'name':'parent_node_name',       'value':'world'               },
+    # note that the a, t values are not used for this case
+    def fun_iota(a, t) :
+        return ('prior_iota', None, None)
+    # ----------------------------------------------------------------------
+    # age table:
+    age_list    = [ 0.0, 50.0, 100.0 ]
+    #
+    # time table:
+    time_list   = [ 1990.0, 2000.0, 2010.0, 2020.0 ]
+    #
+    # integrand table:
+    integrand_table = [
+         { 'name':'Sincidence' }
+    ]
+    #
+    # node table:
+    node_table = [ { 'name':'world', 'parent':'' } ]
+    #
+    # weight table:
+    weight_table = list()
+    #
+    # covariate table:
+    covariate_table = list()
+    #
+    # mulcov table:
+    mulcov_table = list()
+    #
+    # avgint table: empty
+    avgint_table = list()
+    #
+    # nslist_dict:
+    nslist_dict = dict()
+    # ----------------------------------------------------------------------
+    # data table:
+    data_table = list()
+    #
+    # values that are the same for all data points
+    row = {
+        'integrand':   'Sincidence',
+        'hold_out':    False,
+        'density':     'gaussian',
+        'meas_std':    iota_true / 10.,
+        'weight':      '',
+        'time_lower':   2000.,
+        'time_upper':   2000.,
+        'node':         'world',
+        'subgroup':     'world',
+        'meas_value':   iota_true,
+        'age_lower':    50.0,
+        'age_upper':    50.0,
+        'time_lower':   2000.0,
+        'time_upper':   2000.0,
+    }
+    data_table.append(row)
+    #
+    # ----------------------------------------------------------------------
+    # prior_table
+    prior_table = [
+        { # prior_iota
+            'name':     'prior_iota',
+            'density':  'uniform',
+            'lower':    iota_true / 10.0,
+            'upper':    iota_true * 10.0,
+            'mean':     iota_true * 2.0,
+        }
+    ]
+    # ----------------------------------------------------------------------
+    # smooth table
+    name           = 'smooth_iota'
+    fun            = fun_iota
+    smooth_table = [
+        {   'name':name,
+            'age_id':[0],
+            'time_id':[0],
+            'fun':fun
+        }
+    ]
+    # ----------------------------------------------------------------------
+    # rate table:
+    rate_table = [
+        {   'name':          'iota',
+            'parent_smooth': 'smooth_iota',
+        }
+    ]
+    # ----------------------------------------------------------------------
+    # option_table
+    option_table = [
+        { 'name':'rate_case',              'value':'iota_pos_rho_zero'   },
+        { 'name':'parent_node_name',       'value':'world'               },
 
-      { 'name':'quasi_fixed',            'value':'false'               },
-      { 'name':'max_num_iter_fixed',     'value':'50'                  },
-      { 'name':'print_level_fixed',      'value':'0'                   },
-      { 'name':'tolerance_fixed',        'value':'1e-9'                },
+        { 'name':'quasi_fixed',            'value':'false'               },
+        { 'name':'max_num_iter_fixed',     'value':'50'                  },
+        { 'name':'print_level_fixed',      'value':'0'                   },
+        { 'name':'tolerance_fixed',        'value':'1e-9'                },
 
-      { 'name':'max_num_iter_random',    'value':'50'                  },
-      { 'name':'print_level_random',     'value':'0'                   },
-      { 'name':'tolerance_random',       'value':'1e-10'               },
+        { 'name':'max_num_iter_random',    'value':'50'                  },
+        { 'name':'print_level_random',     'value':'0'                   },
+        { 'name':'tolerance_random',       'value':'1e-10'               },
 
-      { 'name':'other_database',         'value':'other.db'            },
-      { 'name':'other_input_table',      'value':other_input_table     },
-   ]
-   # ----------------------------------------------------------------------
-   # subgroup_table
-   subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
-   # ----------------------------------------------------------------------
-   # create database
-   dismod_at.create_database(
-      file_name,
-      age_list,
-      time_list,
-      integrand_table,
-      node_table,
-      subgroup_table,
-      weight_table,
-      covariate_table,
-      avgint_table,
-      data_table,
-      prior_table,
-      smooth_table,
-      nslist_dict,
-      rate_table,
-      mulcov_table,
-      option_table
-   )
-   # ----------------------------------------------------------------------
-   return
+        { 'name':'other_database',         'value':'other.db'            },
+        { 'name':'other_input_table',      'value':other_input_table     },
+    ]
+    # ----------------------------------------------------------------------
+    # subgroup_table
+    subgroup_table = [ { 'subgroup':'world', 'group':'world' } ]
+    # ----------------------------------------------------------------------
+    # create database
+    dismod_at.create_database(
+        file_name,
+        age_list,
+        time_list,
+        integrand_table,
+        node_table,
+        subgroup_table,
+        weight_table,
+        covariate_table,
+        avgint_table,
+        data_table,
+        prior_table,
+        smooth_table,
+        nslist_dict,
+        rate_table,
+        mulcov_table,
+        option_table
+    )
+    # ----------------------------------------------------------------------
+    return
 # ===========================================================================
 #
 # example_db, example.db
@@ -223,11 +223,11 @@ shutil.copyfile(database, other_db)
 #
 # example.db
 connection = dismod_at.create_connection(
-   database, new = False, readonly = False
+    database, new = False, readonly = False
 )
 for table_name in other_input_table.split() :
-   command    = 'DROP TABLE ' + table_name
-   dismod_at.sql_command(connection, command)
+    command    = 'DROP TABLE ' + table_name
+    dismod_at.sql_command(connection, command)
 command    = 'VACUUM;'
 dismod_at.sql_command(connection, command)
 connection.close()
@@ -241,7 +241,7 @@ dismod_at.system_command_prc([ program, database, 'fit', 'fixed' ])
 # -----------------------------------------------------------------------
 # read database
 connection            = dismod_at.create_connection(
-   database, new = False, readonly = True
+    database, new = False, readonly = True
 )
 var_table             = dismod_at.get_table_dict(connection, 'var')
 fit_var_table         = dismod_at.get_table_dict(connection, 'fit_var')
@@ -253,10 +253,10 @@ assert len(fit_var_table) == 1
 #
 # check that the fit is accurate
 for var_id in range( len(var_table) ) :
-   true_value  = iota_true
-   fit_value   = fit_var_table[var_id]['fit_var_value']
-   rel_error   = 1.0 - fit_value/true_value
-   assert abs(rel_error) < 1e-6
+    true_value  = iota_true
+    fit_value   = fit_var_table[var_id]['fit_var_value']
+    rel_error   = 1.0 - fit_value/true_value
+    assert abs(rel_error) < 1e-6
 #
 # Test db2csv
 dismod_at.db2csv_command(database)

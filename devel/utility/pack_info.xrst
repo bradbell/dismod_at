@@ -13,8 +13,8 @@ Devel Packing Variables into a Single Vector
 Contents
 ********
 {xrst_toc_table
-   devel/utility/pack_info.cpp
-   example/devel/utility/pack_info_xam.cpp
+    devel/utility/pack_info.cpp
+    example/devel/utility/pack_info_xam.cpp
 }
 Example
 *******

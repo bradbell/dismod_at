@@ -30,7 +30,7 @@ s_in
 ====
 This argument has prototype
 
-   ``size_t`` *s_in*
+    ``size_t`` *s_in*
 
 If *s_in*  != 0 ,
 it is used as a seed for the random number generator.
@@ -43,7 +43,7 @@ s_out
 =====
 This return value prototype
 
-   ``size_t`` *s_out*
+    ``size_t`` *s_out*
 
 and is the actual seed that was used to initialize the random number generator.
 
@@ -59,18 +59,18 @@ rng
 ===
 The return value *rng* has prototype
 
-   ``gsl_rng`` * *rng*
+    ``gsl_rng`` * *rng*
 
 free_gsl_rng
 ************
 Once you are done with a generator created by ``new_gsl_rng`` ,
 you should free the corresponding memory using
 
-   ``gsl_rng_free`` ()
+    ``gsl_rng_free`` ()
 
 .
 {xrst_toc_hidden
-   example/devel/utility/manage_gsl_rng_xam.cpp
+    example/devel/utility/manage_gsl_rng_xam.cpp
 }
 Example
 *******

@@ -33,7 +33,7 @@ pack_object
 ***********
 This argument has prototype
 
-   ``const pack_info&`` *pack_object*
+    ``const pack_info&`` *pack_object*
 
 It is the :ref:`pack_info-name` information corresponding
 to the :ref:`model_variables-name` .
@@ -45,7 +45,7 @@ pack_index
 **********
 This return value has prototype
 
-   ``CppAD::vector<size_t>`` *pack_index*
+    ``CppAD::vector<size_t>`` *pack_index*
 
 It size is equal to *n_random* ; i.e., the number of
 :ref:`random effects<model_variables@Random Effects, u>` in the model.
@@ -63,7 +63,7 @@ pack_vec
 ========
 This argument has prototype
 
-   ``const CppAD::vector<`` *Float* >& *pack_vec*
+    ``const CppAD::vector<`` *Float* >& *pack_vec*
 
 and its size is *pack_object* . ``size`` () .
 It specifies the value for all the :ref:`model_variables-name`
@@ -73,7 +73,7 @@ random_vec
 ==========
 This argument has prototype
 
-   ``CppAD::vector<`` *Float* >& *random_vec*
+    ``CppAD::vector<`` *Float* >& *random_vec*
 
 and its size is *n_random* .
 It is a copy of the random effects in *pack_vec*
@@ -88,7 +88,7 @@ pack_vec
 ========
 This argument has prototype
 
-   ``CppAD::vector<`` *Float* >& *pack_vec*
+    ``CppAD::vector<`` *Float* >& *pack_vec*
 
 and its size is *pack_object* . ``size`` () .
 It specifies the value for all the :ref:`model_variables-name`
@@ -100,13 +100,13 @@ random_vec
 ==========
 This argument has prototype
 
-   ``const CppAD::vector<`` *Float* >& *random_vec*
+    ``const CppAD::vector<`` *Float* >& *random_vec*
 
 and its size is *n_random* .
 It contains the random effects
 as one contiguous vector in an unspecified order.
 {xrst_toc_hidden
-   example/devel/utility/random_effect_xam.cpp
+    example/devel/utility/random_effect_xam.cpp
 }
 Example
 *******
@@ -125,59 +125,59 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 // random2var_id
 CppAD::vector<size_t> random2var_id(const pack_info& pack_object )
 {
-   size_t n_random = pack_object.random_size();
-   CppAD::vector<size_t> result( n_random );
-   for(size_t random_index = 0; random_index < n_random; ++random_index)
-      result[random_index] = random_index;
+    size_t n_random = pack_object.random_size();
+    CppAD::vector<size_t> result( n_random );
+    for(size_t random_index = 0; random_index < n_random; ++random_index)
+        result[random_index] = random_index;
 
-   return result;
+    return result;
 }
 // -------------------------------------------------------------------------
 // unpack_random
 template <class Float>
 void unpack_random(
-   const pack_info&             pack_object  ,
-   const CppAD::vector<Float>&  pack_vec   ,
-   CppAD::vector<Float>&        random_vec )
+    const pack_info&             pack_object  ,
+    const CppAD::vector<Float>&  pack_vec   ,
+    CppAD::vector<Float>&        random_vec )
 {
-   assert( random_vec.size() == pack_object.random_size() );
-   assert( pack_vec.size()   == pack_object.size() );
-   //
-   size_t n_random = pack_object.random_size();
-   for(size_t random_index = 0; random_index < n_random; ++random_index)
-      random_vec[random_index] = pack_vec[random_index];
+    assert( random_vec.size() == pack_object.random_size() );
+    assert( pack_vec.size()   == pack_object.size() );
+    //
+    size_t n_random = pack_object.random_size();
+    for(size_t random_index = 0; random_index < n_random; ++random_index)
+        random_vec[random_index] = pack_vec[random_index];
 
-   return;
+    return;
 }
 // -------------------------------------------------------------------------
 // pack_random
 template <class Float>
 void pack_random(
-   const pack_info&             pack_object  ,
-   CppAD::vector<Float>&        pack_vec   ,
-   const CppAD::vector<Float>&  random_vec )
+    const pack_info&             pack_object  ,
+    CppAD::vector<Float>&        pack_vec   ,
+    const CppAD::vector<Float>&  random_vec )
 {
-   assert( random_vec.size() == pack_object.random_size() );
-   assert( pack_vec.size()   == pack_object.size() );
-   //
-   size_t n_random = pack_object.random_size();
-   for(size_t random_index = 0; random_index < n_random; ++random_index)
-         pack_vec[random_index] = random_vec[random_index];
+    assert( random_vec.size() == pack_object.random_size() );
+    assert( pack_vec.size()   == pack_object.size() );
+    //
+    size_t n_random = pack_object.random_size();
+    for(size_t random_index = 0; random_index < n_random; ++random_index)
+            pack_vec[random_index] = random_vec[random_index];
 
-   return;
+    return;
 }
 
 # define DISMOD_AT_INSTANTIATE_RANDOM_EFFECT(Float)           \
-   template void unpack_random(                              \
-   const pack_info&             pack_object  ,                \
-   const CppAD::vector<Float>&  pack_vec   ,                 \
-   CppAD::vector<Float>&        random_vec                   \
-   );                                                        \
-   template void pack_random(                                \
-   const pack_info&             pack_object  ,               \
-   CppAD::vector<Float>&        pack_vec   ,                 \
-   const CppAD::vector<Float>&  random_vec                   \
-   );
+    template void unpack_random(                              \
+    const pack_info&             pack_object  ,                \
+    const CppAD::vector<Float>&  pack_vec   ,                 \
+    CppAD::vector<Float>&        random_vec                   \
+    );                                                        \
+    template void pack_random(                                \
+    const pack_info&             pack_object  ,               \
+    CppAD::vector<Float>&        pack_vec   ,                 \
+    const CppAD::vector<Float>&  random_vec                   \
+    );
 
 // instantiations
 DISMOD_AT_INSTANTIATE_RANDOM_EFFECT( double )

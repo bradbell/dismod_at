@@ -20,7 +20,7 @@ db
 **
 The argument *db* has prototype
 
-   ``sqlite3`` * *db*
+    ``sqlite3`` * *db*
 
 and is an open connection to the database.
 
@@ -28,16 +28,16 @@ time_table
 **********
 The return value *time_table* has prototype
 
-   ``CppAD::vector<double>`` *time_table*
+    ``CppAD::vector<double>`` *time_table*
 
 For each :ref:`time_table@time_id` ,
 
-   *time_table* [ *time_id* ]
+    *time_table* [ *time_id* ]
 
 is the time for the corresponding
 :ref:`time_table@time` .
 {xrst_toc_hidden
-   example/devel/table/get_time_table_xam.cpp
+    example/devel/table/get_time_table_xam.cpp
 }
 Example
 *******
@@ -54,19 +54,19 @@ this function.
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 CppAD::vector<double> get_time_table(sqlite3* db)
-{  using std::string;
+{   using std::string;
 
-   string table_name  = "time";
-   string column_name = "time";
-   CppAD::vector<double>  time;
-   get_table_column(db, table_name, column_name, time);
+    string table_name  = "time";
+    string column_name = "time";
+    CppAD::vector<double>  time;
+    get_table_column(db, table_name, column_name, time);
 
 # ifndef NDEBUG
-   size_t n_time      = check_table_id(db, table_name);
-   assert( time.size() == n_time );
+    size_t n_time      = check_table_id(db, table_name);
+    assert( time.size() == n_time );
 # endif
 
-   return time;
+    return time;
 }
 
 } // END DISMOD_AT_NAMESPACE

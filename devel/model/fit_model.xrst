@@ -11,8 +11,8 @@ Object that Fits Fixed and Random Effects Model to Data
 Contents
 ********
 {xrst_toc_table
-   devel/model/fit_model.cpp
-   include/dismod_at/fit_model_scale.hpp
+    devel/model/fit_model.cpp
+    include/dismod_at/fit_model_scale.hpp
 }
 
 {xrst_end fit_model}

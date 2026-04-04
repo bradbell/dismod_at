@@ -43,7 +43,7 @@ Descendant
 The set of descendants for a node *p* is the
 set children of *p* , grand children of *p* , ... .
 {xrst_toc_hidden
-   example/table/node_table.py
+    example/table/node_table.py
 }
 Example
 *******

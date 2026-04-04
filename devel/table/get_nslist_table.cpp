@@ -20,7 +20,7 @@ db
 **
 The argument *db* has prototype
 
-   ``sqlite3`` * *db*
+    ``sqlite3`` * *db*
 
 and is an open connection to the database.
 
@@ -28,16 +28,16 @@ nslist_table
 ************
 The return value *nslist_table* has prototype
 
-   ``CppAD::vector<std::string>`` *nslist_table*
+    ``CppAD::vector<std::string>`` *nslist_table*
 
 For each :ref:`nslist_table@nslist_id` ,
 
-   *nslist_table* [ *nslist_id* ]
+    *nslist_table* [ *nslist_id* ]
 
 is the name for the corresponding
 :ref:`nslist_pair_table@nslist_id` .
 {xrst_toc_hidden
-   example/devel/table/get_nslist_table_xam.cpp
+    example/devel/table/get_nslist_table_xam.cpp
 }
 Example
 *******
@@ -57,21 +57,21 @@ this function.
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 CppAD::vector<std::string> get_nslist_table(sqlite3* db)
-{  using std::string;
+{   using std::string;
 
-   string table_name  = "nslist";
+    string table_name  = "nslist";
 # ifndef NDEBUG
-   size_t n_nslist       = check_table_id(db, table_name);
+    size_t n_nslist       = check_table_id(db, table_name);
 # else
-   check_table_id(db, table_name);
+    check_table_id(db, table_name);
 # endif
 
-   string column_name = "nslist_name";
-   CppAD::vector<std::string>  nslist;
-   get_table_column(db, table_name, column_name, nslist);
-   assert( nslist.size() == n_nslist );
+    string column_name = "nslist_name";
+    CppAD::vector<std::string>  nslist;
+    get_table_column(db, table_name, column_name, nslist);
+    assert( nslist.size() == n_nslist );
 
-   return nslist;
+    return nslist;
 }
 
 } // END DISMOD_AT_NAMESPACE

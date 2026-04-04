@@ -41,7 +41,7 @@ This identifies which :ref:`data_subset_table@data_id`
 each row of the data_sim table corresponds to.
 If *n_subset* is the number of rows in the data_subset table,
 
-   *data_sim_id* = *simulate_index* * *n_subset* + *data_subset_id*
+    *data_sim_id* = *simulate_index* * *n_subset* + *data_subset_id*
 
 for *simulate_index* equal zero to *number_simulate* ``-1``
 and *data_subset_id* equal zero to ``n_subset`` *-1* .
@@ -139,20 +139,20 @@ It the density is :ref:`density_table@Notation@Linear` ,
 
 .. math::
 
-   z = A + e
+    z = A + e
 
 It the density is :ref:`density_table@Notation@Log Scaled` ,
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-      e        & = & \log( z + \eta ) - \log( A + \eta )
-      \\
-      \exp (e) & = & ( z + \eta ) / ( A + \eta )
-      \\
-      z        & = & \exp(e) ( A + \eta ) - \eta
-   \end{eqnarray}
+    \begin{eqnarray}
+        e        & = & \log( z + \eta ) - \log( A + \eta )
+        \\
+        \exp (e) & = & ( z + \eta ) / ( A + \eta )
+        \\
+        z        & = & \exp(e) ( A + \eta ) - \eta
+    \end{eqnarray}
 
 Example
 *******

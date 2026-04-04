@@ -13,9 +13,9 @@ Use C++ to Create a Database Table
 Prototype
 *********
 {xrst_literal
-   include/dismod_at/create_table.hpp
-   // BEGIN_PROTOTYPE
-   // END_PROTOTYPE
+    include/dismod_at/create_table.hpp
+    // BEGIN_PROTOTYPE
+    // END_PROTOTYPE
 }
 
 
@@ -59,7 +59,7 @@ The size of *row_value* is *n_row* * *col_name.size* () .
 For *i* = 0 , ..., *n_row* ``-1`` ,
 *j* = 0 , ..., *col_name.size* () ``-1`` ,
 
-   *row_value* [ ``i`` * *col_name* . ``size`` () + *j*  ]
+    *row_value* [ ``i`` * *col_name* . ``size`` () + *j*  ]
 
 is the value placed in the *i*-th row and column with name
 *col_name* [ *j* .
@@ -92,7 +92,7 @@ A column with name *table_name* _ ``id`` and type
 Its values start with zero (for the first row) and
 increment by one for each row.
 {xrst_toc_hidden
-   example/devel/table/create_table_xam.cpp
+    example/devel/table/create_table_xam.cpp
 }
 Example
 *******
@@ -109,77 +109,77 @@ The file :ref:`create_table_xam.cpp-name` is an example use of
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void create_table(
-   sqlite3*                            db             ,
-   const std::string&                  table_name     ,
-   const CppAD::vector<std::string>&   col_name       ,
-   const CppAD::vector<std::string>&   col_type       ,
-   const CppAD::vector<bool>&          col_unique     ,
-   const CppAD::vector<std::string>&   row_value      ,
-   const std::size_t&                  max_insert     )
-{  using CppAD::to_string;
-   //
-   // cmd
-   std::string cmd;
-   //
-   // n_col, n_row
-   size_t n_col = col_name.size();
-   size_t n_row = row_value.size() / n_col;
-   //
-   assert( col_type.size() == n_col );
-   assert( col_unique.size() == n_col );
-   assert( row_value.size() == n_row * n_col );
-   //
-   // db
-   // create the table
-   cmd  = "create table " + table_name;
-   cmd += " (" + table_name + "_id integer primary key";
-   for(size_t j = 0; j < n_col; j++)
-   {  cmd += ", " + col_name[j] + " " + col_type[j];
-      if( col_unique[j] )
-         cmd += " unique";
-   }
-   cmd += ");";
-   dismod_at::exec_sql_cmd(db, cmd);
-   //
-   if( n_row == 0 )
-      return;
-   //
-   // start_insert_command
-   cmd = "insert into " + table_name;
-   cmd += " (" + table_name + "_id";
-   for(size_t j = 0; j < n_col; j++)
-      cmd += ", " + col_name[j];
-   cmd += " ) values\n";
-   std::string start_insert_command = cmd;
-   //
-   // i_start, i_end
-   size_t i_end = 0;
-   while( i_end < n_row )
-   {  size_t i_start = i_end;
-      i_end = i_start + max_insert;
-      if (i_end > n_row)
-         i_end = n_row;
-      //
-      // cmd
-      cmd = start_insert_command;
-      for(size_t i = i_start; i < i_end; i++)
-      {  cmd = cmd + "( "  + to_string(i);
-         for(size_t j = 0; j < n_col; j++)
-         {  cmd += ", ";
-            if( col_type[j] == "text" )
-               cmd += "'" + row_value[i * n_col + j] + "'";
-            else if( row_value[i * n_col + j] == "" )
-               cmd += "null";
+    sqlite3*                            db             ,
+    const std::string&                  table_name     ,
+    const CppAD::vector<std::string>&   col_name       ,
+    const CppAD::vector<std::string>&   col_type       ,
+    const CppAD::vector<bool>&          col_unique     ,
+    const CppAD::vector<std::string>&   row_value      ,
+    const std::size_t&                  max_insert     )
+{   using CppAD::to_string;
+    //
+    // cmd
+    std::string cmd;
+    //
+    // n_col, n_row
+    size_t n_col = col_name.size();
+    size_t n_row = row_value.size() / n_col;
+    //
+    assert( col_type.size() == n_col );
+    assert( col_unique.size() == n_col );
+    assert( row_value.size() == n_row * n_col );
+    //
+    // db
+    // create the table
+    cmd  = "create table " + table_name;
+    cmd += " (" + table_name + "_id integer primary key";
+    for(size_t j = 0; j < n_col; j++)
+    {   cmd += ", " + col_name[j] + " " + col_type[j];
+        if( col_unique[j] )
+            cmd += " unique";
+    }
+    cmd += ");";
+    dismod_at::exec_sql_cmd(db, cmd);
+    //
+    if( n_row == 0 )
+        return;
+    //
+    // start_insert_command
+    cmd = "insert into " + table_name;
+    cmd += " (" + table_name + "_id";
+    for(size_t j = 0; j < n_col; j++)
+        cmd += ", " + col_name[j];
+    cmd += " ) values\n";
+    std::string start_insert_command = cmd;
+    //
+    // i_start, i_end
+    size_t i_end = 0;
+    while( i_end < n_row )
+    {   size_t i_start = i_end;
+        i_end = i_start + max_insert;
+        if (i_end > n_row)
+            i_end = n_row;
+        //
+        // cmd
+        cmd = start_insert_command;
+        for(size_t i = i_start; i < i_end; i++)
+        {   cmd = cmd + "( "  + to_string(i);
+            for(size_t j = 0; j < n_col; j++)
+            {   cmd += ", ";
+                if( col_type[j] == "text" )
+                    cmd += "'" + row_value[i * n_col + j] + "'";
+                else if( row_value[i * n_col + j] == "" )
+                    cmd += "null";
+                else
+                    cmd += row_value[i * n_col + j];
+            }
+            if( i + 1 < i_end )
+                cmd += " ),\n";
             else
-               cmd += row_value[i * n_col + j];
-         }
-         if( i + 1 < i_end )
-            cmd += " ),\n";
-         else
-            cmd += " )\n";
-      }
-      dismod_at::exec_sql_cmd(db, cmd);
-   }
+                cmd += " )\n";
+        }
+        dismod_at::exec_sql_cmd(db, cmd);
+    }
 }
 
 } // END_DISMOD_AT_NAMESPACE

@@ -64,12 +64,12 @@ corresponding to *prior_id*
 
 .. math::
 
-   \delta_j = \left\{ \begin{array}{ll}
-      \log ( \mu_j + \eta_j + \sigma_j ) - \log( \mu_j + \eta_j )
-         & \R{if \; log \; density}
-      \\
-      \sigma_j & \R{otherwise}
-   \end{array} \right.
+    \delta_j = \left\{ \begin{array}{ll}
+        \log ( \mu_j + \eta_j + \sigma_j ) - \log( \mu_j + \eta_j )
+            & \R{if \; log \; density}
+        \\
+        \sigma_j & \R{otherwise}
+    \end{array} \right.
 
 V_j^u
 *****
@@ -77,11 +77,11 @@ The value density for the *j*-th component of :math:`u` is
 
 .. math::
 
-   V_j^u ( u | \theta )
-   =
-   \exp \left[ D \left(
-      u_j \W{,} \mu_j \W{,} \lambda_j \delta_j \W{,} d_j
-   \right) \right]
+    V_j^u ( u | \theta )
+    =
+    \exp \left[ D \left(
+        u_j \W{,} \mu_j \W{,} \lambda_j \delta_j \W{,} d_j
+    \right) \right]
 
 where :math:`D` is the
 :ref:`log-density function<statistic@Log-Density Function, D>` .
@@ -93,6 +93,6 @@ The value density for all the random effects :math:`u` is defined by
 
 .. math::
 
-   V^u ( u | \theta ) = \prod_{j=0}^{n-1} V_j^u ( u | \theta )
+    V^u ( u | \theta ) = \prod_{j=0}^{n-1} V_j^u ( u | \theta )
 
 {xrst_end random_value}

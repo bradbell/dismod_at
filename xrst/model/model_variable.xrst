@@ -47,24 +47,24 @@ The :ref:`smooth_table@smooth_id` for one of these variables
 specifies its prior as follows:
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - :ref:`smooth_table@n_age`
-     - number of age points used to represent the function
-   * - :ref:`smooth_table@n_time`
-     - number of time points used to represent the function
-   * - :ref:`smooth_grid_table@age_id`
-     - identifies age value for a variable
-   * - :ref:`smooth_grid_table@time_id`
-     - identifies time value for a variable
-   * - :ref:`smooth_grid_table@const_value`
-     - null or a value that a variable is constrained to
-   * - :ref:`smooth_grid_table@value_prior_id`
-     - value prior for a variable
-   * - :ref:`smooth_grid_table@dage_prior_id`
-     - difference prior for a variable (and next variable) in age direction
-   * - :ref:`smooth_grid_table@dtime_prior_id`
-     - difference prior for a variable (and next variable) in time direction
+    * - :ref:`smooth_table@n_age`
+      - number of age points used to represent the function
+    * - :ref:`smooth_table@n_time`
+      - number of time points used to represent the function
+    * - :ref:`smooth_grid_table@age_id`
+      - identifies age value for a variable
+    * - :ref:`smooth_grid_table@time_id`
+      - identifies time value for a variable
+    * - :ref:`smooth_grid_table@const_value`
+      - null or a value that a variable is constrained to
+    * - :ref:`smooth_grid_table@value_prior_id`
+      - value prior for a variable
+    * - :ref:`smooth_grid_table@dage_prior_id`
+      - difference prior for a variable (and next variable) in age direction
+    * - :ref:`smooth_grid_table@dtime_prior_id`
+      - difference prior for a variable (and next variable) in time direction
 
 The number of variables (number of grid points)
 corresponding to a smoothing is *n_age* * *n_time* .

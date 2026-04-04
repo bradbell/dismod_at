@@ -45,13 +45,13 @@ The data table :ref:`data_table@meas_std` must be null and the
 :ref:`data_table@sample_size` must not be null.
 
 .. csv-table:: Binomial Notation
-   :widths: auto
+    :widths: auto
 
-   :math:`n`,:ref:`data_table@sample_size` in the data table
-   :math:`k`,counts in a binomial sample (need not be an integer)
-   :math:`y=k/n`,:ref:`data_table@meas_value` in the data table
-   :math:`\mu`,:ref:`average integrand<avg_integrand-name>` is model mean for y.
-   :math:`\sqrt{\mu / n}`,approximation used for meas_value standard deviation
+    :math:`n`,:ref:`data_table@sample_size` in the data table
+    :math:`k`,counts in a binomial sample (need not be an integer)
+    :math:`y=k/n`,:ref:`data_table@meas_value` in the data table
+    :math:`\mu`,:ref:`average integrand<avg_integrand-name>` is model mean for y.
+    :math:`\sqrt{\mu / n}`,approximation used for meas_value standard deviation
 
 gaussian
 ========
@@ -128,7 +128,7 @@ We refer to the following densities as nonsmooth:
 ``cen_laplace`` ,
 ``log_laplace`` .
 {xrst_toc_hidden
-   example/table/density_table.py
+    example/table/density_table.py
 }
 Example
 *******

@@ -20,7 +20,7 @@ db
 **
 The argument *db* has prototype
 
-   ``sqlite3`` * *db*
+    ``sqlite3`` * *db*
 
 and is an open connection to the database.
 
@@ -28,16 +28,16 @@ age_table
 *********
 The return value *age_table* has prototype
 
-   ``CppAD::vector<double>`` *age_table*
+    ``CppAD::vector<double>`` *age_table*
 
 For each :ref:`age_table@age_id` ,
 
-   *age_table* [ *age_id* ]
+    *age_table* [ *age_id* ]
 
 is the age for the corresponding
 :ref:`age_table@age` .
 {xrst_toc_hidden
-   example/devel/table/get_age_table_xam.cpp
+    example/devel/table/get_age_table_xam.cpp
 }
 Example
 *******
@@ -57,21 +57,21 @@ this function.
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 CppAD::vector<double> get_age_table(sqlite3* db)
-{  using std::string;
+{   using std::string;
 
-   string table_name  = "age";
+    string table_name  = "age";
 # ifndef NDEBUG
-   size_t n_age       = check_table_id(db, table_name);
+    size_t n_age       = check_table_id(db, table_name);
 # else
-   check_table_id(db, table_name);
+    check_table_id(db, table_name);
 # endif
 
-   string column_name =  "age";
-   CppAD::vector<double>  age;
-   get_table_column(db, table_name, column_name, age);
-   assert( age.size() == n_age );
+    string column_name =  "age";
+    CppAD::vector<double>  age;
+    get_table_column(db, table_name, column_name, age);
+    assert( age.size() == n_age );
 
-   return age;
+    return age;
 }
 
 } // END DISMOD_AT_NAMESPACE

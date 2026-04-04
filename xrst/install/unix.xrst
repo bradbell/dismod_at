@@ -27,8 +27,8 @@
 Installing dismod_at in Unix
 ############################
 {xrst_toc_hidden
-   bin/install_settings.py
-   bin/example_install.sh
+    bin/install_settings.py
+    bin/example_install.sh
 }
 
 System Requirements
@@ -98,9 +98,9 @@ on Fedora or Red-Hat one needs to install ``suitesparse-devel`` .
 
 eigen
 =====
-The `eigen <https://libeigen.gitlab.io/eigen/docs-nightly/>_` 
+The `eigen <https://libeigen.gitlab.io/eigen/docs-nightly/>_`
 {xrst_comment
-   `eigen <https://eigen.tuxfamily.org/index.php?title=Main_Page>`_
+    `eigen <https://eigen.tuxfamily.org/index.php?title=Main_Page>`_
 }
 linear algebra package.
 
@@ -134,17 +134,17 @@ Adding to a Path
 The instructions below may require you to add to a *path_name* .
 Use the command
 
-   ``echo $`` *path_name*
+    ``echo $`` *path_name*
 
 to see if your initial path is empty. If it is empty,
 use the command
 
-   ``export`` *path_name* = *directory*
+    ``export`` *path_name* = *directory*
 
 to add *directory* to the path.
 If it is non-empty, use
 
-   ``export`` *path_name* =" ``$`` *path_name* : *directory* "
+    ``export`` *path_name* =" ``$`` *path_name* : *directory* "
 
 to add *directory* to the path.
 
@@ -154,29 +154,29 @@ After ``sqlite3`` and ``gsl`` are installed
 the following commands should work:
 ::
 
-   pkg-config sqlite3 --modversion
-   pkg-config gsl     --modversion
+    pkg-config sqlite3 --modversion
+    pkg-config gsl     --modversion
 
 If one of them fails, a corresponding directory is missing
 from the ``PKG_CONFIG_PATH`` environment variable.
 If *prefix* is the prefix where ``gsl`` was installed,
 the command
 
-   ``find -L`` *prefix* ``-name gsl.pc 2> /dev/null``
+    ``find -L`` *prefix* ``-name gsl.pc 2> /dev/null``
 
 should find the directory where ``gsl.pc`` is located.
 After :ref:`install_unix@Special Requirements@cppad_mixed`
 is installed (see below),
 the following command should work:
 
-   ``pkg-config`` *pkg* ``--modversion``
+    ``pkg-config`` *pkg* ``--modversion``
 
 where *pkg* is any of the required packages.
 (There is one exception, the eigen package uses ``eigen3`` for
 *pkg* above.)
 If one of these commands fails,
 
-   ``find -L`` *dismod_at_prefix* ``-name`` *pkg* . ``pc 2> /dev/null``
+    ``find -L`` *dismod_at_prefix* ``-name`` *pkg* . ``pc 2> /dev/null``
 
 should find the directory where *pkg* . ``pc`` is located;
 see :ref:`install_settings.py@dismod_at_prefix` .
@@ -194,14 +194,14 @@ PATH
 After you install dismod_at (see below)
 you should be able to execute the command
 
-   ``dismod_at``
+    ``dismod_at``
 
 from any directory.
 If you get the error ``dismod_at: command not found`` ,
 you will need to add the binary install directory to you path.
 Use the following command to find it:
 
-   ``find -L`` *dismod_at_prefix* ``-name dismod_at 2> /dev/null``
+    ``find -L`` *dismod_at_prefix* ``-name dismod_at 2> /dev/null``
 
 see :ref:`install_settings.py@dismod_at_prefix` .
 
@@ -221,7 +221,7 @@ you will need to add the directory where the module is installed
 to your python path.
 Use the following command to find it:
 
-   ``find -L`` *dismod_at_prefix* ``-name site-packages 2> /dev/null``
+    ``find -L`` *dismod_at_prefix* ``-name site-packages 2> /dev/null``
 
 Special Requirements
 ********************
@@ -258,7 +258,7 @@ The `cppad_mixed <https://bradbell.github.io/cppad_mixed>`_
 C++ random effects modeling package.
 Starting in the ``dismod_at.git`` directory, the command
 
-   ``bin/get_cppad_mixed.sh``
+    ``bin/get_cppad_mixed.sh``
 
 can be used to install ipopt, and cppad_mixed.
 This script also serves as an example of how to install cppad_mixed.
@@ -284,7 +284,7 @@ in the ``dismod_at.git`` directory
 execute the following command:
 ::
 
-   bin/run_cmake.sh
+    bin/run_cmake.sh
 
 The script also serves as an example of how to install dismod_at.
 
@@ -294,9 +294,9 @@ The following command is option and will just build the
 executable program ``build/devel/dismod_at`` :
 ::
 
-   cd build
-   make
-   cd ..
+    cd build
+    make
+    cd ..
 
 Test
 ====
@@ -306,10 +306,10 @@ build the examples and tests,
 and run the examples, correctness tests, and speed tests:
 ::
 
-   cd build
-   make check
-   make speed
-   cd ..
+    cd build
+    make check
+    make speed
+    cd ..
 
 Some of the tests use different random number simulations each time
 they are run.
@@ -326,9 +326,9 @@ build the dismod_at library and executable if necessary,
 and install dismod_at:
 ::
 
-   cd build
-   make install install_python
-   cd ..
+    cd build
+    make install install_python
+    cd ..
 
 Example
 *******

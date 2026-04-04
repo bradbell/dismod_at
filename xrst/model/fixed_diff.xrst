@@ -31,7 +31,7 @@ The fixed effects age difference function is
 
 .. math::
 
-   A^\theta ( \theta ) =  \prod_{k=0}^{K-1} A^s ( s_k , \theta^k , \theta )
+    A^\theta ( \theta ) =  \prod_{k=0}^{K-1} A^s ( s_k , \theta^k , \theta )
 
 see definition of :ref:`smooth_dage@A^s` .
 
@@ -41,7 +41,7 @@ The fixed effects time difference function is
 
 .. math::
 
-   T^\theta ( \theta ) =  \prod_{k=0}^{K-1} T^s ( s_k , \theta^k , \theta )
+    T^\theta ( \theta ) =  \prod_{k=0}^{K-1} T^s ( s_k , \theta^k , \theta )
 
 see definition of :ref:`smooth_dtime@T^s` .
 

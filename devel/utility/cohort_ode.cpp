@@ -18,8 +18,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_PROTOTYPE
-   // END_PROTOTYPE
+    // BEGIN_PROTOTYPE
+    // END_PROTOTYPE
 }
 
 Purpose
@@ -83,7 +83,7 @@ The input value of its elements does not matter.
 Upon return, *c_out* [ *k* ] is the approximation solution
 for :math:`C(a, t)` at the corresponding age and time.
 {xrst_toc_hidden
-   example/devel/utility/cohort_ode_xam.cpp
+    example/devel/utility/cohort_ode_xam.cpp
 }
 Example
 *******
@@ -103,102 +103,102 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 // BEGIN_PROTOTYPE
 template <class Float>
 void cohort_ode(
-   const std::string&           rate_case ,
-   const CppAD::vector<double>& age       ,
-   const Float&                 pini      ,
-   const CppAD::vector<Float>&  iota      ,
-   const CppAD::vector<Float>&  rho       ,
-   const CppAD::vector<Float>&  chi       ,
-   const CppAD::vector<Float>&  omega     ,
-   CppAD::vector<Float>&        s_out     ,
-   CppAD::vector<Float>&        c_out     )
+    const std::string&           rate_case ,
+    const CppAD::vector<double>& age       ,
+    const Float&                 pini      ,
+    const CppAD::vector<Float>&  iota      ,
+    const CppAD::vector<Float>&  rho       ,
+    const CppAD::vector<Float>&  chi       ,
+    const CppAD::vector<Float>&  omega     ,
+    CppAD::vector<Float>&        s_out     ,
+    CppAD::vector<Float>&        c_out     )
 // END_PROTOTYPE
-{  size_t n_cohort = age.size();
-   assert( n_cohort == iota.size() );
-   assert( n_cohort == rho.size() );
-   assert( n_cohort == chi.size() );
-   assert( n_cohort == omega.size() );
-   assert( n_cohort == s_out.size() );
-   assert( n_cohort == c_out.size() );
-   assert( rate_case != "no_ode" );
-   /*
-   -------------------------------------------------------------------------
-   case_number
-   -------------------------------------------------------------------------
-   b[0] = - ( iota + omega )
-   b[1] = + rho
-   b[2] = + iota
-   b[3] = - ( rho + chi + omega );
-   */
-   size_t case_number = 0;
-   if( rate_case == "iota_zero_rho_zero" )
-   {  // b[1] = 0, b[2] = 0
-      case_number = 1;
-   }
-   else if( rate_case == "iota_zero_rho_pos" )
-   {  // b[1] != 0, b[2] = 0
-      case_number = 2;
-   }
-   else if( rate_case == "iota_pos_rho_zero" )
-   {  // b[1] = 0, b[2] != 0
-      case_number = 3;
-   }
-   else if( rate_case == "iota_pos_rho_pos" )
-   {  // b[1] != 0, b[2] != 0
-      case_number = 4;
-   }
-   assert( rate_case == "trapezoidal" || case_number != 0 );
-   // ----------------------------------------------------------------------
-   // initialize for first interval
-   c_out[0] = pini;
-   s_out[0] = Float(1) - pini;
-   //
-   CppAD::vector<Float> b(4), yi(2), yf(2);
-   Float tf;
-   for(size_t k = 1; k < n_cohort; ++k)
-   {  // integrate from age[k-1] to age[k]
-      //
-      // rates at the midpoint
-      Float iota_m   = (iota[k-1]   + iota[k])  / Float(2);
-      Float rho_m    = (rho[k-1]    + rho[k])   / Float(2);
-      Float chi_m    = (chi[k-1]    + chi[k])   / Float(2);
-      Float omega_m  = (omega[k-1]  + omega[k]) / Float(2);
-      //
-      // arguments to eigen_ode2
-      b[0]  = - (iota_m + omega_m);
-      b[1]  = + rho_m;
-      b[2]  = + iota_m;
-      b[3]  = - (rho_m + chi_m + omega_m);
-      yi[0] = s_out[k-1];
-      yi[1] = c_out[k-1];
-      tf    = age[k] - age[k-1];
-      //
-      // one step in solving ODE for this cohort
-      if( case_number == 0 )
-         yf = trap_ode2(b, yi, tf);
-      else
-         yf = eigen_ode2(case_number, b, yi, tf);
-      //
-      // copy result to output vector
-      s_out[k] = yf[0];
-      c_out[k] = yf[1];
-   }
-   return;
+{   size_t n_cohort = age.size();
+    assert( n_cohort == iota.size() );
+    assert( n_cohort == rho.size() );
+    assert( n_cohort == chi.size() );
+    assert( n_cohort == omega.size() );
+    assert( n_cohort == s_out.size() );
+    assert( n_cohort == c_out.size() );
+    assert( rate_case != "no_ode" );
+    /*
+    -------------------------------------------------------------------------
+    case_number
+    -------------------------------------------------------------------------
+    b[0] = - ( iota + omega )
+    b[1] = + rho
+    b[2] = + iota
+    b[3] = - ( rho + chi + omega );
+    */
+    size_t case_number = 0;
+    if( rate_case == "iota_zero_rho_zero" )
+    {   // b[1] = 0, b[2] = 0
+        case_number = 1;
+    }
+    else if( rate_case == "iota_zero_rho_pos" )
+    {   // b[1] != 0, b[2] = 0
+        case_number = 2;
+    }
+    else if( rate_case == "iota_pos_rho_zero" )
+    {   // b[1] = 0, b[2] != 0
+        case_number = 3;
+    }
+    else if( rate_case == "iota_pos_rho_pos" )
+    {   // b[1] != 0, b[2] != 0
+        case_number = 4;
+    }
+    assert( rate_case == "trapezoidal" || case_number != 0 );
+    // ----------------------------------------------------------------------
+    // initialize for first interval
+    c_out[0] = pini;
+    s_out[0] = Float(1) - pini;
+    //
+    CppAD::vector<Float> b(4), yi(2), yf(2);
+    Float tf;
+    for(size_t k = 1; k < n_cohort; ++k)
+    {   // integrate from age[k-1] to age[k]
+        //
+        // rates at the midpoint
+        Float iota_m   = (iota[k-1]   + iota[k])  / Float(2);
+        Float rho_m    = (rho[k-1]    + rho[k])   / Float(2);
+        Float chi_m    = (chi[k-1]    + chi[k])   / Float(2);
+        Float omega_m  = (omega[k-1]  + omega[k]) / Float(2);
+        //
+        // arguments to eigen_ode2
+        b[0]  = - (iota_m + omega_m);
+        b[1]  = + rho_m;
+        b[2]  = + iota_m;
+        b[3]  = - (rho_m + chi_m + omega_m);
+        yi[0] = s_out[k-1];
+        yi[1] = c_out[k-1];
+        tf    = age[k] - age[k-1];
+        //
+        // one step in solving ODE for this cohort
+        if( case_number == 0 )
+            yf = trap_ode2(b, yi, tf);
+        else
+            yf = eigen_ode2(case_number, b, yi, tf);
+        //
+        // copy result to output vector
+        s_out[k] = yf[0];
+        c_out[k] = yf[1];
+    }
+    return;
 }
 
 // instantiation macro
 # define DISMOT_AT_INSTANTIATE_COHORT_ODE(Float)     \
-   template void cohort_ode<Float>(                 \
-   const std::string&           rate_case       ,   \
-   const CppAD::vector<double>& age             ,   \
-   const Float&                 pini            ,   \
-   const CppAD::vector<Float>&  iota            ,   \
-   const CppAD::vector<Float>&  rho             ,   \
-   const CppAD::vector<Float>&  chi             ,   \
-   const CppAD::vector<Float>&  omega           ,   \
-   CppAD::vector<Float>&        s_out           ,   \
-   CppAD::vector<Float>&        c_out               \
-   );
+    template void cohort_ode<Float>(                 \
+    const std::string&           rate_case       ,   \
+    const CppAD::vector<double>& age             ,   \
+    const Float&                 pini            ,   \
+    const CppAD::vector<Float>&  iota            ,   \
+    const CppAD::vector<Float>&  rho             ,   \
+    const CppAD::vector<Float>&  chi             ,   \
+    const CppAD::vector<Float>&  omega           ,   \
+    CppAD::vector<Float>&        s_out           ,   \
+    CppAD::vector<Float>&        c_out               \
+    );
 
 // instantiations
 DISMOT_AT_INSTANTIATE_COHORT_ODE( double )

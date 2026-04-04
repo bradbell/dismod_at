@@ -127,11 +127,11 @@ specific_compiler = ''
 extra_cxx_flags  = '-std=c++17 -Wpedantic -Wall -Wshadow -Wconversion'
 extra_cxx_flags += ' -Wno-bitwise-instead-of-logical'
 if shutil.which('brew') != None :
-   cmd    = [ 'brew', '--prefix' ]
-   result = subprocess.run(cmd, capture_output=True, encoding='utf-8')
-   if result.returncode == 0:
-      brew_prefix      = result.stdout.strip()
-      extra_cxx_flags += f' -Wno-sign-conversion -I {brew_prefix}/include'
+    cmd    = [ 'brew', '--prefix' ]
+    result = subprocess.run(cmd, capture_output=True, encoding='utf-8')
+    if result.returncode == 0:
+        brew_prefix      = result.stdout.strip()
+        extra_cxx_flags += f' -Wno-sign-conversion -I {brew_prefix}/include'
 # {xrst_code}
 # {xrst_spell_on}
 # An alternative might be ``-Wall`` .
@@ -161,38 +161,38 @@ msg = 'install_settings.py: '
 #
 # build_type
 if build_type not in [ 'debug', 'release' ] :
-   msg += 'build_type is not debug or release'
-   assert False, msg
+    msg += 'build_type is not debug or release'
+    assert False, msg
 #
 # verbose_makefile
 if verbose_makefile not in [ 'yes', 'no' ] :
-   msg += 'verbose_makefile is not yes or no'
-   assert False, msg
+    msg += 'verbose_makefile is not yes or no'
+    assert False, msg
 #
 # install_settings
 def install_settings() :
-   settings = {
-      'verbose_makefile'             : verbose_makefile              ,
-      'build_type'                   : build_type                    ,
-      'dismod_at_prefix'             : dismod_at_prefix              ,
-      'python3_executalbe'           : python3_executalbe            ,
-      'specific_compiler'            : specific_compiler             ,
-      'extra_cxx_flags'              : extra_cxx_flags               ,
-      'cmake_libdir'                 : cmake_libdir                  ,
-      'system_specific_library_list' : system_specific_library_list  ,
-   }
-   return settings
+    settings = {
+        'verbose_makefile'             : verbose_makefile              ,
+        'build_type'                   : build_type                    ,
+        'dismod_at_prefix'             : dismod_at_prefix              ,
+        'python3_executalbe'           : python3_executalbe            ,
+        'specific_compiler'            : specific_compiler             ,
+        'extra_cxx_flags'              : extra_cxx_flags               ,
+        'cmake_libdir'                 : cmake_libdir                  ,
+        'system_specific_library_list' : system_specific_library_list  ,
+    }
+    return settings
 #
 # main
 if __name__ == '__main__' :
-   #
-   # output
-   output  = f"verbose_makefile='{verbose_makefile}'\n"
-   output += f"build_type='{build_type}'\n"
-   output += f"dismod_at_prefix='{dismod_at_prefix}'\n"
-   output += f"python3_executable='{python3_executable}'\n"
-   output += f"specific_compiler='{specific_compiler}'\n"
-   output += f"extra_cxx_flags='{extra_cxx_flags}'\n"
-   output += f"cmake_libdir='{cmake_libdir}'\n"
-   output += f"system_specific_library_list='{system_specific_library_list}'\n"
-   print(output)
+    #
+    # output
+    output  = f"verbose_makefile='{verbose_makefile}'\n"
+    output += f"build_type='{build_type}'\n"
+    output += f"dismod_at_prefix='{dismod_at_prefix}'\n"
+    output += f"python3_executable='{python3_executable}'\n"
+    output += f"specific_compiler='{specific_compiler}'\n"
+    output += f"extra_cxx_flags='{extra_cxx_flags}'\n"
+    output += f"cmake_libdir='{cmake_libdir}'\n"
+    output += f"system_specific_library_list='{system_specific_library_list}'\n"
+    print(output)

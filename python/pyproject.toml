@@ -19,17 +19,17 @@ authors           = [
   {name  = 'Bradley M. Bell', email = 'bradbell@seanet.com'},
 ]
 dependencies      = [
-   'matplotlib',
-   'numpy',
-   'scipy',
+    'matplotlib',
+    'numpy',
+    'scipy',
 ]
 classifiers       = [
-   'Development Status :: 4 - Beta',
-   'License            :: OSI Approved',
-   'Operating System   :: OS Independent',
-   'Environment        :: Console',
-   'Intended Audience  :: Public Health Modelers',
-   'Natural Language   :: English',
+    'Development Status :: 4 - Beta',
+    'License            :: OSI Approved',
+    'Operating System   :: OS Independent',
+    'Environment        :: Console',
+    'Intended Audience  :: Public Health Modelers',
+    'Natural Language   :: English',
 ]
 #
 # https://github.com/pypa/setuptools/issues/4903

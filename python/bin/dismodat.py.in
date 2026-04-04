@@ -27,8 +27,8 @@ import time
 # import dismod_at
 sandbox = 'python/dismod_at'
 if os.path.isdir(sandbox) :
-   print( f'using dismod_at sandbox {sandbox}' )
-   sys.path.insert(0,  os.path.join( os.getcwd(), 'python' ) )
+    print( f'using dismod_at sandbox {sandbox}' )
+    sys.path.insert(0,  os.path.join( os.getcwd(), 'python' ) )
 import dismod_at
 dismod_at.main()
 print( 'dismodat.py: OK' )

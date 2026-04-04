@@ -20,7 +20,7 @@ db
 **
 The argument *db* has prototype
 
-   ``sqlite3`` * *db*
+    ``sqlite3`` * *db*
 
 and is an open connection to the database.
 
@@ -28,11 +28,11 @@ weight_table
 ************
 The return value *weight_table* has prototype
 
-   ``CppAD::vector<weight_struct>`` *weight_table*
+    ``CppAD::vector<weight_struct>`` *weight_table*
 
 For each :ref:`weight_table@weight_id` ,
 
-   *weight_table* [ *weight_id* ]
+    *weight_table* [ *weight_id* ]
 
 is the information for the corresponding
 :ref:`weight_table@weight_id` .
@@ -42,23 +42,23 @@ weight_struct
 This is a structure with the following fields
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - Type
-     - Field
-     - Description
-   * - ``std::string``
-     - ``weight_name``
-     - The :ref:`weight_table@weight_name` for this weighting.
-   * - ``int``
-     - ``n_age``
-     - The :ref:`weight_table@n_age` for this weighting.
-   * - ``int``
-     - ``n_time``
-     - The :ref:`weight_table@n_time` for this weighting.
+    * - Type
+      - Field
+      - Description
+    * - ``std::string``
+      - ``weight_name``
+      - The :ref:`weight_table@weight_name` for this weighting.
+    * - ``int``
+      - ``n_age``
+      - The :ref:`weight_table@n_age` for this weighting.
+    * - ``int``
+      - ``n_time``
+      - The :ref:`weight_table@n_time` for this weighting.
 
 {xrst_comment
-   example/devel/table/get_weight_grid_xam.cpp is included by weight_grid.omh
+    example/devel/table/get_weight_grid_xam.cpp is included by weight_grid.omh
 %}
 Example
 *******
@@ -75,33 +75,33 @@ this function.
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 CppAD::vector<weight_struct> get_weight_table(sqlite3* db)
-{  using std::string;
+{   using std::string;
 
-   string table_name  = "weight";
-   size_t n_weight    = check_table_id(db, table_name);
+    string table_name  = "weight";
+    size_t n_weight    = check_table_id(db, table_name);
 
-   string column_name =  "weight_name";
-   CppAD::vector<string>  weight_name;
-   get_table_column(db, table_name, column_name, weight_name);
-   assert( weight_name.size() == n_weight );
+    string column_name =  "weight_name";
+    CppAD::vector<string>  weight_name;
+    get_table_column(db, table_name, column_name, weight_name);
+    assert( weight_name.size() == n_weight );
 
-   column_name        =  "n_age";
-   CppAD::vector<int>     n_age;
-   get_table_column(db, table_name, column_name, n_age);
-   assert( n_age.size() == n_weight );
+    column_name        =  "n_age";
+    CppAD::vector<int>     n_age;
+    get_table_column(db, table_name, column_name, n_age);
+    assert( n_age.size() == n_weight );
 
-   column_name        =  "n_time";
-   CppAD::vector<int>     n_time;
-   get_table_column(db, table_name, column_name, n_time);
-   assert( n_time.size() == n_weight );
+    column_name        =  "n_time";
+    CppAD::vector<int>     n_time;
+    get_table_column(db, table_name, column_name, n_time);
+    assert( n_time.size() == n_weight );
 
-   CppAD::vector<weight_struct> weight_table(n_weight);
-   for(size_t i = 0; i < n_weight; i++)
-   {  weight_table[i].weight_name   = weight_name[i];
-      weight_table[i].n_age         = n_age[i];
-      weight_table[i].n_time        = n_time[i];
-   }
-   return weight_table;
+    CppAD::vector<weight_struct> weight_table(n_weight);
+    for(size_t i = 0; i < n_weight; i++)
+    {   weight_table[i].weight_name   = weight_name[i];
+        weight_table[i].n_age         = n_age[i];
+        weight_table[i].n_time        = n_time[i];
+    }
+    return weight_table;
 }
 
 } // END DISMOD_AT_NAMESPACE

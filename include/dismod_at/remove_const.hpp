@@ -27,8 +27,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_PROTOTYPE
-   // END_PROTOTYPE
+    // BEGIN_PROTOTYPE
+    // END_PROTOTYPE
 }
 
 lower_bound
@@ -80,19 +80,19 @@ This has size *n_var* and is a mapping from the index in *var*
 to the corresponding index in *both* .
 It is monotone increasing; i.e., for *i_var* < *n_var* ``- 1`` ,
 
-   *both_index* [ *i_var* ] < *both_index* [ *i_var*  + 1]
+    *both_index* [ *i_var* ] < *both_index* [ *i_var*  + 1]
 
 var_index
 *********
 This has size *n_both* . If
 
-   *lower_bound* [ *i_both* ] == *upper_bound* [ *i_both* ]
+    *lower_bound* [ *i_both* ] == *upper_bound* [ *i_both* ]
 
 *var_index* [ *i_both* ] is equal to *n_both* . Otherwise
 it is a mapping from the index in *both*
 to the corresponding index in *var* ; i.e.,
 
-   *both_index* [ *var_index* [ *i_both* ] ] == *i_both*
+    *both_index* [ *var_index* [ *i_both* ] ] == *i_both*
 
 {xrst_end remove_const}
 */
@@ -112,8 +112,8 @@ CppAD::vector<size_t>       both2var_index_;
 public:
 // BEGIN_PROTOTYPE
 remove_const(
-   CppAD::vector<double> lower_bound ,
-   CppAD::vector<double> upper_bound
+    CppAD::vector<double> lower_bound ,
+    CppAD::vector<double> upper_bound
 );
 size_t n_both(void) const;
 size_t n_const(void) const;
@@ -133,27 +133,27 @@ restore(const CppAD::vector<Scalar>& var) const;
 // remove
 template <class Scalar> CppAD::vector<Scalar>
 remove_const::remove(const CppAD::vector<Scalar>& both) const
-{  assert( both.size() == n_both_ );
-   size_t m_var = n_var();
-   CppAD::vector<Scalar> var(m_var);
-   for(size_t var_index = 0; var_index < m_var; ++var_index)
-      var[var_index] = both[ var2both_index_[var_index] ];
-   return var;
+{   assert( both.size() == n_both_ );
+    size_t m_var = n_var();
+    CppAD::vector<Scalar> var(m_var);
+    for(size_t var_index = 0; var_index < m_var; ++var_index)
+        var[var_index] = both[ var2both_index_[var_index] ];
+    return var;
 }
 // restore
 template <class Scalar> CppAD::vector<Scalar>
 remove_const::restore(const CppAD::vector<Scalar>& var) const
-{  assert( var.size() == n_var() );
-   CppAD::vector<Scalar> both( n_both_ );
-   for(size_t both_index = 0; both_index < n_both_; ++both_index)
-   {  if( both2var_index_[both_index] < n_both_ )
-         both[both_index] = var[ both2var_index_[both_index] ];
-      else
-      {  both[both_index] = lower_bound_[both_index];
-         assert( lower_bound_[both_index] == upper_bound_[both_index] );
-      }
-   }
-   return both;
+{   assert( var.size() == n_var() );
+    CppAD::vector<Scalar> both( n_both_ );
+    for(size_t both_index = 0; both_index < n_both_; ++both_index)
+    {   if( both2var_index_[both_index] < n_both_ )
+            both[both_index] = var[ both2var_index_[both_index] ];
+        else
+        {   both[both_index] = lower_bound_[both_index];
+            assert( lower_bound_[both_index] == upper_bound_[both_index] );
+        }
+    }
+    return both;
 }
 
 } // END_DISMOD_AT_NAMESPACE

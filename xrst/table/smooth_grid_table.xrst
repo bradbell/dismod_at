@@ -137,7 +137,7 @@ if a *time_id* value appears,
 it appears once with each *age_id*
 that appears with this *smooth_id* .
 {xrst_toc_hidden
-   example/table/smooth_grid_table.py
+    example/table/smooth_grid_table.py
 }
 Example
 *******

@@ -16,41 +16,41 @@
 # {xrst_end rate_eff_cov_table.py}
 # BEGIN PYTHON
 def rate_eff_cov_table() :
-   import dismod_at
-   import copy
-   #
-   file_name      = 'example.db'
-   connection     = dismod_at.create_connection(
-      file_name, new = True, readonly = False
-   )
-   cursor         = connection.cursor()
-   #
-   # create the rate table
-   col_name = [
-      'covariate_id', 'node_id', 'split_value', 'weight_id'
-   ]
-   col_type = [
-      'integer',      'integer', 'real',        'integer'
-   ]
-   # sex is our splitting covariate and -0.5 corresponds to female.
-   row_list = [
-      [1,             0,          -0.5,         1],
-      [1,             1,          -0.5,         0],
-      [1,             2,          -0.5,         1],
-      [1,             3,          -0.5,         0],
-   ]
-   tbl_name = 'rate_eff_cov'
-   dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
-   # ----------------------------------------------------------------------
-   # include primary key in test
-   check_name = [ tbl_name + '_id' ] + col_name
-   check_list = list()
-   for i in range( len(row_list) ) :
-      check_list.append( [i] + row_list[i] )
-   #
-   row_list = dismod_at.get_row_list(connection, tbl_name, check_name)
-   assert row_list == check_list
-   # ----------------------------------------------------------------------
-   connection.close()
-   print('rate_eff_cov_table: OK')
+    import dismod_at
+    import copy
+    #
+    file_name      = 'example.db'
+    connection     = dismod_at.create_connection(
+        file_name, new = True, readonly = False
+    )
+    cursor         = connection.cursor()
+    #
+    # create the rate table
+    col_name = [
+        'covariate_id', 'node_id', 'split_value', 'weight_id'
+    ]
+    col_type = [
+        'integer',      'integer', 'real',        'integer'
+    ]
+    # sex is our splitting covariate and -0.5 corresponds to female.
+    row_list = [
+        [1,             0,          -0.5,         1],
+        [1,             1,          -0.5,         0],
+        [1,             2,          -0.5,         1],
+        [1,             3,          -0.5,         0],
+    ]
+    tbl_name = 'rate_eff_cov'
+    dismod_at.create_table(connection, tbl_name, col_name, col_type, row_list)
+    # ----------------------------------------------------------------------
+    # include primary key in test
+    check_name = [ tbl_name + '_id' ] + col_name
+    check_list = list()
+    for i in range( len(row_list) ) :
+        check_list.append( [i] + row_list[i] )
+    #
+    row_list = dismod_at.get_row_list(connection, tbl_name, check_name)
+    assert row_list == check_list
+    # ----------------------------------------------------------------------
+    connection.close()
+    print('rate_eff_cov_table: OK')
 # END PYTHON

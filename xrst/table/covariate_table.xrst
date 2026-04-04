@@ -60,7 +60,7 @@ are not included in the :ref:`predict_table-name` ;
 see the heading Covariates for the
 :ref:`predict table<predict_table@Avgint Subset@Covariates>` .
 {xrst_toc_hidden
-   example/table/covariate_table.py
+    example/table/covariate_table.py
 }
 Example
 *******

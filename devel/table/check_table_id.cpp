@@ -22,7 +22,7 @@ db
 **
 The argument *db* has prototype
 
-   ``sqlite3`` * *db*
+    ``sqlite3`` * *db*
 
 and is an open connection to the database.
 
@@ -30,7 +30,7 @@ table_name
 **********
 This argument has prototype
 
-   ``const std::string&`` *table_name*
+    ``const std::string&`` *table_name*
 
 It is the name of the table that we are checking.
 
@@ -38,7 +38,7 @@ n_row
 *****
 The return value has prototype
 
-   ``size_t`` *n_row*
+    ``size_t`` *n_row*
 
 It is the number of rows in the table.
 
@@ -60,20 +60,20 @@ see :ref:`database@Primary Key` .
 # include <dismod_at/check_table_id.hpp>
 
 namespace dismod_at {
-   size_t  check_table_id(sqlite3* db, const std::string& table_name )
-   {  using std::string;
-      string column_name = table_name + "_id";
-      CppAD::vector<int>   table_id;
-      get_table_column(db, table_name, column_name, table_id);
+    size_t  check_table_id(sqlite3* db, const std::string& table_name )
+    {   using std::string;
+        string column_name = table_name + "_id";
+        CppAD::vector<int>   table_id;
+        get_table_column(db, table_name, column_name, table_id);
 
-      size_t n_row = table_id.size();
-      for(size_t i = 0; i < n_row; i++)
-      {  if( table_id[i] != int(i) )
-         {  string msg = table_name + "_id must start at zero";
-            msg       += " and increment by one.";
-            error_exit(msg, table_name, i);
-         }
-      }
-      return n_row;
-   }
+        size_t n_row = table_id.size();
+        for(size_t i = 0; i < n_row; i++)
+        {   if( table_id[i] != int(i) )
+            {   string msg = table_name + "_id must start at zero";
+                msg       += " and increment by one.";
+                error_exit(msg, table_name, i);
+            }
+        }
+        return n_row;
+    }
 }

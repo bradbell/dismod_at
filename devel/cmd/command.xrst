@@ -12,7 +12,7 @@ Version
 *******
 The dismod_at command::
 
-   dismod_at --version
+    dismod_at --version
 
 writes the output ``dismod_at-``\ *version* to standard output
 where *version* is the version of dismod_at that you are using.
@@ -40,18 +40,18 @@ The second is an ``end`` message and signifies that the command completed.
 
 {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_2}
 {xrst_toc_hidden
-   devel/cmd/bnd_mulcov_command.cpp
-   devel/cmd/data_density_command.cpp
-   devel/cmd/depend_command.cpp
-   devel/cmd/fit_command.cpp
-   devel/cmd/hold_out_command.cpp
-   devel/cmd/init_command.cpp
-   devel/cmd/old2new_command.cpp
-   devel/cmd/predict_command.cpp
-   devel/cmd/sample_command.cpp
-   devel/cmd/set_command.cpp
-   devel/cmd/simulate_command.cpp
-   python/dismod_at/main.py
+    devel/cmd/bnd_mulcov_command.cpp
+    devel/cmd/data_density_command.cpp
+    devel/cmd/depend_command.cpp
+    devel/cmd/fit_command.cpp
+    devel/cmd/hold_out_command.cpp
+    devel/cmd/init_command.cpp
+    devel/cmd/old2new_command.cpp
+    devel/cmd/predict_command.cpp
+    devel/cmd/sample_command.cpp
+    devel/cmd/set_command.cpp
+    devel/cmd/simulate_command.cpp
+    python/dismod_at/main.py
 }
 {xrst_comment END_SORT_THIS_LINE_MINUS_2}
 
@@ -60,23 +60,23 @@ Commands
 {xrst_comment BEGIN_SORT_THIS_LINE_PLUS_5}
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   bnd_mulcov_command,:ref:`bnd_mulcov_command-title`
-   csv2db_command,:ref:`csv2db_command-title`
-   data_density_command,:ref:`data_density_command-title`
-   db2csv_command,:ref:`db2csv_command-title`
-   depend_command,:ref:`depend_command-title`
-   fit_command,:ref:`fit_command-title`
-   hold_out_command,:ref:`hold_out_command-title`
-   init_command,:ref:`init_command-title`
-   modify_command,:ref:`modify_command-title`
-   old2new_command,:ref:`old2new_command-title`
-   perturb_command,:ref:`perturb_command-title`
-   predict_command,:ref:`predict_command-title`
-   sample_command,:ref:`sample_command-title`
-   set_command,:ref:`set_command-title`
-   simulate_command,:ref:`simulate_command-title`
+    bnd_mulcov_command,:ref:`bnd_mulcov_command-title`
+    csv2db_command,:ref:`csv2db_command-title`
+    data_density_command,:ref:`data_density_command-title`
+    db2csv_command,:ref:`db2csv_command-title`
+    depend_command,:ref:`depend_command-title`
+    fit_command,:ref:`fit_command-title`
+    hold_out_command,:ref:`hold_out_command-title`
+    init_command,:ref:`init_command-title`
+    modify_command,:ref:`modify_command-title`
+    old2new_command,:ref:`old2new_command-title`
+    perturb_command,:ref:`perturb_command-title`
+    predict_command,:ref:`predict_command-title`
+    sample_command,:ref:`sample_command-title`
+    set_command,:ref:`set_command-title`
+    simulate_command,:ref:`simulate_command-title`
 
 {xrst_comment END_SORT_THIS_LINE_MINUS_2}
 
@@ -90,7 +90,7 @@ Dismod_at Developer Command Documentation}
 Contents
 ********
 {xrst_toc_table
-   devel/cmd/hold_out_command.cpp
+    devel/cmd/hold_out_command.cpp
 }
 
 {xrst_end devel_command}

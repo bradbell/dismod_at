@@ -30,7 +30,7 @@ This column has type ``integer`` and is the number of _time values
 in this smoothing grid. It must be greater than zero.
 
 {xrst_comment
-   example/table/weight_grid_table.py is included by weight_grid_table.omh
+    example/table/weight_grid_table.py is included by weight_grid_table.omh
 %}
 Example
 *******

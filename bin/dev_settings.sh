@@ -54,10 +54,10 @@ index_page_name='dismod_at'
 #     archive/$tag.tar.gz
 # In addition, all occurrences of stable-yyyy and release-yyyy are updated.
 version_file_list='
-   python/pyproject.toml
-   CITATION.cff
-   dismod_at.xrst
-   CMakeLists.txt
+    python/pyproject.toml
+    CITATION.cff
+    dismod_at.xrst
+    CMakeLists.txt
 '
 # All the occurrences of the version in the files above are checked to see
 # that they agree.
@@ -69,8 +69,8 @@ version_file_list='
 # The entries are separate by white space, so the under bar character is used
 # for spaces in the full name.
 contributor_list='
-   bradbell:Bradley_M._Bell
-   gculbr:Garland_Culbreth
+    bradbell:Bradley_M._Bell
+    gculbr:Garland_Culbreth
 '
 #
 # no_copyright_list
@@ -78,17 +78,17 @@ contributor_list='
 # If an entry below is a directory it specifies all the files in the directory.
 # BEGIN_SORT_THIS_LINE_PLUS_2
 no_copyright_list='
-   .gitignore
-   .readthedocs.yaml
-   2DO
-   CITATION.cff
-   agpl-3.0.txt
-   batch_edit.sed
-   bin/patch_dock_dismod_at.sh
-   python/README.md
-   python/pyproject.toml
-   readme.md
-   xrst.toml
+    .gitignore
+    .readthedocs.yaml
+    2DO
+    CITATION.cff
+    agpl-3.0.txt
+    batch_edit.sed
+    bin/patch_dock_dismod_at.sh
+    python/README.md
+    python/pyproject.toml
+    readme.md
+    xrst.toml
 '
 # END_SORT_THIS_LINE_MINUS_2
 #

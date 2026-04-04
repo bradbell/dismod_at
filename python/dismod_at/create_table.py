@@ -85,38 +85,38 @@
 # {xrst_end create_table}
 # ---------------------------------------------------------------------------
 def create_table(connection, tbl_name, col_name, col_type, row_list) :
-   import math
-   import dismod_at
-   import copy
-   primary_key = tbl_name + '_id'
-   name_column = tbl_name + '_name'
-   #
-   cmd       = 'create table ' + tbl_name + '('
-   n_col     = len( col_name )
-   cmd      += '\n\t' + tbl_name + '_id integer primary key'
-   for j in range(n_col) :
-      assert col_name != primary_key
-      cmd   += ',\n\t' + col_name[j] + ' ' + col_type[j]
-      if col_name[j] == name_column :
-         cmd += ' unique'
-   cmd += '\n\t);'
-   #
-   cursor  = connection.cursor()
-   cursor.execute(cmd)
-   #
-   quote_text = True
-   for i in range( len(row_list) ) :
-      row_cpy     = copy.copy(row_list[i])
-      for j in range( len(row_cpy) ) :
-         if col_type[j] == 'real' :
-            if row_cpy[j] != None :
-               if math.isnan( float(row_cpy[j]) ) :
-                  name = col_name[j]
-                  msg  = f'create_table: row_list[{i}][{j}] is nan and the '
-                  msg += f'column type is real (the column name is {name} ).'
-                  assert False, msg
-      row_cpy.insert(0, i)
-      value_tuple = dismod_at.unicode_tuple(row_cpy, quote_text)
-      cmd = 'insert into ' + tbl_name + ' values ' + value_tuple
-      cursor.execute(cmd)
-   connection.commit()
+    import math
+    import dismod_at
+    import copy
+    primary_key = tbl_name + '_id'
+    name_column = tbl_name + '_name'
+    #
+    cmd       = 'create table ' + tbl_name + '('
+    n_col     = len( col_name )
+    cmd      += '\n\t' + tbl_name + '_id integer primary key'
+    for j in range(n_col) :
+        assert col_name != primary_key
+        cmd   += ',\n\t' + col_name[j] + ' ' + col_type[j]
+        if col_name[j] == name_column :
+            cmd += ' unique'
+    cmd += '\n\t);'
+    #
+    cursor  = connection.cursor()
+    cursor.execute(cmd)
+    #
+    quote_text = True
+    for i in range( len(row_list) ) :
+        row_cpy     = copy.copy(row_list[i])
+        for j in range( len(row_cpy) ) :
+            if col_type[j] == 'real' :
+                if row_cpy[j] != None :
+                    if math.isnan( float(row_cpy[j]) ) :
+                        name = col_name[j]
+                        msg  = f'create_table: row_list[{i}][{j}] is nan and the '
+                        msg += f'column type is real (the column name is {name} ).'
+                        assert False, msg
+        row_cpy.insert(0, i)
+        value_tuple = dismod_at.unicode_tuple(row_cpy, quote_text)
+        cmd = 'insert into ' + tbl_name + ' values ' + value_tuple
+        cursor.execute(cmd)
+    connection.commit()

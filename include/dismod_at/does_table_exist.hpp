@@ -9,7 +9,7 @@
 # include <string>
 
 namespace dismod_at {
-   bool does_table_exist(sqlite3* db,  const std::string table_name);
+    bool does_table_exist(sqlite3* db,  const std::string table_name);
 }
 
 # endif

@@ -5,18 +5,18 @@ $Id:$
 # ----------------------------------------------------------------------------
 {xrst_begin 2025}
 {xrst_spell
-   isnan
-   macos
-   mm
-   dd
-   xam
-   subprocess
-   stderr
-   suitesparse
-   txt
-   cmake
-   pc
-   startswith
+    isnan
+    macos
+    mm
+    dd
+    xam
+    subprocess
+    stderr
+    suitesparse
+    txt
+    cmake
+    pc
+    startswith
 }
 
 Release Notes for 2025
@@ -110,15 +110,15 @@ It used to be that just ``end`` followed by the command name was included
 in the message.
 For example, in the :ref:`user_re_scale.py-name` example, the code
 {xrst_code py}
-   assert log_table[fit_log_id + 1]['message'] == 'end fit'
+    assert log_table[fit_log_id + 1]['message'] == 'end fit'
 {xrst_code}
 was changed to
 {xrst_code py}
-   assert log_table[fit_log_id + 1]['message'] == 'end fit both'
+    assert log_table[fit_log_id + 1]['message'] == 'end fit both'
 {xrst_code}
 Note that it could have also been changed to
 {xrst_code py}
-   assert log_table[fit_log_id + 1]['message'].startswith( 'end fit' )
+    assert log_table[fit_log_id + 1]['message'].startswith( 'end fit' )
 {xrst_code}
 
 07-11
@@ -151,7 +151,7 @@ This has been fixed by using the median of the data greater than zero.
 #. Fix bug in commit on 06-05 by changing CHOMOLD -> CHOLMOD in CMakeLists.txt.
    This caused the following error on some systems::
 
-      -- Cannot find CHOMOLD.pc file
+        -- Cannot find CHOMOLD.pc file
 
 #. Advance to cppad_mixed-2025.6.6.
 
@@ -244,7 +244,7 @@ This caused a failure during testing on windows systems and has been fixed.
 2. Fix some no-standard constructs in logical expressions; e.g.,
    change ``not std::isnan``  to ``! std::isnan`` .
 3. Fix 'possibly dangling reference to a temporary' in `subset_data.cpp`
-      and `child_data_in_fit.cpp` .
+       and `child_data_in_fit.cpp` .
 
 02-07
 =====

@@ -10,7 +10,7 @@ Model for Data Given Model Variables
 Contents
 ********
 {xrst_toc_table
-   devel/model/data_model.cpp
+    devel/model/data_model.cpp
 }
 
 {xrst_end devel_data_model}

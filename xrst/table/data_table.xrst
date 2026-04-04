@@ -229,8 +229,8 @@ The covariate value ``null`` is interpreted as the
 the corresponding covariate.
 
 {xrst_toc_hidden
-   xrst/table/binomial.xrst
-   example/table/data_table.py
+    xrst/table/binomial.xrst
+    example/table/data_table.py
 }
 
 Example

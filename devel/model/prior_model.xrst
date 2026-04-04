@@ -10,7 +10,7 @@ Prior Model for Model Variables
 Contents
 ********
 {xrst_toc_table
-   devel/model/prior_model.cpp
+    devel/model/prior_model.cpp
 }
 
 {xrst_end prior_model}

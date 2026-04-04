@@ -95,8 +95,8 @@ can also be used.
 Contents
 ********
 {xrst_toc_table
-   xrst/table/input.xrst
-   xrst/table/data_flow.xrst
+    xrst/table/input.xrst
+    xrst/table/data_flow.xrst
 }
 
 {xrst_end database}

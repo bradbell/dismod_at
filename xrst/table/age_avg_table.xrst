@@ -17,14 +17,14 @@ We use :ref:`option_table@Age Average Grid@ode_step_size`
 to denote its value in the option table.
 Let *N*  >= 1 be the minimum integer such that
 
-   *s* = ( *age_max* ``-`` *age_min* ) / *N* <= *ode_step_size*
+    *s* = ( *age_max* ``-`` *age_min* ) / *N* <= *ode_step_size*
 
 Define the set of age points
 :math:`a_i = i * s` for :math:`i = 0, \ldots , N`, and define the set
 
 .. math::
 
-   S = \{ a_0, a_1 , \ldots , a_N \}
+    S = \{ a_0, a_1 , \ldots , a_N \}
 
 Note that :math:`a_0` is *age_min*
 and :math:`a_N` is *age_max* .

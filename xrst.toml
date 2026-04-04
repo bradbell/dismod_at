@@ -20,64 +20,64 @@ overline  = [ false, false, false, false, false,  ]
 rst_epilog = ''
 rst_prolog = '''
 .. |space| unicode:: 0xA0
-.. |tab| replace:: |space| |space| |space|
+.. |tab| replace:: |space| |space| |space| |space|
 '''
 latex_macro = [
-   '\newcommand{\B}[1]{ {\bf #1} }' ,
-   '\newcommand{\R}[1]{ {\rm #1} }' ,
-   '\newcommand{\W}[1]{ \; #1 \; }'
+    '\newcommand{\B}[1]{ {\bf #1} }' ,
+    '\newcommand{\R}[1]{ {\rm #1} }' ,
+    '\newcommand{\W}[1]{ \; #1 \; }'
 ]
 
 # BEGIN_SORT_THIS_LINE_PLUS_3
 [project_dictionary]
 data = [ '''
-   avg
-   avgint
-   bilinear
-   bnd
-   const
-   cov
-   cpp
-   cppad
-   csv
-   cv
-   dage
-   db
-   dict
-   dismod
-   dismodat
-   dtime
-   eqnarray
-   gaussian
-   hes
-   init
-   int
-   ipopt
-   laplace
-   max
-   meas
-   min
-   mulcov
-   mulstd
-   multiplier
-   nan
-   nowrap
-   nslist
-   obj
-   pini
-   py
-   rho
-   sh
-   sim
-   sincidence
-   smoothings
-   sqlite
-   std
-   str
-   struct
-   subgroup
-   th
-   var
-   vec
+    avg
+    avgint
+    bilinear
+    bnd
+    const
+    cov
+    cpp
+    cppad
+    csv
+    cv
+    dage
+    db
+    dict
+    dismod
+    dismodat
+    dtime
+    eqnarray
+    gaussian
+    hes
+    init
+    int
+    ipopt
+    laplace
+    max
+    meas
+    min
+    mulcov
+    mulstd
+    multiplier
+    nan
+    nowrap
+    nslist
+    obj
+    pini
+    py
+    rho
+    sh
+    sim
+    sincidence
+    smoothings
+    sqlite
+    std
+    str
+    struct
+    subgroup
+    th
+    var
+    vec
 ''' ]
 # END_SORT_THIS_LINE_MINUS_2

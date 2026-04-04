@@ -40,8 +40,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_DATA_MODEL_PROTOTYPE
-   // END_DATA_MODEL_PROTOTYPE
+    // BEGIN_DATA_MODEL_PROTOTYPE
+    // END_DATA_MODEL_PROTOTYPE
 }
 
 data_object
@@ -125,7 +125,7 @@ w_info_vec
 **********
 For each :ref:`weight_table@weight_id` ,
 
-   *w_info_vec* [ *weight_id*  ]
+    *w_info_vec* [ *weight_id*  ]
 
 is the corresponding :ref:`weight_info-name` information.
 In addition, the constant weight is included at the end of the vector; i.e.,
@@ -135,7 +135,7 @@ s_info_vec
 **********
 For each :ref:`smooth_table@smooth_id` ,
 
-   *s_info_vec* [ *smooth_id*  ]
+    *s_info_vec* [ *smooth_id*  ]
 
 is the corresponding :ref:`smooth_info-name` information.
 For each *s_info_vec* [ *smooth_id* ] object,
@@ -237,21 +237,21 @@ arguments to the ``data_model`` constructor and are passed through
 # include <dismod_at/error_exit.hpp>
 
 namespace {
-   template <class Float>
-   void print_forward_if_positive(
-      const char* name    ,
-      const Float& value  )
-   {  std::string label = "data_model::like_one: ";
-      label      += name;
-      label      += " = ";
-      double tiny = std::numeric_limits<double>::min();
-      CppAD::PrintFor(tiny - value, label.c_str(), value, "\n");
-   }
-   void print_forward_if_positive(
-      const char* name    ,
-      const double& value )
-   {  assert( value <= 0.0 );
-   }
+    template <class Float>
+    void print_forward_if_positive(
+        const char* name    ,
+        const Float& value  )
+    {   std::string label = "data_model::like_one: ";
+        label      += name;
+        label      += " = ";
+        double tiny = std::numeric_limits<double>::min();
+        CppAD::PrintFor(tiny - value, label.c_str(), value, "\n");
+    }
+    void print_forward_if_positive(
+        const char* name    ,
+        const double& value )
+    {   assert( value <= 0.0 );
+    }
 }
 
 namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
@@ -263,27 +263,27 @@ data_model::~data_model(void)
 // BEGIN_DATA_MODEL_PROTOTYPE
 template <class SubsetStruct>
 data_model::data_model(
-   const cov2weight_map&                    cov2weight_obj     ,
-   size_t                                   n_covariate        ,
-   bool                                     fit_simulated_data ,
-   const std::string&                       meas_noise_effect  ,
-   const std::string&                       rate_case          ,
-   double                                   bound_random       ,
-   double                                   ode_step_size      ,
-   const CppAD::vector<double>&             age_avg_grid       ,
-   const CppAD::vector<double>&             age_table          ,
-   const CppAD::vector<double>&             time_table         ,
-   const CppAD::vector<covariate_struct>&   covariate_table    ,
-   const CppAD::vector<subgroup_struct>&    subgroup_table     ,
-   const CppAD::vector<integrand_struct>&   integrand_table    ,
-   const CppAD::vector<mulcov_struct>&      mulcov_table       ,
-   const CppAD::vector<prior_struct>&       prior_table        ,
-   const CppAD::vector<SubsetStruct>&       subset_object      ,
-   const CppAD::vector<double>&             subset_cov_value   ,
-   const CppAD::vector<weight_info>&        w_info_vec         ,
-   const CppAD::vector<smooth_info>&        s_info_vec         ,
-   const pack_info&                         pack_object        ,
-   const child_info&                        child_info4data    )
+    const cov2weight_map&                    cov2weight_obj     ,
+    size_t                                   n_covariate        ,
+    bool                                     fit_simulated_data ,
+    const std::string&                       meas_noise_effect  ,
+    const std::string&                       rate_case          ,
+    double                                   bound_random       ,
+    double                                   ode_step_size      ,
+    const CppAD::vector<double>&             age_avg_grid       ,
+    const CppAD::vector<double>&             age_table          ,
+    const CppAD::vector<double>&             time_table         ,
+    const CppAD::vector<covariate_struct>&   covariate_table    ,
+    const CppAD::vector<subgroup_struct>&    subgroup_table     ,
+    const CppAD::vector<integrand_struct>&   integrand_table    ,
+    const CppAD::vector<mulcov_struct>&      mulcov_table       ,
+    const CppAD::vector<prior_struct>&       prior_table        ,
+    const CppAD::vector<SubsetStruct>&       subset_object      ,
+    const CppAD::vector<double>&             subset_cov_value   ,
+    const CppAD::vector<weight_info>&        w_info_vec         ,
+    const CppAD::vector<smooth_info>&        s_info_vec         ,
+    const pack_info&                         pack_object        ,
+    const child_info&                        child_info4data    )
 // END_DATA_MODEL_PROTOTYPE
 :
 // const
@@ -295,193 +295,193 @@ subset_cov_value_   (subset_cov_value)               ,
 pack_object_size_   (pack_object.size())             ,
 # endif
 avgint_obj_(
-   cov2weight_obj,
-   ode_step_size,
-   rate_case,
-   age_avg_grid,
-   age_table,
-   time_table,
-   covariate_table,
-   subgroup_table,
-   integrand_table,
-   mulcov_table,
-   w_info_vec,
-   s_info_vec,
-   pack_object
+    cov2weight_obj,
+    ode_step_size,
+    rate_case,
+    age_avg_grid,
+    age_table,
+    time_table,
+    covariate_table,
+    subgroup_table,
+    integrand_table,
+    mulcov_table,
+    w_info_vec,
+    s_info_vec,
+    pack_object
 ),
 avg_noise_obj_(
-   ode_step_size,
-   age_avg_grid,
-   age_table,
-   time_table,
-   subgroup_table,
-   w_info_vec,
-   s_info_vec,
-   pack_object
+    ode_step_size,
+    age_avg_grid,
+    age_table,
+    time_table,
+    subgroup_table,
+    w_info_vec,
+    s_info_vec,
+    pack_object
 )
-{  assert( bound_random >= 0.0 );
-   assert( n_child_ == pack_object.child_size() );
-   // ------------------------------------------------------------------------
-   //
-   using std::string;
-   //
-   // meas_noise_effect_
-   // add_std
-   if( meas_noise_effect == "add_std_scale_all" )
-      meas_noise_effect_ = add_std_scale_all_enum;
-   else if( meas_noise_effect == "add_std_scale_none" )
-      meas_noise_effect_ = add_std_scale_none_enum;
-   // add_var
-   else if( meas_noise_effect == "add_var_scale_all" )
-      meas_noise_effect_ = add_var_scale_all_enum;
-   else if( meas_noise_effect == "add_var_scale_none" )
-      meas_noise_effect_ = add_var_scale_none_enum;
-   else
-      assert(false);
-   //
-   // minimum_meas_cv_
-   minimum_meas_cv_.resize( integrand_table.size() );
-   for(size_t i = 0; i < integrand_table.size(); ++i)
-      minimum_meas_cv_[i] = integrand_table[i].minimum_meas_cv;
-   //
-   // replace_like_called_: initialize
-   replace_like_called_ = false;
-   //
-   // -----------------------------------------------------------------------
-   // subset_data_obj_
-   //
-   // only set values that are in subset_data_struct and avgint_subset_struct
-   size_t n_subset = subset_object.size();
-   subset_data_obj_.resize(n_subset);
-   assert( subset_cov_value.size() == n_covariate * n_subset );
-   for(size_t i = 0; i < n_subset; i++)
-   {  subset_data_obj_[i].original_id  = subset_object[i].original_id;
-      subset_data_obj_[i].integrand_id = subset_object[i].integrand_id;
-      subset_data_obj_[i].node_id      = subset_object[i].node_id;
-      subset_data_obj_[i].subgroup_id  = subset_object[i].subgroup_id;
-      subset_data_obj_[i].weight_id    = subset_object[i].weight_id;
-      subset_data_obj_[i].age_lower    = subset_object[i].age_lower;
-      subset_data_obj_[i].age_upper    = subset_object[i].age_upper;
-      subset_data_obj_[i].time_lower   = subset_object[i].time_lower;
-      subset_data_obj_[i].time_upper   = subset_object[i].time_upper;
-   }
-   // -----------------------------------------------------------------------
-   // data_info_
-   //
-   // has same size as subset_data_obj
-   data_info_.resize( n_subset );
-   //
-   for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-   {  // information for this data point
-      size_t original_id = subset_object[subset_id].original_id;
+{   assert( bound_random >= 0.0 );
+    assert( n_child_ == pack_object.child_size() );
+    // ------------------------------------------------------------------------
+    //
+    using std::string;
+    //
+    // meas_noise_effect_
+    // add_std
+    if( meas_noise_effect == "add_std_scale_all" )
+        meas_noise_effect_ = add_std_scale_all_enum;
+    else if( meas_noise_effect == "add_std_scale_none" )
+        meas_noise_effect_ = add_std_scale_none_enum;
+    // add_var
+    else if( meas_noise_effect == "add_var_scale_all" )
+        meas_noise_effect_ = add_var_scale_all_enum;
+    else if( meas_noise_effect == "add_var_scale_none" )
+        meas_noise_effect_ = add_var_scale_none_enum;
+    else
+        assert(false);
+    //
+    // minimum_meas_cv_
+    minimum_meas_cv_.resize( integrand_table.size() );
+    for(size_t i = 0; i < integrand_table.size(); ++i)
+        minimum_meas_cv_[i] = integrand_table[i].minimum_meas_cv;
+    //
+    // replace_like_called_: initialize
+    replace_like_called_ = false;
+    //
+    // -----------------------------------------------------------------------
+    // subset_data_obj_
+    //
+    // only set values that are in subset_data_struct and avgint_subset_struct
+    size_t n_subset = subset_object.size();
+    subset_data_obj_.resize(n_subset);
+    assert( subset_cov_value.size() == n_covariate * n_subset );
+    for(size_t i = 0; i < n_subset; i++)
+    {   subset_data_obj_[i].original_id  = subset_object[i].original_id;
+        subset_data_obj_[i].integrand_id = subset_object[i].integrand_id;
+        subset_data_obj_[i].node_id      = subset_object[i].node_id;
+        subset_data_obj_[i].subgroup_id  = subset_object[i].subgroup_id;
+        subset_data_obj_[i].weight_id    = subset_object[i].weight_id;
+        subset_data_obj_[i].age_lower    = subset_object[i].age_lower;
+        subset_data_obj_[i].age_upper    = subset_object[i].age_upper;
+        subset_data_obj_[i].time_lower   = subset_object[i].time_lower;
+        subset_data_obj_[i].time_upper   = subset_object[i].time_upper;
+    }
+    // -----------------------------------------------------------------------
+    // data_info_
+    //
+    // has same size as subset_data_obj
+    data_info_.resize( n_subset );
+    //
+    for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
+    {   // information for this data point
+        size_t original_id = subset_object[subset_id].original_id;
 
-      // integrand as an enum instead of integrand_id
-      size_t  integrand_id     = subset_object[subset_id].integrand_id;
-      integrand_enum integrand = integrand_table[integrand_id].integrand;
+        // integrand as an enum instead of integrand_id
+        size_t  integrand_id     = subset_object[subset_id].integrand_id;
+        integrand_enum integrand = integrand_table[integrand_id].integrand;
 
-      // child of parent node that this data is associated with
-      size_t  child            = child_info4data.table_id2child(original_id);
+        // child of parent node that this data is associated with
+        size_t  child            = child_info4data.table_id2child(original_id);
 
-      // group_id for this data point
-      size_t subgroup_id       = subset_object[subset_id].subgroup_id;
-      size_t group_id          = subgroup_table[subgroup_id].group_id;
+        // group_id for this data point
+        size_t subgroup_id       = subset_object[subset_id].subgroup_id;
+        size_t group_id          = subgroup_table[subgroup_id].group_id;
 
-      // set child information for this data point
-      data_info_[subset_id].child     = child;
+        // set child information for this data point
+        data_info_[subset_id].child     = child;
 
-      // Does this data point depend on the random effects
-      // that do not have equal bounds
-      bool depend_on_ran_var = false;
-      if( bound_random > 0.0 )
-      {  CppAD::vector<size_t> rate_id_vec;
-         switch( integrand )
-         {  case Sincidence_enum:
-            rate_id_vec.push_back( size_t(iota_enum) );
-            break;
+        // Does this data point depend on the random effects
+        // that do not have equal bounds
+        bool depend_on_ran_var = false;
+        if( bound_random > 0.0 )
+        {   CppAD::vector<size_t> rate_id_vec;
+            switch( integrand )
+            {   case Sincidence_enum:
+                rate_id_vec.push_back( size_t(iota_enum) );
+                break;
 
-            case remission_enum:
-            rate_id_vec.push_back( size_t(rho_enum) );
-            break;
+                case remission_enum:
+                rate_id_vec.push_back( size_t(rho_enum) );
+                break;
 
-            case mtexcess_enum:
-            rate_id_vec.push_back( size_t(chi_enum) );
-            break;
+                case mtexcess_enum:
+                rate_id_vec.push_back( size_t(chi_enum) );
+                break;
 
-            case mtother_enum:
-            rate_id_vec.push_back( size_t(omega_enum) );
-            break;
+                case mtother_enum:
+                rate_id_vec.push_back( size_t(omega_enum) );
+                break;
 
-            case mtwith_enum:
-            case relrisk_enum:
-            rate_id_vec.push_back( size_t(chi_enum) );
-            rate_id_vec.push_back( size_t(omega_enum) );
-            break;
+                case mtwith_enum:
+                case relrisk_enum:
+                rate_id_vec.push_back( size_t(chi_enum) );
+                rate_id_vec.push_back( size_t(omega_enum) );
+                break;
 
-            default:
-            for(size_t ell = 0; ell < number_rate_enum; ell++)
-               rate_id_vec.push_back( ell );
-            break;
-         }
-         // change depend_on_ran_var for rate effects that are not constant
-         if( child < n_child_ )
-         for(size_t ell = 0; ell < rate_id_vec.size(); ell++)
-         {  size_t rate_id = rate_id_vec[ell];
-            // check if any random effects for this rate are not constant
-            size_t smooth_id =
-               pack_object.node_rate_value_info(rate_id, child).smooth_id;
-            if( smooth_id != DISMOD_AT_NULL_SIZE_T )
-            {  const smooth_info& s_info = s_info_vec[smooth_id];
-               depend_on_ran_var |= ! s_info.all_const_value();
+                default:
+                for(size_t ell = 0; ell < number_rate_enum; ell++)
+                    rate_id_vec.push_back( ell );
+                break;
             }
-         }
-         // change depend_on_ran_var for subgroup_rate_value covariates
-         for(size_t ell = 0; ell < rate_id_vec.size(); ell++)
-         {  size_t rate_id = rate_id_vec[ell];
-            size_t n_cov = pack_object.subgroup_rate_value_n_cov(rate_id);
+            // change depend_on_ran_var for rate effects that are not constant
+            if( child < n_child_ )
+            for(size_t ell = 0; ell < rate_id_vec.size(); ell++)
+            {   size_t rate_id = rate_id_vec[ell];
+                // check if any random effects for this rate are not constant
+                size_t smooth_id =
+                    pack_object.node_rate_value_info(rate_id, child).smooth_id;
+                if( smooth_id != DISMOD_AT_NULL_SIZE_T )
+                {   const smooth_info& s_info = s_info_vec[smooth_id];
+                    depend_on_ran_var |= ! s_info.all_const_value();
+                }
+            }
+            // change depend_on_ran_var for subgroup_rate_value covariates
+            for(size_t ell = 0; ell < rate_id_vec.size(); ell++)
+            {   size_t rate_id = rate_id_vec[ell];
+                size_t n_cov = pack_object.subgroup_rate_value_n_cov(rate_id);
+                for(size_t j = 0; j < n_cov; ++j)
+                {   const pack_info::subvec_info info_0 =
+                        pack_object.subgroup_rate_value_info(rate_id, j, 0);
+                    size_t n_sub =
+                        pack_object.subgroup_rate_value_n_sub(rate_id, j);
+                    if( info_0.group_id == group_id )
+                    for(size_t k = 0; k < n_sub; ++k)
+                    {   const pack_info::subvec_info info =
+                        pack_object.subgroup_rate_value_info(rate_id, j, k);
+                        //
+                        assert( info.group_id  == info_0.group_id );
+                        assert( info.smooth_id == info_0.smooth_id );
+                        //
+                        size_t smooth_id = info.smooth_id;
+                        assert( smooth_id != DISMOD_AT_NULL_SIZE_T );
+                        const smooth_info& s_info = s_info_vec[smooth_id];
+                        depend_on_ran_var |= ! s_info.all_const_value();
+                    }
+                }
+            }
+            // change depend_on_ran_var for subgroup_meas_value covariates
+            size_t n_cov = pack_object.subgroup_meas_value_n_cov(integrand_id);
             for(size_t j = 0; j < n_cov; ++j)
-            {  const pack_info::subvec_info info_0 =
-                  pack_object.subgroup_rate_value_info(rate_id, j, 0);
-               size_t n_sub =
-                  pack_object.subgroup_rate_value_n_sub(rate_id, j);
-               if( info_0.group_id == group_id )
-               for(size_t k = 0; k < n_sub; ++k)
-               {  const pack_info::subvec_info info =
-                  pack_object.subgroup_rate_value_info(rate_id, j, k);
-                  //
-                  assert( info.group_id  == info_0.group_id );
-                  assert( info.smooth_id == info_0.smooth_id );
-                  //
-                  size_t smooth_id = info.smooth_id;
-                  assert( smooth_id != DISMOD_AT_NULL_SIZE_T );
-                  const smooth_info& s_info = s_info_vec[smooth_id];
-                  depend_on_ran_var |= ! s_info.all_const_value();
-               }
+            {   const pack_info::subvec_info info_0 =
+                    pack_object.subgroup_meas_value_info(integrand_id, j, 0);
+                size_t n_sub =
+                    pack_object.subgroup_meas_value_n_sub(integrand_id, j);
+                if( info_0.group_id == group_id )
+                for(size_t k = 0; k < n_sub; ++k)
+                {   const pack_info::subvec_info info =
+                    pack_object.subgroup_meas_value_info(integrand_id, j, k);
+                    //
+                    assert( info.group_id  == info_0.group_id );
+                    assert( info.smooth_id == info_0.smooth_id );
+                    //
+                    size_t smooth_id = info.smooth_id;
+                    assert( smooth_id != DISMOD_AT_NULL_SIZE_T );
+                    const smooth_info& s_info = s_info_vec[smooth_id];
+                    depend_on_ran_var |= ! s_info.all_const_value();
+                }
             }
-         }
-         // change depend_on_ran_var for subgroup_meas_value covariates
-         size_t n_cov = pack_object.subgroup_meas_value_n_cov(integrand_id);
-         for(size_t j = 0; j < n_cov; ++j)
-         {  const pack_info::subvec_info info_0 =
-               pack_object.subgroup_meas_value_info(integrand_id, j, 0);
-            size_t n_sub =
-               pack_object.subgroup_meas_value_n_sub(integrand_id, j);
-            if( info_0.group_id == group_id )
-            for(size_t k = 0; k < n_sub; ++k)
-            {  const pack_info::subvec_info info =
-               pack_object.subgroup_meas_value_info(integrand_id, j, k);
-               //
-               assert( info.group_id  == info_0.group_id );
-               assert( info.smooth_id == info_0.smooth_id );
-               //
-               size_t smooth_id = info.smooth_id;
-               assert( smooth_id != DISMOD_AT_NULL_SIZE_T );
-               const smooth_info& s_info = s_info_vec[smooth_id];
-               depend_on_ran_var |= ! s_info.all_const_value();
-            }
-         }
-      }
-      data_info_[subset_id].depend_on_ran_var = depend_on_ran_var;
-   }
+        }
+        data_info_[subset_id].depend_on_ran_var = depend_on_ran_var;
+    }
 }
 /*
 {xrst_begin data_model_replace_like dev}
@@ -514,7 +514,7 @@ data_object
 ***********
 This object has prototype
 
-   ``data_model`` *data_object*
+    ``data_model`` *data_object*
 
 see :ref:`data_object constructor<data_model_ctor@data_object>` .
 
@@ -528,7 +528,7 @@ n_subset
 ========
 We use the notation
 
-   *n_subset* = *subset_object* . ``size`` ()
+    *n_subset* = *subset_object* . ``size`` ()
 
 subset_id
 =========
@@ -540,7 +540,7 @@ subset_data_obj
 ***************
 This argument has prototype
 
-   ``const CppAD::vector<subset_data_struct>&`` *subset_data_obj*
+    ``const CppAD::vector<subset_data_struct>&`` *subset_data_obj*
 
 and has size *n_subset* .
 For each *subset_id* ,
@@ -559,47 +559,47 @@ program exits.
 {xrst_end data_model_replace_like}
 */
 void data_model::replace_like(
-      const CppAD::vector<subset_data_struct>&  subset_data_obj )
+        const CppAD::vector<subset_data_struct>&  subset_data_obj )
 {
-   // n_subset
-   size_t n_subset = subset_data_obj_.size();
-   assert( subset_data_obj.size() == n_subset );
-   //
-   // replace density_id, hold_out, meas_value, meas_std, eta, nu, sample_size,
-   // data_sim_value
-   for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-   {  subset_data_obj_[subset_id].density =
-         subset_data_obj[subset_id].density;
-      subset_data_obj_[subset_id].hold_out =
-         subset_data_obj[subset_id].hold_out;
-      subset_data_obj_[subset_id].meas_value =
-         subset_data_obj[subset_id].meas_value;
-      subset_data_obj_[subset_id].meas_std =
-         subset_data_obj[subset_id].meas_std;
-      subset_data_obj_[subset_id].eta =
-         subset_data_obj[subset_id].eta;
-      subset_data_obj_[subset_id].nu =
-         subset_data_obj[subset_id].nu;
-      subset_data_obj_[subset_id].sample_size =
-         subset_data_obj[subset_id].sample_size;
-      subset_data_obj_[subset_id].data_sim_value =
-         subset_data_obj[subset_id].data_sim_value;
-      //
-      data_info_[subset_id].density = subset_data_obj[subset_id].density;
-      //
-      bool laplace = data_info_[subset_id].density == laplace_enum;
-      laplace     |= data_info_[subset_id].density == log_laplace_enum;
-      if( laplace && data_info_[subset_id].depend_on_ran_var )
-      {  std::string msg, table_name;
-         size_t data_id = subset_data_obj_[subset_id].original_id;
-         table_name = "data";
-         msg  = "density_id corresponds to laplace or log_laplace and\n";
-         msg += "model depends on random effects that are not constrained";
-         error_exit(msg, table_name, data_id);
-      }
-   }
-   replace_like_called_ = true;
-   return;
+    // n_subset
+    size_t n_subset = subset_data_obj_.size();
+    assert( subset_data_obj.size() == n_subset );
+    //
+    // replace density_id, hold_out, meas_value, meas_std, eta, nu, sample_size,
+    // data_sim_value
+    for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
+    {   subset_data_obj_[subset_id].density =
+            subset_data_obj[subset_id].density;
+        subset_data_obj_[subset_id].hold_out =
+            subset_data_obj[subset_id].hold_out;
+        subset_data_obj_[subset_id].meas_value =
+            subset_data_obj[subset_id].meas_value;
+        subset_data_obj_[subset_id].meas_std =
+            subset_data_obj[subset_id].meas_std;
+        subset_data_obj_[subset_id].eta =
+            subset_data_obj[subset_id].eta;
+        subset_data_obj_[subset_id].nu =
+            subset_data_obj[subset_id].nu;
+        subset_data_obj_[subset_id].sample_size =
+            subset_data_obj[subset_id].sample_size;
+        subset_data_obj_[subset_id].data_sim_value =
+            subset_data_obj[subset_id].data_sim_value;
+        //
+        data_info_[subset_id].density = subset_data_obj[subset_id].density;
+        //
+        bool laplace = data_info_[subset_id].density == laplace_enum;
+        laplace     |= data_info_[subset_id].density == log_laplace_enum;
+        if( laplace && data_info_[subset_id].depend_on_ran_var )
+        {   std::string msg, table_name;
+            size_t data_id = subset_data_obj_[subset_id].original_id;
+            table_name = "data";
+            msg  = "density_id corresponds to laplace or log_laplace and\n";
+            msg += "model depends on random effects that are not constrained";
+            error_exit(msg, table_name, data_id);
+        }
+    }
+    replace_like_called_ = true;
+    return;
 }
 
 /*
@@ -617,7 +617,7 @@ data_object
 ***********
 This object has prototype
 
-   ``data_model`` *data_object*
+    ``data_model`` *data_object*
 
 see :ref:`data_object constructor<data_model_ctor@data_object>` .
 The object *data_object* is effectively const.
@@ -631,7 +631,7 @@ subset_id
 *********
 This argument has prototype
 
-   ``size_t`` *subset_id*
+    ``size_t`` *subset_id*
 
 and is the :ref:`subset_data@subset_data_obj@subset_id`
 we are computing the average integrand for.
@@ -640,7 +640,7 @@ pack_vec
 ********
 This argument has prototype
 
-   ``const CppAD::vector<`` *Float* >& *pack_vec*
+    ``const CppAD::vector<`` *Float* >& *pack_vec*
 
 and is all the :ref:`model_variables-name` in the order
 specified by :ref:`pack_info-name` .
@@ -649,14 +649,14 @@ avg
 ***
 The return value has prototype
 
-   *Float* ``avg``
+    *Float* ``avg``
 
 This is the
 :ref:`average integrand<avg_integrand@Average Integrand, A_i>`
 for the specified data point.
 {xrst_toc_hidden
-   example/devel/model/avg_no_ode_xam.cpp
-   example/devel/model/avg_yes_ode_xam.cpp
+    example/devel/model/avg_no_ode_xam.cpp
+    example/devel/model/avg_yes_ode_xam.cpp
 }
 Example
 *******
@@ -668,42 +668,42 @@ contain examples using this routine.
 */
 template <class Float>
 Float data_model::average(
-   size_t                        subset_id ,
-   const CppAD::vector<Float>&   pack_vec  )
+    size_t                        subset_id ,
+    const CppAD::vector<Float>&   pack_vec  )
 {
-   // arguments to avg_integrand::rectangle
-   const subset_data_struct& data_item = subset_data_obj_[subset_id];
-   double age_lower    = data_item.age_lower;
-   double age_upper    = data_item.age_upper;
-   double time_lower   = data_item.time_lower;
-   double time_upper   = data_item.time_upper;
-   size_t node_id      = size_t( data_item.node_id );
-   size_t weight_id    = size_t( data_item.weight_id );
-   size_t integrand_id = size_t( data_item.integrand_id );
-   size_t subgroup_id  = size_t( data_item.subgroup_id );
-   size_t child        = size_t( data_info_[subset_id].child );
-   CppAD::vector<double> x(n_covariate_);
-   for(size_t j = 0; j < n_covariate_; j++)
-      x[j] = subset_cov_value_[subset_id * n_covariate_ + j];
-   //
-   // compute average integrand
-   Float result = avgint_obj_.rectangle(
-      node_id,
-      age_lower,
-      age_upper,
-      time_lower,
-      time_upper,
-      weight_id,
-      integrand_id,
-      n_child_,
-      child,
-      subgroup_id,
-      x,
-      pack_vec
-   );
-   //
-   assert( ! CppAD::isnan(result) );
-   return result;
+    // arguments to avg_integrand::rectangle
+    const subset_data_struct& data_item = subset_data_obj_[subset_id];
+    double age_lower    = data_item.age_lower;
+    double age_upper    = data_item.age_upper;
+    double time_lower   = data_item.time_lower;
+    double time_upper   = data_item.time_upper;
+    size_t node_id      = size_t( data_item.node_id );
+    size_t weight_id    = size_t( data_item.weight_id );
+    size_t integrand_id = size_t( data_item.integrand_id );
+    size_t subgroup_id  = size_t( data_item.subgroup_id );
+    size_t child        = size_t( data_info_[subset_id].child );
+    CppAD::vector<double> x(n_covariate_);
+    for(size_t j = 0; j < n_covariate_; j++)
+        x[j] = subset_cov_value_[subset_id * n_covariate_ + j];
+    //
+    // compute average integrand
+    Float result = avgint_obj_.rectangle(
+        node_id,
+        age_lower,
+        age_upper,
+        time_lower,
+        time_upper,
+        weight_id,
+        integrand_id,
+        n_child_,
+        child,
+        subgroup_id,
+        x,
+        pack_vec
+    );
+    //
+    assert( ! CppAD::isnan(result) );
+    return result;
 }
 
 /*
@@ -737,7 +737,7 @@ The log-likelihood computed by ``like_one`` is the mapping
 
 .. math::
 
-   \ell (u, \theta) = C + \log [ \B{p} ( y_i | u , \theta ) ]
+    \ell (u, \theta) = C + \log [ \B{p} ( y_i | u , \theta ) ]
 
 where :math:`u` are the random effects,
 :math:`\theta` are the fixed effects, and
@@ -748,7 +748,7 @@ data_object
 ***********
 This object has prototype
 
-   ``data_model`` *data_object*
+    ``data_model`` *data_object*
 
 see :ref:`data_object constructor<data_model_ctor@data_object>` .
 It is effectively const
@@ -770,7 +770,7 @@ subset_id
 *********
 This argument has prototype
 
-   ``size_t`` *subset_id*
+    ``size_t`` *subset_id*
 
 and is the :ref:`subset_data@subset_data_obj@subset_id`
 we are computing the weighted residual and log-likelihood for.
@@ -779,7 +779,7 @@ pack_vec
 ********
 This argument has prototype
 
-   ``const CppAD::vector<`` *Float* >& *pack_vec*
+    ``const CppAD::vector<`` *Float* >& *pack_vec*
 
 and is all the :ref:`model_variables-name` in the order
 specified by :ref:`pack_info-name` ; i.e.,
@@ -792,7 +792,7 @@ avg
 ***
 This argument has prototype
 
-   ``const`` *Float* & *avg*
+    ``const`` *Float* & *avg*
 
 and is the
 :ref:`average integrand<avg_integrand@Average Integrand, A_i>` ,
@@ -810,7 +810,7 @@ residual
 ********
 The return value has prototype
 
-   ``residual_struct<`` *Float* > *residual*
+    ``residual_struct<`` *Float* > *residual*
 
 see :ref:`residual_density@residual@residual_struct` .
 It contains the weighted residual and the corresponding log-density.
@@ -820,7 +820,7 @@ index
 Note that the :ref:`residual_density@index` field is set to
 the value *subset_id* .
 {xrst_toc_hidden
-   example/devel/model/like_one_xam.cpp
+    example/devel/model/like_one_xam.cpp
 }
 Example
 *******
@@ -831,128 +831,128 @@ of using this routine.
 */
 template <class Float>
 residual_struct<Float> data_model::like_one(
-   size_t                        subset_id ,
-   const CppAD::vector<Float>&   pack_vec  ,
-   const Float&                  avg       ,
-   Float&                        delta_out )
+    size_t                        subset_id ,
+    const CppAD::vector<Float>&   pack_vec  ,
+    const Float&                  avg       ,
+    Float&                        delta_out )
 {
-   assert( pack_object_size_ == pack_vec.size() );
-   assert( replace_like_called_ );
+    assert( pack_object_size_ == pack_vec.size() );
+    assert( replace_like_called_ );
 
-   // covariate information for this data point
-   CppAD::vector<double> x(n_covariate_);
-   for(size_t j = 0; j < n_covariate_; j++)
-      x[j] = subset_cov_value_[subset_id * n_covariate_ + j];
-   double eta          = subset_data_obj_[subset_id].eta;
-   double nu           = subset_data_obj_[subset_id].nu;
-   double meas_value   = subset_data_obj_[subset_id].meas_value;
-   double meas_std     = subset_data_obj_[subset_id].meas_std;
-   double age_lower    = subset_data_obj_[subset_id].age_lower;
-   double age_upper    = subset_data_obj_[subset_id].age_upper;
-   double time_lower   = subset_data_obj_[subset_id].time_lower;
-   double time_upper   = subset_data_obj_[subset_id].time_upper;
-   size_t sample_size  = size_t( subset_data_obj_[subset_id].sample_size );
-   size_t weight_id    = size_t( subset_data_obj_[subset_id].weight_id );
-   size_t subgroup_id  = size_t( subset_data_obj_[subset_id].subgroup_id );
-   size_t integrand_id = size_t( subset_data_obj_[subset_id].integrand_id );
-   double data_sim_value   = subset_data_obj_[subset_id].data_sim_value;
-   //
-   // density
-   density_enum density = data_info_[subset_id].density;
-   if( density == binomial_enum && avg <= 0.0 )
-   {  int data_id = subset_data_obj_[subset_id].original_id;
-      std::string msg = "like_one: density = binomial, average integrand = ";
-      msg += CppAD::to_string(avg) + " data_id = " + CppAD::to_string(data_id);
-      error_exit(msg);
-   }
-   //
-   // average noise effect
-   Float std_effect = avg_noise_obj_.rectangle(
-      age_lower,
-      age_upper,
-      time_lower,
-      time_upper,
-      weight_id,
-      subgroup_id,
-      integrand_id,
-      x,
-      pack_vec
-   );
-   //
-   // Delta
-   Float Delta;
-   if( density == binomial_enum )
-   {  // The binomial distribution does not yet support noise effects
-      print_forward_if_positive("std_effect", std_effect);
-      //
-      // The average integrand models binomial counts divided by sample size
-      Delta = sqrt( avg / double(sample_size) );
-   }
-   else
-   {  double meas_cv = minimum_meas_cv_[integrand_id];
-      Delta          = std::max(meas_std, meas_cv * std::fabs(meas_value) );
-   }
-   //
-   // sigma
-   // the adjusted standard deviation
-   Float sigma = Delta;
-   switch( meas_noise_effect_ )
-   {
-      default:
-      assert(false);
-      // --------------------------------------------------------------------
-      // add_std
-      case add_std_scale_all_enum:
-      sigma  = Delta * (1.0  + std_effect);
-      break;
+    // covariate information for this data point
+    CppAD::vector<double> x(n_covariate_);
+    for(size_t j = 0; j < n_covariate_; j++)
+        x[j] = subset_cov_value_[subset_id * n_covariate_ + j];
+    double eta          = subset_data_obj_[subset_id].eta;
+    double nu           = subset_data_obj_[subset_id].nu;
+    double meas_value   = subset_data_obj_[subset_id].meas_value;
+    double meas_std     = subset_data_obj_[subset_id].meas_std;
+    double age_lower    = subset_data_obj_[subset_id].age_lower;
+    double age_upper    = subset_data_obj_[subset_id].age_upper;
+    double time_lower   = subset_data_obj_[subset_id].time_lower;
+    double time_upper   = subset_data_obj_[subset_id].time_upper;
+    size_t sample_size  = size_t( subset_data_obj_[subset_id].sample_size );
+    size_t weight_id    = size_t( subset_data_obj_[subset_id].weight_id );
+    size_t subgroup_id  = size_t( subset_data_obj_[subset_id].subgroup_id );
+    size_t integrand_id = size_t( subset_data_obj_[subset_id].integrand_id );
+    double data_sim_value   = subset_data_obj_[subset_id].data_sim_value;
+    //
+    // density
+    density_enum density = data_info_[subset_id].density;
+    if( density == binomial_enum && avg <= 0.0 )
+    {   int data_id = subset_data_obj_[subset_id].original_id;
+        std::string msg = "like_one: density = binomial, average integrand = ";
+        msg += CppAD::to_string(avg) + " data_id = " + CppAD::to_string(data_id);
+        error_exit(msg);
+    }
+    //
+    // average noise effect
+    Float std_effect = avg_noise_obj_.rectangle(
+        age_lower,
+        age_upper,
+        time_lower,
+        time_upper,
+        weight_id,
+        subgroup_id,
+        integrand_id,
+        x,
+        pack_vec
+    );
+    //
+    // Delta
+    Float Delta;
+    if( density == binomial_enum )
+    {   // The binomial distribution does not yet support noise effects
+        print_forward_if_positive("std_effect", std_effect);
+        //
+        // The average integrand models binomial counts divided by sample size
+        Delta = sqrt( avg / double(sample_size) );
+    }
+    else
+    {   double meas_cv = minimum_meas_cv_[integrand_id];
+        Delta          = std::max(meas_std, meas_cv * std::fabs(meas_value) );
+    }
+    //
+    // sigma
+    // the adjusted standard deviation
+    Float sigma = Delta;
+    switch( meas_noise_effect_ )
+    {
+        default:
+        assert(false);
+        // --------------------------------------------------------------------
+        // add_std
+        case add_std_scale_all_enum:
+        sigma  = Delta * (1.0  + std_effect);
+        break;
 
-      case add_std_scale_none_enum:
-      sigma  = Delta + std_effect;
-      break;
+        case add_std_scale_none_enum:
+        sigma  = Delta + std_effect;
+        break;
 
-      // -----------------------------------------------------------------
-      // add_var
-      case add_var_scale_all_enum:
-      sigma  = Delta * sqrt(1.0  + std_effect);
-      break;
+        // -----------------------------------------------------------------
+        // add_var
+        case add_var_scale_all_enum:
+        sigma  = Delta * sqrt(1.0  + std_effect);
+        break;
 
-      case add_var_scale_none_enum:
-      sigma  = sqrt( Delta * Delta + std_effect );
-      break;
+        case add_var_scale_none_enum:
+        sigma  = sqrt( Delta * Delta + std_effect );
+        break;
 
-   }
-   //
-   // delta_out
-   // transformed standard deviation
-   delta_out = sigma;
-   if( log_density(density) )
-      delta_out = log( meas_value + eta + sigma ) - log( meas_value + eta );
-   residual_enum residual_type;
-   double        y;
-   if( fit_simulated_data_ )
-   {  assert( ! std::isnan(data_sim_value) );
-      residual_type = simulated_data_enum;
-      y             = std::numeric_limits<double>::quiet_NaN();
-   }
-   else
-   {  assert( std::isnan(data_sim_value) );
-      residual_type = real_data_enum;
-      y             = meas_value;
-   }
-   struct residual_struct<Float> residual = residual_density(
-      residual_type,
-      Float(data_sim_value),
-      Float(y),
-      avg,
-      delta_out,
-      density,
-      Float(eta),
-      Float(nu),
-      Float(sample_size),
-      subset_id
-   );
-   //
-   return residual;
+    }
+    //
+    // delta_out
+    // transformed standard deviation
+    delta_out = sigma;
+    if( log_density(density) )
+        delta_out = log( meas_value + eta + sigma ) - log( meas_value + eta );
+    residual_enum residual_type;
+    double        y;
+    if( fit_simulated_data_ )
+    {   assert( ! std::isnan(data_sim_value) );
+        residual_type = simulated_data_enum;
+        y             = std::numeric_limits<double>::quiet_NaN();
+    }
+    else
+    {   assert( std::isnan(data_sim_value) );
+        residual_type = real_data_enum;
+        y             = meas_value;
+    }
+    struct residual_struct<Float> residual = residual_density(
+        residual_type,
+        Float(data_sim_value),
+        Float(y),
+        avg,
+        delta_out,
+        density,
+        Float(eta),
+        Float(nu),
+        Float(sample_size),
+        subset_id
+    );
+    //
+    return residual;
 }
 /*
 -------------------------------------------------------------------------------
@@ -980,7 +980,7 @@ data_object
 ***********
 This object has prototype
 
-   ``data_model`` *data_object*
+    ``data_model`` *data_object*
 
 see :ref:`data_object constructor<data_model_ctor@data_object>` .
 It is effectively const
@@ -996,7 +996,7 @@ hold_out
 ********
 This argument has prototype
 
-   ``bool`` *hold_out*
+    ``bool`` *hold_out*
 
 If it is true, the flagged data will be held out,
 otherwise it will not.
@@ -1005,7 +1005,7 @@ random_depend
 *************
 This argument has prototype
 
-   ``bool`` *random_depend*
+    ``bool`` *random_depend*
 
 If it is true (false), only residuals that depend on the random effects
 that have non-equal (equal) bounds, are included.
@@ -1014,7 +1014,7 @@ pack_vec
 ********
 This argument has prototype
 
-   ``const CppAD::vector<`` *Float* >& *pack_vec*
+    ``const CppAD::vector<`` *Float* >& *pack_vec*
 
 and is all the :ref:`model_variables-name` in the order
 specified by :ref:`pack_info-name` ; i.e., :math:`(u , \theta)`.
@@ -1026,7 +1026,7 @@ residual_vec
 ************
 The return value has prototype
 
-   ``CppAD::vector< residual_struct<`` *Float* > > *residual_vec*
+    ``CppAD::vector< residual_struct<`` *Float* > > *residual_vec*
 
 index
 =====
@@ -1061,7 +1061,7 @@ for the data that is included,
 is the sum of the log of the densities corresponding to all the
 :ref:`residuals<residual_density-name>` in *residual_vec* .
 {xrst_toc_hidden
-   example/devel/model/like_all_xam.cpp
+    example/devel/model/like_all_xam.cpp
 }
 Example
 *******
@@ -1071,80 +1071,80 @@ Example
 */
 template <class Float>
 CppAD::vector< residual_struct<Float> > data_model::like_all(
-   bool                        hold_out      ,
-   bool                        random_depend ,
-   const CppAD::vector<Float>& pack_vec      )
-{  assert( replace_like_called_ );
-   //
-   // loop over the subsampled data
-   CppAD::vector< residual_struct<Float> > residual_vec;
-   for(size_t subset_id = 0; subset_id < subset_data_obj_.size(); subset_id++)
-   {  bool keep = hold_out == false;
-      keep     |= subset_data_obj_[subset_id].hold_out == 0;
-      if( random_depend )
-         keep &= data_info_[subset_id].depend_on_ran_var == true;
-      else
-         keep &= data_info_[subset_id].depend_on_ran_var == false;
-      assert( data_info_[subset_id].child <= n_child_ );
-      if( keep )
-      {  Float avg = average(subset_id, pack_vec);
+    bool                        hold_out      ,
+    bool                        random_depend ,
+    const CppAD::vector<Float>& pack_vec      )
+{   assert( replace_like_called_ );
+    //
+    // loop over the subsampled data
+    CppAD::vector< residual_struct<Float> > residual_vec;
+    for(size_t subset_id = 0; subset_id < subset_data_obj_.size(); subset_id++)
+    {   bool keep = hold_out == false;
+        keep     |= subset_data_obj_[subset_id].hold_out == 0;
+        if( random_depend )
+            keep &= data_info_[subset_id].depend_on_ran_var == true;
+        else
+            keep &= data_info_[subset_id].depend_on_ran_var == false;
+        assert( data_info_[subset_id].child <= n_child_ );
+        if( keep )
+        {   Float avg = average(subset_id, pack_vec);
 
-         // compute its residual and log likelihood
-         Float not_used;
-         residual_struct<Float> residual =
-            like_one(subset_id, pack_vec, avg, not_used);
-         residual_vec.push_back( residual );
-      }
-   }
-   return residual_vec;
+            // compute its residual and log likelihood
+            Float not_used;
+            residual_struct<Float> residual =
+                like_one(subset_id, pack_vec, avg, not_used);
+            residual_vec.push_back( residual );
+        }
+    }
+    return residual_vec;
 }
 
 // ------------------------------------------------------------------------
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(SubsetStruct)       \
 template data_model::data_model(                                   \
-   const cov2weight_map&                    cov2weight_obj     ,  \
-   size_t                                   n_covariate        ,  \
-   bool                                     fit_simulated_data ,  \
-   const std::string&                       meas_noise_effect  ,  \
-   const std::string&                       rate_case          ,  \
-   double                                   bound_random       ,  \
-   double                                   ode_step_size      ,  \
-   const CppAD::vector<double>&             age_avg_grid       ,  \
-   const CppAD::vector<double>&             age_table          ,  \
-   const CppAD::vector<double>&             time_table         ,  \
-   const CppAD::vector<covariate_struct>&   covariate_table    ,  \
-   const CppAD::vector<subgroup_struct>&    subgroup_table     ,  \
-   const CppAD::vector<integrand_struct>&   integrand_table    ,  \
-   const CppAD::vector<mulcov_struct>&      mulcov_table       ,  \
-   const CppAD::vector<prior_struct>&       prior_table        ,  \
-   const CppAD::vector<SubsetStruct>&       subset_object      ,  \
-   const CppAD::vector<double>&             subset_cov_value   ,  \
-   const CppAD::vector<weight_info>&        w_info_vec         ,  \
-   const CppAD::vector<smooth_info>&        s_info_vec         ,  \
-   const pack_info&                         pack_object        ,  \
-   const child_info&                        child_info4data       \
+    const cov2weight_map&                    cov2weight_obj     ,  \
+    size_t                                   n_covariate        ,  \
+    bool                                     fit_simulated_data ,  \
+    const std::string&                       meas_noise_effect  ,  \
+    const std::string&                       rate_case          ,  \
+    double                                   bound_random       ,  \
+    double                                   ode_step_size      ,  \
+    const CppAD::vector<double>&             age_avg_grid       ,  \
+    const CppAD::vector<double>&             age_table          ,  \
+    const CppAD::vector<double>&             time_table         ,  \
+    const CppAD::vector<covariate_struct>&   covariate_table    ,  \
+    const CppAD::vector<subgroup_struct>&    subgroup_table     ,  \
+    const CppAD::vector<integrand_struct>&   integrand_table    ,  \
+    const CppAD::vector<mulcov_struct>&      mulcov_table       ,  \
+    const CppAD::vector<prior_struct>&       prior_table        ,  \
+    const CppAD::vector<SubsetStruct>&       subset_object      ,  \
+    const CppAD::vector<double>&             subset_cov_value   ,  \
+    const CppAD::vector<weight_info>&        w_info_vec         ,  \
+    const CppAD::vector<smooth_info>&        s_info_vec         ,  \
+    const pack_info&                         pack_object        ,  \
+    const child_info&                        child_info4data       \
 );
 DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(subset_data_struct)
 DISMOD_AT_INSTANTIATE_DATA_MODEL_CTOR(avgint_subset_struct)
 // ------------------------------------------------------------------------
 # define DISMOD_AT_INSTANTIATE_DATA_MODEL(Float)            \
-   template Float data_model::average(                     \
-      size_t                        subset_id,            \
-      const CppAD::vector<Float>&   pack_vec              \
-   );                                                      \
-   template residual_struct<Float>                         \
-   data_model::like_one(                                   \
-      size_t                        subset_id,            \
-      const CppAD::vector<Float>&   pack_vec ,            \
-      const Float&                  avg      ,            \
-      Float&                        delta_out             \
-   );                                                      \
-   template CppAD::vector< residual_struct<Float> >        \
-   data_model::like_all(                                   \
-      bool                          hold_out ,            \
-      bool                          parent   ,            \
-      const CppAD::vector<Float>&   pack_vec              \
-   );                                                      \
+    template Float data_model::average(                     \
+        size_t                        subset_id,            \
+        const CppAD::vector<Float>&   pack_vec              \
+    );                                                      \
+    template residual_struct<Float>                         \
+    data_model::like_one(                                   \
+        size_t                        subset_id,            \
+        const CppAD::vector<Float>&   pack_vec ,            \
+        const Float&                  avg      ,            \
+        Float&                        delta_out             \
+    );                                                      \
+    template CppAD::vector< residual_struct<Float> >        \
+    data_model::like_all(                                   \
+        bool                          hold_out ,            \
+        bool                          parent   ,            \
+        const CppAD::vector<Float>&   pack_vec              \
+    );                                                      \
 
 // instantiations
 DISMOD_AT_INSTANTIATE_DATA_MODEL( double )

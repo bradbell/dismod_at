@@ -16,14 +16,14 @@ Define :math:`S(t)` by
 
 .. math::
 
-   S'(t) =  - [ \iota (t) + \omega (t) ] S(t)
+    S'(t) =  - [ \iota (t) + \omega (t) ] S(t)
 
 Define :math:`C(t)` by
 :math:`C(0) = c_0 > 0` and
 
 .. math::
 
-   C'(t) =  + \iota (t) S(t) - [ \chi (t) + \omega (t) ] C(t)
+    C'(t) =  + \iota (t) S(t) - [ \chi (t) + \omega (t) ] C(t)
 
 Define :math:`P(t)` by :math:`P(t) = C(t) / [ S(t) + C(t) ]`
 It follows that :math:`P(t)` does not depend on the value of
@@ -35,7 +35,7 @@ It follows that :math:`S(t) > 0`, :math:`C(t) > 0` for all :math:`t` and
 
 .. math::
 
-   P(t) = 1 / [ 1 + S(t) / C(t) ]
+    P(t) = 1 / [ 1 + S(t) / C(t) ]
 
 Define :math:`Q(t) = C(t) / S(t)`.
 It suffices to show that :math:`Q(t)` does not depend on :math:`\omega(t)`.
@@ -43,31 +43,31 @@ Taking the derivative of :math:`Q(t)` we have
 
 .. math::
 
-   Q'(t) = [ C'(t) S(t) - S'(t) C(t) ] / S(t)^2
+    Q'(t) = [ C'(t) S(t) - S'(t) C(t) ] / S(t)^2
 
 Dropping the dependence on :math:`t` we have
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   Q'
-   & = &
-   [ + \iota S S - ( \chi + \omega ) C S + (  \iota  + \omega ) S C ] / S^2
-   \\
-   & = &
-   [ + \iota S - ( \chi + \omega ) C + (  \iota  + \omega ) C ] / S
-   \\
-   & = &
-   \iota  + ( \iota - \chi ) Q
-   \end{eqnarray}
+    \begin{eqnarray}
+    Q'
+    & = &
+    [ + \iota S S - ( \chi + \omega ) C S + (  \iota  + \omega ) S C ] / S^2
+    \\
+    & = &
+    [ + \iota S - ( \chi + \omega ) C + (  \iota  + \omega ) C ] / S
+    \\
+    & = &
+    \iota  + ( \iota - \chi ) Q
+    \end{eqnarray}
 
 So :math:`Q(t)` satisfies the equation
 :math:`Q(0) = c_0 / s_0` and
 
 .. math::
 
-   Q'(t) = \iota(t) + [ \iota(t) - \chi (t) ] Q(t)
+    Q'(t) = \iota(t) + [ \iota(t) - \chi (t) ] Q(t)
 
 If follows that :math:`Q(t)` does not depend on :math:`\omega (t)`
 which completes the proof.

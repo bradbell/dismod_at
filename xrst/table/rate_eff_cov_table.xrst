@@ -100,7 +100,7 @@ The file :ref:`rate_eff_cov_table.py-name`
 contains an example ``rate_eff_cov`` table.
 
 {xrst_toc_hidden
-   example/table/rate_eff_cov_table.py
+    example/table/rate_eff_cov_table.py
 }
 
 

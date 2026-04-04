@@ -18,6 +18,6 @@ Install dismod_at
 *****************
 The following command to install dismod_at in your current conda environment::
 
-   conda install conda-forge::dismod-at
+    conda install conda-forge::dismod-at
 
 {xrst_end install_conda}

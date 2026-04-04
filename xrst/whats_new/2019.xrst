@@ -53,7 +53,7 @@ In addition, report an error if these multipliers are requested.
    *subgroup_id* , this has been fixed.
 #. Advance :ref:`dock_dismod_at.sh-name` to version 20191205. This requires running
 
-      ./ ``dock_dismod_at.sh image dismod_at``
+        ./ ``dock_dismod_at.sh image dismod_at``
 
 12-04
 =====
@@ -67,7 +67,7 @@ In addition, report an error if these multipliers are requested.
    in the variable.csv file created by the db2csv command.
 #. Advance :ref:`dock_dismod_at.sh-name` to version 20191204. This requires running
 
-      ./ ``dock_dismod_at.sh image dismod_at``
+        ./ ``dock_dismod_at.sh image dismod_at``
 
 11-30
 =====
@@ -200,7 +200,7 @@ Advance :ref:`dock_dismod_at.sh-name` to version 20191008, which
 includes to changes under 10-08 below.
 This requires running
 
-   ./ ``dock_dismod_at.sh image dismod_at``
+    ./ ``dock_dismod_at.sh image dismod_at``
 
 10-08
 =====
@@ -267,11 +267,11 @@ the selected section.
    was changed from 18.04 to 19.10.
    This requires running
 
-   | |tab| ./ ``dock_dismod_at.sh image base``
-   | |tab| ./ ``dock_dismod_at.sh image dismod_at``
+    | |tab| ./ ``dock_dismod_at.sh image base``
+    | |tab| ./ ``dock_dismod_at.sh image dismod_at``
 
-   This fixed a warning during the install of
-   :ref:`install_unix@Special Requirements@cppad` .
+    This fixed a warning during the install of
+    :ref:`install_unix@Special Requirements@cppad` .
 
 09-22
 =====
@@ -314,13 +314,13 @@ the selected section.
    To be specific, the line
    {xrst_spell_off}
    {xrst_code py}
-      meas_std = 2.0 * iota_true;
+       meas_std = 2.0 * iota_true;
    {xrst_code}
    {xrst_spell_on}
    was changed to
    {xrst_spell_off}
    {xrst_code py}
-      meas_std = 1.5 * iota_true;
+       meas_std = 1.5 * iota_true;
    {xrst_code}
    {xrst_spell_on}
 
@@ -935,18 +935,18 @@ This has been fixed.
    :ref:`density_table@Notation@Log Scaled`
    data was
 
-   .. math::
+    .. math::
 
-      y = \exp(e) * ( A + \eta )
+        y = \exp(e) * ( A + \eta )
 
-   The correct formula is
+    The correct formula is
 
-   .. math::
+    .. math::
 
-      y = \exp(e) * ( A + \eta ) - \eta
+        y = \exp(e) * ( A + \eta ) - \eta
 
-   The documentation has been fixed
-   (the implementation in software was correct).
+    The documentation has been fixed
+    (the implementation in software was correct).
 
 01-16
 =====

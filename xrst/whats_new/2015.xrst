@@ -296,9 +296,9 @@ This is represented by
 #. Change ``bin/database2csv.py`` to only take one argument.
 #. Change all the :ref:`commands<command-name>` to have syntax
 
-      ``dismod_at`` *file_name* *command*
+        ``dismod_at`` *file_name* *command*
 
-   i.e., switch the order of *file_name* and *command* .
+    i.e., switch the order of *file_name* and *command* .
 
 11-02
 =====
@@ -379,7 +379,7 @@ This is represented by
 #. Advance to a newer version of CppAD. The requires that you re-run
    ::
 
-      bin/install_cppad.sh
+        bin/install_cppad.sh
 
 #. Remove some unused code in the dismod_at
    :ref:`user_example-name` examples (used for return value in
@@ -394,10 +394,10 @@ This is represented by
    They are now run separately from the correctness tests with the command
    ::
 
-      make speed
+        make speed
 
-   See instructions for running the
-   :ref:`tests<install_unix@dismod_at@Test>` .
+    See instructions for running the
+    :ref:`tests<install_unix@dismod_at@Test>` .
 
 10-27
 =====
@@ -420,11 +420,11 @@ Changed the specification for the :ref:`create_database-name` argument
 :ref:`create_database@option_table` .
 To be specific, the row
 
-   { ``'name'`` : ``'parent_node_id'`` , ``'value'`` :' *parent_node_id* ' }
+    { ``'name'`` : ``'parent_node_id'`` , ``'value'`` :' *parent_node_id* ' }
 
 was replace by the row
 
-   { ``'name'`` : ``'parent_node_name'`` , ``'value'`` :' *parent_node_name* ' }
+    { ``'name'`` : ``'parent_node_name'`` , ``'value'`` :' *parent_node_name* ' }
 
 10-25
 =====
@@ -660,14 +660,14 @@ In addition, the minimal version of
 
 #. The Hessian w.r.t. :math:`\beta`,
 
-   .. math::
+    .. math::
 
-      H^{(2)}_\beta H( \beta, \theta, u)
+        H^{(2)}_\beta H( \beta, \theta, u)
 
-   is no longer recorded as a separate AD function, but is rather
-   evaluated using the recording for :math:`H( \beta , \theta , u)`
-   (instead of its own separate recording.
-   The greatly reduced the program memory requirements.
+    is no longer recorded as a separate AD function, but is rather
+    evaluated using the recording for :math:`H( \beta , \theta , u)`
+    (instead of its own separate recording.
+    The greatly reduced the program memory requirements.
 #. The ``cppad_mixed ran_like`` function was changed from
    use ``a5_double`` objects to ``a3_double`` objects.
 
@@ -935,13 +935,13 @@ First version of :ref:`sample_command-name` that passes its example / test.
 #. For *cov_type* equal ``rate_value`` , ``meas_value`` ,
    and ``meas_std`` , change
 
-   | |tab| *cov_type* _ ``mulcov_n_cov -> mulcov_`` *cov_type* _ ``n_cov``
-   | |tab| *cov_type* _ ``mulcov_info -> mulcov_`` *cov_type* _ ``info``
+    | |tab| *cov_type* _ ``mulcov_n_cov -> mulcov_`` *cov_type* _ ``n_cov``
+    | |tab| *cov_type* _ ``mulcov_info -> mulcov_`` *cov_type* _ ``info``
 
-   see
-   :ref:`var_table@var_type@mulcov_rate_value` ,
-   :ref:`var_table@var_type@mulcov_meas_value` and
-   :ref:`var_table@var_type@mulcov_meas_noise` .
+    see
+    :ref:`var_table@var_type@mulcov_rate_value` ,
+    :ref:`var_table@var_type@mulcov_meas_value` and
+    :ref:`var_table@var_type@mulcov_meas_noise` .
 
 07-01
 =====
@@ -967,11 +967,11 @@ First version of :ref:`sample_command-name` that passes its example / test.
 #. There was a bug in reading the data tables whereby the following error
    would be incorrectly generated:
 
-   | |tab| *table_name* _ ``id must start at zero and increment by one.``
-   | |tab| ``Detected in`` *table_name* ``table at`` *table_name* _ ``id`` = *index* .
+    | |tab| *table_name* _ ``id must start at zero and increment by one.``
+    | |tab| ``Detected in`` *table_name* ``table at`` *table_name* _ ``id`` = *index* .
 
-   where *table_name* is any table name.
-   This has been fixed.
+    where *table_name* is any table name.
+    This has been fixed.
 #. Added the :ref:`simulate_command-name` (not yet working).
 #. The values *n_age_ode* and *n_time_ode*
    are now computed automatically
@@ -1009,13 +1009,13 @@ First version of :ref:`sample_command-name` that passes its example / test.
    the :ref:`smooth_table-name` have been changed to end in ``_prior_id`` .
    To be explicit, the following column names have been changed:
 
-   .. csv-table::
-      :widths: auto
+    .. csv-table::
+        :widths: auto
 
-      Old name,New name
-      ``mulcov_value``,``mulcov_value_prior_id``
-      ``mulcov_dage``,``mulcov_dage_prior_id``
-      ``mulcov_dtime``,``mulcov_dtime_prior_id``
+        Old name,New name
+        ``mulcov_value``,``mulcov_value_prior_id``
+        ``mulcov_dage``,``mulcov_dage_prior_id``
+        ``mulcov_dtime``,``mulcov_dtime_prior_id``
 
 #. Update the :ref:`wish_list-name`
 

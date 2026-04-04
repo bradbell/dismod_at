@@ -18,15 +18,15 @@
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 void predict_command(
-   const std::string&                                    source              ,
-   bool                                                  zero_meas_value     ,
-   double                                                fit_var_scale       ,
-   sqlite3*                                              db                  ,
-   const dismod_at::db_input_struct&                     db_input            ,
-   const dismod_at::pack_info&                           pack_object         ,
-   dismod_at::data_model&                                avgint_object       ,
-   const CppAD::vector<dismod_at::avgint_subset_struct>& avgint_subset_obj   ,
-   const pack_prior&                                     var2prior
+    const std::string&                                    source              ,
+    bool                                                  zero_meas_value     ,
+    double                                                fit_var_scale       ,
+    sqlite3*                                              db                  ,
+    const dismod_at::db_input_struct&                     db_input            ,
+    const dismod_at::pack_info&                           pack_object         ,
+    dismod_at::data_model&                                avgint_object       ,
+    const CppAD::vector<dismod_at::avgint_subset_struct>& avgint_subset_obj   ,
+    const pack_prior&                                     var2prior
 );
 
 } // END_DISMOD_AT_NAMESPACE

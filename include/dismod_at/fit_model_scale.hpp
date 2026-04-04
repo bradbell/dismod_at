@@ -23,12 +23,12 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_SCALE_FIXED_EFFECT
-   // END_SCALE_FIXED_EFFECT
+    // BEGIN_SCALE_FIXED_EFFECT
+    // END_SCALE_FIXED_EFFECT
 }
 {xrst_literal
-   // BEGIN_UNSCALE_FIXED_EFFECT
-   // END_UNSCALE_FIXED_EFFECT
+    // BEGIN_UNSCALE_FIXED_EFFECT
+    // END_UNSCALE_FIXED_EFFECT
 }
 
 n_fixed\_
@@ -79,32 +79,32 @@ Note that this equality is only true up to numerical precision.
 // BEGIN_SCALE_FIXED_EFFECT
 template <class Float>
 void dismod_at::fit_model::scale_fixed_effect(
-   const CppAD::vector<Float>& fixed_before  ,
-   CppAD::vector<Float>&       fixed_after ) const
+    const CppAD::vector<Float>& fixed_before  ,
+    CppAD::vector<Float>&       fixed_after ) const
 // END_SCALE_FIXED_EFFECT
-{  assert( fixed_before.size()  == n_fixed_ );
-   assert( fixed_after.size() == n_fixed_ );
-   for(size_t j = 0; j < n_fixed_; j++)
-   {  if( fixed_is_scaled_[j] )
-         fixed_after[j] = log( fixed_before[j] + fixed_scale_eta_[j] );
-      else
-         fixed_after[j] = fixed_before[j];
-   }
+{   assert( fixed_before.size()  == n_fixed_ );
+    assert( fixed_after.size() == n_fixed_ );
+    for(size_t j = 0; j < n_fixed_; j++)
+    {   if( fixed_is_scaled_[j] )
+            fixed_after[j] = log( fixed_before[j] + fixed_scale_eta_[j] );
+        else
+            fixed_after[j] = fixed_before[j];
+    }
 }
 // BEGIN_UNSCALE_FIXED_EFFECT
 template <class Float>
 void dismod_at::fit_model::unscale_fixed_effect(
-   const CppAD::vector<Float>& fixed_after  ,
-   CppAD::vector<Float>&       fixed_before ) const
+    const CppAD::vector<Float>& fixed_after  ,
+    CppAD::vector<Float>&       fixed_before ) const
 // END_UNSCALE_FIXED_EFFECT
-{  assert( fixed_after.size()  == n_fixed_ );
-   assert( fixed_before.size() == n_fixed_ );
-   for(size_t j = 0; j < n_fixed_; j++)
-   {  if( fixed_is_scaled_[j] )
-         fixed_before[j] = exp( fixed_after[j] ) - fixed_scale_eta_[j];
-      else
-         fixed_before[j] = fixed_after[j];
-   }
+{   assert( fixed_after.size()  == n_fixed_ );
+    assert( fixed_before.size() == n_fixed_ );
+    for(size_t j = 0; j < n_fixed_; j++)
+    {   if( fixed_is_scaled_[j] )
+            fixed_before[j] = exp( fixed_after[j] ) - fixed_scale_eta_[j];
+        else
+            fixed_before[j] = fixed_after[j];
+    }
 }
 
 # endif

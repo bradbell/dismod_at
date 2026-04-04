@@ -277,15 +277,15 @@ because the other choices will take more execution time
 and are for program validation.)
 
 .. csv-table::
-   :widths: auto
+    :widths: auto
 
-   *option_value*,Description,Restrictions
-   ``none``,do not perform derivative test,none
-   ``first-order``,test first derivatives,none
-   ``second-order``,test first and second derivatives,in fixed case *quasi_fixed* must be false.
-   ``only-second-order``,only test second derivatives,in fixed case *quasi_fixed* must be false.
-   ``adaptive``,a step size adaptive first order derivative test,only for fixed case
-   ``trace-adaptive``,trace adaptive test on standard output,only for fixed case
+    *option_value*,Description,Restrictions
+    ``none``,do not perform derivative test,none
+    ``first-order``,test first derivatives,none
+    ``second-order``,test first and second derivatives,in fixed case *quasi_fixed* must be false.
+    ``only-second-order``,only test second derivatives,in fixed case *quasi_fixed* must be false.
+    ``adaptive``,a step size adaptive first order derivative test,only for fixed case
+    ``trace-adaptive``,trace adaptive test on standard output,only for fixed case
 
 max_num_iter
 ============
@@ -365,7 +365,7 @@ is moved to be interior to the corresponding upper and lower bounds.
 If there is an upper or lower bound for a fixed effect,
 then both are present in the :ref:`prior_table-name` and
 
-   *bound_frac_fixed* * ( *upper* ``-`` *lower* )
+    *bound_frac_fixed* * ( *upper* ``-`` *lower* )
 
 is the maximum that ``start_var`` table value is moved.
 This is called ``bound_frac`` in the Ipopt documentation
@@ -520,19 +520,19 @@ If :ref:`data_table@age_upper` is equal to
 the model for the data does not require integration over an interval.
 The average for data table age intervals with
 
-   *age_upper* ``-`` *age_lower* <= *age_size*
+    *age_upper* ``-`` *age_lower* <= *age_size*
 
 is approximated by the value at age
 
-   ( *age_upper* + *age_lower* ) / 2.0
+    ( *age_upper* + *age_lower* ) / 2.0
 
 The average for data table time intervals with
 
-   *time_upper* ``-`` *time_lower* <= *time_size*
+    *time_upper* ``-`` *time_lower* <= *time_size*
 
 is approximated by the value at time
 
-   ( *time_upper* + *time_lower* ) / 2.0
+    ( *time_upper* + *time_lower* ) / 2.0
 
 The default value for *age_size* and *time_size* is zero; i.e.,
 no age or time compression.
@@ -549,8 +549,8 @@ is printed on standard output.
 This gives one an indication of progress for large problems where
 this initialization takes a long time.
 {xrst_toc_hidden
-   xrst/table/option_default.xrst
-   example/table/option_table.py
+    xrst/table/option_default.xrst
+    example/table/option_table.py
 }
 
 splitting_covariate

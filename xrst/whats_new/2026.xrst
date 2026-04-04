@@ -4,9 +4,10 @@
 # ----------------------------------------------------------------------------
 {xrst_begin 2026}
 {xrst_spell
-   mm
-   dd
-   cmake
+    mm
+    dd
+    cmake
+    rst
 }
 
 Release Notes for 2026
@@ -15,6 +16,14 @@ Release Notes for 2026
 
 mm-dd
 *****
+
+04-04
+=====
+Change the at_cascade source code and documentation to use 4 spaces for
+one tab; i.e., one level of indentation.
+This used to be 3 spaces because that works well with rst lists
+(the at_cascade documentation uses rst),
+but 4 spaces is the most common choice used by programmers.
 
 03-27
 =====

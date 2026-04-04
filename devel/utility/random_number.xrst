@@ -11,8 +11,8 @@ Pseudo Random Number Generation
 Contents
 ********
 {xrst_toc_table
-   devel/utility/manage_gsl_rng.xrst
-   devel/utility/sim_random.cpp
+    devel/utility/manage_gsl_rng.xrst
+    devel/utility/sim_random.cpp
 }
 
 {xrst_end random_number}

@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 # {xrst_begin modify_command}
 # {xrst_spell
-#     exp
+#       exp
 # }
 # {xrst_comment_ch #}
 #
@@ -90,13 +90,13 @@
 # For example, one of the statements might be
 # ::
 #
-#     from math import exp
+#       from math import exp
 #
 # This would make the function ``exp`` ( *x* ) available for use
 # in *row_expression* and *value_expression* .
 #
 # {xrst_toc_hidden
-#    example/get_started/modify_command.py
+#     example/get_started/modify_command.py
 # }
 # Example
 # *******
@@ -105,94 +105,94 @@
 #
 # {xrst_end modify_command}
 def modify_command(database, arg_list) :
-   import re
-   import os
-   import sys
-   import copy
-   import dismod_at
-   #
-   # database: log table
-   dismod_at.log_command('begin', database, 'modify', arg_list)
-   #
-   # arguments
-   assert len(arg_list) >= 4
-   table_name       = arg_list[0]
-   column_name      = arg_list[1]
-   row_expression   = arg_list[2]
-   value_expression = arg_list[3]
-   i_arg = 4
-   while i_arg < len(arg_list):
-      exec( arg_list[i_arg] )
-      i_arg += 1
-   # -------------------------------------------------------------------------
-   # replaces variable by _v_['variable']
-   def replace_variable(expression, variable) :
-      #
-      ch_set = "([^a-zA-Z_'\"])"
-      #
-      pattern_in  = ch_set + variable + ch_set
-      pattern_out = r"\1_v_['" + variable + r"']\2"
-      expression_out = re.sub(pattern_in, pattern_out, expression)
-      #
-      pattern_in  = '^' + variable + ch_set
-      pattern_out = r"_v_['" + variable + r"']\1"
-      expression_out = re.sub(pattern_in, pattern_out, expression_out)
-      #
-      pattern_in  = ch_set + variable + '$'
-      pattern_out = r"\1_v_['" + variable + r"']"
-      expression_out = re.sub(pattern_in, pattern_out, expression_out)
-      return expression_out
-   # -------------------------------------------------------------------------
-   # get the original value for the table
-   connection           = dismod_at.create_connection(
-      database, new = False, readonly = False
-   )
-   (col_name, col_type) = \
-      dismod_at.get_name_type(connection, table_name)
-   table_dict           = \
-      dismod_at.get_table_dict(connection, table_name)
-   if not column_name in col_name :
-      msg  = column_name + ' is not a column in table ' + table_name + '\n'
-      msg += 'of database ' + database
-      assert False, msg
-   # -------------------------------------------------------------------------
-   # map variable -> _v_['variable']
-   primary_key   = table_name + '_id'
-   primary_index = None
-   count         = 0
-   for col in col_name :
-      row_expression   = replace_variable(row_expression,   col)
-      value_expression = replace_variable(value_expression, col)
-      if col == primary_key :
-         primary_index = count
-      count = count + 1
-   # -------------------------------------------------------------------------
-   # modify the values in the table
-   count = 0
-   for _v_ in table_dict :
-      _v_[primary_key] = count
-      count            = count + 1
-      if eval( row_expression ) :
-         _v_[column_name] = eval(value_expression)
-   # -------------------------------------------------------------------------
-   row_list = list()
-   del col_name[primary_index]
-   del col_type[primary_index]
-   for row in table_dict :
-      this_row = list()
-      for col in col_name :
-         this_row.append( row[col] )
-      row_list.append(this_row)
-   # -------------------------------------------------------------------------
-   # delete the old version of the table
-   cmd    = 'DROP TABLE ' + table_name
-   cursor = connection.cursor()
-   cursor.execute(cmd)
-   # -------------------------------------------------------------------------
-   # create the new version
-   dismod_at.create_table(connection,table_name,col_name,col_type,row_list)
-   # -------------------------------------------------------------------------
-   connection.close()
-   #
-   # database: log table
-   dismod_at.log_command('end', database, 'modify', arg_list)
+    import re
+    import os
+    import sys
+    import copy
+    import dismod_at
+    #
+    # database: log table
+    dismod_at.log_command('begin', database, 'modify', arg_list)
+    #
+    # arguments
+    assert len(arg_list) >= 4
+    table_name       = arg_list[0]
+    column_name      = arg_list[1]
+    row_expression   = arg_list[2]
+    value_expression = arg_list[3]
+    i_arg = 4
+    while i_arg < len(arg_list):
+        exec( arg_list[i_arg] )
+        i_arg += 1
+    # -------------------------------------------------------------------------
+    # replaces variable by _v_['variable']
+    def replace_variable(expression, variable) :
+        #
+        ch_set = "([^a-zA-Z_'\"])"
+        #
+        pattern_in  = ch_set + variable + ch_set
+        pattern_out = r"\1_v_['" + variable + r"']\2"
+        expression_out = re.sub(pattern_in, pattern_out, expression)
+        #
+        pattern_in  = '^' + variable + ch_set
+        pattern_out = r"_v_['" + variable + r"']\1"
+        expression_out = re.sub(pattern_in, pattern_out, expression_out)
+        #
+        pattern_in  = ch_set + variable + '$'
+        pattern_out = r"\1_v_['" + variable + r"']"
+        expression_out = re.sub(pattern_in, pattern_out, expression_out)
+        return expression_out
+    # -------------------------------------------------------------------------
+    # get the original value for the table
+    connection           = dismod_at.create_connection(
+        database, new = False, readonly = False
+    )
+    (col_name, col_type) = \
+        dismod_at.get_name_type(connection, table_name)
+    table_dict           = \
+        dismod_at.get_table_dict(connection, table_name)
+    if not column_name in col_name :
+        msg  = column_name + ' is not a column in table ' + table_name + '\n'
+        msg += 'of database ' + database
+        assert False, msg
+    # -------------------------------------------------------------------------
+    # map variable -> _v_['variable']
+    primary_key   = table_name + '_id'
+    primary_index = None
+    count         = 0
+    for col in col_name :
+        row_expression   = replace_variable(row_expression,   col)
+        value_expression = replace_variable(value_expression, col)
+        if col == primary_key :
+            primary_index = count
+        count = count + 1
+    # -------------------------------------------------------------------------
+    # modify the values in the table
+    count = 0
+    for _v_ in table_dict :
+        _v_[primary_key] = count
+        count            = count + 1
+        if eval( row_expression ) :
+            _v_[column_name] = eval(value_expression)
+    # -------------------------------------------------------------------------
+    row_list = list()
+    del col_name[primary_index]
+    del col_type[primary_index]
+    for row in table_dict :
+        this_row = list()
+        for col in col_name :
+            this_row.append( row[col] )
+        row_list.append(this_row)
+    # -------------------------------------------------------------------------
+    # delete the old version of the table
+    cmd    = 'DROP TABLE ' + table_name
+    cursor = connection.cursor()
+    cursor.execute(cmd)
+    # -------------------------------------------------------------------------
+    # create the new version
+    dismod_at.create_table(connection,table_name,col_name,col_type,row_list)
+    # -------------------------------------------------------------------------
+    connection.close()
+    #
+    # database: log table
+    dismod_at.log_command('end', database, 'modify', arg_list)

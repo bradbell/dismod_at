@@ -80,7 +80,7 @@ the return value of the C++ function ``std::time`` ; i.e.,
 the number of seconds since January 1, 1970.
 You can convert it to GMT with the SQL command
 
-   ``select datetime`` ( ``unix_time`` , ``'unixepoch'`` ) ``from log`` ;
+    ``select datetime`` ( ``unix_time`` , ``'unixepoch'`` ) ``from log`` ;
 
 message
 *******

@@ -30,7 +30,7 @@ To be specific; for the data table
 :ref:`data_table@meas_std` is the measurement standard,
 the minimum cv measurement standard deviation is
 
-   *Delta* = ``max`` ( *meas_std* , *minimum_meas_cv* * | *meas_value* | )
+    *Delta* = ``max`` ( *meas_std* , *minimum_meas_cv* * | *meas_value* | )
 
 see :ref:`Delta<data_like@Notation@Minimum CV Standard Deviation, Delta_i>`
 in the data likelihood section.
@@ -63,57 +63,57 @@ Names
 =====
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - Integrand Name
-     - Description
-     - ODE
-   * - :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence`
-     - incidence rate relative to susceptible population
-     - no
-   * - :ref:`avg_integrand@Integrand, I_i(a,t)@remission`
-     - remission rate
-     - no
-   * - :ref:`avg_integrand@Integrand, I_i(a,t)@mtexcess`
-     - excess mortality rate
-     - no
-   * - :ref:`avg_integrand@Integrand, I_i(a,t)@mtother`
-     - other cause mortality rate
-     - no
-   * - :ref:`avg_integrand@Integrand, I_i(a,t)@mtwith`
-     - with condition mortality rate
-     - no
-   * - :ref:`avg_integrand@Integrand, I_i(a,t)@relrisk`
-     - relative risk
-     - no
-   * - :ref:`avg_integrand@Integrand, I_i(a,t)@susceptible`
-     - susceptible fraction of the population
-     - yes
-   * - :ref:`avg_integrand@Integrand, I_i(a,t)@withC`
-     - with condition fraction of the population
-     - yes
-   * - :ref:`avg_integrand@Integrand, I_i(a,t)@prevalence`
-     - prevalence of the condition
-     - yes
-   * - :ref:`avg_integrand@Integrand, I_i(a,t)@Tincidence`
-     - incidence rate relative to total population
-     - yes
-   * - :ref:`avg_integrand@Integrand, I_i(a,t)@mtspecific`
-     - cause specific mortality rate
-     - yes
-   * - :ref:`avg_integrand@Integrand, I_i(a,t)@mtall`
-     - all cause mortality rate
-     - yes
-   * - :ref:`avg_integrand@Integrand, I_i(a,t)@mtstandard`
-     - standardized mortality ratio
-     - yes
-   * - ``mulcov_`` *mulcov_id*
-     - the group covariate multiplier specified by
-       :ref:`mulcov_table@mulcov_id`
-     - no
+    * - Integrand Name
+      - Description
+      - ODE
+    * - :ref:`avg_integrand@Integrand, I_i(a,t)@Sincidence`
+      - incidence rate relative to susceptible population
+      - no
+    * - :ref:`avg_integrand@Integrand, I_i(a,t)@remission`
+      - remission rate
+      - no
+    * - :ref:`avg_integrand@Integrand, I_i(a,t)@mtexcess`
+      - excess mortality rate
+      - no
+    * - :ref:`avg_integrand@Integrand, I_i(a,t)@mtother`
+      - other cause mortality rate
+      - no
+    * - :ref:`avg_integrand@Integrand, I_i(a,t)@mtwith`
+      - with condition mortality rate
+      - no
+    * - :ref:`avg_integrand@Integrand, I_i(a,t)@relrisk`
+      - relative risk
+      - no
+    * - :ref:`avg_integrand@Integrand, I_i(a,t)@susceptible`
+      - susceptible fraction of the population
+      - yes
+    * - :ref:`avg_integrand@Integrand, I_i(a,t)@withC`
+      - with condition fraction of the population
+      - yes
+    * - :ref:`avg_integrand@Integrand, I_i(a,t)@prevalence`
+      - prevalence of the condition
+      - yes
+    * - :ref:`avg_integrand@Integrand, I_i(a,t)@Tincidence`
+      - incidence rate relative to total population
+      - yes
+    * - :ref:`avg_integrand@Integrand, I_i(a,t)@mtspecific`
+      - cause specific mortality rate
+      - yes
+    * - :ref:`avg_integrand@Integrand, I_i(a,t)@mtall`
+      - all cause mortality rate
+      - yes
+    * - :ref:`avg_integrand@Integrand, I_i(a,t)@mtstandard`
+      - standardized mortality ratio
+      - yes
+    * - ``mulcov_`` *mulcov_id*
+      - the group covariate multiplier specified by
+         :ref:`mulcov_table@mulcov_id`
+      - no
 
 {xrst_toc_hidden
-   example/table/integrand_table.py
+    example/table/integrand_table.py
 }
 Example
 *******

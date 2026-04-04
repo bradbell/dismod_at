@@ -28,41 +28,41 @@ density
 *******
 This argument has prototype
 
-   ``density_enum`` *density*
+    ``density_enum`` *density*
 
 It specifies the :ref:`density<get_density_table@density_enum>`
 for the distribution that we are simulating.
 The following table specifies the meaning of this choice:
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - ``uniform_enum``
-     - not allowed
-   * - ``binomial_enum``
-     - not allowed
-   * - ``gaussian_enum``
-     - :ref:`statistic@Log-Density Function, D@Gaussian`
-   * - ``cen_gaussian_enum``
-     - :ref:`statistic@Log-Density Function, D@Censored Gaussian`
-   * - ``log_gaussian_enum``
-     - :ref:`statistic@Log-Density Function, D@Log-Gaussian`
-   * - ``laplace_enum``
-     - :ref:`statistic@Log-Density Function, D@Laplace`
-   * - ``cen_laplace_enum``
-     - :ref:`statistic@Log-Density Function, D@Censored Laplace`
-   * - ``log_laplace_enum``
-     - :ref:`statistic@Log-Density Function, D@Log-Laplace`
-   * - ``students_enum``
-     - :ref:`statistic@Log-Density Function, D@Student's-t`
-   * - ``log_students_enum``
-     - :ref:`statistic@Log-Density Function, D@Log-Student's-t`
+    * - ``uniform_enum``
+      - not allowed
+    * - ``binomial_enum``
+      - not allowed
+    * - ``gaussian_enum``
+      - :ref:`statistic@Log-Density Function, D@Gaussian`
+    * - ``cen_gaussian_enum``
+      - :ref:`statistic@Log-Density Function, D@Censored Gaussian`
+    * - ``log_gaussian_enum``
+      - :ref:`statistic@Log-Density Function, D@Log-Gaussian`
+    * - ``laplace_enum``
+      - :ref:`statistic@Log-Density Function, D@Laplace`
+    * - ``cen_laplace_enum``
+      - :ref:`statistic@Log-Density Function, D@Censored Laplace`
+    * - ``log_laplace_enum``
+      - :ref:`statistic@Log-Density Function, D@Log-Laplace`
+    * - ``students_enum``
+      - :ref:`statistic@Log-Density Function, D@Student's-t`
+    * - ``log_students_enum``
+      - :ref:`statistic@Log-Density Function, D@Log-Student's-t`
 
 mu
 **
 This argument has prototype
 
-   ``double`` *mu*
+    ``double`` *mu*
 
 In the case were *density* is
 :ref:`density_table@Notation@Linear` ,
@@ -75,7 +75,7 @@ delta
 *****
 This argument has prototype
 
-   ``double`` *delta*
+    ``double`` *delta*
 
 It is assumed *delta* is greater than zero and not infinity.
 
@@ -92,13 +92,13 @@ If the density is
 :ref:`density_table@Notation@Log Scaled` ,
 *delta* is the standard deviation for
 
-   ``log`` ( *z* + *eta* ) ``- log`` ( *mu* + *eta*  )
+    ``log`` ( *z* + *eta* ) ``- log`` ( *mu* + *eta*  )
 
 eta
 ***
 This argument has prototype
 
-   ``double`` *eta*
+    ``double`` *eta*
 
 In the case were *density* is
 ``log_gaussian_enum`` , ``log_laplace_enum``
@@ -111,7 +111,7 @@ nu
 **
 This argument has prototype
 
-   ``double`` *nu*
+    ``double`` *nu*
 
 In the case were *density* is
 ``students_enum`` or ``log_students_enum`` , it is
@@ -122,12 +122,12 @@ z
 *
 The return value has prototype
 
-   ``double`` *z*
+    ``double`` *z*
 
 It simulates a sample from the specified distribution that is independent
 for the any previous return values.
 {xrst_toc_hidden
-   example/devel/utility/sim_random_xam.cpp
+    example/devel/utility/sim_random_xam.cpp
 }
 Example
 *******
@@ -145,70 +145,70 @@ The file :ref:`sim_random_xam.cpp-name` is an example and test of this simulatio
 namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 
 double sim_random(
-   density_enum density,
-   double       mu     ,
-   double       delta  ,
-   double       eta    ,
-   double nu           )
-{  gsl_rng* rng = CppAD::mixed::get_gsl_rng();
-   //
-   assert( density != uniform_enum && density != binomial_enum );
-   assert( delta > 0.0 );
-   // -----------------------------------------------------------------------
-   // linear Gaussian
-   if( density == gaussian_enum )
-      return mu + gsl_ran_gaussian(rng, delta);
-   if( density == cen_gaussian_enum )
-      return std::max(0.0, mu + gsl_ran_gaussian(rng, delta) );
-   //
-   // linear Laplace
-   if( density == laplace_enum )
-   {  double width = delta / std::sqrt(2.0);
-      return mu + gsl_ran_laplace(rng, width);
-   }
-   if( density == cen_laplace_enum )
-   {  double width = delta / std::sqrt(2.0);
-      return std::max(0.0, mu + gsl_ran_laplace(rng, width) );
-   }
-   //
-   // linear students
-   if( density == students_enum )
-   {  assert( nu > 2.0 );
-      double x = gsl_ran_tdist(rng, nu);
-      return  mu +  x * std::sqrt( (nu - 2.0) / nu ) * delta;
-   }
-   // ----------------------------------------------------------------------
-   // log transformed cases
-   assert( mu + eta > 0.0 );
-   //
-   // difference from mean in transformed space
-   double d_log;
-   if( density == log_gaussian_enum || density == cen_log_gaussian_enum )
-   {  // log Gaussian
-      d_log = gsl_ran_gaussian(rng, delta);
-   }
-   else if( density == log_laplace_enum || density == cen_log_laplace_enum )
-   {  // log Laplace
-      double width = delta / std::sqrt(2.0);
-      d_log = gsl_ran_laplace(rng, width);
-   }
-   else
-   {  // log Students
-      assert( density == log_students_enum );
-      assert( nu > 2.0 );
-      double x = gsl_ran_tdist(rng, nu);
-      d_log = x * std::sqrt( (nu - 2.0) / nu ) * delta;
-   }
-   //
-   // d_log = log(z + eta) - log(mu + eta)
-   double z = std::exp( d_log ) * (mu + eta) - eta;
-   //
-   // log censored cases
-   if( density == cen_log_gaussian_enum || density == cen_log_laplace_enum )
-      z = std::max(0.0, z);
-   //
-   // log and not censored
-   return z;
+    density_enum density,
+    double       mu     ,
+    double       delta  ,
+    double       eta    ,
+    double nu           )
+{   gsl_rng* rng = CppAD::mixed::get_gsl_rng();
+    //
+    assert( density != uniform_enum && density != binomial_enum );
+    assert( delta > 0.0 );
+    // -----------------------------------------------------------------------
+    // linear Gaussian
+    if( density == gaussian_enum )
+        return mu + gsl_ran_gaussian(rng, delta);
+    if( density == cen_gaussian_enum )
+        return std::max(0.0, mu + gsl_ran_gaussian(rng, delta) );
+    //
+    // linear Laplace
+    if( density == laplace_enum )
+    {   double width = delta / std::sqrt(2.0);
+        return mu + gsl_ran_laplace(rng, width);
+    }
+    if( density == cen_laplace_enum )
+    {   double width = delta / std::sqrt(2.0);
+        return std::max(0.0, mu + gsl_ran_laplace(rng, width) );
+    }
+    //
+    // linear students
+    if( density == students_enum )
+    {   assert( nu > 2.0 );
+        double x = gsl_ran_tdist(rng, nu);
+        return  mu +  x * std::sqrt( (nu - 2.0) / nu ) * delta;
+    }
+    // ----------------------------------------------------------------------
+    // log transformed cases
+    assert( mu + eta > 0.0 );
+    //
+    // difference from mean in transformed space
+    double d_log;
+    if( density == log_gaussian_enum || density == cen_log_gaussian_enum )
+    {   // log Gaussian
+        d_log = gsl_ran_gaussian(rng, delta);
+    }
+    else if( density == log_laplace_enum || density == cen_log_laplace_enum )
+    {   // log Laplace
+        double width = delta / std::sqrt(2.0);
+        d_log = gsl_ran_laplace(rng, width);
+    }
+    else
+    {   // log Students
+        assert( density == log_students_enum );
+        assert( nu > 2.0 );
+        double x = gsl_ran_tdist(rng, nu);
+        d_log = x * std::sqrt( (nu - 2.0) / nu ) * delta;
+    }
+    //
+    // d_log = log(z + eta) - log(mu + eta)
+    double z = std::exp( d_log ) * (mu + eta) - eta;
+    //
+    // log censored cases
+    if( density == cen_log_gaussian_enum || density == cen_log_laplace_enum )
+        z = std::max(0.0, z);
+    //
+    // log and not censored
+    return z;
 }
 
 } // END_DISMOD_AT_NAMESPACE

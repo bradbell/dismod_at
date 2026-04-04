@@ -190,7 +190,7 @@ If :math:`S` and :math:`C` satisfy the dismod_at
 
 .. math::
 
-   P' = \iota  [ 1 - P ] - \rho P - \chi  [ 1 - P] P
+    P' = \iota  [ 1 - P ] - \rho P - \chi  [ 1 - P] P
 
 We can therefore solve for prevalence without other cause mortality
 :math:`\omega` or all cause mortality :math:`\omega + \chi P`.
@@ -206,12 +206,12 @@ We can therefore solve for prevalence without other cause mortality
    we can compute :math:`\omega = \alpha - \chi P`.
    Furthermore
 
-   .. math::
+    .. math::
 
-      (S + C)' = - \alpha (S + C)
+        (S + C)' = - \alpha (S + C)
 
-   So we can also compute :math:`S + C`, and
-   :math:`C = P (S + C)`,
+    So we can also compute :math:`S + C`, and
+    :math:`C = P (S + C)`,
 #. Given the original ODE, we know that the true solution for
    :math:`S`, must be positive, and :math:`C`, :math:`P` must be
    non-negative.

@@ -36,7 +36,7 @@ for each complete set of :ref:`model_variables-name` ,
 in the ``sample`` table.
 If *n_var* is the number of rows in the :ref:`var_table-name` ,
 
-   *sample_index* = ``mod`` ( *sample_id* , *n_var* )
+    *sample_index* = ``mod`` ( *sample_id* , *n_var* )
 
 The range of *sample_index* is form zero to
 :ref:`simulate_command@number_simulate` minus one.
@@ -49,7 +49,7 @@ that *var_value* corresponds to;
 see :ref:`var_table@var_id` .
 If *n_var* and *sample* index are as above,
 
-   *sample_id* = *sample_index* * *n_var* + *var_id*
+    *sample_id* = *sample_index* * *n_var* + *var_id*
 
 var_value
 *********

@@ -30,7 +30,7 @@
 # {xrst_end sql_command}
 # ---------------------------------------------------------------------------
 def sql_command(connection, command) :
-   cursor = connection.cursor()
-   cursor.execute(command)
-   connection.commit()
-   return cursor.fetchall()
+    cursor = connection.cursor()
+    cursor.execute(command)
+    connection.commit()
+    return cursor.fetchall()

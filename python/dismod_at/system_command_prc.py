@@ -105,105 +105,105 @@
 def system_command_prc(
 # BEGIN syntax
 # result = system_command_prc(
-   command                ,
-   print_command  = True  ,
-   return_stdout  = False ,
-   return_stderr  = False ,
-   file_stdout    = None  ,
-   file_stderr    = None  ,
-   write_command  = False ,
+    command                ,
+    print_command  = True  ,
+    return_stdout  = False ,
+    return_stderr  = False ,
+    file_stdout    = None  ,
+    file_stderr    = None  ,
+    write_command  = False ,
 # )
 # END syntax
-   ) :
-   import sys
-   import subprocess
-   #
-   #
-   if write_command :
-      assert (file_stdout is not None) or (file_stderr is not None)
-   if file_stdout is not None :
-      assert not return_stdout
-   if file_stderr is not None :
-      assert not return_stderr
-   if file_stdout is None :
-      assert not write_command
-   #
-   # command_str
-   command_str = ' '.join(command)
-   #
-   # print
-   if print_command :
-      print(command_str)
-   #
-   # write
-   if write_command :
-      if file_stdout is not None :
-         file_stdout.write( f'command = {command_str}\n' )
-         file_stdout.flush()
-      if file_stderr is not None :
-         file_stderr.write( f'command = {command_str}\n' )
-         file_stderr.flush()
-   #
-   # stdout
-   if return_stdout :
-      stdout = subprocess.PIPE
-   else :
-      stdout = file_stdout
-   #
-   # stderr
-   if return_stderr or file_stderr is None :
-      stderr = subprocess.PIPE
-   else :
-      stderr = file_stderr
-   #
-   # except_msg, subprocess_return
-   except_msg        = None
-   subprocess_return = subprocess.CompletedProcess(args=command, returncode=1)
-   try :
-      subprocess_return = subprocess.run(
-         command,
-         stdout   = stdout  ,
-         stderr   = stderr  ,
-         encoding = 'utf-8' ,
-      )
-   except subprocess.CalledProcessError as e :
-      if e.stdout == None or e.stdout == "" :
-         except_msg = 'CalledProcessError with an empty error message.'
-      else :
-         except_msg = e.stderr
-   except :
-      except_msg = str(sys.exception()) + ' exception'
-   #
-   # file_stderr, subprocess_return.stderr
-   if except_msg != None :
-      subprocess_return.stderr = except_msg
-      if file_stderr is not None :
-         file_stderr.write(except_msg)
-   #
-   # returncode
-   returncode = subprocess_return.returncode
-   #
-   # subprocess_return.stderr
-   if returncode != 0 :
-      error_msg  = 'system_command_prc failed:\n'
-      error_msg += f'returncode = {returncode}\n'
-      error_msg += f'command = {command_str}\nmessage = \n'
-      error_msg += subprocess_return.stderr
-      subprocess_return.stderr = error_msg
-   #
-   # result
-   if return_stderr :
-      result = subprocess_return
-   elif return_stdout :
-      result = subprocess_return.stdout
-   else :
-      result = None
-   #
-   # capture_stderr
-   capture_stderr = return_stderr or (file_stderr is not None)
-   if capture_stderr :
-      return result
-   else :
-      assert returncode == 0, subprocess_return.stderr
-   #
-   return result
+    ) :
+    import sys
+    import subprocess
+    #
+    #
+    if write_command :
+        assert (file_stdout is not None) or (file_stderr is not None)
+    if file_stdout is not None :
+        assert not return_stdout
+    if file_stderr is not None :
+        assert not return_stderr
+    if file_stdout is None :
+        assert not write_command
+    #
+    # command_str
+    command_str = ' '.join(command)
+    #
+    # print
+    if print_command :
+        print(command_str)
+    #
+    # write
+    if write_command :
+        if file_stdout is not None :
+            file_stdout.write( f'command = {command_str}\n' )
+            file_stdout.flush()
+        if file_stderr is not None :
+            file_stderr.write( f'command = {command_str}\n' )
+            file_stderr.flush()
+    #
+    # stdout
+    if return_stdout :
+        stdout = subprocess.PIPE
+    else :
+        stdout = file_stdout
+    #
+    # stderr
+    if return_stderr or file_stderr is None :
+        stderr = subprocess.PIPE
+    else :
+        stderr = file_stderr
+    #
+    # except_msg, subprocess_return
+    except_msg        = None
+    subprocess_return = subprocess.CompletedProcess(args=command, returncode=1)
+    try :
+        subprocess_return = subprocess.run(
+            command,
+            stdout   = stdout  ,
+            stderr   = stderr  ,
+            encoding = 'utf-8' ,
+        )
+    except subprocess.CalledProcessError as e :
+        if e.stdout == None or e.stdout == "" :
+            except_msg = 'CalledProcessError with an empty error message.'
+        else :
+            except_msg = e.stderr
+    except :
+        except_msg = str(sys.exception()) + ' exception'
+    #
+    # file_stderr, subprocess_return.stderr
+    if except_msg != None :
+        subprocess_return.stderr = except_msg
+        if file_stderr is not None :
+            file_stderr.write(except_msg)
+    #
+    # returncode
+    returncode = subprocess_return.returncode
+    #
+    # subprocess_return.stderr
+    if returncode != 0 :
+        error_msg  = 'system_command_prc failed:\n'
+        error_msg += f'returncode = {returncode}\n'
+        error_msg += f'command = {command_str}\nmessage = \n'
+        error_msg += subprocess_return.stderr
+        subprocess_return.stderr = error_msg
+    #
+    # result
+    if return_stderr :
+        result = subprocess_return
+    elif return_stdout :
+        result = subprocess_return.stdout
+    else :
+        result = None
+    #
+    # capture_stderr
+    capture_stderr = return_stderr or (file_stderr is not None)
+    if capture_stderr :
+        return result
+    else :
+        assert returncode == 0, subprocess_return.stderr
+    #
+    return result

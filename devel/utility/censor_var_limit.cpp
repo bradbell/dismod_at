@@ -18,8 +18,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_PROTOTYPE
-   // END_PROTOTYPE
+    // BEGIN_PROTOTYPE
+    // END_PROTOTYPE
 }
 
 lower, upper
@@ -64,32 +64,32 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 
 // BEGIN_PROTOTYPE
 void censor_var_limit(
-   CppAD::vector<double>&                    var_out       ,
-   const CppAD::vector<double>&              var_in        ,
-   const pack_prior&                         var2prior     ,
-   const CppAD::vector<prior_struct>&        prior_table   )
+    CppAD::vector<double>&                    var_out       ,
+    const CppAD::vector<double>&              var_in        ,
+    const pack_prior&                         var2prior     ,
+    const CppAD::vector<prior_struct>&        prior_table   )
 // END_PROTOTYPE
-{  //
-   assert( var_out.size() == var2prior.size() );
-   assert( var_in.size() == var2prior.size() );
-   //
-   for(size_t var_id = 0; var_id < var_in.size(); ++var_id)
-   {  double const_value      = var2prior.const_value(var_id);
-      size_t value_prior_id   = var2prior.value_prior_id(var_id);
-      double lower = const_value;
-      double upper = const_value;
-      if( CppAD::isnan(const_value) )
-      {  assert( value_prior_id != DISMOD_AT_NULL_SIZE_T );
-         lower = prior_table[value_prior_id].lower;
-         upper = prior_table[value_prior_id].upper;
-      }
-      assert( lower <= upper );
-      double value    = var_in[var_id];
-      value           = std::max(value, lower);
-      value           = std::min(value, upper);
-      var_out[var_id] = value;
-   }
-   return;
+{   //
+    assert( var_out.size() == var2prior.size() );
+    assert( var_in.size() == var2prior.size() );
+    //
+    for(size_t var_id = 0; var_id < var_in.size(); ++var_id)
+    {   double const_value      = var2prior.const_value(var_id);
+        size_t value_prior_id   = var2prior.value_prior_id(var_id);
+        double lower = const_value;
+        double upper = const_value;
+        if( CppAD::isnan(const_value) )
+        {   assert( value_prior_id != DISMOD_AT_NULL_SIZE_T );
+            lower = prior_table[value_prior_id].lower;
+            upper = prior_table[value_prior_id].upper;
+        }
+        assert( lower <= upper );
+        double value    = var_in[var_id];
+        value           = std::max(value, lower);
+        value           = std::min(value, upper);
+        var_out[var_id] = value;
+    }
+    return;
 }
 
 } // END DISMOD_AT_NAMESPACE

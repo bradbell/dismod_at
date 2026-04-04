@@ -5,13 +5,13 @@ set -e -u
 #
 if [ ! -e dock_dismod_at.sh ]
 then
-   echo 'patch_dock_dismod_at.sh: dock_dismod_at.sh is not in current directory'
-   eixt 1
+    echo 'patch_dock_dismod_at.sh: dock_dismod_at.sh is not in current directory'
+    eixt 1
 fi
 if grep 'git checkout main' dock_dismod_at.sh > /dev/null
 then
-   echo 'patch_dock_dismod_at.sh: looks like this patch was already applied'
-   exit 1
+    echo 'patch_dock_dismod_at.sh: looks like this patch was already applied'
+    exit 1
 fi
 #
 # sed.$$

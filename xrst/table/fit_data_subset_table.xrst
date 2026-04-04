@@ -22,7 +22,7 @@ Its initial value is zero, and it increments by one for each row.
 The *fit_data_subset_id* column is also a foreign key for the
 :ref:`data_subset_table-name` ; i.e.,
 
-   *data_subset_id* = *fit_data_subset_id*
+    *data_subset_id* = *fit_data_subset_id*
 
 In addition, the size of both tables is the same.
 

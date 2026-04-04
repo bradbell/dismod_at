@@ -9,13 +9,13 @@ set -e -u
 #
 # {xrst_begin dock_dismod_at.sh}
 # {xrst_spell
-#     busybox
-#     cp
-#     dockerfile
-#     get get
-#     podman
-#     rm
-#     rmi
+#       busybox
+#       cp
+#       dockerfile
+#       get get
+#       podman
+#       rm
+#       rmi
 # }
 # {xrst_comment_ch #}
 #
@@ -42,23 +42,23 @@ set -e -u
 # Images
 # ******
 # #.  The headers below are image names and the text below an image name
-#     is the command that creates the image.
+#      is the command that creates the image.
 # #.  The *build_type* in each image name is either
-#     ``debug`` or ``release`` ; see
-#     :ref:`dock_dismod_at.sh@build_type` .
+#      ``debug`` or ``release`` ; see
+#      :ref:`dock_dismod_at.sh@build_type` .
 # #.  Each image depends on its previous image; e.g., if you
-#     rebuild ``dismod_at.base`` , you must rebuild all the other images.
-#     The :ref:`release_notes-name` will mention when new versions
-#     of the images are available.
+#      rebuild ``dismod_at.base`` , you must rebuild all the other images.
+#      The :ref:`release_notes-name` will mention when new versions
+#      of the images are available.
 # #.  The image commands above will not execute if the corresponding image
-#     already exists.
-#     You must remove containers that use an image and then remove the image,
-#     before you can create a new version of the image.
+#      already exists.
+#      You must remove containers that use an image and then remove the image,
+#      before you can create a new version of the image.
 # #.  The commands above will create a
-#     `Dockerfile <https://docs.docker.com/reference/glossary/>`_
-#     in the current working directory.
-#     If such a file already exists, it will need to be moved or deleted
-#     before the command can be executed.
+#      `Dockerfile <https://docs.docker.com/reference/glossary/>`_
+#      in the current working directory.
+#      If such a file already exists, it will need to be moved or deleted
+#      before the command can be executed.
 #
 # dismod_at.base
 # ==============
@@ -110,7 +110,7 @@ set -e -u
 # ``docker`` or ``podman`` :
 # {xrst_spell_off}
 # {xrst_code sh}
-   driver='podman'
+    driver='podman'
 # {xrst_code}
 # {xrst_spell_on}
 # Above and below we refer to the value of this shell variable as *driver* .
@@ -123,7 +123,7 @@ set -e -u
 # ``debug`` or ``release`` :
 # The debug version is much slower but does much more error checking.
 # {xrst_code sh}
-   build_type='release'
+    build_type='release'
 # {xrst_code}
 # The same base image, ``dismod_at.base`` can be used for both
 # debug and release builds.
@@ -136,13 +136,13 @@ set -e -u
 # standard output and standard error to a file.
 # For example,
 #
-#     ``./dock_dismod_at.sh base >&`` *log_file*
+#      ``./dock_dismod_at.sh base >&`` *log_file*
 #
 # will redirect standard output and standard error to *log_file* .
 # If you do this, you will not see the progress during execution.
 # If also want to monitor the progress, in another window use
 #
-#     ``tail -f`` *log_file*
+#      ``tail -f`` *log_file*
 #
 # This ``tail`` command will not terminate until you enter
 # control-C in the window where it is running.
@@ -154,15 +154,15 @@ set -e -u
 # installed on your system.
 # You can test this on your system by trying to execute the following command:
 #
-#     *driver* ``run busybox echo`` ``'Hello World'``
+#      *driver* ``run busybox echo`` ``'Hello World'``
 #
 # dismod_at_version
 # *****************
 # This script can build the following version of ``dismod_at.dismod_at``
 # {xrst_spell_off}
 # {xrst_code sh}
-   dismod_at_version='2026.0.1'
-   dismod_at_hash='cac2d8bc518ac7187d9aa3bcb0e0b2ce99b4db8b'
+    dismod_at_version='2026.0.1'
+    dismod_at_hash='cac2d8bc518ac7187d9aa3bcb0e0b2ce99b4db8b'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -171,8 +171,8 @@ set -e -u
 # This script can build the following version of ``dismod_at.at_cascade``
 # {xrst_spell_off}
 # {xrst_code sh}
-   at_cascade_version='2026.0.0'
-   at_cascade_hash='78329a9aaf06e797774d9a6e8fd531e3e8694d44'
+    at_cascade_version='2026.0.0'
+    at_cascade_hash='78329a9aaf06e797774d9a6e8fd531e3e8694d44'
 # {xrst_code}
 # {xrst_spell_on}
 #
@@ -181,74 +181,74 @@ set -e -u
 ok='true'
 if [ "$#" != 1 ]
 then
-   ok='false'
+    ok='false'
 elif [ "$1" != 'base' ] \
 && [ "$1" != 'mixed' ] \
 && [ "$1" != 'dismod_at' ] \
 && [ "$1" != 'at_cascade' ]
 then
-   ok='false'
+    ok='false'
 fi
 if [ "$ok" != 'true' ]
 then
-   echo 'usage: dock_dismod_at.sh base'
-   echo 'usage: dock_dismod_at.sh mixed'
-   echo 'usage: dock_dismod_at.sh dismod_at'
-   echo 'usage: dock_dismod_at.sh at_cascade'
-   exit 1
+    echo 'usage: dock_dismod_at.sh base'
+    echo 'usage: dock_dismod_at.sh mixed'
+    echo 'usage: dock_dismod_at.sh dismod_at'
+    echo 'usage: dock_dismod_at.sh at_cascade'
+    exit 1
 fi
 # ---------------------------------------------------------------------------
 if ! $driver ps > /dev/null
 then
-   echo "Cannot run $driver ps"
-   if [ "$driver" == 'docker' ]
-   then
+    echo "Cannot run $driver ps"
+    if [ "$driver" == 'docker' ]
+    then
 cat << EOF
 If docker daemon is not running perhaps one of the following will start it:
-   sudo systemctl start docker
-   sudo service docker start
+    sudo systemctl start docker
+    sudo service docker start
 If it is a permission problem perhaps one of the following will get permission:
-   sudo groupadd docker
-   sudo usermod -aG docker $USER
+    sudo groupadd docker
+    sudo usermod -aG docker $USER
 then log out and long back on this system.
 EOF
-   fi
-   exit 1
+    fi
+    exit 1
 fi
 # ---------------------------------------------------------------------------
 # Build images
 # ----------------------------------------------------------------------------
 if [ "$1" == 'base' ]
 then
-   image_name="dismod_at.base"
+    image_name="dismod_at.base"
 else
-   image_name="dismod_at.$1.$build_type"
+    image_name="dismod_at.$1.$build_type"
 fi
 if [ -e 'Dockerfile' ]
 then
-   echo 'dock_dismod_at.sh Error'
-   echo "Must first remove ./Dockerfile"
-   exit 1
+    echo 'dock_dismod_at.sh Error'
+    echo "Must first remove ./Dockerfile"
+    exit 1
 fi
 if $driver ps -a | grep "$image_name" > /dev/null
 then
-   echo 'dock_dismod_at.sh Error'
-   echo 'Must first remove following containers:'
-   $driver ps -a | head -1
-   $driver ps -a | grep "$image_name"
-   echo 'Use the following command for each container_id above:'
-   echo "$driver rm contain_id"
-   exit 1
+    echo 'dock_dismod_at.sh Error'
+    echo 'Must first remove following containers:'
+    $driver ps -a | head -1
+    $driver ps -a | grep "$image_name"
+    echo 'Use the following command for each container_id above:'
+    echo "$driver rm contain_id"
+    exit 1
 fi
 if $driver images | grep "$image_name " > /dev/null
 then
-   echo 'dock_dismod_at.sh Error'
-   echo 'Must first remove following image:'
-   $driver images | head -1
-   $driver images | grep "$image_name "
-   echo 'Use the following command to remove the image above:'
-   echo "$driver rmi image_id"
-   exit 1
+    echo 'dock_dismod_at.sh Error'
+    echo 'Must first remove following image:'
+    $driver images | head -1
+    $driver images | grep "$image_name "
+    echo 'Use the following command to remove the image above:'
+    echo "$driver rmi image_id"
+    exit 1
 fi
 echo 'Creating Dockerfile'
 #
@@ -313,9 +313,9 @@ grep "$dismod_at_version" CMakeLists.txt > /dev/null
 #
 # Change bin/install_settings.py
 RUN sed -i bin/install_settings.py \
-   -e "s|^dismod_at_prefix *=.*|dismod_at_prefix = '$prefix'|" \
-   -e "s|^build_type *=.*|build_type = '$build_type'|"  \
-   -e "s|^python3_executable *=.*|python3_executable = '$prefix/bin/python3'|"
+    -e "s|^dismod_at_prefix *=.*|dismod_at_prefix = '$prefix'|" \
+    -e "s|^build_type *=.*|build_type = '$build_type'|"  \
+    -e "s|^python3_executable *=.*|python3_executable = '$prefix/bin/python3'|"
 #
 # Install cppad_mixed
 RUN bin/get_cppad_mixed.sh
@@ -394,8 +394,8 @@ WORKDIR /home/work
 EOF
 # ----------------------------------------------------------------------------
 else
-   echo 'dock_dismod_at.sh: program error'
-   exit 1
+    echo 'dock_dismod_at.sh: program error'
+    exit 1
 fi
 #
 echo "Creating $image_name"

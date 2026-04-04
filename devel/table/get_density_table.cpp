@@ -29,7 +29,7 @@ db
 **
 The argument *db* has prototype
 
-   ``sqlite3`` * *db*
+    ``sqlite3`` * *db*
 
 and is an open connection to the database.
 
@@ -37,11 +37,11 @@ density_table
 *************
 The return value *density_table* has prototype
 
-   ``CppAD::vector<density_enum>`` *density_table*
+    ``CppAD::vector<density_enum>`` *density_table*
 
 For each :ref:`density_table@density_id` ,
 
-   *density_table* [ *density_id* ]
+    *density_table* [ *density_id* ]
 
 is the enum value for the corresponding
 :ref:`density_table@density_name` .
@@ -51,21 +51,21 @@ density_enum
 This enum type has the following values:
 
 .. csv-table::
-   :widths: auto
-   :align: right
+    :widths: auto
+    :align: right
 
-   *value*,*density_name*
-   ``uniform_enum``,``uniform``
-   ``gaussian_enum``,``gaussian``
-   ``cen_gaussian_enum``,``c_gaussian``
-   ``log_gaussian_enum``,``log_gaussian``
-   ``cen_log_gaussian_enum``,``cen_log_gaussian``
-   ``laplace_enum``,``laplace``
-   ``cen_laplace_enum``,``laplace``
-   ``log_laplace_enum``,``log_laplace``
-   ``cen_log_laplace_enum``,``cen_log_laplace``
-   ``students_enum``,``students``
-   ``log_students_enum``,``log_students``
+    *value*,*density_name*
+    ``uniform_enum``,``uniform``
+    ``gaussian_enum``,``gaussian``
+    ``cen_gaussian_enum``,``c_gaussian``
+    ``log_gaussian_enum``,``log_gaussian``
+    ``cen_log_gaussian_enum``,``cen_log_gaussian``
+    ``laplace_enum``,``laplace``
+    ``cen_laplace_enum``,``laplace``
+    ``log_laplace_enum``,``log_laplace``
+    ``cen_log_laplace_enum``,``cen_log_laplace``
+    ``students_enum``,``students``
+    ``log_students_enum``,``log_students``
 
 The number of these enum values is ``number_density_enum`` .
 
@@ -94,7 +94,7 @@ If *density* , is an ``density_enum`` value,
 ``density_enum2name`` [ *density* ] is a ``const char*[]``
 representation of the *density_name* corresponding to the enum value.
 {xrst_toc_hidden
-   example/devel/table/get_density_table_xam.cpp
+    example/devel/table/get_density_table_xam.cpp
 }
 Example
 *******
@@ -117,105 +117,105 @@ namespace dismod_at { // BEGIN DISMOD_AT_NAMESPACE
 // density names in scame order as enum type in get_density.hpp
 // BEGIN_SORT_THIS_LINE_PLUS_2
 const char* density_enum2name[] = {
-   "binomial",
-   "cen_gaussian",
-   "cen_laplace",
-   "cen_log_gaussian",
-   "cen_log_laplace",
-   "gaussian",
-   "laplace",
-   "log_gaussian",
-   "log_laplace",
-   "log_students",
-   "students",
-   "uniform"
+    "binomial",
+    "cen_gaussian",
+    "cen_laplace",
+    "cen_log_gaussian",
+    "cen_log_laplace",
+    "gaussian",
+    "laplace",
+    "log_gaussian",
+    "log_laplace",
+    "log_students",
+    "students",
+    "uniform"
 };
 // END_SORT_THIS_LINE_MINUS_2
 
 
 CppAD::vector<density_enum> get_density_table(sqlite3* db)
-{  using std::string;
-   using CppAD::to_string;
-   using CppAD::vector;
-   //
-   // for error messaging
-   string message;
-   //
-   // check density names in same order as enum type in get_density_table.hpp
+{   using std::string;
+    using CppAD::to_string;
+    using CppAD::vector;
+    //
+    // for error messaging
+    string message;
+    //
+    // check density names in same order as enum type in get_density_table.hpp
 # ifndef NDEBUG
-   const char** enum2name = density_enum2name;
-   // BEGIN_SORT_THIS_LINE_PLUS_1
-   assert( string("binomial")         == enum2name[binomial_enum] );
-   assert( string("cen_gaussian")     == enum2name[cen_gaussian_enum] );
-   assert( string("cen_laplace")      == enum2name[cen_laplace_enum] );
-   assert( string("cen_log_gaussian") == enum2name[cen_log_gaussian_enum] );
-   assert( string("cen_log_laplace")  == enum2name[cen_log_laplace_enum] );
-   assert( string("gaussian")         == enum2name[gaussian_enum] );
-   assert( string("laplace")          == enum2name[laplace_enum] );
-   assert( string("log_gaussian")     == enum2name[log_gaussian_enum] );
-   assert( string("log_laplace")      == enum2name[log_laplace_enum] );
-   assert( string("log_students")     == enum2name[log_students_enum] );
-   assert( string("students")         == enum2name[students_enum] );
-   assert( string("uniform")          == enum2name[uniform_enum] );
-   // END_SORT_THIS_LINE_MINUS_1
+    const char** enum2name = density_enum2name;
+    // BEGIN_SORT_THIS_LINE_PLUS_1
+    assert( string("binomial")         == enum2name[binomial_enum] );
+    assert( string("cen_gaussian")     == enum2name[cen_gaussian_enum] );
+    assert( string("cen_laplace")      == enum2name[cen_laplace_enum] );
+    assert( string("cen_log_gaussian") == enum2name[cen_log_gaussian_enum] );
+    assert( string("cen_log_laplace")  == enum2name[cen_log_laplace_enum] );
+    assert( string("gaussian")         == enum2name[gaussian_enum] );
+    assert( string("laplace")          == enum2name[laplace_enum] );
+    assert( string("log_gaussian")     == enum2name[log_gaussian_enum] );
+    assert( string("log_laplace")      == enum2name[log_laplace_enum] );
+    assert( string("log_students")     == enum2name[log_students_enum] );
+    assert( string("students")         == enum2name[students_enum] );
+    assert( string("uniform")          == enum2name[uniform_enum] );
+    // END_SORT_THIS_LINE_MINUS_1
 # endif
-   //
-   vector<bool> found(number_density_enum);
-   for(size_t i = 0; i < size_t(number_density_enum); i++)
-      found[i] = false;
-   //
-   string table_name  = "density";
-   size_t n_density   = check_table_id(db, table_name);
-   //
-   string column_name =  "density_name";
-   CppAD::vector<string>  density_name;
-   get_table_column(db, table_name, column_name, density_name);
-   assert( n_density == density_name.size() );
-   //
-   CppAD::vector<density_enum> density_table(n_density);
-   for(size_t density_id = 0; density_id < n_density; density_id++)
-   {  string name          = density_name[density_id];
-      density_enum density = number_density_enum;
-      for(size_t j = 0; j < number_density_enum; ++j)
-      {  if( name == density_enum2name[j] )
-            density = density_enum(j);
-      }
-      if( density == number_density_enum )
-      {  string msg  = name;
-         msg        += " is not a valid choice for a density_name";
-         error_exit(msg, table_name, density_id);
-      }
-      if( found[density] )
-      {  string msg = "The density_name " + name;
-         msg += " appears more than once";
-         error_exit(msg, table_name, density_id);
-      }
-      found[density] = true;
-      density_table[density_id] = density;
-   }
-   return density_table;
+    //
+    vector<bool> found(number_density_enum);
+    for(size_t i = 0; i < size_t(number_density_enum); i++)
+        found[i] = false;
+    //
+    string table_name  = "density";
+    size_t n_density   = check_table_id(db, table_name);
+    //
+    string column_name =  "density_name";
+    CppAD::vector<string>  density_name;
+    get_table_column(db, table_name, column_name, density_name);
+    assert( n_density == density_name.size() );
+    //
+    CppAD::vector<density_enum> density_table(n_density);
+    for(size_t density_id = 0; density_id < n_density; density_id++)
+    {   string name          = density_name[density_id];
+        density_enum density = number_density_enum;
+        for(size_t j = 0; j < number_density_enum; ++j)
+        {   if( name == density_enum2name[j] )
+                density = density_enum(j);
+        }
+        if( density == number_density_enum )
+        {   string msg  = name;
+            msg        += " is not a valid choice for a density_name";
+            error_exit(msg, table_name, density_id);
+        }
+        if( found[density] )
+        {   string msg = "The density_name " + name;
+            msg += " appears more than once";
+            error_exit(msg, table_name, density_id);
+        }
+        found[density] = true;
+        density_table[density_id] = density;
+    }
+    return density_table;
 }
 bool log_density(density_enum density)
-{  bool result = density == log_gaussian_enum;
-   result     |= density == cen_log_gaussian_enum;
-   result     |= density == log_laplace_enum;
-   result     |= density == cen_log_laplace_enum;
-   result     |= density == log_students_enum;
-   return result;
+{   bool result = density == log_gaussian_enum;
+    result     |= density == cen_log_gaussian_enum;
+    result     |= density == log_laplace_enum;
+    result     |= density == cen_log_laplace_enum;
+    result     |= density == log_students_enum;
+    return result;
 }
 bool nonsmooth_density(density_enum density)
-{  bool result = density == laplace_enum;
-   result     |= density == cen_laplace_enum;
-   result     |= density == log_laplace_enum;
-   result     |= density == cen_log_laplace_enum;
-   return result;
+{   bool result = density == laplace_enum;
+    result     |= density == cen_laplace_enum;
+    result     |= density == log_laplace_enum;
+    result     |= density == cen_log_laplace_enum;
+    return result;
 }
 bool censored_density(density_enum density)
-{  bool result = density == cen_gaussian_enum;;
-   result     |= density == cen_log_gaussian_enum;
-   result     |= density == cen_laplace_enum;
-   result     |= density == cen_log_laplace_enum;
-   return result;
+{   bool result = density == cen_gaussian_enum;;
+    result     |= density == cen_log_gaussian_enum;
+    result     |= density == cen_laplace_enum;
+    result     |= density == cen_log_laplace_enum;
+    return result;
 }
 
 } // END DISMOD_AT_NAMESPACE

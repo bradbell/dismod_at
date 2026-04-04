@@ -70,7 +70,7 @@ and not require *group_id* to be monotone and not have to include
 is a keyword in SQL and hence it is hard to work with a table named group.
 
 {xrst_comment
-   example/table/subgroup_table.py
+    example/table/subgroup_table.py
 %}
 Example
 *******

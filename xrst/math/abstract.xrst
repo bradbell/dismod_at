@@ -56,9 +56,9 @@ Algorithmic differentiation is used to make this task feasible.
 Contents
 ********
 {xrst_toc_table
-   xrst/math/diff_eq.xrst
-   xrst/math/censor_density.xrst
-   xrst/math/prevalence_ode.xrst
+    xrst/math/diff_eq.xrst
+    xrst/math/censor_density.xrst
+    xrst/math/prevalence_ode.xrst
 }
 
 {xrst_end math_abstract}

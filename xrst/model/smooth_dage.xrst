@@ -70,12 +70,12 @@ The age difference density :math:`A^s (s, v)` is defined by
 
 .. math::
 
-   \log A^s (s, v, \theta )
-   =
-   \sum_{i=0}^{I-2} \sum_{j=0}^{J-1} D \left(
-      v_{i+1,j} \W{,} v_{i,j} \W{,}
-      \mu_{i,j} \W{,} \lambda \sigma_{i,j}  \W{,} d_{i,j}
-   \right)
+    \log A^s (s, v, \theta )
+    =
+    \sum_{i=0}^{I-2} \sum_{j=0}^{J-1} D \left(
+        v_{i+1,j} \W{,} v_{i,j} \W{,}
+        \mu_{i,j} \W{,} \lambda \sigma_{i,j}  \W{,} d_{i,j}
+    \right)
 
 where :math:`D` is the
 :ref:`log-density function<statistic@Log-Density Function, D>` .

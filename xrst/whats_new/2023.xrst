@@ -81,16 +81,16 @@ table for the python main program.
 
 #. Add the average noise effect
    :ref:`E_i(theta)<
-      data_like@Measurement Noise Covariates@Average Noise Effect, E_i(theta)
+       data_like@Measurement Noise Covariates@Average Noise Effect, E_i(theta)
    >`
    before transforming the standard deviation.
    This changes the definition of the adjusted standard deviation
    :ref:`sigma_i(theta)<
-      data_like@Adjusted Standard Deviation, sigma_i(theta)
+       data_like@Adjusted Standard Deviation, sigma_i(theta)
    >`
    and the transformed standard deviation
    :ref:`delta_i(theta)<
-      data_like@Transformed Standard Deviation, delta_i(theta)
+       data_like@Transformed Standard Deviation, delta_i(theta)
    >` .
    This switched the roles of sigma and delta in many places in the
    examples and documentation.
@@ -161,7 +161,7 @@ Advance dock_dismod_at.sh
 If nan appeared for a real value in :ref:`create_table@row_list` ,
 one would get the following error message::
 
-   sqlite3.OperationalError: no such column: nan
+    sqlite3.OperationalError: no such column: nan
 
 The error message for this case was improved.
 
@@ -259,14 +259,14 @@ In the examples, move the assignment to ``new`` from just before a call to
 In addition, add the ``readonly`` argument. For example,
 in :ref:`user_censor.py-name` the text ::
 
-   new          = False
-   connection   = dismod_at.create_connection(root_node_database, new)
+    new          = False
+    connection   = dismod_at.create_connection(root_node_database, new)
 
 was changed to ::
 
-   connection   = dismod_at.create_connection(
-      root_node_database, new = False, readonly = False
-   )
+    connection   = dismod_at.create_connection(
+        root_node_database, new = False, readonly = False
+    )
 
 Where possible, ``readonly`` was set to ``True`` .
 

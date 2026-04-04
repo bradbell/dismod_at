@@ -32,7 +32,7 @@ The random effects age difference function is
 
 .. math::
 
-   A^u ( u | \theta ) =  \prod_{k=0}^{K-1} A^s ( s_k , u^k, \theta )
+    A^u ( u | \theta ) =  \prod_{k=0}^{K-1} A^s ( s_k , u^k, \theta )
 
 see definition of :ref:`smooth_dage@A^s` .
 
@@ -42,7 +42,7 @@ The random effects time difference function is
 
 .. math::
 
-   T^u ( u | \theta ) =  \prod_{k=0}^{K-1} T^s ( s_k , u^k, \theta )
+    T^u ( u | \theta ) =  \prod_{k=0}^{K-1} T^s ( s_k , u^k, \theta )
 
 see definition of :ref:`smooth_dtime@T^s` .
 

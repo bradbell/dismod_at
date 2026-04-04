@@ -37,13 +37,13 @@ for :math:`\bar{\theta}` given :math:`y` has mean
 
 .. math::
 
-   \B{E} [ ( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T} ]
-   =
-   ( A^\R{T} V^{-1} A )^{-1}
-   =
-   - \; \left(
-      \frac{ \partial^2 } { \partial \theta^2 } \log \B{p} ( y | \theta )
-   \right)^{-1}
+    \B{E} [ ( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T} ]
+    =
+    ( A^\R{T} V^{-1} A )^{-1}
+    =
+    - \; \left(
+        \frac{ \partial^2 } { \partial \theta^2 } \log \B{p} ( y | \theta )
+    \right)^{-1}
 
 Proof
 =====
@@ -51,11 +51,11 @@ The probability density for :math:`y` given :math:`\theta` is
 
 .. math::
 
-   \B{p} ( y | \theta )
-   =
-   \det ( 2 \pi V )^{-1/2} \exp \left[
-      - \frac{1}{2} ( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
-   \right]
+    \B{p} ( y | \theta )
+    =
+    \det ( 2 \pi V )^{-1/2} \exp \left[
+        - \frac{1}{2} ( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
+    \right]
 
 Dropping the determinant term,
 because it does not depend on :math:`\theta`,
@@ -63,7 +63,7 @@ and taking the negative log we get the objective
 
 .. math::
 
-   f ( \theta ) = \frac{1}{2} ( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
+    f ( \theta ) = \frac{1}{2} ( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
 
 and the equivalent problem to minimize :math:`f ( \theta )` with
 respect to :math:`\theta \in \B{R}^{n \times 1}`.
@@ -72,17 +72,17 @@ is given by
 
 .. math::
 
-   f^{(1)} ( \theta ) = - ( y - A \theta )^\R{T} V^{-1} A
+    f^{(1)} ( \theta ) = - ( y - A \theta )^\R{T} V^{-1} A
 
 It follows that
 
 .. math::
 
-   - \frac{ \partial^2 } { \partial \theta^2 } \log \B{p} ( y | \theta )
-   =
-   f^{(2)} ( \theta )
-   =
-   A^\R{T} V^{-1} A
+    - \frac{ \partial^2 } { \partial \theta^2 } \log \B{p} ( y | \theta )
+    =
+    f^{(2)} ( \theta )
+    =
+    A^\R{T} V^{-1} A
 
 This completes the proof of the equation for the second partial
 of :math:`\B{p} ( y | \theta )` in the statement of the lemma.
@@ -91,30 +91,30 @@ The maximum likelihood estimate :math:`\hat{\theta}` satisfies the
 equation :math:`f^{(1)} ( \hat{\theta} ) = 0`; i.e.,
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   0 & = & - ( y - A \hat{\theta} )^\R{T} V^{-1} A
-   \\
-   A^\R{T} V^{-1} y  & = & A^\R{T} V^{-1} A \hat{\theta}
-   \\
-   \hat{\theta} & =  & ( A^\R{T} V^{-1} A )^{-1} A^\R{T} V^{-1} y
-   \end{eqnarray}
+    \begin{eqnarray}
+    0 & = & - ( y - A \hat{\theta} )^\R{T} V^{-1} A
+    \\
+    A^\R{T} V^{-1} y  & = & A^\R{T} V^{-1} A \hat{\theta}
+    \\
+    \hat{\theta} & =  & ( A^\R{T} V^{-1} A )^{-1} A^\R{T} V^{-1} y
+    \end{eqnarray}
 
 Defining :math:`e = y - A \bar{\theta}`, we have
 :math:`\B{E} [ e ] = 0` and
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   \hat{\theta} & =  &
-   ( A^\R{T} V^{-1} A )^{-1} A^\R{T} V^{-1} ( A \bar{\theta} + e )
-   \\
-   \hat{\theta}
-   & =  &
-   \bar{\theta} + ( A^\R{T} V^{-1} A )^{-1} A^\R{T} V^{-1} e
-   \end{eqnarray}
+    \begin{eqnarray}
+    \hat{\theta} & =  &
+    ( A^\R{T} V^{-1} A )^{-1} A^\R{T} V^{-1} ( A \bar{\theta} + e )
+    \\
+    \hat{\theta}
+    & =  &
+    \bar{\theta} + ( A^\R{T} V^{-1} A )^{-1} A^\R{T} V^{-1} e
+    \end{eqnarray}
 
 This expresses the estimate :math:`\hat{\theta}` as a deterministic
 function of the noise :math:`e`.
@@ -127,19 +127,19 @@ of :math:`\hat{\theta}` in the statement of the lemma.
 It also follows, from the equation for :math:`\hat{\theta}` above, that
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   ( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T}
-   & = &
-   ( A^\R{T} V^{-1} A )^{-1} A^\R{T}
-   V^{-1} e e^\R{T} V^{-1}
-   A ( A^\R{T} V^{-1} A )^{-1}
-   \\
-   \B{E} [ ( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T} ]
-   & = &
-   ( A^\R{T} V^{-1} A )^{-1}
-   \end{eqnarray}
+    \begin{eqnarray}
+    ( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T}
+    & = &
+    ( A^\R{T} V^{-1} A )^{-1} A^\R{T}
+    V^{-1} e e^\R{T} V^{-1}
+    A ( A^\R{T} V^{-1} A )^{-1}
+    \\
+    \B{E} [ ( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T} ]
+    & = &
+    ( A^\R{T} V^{-1} A )^{-1}
+    \end{eqnarray}
 
 This completes the proof of the equation for the covariance of
 :math:`\hat{\theta} - \bar{\theta}` in the statement of the lemma.
@@ -168,16 +168,16 @@ It follows that
 
 .. math::
 
-   \B{E} [
-      ( \hat{\theta} - \B{E}[ \hat{\theta} ] )
-      ( \hat{\theta} - \B{E}[ \hat{\theta} ] )^\R{T}
-   \prec
-   ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
-   =
-   - \; \left(
-      \frac{ \partial^2 } { \partial \theta^2 }
-      \log [ \B{p} ( y | \theta ) \B{p} ( \theta ) ]
-   \right)^{-1}
+    \B{E} [
+        ( \hat{\theta} - \B{E}[ \hat{\theta} ] )
+        ( \hat{\theta} - \B{E}[ \hat{\theta} ] )^\R{T}
+    \prec
+    ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+    =
+    - \; \left(
+        \frac{ \partial^2 } { \partial \theta^2 }
+        \log [ \B{p} ( y | \theta ) \B{p} ( \theta ) ]
+    \right)^{-1}
 
 where :math:`\prec` means less than in a positive definite matrix sense.
 
@@ -200,20 +200,20 @@ Proof
 
 .. math::
 
-   \B{p} ( y | \theta ) \B{p} ( \theta )
-   =
-   \det ( 2 \pi V )^{-1/2} \det ( 2 \pi P )^{-1/2} \exp \left[
-   - \frac{1}{2}
-      ( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
-   - \frac{1}{2}
-      ( B \theta - z )^\R{T} P^{-1} ( B \theta - z )
-   \right]
+    \B{p} ( y | \theta ) \B{p} ( \theta )
+    =
+    \det ( 2 \pi V )^{-1/2} \det ( 2 \pi P )^{-1/2} \exp \left[
+    - \frac{1}{2}
+        ( y - A \theta )^\R{T} V^{-1} ( y - A \theta  )
+    - \frac{1}{2}
+        ( B \theta - z )^\R{T} P^{-1} ( B \theta - z )
+    \right]
 
 The derivative of the corresponding negative log likelihood is
 
 .. math::
 
-   - ( y - A \theta )^\R{T} V^{-1} A  + ( B \theta - z )^\R{T} P^{-1} B
+    - ( y - A \theta )^\R{T} V^{-1} A  + ( B \theta - z )^\R{T} P^{-1} B
 
 From this point,
 the proof of the equation for the second partial is very similar to
@@ -223,57 +223,57 @@ Setting the derivative to zero, we get the corresponding maximum likelihood
 estimate :math:`\hat{\theta}` satisfies
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   ( y - A \hat{\theta} )^\R{T} V^{-1} A
-   & = &
-   ( B \hat{\theta} - z )^\R{T} P^{-1} B
-   \\
-   y^\R{T} V^{-1} A + z^\R{T} P^{-1} B
-   & = &
-   \hat{\theta}^\R{T} A^\R{T} V^{-1} A + \hat{\theta}^\R{T} B^\R{T} P^{-1} B
-   \\
-   \hat{\theta}
-   & = &
-   ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
-   ( A^\R{T} V^{-1} y + B^\R{T} P^{-1} z )
-   \\
-   \hat{\theta}
-   & = &
-   ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
-   ( A^\R{T} V^{-1} A \bar{\theta} + B^\R{T} P^{-1} z )
-   +
-   ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1} A^\R{T} V^{-1} e
-   \end{eqnarray}
+    \begin{eqnarray}
+    ( y - A \hat{\theta} )^\R{T} V^{-1} A
+    & = &
+    ( B \hat{\theta} - z )^\R{T} P^{-1} B
+    \\
+    y^\R{T} V^{-1} A + z^\R{T} P^{-1} B
+    & = &
+    \hat{\theta}^\R{T} A^\R{T} V^{-1} A + \hat{\theta}^\R{T} B^\R{T} P^{-1} B
+    \\
+    \hat{\theta}
+    & = &
+    ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+    ( A^\R{T} V^{-1} y + B^\R{T} P^{-1} z )
+    \\
+    \hat{\theta}
+    & = &
+    ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+    ( A^\R{T} V^{-1} A \bar{\theta} + B^\R{T} P^{-1} z )
+    +
+    ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1} A^\R{T} V^{-1} e
+    \end{eqnarray}
 
 The first term is deterministic and the second term is mean zero.
 It follows that
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   \B{E} [ \hat{\theta} ]
-   & = &
-   ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
-   ( A^\R{T} V^{-1} A \bar{\theta} + B^\R{T} P^{-1} z )
-   \\
-   \B{E} [
-      ( \hat{\theta} - \B{E} [ \hat{\theta} ] )
-      ( \hat{\theta} - \B{E} [ \hat{\theta} ] )^\R{T}
-   ]
-   & = &
-   ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
-   A^\R{T} V^{-1} A
-   ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
-   \end{eqnarray}
+    \begin{eqnarray}
+    \B{E} [ \hat{\theta} ]
+    & = &
+    ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+    ( A^\R{T} V^{-1} A \bar{\theta} + B^\R{T} P^{-1} z )
+    \\
+    \B{E} [
+        ( \hat{\theta} - \B{E} [ \hat{\theta} ] )
+        ( \hat{\theta} - \B{E} [ \hat{\theta} ] )^\R{T}
+    ]
+    & = &
+    ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+    A^\R{T} V^{-1} A
+    ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+    \end{eqnarray}
 
 Since the matrix :math:`B^\R{T} P^{-1} B` is positive definite, we have
 
 .. math::
 
-   A^\R{T} V^{-1} A  \prec A^\R{T} V^{-1} A + B^\R{T} P^{-1} B
+    A^\R{T} V^{-1} A  \prec A^\R{T} V^{-1} A + B^\R{T} P^{-1} B
 
 Replacing
 :math:`A^\R{T} V^{-1} A` by
@@ -283,12 +283,12 @@ for the variance of :math:`\hat{\theta}` we obtain
 
 .. math::
 
-   \B{E} [
-      ( \hat{\theta} - \B{E} [ \hat{\theta} ] )
-      ( \hat{\theta} - \B{E} [ \hat{\theta} ] )^\R{T}
-   ]
-   \prec
-   ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+    \B{E} [
+        ( \hat{\theta} - \B{E} [ \hat{\theta} ] )
+        ( \hat{\theta} - \B{E} [ \hat{\theta} ] )^\R{T}
+    ]
+    \prec
+    ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
 
 This completes the proof of this lemma.
 
@@ -303,7 +303,7 @@ Furthermore, we define :math:`\hat{\theta}` as the maximizer of
 
 .. math::
 
-   \B{p}( y, z | \theta ) = \B{p} ( y | \theta ) \B{p} ( z | \theta )
+    \B{p}( y, z | \theta ) = \B{p} ( y | \theta ) \B{p} ( z | \theta )
 
 We define :math:`w \in \B{R}^{(m + n) \times 1}`,
 :math:`C \in \B{R}^{ (m + n) \times n}`, and
@@ -311,11 +311,11 @@ We define :math:`w \in \B{R}^{(m + n) \times 1}`,
 
 .. math::
 
-   w = \left( \begin{array}{c} y \\ z \end{array} \right)
-   \W{,}
-   C = \left( \begin{array}{cc} A & 0 \\ 0 & B \end{array} \right)
-   \W{,}
-   U = \left( \begin{array}{cc} V & 0 \\ 0 & P \end{array} \right)
+    w = \left( \begin{array}{c} y \\ z \end{array} \right)
+    \W{,}
+    C = \left( \begin{array}{cc} A & 0 \\ 0 & B \end{array} \right)
+    \W{,}
+    U = \left( \begin{array}{cc} V & 0 \\ 0 & P \end{array} \right)
 
 We can now apply Lemma 1 with :math:`y` replaced by :math:`w`,
 :math:`A` replaced by :math:`C` and
@@ -324,9 +324,9 @@ It follows from Lemma 1 that :math:`\B{E} [ \hat{\theta} ] = \bar{\theta}` and
 
 .. math::
 
-   \B{E} [ ( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T} ]
-   =
-   ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
+    \B{E} [ ( \hat{\theta} - \bar{\theta} ) ( \hat{\theta} - \bar{\theta} )^\R{T} ]
+    =
+    ( A^\R{T} V^{-1} A + B^\R{T} P^{-1} B )^{-1}
 
 which is the proper posterior variance for the case in Lemma 2.
 

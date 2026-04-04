@@ -17,7 +17,7 @@ If :math:`S` and :math:`C` satisfy the dismod_at
 
 .. math::
 
-   P' = + \iota  - ( \iota + \rho + \chi ) P  +  \chi  P^2
+    P' = + \iota  - ( \iota + \rho + \chi ) P  +  \chi  P^2
 
 Proof
 *****
@@ -26,37 +26,37 @@ Suppose that :math:`S(a)` and :math:`C(a)` satisfy the dismod_at
 
 .. math::
 
-   \begin{array}{rrr}
-      S' =&  - ( \iota + \omega ) S &                     + \rho C \\
-      C' =&               + \iota S & - ( \rho + \chi + \omega ) C
-   \end{array}
+    \begin{array}{rrr}
+        S' =&  - ( \iota + \omega ) S &                     + \rho C \\
+        C' =&               + \iota S & - ( \rho + \chi + \omega ) C
+    \end{array}
 
 It follows that
 
 .. math::
 
-   (S + C)' = - \omega S - ( \omega + \chi ) C
+    (S + C)' = - \omega S - ( \omega + \chi ) C
 
 Using :math:`C = (S + C) P`, we also have
 
 .. math::
-   :nowrap:
+    :nowrap:
 
-   \begin{eqnarray}
-   C'         & = & (S + C)' P + (S + C) P'
-   \\
-   (S + C) P' & = & C' - (S + C)' P
-   \\
-   (S + C) P' & = &
-      + \iota S - ( \rho + \chi + \omega ) C
-      + \omega S P + ( \omega + \chi ) C P
-   \\
-   P' & = &
-      + \iota (1 - P) - ( \rho + \chi + \omega ) P
-      + \omega (1 - P) P + ( \omega + \chi ) P^2
-   \\
-   P' & = & + \iota  - ( \iota + \rho + \chi ) P  +  \chi  P^2
-   \end{eqnarray}
+    \begin{eqnarray}
+    C'         & = & (S + C)' P + (S + C) P'
+    \\
+    (S + C) P' & = & C' - (S + C)' P
+    \\
+    (S + C) P' & = &
+        + \iota S - ( \rho + \chi + \omega ) C
+        + \omega S P + ( \omega + \chi ) C P
+    \\
+    P' & = &
+        + \iota (1 - P) - ( \rho + \chi + \omega ) P
+        + \omega (1 - P) P + ( \omega + \chi ) P^2
+    \\
+    P' & = & + \iota  - ( \iota + \rho + \chi ) P  +  \chi  P^2
+    \end{eqnarray}
 
 Advantage
 *********
@@ -81,7 +81,7 @@ Furthermore
 
 .. math::
 
-   (S + C)' = - \alpha (S + C)
+    (S + C)' = - \alpha (S + C)
 
 We can also compute :math:`S + C`, and
 :math:`C = P (S + C)`, :math:`S = (1 - P)(S + C)`.

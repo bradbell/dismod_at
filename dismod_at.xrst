@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 {xrst_begin dismod_at}
 {xrst_spell
-   gz
+    gz
 }
 
 dismod_at User Documentation and API
@@ -26,34 +26,34 @@ Versions
 ********
 
 .. list-table::
-   :widths: auto
+    :widths: auto
 
-   * - This version
-     - dismod_at-2026.4.4
-   * - Documentation for latest version
-     - `latest <https://dismod-at.readthedocs.io/latest>`_
-   * - Documentation for most recent stable version
-     - `stable-2026 <https://dismod-at.readthedocs.io/stable-2026>`_
-   * - Most recent release of this stable version
-     - release-2026_
+    * - This version
+      - dismod_at-2026.4.4
+    * - Documentation for latest version
+      - `latest <https://dismod-at.readthedocs.io/latest>`_
+    * - Documentation for most recent stable version
+      - `stable-2026 <https://dismod-at.readthedocs.io/stable-2026>`_
+    * - Most recent release of this stable version
+      - release-2026_
 
 .. _release-2026: https://codeload.github.com/bradbell/
-   dismod_at/tar.gz/refs/tags/2026.0.1
+    dismod_at/tar.gz/refs/tags/2026.0.1
 
 
 Contents
 ********
 {xrst_toc_table
-   xrst/math/abstract.xrst
-   xrst/install/install.xrst
-   example/get_started/get_started.xrst
-   example/user/user.xrst
-   xrst/table/database.xrst
-   xrst/model/model.xrst
-   devel/cmd/command.xrst
-   python/dismod_at/__init__.py.in
-   xrst/release_notes.xrst
-   xrst/wish_list.xrst
+    xrst/math/abstract.xrst
+    xrst/install/install.xrst
+    example/get_started/get_started.xrst
+    example/user/user.xrst
+    xrst/table/database.xrst
+    xrst/model/model.xrst
+    devel/cmd/command.xrst
+    python/dismod_at/__init__.py.in
+    xrst/release_notes.xrst
+    xrst/wish_list.xrst
 }
 
 {xrst_end dismod_at}

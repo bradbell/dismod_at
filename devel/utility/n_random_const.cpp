@@ -39,11 +39,11 @@ This argument is the :ref:`get_prior_table@prior_table` .
 Prototype
 *********
 {xrst_literal
-   // BEGIN PROTOTYPE
-   // END PROTOTYPE
+    // BEGIN PROTOTYPE
+    // END PROTOTYPE
 }
 {xrst_toc_hidden
-   example/devel/utility/n_random_const_xam.cpp
+    example/devel/utility/n_random_const_xam.cpp
 }
 Example
 *******
@@ -57,38 +57,38 @@ Example
 # include <dismod_at/pack_prior.hpp>
 
 namespace dismod_at {
-   // BEGIN PROTOTYPE
-   size_t number_random_const(
-      const pack_info&                     pack_object  ,
-       const pack_prior&                    var2prior    ,
-      const CppAD::vector<prior_struct>&   prior_table  )
-   // END PROTOTYPE
-   {  //
-      // mapping from random effects to all variables
-      CppAD::vector<size_t> pack_index = random2var_id(pack_object);
-      assert( pack_index.size() == pack_object.random_size() );
-      //
-      // count how many random effects are constant
-      size_t n_random_const = 0;
-      for(size_t j = 0; j < pack_index.size(); j++)
-      {  size_t var_id      = pack_index[j];
-         size_t prior_id    = var2prior.value_prior_id(var_id);
-         double const_value = var2prior.const_value(var_id);
-         double max_abs     = var2prior.max_abs(var_id);
-         if( ! std::isnan(const_value) )
-         {  assert( prior_id == DISMOD_AT_NULL_SIZE_T );
-            ++n_random_const;
-         }
-         else
-         {  assert( prior_id != DISMOD_AT_NULL_SIZE_T );
-            double lower = prior_table[prior_id].lower;
-            double upper = prior_table[prior_id].upper;
-            if( lower ==  upper )
-               ++n_random_const;
-            else if( max_abs == 0.0 )
-               ++n_random_const;
-         }
-      }
-      return n_random_const;
-   }
+    // BEGIN PROTOTYPE
+    size_t number_random_const(
+        const pack_info&                     pack_object  ,
+         const pack_prior&                    var2prior    ,
+        const CppAD::vector<prior_struct>&   prior_table  )
+    // END PROTOTYPE
+    {   //
+        // mapping from random effects to all variables
+        CppAD::vector<size_t> pack_index = random2var_id(pack_object);
+        assert( pack_index.size() == pack_object.random_size() );
+        //
+        // count how many random effects are constant
+        size_t n_random_const = 0;
+        for(size_t j = 0; j < pack_index.size(); j++)
+        {   size_t var_id      = pack_index[j];
+            size_t prior_id    = var2prior.value_prior_id(var_id);
+            double const_value = var2prior.const_value(var_id);
+            double max_abs     = var2prior.max_abs(var_id);
+            if( ! std::isnan(const_value) )
+            {   assert( prior_id == DISMOD_AT_NULL_SIZE_T );
+                ++n_random_const;
+            }
+            else
+            {   assert( prior_id != DISMOD_AT_NULL_SIZE_T );
+                double lower = prior_table[prior_id].lower;
+                double upper = prior_table[prior_id].upper;
+                if( lower ==  upper )
+                    ++n_random_const;
+                else if( max_abs == 0.0 )
+                    ++n_random_const;
+            }
+        }
+        return n_random_const;
+    }
 }

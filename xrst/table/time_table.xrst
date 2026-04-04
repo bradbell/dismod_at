@@ -29,7 +29,7 @@ time spacing between solutions of the
 :ref:`avg_integrand@Ordinary Differential Equation`
 along cohort lines.
 {xrst_toc_hidden
-   example/table/time_table.py
+    example/table/time_table.py
 }
 Example
 *******

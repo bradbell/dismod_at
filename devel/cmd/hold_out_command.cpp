@@ -21,8 +21,8 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 Set subset_hold_out For This Set of Available Data
 ##################################################
 {xrst_literal
-   // BEGIN_HOLD_OUT_THIS_AVAIL
-   // END_HOLD_OUT_THIS_AVAIL
+    // BEGIN_HOLD_OUT_THIS_AVAIL
+    // END_HOLD_OUT_THIS_AVAIL
 }
 
 subset_hold_out
@@ -55,53 +55,53 @@ subset_hold_out value changed from 0 to 1.
 */
 // BEGIN_HOLD_OUT_THIS_AVAIL
 void hold_out_this_avail(
-   CppAD::vector<int>&     subset_hold_out ,
-   size_t&                 n_data_fit      ,
-   size_t                  n_avail_left    ,
-   size_t                  max_data_fit    ,
-   CppAD::vector<size_t>&  avail           )
+    CppAD::vector<int>&     subset_hold_out ,
+    size_t&                 n_data_fit      ,
+    size_t                  n_avail_left    ,
+    size_t                  max_data_fit    ,
+    CppAD::vector<size_t>&  avail           )
 // END_HOLD_OUT_THIS_AVAIL
 {
-   // rng
-   // gsl random number generator
-   gsl_rng* rng = CppAD::mixed::get_gsl_rng();
-   //
-   // this_max_fit
-   size_t this_max_fit = (max_data_fit - n_data_fit) / n_avail_left;
-   if( this_max_fit * n_avail_left < max_data_fit - n_data_fit )
-      ++this_max_fit;
-   if( this_max_fit + n_avail_left > max_data_fit - n_data_fit )
-      this_max_fit = max_data_fit - n_data_fit;
-   //
-   // n_data_fit, data_subset_table
-   if( avail.size() <= this_max_fit )
-      n_data_fit += avail.size();
-   else
-   {  n_data_fit += this_max_fit;
-      //
-      // n_hold_out
-      size_t n_hold_out = avail.size() - this_max_fit;
-      //
-      // chosen: array of indices that are chosen
-      CppAD::vector<size_t> chosen(n_hold_out);
-      //
-      // chosen
-      gsl_ran_choose(
-         rng,
-         chosen.data(),
-         n_hold_out,
-         avail.data(),
-         avail.size(),
-         sizeof(size_t)
-      );
-      //
-      // subset_hold_out
-      for(size_t i = 0; i < n_hold_out; ++i)
-      {  size_t subset_id = chosen[i];
-         assert( subset_hold_out[subset_id] == 0 );
-         subset_hold_out[subset_id] = 1;
-      }
-   }
+    // rng
+    // gsl random number generator
+    gsl_rng* rng = CppAD::mixed::get_gsl_rng();
+    //
+    // this_max_fit
+    size_t this_max_fit = (max_data_fit - n_data_fit) / n_avail_left;
+    if( this_max_fit * n_avail_left < max_data_fit - n_data_fit )
+        ++this_max_fit;
+    if( this_max_fit + n_avail_left > max_data_fit - n_data_fit )
+        this_max_fit = max_data_fit - n_data_fit;
+    //
+    // n_data_fit, data_subset_table
+    if( avail.size() <= this_max_fit )
+        n_data_fit += avail.size();
+    else
+    {  n_data_fit += this_max_fit;
+        //
+        // n_hold_out
+        size_t n_hold_out = avail.size() - this_max_fit;
+        //
+        // chosen: array of indices that are chosen
+        CppAD::vector<size_t> chosen(n_hold_out);
+        //
+        // chosen
+        gsl_ran_choose(
+            rng,
+            chosen.data(),
+            n_hold_out,
+            avail.data(),
+            avail.size(),
+            sizeof(size_t)
+        );
+        //
+        // subset_hold_out
+        for(size_t i = 0; i < n_hold_out; ++i)
+        {  size_t subset_id = chosen[i];
+            assert( subset_hold_out[subset_id] == 0 );
+            subset_hold_out[subset_id] = 1;
+        }
+    }
 }
 /*
 ------------------------------------------------------------------------------
@@ -113,8 +113,8 @@ Sub-sampling Hold Outs to Keep max_fit Only Balancing Children
 Prototype
 *********
 {xrst_literal ,
-   // BEGIN_HOLD_OUT_MAX_FIT , // END_HOLD_OUT_MAX_FIT
-   // BEGIN_RETURN_HOLD_OUT_MAX_FIT , // END_RETURN_HOLD_OUT_MAX_FIT
+    // BEGIN_HOLD_OUT_MAX_FIT , // END_HOLD_OUT_MAX_FIT
+    // BEGIN_RETURN_HOLD_OUT_MAX_FIT , // END_RETURN_HOLD_OUT_MAX_FIT
 }
 
 integrand_name
@@ -157,124 +157,124 @@ in data_subset_table.
 */
 // BEGIN_HOLD_OUT_MAX_FIT
 CppAD::vector<int> hold_out_max_fit(
-   integrand_enum                                this_integrand    ,
-   size_t                                        max_fit           ,
-   size_t                                        max_fit_parent    ,
-   const child_info&                             child_info4data   ,
-   const CppAD::vector<data_subset_struct>&      data_subset_table ,
-   const CppAD::vector<integrand_struct>&        integrand_table   ,
-   const CppAD::vector<covariate_struct>&        covariate_table   ,
-   const CppAD::vector<data_struct>&             data_table        ,
-   const CppAD::vector<double>&                  data_cov_value    )
+    integrand_enum                                this_integrand    ,
+    size_t                                        max_fit           ,
+    size_t                                        max_fit_parent    ,
+    const child_info&                             child_info4data   ,
+    const CppAD::vector<data_subset_struct>&      data_subset_table ,
+    const CppAD::vector<integrand_struct>&        integrand_table   ,
+    const CppAD::vector<covariate_struct>&        covariate_table   ,
+    const CppAD::vector<data_struct>&             data_table        ,
+    const CppAD::vector<double>&                  data_cov_value    )
 {  // n_subset
-   const size_t n_subset = data_subset_table.size();
-   // END_HOLD_OUT_MAX_FIT
-   //
-   using std::string;
-   using CppAD::vector;
-   //
-   // this_integrand_id
-   int this_integrand_id = DISMOD_AT_NULL_INT;
-   for(size_t i = 0; i < integrand_table.size(); ++i)
-      if( integrand_table[i].integrand == this_integrand )
-         this_integrand_id = int(i);
-   //
-   // subset_hold_out
-   vector<int> subset_hold_out( n_subset );
-   for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
-   {  size_t data_id             = data_subset_table[subset_id].data_id;
-      int  integrand_id          = data_table[data_id].integrand_id;
-      subset_hold_out[subset_id] = data_subset_table[subset_id].hold_out;
-      if( integrand_id == this_integrand_id )
-         subset_hold_out[subset_id] = 0;
-   }
-   //
-   // n_child
-   size_t n_child = child_info4data.child_size();
-   //
-   // avail
-   vector< vector<size_t> > avail(n_child + 1);
-   //
-   // avail
-   for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
-   {  //
-      // data_id, child_id
-      size_t data_id   = data_subset_table[subset_id].data_id;
-      size_t child_id  = child_info4data.table_id2child(data_id);
-      //
-      // avail[child_id]
-      int integrand_id         = data_table[data_id].integrand_id;
-      int    data_hold_out     = data_table[data_id].hold_out;
-      if( data_hold_out != 0 )
-         assert( subset_hold_out[subset_id] == 0 );
-      else
-      {  if( integrand_id == this_integrand_id )
-            avail[child_id].push_back( subset_id );
-      }
-   }
-   //
-   // subset_hold_out
-   if( max_fit_parent != DISMOD_AT_NULL_SIZE_T )
-   {  size_t n_data_fit   = 0;
-      size_t n_avail_left = 1;
-      hold_out_this_avail(
-         subset_hold_out,
-         n_data_fit,
-         n_avail_left,
-         max_fit_parent,
-         avail[n_child]
-      );
-   }
-   //
-   // n_avail
-   size_t n_avail = n_child + 1;
-   if( max_fit_parent != DISMOD_AT_NULL_SIZE_T )
-      n_avail = n_child;
-   //
-   // avail_size
-   vector<size_t> avail_size(n_avail);
-   for(size_t child_id = 0; child_id < n_avail; ++child_id)
-      avail_size[child_id] = avail[child_id].size();
-   //
-   // size_order
-   vector<size_t> size_order(n_avail);
-   CppAD::index_sort(avail_size, size_order);
-   //
-   // n_data_fit
-   size_t n_data_fit = 0;
-   //
-   for(size_t index = 0; index < n_avail; ++index)
-   {  //
-      // child_id
-      size_t child_id = size_order[index];
-      //
-      // n_avail_left
-      size_t n_avail_left = n_avail - index;
-      //
-      // subset_hold_out
-      hold_out_this_avail(
-         subset_hold_out,
-         n_data_fit,
-         n_avail_left,
-         max_fit,
-         avail[child_id]
-      );
-   }
-   // BEGIN_RETURN_HOLD_OUT_MAX_FIT
+    const size_t n_subset = data_subset_table.size();
+    // END_HOLD_OUT_MAX_FIT
+    //
+    using std::string;
+    using CppAD::vector;
+    //
+    // this_integrand_id
+    int this_integrand_id = DISMOD_AT_NULL_INT;
+    for(size_t i = 0; i < integrand_table.size(); ++i)
+        if( integrand_table[i].integrand == this_integrand )
+            this_integrand_id = int(i);
+    //
+    // subset_hold_out
+    vector<int> subset_hold_out( n_subset );
+    for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
+    {  size_t data_id             = data_subset_table[subset_id].data_id;
+        int  integrand_id          = data_table[data_id].integrand_id;
+        subset_hold_out[subset_id] = data_subset_table[subset_id].hold_out;
+        if( integrand_id == this_integrand_id )
+            subset_hold_out[subset_id] = 0;
+    }
+    //
+    // n_child
+    size_t n_child = child_info4data.child_size();
+    //
+    // avail
+    vector< vector<size_t> > avail(n_child + 1);
+    //
+    // avail
+    for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
+    {  //
+        // data_id, child_id
+        size_t data_id   = data_subset_table[subset_id].data_id;
+        size_t child_id  = child_info4data.table_id2child(data_id);
+        //
+        // avail[child_id]
+        int integrand_id         = data_table[data_id].integrand_id;
+        int    data_hold_out     = data_table[data_id].hold_out;
+        if( data_hold_out != 0 )
+            assert( subset_hold_out[subset_id] == 0 );
+        else
+        {  if( integrand_id == this_integrand_id )
+                avail[child_id].push_back( subset_id );
+        }
+    }
+    //
+    // subset_hold_out
+    if( max_fit_parent != DISMOD_AT_NULL_SIZE_T )
+    {  size_t n_data_fit   = 0;
+        size_t n_avail_left = 1;
+        hold_out_this_avail(
+            subset_hold_out,
+            n_data_fit,
+            n_avail_left,
+            max_fit_parent,
+            avail[n_child]
+        );
+    }
+    //
+    // n_avail
+    size_t n_avail = n_child + 1;
+    if( max_fit_parent != DISMOD_AT_NULL_SIZE_T )
+        n_avail = n_child;
+    //
+    // avail_size
+    vector<size_t> avail_size(n_avail);
+    for(size_t child_id = 0; child_id < n_avail; ++child_id)
+        avail_size[child_id] = avail[child_id].size();
+    //
+    // size_order
+    vector<size_t> size_order(n_avail);
+    CppAD::index_sort(avail_size, size_order);
+    //
+    // n_data_fit
+    size_t n_data_fit = 0;
+    //
+    for(size_t index = 0; index < n_avail; ++index)
+    {  //
+        // child_id
+        size_t child_id = size_order[index];
+        //
+        // n_avail_left
+        size_t n_avail_left = n_avail - index;
+        //
+        // subset_hold_out
+        hold_out_this_avail(
+            subset_hold_out,
+            n_data_fit,
+            n_avail_left,
+            max_fit,
+            avail[child_id]
+        );
+    }
+    // BEGIN_RETURN_HOLD_OUT_MAX_FIT
 # ifndef NDEBUG
-   assert( subset_hold_out.size() == n_subset );
-   for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
-   {  int data_id              = data_subset_table[subset_id].data_id;
-      int data_hold_out        = data_table[data_id].hold_out;
-      assert( data_hold_out == 0 || subset_hold_out[subset_id] == 0 );
-      int integrand_id         = data_table[data_id].integrand_id;
-      if( integrand_id != this_integrand_id ) assert (
-         data_subset_table[subset_id].hold_out == subset_hold_out[subset_id]
-      );
-   }
+    assert( subset_hold_out.size() == n_subset );
+    for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
+    {  int data_id              = data_subset_table[subset_id].data_id;
+        int data_hold_out        = data_table[data_id].hold_out;
+        assert( data_hold_out == 0 || subset_hold_out[subset_id] == 0 );
+        int integrand_id         = data_table[data_id].integrand_id;
+        if( integrand_id != this_integrand_id ) assert (
+            data_subset_table[subset_id].hold_out == subset_hold_out[subset_id]
+        );
+    }
 # endif
-   return subset_hold_out;
-   // END_RETURN_HOLD_OUT_MAX_FIT
+    return subset_hold_out;
+    // END_RETURN_HOLD_OUT_MAX_FIT
 }
 /*
 ------------------------------------------------------------------------------
@@ -286,8 +286,8 @@ Sub-sampling Hold Outs To Keep Max Fit and Balance a Covariate
 Prototype
 *********
 {xrst_literal ,
-   // BEGIN_HOLD_OUT_WITH_COV , // END_HOLD_OUT_WITH_COV
-   // BEGIN_RETURN_HOLD_OUT_WITH_COV , // END_RETURN_HOLD_OUT_WITH_COV
+    // BEGIN_HOLD_OUT_WITH_COV , // END_HOLD_OUT_WITH_COV
+    // BEGIN_RETURN_HOLD_OUT_WITH_COV , // END_RETURN_HOLD_OUT_WITH_COV
 }
 
 integrand_name
@@ -330,173 +330,173 @@ in data_subset_table.
 */
 // BEGIN_HOLD_OUT_WITH_COV
 CppAD::vector<int> hold_out_with_cov(
-   integrand_enum                                this_integrand    ,
-   size_t                                        max_fit           ,
-   size_t                                        max_fit_parent    ,
-   const std::string&                            cov_name          ,
-   double                                        cov_value_1       ,
-   double                                        cov_value_2       ,
-   const child_info&                             child_info4data   ,
-   const CppAD::vector<data_subset_struct>&      data_subset_table ,
-   const CppAD::vector<integrand_struct>&        integrand_table   ,
-   const CppAD::vector<covariate_struct>&        covariate_table   ,
-   const CppAD::vector<data_struct>&             data_table        ,
-   const CppAD::vector<double>&                  data_cov_value    )
-{   // n_subset
-   const size_t n_subset = data_subset_table.size();
-   // END_HOLD_OUT_WITH_COV
-   //
-   using std::string;
-   using CppAD::vector;
-   //
-   // this_integrand_id
-   int this_integrand_id = DISMOD_AT_NULL_INT;
-   for(size_t i = 0; i < integrand_table.size(); ++i)
-      if( integrand_table[i].integrand == this_integrand )
-         this_integrand_id = int(i);
-   //
-   // subset_hold_out
-   vector<int> subset_hold_out( n_subset );
-   for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
-   {  size_t data_id             = data_subset_table[subset_id].data_id;
-      int  integrand_id          = data_table[data_id].integrand_id;
-      subset_hold_out[subset_id] = data_subset_table[subset_id].hold_out;
-      if( integrand_id == this_integrand_id )
-         subset_hold_out[subset_id] = 0;
-   }
-   //
-   // n_covariate, covariate_id
-   size_t n_covariate = covariate_table.size();
-   size_t covariate_id = n_covariate;
-   for(size_t i = 0; i < n_covariate; ++i)
-      if( covariate_table[i].covariate_name == cov_name )
-         covariate_id = i;
-   if( covariate_id == n_covariate )
-   {  string msg = "hold_out_command: " + cov_name;
-      msg       += " is not a valid covariate name";
-      error_exit(msg);
-   }
-   //
-   // n_child
-   size_t n_child = child_info4data.child_size();
-   //
-   // avail
-   vector< vector< vector<size_t> > > avail(n_child + 1);
-   for(size_t child_id = 0; child_id <= n_child; ++child_id)
-      avail[child_id].resize(3);
-   //
-   // avail
-   for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
-   {  //
-      // data_id, child_id
-      size_t data_id   = data_subset_table[subset_id].data_id;
-      size_t child_id  = child_info4data.table_id2child(data_id);
-      //
-      // avail[child_id]
-      int  integrand_id        = data_table[data_id].integrand_id;
-      int    data_hold_out     = data_table[data_id].hold_out;
-      if( data_hold_out != 0 )
-         assert( data_subset_table[subset_id].hold_out == 0 );
-      else
-      {  if( integrand_id == this_integrand_id )
-         {  size_t index     = data_id * n_covariate + covariate_id;
-            double cov_value = data_cov_value[index];
-            if( cov_value == cov_value_1 )
-               avail[child_id][1].push_back( subset_id );
-            else if( cov_value == cov_value_2 )
-               avail[child_id][2].push_back( subset_id );
-            else
-               avail[child_id][0].push_back( subset_id );
-         }
-      }
-   }
-   //
-   // n_avail
-   size_t n_avail = 3 * (n_child + 1);
-   //
-   // avail_size
-   vector<size_t> avail_size(n_avail);
-   for(size_t child_id = 0; child_id <= n_child; ++child_id)
-   {  for(size_t cov_value_id = 0; cov_value_id < 3; ++cov_value_id)
-      {  size_t index      = child_id * 3 + cov_value_id;
-         avail_size[index] = avail[child_id][cov_value_id].size();
-      }
-   }
-   //
-   // size_order
-   vector<size_t> size_order(n_avail);
-   CppAD::index_sort(avail_size, size_order);
-   //
-   // subset_hold_out
-   if( max_fit_parent != DISMOD_AT_NULL_SIZE_T )
-   {  size_t n_data_fit   = 0;
-      size_t n_avail_left = 3;
-      for(size_t order = 0; order < n_avail; ++order)
-      {  // index
-         size_t index = size_order[order];
-         //
-         // child_id, cov_value_id
-         size_t cov_value_id = index % 3;
-         size_t child_id     = index / 3;
-         if( child_id == n_child )
-         {  assert( 0 < n_avail_left);
+    integrand_enum                                this_integrand    ,
+    size_t                                        max_fit           ,
+    size_t                                        max_fit_parent    ,
+    const std::string&                            cov_name          ,
+    double                                        cov_value_1       ,
+    double                                        cov_value_2       ,
+    const child_info&                             child_info4data   ,
+    const CppAD::vector<data_subset_struct>&      data_subset_table ,
+    const CppAD::vector<integrand_struct>&        integrand_table   ,
+    const CppAD::vector<covariate_struct>&        covariate_table   ,
+    const CppAD::vector<data_struct>&             data_table        ,
+    const CppAD::vector<double>&                  data_cov_value    )
+{    // n_subset
+    const size_t n_subset = data_subset_table.size();
+    // END_HOLD_OUT_WITH_COV
+    //
+    using std::string;
+    using CppAD::vector;
+    //
+    // this_integrand_id
+    int this_integrand_id = DISMOD_AT_NULL_INT;
+    for(size_t i = 0; i < integrand_table.size(); ++i)
+        if( integrand_table[i].integrand == this_integrand )
+            this_integrand_id = int(i);
+    //
+    // subset_hold_out
+    vector<int> subset_hold_out( n_subset );
+    for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
+    {   size_t data_id             = data_subset_table[subset_id].data_id;
+        int  integrand_id          = data_table[data_id].integrand_id;
+        subset_hold_out[subset_id] = data_subset_table[subset_id].hold_out;
+        if( integrand_id == this_integrand_id )
+            subset_hold_out[subset_id] = 0;
+    }
+    //
+    // n_covariate, covariate_id
+    size_t n_covariate = covariate_table.size();
+    size_t covariate_id = n_covariate;
+    for(size_t i = 0; i < n_covariate; ++i)
+        if( covariate_table[i].covariate_name == cov_name )
+            covariate_id = i;
+    if( covariate_id == n_covariate )
+    {   string msg = "hold_out_command: " + cov_name;
+        msg       += " is not a valid covariate name";
+        error_exit(msg);
+    }
+    //
+    // n_child
+    size_t n_child = child_info4data.child_size();
+    //
+    // avail
+    vector< vector< vector<size_t> > > avail(n_child + 1);
+    for(size_t child_id = 0; child_id <= n_child; ++child_id)
+        avail[child_id].resize(3);
+    //
+    // avail
+    for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
+    {   //
+        // data_id, child_id
+        size_t data_id   = data_subset_table[subset_id].data_id;
+        size_t child_id  = child_info4data.table_id2child(data_id);
+        //
+        // avail[child_id]
+        int  integrand_id        = data_table[data_id].integrand_id;
+        int    data_hold_out     = data_table[data_id].hold_out;
+        if( data_hold_out != 0 )
+            assert( data_subset_table[subset_id].hold_out == 0 );
+        else
+        {   if( integrand_id == this_integrand_id )
+            {   size_t index     = data_id * n_covariate + covariate_id;
+                double cov_value = data_cov_value[index];
+                if( cov_value == cov_value_1 )
+                    avail[child_id][1].push_back( subset_id );
+                else if( cov_value == cov_value_2 )
+                    avail[child_id][2].push_back( subset_id );
+                else
+                    avail[child_id][0].push_back( subset_id );
+            }
+        }
+    }
+    //
+    // n_avail
+    size_t n_avail = 3 * (n_child + 1);
+    //
+    // avail_size
+    vector<size_t> avail_size(n_avail);
+    for(size_t child_id = 0; child_id <= n_child; ++child_id)
+    {   for(size_t cov_value_id = 0; cov_value_id < 3; ++cov_value_id)
+        {   size_t index      = child_id * 3 + cov_value_id;
+            avail_size[index] = avail[child_id][cov_value_id].size();
+        }
+    }
+    //
+    // size_order
+    vector<size_t> size_order(n_avail);
+    CppAD::index_sort(avail_size, size_order);
+    //
+    // subset_hold_out
+    if( max_fit_parent != DISMOD_AT_NULL_SIZE_T )
+    {   size_t n_data_fit   = 0;
+        size_t n_avail_left = 3;
+        for(size_t order = 0; order < n_avail; ++order)
+        {   // index
+            size_t index = size_order[order];
+            //
+            // child_id, cov_value_id
+            size_t cov_value_id = index % 3;
+            size_t child_id     = index / 3;
+            if( child_id == n_child )
+            {   assert( 0 < n_avail_left);
+                hold_out_this_avail(
+                    subset_hold_out,
+                    n_data_fit,
+                    n_avail_left,
+                    max_fit_parent,
+                    avail[child_id][cov_value_id]
+                );
+                --n_avail_left;
+            }
+        }
+    }
+    //
+    // n_avail_left
+    size_t n_avail_left = n_avail;
+    if( max_fit_parent != DISMOD_AT_NULL_SIZE_T )
+        n_avail_left -= 3;
+    //
+    // n_data_fit
+    size_t n_data_fit = 0;
+    //
+    for(size_t order = 0; order < n_avail; ++order)
+    {   //
+        // index
+        size_t index = size_order[order];
+        //
+        // child_id, cov_value_id
+        size_t cov_value_id = index % 3;
+        size_t child_id     = index / 3;
+        //
+        if( max_fit_parent == DISMOD_AT_NULL_SIZE_T || child_id < n_child )
+        {   //
+            // subset_hold_out
             hold_out_this_avail(
-               subset_hold_out,
-               n_data_fit,
-               n_avail_left,
-               max_fit_parent,
-               avail[child_id][cov_value_id]
+                subset_hold_out,
+                n_data_fit,
+                n_avail_left,
+                max_fit,
+                avail[child_id][cov_value_id]
             );
             --n_avail_left;
-         }
-      }
-   }
-   //
-   // n_avail_left
-   size_t n_avail_left = n_avail;
-   if( max_fit_parent != DISMOD_AT_NULL_SIZE_T )
-      n_avail_left -= 3;
-   //
-   // n_data_fit
-   size_t n_data_fit = 0;
-   //
-   for(size_t order = 0; order < n_avail; ++order)
-   {  //
-      // index
-      size_t index = size_order[order];
-      //
-      // child_id, cov_value_id
-      size_t cov_value_id = index % 3;
-      size_t child_id     = index / 3;
-      //
-      if( max_fit_parent == DISMOD_AT_NULL_SIZE_T || child_id < n_child )
-      {  //
-         // subset_hold_out
-         hold_out_this_avail(
-            subset_hold_out,
-            n_data_fit,
-            n_avail_left,
-            max_fit,
-            avail[child_id][cov_value_id]
-         );
-         --n_avail_left;
-      }
-   }
-   // BEGIN_RETURN_HOLD_OUT_WITH_COV
+        }
+    }
+    // BEGIN_RETURN_HOLD_OUT_WITH_COV
 # ifndef NDEBUG
-   assert( subset_hold_out.size() == n_subset );
-   for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
-   {  int data_id              = data_subset_table[subset_id].data_id;
-      int data_hold_out        = data_table[data_id].hold_out;
-      assert( data_hold_out == 0 || subset_hold_out[subset_id] == 0 );
-      int integrand_id         = data_table[data_id].integrand_id;
-      if( integrand_id != this_integrand_id ) assert (
-         data_subset_table[subset_id].hold_out == subset_hold_out[subset_id]
-      );
-   }
+    assert( subset_hold_out.size() == n_subset );
+    for(size_t subset_id = 0; subset_id < n_subset; ++subset_id)
+    {   int data_id              = data_subset_table[subset_id].data_id;
+        int data_hold_out        = data_table[data_id].hold_out;
+        assert( data_hold_out == 0 || subset_hold_out[subset_id] == 0 );
+        int integrand_id         = data_table[data_id].integrand_id;
+        if( integrand_id != this_integrand_id ) assert (
+            data_subset_table[subset_id].hold_out == subset_hold_out[subset_id]
+        );
+    }
 # endif
-   return subset_hold_out;
-   // END_RETURN_HOLD_OUT_WITH_COV
+    return subset_hold_out;
+    // END_RETURN_HOLD_OUT_WITH_COV
 }
 /*
 -----------------------------------------------------------------------------
@@ -609,163 +609,163 @@ contain examples and tests using this command.
 */
 // ---------------------------------------------------------------------------
 void hold_out_command(
-   sqlite3*                                      db                ,
-   const std::string&                            integrand_name    ,
-   const std::string&                            max_fit_str       ,
-   const CppAD::vector<std::string>&             optional_argument ,
-   const child_info&                             child_info4data   ,
-   const CppAD::vector<integrand_struct>&        integrand_table   ,
-   const CppAD::vector<covariate_struct>&        covariate_table   ,
-   const CppAD::vector<data_struct>&             data_table        ,
-   const CppAD::vector<double>&                  data_cov_value    )
-{  using std::string;
-   using CppAD::vector;
-   using CppAD::to_string;
-   //
-   //  max_fit_parent, cov_name, cov_value_1_str, cov_value_2_str;
-   string max_fit_parent_str, cov_name, cov_value_1_str, cov_value_2_str;
-   if( optional_argument.size() == 1 )
-      max_fit_parent_str = optional_argument[0];
-   else if( optional_argument.size() == 3 )
-   {  cov_name           = optional_argument[0];
-      cov_value_1_str    = optional_argument[1];
-      cov_value_2_str    = optional_argument[2];
-   }
-   else if( optional_argument.size() == 4 )
-   {  max_fit_parent_str  = optional_argument[0];
-      cov_name            = optional_argument[1];
-      cov_value_1_str     = optional_argument[2];
-      cov_value_2_str     = optional_argument[3];
-   }
-   else
-      assert( optional_argument.size() == 0 );
-   //
-   // data_subset_table
-   vector<data_subset_struct> data_subset_table = get_data_subset(db);
-   //
-   // n_subset
-   size_t n_subset = data_subset_table.size();
-   //
-   // max_fit
-   size_t max_fit = std::atoi( max_fit_str.c_str() );
-   //
-   // max_fit_parent
-   size_t max_fit_parent = DISMOD_AT_NULL_SIZE_T;
-   if( max_fit_parent_str.size() != 0 )
-      max_fit_parent = std::atoi( max_fit_parent_str.c_str() );
-   //
-   // this_integrand
-   integrand_enum this_integrand = number_integrand_enum;
-   for(size_t i = 0; i < size_t(number_integrand_enum); ++i)
-   {  if( integrand_enum2name[i] == integrand_name )
-         this_integrand = integrand_enum(i);
-   }
-   if( this_integrand == number_integrand_enum )
-   {  string msg = "hold_out_command: " + integrand_name;
-      msg       += " is not a valid integrand name";
-      error_exit(msg);
-   }
-   //
-   // subset_hold_out
-   vector<int> subset_hold_out;
-   if( cov_value_1_str.size() == 0 )
-   {  subset_hold_out = hold_out_max_fit(
-         this_integrand    ,
-         max_fit           ,
-         max_fit_parent    ,
-         child_info4data   ,
-         data_subset_table ,
-         integrand_table   ,
-         covariate_table   ,
-         data_table        ,
-         data_cov_value
-      );
-   }
-   else
-   {  double cov_value_1  = std::atof( cov_value_1_str.c_str() );
-      double cov_value_2  = std::atof( cov_value_2_str.c_str() );
-      subset_hold_out     = hold_out_with_cov(
-         this_integrand    ,
-         max_fit           ,
-         max_fit_parent    ,
-         cov_name          ,
-         cov_value_1       ,
-         cov_value_2       ,
-         child_info4data   ,
-         data_subset_table ,
-         integrand_table   ,
-         covariate_table   ,
-         data_table        ,
-         data_cov_value
-      );
-   }
-   //
-   // drop old data_subset table
-   string sql_cmd    = "drop table data_subset";
-   exec_sql_cmd(db, sql_cmd);
-   //
-   // write new data_subset table
-   string table_name = "data_subset";
-   size_t n_col      = 6;
-   vector<string> col_name(n_col), col_type(n_col);
-   vector<string> row_value(n_col * n_subset);
-   vector<bool>   col_unique(n_col);
-   //
-   col_name[0]       = "data_id";
-   col_type[0]       = "integer";
-   col_unique[0]     = true;
-   //
-   col_name[1]       = "hold_out";
-   col_type[1]       = "integer";
-   col_unique[1]     = false;
-   //
-   col_name[2]       = "density_id";
-   col_type[2]       = "integer";
-   col_unique[2]     = false;
-   //
-   col_name[3]       = "eta";
-   col_type[3]       = "real";
-   col_unique[3]     = false;
-   //
-   col_name[4]       = "nu";
-   col_type[4]       = "real";
-   col_unique[4]     = false;
-   //
-   col_name[5]       = "sample_size";
-   col_type[5]       = "integer";
-   col_unique[5]     = false;
-   //
-   for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
-   {  int data_id     = data_subset_table[subset_id].data_id;
-      int density_id  = data_subset_table[subset_id].density_id;
-      double eta      = data_subset_table[subset_id].eta;
-      double nu       = data_subset_table[subset_id].nu;
-      int sample_size = data_subset_table[subset_id].sample_size;
-      //
-      int hold_out    = subset_hold_out[subset_id];
-      //
-      row_value[n_col * subset_id + 0] = to_string( data_id );
-      row_value[n_col * subset_id + 1] = to_string( hold_out );
-      row_value[n_col * subset_id + 2] = to_string( density_id );
-      //
-      if( std::isnan(eta) )
-         row_value[n_col * subset_id + 3] = "";
-      else
-         row_value[n_col * subset_id + 3] = to_string( eta );
-      //
-      if( std::isnan(nu) )
-         row_value[n_col * subset_id + 4] = "";
-      else
-         row_value[n_col * subset_id + 4] = to_string( nu );
-      //
-      if( sample_size == DISMOD_AT_NULL_INT )
-         row_value[n_col * subset_id + 5] = "";
-      else
-         row_value[n_col * subset_id + 5] = to_string( sample_size );
-   }
-   create_table(
-      db, table_name, col_name, col_type, col_unique, row_value
-   );
-   return;
+    sqlite3*                                      db                ,
+    const std::string&                            integrand_name    ,
+    const std::string&                            max_fit_str       ,
+    const CppAD::vector<std::string>&             optional_argument ,
+    const child_info&                             child_info4data   ,
+    const CppAD::vector<integrand_struct>&        integrand_table   ,
+    const CppAD::vector<covariate_struct>&        covariate_table   ,
+    const CppAD::vector<data_struct>&             data_table        ,
+    const CppAD::vector<double>&                  data_cov_value    )
+{   using std::string;
+    using CppAD::vector;
+    using CppAD::to_string;
+    //
+    //  max_fit_parent, cov_name, cov_value_1_str, cov_value_2_str;
+    string max_fit_parent_str, cov_name, cov_value_1_str, cov_value_2_str;
+    if( optional_argument.size() == 1 )
+        max_fit_parent_str = optional_argument[0];
+    else if( optional_argument.size() == 3 )
+    {   cov_name           = optional_argument[0];
+        cov_value_1_str    = optional_argument[1];
+        cov_value_2_str    = optional_argument[2];
+    }
+    else if( optional_argument.size() == 4 )
+    {   max_fit_parent_str  = optional_argument[0];
+        cov_name            = optional_argument[1];
+        cov_value_1_str     = optional_argument[2];
+        cov_value_2_str     = optional_argument[3];
+    }
+    else
+        assert( optional_argument.size() == 0 );
+    //
+    // data_subset_table
+    vector<data_subset_struct> data_subset_table = get_data_subset(db);
+    //
+    // n_subset
+    size_t n_subset = data_subset_table.size();
+    //
+    // max_fit
+    size_t max_fit = std::atoi( max_fit_str.c_str() );
+    //
+    // max_fit_parent
+    size_t max_fit_parent = DISMOD_AT_NULL_SIZE_T;
+    if( max_fit_parent_str.size() != 0 )
+        max_fit_parent = std::atoi( max_fit_parent_str.c_str() );
+    //
+    // this_integrand
+    integrand_enum this_integrand = number_integrand_enum;
+    for(size_t i = 0; i < size_t(number_integrand_enum); ++i)
+    {   if( integrand_enum2name[i] == integrand_name )
+            this_integrand = integrand_enum(i);
+    }
+    if( this_integrand == number_integrand_enum )
+    {   string msg = "hold_out_command: " + integrand_name;
+        msg       += " is not a valid integrand name";
+        error_exit(msg);
+    }
+    //
+    // subset_hold_out
+    vector<int> subset_hold_out;
+    if( cov_value_1_str.size() == 0 )
+    {   subset_hold_out = hold_out_max_fit(
+            this_integrand    ,
+            max_fit           ,
+            max_fit_parent    ,
+            child_info4data   ,
+            data_subset_table ,
+            integrand_table   ,
+            covariate_table   ,
+            data_table        ,
+            data_cov_value
+        );
+    }
+    else
+    {   double cov_value_1  = std::atof( cov_value_1_str.c_str() );
+        double cov_value_2  = std::atof( cov_value_2_str.c_str() );
+        subset_hold_out     = hold_out_with_cov(
+            this_integrand    ,
+            max_fit           ,
+            max_fit_parent    ,
+            cov_name          ,
+            cov_value_1       ,
+            cov_value_2       ,
+            child_info4data   ,
+            data_subset_table ,
+            integrand_table   ,
+            covariate_table   ,
+            data_table        ,
+            data_cov_value
+        );
+    }
+    //
+    // drop old data_subset table
+    string sql_cmd    = "drop table data_subset";
+    exec_sql_cmd(db, sql_cmd);
+    //
+    // write new data_subset table
+    string table_name = "data_subset";
+    size_t n_col      = 6;
+    vector<string> col_name(n_col), col_type(n_col);
+    vector<string> row_value(n_col * n_subset);
+    vector<bool>   col_unique(n_col);
+    //
+    col_name[0]       = "data_id";
+    col_type[0]       = "integer";
+    col_unique[0]     = true;
+    //
+    col_name[1]       = "hold_out";
+    col_type[1]       = "integer";
+    col_unique[1]     = false;
+    //
+    col_name[2]       = "density_id";
+    col_type[2]       = "integer";
+    col_unique[2]     = false;
+    //
+    col_name[3]       = "eta";
+    col_type[3]       = "real";
+    col_unique[3]     = false;
+    //
+    col_name[4]       = "nu";
+    col_type[4]       = "real";
+    col_unique[4]     = false;
+    //
+    col_name[5]       = "sample_size";
+    col_type[5]       = "integer";
+    col_unique[5]     = false;
+    //
+    for(size_t subset_id = 0; subset_id < n_subset; subset_id++)
+    {   int data_id     = data_subset_table[subset_id].data_id;
+        int density_id  = data_subset_table[subset_id].density_id;
+        double eta      = data_subset_table[subset_id].eta;
+        double nu       = data_subset_table[subset_id].nu;
+        int sample_size = data_subset_table[subset_id].sample_size;
+        //
+        int hold_out    = subset_hold_out[subset_id];
+        //
+        row_value[n_col * subset_id + 0] = to_string( data_id );
+        row_value[n_col * subset_id + 1] = to_string( hold_out );
+        row_value[n_col * subset_id + 2] = to_string( density_id );
+        //
+        if( std::isnan(eta) )
+            row_value[n_col * subset_id + 3] = "";
+        else
+            row_value[n_col * subset_id + 3] = to_string( eta );
+        //
+        if( std::isnan(nu) )
+            row_value[n_col * subset_id + 4] = "";
+        else
+            row_value[n_col * subset_id + 4] = to_string( nu );
+        //
+        if( sample_size == DISMOD_AT_NULL_INT )
+            row_value[n_col * subset_id + 5] = "";
+        else
+            row_value[n_col * subset_id + 5] = to_string( sample_size );
+    }
+    create_table(
+        db, table_name, col_name, col_type, col_unique, row_value
+    );
+    return;
 }
 } // END_DISMOD_AT_NAMESPACE

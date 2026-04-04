@@ -38,7 +38,7 @@ This identifies which :ref:`var_table@var_id`
 each row of the prior_sim table corresponds to.
 If *n_var* is the number of rows in the var table,
 
-   *prior_sim_id* = *simulate_index* * *n_var* + *var_id*
+    *prior_sim_id* = *simulate_index* * *n_var* + *var_id*
 
 for *simulate_index* equal zero to *number_simulate* ``-1``
 and *var_id* equal zero to ``n_var`` *-1* .
@@ -95,7 +95,7 @@ To be specific, if *sim* is the value simulated just using the
 and *lower* , *upper* are the corresponding limits;
 the corresponding simulated value or difference is
 
-   ``max`` [ *upper* , ``min`` ( *lower* , *sim*  ) ]
+    ``max`` [ *upper* , ``min`` ( *lower* , *sim*  ) ]
 
 Example
 *******

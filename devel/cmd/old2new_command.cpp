@@ -30,7 +30,7 @@ a sample_size column in the data table.
 Example
 *******
 {xrst_toc_list
-   example/get_started/old2new_command.py
+    example/get_started/old2new_command.py
 }
 
 {xrst_end old2new_command}
@@ -38,25 +38,25 @@ Example
 
 // ----------------------------------------------------------------------------
 void old2new_command(sqlite3* db)
-{  //
-   // msg
-   std::string msg;
-   //
-   // check if sample_name column is in data table
-   std::string table_name  = "data";
-   std::string column_name = "sample_size";
-   if( dismod_at::is_column_in_table(db, table_name, column_name) )
-   {  msg = "old2new command: sample_name is already in data table";
-      error_exit(msg, table_name);
-   }
-   //
-   // add sample_name column to data table
-   std::string sql_cmd = "ALTER TABLE data ADD COLUMN sample_size;";
-   exec_sql_cmd(db, sql_cmd);
-   //
-   assert( dismod_at::is_column_in_table(db, table_name, column_name) );
-   //
-   return;
+{   //
+    // msg
+    std::string msg;
+    //
+    // check if sample_name column is in data table
+    std::string table_name  = "data";
+    std::string column_name = "sample_size";
+    if( dismod_at::is_column_in_table(db, table_name, column_name) )
+    {   msg = "old2new command: sample_name is already in data table";
+        error_exit(msg, table_name);
+    }
+    //
+    // add sample_name column to data table
+    std::string sql_cmd = "ALTER TABLE data ADD COLUMN sample_size;";
+    exec_sql_cmd(db, sql_cmd);
+    //
+    assert( dismod_at::is_column_in_table(db, table_name, column_name) );
+    //
+    return;
 }
 
 } // END_DISMOD_AT_NAMESPACE

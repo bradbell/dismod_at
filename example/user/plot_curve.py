@@ -4,7 +4,7 @@
 # ----------------------------------------------------------------------------
 # {xrst_begin user_plot_curve.py}
 # {xrst_spell
-#     lambsa
+#       lambsa
 # }
 # {xrst_comment_ch #}
 #
@@ -30,18 +30,18 @@
 #
 # .. math::
 #
-#    f(a, t) = \lambda * \exp \left[
-#        - \left( \frac{a - 50}{100} \right)^2
-#        - \left( \frac{(t - 2000.0}{20.0} \right)^2
-#  \right]
+#     f(a, t) = \lambda * \exp \left[
+#           - \left( \frac{a - 50}{100} \right)^2
+#           - \left( \frac{(t - 2000.0}{20.0} \right)^2
+#   \right]
 #
 # where :math:`a` is age, :math:`t` is time, and
 # :math:`lambsa` is 1, 2, 3, 4 for variables
 # ``A`` , ``B`` , ``C`` , ``D`` respectively.
 #
 # {xrst_literal
-#     BEGIN PYTHON
-#     END PYTHON
+#       BEGIN PYTHON
+#       END PYTHON
 # }
 #
 # {xrst_end user_plot_curve.py}
@@ -53,47 +53,47 @@ import math
 test_program  = 'example/user/plot_curve.py'
 check_program = sys.argv[0].replace('\\', '/')
 if check_program != test_program  or len(sys.argv) != 1 :
-   usage  = 'python3 ' + test_program + '\n'
-   usage += 'where python3 is the python 3 program on your system\n'
-   usage += 'and working directory is the dismod_at distribution directory\n'
-   sys.exit(usage)
+    usage  = 'python3 ' + test_program + '\n'
+    usage += 'where python3 is the python 3 program on your system\n'
+    usage += 'and working directory is the dismod_at distribution directory\n'
+    sys.exit(usage)
 print(test_program)
 #
 # import dismod_at
 local_dir = os.getcwd() + '/python'
 if( os.path.isdir( local_dir + '/dismod_at' ) ) :
-   sys.path.insert(0, local_dir)
+    sys.path.insert(0, local_dir)
 import dismod_at
 #
 # change into the build/example/user directory
 if not os.path.exists('build/example/user') :
-   os.makedirs('build/example/user')
+    os.makedirs('build/example/user')
 os.chdir('build/example/user')
 #
 # fun
 def fun(a, t, z_name) :
-   index     = ord(z_name) - ord('A')
-   factor    = index + 1
-   a_scaled  = (a - 50.0) / 100.0
-   t_scaled  = (t - 2000.0) / 20.0
-   quad      = a_scaled**2 + t_scaled**2
-   z         = factor * math.exp( - quad )
-   return z
+    index     = ord(z_name) - ord('A')
+    factor    = index + 1
+    a_scaled  = (a - 50.0) / 100.0
+    t_scaled  = (t - 2000.0) / 20.0
+    quad      = a_scaled**2 + t_scaled**2
+    z         = factor * math.exp( - quad )
+    return z
 #
 # plot_data
 plot_data = dict()
 for z_name in [ 'A', 'B', 'C', 'D' ] :
-   plot_data[z_name] = list()
-   for age in range(0, 101, 5) :
-      for time in range(1980, 2021, 5) :
-         value = fun(age, time, z_name)
-         std   = value / 10.0
-         row = { 'age': age, 'time': time, 'value': value, 'std':  std }
-         plot_data[z_name].append( row )
+    plot_data[z_name] = list()
+    for age in range(0, 101, 5) :
+        for time in range(1980, 2021, 5) :
+            value = fun(age, time, z_name)
+            std   = value / 10.0
+            row = { 'age': age, 'time': time, 'value': value, 'std':  std }
+            plot_data[z_name].append( row )
 #
 # plot_limit
 plot_limit = {
-   'age_min': 0.0, 'age_max': 100.0, 'time_min': 1980.0, 'time_max': 2020.0
+    'age_min': 0.0, 'age_max': 100.0, 'time_min': 1980.0, 'time_max': 2020.0
 }
 #
 # plot_curve

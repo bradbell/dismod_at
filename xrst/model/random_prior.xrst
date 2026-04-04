@@ -14,9 +14,9 @@ given the fixed effects, by
 
 .. math::
 
-   \B{p} ( u | \theta )
-   =
-   V^u ( u | \theta ) A^u ( u | \theta ) T^u ( u | \theta )
+    \B{p} ( u | \theta )
+    =
+    V^u ( u | \theta ) A^u ( u | \theta ) T^u ( u | \theta )
 
 See
 :ref:`random_value@V^u` ,

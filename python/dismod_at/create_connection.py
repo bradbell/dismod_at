@@ -5,7 +5,7 @@
 # ----------------------------------------------------------------------------
 # {xrst_begin create_connection}
 # {xrst_spell
-#     readonly
+#       readonly
 # }
 # {xrst_comment_ch #}
 #
@@ -15,8 +15,8 @@
 # Prototype
 # *********
 # {xrst_literal
-#     BEGIN_PROTOTYPE
-#     END_PROTOTYPE
+#       BEGIN_PROTOTYPE
+#       END_PROTOTYPE
 # }
 #
 # file_name
@@ -54,27 +54,27 @@ import sqlite3
 # BEGIN_PROTOTYPE
 # connection =
 def create_connection(file_name, new = False, readonly = False) :
-   assert type(file_name) == str
-   assert type(new)       == bool
-   assert type(readonly)  == bool
+    assert type(file_name) == str
+    assert type(new)       == bool
+    assert type(readonly)  == bool
 # END_PROTOTYPE
-   import os
-   import sys
-   #
-   if new :
-      # remove old version of this file
-      if  os.path.isfile(file_name) :
-         os.remove(file_name)
-   else :
-      # make sure this file exists
-      if not os.path.isfile(file_name) :
-         msg = 'create_connection: ' + file_name + ' does not exist.'
-         assert False, msg
-   if readonly :
-      file_name_plus_mode =  f'file:{file_name}?mode=ro'
-      connection = sqlite3.connect(
-         file_name_plus_mode, uri = True, check_same_thread = True
-      )
-   else :
-      connection = sqlite3.connect(file_name, check_same_thread = True)
-   return connection
+    import os
+    import sys
+    #
+    if new :
+        # remove old version of this file
+        if  os.path.isfile(file_name) :
+            os.remove(file_name)
+    else :
+        # make sure this file exists
+        if not os.path.isfile(file_name) :
+            msg = 'create_connection: ' + file_name + ' does not exist.'
+            assert False, msg
+    if readonly :
+        file_name_plus_mode =  f'file:{file_name}?mode=ro'
+        connection = sqlite3.connect(
+            file_name_plus_mode, uri = True, check_same_thread = True
+        )
+    else :
+        connection = sqlite3.connect(file_name, check_same_thread = True)
+    return connection

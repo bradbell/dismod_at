@@ -6,16 +6,16 @@
 # define DISMOD_AT_MEAS_NOISE_EFFECT_HPP
 
 namespace dismod_at {
-   enum meas_noise_effect_enum {
-      //
-      add_std_scale_all_enum,
-      add_std_scale_none_enum,
-      //
-      add_var_scale_all_enum,
-      add_var_scale_none_enum,
-      //
-      number_meas_noise_effect_enum
-   };
+    enum meas_noise_effect_enum {
+        //
+        add_std_scale_all_enum,
+        add_std_scale_none_enum,
+        //
+        add_var_scale_all_enum,
+        add_var_scale_none_enum,
+        //
+        number_meas_noise_effect_enum
+    };
 }
 
 # endif

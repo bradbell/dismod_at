@@ -9,8 +9,8 @@ C++ split_space: Example and Test
 #################################
 
 {xrst_literal
-   // BEGIN C++
-   // END C++
+    // BEGIN C++
+    // END C++
 }
 
 {xrst_end split_space_xam.cpp}
@@ -20,16 +20,16 @@ C++ split_space: Example and Test
 
 bool split_space_xam(void)
 {
-   bool   ok = true;
+    bool   ok = true;
 
-   std::string str = " one two  three  ";
-   CppAD::vector<std::string> vec = dismod_at::split_space(str);
+    std::string str = " one two  three  ";
+    CppAD::vector<std::string> vec = dismod_at::split_space(str);
 
-   ok &= vec.size() == 3;
-   ok &= vec[0] == "one";
-   ok &= vec[1] == "two";
-   ok &= vec[2] == "three";
+    ok &= vec.size() == 3;
+    ok &= vec[0] == "one";
+    ok &= vec[1] == "two";
+    ok &= vec[2] == "three";
 
-   return ok;
+    return ok;
 }
 // END C++

@@ -9,11 +9,11 @@
 # include <string>
 namespace dismod_at {
 
-   bool is_column_in_table(
-      sqlite3*           db          ,
-      const std::string& table_name  ,
-      const std::string& column_name
-   );
+    bool is_column_in_table(
+        sqlite3*           db          ,
+        const std::string& table_name  ,
+        const std::string& column_name
+    );
 
 }
 

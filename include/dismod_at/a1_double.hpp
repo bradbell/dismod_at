@@ -24,7 +24,7 @@ Source Code
 {xrst_spell_off}
 {xrst_code cpp} */
 namespace dismod_at {
-   typedef CppAD::AD<double>  a1_double;
+    typedef CppAD::AD<double>  a1_double;
 }
 /* {xrst_code}
 {xrst_spell_on}

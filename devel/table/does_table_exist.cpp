@@ -20,8 +20,8 @@ Syntax
 Prototype
 *********
 {xrst_literal
-   // BEGIN_PROTOTYPE
-   // END_PROTOTYPE
+    // BEGIN_PROTOTYPE
+    // END_PROTOTYPE
 }
 
 db
@@ -48,18 +48,18 @@ namespace dismod_at { // BEGIN_DISMOD_AT_NAMESPACE
 bool does_table_exist(sqlite3* db, const std::string table_name)
 // END_PROTOTYPE
 {
-   // sql_cmd
-   std::string sql_cmd;
-   sql_cmd  = "SELECT name FROM sqlite_master WHERE name=";
-   sql_cmd += "'" + table_name + "'";
-   //
-   // sql_result
-   char sep = ',';
-   std::string sql_result = exec_sql_cmd(db, sql_cmd, sep);
-   //
-   // exist
-   bool exist = 0 < sql_result.size();
-   return exist;
+    // sql_cmd
+    std::string sql_cmd;
+    sql_cmd  = "SELECT name FROM sqlite_master WHERE name=";
+    sql_cmd += "'" + table_name + "'";
+    //
+    // sql_result
+    char sep = ',';
+    std::string sql_result = exec_sql_cmd(db, sql_cmd, sep);
+    //
+    // exist
+    bool exist = 0 < sql_result.size();
+    return exist;
 }
 
 } // END_DISMOD_AT_NAMESPACE

@@ -24,15 +24,15 @@ from math import exp
 # check execution is from distribution directory
 example = 'example/get_started/predict_command.py'
 if sys.argv[0] != example  or len(sys.argv) != 1 :
-   usage  = 'python3 ' + example + '\n'
-   usage += 'where python3 is the python 3 program on your system\n'
-   usage += 'and working directory is the dismod_at distribution directory\n'
-   sys.exit(usage)
+    usage  = 'python3 ' + example + '\n'
+    usage += 'where python3 is the python 3 program on your system\n'
+    usage += 'and working directory is the dismod_at distribution directory\n'
+    sys.exit(usage)
 #
 # import dismod_at
 local_dir = os.getcwd() + '/python'
 if( os.path.isdir( local_dir + '/dismod_at' ) ) :
-   sys.path.insert(0, local_dir)
+    sys.path.insert(0, local_dir)
 import dismod_at
 #
 # import get_started_db example
@@ -41,7 +41,7 @@ import get_started_db
 #
 # change into the build/example/get_started directory
 if not os.path.exists('build/example/get_started') :
-   os.makedirs('build/example/get_started')
+    os.makedirs('build/example/get_started')
 os.chdir('build/example/get_started')
 # ---------------------------------------------------------------------------
 # create get_started.db
@@ -55,7 +55,7 @@ dismod_at.system_command_prc( [program, file_name, 'predict', 'fit_var'] )
 # -----------------------------------------------------------------------
 # connect to database
 connection = dismod_at.create_connection(
-   file_name, new = False, readonly = True
+    file_name, new = False, readonly = True
 )
 # -----------------------------------------------------------------------
 # get variable and predict tables
@@ -67,15 +67,15 @@ connection.close()
 assert len(avgint_table) == 1
 #
 for var_id in range( len(var_table) ) :
-   var_row     = var_table[var_id]
-   fit_row     = fit_var_table[var_id]
-   var_type    = var_row['var_type']
-   if var_type == 'mulcov_rate_value' :
-      income_multiplier = fit_row['fit_var_value']
-   elif var_type == 'rate' :
-      omega_world = fit_row['fit_var_value']
-   else :
-      assert False
+    var_row     = var_table[var_id]
+    fit_row     = fit_var_table[var_id]
+    var_type    = var_row['var_type']
+    if var_type == 'mulcov_rate_value' :
+        income_multiplier = fit_row['fit_var_value']
+    elif var_type == 'rate' :
+        omega_world = fit_row['fit_var_value']
+    else :
+        assert False
 #
 # use fact that avgint_id == avgint_subset_id and number_sample == 1
 avgint_row = avgint_table[0]

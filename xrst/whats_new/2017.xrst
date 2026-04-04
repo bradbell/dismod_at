@@ -86,7 +86,7 @@ This has been fixed.
 
 #. Move documentation from IHME to github; see
 
-   https://bradbell.github.io/dismod_at/doc/index.html.
+    https://bradbell.github.io/dismod_at/doc/index.html.
 #. The :ref:`install_unix@System Requirements@git` program
    was added to the system requirements.
 #. The :ref:`download<install_unix@Download dismod_at.git>` instructions
@@ -347,7 +347,7 @@ to have more control over scaling the objective. See
    Remove the ``start`` command.
    It has been replace by the :ref:`set_command-name` syntax
 
-      ``dismod_at set start_var`` *source*
+        ``dismod_at set start_var`` *source*
 
 #. Fix a bug in :ref:`db2csv_command-name` that occurred when
    :ref:`smooth_table@mulstd_value_prior_id`
@@ -371,7 +371,7 @@ These changes were merged into the master branch on 09-29.
 #. Remove the ``truth`` command.
    It has been replace by the :ref:`set_command-name` syntax
 
-      ``dismod_at set truth_var fit_var``
+        ``dismod_at set truth_var fit_var``
 
 09-25
 =====
@@ -468,7 +468,7 @@ up when the object results in a ``nan`` .
 Advance to cppad-20170830. This fixes a problem with the cmake command;
 to be specific,
 
-   ``Policy CMP0046 is not set: Error on non-existent dependency``
+    ``Policy CMP0046 is not set: Error on non-existent dependency``
 
 08-07
 =====

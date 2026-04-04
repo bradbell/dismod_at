@@ -28,10 +28,10 @@ we are given a grid of function values to be interpolated
 
 .. math::
 
-   \left\{
-         \left. v_{i,j} = f( a_i , t_j ) \; \right| \;
-         i = 0, \ldots , M-1 , j = 0 , \ldots , N-1
-   \right\} \; .
+    \left\{
+            \left. v_{i,j} = f( a_i , t_j ) \; \right| \;
+            i = 0, \ldots , M-1 , j = 0 , \ldots , N-1
+    \right\} \; .
 
 Interpolant
 ***********
@@ -48,31 +48,31 @@ In this case the function is defined by
 
 .. math::
 
-   f( \alpha , s )
-   =
-   \frac{a_{i+1} - \alpha}{a_{i+1} - a_i}
-      \frac{t_{j+1} - s}{t_{j+1} - t_j} v_{i,j}
-   +
-   \frac{\alpha - a_i}{a_{i+1} - a_i}
-      \frac{t_{j+1} - s}{t_{j+1} - t_j} v_{i+1,j}
-   +
-   \frac{a_{i+1} - s}{a_{i+1} - a_i}
-      \frac{s - t_j}{t_{j+1} - t_j} v_{i,j+1}
-   +
-   \frac{\alpha - a_i}{a_{i+1} - a_i}
-      \frac{s - t_j}{t_{j+1} - t_j} v_{i+1,j+1}
+    f( \alpha , s )
+    =
+    \frac{a_{i+1} - \alpha}{a_{i+1} - a_i}
+        \frac{t_{j+1} - s}{t_{j+1} - t_j} v_{i,j}
+    +
+    \frac{\alpha - a_i}{a_{i+1} - a_i}
+        \frac{t_{j+1} - s}{t_{j+1} - t_j} v_{i+1,j}
+    +
+    \frac{a_{i+1} - s}{a_{i+1} - a_i}
+        \frac{s - t_j}{t_{j+1} - t_j} v_{i,j+1}
+    +
+    \frac{\alpha - a_i}{a_{i+1} - a_i}
+        \frac{s - t_j}{t_{j+1} - t_j} v_{i+1,j+1}
 
 Note that
 
 .. csv-table::
-   :header-rows: 1
-   :delim: ;
+    :header-rows: 1
+    :delim: ;
 
-   :math:`( \alpha , s)`          ; :math:`f( \alpha, s)`
-   :math:`( a_i , t_j  )`         ; :math:`v_{i,j}`
-   :math:`( a_i , t_{j+1}  )`     ; :math:`v_{i,j+1}`
-   :math:`( a_{i+1} , t_j  )`     ; :math:`v_{i+1,j}`
-   :math:`( a_{i+1} , t_{j+1}  )` ; :math:`v_{i+1,j+1}`
+    :math:`( \alpha , s)`          ; :math:`f( \alpha, s)`
+    :math:`( a_i , t_j  )`         ; :math:`v_{i,j}`
+    :math:`( a_i , t_{j+1}  )`     ; :math:`v_{i,j+1}`
+    :math:`( a_{i+1} , t_j  )`     ; :math:`v_{i+1,j}`
+    :math:`( a_{i+1} , t_{j+1}  )` ; :math:`v_{i+1,j+1}`
 
 Below Minimum Age
 =================
@@ -83,11 +83,11 @@ In this case the function is defined by
 
 .. math::
 
-   f( \alpha , s )
-   =
-   \frac{t_{j+1} - s}{t_{j+1} - t_j} v_{0,j}
-   +
-   \frac{s - t_j}{t_{j+1} - t_j} v_{0,j+1}
+    f( \alpha , s )
+    =
+    \frac{t_{j+1} - s}{t_{j+1} - t_j} v_{0,j}
+    +
+    \frac{s - t_j}{t_{j+1} - t_j} v_{0,j+1}
 
 Above Maximum Age
 =================
@@ -98,11 +98,11 @@ In this case the function is defined by
 
 .. math::
 
-   f( \alpha , s )
-   =
-   \frac{t_{j+1} - s}{t_{j+1} - t_j} v_{M-1,j}
-   +
-   \frac{s - t_j}{t_{j+1} - t_j} v_{M-1,j+1}
+    f( \alpha , s )
+    =
+    \frac{t_{j+1} - s}{t_{j+1} - t_j} v_{M-1,j}
+    +
+    \frac{s - t_j}{t_{j+1} - t_j} v_{M-1,j+1}
 
 Below Minimum Time
 ==================
@@ -113,11 +113,11 @@ In this case the function is defined by
 
 .. math::
 
-   f( \alpha , s )
-   =
-   \frac{a_{i+1} - \alpha}{a_{i+1} - a_i} v_{i,0}
-   +
-   \frac{\alpha - a_i}{a_{i+1} - a_i}  v_{i+1,0}
+    f( \alpha , s )
+    =
+    \frac{a_{i+1} - \alpha}{a_{i+1} - a_i} v_{i,0}
+    +
+    \frac{\alpha - a_i}{a_{i+1} - a_i}  v_{i+1,0}
 
 Above Maximum Time
 ==================
@@ -128,11 +128,11 @@ In this case the function is defined by
 
 .. math::
 
-   f( \alpha , s )
-   =
-   \frac{a_{i+1} - \alpha}{a_{i+1} - a_i} v_{i,N-1}
-   +
-   \frac{\alpha - a_i}{a_{i+1} - a_i}  v_{i+1,N-1}
+    f( \alpha , s )
+    =
+    \frac{a_{i+1} - \alpha}{a_{i+1} - a_i} v_{i,N-1}
+    +
+    \frac{\alpha - a_i}{a_{i+1} - a_i}  v_{i+1,N-1}
 
 Outside Both Limits
 ===================

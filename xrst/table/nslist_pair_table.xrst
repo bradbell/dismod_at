@@ -39,7 +39,7 @@ This column has type ``integer`` and is a
 :ref:`smooth_table@smooth_id` .
 It specifies which smoothing to apply at this node.
 {xrst_toc_hidden
-   example/table/nslist_pair_table.py
+    example/table/nslist_pair_table.py
 }
 Example
 *******

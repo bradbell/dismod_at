@@ -13,14 +13,14 @@
 # include <dismod_at/get_option_table.hpp>
 
 namespace dismod_at {
-   void check_rate_eff_cov(
-      const CppAD::vector<double>&                data_cov_value     ,
-      const CppAD::vector<double>&                avgint_cov_value   ,
-      const CppAD::vector<covariate_struct>&      covariate_table    ,
-      const CppAD::vector<node_struct>&           node_table         ,
-      const CppAD::vector<rate_eff_cov_struct>&   rate_eff_cov_table ,
-      const CppAD::vector<option_struct>&         option_table
-   );
+    void check_rate_eff_cov(
+        const CppAD::vector<double>&                data_cov_value     ,
+        const CppAD::vector<double>&                avgint_cov_value   ,
+        const CppAD::vector<covariate_struct>&      covariate_table    ,
+        const CppAD::vector<node_struct>&           node_table         ,
+        const CppAD::vector<rate_eff_cov_struct>&   rate_eff_cov_table ,
+        const CppAD::vector<option_struct>&         option_table
+    );
 }
 
 # endif

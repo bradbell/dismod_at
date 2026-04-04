@@ -9,15 +9,15 @@
 # include <cppad/utility/vector.hpp>
 
 namespace dismod_at {
-   struct data_subset_struct {
-      int    data_id;
-      int    hold_out;
-      int    density_id;
-      int    sample_size;
-      double eta;
-      double nu;
-   };
-   extern CppAD::vector<data_subset_struct> get_data_subset(sqlite3* db);
+    struct data_subset_struct {
+        int    data_id;
+        int    hold_out;
+        int    density_id;
+        int    sample_size;
+        double eta;
+        double nu;
+    };
+    extern CppAD::vector<data_subset_struct> get_data_subset(sqlite3* db);
 }
 
 # endif

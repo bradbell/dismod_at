@@ -149,7 +149,7 @@ The covariate value ``null`` is interpreted as the
 :ref:`covariate_table@reference` value for
 the corresponding covariate.
 {xrst_toc_hidden
-   example/table/avgint_table.py
+    example/table/avgint_table.py
 }
 Example
 *******
