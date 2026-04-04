@@ -2,7 +2,7 @@
 set -e -u
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
-# SPDX-FileContributor: 2014-25 Bradley M. Bell
+# SPDX-FileContributor: 2014-26 Bradley M. Bell
 # -----------------------------------------------------------------------------
 # bash function that echos and executes a command
 echo_eval() {
@@ -90,6 +90,9 @@ fi
 #
 # dismod_at_prefix
 eval $(bin/install_settings.py | grep ^dismod_at_prefix)
+#
+# set up build and dismod_at_prefix as directory links
+bin/build_type.sh check_all $dismod_at_prefix $build_type
 #
 if [ "$skip_check_copy" == 'no' ]
 then

@@ -5,6 +5,6 @@ authors:
   given-names: "Bradley"
   orcid: "https://www.seanet.com/~bradbell/home.html"
 title: "Estimating disease rates as functions of age and time"
-version: "2026.3.27"
+version: "2026.4.4"
 url: "https://github.com/bradbell/dismod_at"
 
