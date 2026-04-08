@@ -22,7 +22,7 @@ mm-dd
 Change the dismod_at source code and documentation to use 4 spaces for
 one tab; i.e., one level of indentation.
 This used to be 3 spaces because that works well with rst lists
-(the at_cascade documentation uses rst),
+(the dismod_at documentation uses rst),
 but 4 spaces is the most common choice used by programmers.
 
 03-27
