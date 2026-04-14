@@ -20,8 +20,9 @@ mm-dd
 04-14
 =====
 Advance to cppad_mixed-2026.4.14. This ensures that the cppad library
-is dynamic (not static) on Mac OS. The only system left where it is static
-is windows.
+is dynamic (not static) except in the Windows system case.
+It also makes the metis package available to the sparse linear algebra solver
+used by the optimizer in cppad_mixed.
 
 04-04
 =====
