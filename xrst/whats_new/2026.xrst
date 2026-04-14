@@ -17,6 +17,12 @@ Release Notes for 2026
 mm-dd
 *****
 
+04-14
+=====
+Advance to cppad_mixed-2026.4.14. This ensures that the cppad library
+is dynamic (not static) on Mac OS. The only system left where it is static
+is windows.
+
 04-04
 =====
 Change the dismod_at source code and documentation to use 4 spaces for
