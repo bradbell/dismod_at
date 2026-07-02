@@ -17,6 +17,13 @@ Release Notes for 2026
 mm-dd
 *****
 
+07-02
+=====
+#.  Advance to cppad_mixed-2026.7.2. This fixes a compile error
+    when using g++ version 16.1.1 20260515.
+#.  The development tools were moved from the bin subdirectory
+    to the tools subdirectory.
+
 04-14
 =====
 Advance to cppad_mixed-2026.4.14. This ensures that the cppad library
