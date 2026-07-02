@@ -3,8 +3,13 @@ set -e -u
 # !! EDITS TO THIS FILE ARE LOST DURING UPDATES BY xrst.git/tools/dev_tools.sh !!
 # SPDX-License-Identifier: AGPL-3.0-or-later
 # SPDX-FileCopyrightText: Bradley M. Bell <bradbell@seanet.com>
-# SPDX-FileContributor: 2020-26 Bradley M. Bell
+# SPDX-FileContributor: 2026 Bradley M. Bell
 # -----------------------------------------------------------------------------
+# script_path
+script_dir="$( dirname -- "${BASH_SOURCE[0]}" )"
+script_dir="$( cd -- "$script_dir" &> /dev/null && pwd )"
+script_path="$script_dir/$(basename $0)"
+#
 # tools/new_release.sh  [--skip_stable_check_all]
 # Creates and check a release for the year and release number specified below.
 #
@@ -128,25 +133,19 @@ stable_branch=stable/$year
 # stable_local_hash
 if ! git show-ref --hash "heads/$stable_branch" > /dev/null
 then
-    echo "Cannot find local version of $stable_branch. Do the following ?"
-    if ! git show-ref --hash "origin/$stable_branch" > /dev/null
-    then
-        echo "git branch $stable_branch $main_branch"
-    else
-        echo "git checkout $stable_branch; git checkout $main_branch"
-    fi
-    exit 1
+     echo "Cannot find local version of $stable_branch. Do the following ?"
+     echo "git branch $stable_branch $main_branch"
+     exit 1
 fi
 stable_local_hash=$(git show-ref --hash "heads/$stable_branch" )
 #
 # stable_remote_hash
 if ! git show-ref --hash "origin/$stable_branch" > /dev/null
 then
-    echo "Cannot find remote version of $stable_branch. Do the following ?"
-    echo "git checkout $stable_branch"
-    echo "git push --set-upstream origin $stable_branch"
-    echo "git checkout $main_branch"
-    exit 1
+     echo "Cannot find remote version of $stable_branch. Do the following ?"
+     echo "git checkout $stable_branch"
+     echo "git push --set-upstream origin $stable_branch"
+     exit 1
 fi
 stable_remote_hash=$(git show-ref --hash "origin/$stable_branch" )
 #
@@ -202,6 +201,13 @@ fi
 # ----------------------------------------------------------------------------
 # Changes to stable branch
 # ----------------------------------------------------------------------------
+if ! git show-ref $stable_branch > /dev/null
+then
+    echo "tools/new_release: neither local or remove $stable_branch exists."
+    echo 'Use the following to create it ?'
+    echo "   git branch $stable_branch"
+    exit 1
+fi
 if ! git checkout $stable_branch
 then
     echo "tools/new_release: should be able to checkout $stable_branch"
@@ -327,5 +333,5 @@ then
     exit 1
 fi
 # ----------------------------------------------------------------------------
-echo 'tools/new_release.sh: OK'
+echo "$script_path: OK"
 exit 0
