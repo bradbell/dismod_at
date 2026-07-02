@@ -379,7 +379,7 @@ This is represented by
 #. Advance to a newer version of CppAD. The requires that you re-run
    ::
 
-        bin/install_cppad.sh
+        tools/install_cppad.sh
 
 #. Remove some unused code in the dismod_at
    :ref:`user_example-name` examples (used for return value in

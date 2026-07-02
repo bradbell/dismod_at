@@ -27,8 +27,8 @@
 Installing dismod_at in Unix
 ############################
 {xrst_toc_hidden
-    bin/install_settings.py
-    bin/example_install.sh
+    tools/install_settings.py
+    tools/example_install.sh
 }
 
 System Requirements
@@ -284,7 +284,7 @@ in the ``dismod_at.git`` directory
 execute the following command:
 ::
 
-    bin/run_cmake.sh
+    tools/run_cmake.sh
 
 The script also serves as an example of how to install dismod_at.
 

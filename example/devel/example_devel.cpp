@@ -24,7 +24,7 @@ Steps
 *****
 ::
 
-    bin/run_cmake.sh
+    tools/run_cmake.sh
     cd build
     make example_devel
     example/devel/example_devel

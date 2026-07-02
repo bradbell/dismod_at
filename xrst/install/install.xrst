@@ -12,7 +12,7 @@ Contents
 ********
 {xrst_toc_table
     xrst/install/conda.xrst
-    bin/dock_dismod_at.sh
+    tools/dock_dismod_at.sh
     xrst/install/unix.xrst
 }
 

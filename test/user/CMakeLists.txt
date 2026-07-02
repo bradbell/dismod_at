@@ -42,7 +42,7 @@ FOREACH(user_case
 #
    ADD_CUSTOM_TARGET(
       check_test_user_${user_case}
-      ${python3_executable} bin/user_test.py test/user/${user_case}.py
+      ${python3_executable} tools/user_test.py test/user/${user_case}.py
       WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
       DEPENDS dismod_at
    )

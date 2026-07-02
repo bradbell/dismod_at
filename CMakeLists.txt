@@ -96,7 +96,7 @@ ENDMACRO( set_library_path_list )
 # ============================================================================
 CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 PROJECT(dismod_at)
-SET(dismod_at_version "2026.4.14")
+SET(dismod_at_version "2026.7.2")
 INCLUDE_DIRECTORIES( ${dismod_at_SOURCE_DIR}/include )
 INCLUDE(CheckCXXSourceRuns)
 # ============================================================================
@@ -262,8 +262,8 @@ CONFIGURE_FILE(
    ${CMAKE_CURRENT_SOURCE_DIR}/include/dismod_at/configure.hpp
 )
 CONFIGURE_FILE(
-   ${CMAKE_CURRENT_SOURCE_DIR}/bin/user_test.py.in
-   ${CMAKE_CURRENT_SOURCE_DIR}/bin/user_test.py
+   ${CMAKE_CURRENT_SOURCE_DIR}/tools/user_test.py.in
+   ${CMAKE_CURRENT_SOURCE_DIR}/tools/user_test.py
 )
 # ----------------------------------------------------------------------------
 # subdirectories

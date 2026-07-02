@@ -239,7 +239,7 @@ This caused a failure during testing on windows systems and has been fixed.
 
 03-25
 =====
-1. Change ``bin/user_test.sh`` to ``bin/user_test.py`` so that it can be
+1. Change ``bin/user_test.sh`` to ``tools/user_test.py`` so that it can be
    used in Dos, Macos, and Linux.
 2. Fix some no-standard constructs in logical expressions; e.g.,
    change ``not std::isnan``  to ``! std::isnan`` .
