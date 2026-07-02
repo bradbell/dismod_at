@@ -35,7 +35,7 @@ set -e -u
 # :ref:`install_dismod_at<install_unix-name>` and
 # `at_cascade <https://at-cascade.readthedocs.io/latest>`_ .
 # You can use the following link to get a get a copy of
-# `dock_dock_dismod_at/sh <https://raw.githubusercontent.com/bradbell/dismod_at/master/tools/dock_dismod_at.sh>`_
+# `dock_dock_dismod_at.sh <https://raw.githubusercontent.com/bradbell/dismod_at/master/tools/dock_dismod_at.sh>`_
 # If you understand docker, this script also serves as an example
 # install of dismod_at.
 #
