@@ -21,12 +21,17 @@ mm-dd
 =====
 #.  Advance to cppad_mixed-2026.7.2. This fixes a compile error
     when using g++ version 16.1.1 20260515.
-#.  The development tools were moved from the bin subdirectory
-    to the tools subdirectory.
+#.  The development tools were moved from the ``bin`` subdirectory
+    to the ``tools`` subdirectory. This was done for two reasons:
+    it is a more standard choice for this directory and it makes
+    ``tools/path_tools.sh`` less problematic (see below).
 #.  Advance the dock_dismod_at
     :ref:`dock_dismod_at.sh@dismod_at_version` from 2026.0.1.to 2026.7.2.
     Instructions were added at the link above for getting older versions
-    using dock_dismod_at.sh.
+    of dismod_at using dock_dismod_at.sh.
+#.  Note that if you execute ``source tools/tools_path.sh`` the
+    local subdirectory ``tools`` will be added to you path; e.g.,
+    you can use ``check_all.sh`` instead of ``tools/check_all.sh`` .
 
 04-14
 =====
