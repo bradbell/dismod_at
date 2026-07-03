@@ -161,10 +161,12 @@ set -e -u
 # This script can build the following version of ``dismod_at.dismod_at``
 # {xrst_spell_off}
 # {xrst_code sh}
-    dismod_at_version='2026.0.1'
-    dismod_at_hash='cac2d8bc518ac7187d9aa3bcb0e0b2ce99b4db8b'
+    dismod_at_version='2026.7.2'
+    dismod_at_hash='47b4e72080c6e3bc81baaa1a5dfff21c1d2d0655'
 # {xrst_code}
 # {xrst_spell_on}
+# If you want to build an older version of dismod_at, use git to get the
+# version of this script that corresponds to the dismod_at version you want.
 #
 # at_cascade_version
 # ******************
@@ -308,6 +310,7 @@ RUN git clone https://github.com/bradbell/dismod_at.git dismod_at.git
 WORKDIR /home/dismod_at.git
 #
 RUN \
+git checkout main &&\
 git checkout --quiet $dismod_at_hash  && \
 grep "$dismod_at_version" CMakeLists.txt > /dev/null
 #
@@ -315,7 +318,7 @@ grep "$dismod_at_version" CMakeLists.txt > /dev/null
 RUN sed -i tools/install_settings.py \
     -e "s|^dismod_at_prefix *=.*|dismod_at_prefix = '$prefix'|" \
     -e "s|^build_type *=.*|build_type = '$build_type'|"  \
-    -e "s|^python3_executable *=.*|python3_executable = '$prefix/tools/python3'|"
+    -e "s|^python3_executable *=.*|python3_executable = '$prefix/bin/python3'|"
 #
 # Install cppad_mixed
 RUN tools/get_cppad_mixed.sh
@@ -331,6 +334,8 @@ WORKDIR /home/dismod_at.git
 # Check source
 RUN \
 mv tools/install_settings.py temp.py && \
+git checkout main &&\
+git pull && \
 git checkout --quiet $dismod_at_hash  && \
 mv temp.py tools/install_settings.py && \
 grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
@@ -367,6 +372,8 @@ WORKDIR /home
 RUN \
 cd dismod_at.git && \
 mv tools/install_settings.py temp.py && \
+git checkout main &&\
+git pull && \
 git checkout --quiet $dismod_at_hash  && \
 mv temp.py tools/install_settings.py && \
 grep "$dismod_at_version" CMakeLists.txt > /dev/null && \
@@ -382,10 +389,10 @@ WORKDIR /home/at_cascade.git
 RUN \
 git checkout --quiet $at_cascade_hash && \
 grep "at_cascade-$at_cascade_version\$" at_cascade.xrst > /dev/null && \
-sed -i tools/run_test.sh -e 's|if python3|if $prefix/tools/python3|'
+sed -i bin/run_test.sh -e 's|if python3|if $prefix/bin/python3|'
 #
 # Test at_cascade
-RUN tools/check_all.sh
+RUN bin/check_all.sh
 #
 # Install at_cascade
 RUN pip3 install .

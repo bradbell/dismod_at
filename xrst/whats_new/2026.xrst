@@ -23,6 +23,10 @@ mm-dd
     when using g++ version 16.1.1 20260515.
 #.  The development tools were moved from the bin subdirectory
     to the tools subdirectory.
+#.  Advance the dock_dismod_at
+    :ref:`dock_dismod_at.sh@dismod_at_version` from 2026.0.1.to 2026.7.2.
+    Instructions were added at the link above for getting older versions
+    using dock_dismod_at.sh.
 
 04-14
 =====
