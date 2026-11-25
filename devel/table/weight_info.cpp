@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: University of Washington <https://www.washington.edu>
 // SPDX-FileContributor: 2014-22 Bradley M. Bell
+// SPDX-FileContributor: 2026 Joseph Wagner
 // ----------------------------------------------------------------------------
 /*
 {xrst_begin weight_info dev}
@@ -12,8 +13,12 @@ Syntax
 ******
 
 | ``weight_info`` *w_constant* ()
+| ``weight_grid_group`` (
+| |tab| *n_weight* , *weight_grid_table* , *grid_start* , *grid_order*
+| )
 | ``weight_info`` *w_info* (
-| |tab| *age_table* , *time_table* , *weight_id* , *weight_table* , *weight_grid_table*
+| |tab| *age_table* , *time_table* , *weight_id* , *weight_table* , *weight_grid_table* ,
+| |tab| *grid_start* , *grid_order*
 | )
 | ``weight_info`` *w_test* (
 | |tab| *age_table* , *time_table* , *age_id* , *time_id* , *weight*
@@ -84,6 +89,52 @@ This argument has prototype
     ``const CppAD::vector<weight_grid_struct>&`` *weight_grid_table*
 
 an is the :ref:`weight_grid_table-name` .
+
+weight_grid_group
+*****************
+This routine makes one pass over *weight_grid_table* and sets
+*grid_start* and *grid_order* so that a ``weight_info`` constructor
+only needs to visit the rows for its *weight_id* .
+Call it once, and then use its results to construct
+*w_info* for each *weight_id* .
+
+n_weight
+********
+This argument has prototype
+
+    ``size_t`` *n_weight*
+
+and is the number of rows in the weight table.
+
+grid_start
+**********
+This is an output of ``weight_grid_group`` and
+an input to the *w_info* constructor.
+It has prototype
+
+    ``CppAD::vector<size_t>`` *grid_start*
+
+Its size is *n_weight* + 1 and for *weight_id* less than *n_weight* ,
+
+    *grid_start* [ *weight_id* +1] ``-`` *grid_start* [ *weight_id* ]
+
+is the number of rows in *weight_grid_table* that have this *weight_id* .
+
+grid_order
+**********
+This is an output of ``weight_grid_group`` and
+an input to the *w_info* constructor.
+It has prototype
+
+    ``CppAD::vector<size_t>`` *grid_order*
+
+For *k* greater than or equal *grid_start* [ *weight_id* ] and
+less than *grid_start* [ *weight_id* +1] ,
+
+    *grid_order* [ *k* ]
+
+is the index in *weight_grid_table* of a row that has this *weight_id* .
+For each *weight_id* , these indices are in increasing order.
 
 age_id
 ******
@@ -287,8 +338,10 @@ weight_info::weight_info(
     const CppAD::vector<double>&             time_table        ,
     size_t                                   weight_id         ,
     const CppAD::vector<weight_struct>&      weight_table      ,
-    const CppAD::vector<weight_grid_struct>& weight_grid_table )
-{   size_t i, j, id;
+    const CppAD::vector<weight_grid_struct>& weight_grid_table ,
+    const CppAD::vector<size_t>&             grid_start        ,
+    const CppAD::vector<size_t>&             grid_order        )
+{   size_t i, j, k, id;
 
     using std::cerr;
     using std::endl;
@@ -297,20 +350,27 @@ weight_info::weight_info(
     // determine the vector age_id and time_id vectors for this weight_id
     assert( age_id_.size() == 0 );
     assert( time_id_.size() == 0 );
-    size_t n_weight = weight_grid_table.size();
+    //
+    // k_begin, k_end
+    // grid_order[k] for k_begin <= k < k_end are the rows for this weight_id
+    assert( grid_start.size() == weight_table.size() + 1 );
+    size_t k_begin = grid_start[weight_id];
+    size_t k_end   = grid_start[weight_id + 1];
+    //
+    // age_vec, time_vec
     CppAD::vector<key_id> age_vec, time_vec;
-    for( i = 0; i < n_weight; i++)
-    {   if( weight_grid_table[i].weight_id == int(weight_id) )
-        {   key_id element;
-            //
-            element.id  = weight_grid_table[i].age_id;
-            element.key = age_table[element.id];
-            unique_insert_sort( age_vec,  element);
-            //
-            element.id  = weight_grid_table[i].time_id;
-            element.key = time_table[element.id];
-            unique_insert_sort( time_vec, element );
-        }
+    for( k = k_begin; k < k_end; k++)
+    {   i = grid_order[k];
+        assert( weight_grid_table[i].weight_id == int(weight_id) );
+        key_id element;
+        //
+        element.id  = weight_grid_table[i].age_id;
+        element.key = age_table[element.id];
+        unique_insert_sort( age_vec,  element);
+        //
+        element.id  = weight_grid_table[i].time_id;
+        element.key = time_table[element.id];
+        unique_insert_sort( time_vec, element );
     }
 
     // number of age and time points for this weighting
@@ -346,26 +406,25 @@ weight_info::weight_info(
     weight_.resize(n_age  * n_time );
     for(i = 0; i < n_age * n_time; i++)
         count[i] = 0;
-    for( i = 0; i < n_weight; i++)
-    {   if( weight_grid_table[i].weight_id == int(weight_id) )
-        {   id           = weight_grid_table[i].age_id;
-            size_t j_age = n_age;
-            for(j = 0; j < n_age; j++ )
-                if( id == age_id_[j] )
-                    j_age = j;
-            assert( j_age < n_age );
-            //
-            id            = weight_grid_table[i].time_id;
-            size_t j_time = n_time;
-            for(j = 0; j < n_time; j++ )
-                if( id == time_id_[j] )
-                    j_time = j;
-            assert( j_time < n_time );
-            size_t index = j_age * n_time + j_time;
-            count[index]++;
-            //
-            weight_[index] = weight_grid_table[i].weight;
-        }
+    for( k = k_begin; k < k_end; k++)
+    {   i            = grid_order[k];
+        id           = weight_grid_table[i].age_id;
+        size_t j_age = n_age;
+        for(j = 0; j < n_age; j++ )
+            if( id == age_id_[j] )
+                j_age = j;
+        assert( j_age < n_age );
+        //
+        id            = weight_grid_table[i].time_id;
+        size_t j_time = n_time;
+        for(j = 0; j < n_time; j++ )
+            if( id == time_id_[j] )
+                j_time = j;
+        assert( j_time < n_time );
+        size_t index = j_age * n_time + j_time;
+        count[index]++;
+        //
+        weight_[index] = weight_grid_table[i].weight;
     }
 
     // make sure each age, time pair appears once
@@ -381,5 +440,52 @@ weight_info::weight_info(
     }
 }
 
+// weight_grid_group
+void weight_grid_group(
+    size_t                                   n_weight          ,
+    const CppAD::vector<weight_grid_struct>& weight_grid_table ,
+    CppAD::vector<size_t>&                   grid_start        ,
+    CppAD::vector<size_t>&                   grid_order        )
+{   //
+    // n_grid
+    size_t n_grid = weight_grid_table.size();
+    //
+    // grid_start
+    // set grid_start[weight_id + 1] to the number of rows for weight_id
+    grid_start.resize(0);
+    grid_start.resize(n_weight + 1);
+    for(size_t weight_id = 0; weight_id <= n_weight; weight_id++)
+        grid_start[weight_id] = 0;
+    size_t n_order = 0;
+    for(size_t i = 0; i < n_grid; i++)
+    {   int id = weight_grid_table[i].weight_id;
+        if( 0 <= id && size_t(id) < n_weight )
+        {   grid_start[size_t(id) + 1]++;
+            n_order++;
+        }
+    }
+    //
+    // grid_start
+    // set grid_start[weight_id] to the index in grid_order of the first row
+    // for weight_id; grid_start[n_weight] is the size of grid_order.
+    for(size_t weight_id = 0; weight_id < n_weight; weight_id++)
+        grid_start[weight_id + 1] += grid_start[weight_id];
+    assert( grid_start[n_weight] == n_order );
+    //
+    // next
+    // next[weight_id] is the index in grid_order for next row for weight_id
+    CppAD::vector<size_t> next(n_weight);
+    for(size_t weight_id = 0; weight_id < n_weight; weight_id++)
+        next[weight_id] = grid_start[weight_id];
+    //
+    // grid_order
+    grid_order.resize(0);
+    grid_order.resize(n_order);
+    for(size_t i = 0; i < n_grid; i++)
+    {   int id = weight_grid_table[i].weight_id;
+        if( 0 <= id && size_t(id) < n_weight )
+            grid_order[ next[size_t(id)]++ ] = i;
+    }
+}
 
 } // END_DISMOD_AT_NAMESPACE

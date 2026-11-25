@@ -596,13 +596,19 @@ int main(int n_arg, const char** argv)
         );
         // w_info_vec
         vector<dismod_at::weight_info> w_info_vec(n_weight + 1);
+        vector<size_t> grid_start, grid_order;
+        dismod_at::weight_grid_group(
+            n_weight, db_input.weight_grid_table, grid_start, grid_order
+        );
         for(size_t weight_id = 0; weight_id < n_weight; weight_id++)
         {   w_info_vec[weight_id] = dismod_at::weight_info(
                 db_input.age_table,
                 db_input.time_table,
                 weight_id,
                 db_input.weight_table,
-                db_input.weight_grid_table
+                db_input.weight_grid_table,
+                grid_start,
+                grid_order
             );
         }
         // The constant weighting is placed at the end of w_info_vec
@@ -721,13 +727,19 @@ int main(int n_arg, const char** argv)
         );
         // w_info_vec
         vector<dismod_at::weight_info> w_info_vec(n_weight + 1);
+        vector<size_t> grid_start, grid_order;
+        dismod_at::weight_grid_group(
+            n_weight, db_input.weight_grid_table, grid_start, grid_order
+        );
         for(size_t weight_id = 0; weight_id < n_weight; weight_id++)
         {   w_info_vec[weight_id] = dismod_at::weight_info(
                 db_input.age_table,
                 db_input.time_table,
                 weight_id,
                 db_input.weight_table,
-                db_input.weight_grid_table
+                db_input.weight_grid_table,
+                grid_start,
+                grid_order
             );
         }
         // data_object
