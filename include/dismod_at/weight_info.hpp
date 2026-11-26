@@ -38,7 +38,9 @@ public:
         const CppAD::vector<double>&             time_table   ,
         size_t                                   weight_id    ,
         const CppAD::vector<weight_struct>&      weight_table ,
-        const CppAD::vector<weight_grid_struct>& weight_grid_table
+        const CppAD::vector<weight_grid_struct>& weight_grid_table ,
+        const CppAD::vector<size_t>&             grid_start   ,
+        const CppAD::vector<size_t>&             grid_order
     );
     //
     size_t age_size(void) const;
@@ -49,6 +51,13 @@ public:
     //
     double weight(size_t i, size_t j) const;
 };
+// group the rows of the weight_grid table by weight_id
+void weight_grid_group(
+    size_t                                   n_weight          ,
+    const CppAD::vector<weight_grid_struct>& weight_grid_table ,
+    CppAD::vector<size_t>&                   grid_start        ,
+    CppAD::vector<size_t>&                   grid_order
+);
 
 } // END_DISMOD_AT_NAMESPACE
 

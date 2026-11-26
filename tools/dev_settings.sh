@@ -73,6 +73,7 @@ version_file_list='
 contributor_list='
     bradbell:Bradley_M._Bell
     gculbr:Garland_Culbreth
+    joewag:Joseph_Wagner
 '
 #
 # no_copyright_list

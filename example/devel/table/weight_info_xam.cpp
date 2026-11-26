@@ -63,6 +63,7 @@ bool weight_info_xam(void)
         " n_age          integer,"
         " n_time         integer)",
     "insert into weight values(0, 'my weight', 3, 2)",
+    "insert into weight values(1, 'constant',  1, 1)",
     //
     "create table weight_grid("
         " weight_grid_id integer primary key,"
@@ -74,9 +75,10 @@ bool weight_info_xam(void)
     "insert into weight_grid values(0,         0,     0,      0,    0.50)",
     "insert into weight_grid values(1,         0,     2,      0,    0.75)",
     "insert into weight_grid values(2,         0,     4,      0,    1.00)",
-    "insert into weight_grid values(3,         0,     0,      1,    1.00)",
-    "insert into weight_grid values(4,         0,     2,      1,    1.25)",
-    "insert into weight_grid values(5,         0,     4,      1,    1.50)",
+    "insert into weight_grid values(3,         1,     0,      0,    2.00)",
+    "insert into weight_grid values(4,         0,     0,      1,    1.00)",
+    "insert into weight_grid values(5,         0,     2,      1,    1.25)",
+    "insert into weight_grid values(6,         0,     4,      1,    1.50)",
     };
     size_t n_command = sizeof(sql_cmd) / sizeof(sql_cmd[0]);
     for(size_t i = 0; i < n_command; i++)
@@ -98,10 +100,28 @@ bool weight_info_xam(void)
             db, data_table, avgint_table
     );
 
+    // group the rows of the weight_grid table by weight_id
+    size_t n_weight = weight_table.size();
+    vector<size_t> grid_start, grid_order;
+    dismod_at::weight_grid_group(
+        n_weight, weight_grid_table, grid_start, grid_order
+    );
+    ok  &= grid_start.size() == n_weight + 1;
+    ok  &= grid_start[0]     == 0;
+    ok  &= grid_start[1]     == 6;
+    ok  &= grid_start[2]     == 7;
+    //
+    // rows for weight_id zero are not all next to each other
+    ok  &= grid_order.size() == 7;
+    ok  &= grid_order[2]     == 2;
+    ok  &= grid_order[3]     == 4;
+    ok  &= grid_order[6]     == 3;
+
     // extract the weight_grid information
     size_t weight_id = 0;
     dismod_at::weight_info w_info(
-        age_table, time_table, weight_id, weight_table, weight_grid_table
+        age_table, time_table, weight_id, weight_table, weight_grid_table,
+        grid_start, grid_order
     );
 
     ok  &= w_info.age_size()  == 3;
@@ -120,6 +140,18 @@ bool weight_info_xam(void)
     ok  &= w_info.weight(0,1)  == 1.50;
     ok  &= w_info.weight(1,1)  == 1.25;
     ok  &= w_info.weight(2,1)  == 1.00;
+    //
+    // the constant weighting
+    weight_id = 1;
+    dismod_at::weight_info w_constant(
+        age_table, time_table, weight_id, weight_table, weight_grid_table,
+        grid_start, grid_order
+    );
+    ok  &= w_constant.age_size()  == 1;
+    ok  &= w_constant.time_size() == 1;
+    ok  &= w_constant.age_id(0)   == 0;
+    ok  &= w_constant.time_id(0)  == 0;
+    ok  &= w_constant.weight(0,0) == 2.00;
     //
     // close database and return
     sqlite3_close(db);

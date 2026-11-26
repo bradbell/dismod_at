@@ -220,10 +220,17 @@ test_weight_info(void)
             db, data_table, avgint_table
     );
 
+    // group the rows of the weight_grid table by weight_id
+    vector<size_t> grid_start, grid_order;
+    dismod_at::weight_grid_group(
+        weight_table.size(), weight_grid_table, grid_start, grid_order
+    );
+
     // extract the weighting information
     size_t weight_id = 0;
     dismod_at::weight_info  w_info(
-        age_table, time_table, weight_id, weight_table, weight_grid_table
+        age_table, time_table, weight_id, weight_table, weight_grid_table,
+        grid_start, grid_order
     );
 
     ok  &= w_info.age_size()  == 3;
